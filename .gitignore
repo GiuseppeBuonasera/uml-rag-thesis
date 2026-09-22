@@ -1,0 +1,22 @@
+# Ambiente
+.venv/
+__pycache__/
+*.pyc
+
+# Chiavi/segreti
+.env
+
+# Dati e risultati (di solito troppo pesanti/sperimentali per Git)
+corpus/raw/*
+!corpus/raw/.gitkeep
+corpus/processed/*
+!corpus/processed/.gitkeep
+data/results/*
+!data/results/.gitkeep
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.vscode/settings.json
