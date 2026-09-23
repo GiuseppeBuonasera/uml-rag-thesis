@@ -31,9 +31,15 @@ pip install -r requirements.txt
 ## Stato del progetto
 
 - [x] Costruzione corpus — prima versione: 45 esercizi (`corpus/raw/models/`),
-      indicizzati in `corpus/processed/corpus.jsonl`, diagrammi convertiti in Apollon
-      JSON (`corpus/apollon_convert.py`, con approssimazioni note da rivedere, vedi
-      `docs/decisions.md`)
+      indicizzati in `corpus/processed/corpus.jsonl`, 44/45 diagrammi convertiti in
+      **Apollon v4 JSON** (`corpus/apollon_convert.py`; `Cruise` escluso, costrutto
+      non supportato). Revisionato il 2026-09-23: due bug reali corretti nella
+      conversione (parsing attributi, molteplicità invertite), poi passaggio da
+      Apollon v3 a v4 (tipi di relazione nativi come `ClassInheritance`). Ogni
+      diagramma è verificato a 3 livelli (schema JSON ufficiale, integrità
+      referenziale, round-trip semantico col PlantUML originale), tutti a 0 errori.
+      Restano approssimazioni note e la verifica visiva nell'editor Apollon non è
+      ancora stata fatta — vedi `docs/decisions.md`
 - [ ] Retrieval keyword (BM25)
 - [ ] Retrieval dense
 - [ ] Retrieval hybrid

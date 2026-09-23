@@ -19,10 +19,11 @@ zero-shot, specialmente per certe tipologie di esercizio.
    - dense (embedding-based, es. SBERT/SROBERTA)
    - hybrid (combinazione delle due)
 3. **Integrazione con LLM(s)** — costruzione del prompt few-shot con gli esempi
-   recuperati, generazione del diagramma in **Apollon JSON** (formato dell'editor
-   Apollon, https://apollon.ase.in.tum.de; deciso il 2026-09-22, vedi
-   `docs/decisions.md` — non PlantUML, nonostante il riferimento a De Bari et al./
-   Nguyen et al. che usavano PlantUML).
+   recuperati, generazione del diagramma in **Apollon JSON v4** (formato dell'editor
+   Apollon, pacchetto `@tumaet/apollon@5.3.0`, modello wire-format `"4.2.0"`; deciso
+   il 2026-09-22 [v3] e aggiornato a v4 il 2026-09-23, vedi `docs/decisions.md` — non
+   PlantUML, nonostante il riferimento a De Bari et al./Nguyen et al. che usavano
+   PlantUML).
 4. **Valutazione sperimentale** — confronto with/without retrieval, su metriche
    sintattiche, semantiche e pragmatiche.
 5. **Analisi** — quali tipologie di esercizio beneficiano di più dal retrieval.
@@ -43,7 +44,8 @@ UML.
 ## Convenzioni tecniche del repo
 
 - Linguaggio: Python (ambiente virtuale dedicato, vedi `requirements.txt`)
-- Formato diagrammi generati: Apollon JSON (https://apollon.ase.in.tum.de)
+- Formato diagrammi generati: Apollon JSON v4 (`@tumaet/apollon@5.3.0`, modello
+  `"4.2.0"`; schema in `evaluation/uml-model-4.schema.json`)
 - Struttura cartelle:
   - `corpus/raw/` — dati grezzi (esercizi + diagrammi originali)
   - `corpus/processed/` — dati puliti/indicizzati pronti per il retrieval

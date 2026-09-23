@@ -1,6 +1,6 @@
 """
 Client verso l'LLM (es. Anthropic Claude, OpenAI) per generare il diagramma
-UML (PlantUML) a partire dal prompt costruito.
+UML (Apollon v4 JSON, vedi docs/decisions.md) a partire dal prompt costruito.
 """
 
 
@@ -11,5 +11,5 @@ class LLMClient:
         # TODO: inizializzare il client dell'SDK corrispondente
 
     def generate(self, prompt: str) -> str:
-        """Ritorna il diagramma PlantUML generato come stringa."""
+        """Ritorna il diagramma Apollon v4 JSON generato, come stringa."""
         raise NotImplementedError

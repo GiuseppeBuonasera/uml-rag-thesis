@@ -1,8 +1,11 @@
 """
-Metriche di valutazione dei diagrammi UML generati:
-- sintattiche (validità PlantUML, parsing corretto)
+Metriche di valutazione dei diagrammi UML generati (formato Apollon v4 JSON, vedi
+docs/decisions.md):
+- sintattiche (validità contro evaluation/uml-model-4.schema.json — vedi
+  corpus/apollon_convert.py::validate_against_schema per un validatore già pronto)
 - semantiche (correttezza rispetto al diagramma di riferimento: classi, attributi,
-  associazioni)
+  relazioni — inclusa la distinzione tra i tipi nativi ClassInheritance/
+  ClassAggregation/ClassComposition/ecc., non più solo associazioni generiche)
 - pragmatiche (utilità/qualità percepita, es. via LLM-as-judge o rubric)
 """
 
