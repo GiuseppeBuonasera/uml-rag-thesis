@@ -30,7 +30,10 @@ pip install -r requirements.txt
 
 ## Stato del progetto
 
-- [ ] Costruzione corpus
+- [x] Costruzione corpus — prima versione: 45 esercizi (`corpus/raw/models/`),
+      indicizzati in `corpus/processed/corpus.jsonl`, diagrammi convertiti in Apollon
+      JSON (`corpus/apollon_convert.py`, con approssimazioni note da rivedere, vedi
+      `docs/decisions.md`)
 - [ ] Retrieval keyword (BM25)
 - [ ] Retrieval dense
 - [ ] Retrieval hybrid

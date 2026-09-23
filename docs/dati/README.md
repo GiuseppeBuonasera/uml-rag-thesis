@@ -29,12 +29,13 @@ LLM diversi (ChatGPT, DeepSeek, Gemini, Qwen) come screenshot in `Exercises/`, e
 ### `apollon_format_reference/`
 Materiale che definisce il formato di output scelto (Apollon JSON, vedi
 `docs/decisions.md`):
-- `prompt.docx` — prompt template originale che istruisce l'LLM a produrre un diagramma
-  delle classi in JSON compatibile con [Apollon](https://apollon.ase.in.tum.de).
+- `prompt.docx` (+ `prompt_template.txt`, estratto in testo semplice) — prompt template
+  originale che istruisce l'LLM a produrre un diagramma delle classi in JSON
+  compatibile con [Apollon](https://apollon.ase.in.tum.de).
 - `diagram_example_1.json`, `diagram_example_2.json` — esempi di output Apollon validi
-  (struttura `elements` / `relationships` / `assessments`), utili come riferimento per
-  validare lo schema in `evaluation/metrics.py` e per un eventuale convertitore
-  PlantUML → Apollon JSON dei 45 diagrammi di riferimento in `corpus/raw/models/`.
+  (struttura `elements` / `relationships` / `assessments`), usati come riferimento per
+  scrivere `corpus/apollon_convert.py` (vedi sotto) e per validare lo schema in
+  `evaluation/metrics.py`.
 
 ### `external_exercise_pool/`
 - `data.pdf` — raccolta di tracce di esercizi UML da una risorsa didattica pubblica
@@ -45,8 +46,17 @@ Materiale che definisce il formato di output scelto (Apollon JSON, vedi
 ## Nota di scope
 
 Il target di generazione è **Apollon JSON**, non PlantUML (vedi
-[`docs/decisions.md`](../decisions.md)). I 45 diagrammi di riferimento in
-`corpus/raw/models/` sono attualmente solo in PlantUML: serve un passo di conversione
-(o una nuova annotazione manuale) prima di poterli usare come few-shot example nel
-formato di output finale. Questo è tracciato come step successivo, non ancora fatto —
-vedi `corpus/processed/corpus.jsonl`, campo `diagram_apollon_json: null`.
+[`docs/decisions.md`](../decisions.md)). I 45 diagrammi di riferimento originali in
+`corpus/raw/models/` sono in PlantUML; sono stati convertiti in Apollon JSON da
+[`corpus/apollon_convert.py`](../../corpus/apollon_convert.py) (schema verificato
+contro il pacchetto npm `@ls1intum/apollon`, non dedotto). Il risultato è in
+`corpus/processed/corpus.jsonl` (campo `diagram_apollon_json`) e in
+`corpus/processed/apollon/<id>.json`.
+
+**È una conversione automatica con approssimazioni note**, non una nuova annotazione
+manuale — ogni record ha un campo `apollon_conversion_warnings` che elenca i casi non
+gestiti in modo esatto (soprattutto: il costrutto "classe associativa" di PlantUML,
+`(A,B) .. C`, approssimato con due associazioni semplici di molteplicità `1`; 2 vincoli
+XOR scartati perché non rappresentabili). Da rivedere manualmente prima di usare questi
+diagrammi come few-shot "canonici" in valutazioni che contano sulla loro esattezza
+semantica al 100%.

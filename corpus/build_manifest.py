@@ -8,13 +8,15 @@ Ogni cartella in corpus/raw/models/<Nome>/ deve contenere:
   plantuml.txt       - diagramma di riferimento in PlantUML (obbligatorio)
   extramaterial/     - materiale extra facoltativo (ignorato dal manifest)
 
-Il diagramma target finale è Apollon JSON (vedi docs/decisions.md), non ancora
-disponibile per questi 45 esercizi: il campo diagram_apollon_json resta a None finché
-non esiste un convertitore PlantUML -> Apollon o un'annotazione manuale. Non viene
-inventato/generato automaticamente qui.
+Il diagramma target finale è Apollon JSON (vedi docs/decisions.md): questo script
+scrive solo il PlantUML originale (diagram_apollon_json resta a None). La conversione
+in Apollon JSON è un passo successivo, vedi corpus/apollon_convert.py — va eseguito
+dopo questo script (e riscrive corpus.jsonl aggiungendo diagram_apollon_json e
+apollon_conversion_warnings).
 
 Uso:
     python corpus/build_manifest.py
+    python corpus/apollon_convert.py
 """
 
 import json
