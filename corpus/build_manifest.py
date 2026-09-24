@@ -28,6 +28,12 @@ OUT_PATH = Path(__file__).parent / "processed" / "corpus.jsonl"
 REQUIRED_METADATA_FIELDS = ["name", "language", "tags", "domain", "source", "citation", "contact"]
 REQUIRED_FILES = ["description.md", "metadata.txt", "plantuml.txt"]
 
+# Esercizi del corpus usati anche come esempio few-shot statico nel prompt
+# (docs/dati/apollon_format_reference/example_*_v4.json). Vanno esclusi dalle query
+# di valutazione quando si usa quel prompt come baseline statica, per evitare
+# leakage — vedi docs/decisions.md, voce sul Blocco 4 (2026-09-24).
+STATIC_EXAMPLE_IDS = {"AirTravel"}
+
 
 def parse_metadata(text: str) -> dict:
     fields = {}
@@ -72,6 +78,7 @@ def build_record(model_dir: Path) -> dict:
         "diagram_apollon_json": None,  # TODO: conversione PlantUML -> Apollon JSON
         "has_extramaterial": (model_dir / "extramaterial").is_dir(),
         "raw_dir": str(model_dir.relative_to(Path(__file__).parent.parent)).replace("\\", "/"),
+        "used_as_static_example": model_dir.name in STATIC_EXAMPLE_IDS,
     }
 
 
@@ -112,6 +119,13 @@ def verify(records: list[dict]) -> None:
 
     domains = sorted(set(r["domain"] for r in records if r["domain"]))
     print(f"Domini rappresentati ({len(domains)}): {domains}")
+
+    static_example_ids = sorted(r["id"] for r in records if r["used_as_static_example"])
+    assert set(static_example_ids) == STATIC_EXAMPLE_IDS, (
+        f"used_as_static_example non coincide con STATIC_EXAMPLE_IDS: "
+        f"trovato {static_example_ids}, atteso {sorted(STATIC_EXAMPLE_IDS)}"
+    )
+    print(f"Esempi few-shot statici (used_as_static_example=true): {static_example_ids}")
 
 
 if __name__ == "__main__":

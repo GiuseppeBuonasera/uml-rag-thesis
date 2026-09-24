@@ -220,6 +220,171 @@ formato diagrammi, scelta del modello di embedding, metrica di valutazione).
     dichiarata esplicitamente in tesi come limite/nota metodologica. I punteggi in
     `docs/dati/debari_baseline/Analysis.xlsx` restano utilizzabili come riferimento
     perché valutano i diagrammi nel merito, non il formato di serializzazione.
+
+    **Correzione (2026-09-24)**: questo paragrafo confondeva due studi distinti.
+    `prompt.docx` (e i due esempi v3, ed `Exercises.docx` con i 15 esercizi
+    italiani) **non sono di De Bari et al.** — sono del secondo studio del 2025
+    (confermato via figshare DOI 10.6084/m9.figshare.29492624, vedi voce
+    successiva). `Analysis.xlsx` **è** di De Bari, ma valuta i 20 esercizi in
+    inglese del PDF (ora `docs/dati/debari/Exercises.pdf`), non i 15 esercizi
+    italiani di `Exercises.docx`. Quindi: il "few-shot statico" costruito
+    adattando `prompt.docx` al v4 è una baseline del **secondo studio**, non di
+    De Bari; i punteggi di `Analysis.xlsx` non sono direttamente confrontabili con
+    quel few-shot perché valutano un set di esercizi diverso. Se serve una
+    baseline comparabile ai punteggi di `Analysis.xlsx`, va costruita sui 20
+    esercizi del PDF di De Bari, non sui 15 italiani.
   - `evaluation/metrics.py` menziona ancora "validità PlantUML" tra le metriche
     sintattiche: da aggiornare per riferirsi alla validazione contro
     `uml-model-4.schema.json`.
+
+### [2026-09-24] Riorganizzazione docs/dati/: identificato lo studio di provenienza corretto per ciascun file
+- Contesto: le voci precedenti (2026-09-22, 2026-09-23) avevano già separato il
+  corpus (`corpus/raw/models/`) dal resto, ma raggruppavano insieme materiale di
+  **due studi distinti** sotto lo stesso nome fuorviante (`debari_baseline/`):
+  - Il PDF da 20 esercizi in inglese con soluzioni di riferimento
+    (`external_exercise_pool/uml_class_diagram_exercises_with_solutions.pdf`) e
+    `debari_baseline/Analysis.xlsx` sono lo **stesso studio** (De Bari et al.):
+    verificato aprendo entrambi i file — i 20 fogli "Part 2 - N" di `Analysis.xlsx`
+    corrispondono agli esercizi del PDF (es. "Part 2 - 1" cita la classe "Work
+    Product" = esercizio 1 "Project Management System"; "Part 2 - 2" cita "Take"
+    con attributi `nbr`/`filmed_meters`/`reel` = esercizio 2 "Hollywood Approach";
+    "Part 2 - 3" cita "Document"/"numberofpages"/"User" = esercizio 3 "Word
+    Processor" — controllo diretto sul contenuto XML dei fogli, non solo sui nomi).
+  - `debari_baseline/Exercises.docx` (15 esercizi in italiano) e
+    `debari_baseline/Exercises/` (60 screenshot ChatGPT/DeepSeek/Gemini/Qwen)
+    appartengono a un **secondo studio, del 2025, non di De Bari**. Verificato
+    tramite l'item figshare DOI 10.6084/m9.figshare.29492624 ("A comparison of
+    different Large Language Models for the generation of UML class diagrams -
+    Appendix"): contiene esattamente `prompt.docx` (22.4 KB), `diagram (1).json`
+    (9.9 KB), `diagram (2).json` (6.3 KB), `Exercises.docx` (3.2 MB) e
+    `Exercises.zip` (17.1 MB) — dimensioni pressoché identiche (byte-per-byte per i
+    primi quattro) ai file locali corrispondenti. Non ho scaricato/estratto
+    `Exercises.zip` per un confronto byte-a-byte dei singoli screenshot (non
+    verificabile da qui in modo diretto): la conferma si basa sulla corrispondenza
+    di dimensione del file compresso nel suo complesso (17.1 MB vs 19 MB
+    decompressi localmente, rapporto plausibile per PNG) più la corrispondenza
+    esatta degli altri quattro file dello stesso item. Va detto esplicitamente: non
+    è una verifica byte-a-byte del contenuto di `Exercises.zip`.
+- Decisione presa: nuova struttura in `docs/dati/` che riflette la provenienza reale:
+  - `debari/` — `Exercises.pdf` (rinominato da `uml_class_diagram_exercises_with_solutions.pdf`)
+    + `Analysis.xlsx`. Materiale dello studio di De Bari et al.
+  - `studio2025_it/` — `Exercises.docx` (15 esercizi italiani). Materiale del secondo
+    studio (2025).
+  - `apollon_format_reference/legacy_v3/` — `prompt.docx`,
+    `diagram_example_1.json`, `diagram_example_2.json`: anche questi fanno parte
+    dello stesso item figshare del secondo studio (sono il prompt/esempi v3
+    originali), tenuti come riferimento storico del formato precedente.
+  - Eliminati: `docs/dati/external_exercise_pool/` (cartella svuotata dallo
+    spostamento), `docs/dati/apollon_format_reference/prompt_template.txt`
+    (estrazione testuale rovinata di `prompt.docx`, ridondante — l'originale resta
+    in `legacy_v3/`), `docs/dati/debari_baseline/Exercises/` (60 screenshot, 19 MB,
+    non usati in nessuno script della pipeline — rimossi perché reperibili
+    integralmente sul figshare item sopra, DOI citato in `docs/dati/README.md`).
+  - Spostamenti fatti con `git mv` per mantenere la storia.
+- Verificato dopo la riorganizzazione: nessun riferimento residuo ai vecchi percorsi
+  in file `.py`/`.md`/`.txt` del repository (grep mirato, eseguito su tutto il
+  repository escluso `.git/`) al di fuori delle voci storiche di questo stesso file
+  di decisioni (lasciate intenzionalmente, non riscritte) e di `docs/dati/README.md`
+  (riscritto nella voce successiva). `corpus/build_manifest.py` e
+  `corpus/apollon_convert.py` rieseguiti senza errori (44/45 diagrammi, 0 violazioni
+  su tutti e tre i controlli) — non usano percorsi sotto `docs/dati/`, quindi lo
+  spostamento non li riguarda direttamente, ma la riesecuzione conferma che nulla si
+  è rotto.
+- Punto aperto, non deciso qui: se e come usare `debari/` (i 20 esercizi con
+  soluzione) nella pipeline — vedi la voce successiva per il ruolo previsto (test
+  set) e la domanda aperta sul leave-one-out.
+
+### [2026-09-24] Blocco 2 — docs/dati/README.md riscritto per la nuova struttura
+- Contesto: la voce precedente (Blocco 1) ha spostato i file; questa voce riguarda
+  solo la documentazione.
+- Decisione presa: `docs/dati/README.md` riscritto da zero seguendo la nuova
+  struttura (`debari/`, `studio2025_it/`, `apollon_format_reference/legacy_v3/`),
+  con il ruolo previsto di ciascuna cartella dichiarato esplicitamente (in
+  particolare: `debari/` come **test set**, non corpus few-shot — punto aperto sul
+  leave-one-out, da discutere con i relatori).
+- La correzione alla voce del 2026-09-23 che confondeva i due studi (vedi sopra,
+  "Correzione (2026-09-24)" inline in quella voce) è parte di questo stesso blocco:
+  non cancellata, corretta esplicitamente sul posto come richiesto.
+- Verificato: nessun'altra menzione errata di "15 esercizi italiani" associata ad
+  `Analysis.xlsx` trovata nel resto del repository (stesso grep del Blocco 1).
+
+### [2026-09-24] Blocco 3 — corretto il lato del rombo in aggregazione/composizione
+- Contesto: revisione ha verificato `library/lib/utils/edgeUtils.ts`
+  (`getEdgeMarkerStyles`) di `@tumaet/apollon`: per **tutti** i tipi di relazione
+  delle classi il marcatore grafico (triangolo, rombo, freccia) è sempre su
+  `markerEnd`, mai su `markerStart`. Per `ClassInheritance`/`ClassRealization` e
+  `ClassUnidirectional`/`ClassDependency` la convenzione già in uso era corretta
+  (target = superclasse/interfaccia o lato della freccia). Per
+  `ClassAggregation`/`ClassComposition` **non lo era**: il contenitore/aggregatore
+  finiva come `source`, mentre il rombo (quindi il ruolo "contenitore") deve stare
+  sul `target`.
+- Decisione presa: `relationship_kind` corretta — per `AGGREGATION_OPS` lo scambio
+  scatta su `("o--", "o-")` invece che su `("--o", "-o")` (e specularmente per
+  `COMPOSITION_OPS` con `*`), cosicché il contenitore finisca sempre come `target`,
+  qualunque sia la forma dell'operatore PlantUML usata per indicarlo. Le
+  molteplicità sono scambiate insieme alle classi, come già richiesto dal fix del
+  Bug 2 (2026-09-23) — nessuna regressione su quel fix.
+- `prompt_template_v4.txt` corretto: le righe su `ClassComposition`/
+  `ClassAggregation` ora dicono esplicitamente `"target" = the whole/container`,
+  `"source" = the part`.
+- `example_1_bank_loans_v4.json` ed `example_2_airtravel_v4.json` rigenerati **con
+  la pipeline** (funzioni di `corpus/apollon_convert.py`, non trascritti a mano) —
+  vedi `docs/dati/README.md` per dove vivono.
+- Aggiunto `corpus/test_apollon_convert.py`: un test mirato che copre
+  `Order "1" *-- "*" Line` (e le forme `*-`, `*-->`, `*->`, `o--`, `o-`, `--o`,
+  `--*`), verificando esplicitamente quale classe finisce come `source`/`target` e
+  con quale molteplicità. **Nota**: per `--o`/`--*` (simbolo adiacente al lato
+  destro della riga PlantUML, cioè a `Line` in quell'esempio) l'esito atteso è
+  l'opposto rispetto a `*--`/`o--` (Line come contenitore/target, non Order) — è la
+  stessa regola di posizione del simbolo applicata in modo coerente, non
+  un'eccezione; documentato nei commenti del test per evitare ambiguità.
+- `round_trip_check` esteso: oltre a nomi/tipi di attributi e molteplicità per
+  nome-classe (controllo già presente, agnostico rispetto a chi è source/target),
+  ora verifica esplicitamente **quale classe è il contenitore** per aggregazione/
+  composizione — con una funzione (`_expected_container`) scritta apposta senza
+  richiamare `relationship_kind`, per non validare un eventuale bug futuro con la
+  stessa funzione che lo causerebbe (stesso principio del fix precedente).
+- Verificato dopo la correzione: `corpus/test_apollon_convert.py` — tutti i casi
+  passano. Pipeline completa rieseguita: 44/45 diagrammi, **0 violazioni di
+  schema, 0 problemi di integrità, 0 discrepanze di round-trip** (incluso il nuovo
+  controllo sul contenitore). Controllo esplicito richiesto su `AirTravel`: nel
+  JSON convertito, l'edge `ClassAggregation` tra Airline e Airplane ha
+  `source=Airplane (0..*)`, `target=Airline (0..1)`; l'edge `ClassComposition` tra
+  PassengerPlane e SeatCategory ha `source=SeatCategory (0..*)`,
+  `target=PassengerPlane (0..1)` — Airline e PassengerPlane sono i contenitori, ora
+  correttamente come `target`.
+- Punto ancora non verificato (non un bug, un limite di questo ambiente): il
+  rendering effettivo nell'editor Apollon online. La convenzione qui applicata
+  viene dal codice sorgente (`getEdgeMarkerStyles`), non da uno screenshot
+  dell'editor in azione.
+
+### [2026-09-24] Blocco 4 — leakage: AirTravel è sia esempio statico nel prompt sia esercizio del corpus
+- Contesto: `docs/dati/apollon_format_reference/example_2_airtravel_v4.json` (secondo
+  esempio few-shot del prompt v4, sostituisce l'orologio digitale — vedi voce
+  2026-09-23) è una copia diretta di `corpus/processed/apollon/AirTravel.json`,
+  cioè lo stesso identico esercizio `AirTravel` presente nel corpus indicizzato in
+  `corpus/processed/corpus.jsonl`. Se si valuta il sistema chiedendo di generare il
+  diagramma per la traccia "AirTravel" usando come baseline il prompt few-shot
+  statico che include AirTravel come esempio, il confronto è viziato: il modello
+  vedrebbe (parte del)la risposta corretta nel prompt stesso.
+- Decisione presa: aggiunto il campo `used_as_static_example` (booleano) a ogni
+  record di `corpus/processed/corpus.jsonl`, scritto da
+  `corpus/build_manifest.py` (non aggiunto a mano al file JSONL) tramite la
+  costante `STATIC_EXAMPLE_IDS = {"AirTravel"}` definita in quello script. Solo il
+  record `AirTravel` ha `used_as_static_example: true`; tutti gli altri 44 hanno
+  `false`. `build_manifest.py::verify` include ora un controllo che fa fallire la
+  build se l'insieme dei record flaggati non coincide esattamente con
+  `STATIC_EXAMPLE_IDS`.
+- **Cosa questo campo non fa**: non esclude automaticamente AirTravel da nessuna
+  pipeline di valutazione — quella logica non esiste ancora (fase di valutazione
+  non implementata). È solo un marcatore nei dati, da usare esplicitamente quando
+  si scriverà il codice di valutazione con few-shot statico (filtrare
+  `used_as_static_example == False` prima di campionare le query di test).
+  Documentato qui perché sia visibile prima che qualcuno costruisca quella
+  pipeline dimenticandoselo.
+- Verificato: `corpus/build_manifest.py` rieseguito, stampa
+  "Esempi few-shot statici (used_as_static_example=true): ['AirTravel']";
+  controllo diretto sul JSONL prodotto conferma un solo record con
+  `used_as_static_example: true` (AirTravel) e tutti gli altri 44 con `false`.
+  Pipeline completa (`build_manifest.py` + `apollon_convert.py`) rieseguita dopo la
+  modifica: 44/45 diagrammi, 0 violazioni su tutti e tre i controlli.

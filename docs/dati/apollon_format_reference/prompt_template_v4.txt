@@ -52,8 +52,8 @@ Every relationship is an entry in "edges" with:
 Choosing the relationship type — use the native type, do not approximate:
 - Generalization / inheritance between a superclass and a subclass ("an X is a special kind of Y", e.g. "PassengerPlane is a special Aircraft"): "ClassInheritance". "source" = the subclass, "target" = the superclass. Leave both multiplicities empty; "label" empty.
 - Interface implementation ("X implements the Y interface"): "ClassRealization", same source/target convention as inheritance (source = implementing class, target = interface). Leave multiplicities empty.
-- Whole-part relationship where the part's lifecycle is fully owned by the whole (it cannot exist without it, e.g. "an Order is made of OrderLines"): "ClassComposition". "source" = the whole/container.
-- Whole-part relationship where the part can exist independently (e.g. "a Course has Students" but a Student exists without the Course): "ClassAggregation". "source" = the whole/container.
+- Whole-part relationship where the part's lifecycle is fully owned by the whole (it cannot exist without it, e.g. "an Order is made of OrderLines"): "ClassComposition". "target" = the whole/container, "source" = the part (the filled diamond marker is drawn on the target end).
+- Whole-part relationship where the part can exist independently (e.g. "a Course has Students" but a Student exists without the Course): "ClassAggregation". "target" = the whole/container, "source" = the part (the hollow diamond marker is drawn on the target end).
 - A plain association where only one side is aware of / navigates to the other (e.g. "a Customer places Orders" but an Order does not need to know every Customer field back): "ClassUnidirectional", "source" = the class that holds the reference/navigates the association, "target" = the other end.
 - A plain association navigable both ways, or where directionality is not meaningful for the exercise: "ClassBidirectional".
 - A usage/dependency that is not a structural association (e.g. "the Printer service uses the Document class as a parameter, without storing a reference to it"): "ClassDependency".

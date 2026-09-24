@@ -27,14 +27,21 @@ pubblicato ma anche il codice TypeScript che lo implementa:
   "left" (ne esistono altri piu' fini per il trascinamento manuale nell'editor, non
   necessari per una generazione programmatica).
 - versionConverter-*.js (bundle compilato): versione corrente del modello = "4.2.0".
+- library/lib/utils/edgeUtils.ts (getEdgeMarkerStyles, verificato il 2026-09-24): il
+  marcatore grafico (triangolo per inheritance/realization, rombo bianco/nero per
+  aggregation/composition, freccia per unidirectional/dependency) e' SEMPRE su
+  markerEnd — mai su markerStart — per ogni tipo di relazione delle classi. Questo
+  fissa in modo definitivo, per tutti i tipi, quale estremo (source o target) deve
+  ricevere quale ruolo semantico: vedi il docstring di relationship_kind per la
+  convenzione risultante per ciascun tipo. **Corretto un bug**: una prima versione
+  di questo modulo (fino al 2026-09-23) metteva il contenitore/aggregatore come
+  "source" per ClassAggregation/ClassComposition — sbagliato, deve essere "target".
 
-Punto NON verificato nei sorgenti (nessun file di marker/arrowhead trovato in tempo
-utile): quale estremo di ClassInheritance/ClassRealization porta il triangolo
-nell'editor. Si e' assunta la convenzione UML standard (fonte-figlio,
-target-superclasse/interfaccia), la stessa gia' usata per il parsing PlantUML e per
-la v3. **Da confermare aprendo qualche diagramma convertito nell'editor Apollon
-online** (motivo per cui non e' stato ancora spuntato "verifica visiva" nella
-checklist di questa decisione).
+Punto ancora NON verificato nei sorgenti: il rendering effettivo nell'editor Apollon
+non e' stato controllato visivamente (nessun ambiente browser/JS disponibile qui).
+La convenzione sopra e' dedotta dal codice sorgente (getEdgeMarkerStyles), non da
+uno screenshot dell'editor in azione — **da confermare aprendo qualche diagramma
+convertito nell'editor Apollon online**.
 
 Limiti noti (vedi anche i "apollon_conversion_warnings" scritti per ciascun record):
 - Il costrutto "classe associativa" di PlantUML, es. "(A,B) .. C", non ha un
@@ -267,21 +274,36 @@ def relationship_kind(op: str) -> tuple[str, bool, bool]:
     ClassRealization, ClassAggregation, ClassComposition, ClassUnidirectional,
     ClassDependency, ClassBidirectional.
 
-    swapped=True significa: il lato che deve comparire come "source" nell'edge
-    (il figlio per ereditarieta'/realizzazione, l'aggregatore/contenitore per
-    aggregazione/composizione, l'origine della freccia per le associazioni dirette)
-    e' il TARGET originale della riga PlantUML. Chi chiama deve scambiare insieme
+    swapped=True significa: il lato che deve comparire come "source" nell'edge e'
+    il TARGET originale della riga PlantUML. Chi chiama deve scambiare insieme
     classi e molteplicita' — mai l'una senza l'altra (era il Bug 2 della versione
     precedente di questo script).
+
+    Convenzione per ciascun tipo, verificata leggendo
+    library/lib/utils/edgeUtils.ts (getEdgeMarkerStyles) di @tumaet/apollon: il
+    marcatore grafico (triangolo/rombo/freccia) e' SEMPRE su markerEnd, cioe'
+    sull'estremo "target", per ogni tipo di relazione delle classi. Quindi:
+    - ClassInheritance / ClassRealization: target = superclasse/interfaccia,
+      source = sottoclasse/classe che implementa (il triangolo sta sul target).
+    - ClassUnidirectional / ClassDependency: target = il lato verso cui punta la
+      freccia originale in PlantUML (la freccia sta sul target).
+    - ClassAggregation / ClassComposition: target = il CONTENITORE/aggregatore
+      (il rombo sta sul target, non sul source — occhio, e' l'opposto di quello
+      che ci si aspetterebbe leggendo "il contenitore e' la fonte della
+      relazione"; corretto il 2026-09-24 dopo che una prima versione di questa
+      funzione metteva il contenitore come source).
     """
     if op in INHERITANCE_OPS:
         return "ClassInheritance", op in ("<|--", "<|-"), True
     if op in REALIZATION_OPS:
         return "ClassRealization", op == "<|..", True
     if op in AGGREGATION_OPS:
-        return "ClassAggregation", op in ("--o", "-o"), False
+        # 'o' adiacente al lato sinistro (source originale) -> il contenitore e'
+        # a sinistra, ma deve finire come TARGET -> va scambiato.
+        return "ClassAggregation", op in ("o--", "o-"), False
     if op in COMPOSITION_OPS:
-        return "ClassComposition", op in ("--*", "-*"), False
+        # stessa logica, con '*' al posto di 'o'
+        return "ClassComposition", op in ("*--", "*-", "*-->", "*->"), False
     if op in DIRECTED_OPS:
         return "ClassUnidirectional", op == "<--", False
     if op in DEPENDENCY_OPS:
@@ -540,6 +562,16 @@ def _v4_attribute_to_tuple(name: str) -> tuple[str, str]:
     return s.strip(), ""
 
 
+def _expected_container(op: str, source: str, target: str) -> str:
+    """Deriva il nome della classe "contenitore" (aggregatore/whole) per
+    aggregazione/composizione direttamente dalla posizione del simbolo 'o'/'*'
+    nell'operatore PlantUML originale — SENZA passare da relationship_kind, per un
+    controllo di round-trip davvero indipendente dalla funzione sotto test."""
+    if op in ("o--", "o-", "*--", "*-", "*-->", "*->"):
+        return source  # simbolo adiacente al lato sinistro della riga originale
+    return target  # "--o","-o","--*","-*": simbolo adiacente al lato destro
+
+
 def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationships: list[dict], diagram: dict) -> list[str]:
     """Confronta il CONTENUTO SEMANTICO tra il PlantUML originale e il JSON v4
     prodotto, senza riusare relationship_kind (per non validare un eventuale bug con
@@ -601,6 +633,15 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
             problems.append(
                 f"{model_id}: molteplicita' errate per '{r['raw']}' — attese {expected}, ottenute {got}"
             )
+
+        if r["op"] in AGGREGATION_OPS or r["op"] in COMPOSITION_OPS:
+            expected_container = _expected_container(r["op"], r["source"], r["target"])
+            got_container = name_by_id.get(e["target"])
+            if got_container != expected_container:
+                problems.append(
+                    f"{model_id}: contenitore errato per '{r['raw']}' — atteso '{expected_container}' "
+                    f"come target dell'edge, trovato '{got_container}'"
+                )
 
     return problems
 

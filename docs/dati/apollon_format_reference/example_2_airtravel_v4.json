@@ -364,26 +364,26 @@
       }
     },
     {
-      "id": "45a5f234-a214-5501-b1e9-b62f6e472b0c",
-      "source": "a61added-bc10-553d-8cfc-781a54ae7fba",
-      "target": "e1b22f1a-1e6d-53bc-ac04-8461bb4e61ed",
+      "id": "af4d22cf-7c93-5f67-80ad-65492ea2d680",
+      "source": "e1b22f1a-1e6d-53bc-ac04-8461bb4e61ed",
+      "target": "a61added-bc10-553d-8cfc-781a54ae7fba",
       "type": "ClassAggregation",
-      "sourceHandle": "bottom",
-      "targetHandle": "top",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
       "data": {
         "points": [
           {
             "x": 150.0,
-            "y": 110
+            "y": 230
           },
           {
             "x": 150.0,
-            "y": 230
+            "y": 110
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
-        "targetMultiplicity": "0..*",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..1",
         "sourceRole": "",
         "targetRole": ""
       }
@@ -689,26 +689,26 @@
       }
     },
     {
-      "id": "ff4a3851-c2d0-5ed3-b576-544d8e0fbbb2",
-      "source": "975d28ed-b14c-59a4-9e11-9ec453ced742",
-      "target": "4e89c37c-bee3-5249-a24f-32066aa26c7e",
+      "id": "bf51d41e-98dd-508f-8033-5a71afde5f06",
+      "source": "4e89c37c-bee3-5249-a24f-32066aa26c7e",
+      "target": "975d28ed-b14c-59a4-9e11-9ec453ced742",
       "type": "ClassComposition",
-      "sourceHandle": "left",
-      "targetHandle": "right",
+      "sourceHandle": "right",
+      "targetHandle": "left",
       "data": {
         "points": [
           {
-            "x": 880,
-            "y": 265.0
-          },
-          {
             "x": 540,
             "y": 515.0
+          },
+          {
+            "x": 880,
+            "y": 265.0
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
-        "targetMultiplicity": "0..*",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..1",
         "sourceRole": "",
         "targetRole": ""
       }
