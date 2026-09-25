@@ -43,6 +43,17 @@ La convenzione sopra e' dedotta dal codice sorgente (getEdgeMarkerStyles), non d
 uno screenshot dell'editor in azione — **da confermare aprendo qualche diagramma
 convertito nell'editor Apollon online**.
 
+Nomi di ruolo per estremo (source_role/target_role, aggiunto il 2026-09-25 per gli
+esercizi tradotti in corpus/raw/translated_it/, vedi docs/decisions.md): un estremo
+di relazione puo' avere, tra virgolette, solo la molteplicita' (invariato) oppure
+"molteplicita' ruolo" separati da uno spazio (es. `"1 responsabile"`) — vedi
+split_mult_role. Nessuno dei 45 file di corpus/raw/models/ ha uno spazio dentro le
+virgolette di una molteplicita' (verificato con una scansione dedicata), quindi
+questa estensione non cambia il parsing dei 45 esistenti. Il ruolo viaggia insieme
+alla molteplicita' nello scambio source/target di relationship_kind (mai l'uno senza
+l'altra, stesso principio del fix del Bug 2) e finisce in edge.data.sourceRole /
+targetRole nel JSON v4.
+
 Limiti noti (vedi anche i "apollon_conversion_warnings" scritti per ciascun record):
 - Il costrutto "classe associativa" di PlantUML, es. "(A,B) .. C", non ha un
   equivalente diretto in Apollon: approssimato con due relazioni semplici verso i
@@ -127,6 +138,24 @@ DEPENDENCY_OPS = {"..>", "<.."}
 
 def stable_id(seed: str) -> str:
     return str(uuid.uuid5(NAMESPACE, seed))
+
+
+def split_mult_role(raw: str) -> tuple[str, str]:
+    """Il testo tra virgolette di un estremo puo' essere solo la molteplicita'
+    (es. '0..n', invariato rispetto a prima) oppure molteplicita' + nome di ruolo
+    separati da spazio (es. '1 responsabile') — sintassi introdotta il 2026-09-25
+    per gli esercizi tradotti (vedi docs/decisions.md), dove l'immagine sorgente
+    mostra un nome di ruolo su un estremo specifico, distinto da un'etichetta
+    sull'intera associazione. Nessuno dei 45 file originali del corpus ha uno
+    spazio dentro le virgolette di una molteplicita' (verificato), quindi il
+    parsing dei 45 esistenti non cambia comportamento."""
+    raw = raw.strip()
+    if not raw:
+        return "", ""
+    parts = raw.split(None, 1)
+    if len(parts) == 2:
+        return parts[0], parts[1]
+    return parts[0], ""
 
 
 # --- Parsing del PlantUML (invariato: agnostico rispetto al formato di output) ---
@@ -225,14 +254,18 @@ def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[
 
         m = REL_RE.match(line)
         if m:
-            src, src_mult, op, tgt_mult, tgt, label = m.groups()
+            src, src_mult_raw, op, tgt_mult_raw, tgt, label = m.groups()
+            src_mult, src_role = split_mult_role(src_mult_raw or "")
+            tgt_mult, tgt_role = split_mult_role(tgt_mult_raw or "")
             relationships.append(
                 {
                     "kind": "binary",
                     "source": src,
-                    "source_mult": src_mult or "",
+                    "source_mult": src_mult,
+                    "source_role": src_role,
                     "op": op,
-                    "target_mult": tgt_mult or "",
+                    "target_mult": tgt_mult,
+                    "target_role": tgt_role,
                     "target": tgt,
                     "label": (label or "").strip(),
                     "raw": line,
@@ -444,7 +477,7 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
     edges: list[dict] = []
     warnings: list[str] = []
 
-    def add_edge(edge_type, source_name, target_name, label, source_mult, target_mult):
+    def add_edge(edge_type, source_name, target_name, label, source_mult, target_mult, source_role="", target_role=""):
         if source_name not in class_ids or target_name not in class_ids:
             warnings.append(f"relazione scartata, classe mancante: {source_name} -> {target_name}")
             return
@@ -469,8 +502,8 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
                     "label": label,
                     "sourceMultiplicity": source_mult,
                     "targetMultiplicity": target_mult,
-                    "sourceRole": "",
-                    "targetRole": "",
+                    "sourceRole": source_role,
+                    "targetRole": target_role,
                 },
             }
         )
@@ -481,13 +514,16 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
             if swapped:
                 eff_src, eff_tgt = r["target"], r["source"]
                 src_mult, tgt_mult = r["target_mult"], r["source_mult"]
+                src_role, tgt_role = r.get("target_role", ""), r.get("source_role", "")
             else:
                 eff_src, eff_tgt = r["source"], r["target"]
                 src_mult, tgt_mult = r["source_mult"], r["target_mult"]
+                src_role, tgt_role = r.get("source_role", ""), r.get("target_role", "")
             label = "" if no_label_no_mult else r["label"]
             if no_label_no_mult:
                 src_mult = tgt_mult = ""
-            add_edge(edge_type, eff_src, eff_tgt, label, src_mult, tgt_mult)
+                src_role = tgt_role = ""
+            add_edge(edge_type, eff_src, eff_tgt, label, src_mult, tgt_mult, src_role, tgt_role)
         else:  # classe associativa, approssimata con due associazioni semplici
             warnings.append(
                 f"classe associativa '{r['assoc']}' tra {r['a']} e {r['b']} approssimata con due "
@@ -632,6 +668,16 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
         if expected != got:
             problems.append(
                 f"{model_id}: molteplicita' errate per '{r['raw']}' — attese {expected}, ottenute {got}"
+            )
+
+        expected_roles = {r["source"]: r.get("source_role", ""), r["target"]: r.get("target_role", "")}
+        got_roles = {
+            name_by_id.get(e["source"]): e["data"]["sourceRole"],
+            name_by_id.get(e["target"]): e["data"]["targetRole"],
+        }
+        if expected_roles != got_roles:
+            problems.append(
+                f"{model_id}: ruoli errati per '{r['raw']}' — attesi {expected_roles}, ottenuti {got_roles}"
             )
 
         if r["op"] in AGGREGATION_OPS or r["op"] in COMPOSITION_OPS:

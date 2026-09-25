@@ -388,3 +388,127 @@ formato diagrammi, scelta del modello di embedding, metrica di valutazione).
   `used_as_static_example: true` (AirTravel) e tutti gli altri 44 con `false`.
   Pipeline completa (`build_manifest.py` + `apollon_convert.py`) rieseguita dopo la
   modifica: 44/45 diagrammi, 0 violazioni su tutti e tre i controlli.
+
+### [2026-09-25] Traduzione dei 15 esercizi italiani di studio2025_it: avviata, pilota su CourseManagement
+- Contesto: `docs/dati/studio2025_it/Exercises.docx` contiene 15 esercizi in
+  italiano con diagramma delle classi di riferimento (immagine), non ancora
+  parte di `corpus/raw/`. Obiettivo: tradurli e aggiungerli al corpus nello
+  stesso formato dei 45 esistenti.
+- Preparazione: immagini estratte da `word/media/` del docx e associate
+  all'esercizio corretto per posizione nel documento (non per nome del file
+  immagine, che non segue l'ordine — verificato aprendo le immagini, non
+  assunto dai nomi). Salvate in `corpus/raw/translated_it/_images/esNN.png`
+  (N=1..15; esclusi i 2 esempi del prompt, "Prestiti bancari" e "Orologio
+  digitale", che nel docx sono `image1.png`/`image2.png`).
+- Classificazione: 13/15 immagini chiaramente diagrammi delle classi; 2 con
+  ambiguità segnalate e risolte con l'utente prima di procedere (non decise
+  autonomamente): l'esercizio 8 (Ascensore, frecce aperte "controlla"/
+  "comunica" → mappate rispettivamente a `-->`/`..>`) e altre note minori,
+  gestite caso per caso quando si arriverà a quegli esercizi.
+- Pilota: `corpus/raw/translated_it/CourseManagement/` (Esercizio 1, "Sistema
+  di gestione Corsi"). File prodotti: `description_it.md` (originale
+  italiano, copiato senza modifiche — incluse le punteggiature mancanti nel
+  sorgente, verificate nell'XML del docx, non corrette), `plantuml_it.txt`
+  (trascrizione in italiano), `transcription_notes.md`, `render_it.png`
+  (PlantUML locale — scaricato `plantuml-1.2023.0.jar`, l'ultima release non
+  gira sul Java 8 disponibile sul sistema, errore di versione del bytecode),
+  `glossary.json`, `description.md` (traduzione), `plantuml.txt` (generato da
+  `corpus/apply_glossary.py`, non a mano), `metadata.txt`.
+- **Due errori di trascrizione trovati dall'utente confrontando l'immagine col
+  render, non da un controllo automatico**: (1) mancava l'aggregazione
+  Corso—Lezione (rombo su Corso, molteplicità "1"/"1..n"); (2) la relazione
+  "Iscritto" Corso—Partecipante era stata trascritta come aggregazione, è
+  un'associazione semplice ("1..n"/"1..n"). Causa: linee che si incrociano
+  nella zona centrale del diagramma, seguite male una prima volta. Corretti in
+  `plantuml_it.txt`, non solo nel JSON derivato — vedi
+  `transcription_notes.md` del pilota per il dettaglio. **Lezione per gli
+  esercizi successivi**: non dichiarare corrispondenza con l'immagine senza
+  che sia stata verificata da chi ha l'immagine sotto gli occhi; per questo da
+  ora ogni esercizio produce `relations_table.md` (vedi sotto) come base per
+  la revisione, invece di un'affermazione di equivalenza nel testo.
+- **Nomi di ruolo per estremo** (nuova sintassi PlantUML per questo dialetto):
+  un'immagine può mostrare un nome di ruolo su un estremo specifico di
+  un'associazione (es. "+responsabile" su `DocenteInterno`), distinto da un
+  nome di associazione centrato sulla linea (es. "Preallocazione") — i 45 file
+  originali non distinguono i due casi, li trattano entrambi come etichetta
+  `: testo`. Introdotta la sintassi `"molteplicità ruolo"` dentro le
+  virgolette di un estremo (es. `"1 responsabile"`); `apollon_convert.py`
+  (`split_mult_role`) la parsa separando molteplicità e ruolo, che viaggiano
+  insieme nello scambio source/target di `relationship_kind` (mai l'uno senza
+  l'altra) e finiscono in `edge.data.sourceRole`/`targetRole` nel JSON v4 (già
+  previsti dallo schema, prima sempre vuoti). Verificato che nessuno dei 45
+  file originali ha uno spazio dentro le virgolette di una molteplicità
+  (scansione dedicata), quindi il loro parsing non cambia. Aggiunto un test
+  dedicato in `corpus/test_apollon_convert.py` e un controllo nel round-trip.
+- **Normalizzazione delle molteplicità**: PlantUML accetta sia lo stile "n"
+  (`0..n`, `1..n`, `n`) sia lo stile "*" (`0..*`, `1..*`, `*`); l'immagine
+  sorgente usa lo stile "n". Convenzione: `plantuml_it.txt` resta fedele
+  all'immagine (stile "n"), `plantuml.txt` (inglese, quello che entra
+  davvero nella pipeline/nei pochi-shot) usa lo stile "*", più comune nella
+  letteratura UML in inglese e già prevalente nei 45 file originali del
+  corpus. Normalizzazione fatta da `apply_glossary.py`
+  (`normalize_multiplicities`), non da `apollon_convert.py` (che resta
+  agnostico e accetta entrambi gli stili in lettura, invariato).
+  `check_translated.py` aggiornato per trattare le due notazioni come
+  equivalenti nel confronto IT/EN.
+- **Nuova regola per tutti gli esercizi successivi**: dopo ogni trascrizione,
+  generare `relations_table.md` con `corpus/generate_relations_table.py`
+  (riparsando `plantuml_it.txt`, mai scritta a mano) — una riga per relazione
+  con classe A/B, tipo, molteplicità per lato, ruoli, etichetta, più i totali.
+  È la base su cui viene fatta la revisione prima di procedere con l'esercizio
+  successivo.
+- Verificato dopo le correzioni: `corpus/check_translated.py` OK;
+  `corpus/test_apollon_convert.py` OK (incluso il nuovo test sui ruoli);
+  pipeline completa (`build_manifest.py` + `apollon_convert.py`, ora estesa a
+  leggere anche `corpus/raw/translated_it/`) — 46 record, 45/46 convertiti
+  (Cruise sempre escluso), **0 violazioni** su schema/integrità/round-trip.
+  Controllo leakage (TF-IDF + coseno) di `CourseManagement` contro i 45
+  esercizi del corpus e i 20 di De Bari: top-1 = School (0.23), nessuna
+  somiglianza preoccupante.
+- Non ancora fatto: gli altri 14 esercizi (in attesa di conferma sul pilota
+  corretto); verifica visiva del rendering dei ruoli nell'editor Apollon
+  online (stesso limite ambientale già segnalato per il resto del formato v4).
+
+### [2026-09-25] Render inglese, controllo JSON compilato, normalizzazione tipo bool
+- Contesto: due aggiunte richieste dopo la correzione del pilota, applicate
+  retroattivamente a `CourseManagement` e da ripetere per gli esercizi
+  successivi.
+- **`render_en.png`**: generato da `plantuml.txt` (inglese) con lo stesso
+  `plantuml-1.2023.0.jar` locale usato per `render_it.png`, accanto ad esso in
+  `corpus/raw/translated_it/<Nome>/`.
+- **`relations_table.md` con nomi EN**: `corpus/generate_relations_table.py`
+  ora carica anche `glossary.json` e aggiunge le colonne "Classe A (EN)" /
+  "Classe B (EN)" (traduzione via `apply_glossary.apply_glossary`, non
+  riparsando `plantuml.txt` — la corrispondenza esatta IT/EN è già garantita
+  da `check_translated.py`).
+- **Nuovo controllo in `check_translated.py`** (5°, oltre ai 4 già presenti):
+  nessun termine italiano residuo in
+  `corpus/processed/apollon/<id>.json` — il JSON che finisce davvero nella
+  pipeline/nei pochi-shot, non solo in `plantuml.txt`. Controlla nomi di
+  nodo/attributo/metodo ed etichette/ruoli degli edge. Motivazione: un bug
+  nella conversione PlantUML → Apollon potrebbe introdurre o lasciar passare
+  un residuo italiano che il controllo su `plantuml.txt` da solo non
+  vedrebbe.
+- **Normalizzazione tipo `bool` → `boolean`**: PlantUML accetta entrambe le
+  grafie; l'immagine sorgente di `CourseManagement` usa `bool`
+  (`VideoBeam : bool`). Convenzione: `plantuml_it.txt` resta fedele
+  all'immagine, `plantuml.txt` normalizza a `boolean` (fatto da
+  `apply_glossary.normalize_types`, stesso principio della normalizzazione
+  delle molteplicità). `time` non viene toccato — è già un tipo valido,
+  aggiunto esplicitamente all'elenco dei tipi ammessi in
+  `prompt_template_v4.txt` (prima mancava, nonostante fosse già usato in 5
+  attributi nei 45 esercizi originali del corpus).
+- **Scansione dei tipi usati nei 45 esercizi originali** (richiesta, non
+  applicata — solo segnalazione): oltre ai 7 tipi ammessi dal prompt
+  (string, int, float, double, boolean, date, time — 257/129/11/43/24/36/5
+  occorrenze), risultano fuori elenco: `DateTime` (12 occorrenze, distinto da
+  `date`), `Long` (3), `Integer` (2, sinonimo di `int`). Il resto dei "fuori
+  elenco" (~35 voci, quasi tutte con 1 occorrenza) sono in realtà tipi
+  enum/classe legittimi usati come tipo di attributo (es. `Suit`, `DayOfWeek`,
+  `RoomType`), non violazioni della regola "tipi semplici" — più 3 voci che
+  sono artefatti di parsing di sintassi non standard in `TileOGame`
+  (`Ebike` ha anche un attributo con tipo vuoto: `steel` senza tipo dichiarato
+  nel sorgente). Nessuna correzione applicata ai 45 file, come richiesto.
+- Verificato dopo le modifiche: `corpus/check_translated.py` OK (5/5
+  controlli); `corpus/test_apollon_convert.py` OK; pipeline completa — 46
+  record, 45/46 convertiti, 0 violazioni su schema/integrità/round-trip.

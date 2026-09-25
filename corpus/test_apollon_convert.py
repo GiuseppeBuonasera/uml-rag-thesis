@@ -59,7 +59,47 @@ def check_container_is_target(op: str, edge_type: str) -> None:
     print(f"  OK  Order \"1\" {op} \"*\" Line  ->  source=Line(*) target=Order(1)  [{edge_type}]")
 
 
+def check_role_parsing() -> None:
+    """Sintassi '\"molteplicita' ruolo\"' introdotta il 2026-09-25 per gli
+    esercizi tradotti (es. '+responsabile' su un estremo in CourseManagement).
+    Usa il parser reale (parse_plantuml), non un dizionario costruito a mano,
+    per testare anche split_mult_role e il regex REL_RE insieme."""
+    text = '@startuml\nclass Course {\n}\nclass InternalTeacher {\n}\nCourse "0..n" -- "1 responsible" InternalTeacher\n@enduml\n'
+    classes, relationships, warnings, unsupported = ac.parse_plantuml(text)
+    assert not unsupported, unsupported
+    assert not warnings, warnings
+    r = relationships[0]
+    assert r["source_mult"] == "0..n" and r["source_role"] == "", r
+    assert r["target_mult"] == "1" and r["target_role"] == "responsible", r
+
+    diagram, build_warnings = ac.build_apollon_json("test-role", classes, relationships)
+    assert not build_warnings, build_warnings
+    edge = diagram["edges"][0]
+    name_by_id = {n["id"]: n["data"]["name"] for n in diagram["nodes"]}
+    assert name_by_id[edge["source"]] == "Course"
+    assert name_by_id[edge["target"]] == "InternalTeacher"
+    assert edge["data"]["sourceRole"] == "", edge["data"]
+    assert edge["data"]["targetRole"] == "responsible", edge["data"]
+    assert edge["data"]["sourceMultiplicity"] == "0..n"
+    assert edge["data"]["targetMultiplicity"] == "1"
+
+    # round_trip_check deve accorgersi se il ruolo finisse sull'estremo sbagliato
+    problems = ac.round_trip_check("test-role", classes, relationships, diagram)
+    assert not problems, problems
+
+    # una molteplicita' senza ruolo (i 45 file originali) deve continuare a dare
+    # source_role/target_role vuoti, non una regressione sui dati esistenti
+    text_no_role = '@startuml\nclass A {\n}\nclass B {\n}\nA "0..1" -- "1..*" B\n@enduml\n'
+    _, rels_no_role, _, _ = ac.parse_plantuml(text_no_role)
+    assert rels_no_role[0]["source_role"] == "" and rels_no_role[0]["target_role"] == ""
+
+    print('  OK  Course "0..n" -- "1 responsible" InternalTeacher  ->  targetRole="responsible"')
+
+
 def main() -> None:
+    print("Ruoli per estremo (sintassi '\"molteplicita' ruolo\"'):")
+    check_role_parsing()
+    print()
     print("Composizione - il contenitore (Order) deve finire come target, qualunque")
     print("forma dell'operatore usi il PlantUML sorgente per indicarlo:")
     # 'Order "1" *-- "*" Line': il simbolo '*' e' adiacente a Order (sinistra) ->

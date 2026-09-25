@@ -1,12 +1,19 @@
 """
-Costruisce corpus/processed/corpus.jsonl a partire da corpus/raw/models/.
+Costruisce corpus/processed/corpus.jsonl a partire da corpus/raw/models/ e
+corpus/raw/translated_it/ (esercizi tradotti dall'italiano, vedi
+docs/decisions.md — Fase 1/2 traduzione studio2025_it).
 
-Ogni cartella in corpus/raw/models/<Nome>/ deve contenere:
+Ogni cartella <Nome>/ in una delle due directory deve contenere:
   description.md   - traccia testuale dell'esercizio (obbligatorio)
   metadata.txt      - campi "chiave: valore" (name, language, tags, domain, source,
                        citation, contact) (obbligatorio)
   plantuml.txt       - diagramma di riferimento in PlantUML (obbligatorio)
   extramaterial/     - materiale extra facoltativo (ignorato dal manifest)
+
+Le cartelle in corpus/raw/translated_it/ hanno anche file aggiuntivi
+(description_it.md, plantuml_it.txt, transcription_notes.md, glossary.json,
+render_it.png) non letti da questo script — servono solo per la tracciabilità
+della traduzione, vedi corpus/apply_glossary.py e corpus/check_translated.py.
 
 Il diagramma target finale è Apollon JSON (vedi docs/decisions.md): questo script
 scrive solo il PlantUML originale (diagram_apollon_json resta a None). La conversione
@@ -22,7 +29,10 @@ Uso:
 import json
 from pathlib import Path
 
-RAW_MODELS_DIR = Path(__file__).parent / "raw" / "models"
+RAW_DIRS = [
+    Path(__file__).parent / "raw" / "models",
+    Path(__file__).parent / "raw" / "translated_it",
+]
 OUT_PATH = Path(__file__).parent / "processed" / "corpus.jsonl"
 
 REQUIRED_METADATA_FIELDS = ["name", "language", "tags", "domain", "source", "citation", "contact"]
@@ -71,6 +81,7 @@ def build_record(model_dir: Path) -> dict:
         "citation": metadata.get("citation") or None,
         "contact": metadata.get("contact") or None,
         "tags": tags,
+        "translated": "translated_it" in tags,
         "description": description,
         "n_requirements": count_requirements(description),
         "diagram_format": "plantuml",
@@ -83,10 +94,16 @@ def build_record(model_dir: Path) -> dict:
 
 
 def main() -> None:
-    if not RAW_MODELS_DIR.is_dir():
-        raise SystemExit(f"Cartella non trovata: {RAW_MODELS_DIR}")
+    model_dirs: list[Path] = []
+    for raw_dir in RAW_DIRS:
+        if not raw_dir.is_dir():
+            raise SystemExit(f"Cartella non trovata: {raw_dir}")
+        # le cartelle che iniziano con "_" (es. _images/) non sono esercizi:
+        # sono materiale condiviso (immagini sorgente per la trascrizione)
+        model_dirs.extend(
+            sorted(p for p in raw_dir.iterdir() if p.is_dir() and not p.name.startswith("_"))
+        )
 
-    model_dirs = sorted(p for p in RAW_MODELS_DIR.iterdir() if p.is_dir())
     records = [build_record(d) for d in model_dirs]
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -126,6 +143,9 @@ def verify(records: list[dict]) -> None:
         f"trovato {static_example_ids}, atteso {sorted(STATIC_EXAMPLE_IDS)}"
     )
     print(f"Esempi few-shot statici (used_as_static_example=true): {static_example_ids}")
+
+    translated_ids = sorted(r["id"] for r in records if r["translated"])
+    print(f"Esercizi tradotti (translated=true, tag 'translated_it'): {translated_ids}")
 
 
 if __name__ == "__main__":

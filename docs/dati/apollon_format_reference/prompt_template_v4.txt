@@ -28,7 +28,7 @@ Every class, abstract class, interface, or enumeration is a single node with "ty
   "isAbstract": true   // only if the class is abstract; omit otherwise
   "stereotype": "interface" | "enumeration"   // only for interfaces/enumerations; omit for ordinary classes
 }
-Attributes must be of simple types: string, int, float, double, boolean, or date. No composite types, no collections (lists/sets/maps) as attribute types — multiplicity must always be modeled through explicit edges, never through a collection-typed attribute.
+Attributes must be of simple types: string, int, float, double, boolean, date, or time. No composite types, no collections (lists/sets/maps) as attribute types — multiplicity must always be modeled through explicit edges, never through a collection-typed attribute.
 For an enumeration, put each literal value as an entry in "attributes" with just its bare name (no "+" prefix, no type), and set "data.stereotype": "enumeration".
 Methods without a real implementation must still have a valid, non-empty "name" (e.g. "toString(): String"), never an empty string.
 All "id" values (nodes, attributes, methods, edges) must be unique across the whole diagram.
