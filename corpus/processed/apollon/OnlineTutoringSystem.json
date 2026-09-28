@@ -1,0 +1,817 @@
+{
+  "version": "4.2.0",
+  "id": "OnlineTutoringSystem",
+  "title": "OnlineTutoringSystem",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "71c9f89a-b6ed-5fce-a8df-e8610aa61f78",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "LevelOfTutoring",
+        "attributes": [
+          {
+            "id": "7795c5ab-09c5-5429-8acf-5686859ec820",
+            "name": "PrimarySchool"
+          },
+          {
+            "id": "e0d4aae5-6be0-5fc9-91cf-a8240ef291f7",
+            "name": "HighSchool"
+          },
+          {
+            "id": "aa043b04-cede-56eb-82f3-c4edcd8ace1d",
+            "name": "University"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "a0a73c34-4e27-5b8c-ad09-abf40924b28a",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "SessionStatus",
+        "attributes": [
+          {
+            "id": "6d2d5b90-7019-50f5-96a3-00f1a93e9c7d",
+            "name": "Proposed"
+          },
+          {
+            "id": "dce2e652-ec05-518f-99cf-0f29c8c607fa",
+            "name": "Confirmed"
+          },
+          {
+            "id": "0ef4afcd-5963-50c1-be6c-d98ad9529d89",
+            "name": "Completed"
+          },
+          {
+            "id": "e05a09fe-5ba2-52ec-a03d-1a5ee9b8f865",
+            "name": "Paid"
+          },
+          {
+            "id": "5d8f12b7-1644-5255-9557-96ae3a3da3c0",
+            "name": "Cancelled"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "4e6d5e1a-dc7d-5774-b112-e6bce1cce306",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "PaymentKind",
+        "attributes": [
+          {
+            "id": "8ed8e07d-5058-5e70-88f8-23047dcdd36c",
+            "name": "CreditCard"
+          },
+          {
+            "id": "d988b07d-1f10-54d9-9e4b-159254e65755",
+            "name": "WireTransfer"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "d63a88b6-5e05-503a-927e-1461a3b6a5cc",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "User",
+        "attributes": [
+          {
+            "id": "d6ab580d-e639-50b3-ba91-abe6cd115c27",
+            "name": "+ name : string"
+          },
+          {
+            "id": "b9eef817-7894-58d6-9c8c-11654897bf81",
+            "name": "+ email : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "1f942c59-4797-5722-8a99-73f539df58e5",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 290
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "BestTutorAward",
+        "attributes": [
+          {
+            "id": "e8a92916-243b-5044-898b-730240b96561",
+            "name": "+ year : int"
+          },
+          {
+            "id": "616d2b56-9d94-5b35-b62b-d8bc9a4ec555",
+            "name": "+ month : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0afb6860-415b-5b43-bd4f-93c46e39c160",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 290
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Tutor",
+        "attributes": [
+          {
+            "id": "fbfdd6a4-e7eb-5cf7-8b71-b95b36a7dc79",
+            "name": "+ bankAccount : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ead2c7ed-6bd4-5b29-b398-5a341b83b65a",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 290
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "TutoringOffer",
+        "attributes": [
+          {
+            "id": "8e6029d7-c0c3-53fc-be3c-b6af733abb67",
+            "name": "+ hourlyPrice : float"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "02cb8141-69cc-5a4a-9f6f-211a64e41ec0",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 290
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Subject",
+        "attributes": [
+          {
+            "id": "79aba4ec-692d-5c67-9458-91bcb4eb6bf9",
+            "name": "+ name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "fa4d6273-2cd9-5a83-af82-6fe29b26a02d",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 450
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "TutorAvailability",
+        "attributes": [
+          {
+            "id": "f72eb0cd-34b3-562a-9d21-4579334015eb",
+            "name": "+ startTime : date"
+          },
+          {
+            "id": "6d432743-acb8-5775-a34d-2810bb877738",
+            "name": "+ endTime : time"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "50961865-4b13-52cc-b1e4-d748de84b809",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "TutoringRole",
+        "attributes": [],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "77d1c64a-f9b8-558a-87f2-5629777b332b",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 450
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "TutoringElement",
+        "attributes": [
+          {
+            "id": "2d29d466-9299-593a-903d-b19883d6cfb3",
+            "name": "+ tutoringLevel : LevelOfTutoring"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "9c7c142d-082d-5106-8068-f4ab1a6f1028",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Student",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "91f116d5-bd65-5973-b45a-be2c078c15a0",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 610
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "TutoringRequest",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "d61d99d2-af42-5321-9601-0102f843c551",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 610
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "TutoringSession",
+        "attributes": [
+          {
+            "id": "b908db73-df24-5a3d-a12a-b7aa8dcf4b20",
+            "name": "+ sessionDate : date"
+          },
+          {
+            "id": "2fdffcfb-3bb5-50a6-9c28-2ae51c3d9813",
+            "name": "+ totalPrice : float"
+          },
+          {
+            "id": "27c49f53-3614-5b68-a399-0bbdfef9201e",
+            "name": "+ sessionStatus : SessionStatus"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "35784e1b-cb19-5d95-8ac4-57b24918d069",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 610
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Payment",
+        "attributes": [
+          {
+            "id": "19febd9c-a3c0-587e-9147-133b578448db",
+            "name": "+ paymentForm : PaymentKind"
+          },
+          {
+            "id": "71d0a141-c6d2-58b6-94f0-520ecefc2398",
+            "name": "+ paymentDate : date"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "bd0da92d-f120-5bc4-a120-72bee14fef63",
+      "source": "0afb6860-415b-5b43-bd4f-93c46e39c160",
+      "target": "50961865-4b13-52cc-b1e4-d748de84b809",
+      "type": "ClassInheritance",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 360
+          },
+          {
+            "x": 430.0,
+            "y": 450
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "53d387e6-ccce-5299-8051-7463ff89b77a",
+      "source": "9c7c142d-082d-5106-8068-f4ab1a6f1028",
+      "target": "50961865-4b13-52cc-b1e4-d748de84b809",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 470.0
+          },
+          {
+            "x": 540,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "cc368693-8166-55df-a4d1-7338d5366a33",
+      "source": "91f116d5-bd65-5973-b45a-be2c078c15a0",
+      "target": "77d1c64a-f9b8-558a-87f2-5629777b332b",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 630.0
+          },
+          {
+            "x": 600,
+            "y": 485.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "99b779e5-32f2-5b39-bdfa-b9afce526382",
+      "source": "ead2c7ed-6bd4-5b29-b398-5a341b83b65a",
+      "target": "77d1c64a-f9b8-558a-87f2-5629777b332b",
+      "type": "ClassInheritance",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 360
+          },
+          {
+            "x": 710.0,
+            "y": 450
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4521a749-1bbf-5c7c-8882-e4e8b06741f6",
+      "source": "ead2c7ed-6bd4-5b29-b398-5a341b83b65a",
+      "target": "0afb6860-415b-5b43-bd4f-93c46e39c160",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 325.0
+          },
+          {
+            "x": 540,
+            "y": 325.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "523c61d6-ad81-5a20-b68f-c840c4369afd",
+      "source": "fa4d6273-2cd9-5a83-af82-6fe29b26a02d",
+      "target": "0afb6860-415b-5b43-bd4f-93c46e39c160",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 500.0
+          },
+          {
+            "x": 320,
+            "y": 325.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c4dfcf3f-ea0b-5c17-b541-21ee453e1868",
+      "source": "50961865-4b13-52cc-b1e4-d748de84b809",
+      "target": "d63a88b6-5e05-503a-927e-1461a3b6a5cc",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 470.0
+          },
+          {
+            "x": 880,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..2",
+        "targetMultiplicity": "1",
+        "sourceRole": "roles",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1d8be399-ca73-5aaa-9f1c-b91ace120105",
+      "source": "91f116d5-bd65-5973-b45a-be2c078c15a0",
+      "target": "9c7c142d-082d-5106-8068-f4ab1a6f1028",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 630.0
+          },
+          {
+            "x": 880,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "49ff26d5-0150-54ff-a9b5-94e6fa588ad1",
+      "source": "d61d99d2-af42-5321-9601-0102f843c551",
+      "target": "91f116d5-bd65-5973-b45a-be2c078c15a0",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 675.0
+          },
+          {
+            "x": 260,
+            "y": 630.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "allSessions",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "411576f3-e7b8-556e-9432-12d9c1bfc861",
+      "source": "35784e1b-cb19-5d95-8ac4-57b24918d069",
+      "target": "d61d99d2-af42-5321-9601-0102f843c551",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 660.0
+          },
+          {
+            "x": 540,
+            "y": 675.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9944b23d-ec26-59c3-947c-552f6ddb1a38",
+      "source": "02cb8141-69cc-5a4a-9f6f-211a64e41ec0",
+      "target": "ead2c7ed-6bd4-5b29-b398-5a341b83b65a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 325.0
+          },
+          {
+            "x": 820,
+            "y": 325.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "62dad0ec-37b7-5ae2-8d8c-1895d2649bf9",
+      "source": "02cb8141-69cc-5a4a-9f6f-211a64e41ec0",
+      "target": "91f116d5-bd65-5973-b45a-be2c078c15a0",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 325.0
+          },
+          {
+            "x": 260,
+            "y": 630.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c3829d52-7054-5efc-9eee-2933eda4728e",
+      "source": "ead2c7ed-6bd4-5b29-b398-5a341b83b65a",
+      "target": "91f116d5-bd65-5973-b45a-be2c078c15a0",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 325.0
+          },
+          {
+            "x": 260,
+            "y": 630.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "344a8997-ba5b-5722-a65b-54681438a234",
+      "source": "d61d99d2-af42-5321-9601-0102f843c551",
+      "target": "d61d99d2-af42-5321-9601-0102f843c551",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 675.0
+          },
+          {
+            "x": 540,
+            "y": 675.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "nextSession"
+      }
+    },
+    {
+      "id": "3351590f-caef-5d67-ad31-54d7aae34d9e",
+      "source": "91f116d5-bd65-5973-b45a-be2c078c15a0",
+      "target": "d61d99d2-af42-5321-9601-0102f843c551",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 630.0
+          },
+          {
+            "x": 320,
+            "y": 675.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "firstSession"
+      }
+    },
+    {
+      "id": "913026a1-750f-52f8-918c-37bc81dbb3b0",
+      "source": "0afb6860-415b-5b43-bd4f-93c46e39c160",
+      "target": "1f942c59-4797-5722-8a99-73f539df58e5",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 325.0
+          },
+          {
+            "x": 260,
+            "y": 340.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

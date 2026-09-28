@@ -1,0 +1,542 @@
+{
+  "version": "4.2.0",
+  "id": "HomeForTheElderly",
+  "title": "HomeForTheElderly",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "8dcb22b6-cb51-5eb2-9b92-fcb34982f37b",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Department",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "57ddd398-fcbb-5def-8bca-46913320f97f",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Category",
+        "attributes": [
+          {
+            "id": "f2696fe6-eec1-52ea-ac97-1099fffc0d05",
+            "name": "+ Price : double"
+          },
+          {
+            "id": "c7782ad2-fb81-5a59-a40c-4c01eab783fe",
+            "name": "+ Type : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "be799293-95e1-5113-b911-ab2ab327e3da",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Room",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "3ccd7d6e-a50d-579f-8d92-07340a401689",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Bed",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "713692b3-1e86-5eae-85d9-eea496a379af",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Proposal",
+        "attributes": [
+          {
+            "id": "42bcb65e-d615-5e96-8cf1-d99cdc1b0012",
+            "name": "+ Status : string"
+          },
+          {
+            "id": "ea92ffa3-bf23-52d3-8990-dc3f1be932b0",
+            "name": "+ Validated : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "cb4f9cc7-3b91-5356-a3e8-7705de8e3550",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Stay",
+        "attributes": [
+          {
+            "id": "232138e3-e0b7-5d1f-a899-c460663c2054",
+            "name": "+ IntakeDate : date"
+          },
+          {
+            "id": "e5e50ecc-bcf4-5f4a-831a-eb11ffccb9bf",
+            "name": "+ EndDate : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "15849e2b-33e1-57be-8fc2-e018b5361c43",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [
+          {
+            "id": "30b0ad99-5c4c-5039-b3b0-459ba938b55d",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "d86e285a-4916-5111-95dc-58130f5723f7",
+            "name": "+ Birthdate : date"
+          },
+          {
+            "id": "eb58d473-f8a0-53ff-ba35-5f184f9bcdbf",
+            "name": "+ RegistrationDate : date"
+          },
+          {
+            "id": "dda534fe-9988-53fc-bb77-0a918be7be9b",
+            "name": "+ Abilities : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "b916f98e-cec2-57b0-99d0-b506700b6b0f",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 200
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Invoice",
+        "attributes": [
+          {
+            "id": "20b7f348-0de6-57ee-a2fe-87b762731eec",
+            "name": "+ InvoiceDate : date"
+          },
+          {
+            "id": "348e8746-cd64-5e5e-8a70-34faca901551",
+            "name": "+ OutstandingAmount : double"
+          },
+          {
+            "id": "5943a35c-6d8a-57b2-acfe-4d00d1e456b1",
+            "name": "+ Status : string"
+          }
+        ],
+        "methods": [
+          {
+            "id": "020d2925-c3f5-5cc9-9034-43a1da4b94fe",
+            "name": "+ payment(paymentAmount) : double"
+          }
+        ]
+      }
+    },
+    {
+      "id": "1dba15da-1298-5f45-b03b-7c6d276c43c2",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 420
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "InvoiceItem",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "9a79de7b-c690-5690-ba4c-340e989b9d8b",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 420
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "InvoiceLine",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "5170888b-4671-5853-8c07-13ae7a3ef25c",
+      "source": "8dcb22b6-cb51-5eb2-9b92-fcb34982f37b",
+      "target": "be799293-95e1-5113-b911-ab2ab327e3da",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 60.0
+          },
+          {
+            "x": 600,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "3ba2103b-1cb4-5d89-a95b-fb731acd5e8a",
+      "source": "57ddd398-fcbb-5def-8bca-46913320f97f",
+      "target": "be799293-95e1-5113-b911-ab2ab327e3da",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 90.0
+          },
+          {
+            "x": 600,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b7202353-603e-5fda-98ca-f77716c65e0e",
+      "source": "be799293-95e1-5113-b911-ab2ab327e3da",
+      "target": "3ccd7d6e-a50d-579f-8d92-07340a401689",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 60.0
+          },
+          {
+            "x": 880,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9d71715d-4c82-5425-b898-46fd8b7e6db5",
+      "source": "15849e2b-33e1-57be-8fc2-e018b5361c43",
+      "target": "cb4f9cc7-3b91-5356-a3e8-7705de8e3550",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 280.0
+          },
+          {
+            "x": 540,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c16e22b6-7585-5986-bc76-3650112a43cc",
+      "source": "3ccd7d6e-a50d-579f-8d92-07340a401689",
+      "target": "cb4f9cc7-3b91-5356-a3e8-7705de8e3550",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 60.0
+          },
+          {
+            "x": 540,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f7355716-3120-5be9-9e63-9a88f701a80f",
+      "source": "15849e2b-33e1-57be-8fc2-e018b5361c43",
+      "target": "b916f98e-cec2-57b0-99d0-b506700b6b0f",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 280.0
+          },
+          {
+            "x": 880,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d983c5cb-57f6-5595-962c-4025b77a9a9a",
+      "source": "b916f98e-cec2-57b0-99d0-b506700b6b0f",
+      "target": "9a79de7b-c690-5690-ba4c-340e989b9d8b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 280.0
+          },
+          {
+            "x": 540,
+            "y": 440.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1df63458-ea4f-5b79-a1cb-6a0768f59e6e",
+      "source": "1dba15da-1298-5f45-b03b-7c6d276c43c2",
+      "target": "9a79de7b-c690-5690-ba4c-340e989b9d8b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 440.0
+          },
+          {
+            "x": 320,
+            "y": 440.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "06e253e1-18b4-5698-be92-2709a12dca5d",
+      "source": "cb4f9cc7-3b91-5356-a3e8-7705de8e3550",
+      "target": "1dba15da-1298-5f45-b03b-7c6d276c43c2",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 250.0
+          },
+          {
+            "x": 260,
+            "y": 440.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "3002cb29-eed5-5c53-866e-3dbf327a06e0",
+      "source": "3ccd7d6e-a50d-579f-8d92-07340a401689",
+      "target": "713692b3-1e86-5eae-85d9-eea496a379af",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b583acdd-db78-5fe8-9c14-b95bc38fa8f0",
+      "source": "713692b3-1e86-5eae-85d9-eea496a379af",
+      "target": "15849e2b-33e1-57be-8fc2-e018b5361c43",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 250.0
+          },
+          {
+            "x": 600,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "version": "4.2.0",
+  "id": "Louvre",
+  "title": "Louvre",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "1977189c-92af-56fd-8a82-0976921bc8a6",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Collector",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "c0d0f65f-c9ae-593a-b1a1-e231b0b500c5",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Piece",
+        "attributes": [
+          {
+            "id": "ebd753a0-85d0-54f8-bc12-22d0ac28cdf8",
+            "name": "+ Title : string"
+          },
+          {
+            "id": "2024f2fc-9be0-5c53-a63b-ccfad0620494",
+            "name": "+ Description : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "c9b68ff6-9b86-5056-ad23-63bb76f3152a",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Item",
+        "attributes": [
+          {
+            "id": "808007f6-086f-5a48-b6d6-b4e1b0bff862",
+            "name": "+ Description : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "681484bf-3695-527e-bcb2-ef3c61ccb31f",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Exhibition",
+        "attributes": [
+          {
+            "id": "344a794c-eee9-55dc-9666-32835d72a0fd",
+            "name": "+ Title : string"
+          },
+          {
+            "id": "bad7d9dd-ae5b-51bb-8c54-c15c9010fb05",
+            "name": "+ Stage : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7903b5e0-75a4-5db3-aea6-f05678e444ec",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Location",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "79dc58a2-6b1d-5b99-aa1e-cce72d60615e",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Room",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "b5c1c28d-2234-5959-a5ef-eeda6800935f",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 360
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Employee",
+        "attributes": [
+          {
+            "id": "aaee2f1e-9b53-565f-9e03-7470a679b128",
+            "name": "+ Level : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "4f6bb678-3c40-58b6-b0b6-f925903abd10",
+      "source": "1977189c-92af-56fd-8a82-0976921bc8a6",
+      "target": "c0d0f65f-c9ae-593a-b1a1-e231b0b500c5",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 60.0
+          },
+          {
+            "x": 320,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "58aebd34-4497-599d-b759-857098b4c34f",
+      "source": "c0d0f65f-c9ae-593a-b1a1-e231b0b500c5",
+      "target": "c9b68ff6-9b86-5056-ad23-63bb76f3152a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 90.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "5efdee4d-c7c2-50f1-9b5a-beadcda515b5",
+      "source": "681484bf-3695-527e-bcb2-ef3c61ccb31f",
+      "target": "c9b68ff6-9b86-5056-ad23-63bb76f3152a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 250.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8953d6b9-ded3-536e-a298-02eef3738ae6",
+      "source": "b5c1c28d-2234-5959-a5ef-eeda6800935f",
+      "target": "681484bf-3695-527e-bcb2-ef3c61ccb31f",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 360
+          },
+          {
+            "x": 150.0,
+            "y": 300
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "Coordinator",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8d05ca38-95fb-5a21-98f7-b5822fcdd990",
+      "source": "681484bf-3695-527e-bcb2-ef3c61ccb31f",
+      "target": "7903b5e0-75a4-5db3-aea6-f05678e444ec",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 250.0
+          },
+          {
+            "x": 320,
+            "y": 220.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "AssignedLocation"
+      }
+    },
+    {
+      "id": "bdf1d697-24a2-5fcd-b0e7-e41460fef2ab",
+      "source": "7903b5e0-75a4-5db3-aea6-f05678e444ec",
+      "target": "79dc58a2-6b1d-5b99-aa1e-cce72d60615e",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 220.0
+          },
+          {
+            "x": 600,
+            "y": 220.0
+          }
+        ],
+        "label": "RoomLocationAssignment",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7fde3cf0-9ad2-536b-93f4-a32cbfb23d2a",
+      "source": "b5c1c28d-2234-5959-a5ef-eeda6800935f",
+      "target": "b5c1c28d-2234-5959-a5ef-eeda6800935f",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 395.0
+          },
+          {
+            "x": 260,
+            "y": 395.0
+          }
+        ],
+        "label": "hasCoach >",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

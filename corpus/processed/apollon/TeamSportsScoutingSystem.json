@@ -1,0 +1,841 @@
+{
+  "version": "4.2.0",
+  "id": "TeamSportsScoutingSystem",
+  "title": "TeamSportsScoutingSystem",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "be749f7c-06a5-559f-8b71-6903ef0bb202",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Position",
+        "attributes": [
+          {
+            "id": "8c9a5461-66a3-5a91-82eb-d746897a3459",
+            "name": "Goalkeeper"
+          },
+          {
+            "id": "7bf8480a-0b5a-5e47-87c7-dc111d49a2e0",
+            "name": "LeftBack"
+          },
+          {
+            "id": "4db87235-5af7-59ce-8d09-7bf8515d6265",
+            "name": "..."
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "0c3ca2ea-83ba-5809-ba64-9ff47e6e1f24",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "Recommendation",
+        "attributes": [
+          {
+            "id": "0663bd16-a9c4-5e3e-acc6-b2d93b8cc7df",
+            "name": "KeyPlayer"
+          },
+          {
+            "id": "b8826bd4-5da7-5036-b9ce-8c05fb2fef8a",
+            "name": "FirstTeamPlayer"
+          },
+          {
+            "id": "ca1414d2-da23-5405-b945-612a89ca2ad2",
+            "name": "ReserveTeamPlayer"
+          },
+          {
+            "id": "4703e185-4469-5e97-9eaf-cc0a45ee5710",
+            "name": "ProspectivePlayer"
+          },
+          {
+            "id": "51048b6f-3a8f-537d-bb7a-351ab89cfeaa",
+            "name": "NotRecommended"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "3e9024bd-e4bc-51d4-8611-320925c87bc6",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "ScoutingStatus",
+        "attributes": [
+          {
+            "id": "6bf325e4-8149-5ec6-a5aa-f526bd8bc443",
+            "name": "LongListed"
+          },
+          {
+            "id": "422bf0c1-a0c5-525f-9b3c-22a91e40aa99",
+            "name": "ShortListed"
+          },
+          {
+            "id": "0747b1dd-8302-51e8-b9c4-89c2baada944",
+            "name": "RecommendedForSigning"
+          },
+          {
+            "id": "680df0bd-c27b-54e2-8af5-21f1fc83a1e0",
+            "name": "OfferMade"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "91441d90-a2d3-5102-80c1-8465d4c73274",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "ScoutKind",
+        "attributes": [
+          {
+            "id": "8af7f7d9-d1ef-5c6b-8e22-f14e6839bee4",
+            "name": "RegularScout"
+          },
+          {
+            "id": "9f78204e-4923-5613-8ec3-03e520a06246",
+            "name": "HeadScout"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "b55ce048-a13c-5f09-9f77-0345b75b8119",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 290
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [
+          {
+            "id": "46544ae2-b15f-5540-b507-6dd4621ca88b",
+            "name": "+ FirstName : string"
+          },
+          {
+            "id": "ebbd44cd-c24e-5173-8012-2ce3127f3f7b",
+            "name": "+ LastName : string"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "20ee5819-fcc0-549e-9c2e-e25074ea7f8e",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 290
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Player",
+        "attributes": [
+          {
+            "id": "8fe64438-50c3-52e4-ba18-17d76fe27bce",
+            "name": "+ Status : ScoutingStatus"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "e648b052-6a58-5041-9d21-b14d4960a774",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 290
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "HeadCoach",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "7df86535-ea88-5f16-b7e9-d1a1d9c0edcb",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 290
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Director",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "d0d0115c-0780-5982-876e-6c0436b1f32a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 450
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Scout",
+        "attributes": [
+          {
+            "id": "714e2007-8bfd-58b7-9d21-ee3ece7f9ae3",
+            "name": "+ ScoutKind : ScoutKind"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "076ebb44-2efa-5094-98d4-8702d713ab1f",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Club",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "b450cc47-6589-561a-ab3a-5bd6c3d8232e",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 450
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Offer",
+        "attributes": [
+          {
+            "id": "d1378fad-7735-5d7b-8c04-3febad73d277",
+            "name": "+ Value : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "723132a5-8004-5c07-b8f6-747693908de1",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "ScoutingAssignment",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "beabce7d-9df8-58ca-adf2-f46701d5a902",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 580
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "ScoutReport",
+        "attributes": [
+          {
+            "id": "4daff1c0-07af-5d13-ac68-95d96e0a0905",
+            "name": "+ Pro : string"
+          },
+          {
+            "id": "3717d20b-38b4-5c22-8c92-374c2ade82ac",
+            "name": "+ Con : string"
+          },
+          {
+            "id": "ef3d9818-ca6c-57cb-bded-46cb7e3db104",
+            "name": "+ Recommendation : Recommendation"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ae9f4a7b-ce06-5959-9073-7595c0ac46e5",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 580
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "PlayerProfile",
+        "attributes": [
+          {
+            "id": "3ff0a066-167a-5c06-a3b2-6c1cdfe936e7",
+            "name": "+ Position : Position"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "9652a03f-afc5-56dc-9209-9a123744a15d",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 580
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "PlayerAttribute",
+        "attributes": [
+          {
+            "id": "822075e0-0a82-52dd-912c-8cde80b7237f",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "4cfce4d7-a836-5ac5-accd-107c06290673",
+            "name": "+ Value : int"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "deb167ce-79dc-5327-83af-20e18d532c57",
+      "source": "20ee5819-fcc0-549e-9c2e-e25074ea7f8e",
+      "target": "b55ce048-a13c-5f09-9f77-0345b75b8119",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 325.0
+          },
+          {
+            "x": 260,
+            "y": 340.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "0dd28691-e02e-5569-af02-b606d2415e8a",
+      "source": "e648b052-6a58-5041-9d21-b14d4960a774",
+      "target": "b55ce048-a13c-5f09-9f77-0345b75b8119",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 310.0
+          },
+          {
+            "x": 260,
+            "y": 340.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9d4489f1-2688-5e45-ae2d-00ef5de6aa0d",
+      "source": "7df86535-ea88-5f16-b7e9-d1a1d9c0edcb",
+      "target": "b55ce048-a13c-5f09-9f77-0345b75b8119",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 310.0
+          },
+          {
+            "x": 260,
+            "y": 340.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9339ba4a-e9c0-562b-ac93-c5af31200af6",
+      "source": "d0d0115c-0780-5982-876e-6c0436b1f32a",
+      "target": "b55ce048-a13c-5f09-9f77-0345b75b8119",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 450
+          },
+          {
+            "x": 150.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7f542e0f-c8c6-58d1-9992-1ddc0e0c47fa",
+      "source": "b450cc47-6589-561a-ab3a-5bd6c3d8232e",
+      "target": "7df86535-ea88-5f16-b7e9-d1a1d9c0edcb",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 485.0
+          },
+          {
+            "x": 880,
+            "y": 310.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c59da112-0829-5542-93c2-0844ee3c296e",
+      "source": "7df86535-ea88-5f16-b7e9-d1a1d9c0edcb",
+      "target": "076ebb44-2efa-5094-98d4-8702d713ab1f",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 310.0
+          },
+          {
+            "x": 540,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b11a02aa-06fa-597c-bfa0-e8150b167ec8",
+      "source": "e648b052-6a58-5041-9d21-b14d4960a774",
+      "target": "076ebb44-2efa-5094-98d4-8702d713ab1f",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 310.0
+          },
+          {
+            "x": 540,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8acdb38a-5cbe-5426-97a9-bf2e8b918bc1",
+      "source": "20ee5819-fcc0-549e-9c2e-e25074ea7f8e",
+      "target": "076ebb44-2efa-5094-98d4-8702d713ab1f",
+      "type": "ClassComposition",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 360
+          },
+          {
+            "x": 430.0,
+            "y": 450
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8a8a4182-c5c1-508f-892b-b623239882a9",
+      "source": "d0d0115c-0780-5982-876e-6c0436b1f32a",
+      "target": "076ebb44-2efa-5094-98d4-8702d713ab1f",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 485.0
+          },
+          {
+            "x": 320,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e2c45a35-6cfd-5148-b0a1-0248f0b36f93",
+      "source": "723132a5-8004-5c07-b8f6-747693908de1",
+      "target": "d0d0115c-0780-5982-876e-6c0436b1f32a",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 470.0
+          },
+          {
+            "x": 260,
+            "y": 485.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4b26a1eb-aa21-59b6-9d92-9ee1d8f6409d",
+      "source": "beabce7d-9df8-58ca-adf2-f46701d5a902",
+      "target": "723132a5-8004-5c07-b8f6-747693908de1",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 645.0
+          },
+          {
+            "x": 880,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "39a1737a-b652-5ea6-a223-2e7eee73cbfe",
+      "source": "ae9f4a7b-ce06-5959-9073-7595c0ac46e5",
+      "target": "e648b052-6a58-5041-9d21-b14d4960a774",
+      "type": "ClassComposition",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 580
+          },
+          {
+            "x": 710.0,
+            "y": 330
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b166375b-f76a-5631-9289-f3466cbc389d",
+      "source": "9652a03f-afc5-56dc-9209-9a123744a15d",
+      "target": "ae9f4a7b-ce06-5959-9073-7595c0ac46e5",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 630.0
+          },
+          {
+            "x": 540,
+            "y": 615.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4f5eea92-4be2-5769-b6a7-5cf7764d2d85",
+      "source": "20ee5819-fcc0-549e-9c2e-e25074ea7f8e",
+      "target": "b450cc47-6589-561a-ab3a-5bd6c3d8232e",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 325.0
+          },
+          {
+            "x": 600,
+            "y": 485.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "2a6dfc2f-9aec-5411-807f-e7c8f4cfdb75",
+      "source": "20ee5819-fcc0-549e-9c2e-e25074ea7f8e",
+      "target": "ae9f4a7b-ce06-5959-9073-7595c0ac46e5",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 360
+          },
+          {
+            "x": 430.0,
+            "y": 580
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "30d01430-9e84-517a-881b-d5e31f9ac8e7",
+      "source": "20ee5819-fcc0-549e-9c2e-e25074ea7f8e",
+      "target": "723132a5-8004-5c07-b8f6-747693908de1",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 325.0
+          },
+          {
+            "x": 880,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "81a2ab18-247d-553a-a565-c7a621b016f5",
+      "source": "beabce7d-9df8-58ca-adf2-f46701d5a902",
+      "target": "beabce7d-9df8-58ca-adf2-f46701d5a902",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 645.0
+          },
+          {
+            "x": 260,
+            "y": 645.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "nextReport"
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

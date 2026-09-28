@@ -1,0 +1,670 @@
+{
+  "version": "4.2.0",
+  "id": "FilmSet",
+  "title": "FilmSet",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "00d55a22-91e4-5118-839f-cc60e7bba16d",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Genre",
+        "attributes": [
+          {
+            "id": "e7168e6f-6b0c-5335-bc82-8bd44de7af3a",
+            "name": "Thriller"
+          },
+          {
+            "id": "210d8b99-d81a-5f4b-90a5-08659e36f1bf",
+            "name": "Action"
+          },
+          {
+            "id": "0f86fb99-759e-5726-b37b-924fc25d266e",
+            "name": "Horror"
+          },
+          {
+            "id": "15e068a2-b9ae-5669-8a4e-e1fe190bc6ea",
+            "name": "Comedy"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "4f165296-ed2a-5472-ba8c-cab54c617e7b",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Employee",
+        "attributes": [
+          {
+            "id": "72bcb9f1-27bd-5599-ad41-fa0311b35ded",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "e7530c4d-0350-5592-9377-8a577337f5e6",
+            "name": "+ Ssn : int"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "5ebc3fab-21d2-5c74-8eed-a0b8e27a9044",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "CreativeEmployee",
+        "attributes": [
+          {
+            "id": "5ff8331e-ada6-57df-b4cc-97ecf6023074",
+            "name": "+ Oscar : boolean"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "9016c0ad-315c-574e-9364-cc3f53b4290e",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Technician",
+        "attributes": [
+          {
+            "id": "9753600f-6193-59f3-9e29-45c6ca65b929",
+            "name": "+ FieldOfActivity : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ee9ccd36-071f-5e13-9c39-0fba3befb64a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Director",
+        "attributes": [
+          {
+            "id": "96d61668-b958-519f-8976-5e27c48b3f4c",
+            "name": "+ AssistentName : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "37033cdd-b695-5aec-a728-430840e31636",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Actor",
+        "attributes": [
+          {
+            "id": "d4ebcf2e-fad0-5c44-98a2-03fccf66eb5a",
+            "name": "+ Education : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "db9aa1c9-adc9-5344-a89c-4208a6221557",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "Screenplay",
+        "attributes": [
+          {
+            "id": "69dc3e3a-7c59-53bd-a541-5c686d195bb3",
+            "name": "+ Title : string"
+          },
+          {
+            "id": "aa563d70-daee-549e-9577-39f54edb0dc4",
+            "name": "+ Version : string"
+          },
+          {
+            "id": "d450167c-bc47-5885-be0d-44b950ee0ca0",
+            "name": "+ Date : date"
+          },
+          {
+            "id": "d68601cd-7311-5ef8-9457-c28d6b356d2a",
+            "name": "+ NumberOfScenes : int"
+          },
+          {
+            "id": "e36f73f2-7c8f-5f52-8dfd-043bc081f817",
+            "name": "+ Plot : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "3bf2443a-9caa-5d35-8f4e-f7a8efbd3609",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "FilmSet",
+        "attributes": [
+          {
+            "id": "f9cdb1e8-b989-5834-b74d-b171a524a955",
+            "name": "+ Location : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "b880a8e9-16d7-50dc-810c-e97d33f342aa",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 510
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Film",
+        "attributes": [
+          {
+            "id": "25a39ce9-c059-5f5a-a058-09cc9b8b0768",
+            "name": "+ Title : string"
+          },
+          {
+            "id": "f4726b94-f11b-5059-b412-6c844bb79a39",
+            "name": "+ Year : int"
+          },
+          {
+            "id": "75d6286a-2735-5379-b3ff-47195b7952f2",
+            "name": "+ Genre : Genre"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "93cbaef2-1973-5e58-9be0-0534b034eb6a",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 510
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "ScreenplayAuthor",
+        "attributes": [
+          {
+            "id": "b3003124-31ca-5731-b75e-56baf6925425",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "978bd9fd-94c4-5e9a-915e-1af200f134a2",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 510
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Book",
+        "attributes": [
+          {
+            "id": "b07d35b2-a40b-59a4-b1f2-be8aa2ebfd7f",
+            "name": "+ Title : string"
+          },
+          {
+            "id": "0396348e-8738-5864-82bf-c7ffa65e8992",
+            "name": "+ Author : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "fa2be188-d850-561b-9528-11c66bddb194",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 510
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Concept",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "d691de49-2c93-55e7-a3ee-b1f2540a8ecc",
+      "source": "5ebc3fab-21d2-5c74-8eed-a0b8e27a9044",
+      "target": "4f165296-ed2a-5472-ba8c-cab54c617e7b",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 75.0
+          },
+          {
+            "x": 540,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f1b6a86a-deb0-5eae-b79b-45e7f74c0540",
+      "source": "9016c0ad-315c-574e-9364-cc3f53b4290e",
+      "target": "4f165296-ed2a-5472-ba8c-cab54c617e7b",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 75.0
+          },
+          {
+            "x": 540,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "2390e1fd-98dc-500c-a45a-a933c2a46aea",
+      "source": "ee9ccd36-071f-5e13-9c39-0fba3befb64a",
+      "target": "5ebc3fab-21d2-5c74-8eed-a0b8e27a9044",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4cb6c553-fb55-5745-84a4-60f1897317d9",
+      "source": "37033cdd-b695-5aec-a728-430840e31636",
+      "target": "5ebc3fab-21d2-5c74-8eed-a0b8e27a9044",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ffcad603-f01a-5d8a-b46e-fbd15554d00a",
+      "source": "ee9ccd36-071f-5e13-9c39-0fba3befb64a",
+      "target": "db9aa1c9-adc9-5344-a89c-4208a6221557",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 355.0
+          }
+        ],
+        "label": "implements",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8151d5e9-3044-5f46-87da-c1cb3b353294",
+      "source": "37033cdd-b695-5aec-a728-430840e31636",
+      "target": "db9aa1c9-adc9-5344-a89c-4208a6221557",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 355.0
+          }
+        ],
+        "label": "reads",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "470db5cb-82fb-54fe-bac3-faa28e7d63fc",
+      "source": "4f165296-ed2a-5472-ba8c-cab54c617e7b",
+      "target": "3bf2443a-9caa-5d35-8f4e-f7a8efbd3609",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 90.0
+          },
+          {
+            "x": 880,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "913d7109-2c7f-518f-a374-ee5ac0dff4a7",
+      "source": "3bf2443a-9caa-5d35-8f4e-f7a8efbd3609",
+      "target": "b880a8e9-16d7-50dc-810c-e97d33f342aa",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 295.0
+          },
+          {
+            "x": 260,
+            "y": 575.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c21349cf-7886-5c1c-a62a-16f183111c96",
+      "source": "b880a8e9-16d7-50dc-810c-e97d33f342aa",
+      "target": "93cbaef2-1973-5e58-9be0-0534b034eb6a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 575.0
+          },
+          {
+            "x": 320,
+            "y": 545.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "MostSuccessful",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "5658e9ba-121c-5f19-a50a-4307d7719efd",
+      "source": "93cbaef2-1973-5e58-9be0-0534b034eb6a",
+      "target": "db9aa1c9-adc9-5344-a89c-4208a6221557",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 545.0
+          },
+          {
+            "x": 600,
+            "y": 355.0
+          }
+        ],
+        "label": "creates",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1aa3f027-d3aa-5cc5-82c9-1b4c54d022f4",
+      "source": "b880a8e9-16d7-50dc-810c-e97d33f342aa",
+      "target": "db9aa1c9-adc9-5344-a89c-4208a6221557",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 575.0
+          },
+          {
+            "x": 600,
+            "y": 355.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "756d45fc-a10a-5c28-8531-9037053e5cc4",
+      "source": "db9aa1c9-adc9-5344-a89c-4208a6221557",
+      "target": "978bd9fd-94c4-5e9a-915e-1af200f134a2",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 450
+          },
+          {
+            "x": 710.0,
+            "y": 510
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "6f645dbe-9d0e-5178-b792-45f8969a05e7",
+      "source": "db9aa1c9-adc9-5344-a89c-4208a6221557",
+      "target": "fa2be188-d850-561b-9528-11c66bddb194",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 355.0
+          },
+          {
+            "x": 880,
+            "y": 530.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

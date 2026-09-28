@@ -1,0 +1,598 @@
+{
+  "version": "4.2.0",
+  "id": "Sober",
+  "title": "Sober",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "1ddf7358-d72e-515a-b5d6-6b49315c3f94",
+      "type": "class",
+      "position": {
+        "x": 30.0,
+        "y": 30.0
+      },
+      "width": 165.0,
+      "height": 277.5,
+      "measured": {
+        "width": 165.0,
+        "height": 277.5
+      },
+      "data": {
+        "name": "Ride",
+        "attributes": [
+          {
+            "id": "663c239e-9d48-566a-8969-16ff0fc61464",
+            "name": "+ RideNr : int"
+          },
+          {
+            "id": "9fefe2bb-e585-5b5c-9aac-dfd325470098",
+            "name": "+ PickupDateTime : datetime"
+          },
+          {
+            "id": "f4a507f1-ecb5-5c1a-8fd2-95c90b210e13",
+            "name": "+ DropoffDateTime : datetime"
+          },
+          {
+            "id": "b45cc900-c705-5ad2-804a-a305aec4588a",
+            "name": "+ Duration : int"
+          },
+          {
+            "id": "05b55e0f-e98c-5b38-b673-33ceb1a1bb1c",
+            "name": "+ PickupLocation : string"
+          },
+          {
+            "id": "63d5919e-74fc-5e29-8aea-b44bdc071496",
+            "name": "+ DropoffLocation : string"
+          },
+          {
+            "id": "39934962-9979-5dea-ab54-33e28e9e7606",
+            "name": "+ Distance : int"
+          },
+          {
+            "id": "06115b09-4462-5aae-98bb-e08b60b15011",
+            "name": "+ Fee : int"
+          }
+        ],
+        "methods": [
+          {
+            "id": "a3ec74ec-f361-5433-aea8-d6d5c300ed34",
+            "name": "+ getRideNr()"
+          },
+          {
+            "id": "823baf69-cf84-5c0b-9f98-267cb2d2a551",
+            "name": "+ setRideNr(newRideNr)"
+          },
+          {
+            "id": "8b8ec851-74e8-5e18-80c6-713bfd124f8d",
+            "name": "+ calcDuration()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cb9cf977-73d6-56c8-b541-6e7f18aa78b6",
+      "type": "class",
+      "position": {
+        "x": 240.0,
+        "y": 30.0
+      },
+      "width": 165.0,
+      "height": 120.0,
+      "measured": {
+        "width": 165.0,
+        "height": 120.0
+      },
+      "data": {
+        "name": "RideHailing",
+        "attributes": [
+          {
+            "id": "7d356bfd-d784-5806-a6a8-95dc61a6db0c",
+            "name": "+ Passengers : int"
+          },
+          {
+            "id": "40a0d723-a21d-567f-a8f9-314cdd5b7f07",
+            "name": "+ WaitTime : time"
+          },
+          {
+            "id": "f8344754-ea94-5d03-ba43-0b9e1667ce5c",
+            "name": "+ RequestType : string"
+          }
+        ],
+        "methods": [
+          {
+            "id": "4c2e6ca6-738d-5edc-8f0d-a008f418cf2d",
+            "name": "+ getPassengers()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "0054e82c-a250-5955-8e62-bc38da66e784",
+      "type": "class",
+      "position": {
+        "x": 450.0,
+        "y": 30.0
+      },
+      "width": 165.0,
+      "height": 52.5,
+      "measured": {
+        "width": 165.0,
+        "height": 52.5
+      },
+      "data": {
+        "name": "RideSharing",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "0a3fe944-00a8-5c4c-98d4-81642bc8e776",
+            "name": "+ numberOfCustomers()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "901713b0-8280-59e1-a0e6-e99507ce2a23",
+      "type": "class",
+      "position": {
+        "x": 30.0,
+        "y": 352.5
+      },
+      "width": 165.0,
+      "height": 165.0,
+      "measured": {
+        "width": 165.0,
+        "height": 165.0
+      },
+      "data": {
+        "name": "Customer",
+        "attributes": [
+          {
+            "id": "3fe23822-3d78-57b5-b7ca-424134b7578d",
+            "name": "+ CustNr : int"
+          },
+          {
+            "id": "67e71432-5fce-524d-b460-4b98f07c4007",
+            "name": "+ CustName : string"
+          }
+        ],
+        "methods": [
+          {
+            "id": "91fe2206-f3a1-52cd-b021-fe7495b5722a",
+            "name": "+ getCustNr()"
+          },
+          {
+            "id": "b0f67e44-1540-54a7-90c9-e79ab1187990",
+            "name": "+ setCustNr(newCustNr)"
+          },
+          {
+            "id": "ec80af60-8d6d-5aab-8d10-884663f7a4df",
+            "name": "+ top5customerHail()"
+          },
+          {
+            "id": "589d4dbd-da84-5679-a330-cb5eae1e2b44",
+            "name": "+ top5customerShare()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "4be98d62-3c0e-513f-b85d-b6e27d7b375b",
+      "type": "class",
+      "position": {
+        "x": 240.0,
+        "y": 352.5
+      },
+      "width": 165.0,
+      "height": 142.5,
+      "measured": {
+        "width": 165.0,
+        "height": 142.5
+      },
+      "data": {
+        "name": "Car",
+        "attributes": [
+          {
+            "id": "3487ec38-1c15-5828-a1d0-11b75245fda4",
+            "name": "+ CarNr : int"
+          },
+          {
+            "id": "62c870ad-704d-58ac-b016-a1cd3add02eb",
+            "name": "+ CarType : string"
+          }
+        ],
+        "methods": [
+          {
+            "id": "9804b9e1-7d83-5584-a1d9-97bc849eb3a6",
+            "name": "+ getCarNr()"
+          },
+          {
+            "id": "7ca8dac4-e365-544d-b53e-158f7a062133",
+            "name": "+ setCarNr(newCarNr)"
+          },
+          {
+            "id": "c4e0721c-2cfe-5cd7-8418-89fa213ecf5a",
+            "name": "+ numberOfRides()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "e25286fb-dd23-5dde-ae4f-ef0e85744b17",
+      "type": "class",
+      "position": {
+        "x": 450.0,
+        "y": 352.5
+      },
+      "width": 165.0,
+      "height": 52.5,
+      "measured": {
+        "width": 165.0,
+        "height": 52.5
+      },
+      "data": {
+        "name": "SoberCar",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "7d097b44-9e16-52f2-b979-f4c9b74a49f1",
+            "name": "+ numberOfSoberCars()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "d0dce222-971b-5d99-bca4-51b7b52c5cd2",
+      "type": "class",
+      "position": {
+        "x": 30.0,
+        "y": 562.5
+      },
+      "width": 165.0,
+      "height": 30.0,
+      "measured": {
+        "width": 165.0,
+        "height": 30.0
+      },
+      "data": {
+        "name": "OtherCar",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "d10e54f0-f4ed-5959-9df9-383eaf6d9539",
+      "type": "class",
+      "position": {
+        "x": 240.0,
+        "y": 562.5
+      },
+      "width": 165.0,
+      "height": 75.0,
+      "measured": {
+        "width": 165.0,
+        "height": 75.0
+      },
+      "data": {
+        "name": "Involved",
+        "attributes": [
+          {
+            "id": "070d6e7e-bb48-5ac1-b0e3-d85c3ee98352",
+            "name": "+ DamageAmount : int"
+          }
+        ],
+        "methods": [
+          {
+            "id": "bc1239b9-a368-5ed3-8817-3be1f6198c14",
+            "name": "+ generateReport()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "8d4f265c-e9a6-5c13-9561-eb781dea722c",
+      "type": "class",
+      "position": {
+        "x": 450.0,
+        "y": 562.5
+      },
+      "width": 165.0,
+      "height": 187.5,
+      "measured": {
+        "width": 165.0,
+        "height": 187.5
+      },
+      "data": {
+        "name": "Accident",
+        "attributes": [
+          {
+            "id": "7481ef2c-25c9-5822-9297-b03b0afd8cc1",
+            "name": "+ AccNr : int"
+          },
+          {
+            "id": "91f32970-ec13-5b9a-afe8-f04b99724d27",
+            "name": "+ AccLocation : string"
+          },
+          {
+            "id": "57ac6692-1a75-5547-9660-906fa3b6fc6f",
+            "name": "+ AccDateTime : datetime"
+          }
+        ],
+        "methods": [
+          {
+            "id": "ceb7f461-4ac5-5c9c-8e88-3f81da6b4d31",
+            "name": "+ getAccNr()"
+          },
+          {
+            "id": "7343c2df-2d0c-57f0-ac68-6da7bf09ffe5",
+            "name": "+ setAccNr(newAccNr)"
+          },
+          {
+            "id": "3c9f2921-acb6-5916-84e8-755450f900f5",
+            "name": "+ Top3AccidentHotSports()"
+          },
+          {
+            "id": "8c8a3dc1-9e79-55a8-8c29-b65f6fbf952b",
+            "name": "+ Top3AccidentPeakTimes()"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "6907ca95-24ad-5da3-a5e0-1f473ca1be3d",
+      "source": "cb9cf977-73d6-56c8-b541-6e7f18aa78b6",
+      "target": "1ddf7358-d72e-515a-b5d6-6b49315c3f94",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 240.0,
+            "y": 90.0
+          },
+          {
+            "x": 195.0,
+            "y": 168.75
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a2427f32-6954-5897-a24d-00aa33e00d89",
+      "source": "0054e82c-a250-5955-8e62-bc38da66e784",
+      "target": "1ddf7358-d72e-515a-b5d6-6b49315c3f94",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 450.0,
+            "y": 56.25
+          },
+          {
+            "x": 195.0,
+            "y": 168.75
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "126463d4-39e1-5913-9c09-85d055e9ab62",
+      "source": "cb9cf977-73d6-56c8-b541-6e7f18aa78b6",
+      "target": "901713b0-8280-59e1-a0e6-e99507ce2a23",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 322.5,
+            "y": 150.0
+          },
+          {
+            "x": 112.5,
+            "y": 352.5
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "LeadCustomer"
+      }
+    },
+    {
+      "id": "a8cb4810-24c6-53aa-bf2a-30d8b6a7bf41",
+      "source": "0054e82c-a250-5955-8e62-bc38da66e784",
+      "target": "901713b0-8280-59e1-a0e6-e99507ce2a23",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 450.0,
+            "y": 56.25
+          },
+          {
+            "x": 195.0,
+            "y": 435.0
+          }
+        ],
+        "label": "Book",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "eb4b0e56-52f3-528e-b05e-452623c09a39",
+      "source": "1ddf7358-d72e-515a-b5d6-6b49315c3f94",
+      "target": "4be98d62-3c0e-513f-b85d-b6e27d7b375b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 112.5,
+            "y": 307.5
+          },
+          {
+            "x": 322.5,
+            "y": 352.5
+          }
+        ],
+        "label": "OperatedBy",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "34fb4070-7f63-5fd3-a685-f86b7e66be77",
+      "source": "e25286fb-dd23-5dde-ae4f-ef0e85744b17",
+      "target": "4be98d62-3c0e-513f-b85d-b6e27d7b375b",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 450.0,
+            "y": 378.75
+          },
+          {
+            "x": 405.0,
+            "y": 423.75
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b8e84967-447d-5541-9004-32ccebd1e031",
+      "source": "d0dce222-971b-5d99-bca4-51b7b52c5cd2",
+      "target": "4be98d62-3c0e-513f-b85d-b6e27d7b375b",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 195.0,
+            "y": 577.5
+          },
+          {
+            "x": 240.0,
+            "y": 423.75
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "2e35e9bd-c835-5bc7-9c84-ae8c67525f72",
+      "source": "d0dce222-971b-5d99-bca4-51b7b52c5cd2",
+      "target": "901713b0-8280-59e1-a0e6-e99507ce2a23",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 112.5,
+            "y": 562.5
+          },
+          {
+            "x": 112.5,
+            "y": 517.5
+          }
+        ],
+        "label": "Owns",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ed6a01c6-e294-5f2b-bf4e-d51f37c4221e",
+      "source": "4be98d62-3c0e-513f-b85d-b6e27d7b375b",
+      "target": "d10e54f0-f4ed-5959-9df9-383eaf6d9539",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 322.5,
+            "y": 495.0
+          },
+          {
+            "x": 322.5,
+            "y": 562.5
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "3ab74429-5fdb-58ea-9edb-a2ea9e347e9a",
+      "source": "d10e54f0-f4ed-5959-9df9-383eaf6d9539",
+      "target": "8d4f265c-e9a6-5c13-9561-eb781dea722c",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 405.0,
+            "y": 600.0
+          },
+          {
+            "x": 450.0,
+            "y": 656.25
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

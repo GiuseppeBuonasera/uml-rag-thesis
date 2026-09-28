@@ -1,0 +1,594 @@
+{
+  "version": "4.2.0",
+  "id": "BuildingManagement",
+  "title": "BuildingManagement",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "cea2a6b2-933b-552d-a160-dde6030b6109",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "User",
+        "attributes": [
+          {
+            "id": "c19848d7-cb08-539c-8000-9a4d64a50104",
+            "name": "+ username : string"
+          },
+          {
+            "id": "b52d8b80-4d0c-58eb-ae19-c95b9488137e",
+            "name": "+ password : string"
+          },
+          {
+            "id": "f2f76d12-ba18-5da3-a194-1f7b5399adf9",
+            "name": "+ email : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "4bc943c7-01e7-52da-bde7-9fcdb366d12a",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Administrator",
+        "attributes": [
+          {
+            "id": "451e8cda-00c8-5cb9-9c57-b60d3a9dc766",
+            "name": "+ idCardNumber : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "dc53e4a4-5559-5353-a426-dbb0498157b0",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "WebPortal",
+        "attributes": [
+          {
+            "id": "10924b79-54d4-573a-96fb-5e53cb134e76",
+            "name": "+ versionNumber : string"
+          },
+          {
+            "id": "e4e60ce0-5d82-50b2-86ae-1eec015dd5a8",
+            "name": "+ url : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "1f6bd0f2-5e0b-5b6c-8d9e-14f5f46314f6",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Building",
+        "attributes": [
+          {
+            "id": "16080ff6-f7a9-5163-86f4-27912c89a86c",
+            "name": "+ id : string"
+          },
+          {
+            "id": "99a1d2a4-cc3d-57c6-b8ac-e7d426ef4814",
+            "name": "+ label : string"
+          },
+          {
+            "id": "6da207b7-f525-58ef-a4f7-edfe87ec6055",
+            "name": "+ address : string"
+          },
+          {
+            "id": "be272744-1538-55a3-b2ce-806749a1c056",
+            "name": "+ yearOfConstruction : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "1efc261d-380e-5434-8098-03702775718a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Entry",
+        "attributes": [
+          {
+            "id": "dd22e5e1-2d23-5add-9c80-c62c853bb4d1",
+            "name": "+ name : string"
+          },
+          {
+            "id": "e6919658-5743-58cd-9589-0c29a5c06836",
+            "name": "+ public : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "1beb0c48-305e-55ff-9de1-958cc6db8537",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "TextEntry",
+        "attributes": [
+          {
+            "id": "6e65062e-911c-53a4-94d7-c6496f90e8d9",
+            "name": "+ text : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "f6d8b079-0b78-5396-ab71-6e985104a9cb",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "NumericEntry",
+        "attributes": [
+          {
+            "id": "207a7784-1071-5e95-a659-eb359b3d889e",
+            "name": "+ value : double"
+          },
+          {
+            "id": "99a2840c-d00c-5fba-95ec-386b544f056b",
+            "name": "+ unit : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ef14afe7-3cf4-5074-9a0a-710eca1a2156",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "EntryGroup",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "018e0152-0b6c-5a8f-8af9-4814154f234c",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 420
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "EnergyClass",
+        "attributes": [
+          {
+            "id": "17833d1c-2864-5353-986b-680a34a7d51b",
+            "name": "A"
+          },
+          {
+            "id": "569cc399-2d39-5652-8347-5386ec9e1a2f",
+            "name": "B"
+          },
+          {
+            "id": "7fc1265a-bb72-5948-a824-29c6638e4a11",
+            "name": "C"
+          },
+          {
+            "id": "a46f60b3-bb64-541e-aad1-7494696de785",
+            "name": "D"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "fa8d31bc-fa91-5e50-82d8-bc9a25703496",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 420
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Comment",
+        "attributes": [
+          {
+            "id": "39c02255-9d53-5e99-b8b4-897ce63e829c",
+            "name": "+ text : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "80240640-5475-55ab-b678-6e2b72c9fbe8",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 420
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Image",
+        "attributes": [
+          {
+            "id": "55431470-2f39-50d4-8dab-dfd886edbeef",
+            "name": "+ fileName : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "1134ad8a-0434-595e-9e19-27eced826a1f",
+      "source": "dc53e4a4-5559-5353-a426-dbb0498157b0",
+      "target": "1efc261d-380e-5434-8098-03702775718a",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 310.0
+          }
+        ],
+        "label": "id",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "2a92189a-6933-59a5-b368-2cbad945ed73",
+      "source": "dc53e4a4-5559-5353-a426-dbb0498157b0",
+      "target": "cea2a6b2-933b-552d-a160-dde6030b6109",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "username",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "6cb75a22-4554-5341-874f-2ae6da7030d9",
+      "source": "1efc261d-380e-5434-8098-03702775718a",
+      "target": "ef14afe7-3cf4-5074-9a0a-710eca1a2156",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 310.0
+          },
+          {
+            "x": 880,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "23d5a5a9-67a0-5bca-bc6e-28b563ccc907",
+      "source": "1beb0c48-305e-55ff-9de1-958cc6db8537",
+      "target": "1efc261d-380e-5434-8098-03702775718a",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 295.0
+          },
+          {
+            "x": 260,
+            "y": 310.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "397701fb-bdbc-5720-a285-719faad86c2f",
+      "source": "f6d8b079-0b78-5396-ab71-6e985104a9cb",
+      "target": "1efc261d-380e-5434-8098-03702775718a",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 310.0
+          },
+          {
+            "x": 260,
+            "y": 310.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c202af6c-77ea-5512-a6c1-2071ec03799a",
+      "source": "4bc943c7-01e7-52da-bde7-9fcdb366d12a",
+      "target": "cea2a6b2-933b-552d-a160-dde6030b6109",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "899d5aa1-8108-58ae-a1fd-69b94b96069b",
+      "source": "cea2a6b2-933b-552d-a160-dde6030b6109",
+      "target": "1f6bd0f2-5e0b-5b6c-8d9e-14f5f46314f6",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 105.0
+          },
+          {
+            "x": 880,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "owner",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ab6a597a-f2b8-5f48-9dc4-3a8b501b72ec",
+      "source": "cea2a6b2-933b-552d-a160-dde6030b6109",
+      "target": "1f6bd0f2-5e0b-5b6c-8d9e-14f5f46314f6",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 105.0
+          },
+          {
+            "x": 880,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "author",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b8aa47a1-cfbe-55fc-88b3-ca9a511befb3",
+      "source": "1f6bd0f2-5e0b-5b6c-8d9e-14f5f46314f6",
+      "target": "fa8d31bc-fa91-5e50-82d8-bc9a25703496",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 120.0
+          },
+          {
+            "x": 540,
+            "y": 455.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "987766b4-19fa-5442-8bee-21dd6b7f50fe",
+      "source": "1f6bd0f2-5e0b-5b6c-8d9e-14f5f46314f6",
+      "target": "80240640-5475-55ab-b678-6e2b72c9fbe8",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 990.0,
+            "y": 200
+          },
+          {
+            "x": 710.0,
+            "y": 420
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "profilePicture"
+      }
+    },
+    {
+      "id": "8748ad27-c479-51e5-9f33-cea21878d480",
+      "source": "1f6bd0f2-5e0b-5b6c-8d9e-14f5f46314f6",
+      "target": "018e0152-0b6c-5a8f-8af9-4814154f234c",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 120.0
+          },
+          {
+            "x": 260,
+            "y": 500.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

@@ -1,0 +1,468 @@
+{
+  "version": "4.2.0",
+  "id": "ClothingCompany",
+  "title": "ClothingCompany",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "8873e2ec-bb6a-5fb3-8475-a2fba8a4faad",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Order",
+        "attributes": [
+          {
+            "id": "43d4810f-f055-53c0-9292-3b0343446306",
+            "name": "+ OrderNumber : int"
+          },
+          {
+            "id": "39949734-ab92-5f25-9f40-aa9049d697e7",
+            "name": "+ OrderQuantity : int"
+          },
+          {
+            "id": "7b904ee6-b88d-5f24-a05a-9ecdaae98db3",
+            "name": "+ OrderDate : date"
+          },
+          {
+            "id": "c1cd6bc6-6aec-57d8-a8e7-d23f891ffd67",
+            "name": "+ DeliveryDate : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "9953e636-0b71-5da6-b239-f5ef0c260c28",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Category",
+        "attributes": [
+          {
+            "id": "5eeb1328-027b-563e-91bd-12aeac557576",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "993481ba-9261-5e0a-804b-f81757d237d0",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Product",
+        "attributes": [
+          {
+            "id": "89da8f55-fe6c-5dc3-bed7-d84a773f991e",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "12c5d5ba-5376-599d-97de-c30fe0c6298e",
+            "name": "+ Description : string"
+          },
+          {
+            "id": "e6bc1022-f80a-56f5-8caf-5b333a543384",
+            "name": "+ NetPrice : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "e2ca55d5-15e2-5757-9e8b-562ce8961103",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "Representative",
+        "attributes": [
+          {
+            "id": "e1701d13-a1f2-5725-8ae8-bd4bc34c5919",
+            "name": "+ FirstName : string"
+          },
+          {
+            "id": "4ab9accd-1294-5c8b-8710-dd50990a6909",
+            "name": "+ LastName : string"
+          },
+          {
+            "id": "ad62a81c-57aa-52bf-872b-0fffdee6af99",
+            "name": "+ Ssn : int"
+          },
+          {
+            "id": "53aac853-52d9-5228-8ba3-7a3b80fa5ed0",
+            "name": "+ PhoneNumber : string"
+          },
+          {
+            "id": "11135994-a534-5ccd-8fcd-ac54214ef912",
+            "name": "+ Email : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "488fc8ef-7d4a-5a1f-a8ba-23942fbebcc2",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Manufacturer",
+        "attributes": [
+          {
+            "id": "cef245a8-7517-5e7c-a424-3bc514bf0276",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "5b87f192-d67c-5443-8b3a-427ee8961014",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Country",
+        "attributes": [
+          {
+            "id": "1ee02d30-e4f7-5e0e-aa76-ab873b8e5544",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "22df8d78-1021-5a2f-a968-babe3722ec2a",
+            "name": "+ VAT : double"
+          },
+          {
+            "id": "d488559f-f765-569d-9dc3-532694537d68",
+            "name": "+ Currency : string"
+          },
+          {
+            "id": "28faf213-019a-5e03-9e2a-897e48a60f51",
+            "name": "+ ConversionRate : float"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "781ce281-686e-5cea-bf3c-638a2db80648",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 510
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Customer",
+        "attributes": [
+          {
+            "id": "5dae68ad-aef1-5887-8518-5695c2669200",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "ff1d213f-8930-5fe7-a2f0-7a4808115848",
+            "name": "+ Address : string"
+          },
+          {
+            "id": "3b085fec-b6fa-5d89-82de-d7a6fb25727e",
+            "name": "+ PhoneNumber : string"
+          },
+          {
+            "id": "1e722f67-e62a-5bf2-b8d6-a43ff394e59d",
+            "name": "+ Email : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "135d925e-4c47-585f-9f5b-e1f4dc65e10c",
+      "source": "993481ba-9261-5e0a-804b-f81757d237d0",
+      "target": "8873e2ec-bb6a-5fb3-8475-a2fba8a4faad",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 105.0
+          },
+          {
+            "x": 260,
+            "y": 120.0
+          }
+        ],
+        "label": "contains",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d9a3ad2d-3cc1-5e53-b3e9-03d328f9f45b",
+      "source": "9953e636-0b71-5da6-b239-f5ef0c260c28",
+      "target": "993481ba-9261-5e0a-804b-f81757d237d0",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 105.0
+          }
+        ],
+        "label": "belongsTo",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8ead9e8a-b7da-5cd2-bae2-0ce53c927758",
+      "source": "e2ca55d5-15e2-5757-9e8b-562ce8961103",
+      "target": "8873e2ec-bb6a-5fb3-8475-a2fba8a4faad",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 260
+          },
+          {
+            "x": 150.0,
+            "y": 200
+          }
+        ],
+        "label": "placedBy",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "35f3573a-d2da-53d6-b5fd-de3f5c27ea92",
+      "source": "993481ba-9261-5e0a-804b-f81757d237d0",
+      "target": "5b87f192-d67c-5443-8b3a-427ee8961014",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 170
+          },
+          {
+            "x": 710.0,
+            "y": 260
+          }
+        ],
+        "label": "soldIn",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "3c033f07-2e30-5e33-89e7-7e40c1507a9f",
+      "source": "e2ca55d5-15e2-5757-9e8b-562ce8961103",
+      "target": "5b87f192-d67c-5443-8b3a-427ee8961014",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 355.0
+          },
+          {
+            "x": 600,
+            "y": 340.0
+          }
+        ],
+        "label": "responsibleFor",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4a887a92-fc71-5a0c-9395-86aadf7d6834",
+      "source": "8873e2ec-bb6a-5fb3-8475-a2fba8a4faad",
+      "target": "781ce281-686e-5cea-bf3c-638a2db80648",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 200
+          },
+          {
+            "x": 150.0,
+            "y": 510
+          }
+        ],
+        "label": "orders",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "cf545ba4-4bc4-53e8-a1e1-144bb3d4210b",
+      "source": "5b87f192-d67c-5443-8b3a-427ee8961014",
+      "target": "781ce281-686e-5cea-bf3c-638a2db80648",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 340.0
+          },
+          {
+            "x": 260,
+            "y": 590.0
+          }
+        ],
+        "label": "resell",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "499894a2-e88c-526b-8fca-573d84a50491",
+      "source": "488fc8ef-7d4a-5a1f-a8ba-23942fbebcc2",
+      "target": "993481ba-9261-5e0a-804b-f81757d237d0",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d2228aef-0f39-504d-a228-9e775400f742",
+      "source": "993481ba-9261-5e0a-804b-f81757d237d0",
+      "target": "5b87f192-d67c-5443-8b3a-427ee8961014",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 170
+          },
+          {
+            "x": 710.0,
+            "y": 260
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

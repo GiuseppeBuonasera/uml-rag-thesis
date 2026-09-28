@@ -1,0 +1,377 @@
+{
+  "version": "4.2.0",
+  "id": "GasStation_KUL",
+  "title": "GasStation_KUL",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "92fd8a25-cfc0-5e36-904b-f0721a57fd71",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "CardHolder",
+        "attributes": [
+          {
+            "id": "9a537bbd-b585-534a-951c-305184c0dd23",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "8d7ef54f-9192-51ad-9924-c9223e063d0c",
+            "name": "+ Suspended : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "2877f2b2-ef39-5508-9059-18fe53c9aea0",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Invoice",
+        "attributes": [
+          {
+            "id": "d4ca2473-309b-58d9-819a-fcae9b3c79e3",
+            "name": "+ Number : int"
+          },
+          {
+            "id": "d0aad799-46fa-503f-94a5-c837e865f238",
+            "name": "+ Discount : double"
+          },
+          {
+            "id": "3f846b8e-e93e-5560-b950-d212cedfda49",
+            "name": "+ status : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "e39d2e30-0c45-5e08-89ea-d44b09ad1e8a",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "InvoiceLine",
+        "attributes": [
+          {
+            "id": "44806279-662d-5ac0-9b86-b151ada2c1ef",
+            "name": "+ Number : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "672ce61b-22cc-57e8-93ab-a404686aee66",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "GasStation",
+        "attributes": [
+          {
+            "id": "f36b33c3-d8c9-5b5b-adf5-edbb8c831e38",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "8d2c99bf-bac4-5429-b786-ddc0d7ca48e6",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Pump",
+        "attributes": [
+          {
+            "id": "1f7dbba4-b0f1-5631-966c-4bbf91453284",
+            "name": "+ Type : string"
+          },
+          {
+            "id": "f6690b71-034a-5ef5-951d-d17350eafb4a",
+            "name": "+ InUse : boolean"
+          },
+          {
+            "id": "9fccdc7f-3e48-5502-b866-8c8a338eb28c",
+            "name": "+ RefillThreshold : double"
+          },
+          {
+            "id": "0bcd40f1-8f65-5759-8801-f890bd374cd4",
+            "name": "+ Blocked : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ad842f82-8185-528e-8733-a64e4dffc135",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "RefuelTurn",
+        "attributes": [
+          {
+            "id": "b29011c1-5a20-57ae-a776-c33f68824730",
+            "name": "+ RefuelTurnNumber : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "fa6c0d25-3dbb-5f99-8d74-adfa402a7f2a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "CashTurn",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "62c54349-473a-527a-9021-4eedfb51e453",
+      "source": "8d2c99bf-bac4-5429-b786-ddc0d7ca48e6",
+      "target": "ad842f82-8185-528e-8733-a64e4dffc135",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 310.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "6a90c745-6d85-5436-ab29-531c6ae1a1b0",
+      "source": "8d2c99bf-bac4-5429-b786-ddc0d7ca48e6",
+      "target": "fa6c0d25-3dbb-5f99-8d74-adfa402a7f2a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 310.0
+          },
+          {
+            "x": 260,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "0cd15c29-f56c-5a08-ac1d-a1a5f26b2b11",
+      "source": "672ce61b-22cc-57e8-93ab-a404686aee66",
+      "target": "8d2c99bf-bac4-5429-b786-ddc0d7ca48e6",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 265.0
+          },
+          {
+            "x": 320,
+            "y": 310.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "497ab7bf-df8f-50cd-83b9-cacefe4471af",
+      "source": "92fd8a25-cfc0-5e36-904b-f0721a57fd71",
+      "target": "2877f2b2-ef39-5508-9059-18fe53c9aea0",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 320,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "bb9dd774-b8fb-5dd2-b4df-1472f1091660",
+      "source": "92fd8a25-cfc0-5e36-904b-f0721a57fd71",
+      "target": "ad842f82-8185-528e-8733-a64e4dffc135",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c89f23a0-98bb-57a0-977a-30a7c7906142",
+      "source": "2877f2b2-ef39-5508-9059-18fe53c9aea0",
+      "target": "e39d2e30-0c45-5e08-89ea-d44b09ad1e8a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 105.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "55ac276a-74c8-5db1-96b6-dffaffd2ec69",
+      "source": "ad842f82-8185-528e-8733-a64e4dffc135",
+      "target": "e39d2e30-0c45-5e08-89ea-d44b09ad1e8a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 230
+          },
+          {
+            "x": 710.0,
+            "y": 110
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

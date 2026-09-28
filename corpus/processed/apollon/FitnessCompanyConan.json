@@ -1,0 +1,438 @@
+{
+  "version": "4.2.0",
+  "id": "FitnessCompanyConan",
+  "title": "FitnessCompanyConan",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "7eb6650b-f6d6-5f93-8b8a-5eaae19efa77",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Center",
+        "attributes": [
+          {
+            "id": "af593e5a-4238-5a80-8894-b63d04b4da54",
+            "name": "+ name : string"
+          },
+          {
+            "id": "197e1084-af7f-5b73-9eb6-44bb13530e22",
+            "name": "+ Address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "40c520ab-e266-54a4-90b2-d8fd983ee7f3",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Room",
+        "attributes": [
+          {
+            "id": "01a09899-4da6-53cd-a6b5-4974ec1a1a92",
+            "name": "+ RoomNr : int"
+          },
+          {
+            "id": "93b8e2bb-96d4-58c8-9a6f-d7a8a3ed3ad3",
+            "name": "+ MaxCapacity : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "54604cd1-6125-5c96-bc89-5b5738de0431",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Session",
+        "attributes": [
+          {
+            "id": "df413cae-3558-5028-b2fe-9d33ca144cf8",
+            "name": "+ StartDateTime : datetime"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "d3a73fe6-3903-5560-a12e-5bb3eed0d963",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "IndividualSession",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "13b8cdd6-61ee-51a7-9564-c997ed484b1d",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "GroupSession",
+        "attributes": [
+          {
+            "id": "a1ba0353-fcca-5bef-8b59-b9e40ecc93df",
+            "name": "+ Type : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "9b6bcd96-8865-58c6-9ff7-89e39eb08b25",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [
+          {
+            "id": "9f334b33-8739-57f9-9dfd-4b3c6c464767",
+            "name": "+ FirstName : string"
+          },
+          {
+            "id": "7a27c05a-4fb4-5d8b-a441-c88b8fe3a149",
+            "name": "+ Lastname : string"
+          },
+          {
+            "id": "c78a22bd-4d9a-52fb-936c-ab6e7bf0ccf0",
+            "name": "+ BirthDate : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7094b1e1-ab04-5625-96c4-f1c53ae76abb",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 390
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Member",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "d0dd19f1-f036-5697-85b1-322e1628a190",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 390
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Trainer",
+        "attributes": [
+          {
+            "id": "937e0218-9139-5505-bdbd-9097614d8830",
+            "name": "+ Diploma : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "96403777-0f2c-55aa-b909-b11e68413b7d",
+      "source": "7eb6650b-f6d6-5f93-8b8a-5eaae19efa77",
+      "target": "40c520ab-e266-54a4-90b2-d8fd983ee7f3",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 320,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e6c27af7-e310-5f42-a40a-239a5dce445c",
+      "source": "40c520ab-e266-54a4-90b2-d8fd983ee7f3",
+      "target": "54604cd1-6125-5c96-bc89-5b5738de0431",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 90.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "6b712551-e201-5a35-a7a0-3f8086e45a01",
+      "source": "13b8cdd6-61ee-51a7-9564-c997ed484b1d",
+      "target": "54604cd1-6125-5c96-bc89-5b5738de0431",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 235.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8bb5d9fb-fb2f-5b4e-929d-90301d47b43e",
+      "source": "d3a73fe6-3903-5560-a12e-5bb3eed0d963",
+      "target": "54604cd1-6125-5c96-bc89-5b5738de0431",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 220.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "64a16a53-0f0c-519d-b13e-586e400c99ba",
+      "source": "d3a73fe6-3903-5560-a12e-5bb3eed0d963",
+      "target": "7094b1e1-ab04-5625-96c4-f1c53ae76abb",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 240
+          },
+          {
+            "x": 150.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "acbade69-4423-58ec-9adf-970216167f01",
+      "source": "7094b1e1-ab04-5625-96c4-f1c53ae76abb",
+      "target": "13b8cdd6-61ee-51a7-9564-c997ed484b1d",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 410.0
+          },
+          {
+            "x": 320,
+            "y": 235.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4e324608-d3b6-57ff-b148-a75b6f4c7698",
+      "source": "7094b1e1-ab04-5625-96c4-f1c53ae76abb",
+      "target": "9b6bcd96-8865-58c6-9ff7-89e39eb08b25",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 410.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "be150554-faea-53be-b961-67aa8e206264",
+      "source": "d0dd19f1-f036-5697-85b1-322e1628a190",
+      "target": "9b6bcd96-8865-58c6-9ff7-89e39eb08b25",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 425.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "640b1130-82b0-548e-8aac-87161dbbdf8d",
+      "source": "d0dd19f1-f036-5697-85b1-322e1628a190",
+      "target": "13b8cdd6-61ee-51a7-9564-c997ed484b1d",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 390
+          },
+          {
+            "x": 430.0,
+            "y": 270
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

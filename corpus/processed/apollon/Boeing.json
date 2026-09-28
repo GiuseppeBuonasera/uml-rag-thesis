@@ -1,0 +1,325 @@
+{
+  "version": "4.2.0",
+  "id": "Boeing",
+  "title": "Boeing",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "22ead932-4ea4-5251-a456-581d8a66cfa0",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "AirplaneModel",
+        "attributes": [
+          {
+            "id": "7e488b2b-833f-52ce-9127-1391f3608e26",
+            "name": "+ ModelId : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "52338840-f56d-55b8-b9cf-e012cd34a6e2",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Airplane",
+        "attributes": [
+          {
+            "id": "b077fc2d-086a-5589-831b-6c4c97847b7f",
+            "name": "+ AirPlaneId : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "4a1ee006-a512-5d37-890b-0541949ef416",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Acquisition",
+        "attributes": [
+          {
+            "id": "9cf1e833-02a4-541c-a8b3-7b40ed4ef8c6",
+            "name": "+ AcquisitionId : int"
+          },
+          {
+            "id": "8c07e616-b241-512c-9f99-e0736ca998b4",
+            "name": "+ NegotiatedPice : float"
+          },
+          {
+            "id": "abd7e7b6-0aa9-5e92-be63-ee354579f21c",
+            "name": "+ Options : string"
+          },
+          {
+            "id": "6c5cdf0c-0d75-517d-9b7c-90db6d25f119",
+            "name": "+ DeliveryDate : datetime"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "2eee8327-b3bf-54f1-8284-e10a5d0fad52",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Contract",
+        "attributes": [
+          {
+            "id": "a8b77546-1580-57b1-bf61-9f20ac53f0ba",
+            "name": "+ ContractId : int"
+          },
+          {
+            "id": "3e9f5206-b9cc-5bf8-8d52-eff99fa28cbb",
+            "name": "+ Text : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "c36505fb-2de1-5052-978a-e7bd5b43526b",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Employee",
+        "attributes": [
+          {
+            "id": "9d71b053-fb82-5e05-84bc-6f540ab1ec57",
+            "name": "+ EmployeeId : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "f8df2ff9-715d-5fb4-8ed2-6537c96d8a11",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Airline",
+        "attributes": [
+          {
+            "id": "655c6e51-1670-5070-848e-ea1d46f43c8b",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "b7f09da3-5929-5015-93b4-8e18b1938ee7",
+      "source": "22ead932-4ea4-5251-a456-581d8a66cfa0",
+      "target": "52338840-f56d-55b8-b9cf-e012cd34a6e2",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "5b0232de-0dde-5f6e-8b04-49d63c40bcd0",
+      "source": "52338840-f56d-55b8-b9cf-e012cd34a6e2",
+      "target": "4a1ee006-a512-5d37-890b-0541949ef416",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 120.0
+          }
+        ],
+        "label": "part of",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c886d918-c1d5-5153-8aa7-1f8fd81acd2e",
+      "source": "4a1ee006-a512-5d37-890b-0541949ef416",
+      "target": "2eee8327-b3bf-54f1-8284-e10a5d0fad52",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 120.0
+          },
+          {
+            "x": 260,
+            "y": 310.0
+          }
+        ],
+        "label": "part of",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "99cee738-6b24-5ed8-b20b-a86fabc2875c",
+      "source": "2eee8327-b3bf-54f1-8284-e10a5d0fad52",
+      "target": "f8df2ff9-715d-5fb4-8ed2-6537c96d8a11",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 310.0
+          },
+          {
+            "x": 600,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9bfac855-547a-5ee3-b673-affea482d5ec",
+      "source": "2eee8327-b3bf-54f1-8284-e10a5d0fad52",
+      "target": "c36505fb-2de1-5052-978a-e7bd5b43526b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 310.0
+          },
+          {
+            "x": 320,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ae1af555-90fc-5217-a69d-e728a290bda2",
+      "source": "f8df2ff9-715d-5fb4-8ed2-6537c96d8a11",
+      "target": "f8df2ff9-715d-5fb4-8ed2-6537c96d8a11",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 295.0
+          },
+          {
+            "x": 820,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

@@ -1,0 +1,1190 @@
+[
+  {
+    "esercizio": "AirTravel",
+    "source": "Airport",
+    "op": "--",
+    "target": "Flight",
+    "label": "Source",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "Source"
+  },
+  {
+    "esercizio": "AirTravel",
+    "source": "Airport",
+    "op": "--",
+    "target": "Flight",
+    "label": "Destination",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "Destination"
+  },
+  {
+    "esercizio": "AirTravel",
+    "source": "FlightExecution",
+    "op": "-",
+    "target": "Pilot",
+    "label": "Captain",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "Captain"
+  },
+  {
+    "esercizio": "AirTravel",
+    "source": "FlightExecution",
+    "op": "-",
+    "target": "Pilot",
+    "label": "Co-pilot",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "Co-pilot"
+  },
+  {
+    "esercizio": "Boeing",
+    "source": "Airplane",
+    "op": "--",
+    "target": "Acquisition",
+    "label": "part of",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Boeing",
+    "source": "Acquisition",
+    "op": "--",
+    "target": "Contract",
+    "label": "part of",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "BuildingManagement",
+    "source": "WebPortal",
+    "op": "-->",
+    "target": "Entry",
+    "label": "id",
+    "tipo": "qualificatore"
+  },
+  {
+    "esercizio": "BuildingManagement",
+    "source": "WebPortal",
+    "op": "-->",
+    "target": "User",
+    "label": "username",
+    "tipo": "qualificatore"
+  },
+  {
+    "esercizio": "BuildingManagement",
+    "source": "User",
+    "op": "-->",
+    "target": "Building",
+    "label": "owner",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "owner"
+  },
+  {
+    "esercizio": "BuildingManagement",
+    "source": "User",
+    "op": "-->",
+    "target": "Building",
+    "label": "author",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "author"
+  },
+  {
+    "esercizio": "BuildingManagement",
+    "source": "Building",
+    "op": "-->",
+    "target": "Image",
+    "label": "profilePicture",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "profilePicture"
+  },
+  {
+    "esercizio": "ClothingCompany",
+    "source": "Product",
+    "op": "--",
+    "target": "Order",
+    "label": "contains",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ClothingCompany",
+    "source": "Category",
+    "op": "--",
+    "target": "Product",
+    "label": "belongsTo",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ClothingCompany",
+    "source": "Representative",
+    "op": "--",
+    "target": "Order",
+    "label": "placedBy",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ClothingCompany",
+    "source": "Product",
+    "op": "--",
+    "target": "Country",
+    "label": "soldIn",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ClothingCompany",
+    "source": "Representative",
+    "op": "-",
+    "target": "Country",
+    "label": "responsibleFor",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ClothingCompany",
+    "source": "Order",
+    "op": "-",
+    "target": "Customer",
+    "label": "orders",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ClothingCompany",
+    "source": "Country",
+    "op": "--",
+    "target": "Customer",
+    "label": "resell",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "Block",
+    "label": "blocks",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "blocks"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "Paddle",
+    "label": "paddle",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "paddle"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "Ball",
+    "label": "ball",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "ball"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "Level",
+    "label": "levels",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "levels"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "BlockAssignment",
+    "label": "blockAssignments",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "blockAssignments"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Game",
+    "op": "-->",
+    "target": "HallOfFameEntry",
+    "label": "mostRecentEntry",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "mostRecentEntry"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Game",
+    "op": "--",
+    "target": "PlayedGame",
+    "label": "game",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "game"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Level",
+    "op": "--",
+    "target": "BlockAssignment",
+    "label": "level",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "level"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "PlayedGame",
+    "op": "*--",
+    "target": "PlayedBlockAssignment",
+    "label": "blocks",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "blocks"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Player",
+    "op": "--",
+    "target": "User",
+    "label": "player",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "player"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Player",
+    "op": "--",
+    "target": "PlayedGame",
+    "label": "player",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "player"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Player",
+    "op": "--",
+    "target": "HallOfFameEntry",
+    "label": "player",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "player"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Admin",
+    "op": "--",
+    "target": "User",
+    "label": "admin",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "admin"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Admin",
+    "op": "--",
+    "target": "Game",
+    "label": "admin",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "admin"
+  },
+  {
+    "esercizio": "DestroyBlockGame",
+    "source": "Block",
+    "op": "--",
+    "target": "PlayedBlockAssignment",
+    "label": "block",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "block"
+  },
+  {
+    "esercizio": "Ebike",
+    "source": "EBike",
+    "op": "-->",
+    "target": "Wheel",
+    "label": "wheel",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "wheel"
+  },
+  {
+    "esercizio": "Ebike",
+    "source": "EBike",
+    "op": "-->",
+    "target": "Battery",
+    "label": "battery",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "battery"
+  },
+  {
+    "esercizio": "Ebike",
+    "source": "EBike",
+    "op": "-->",
+    "target": "Frame",
+    "label": "frame",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "frame"
+  },
+  {
+    "esercizio": "Ebike",
+    "source": "EBike",
+    "op": "-->",
+    "target": "DriveSystem",
+    "label": "driveSystem",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "driveSystem"
+  },
+  {
+    "esercizio": "Ebike",
+    "source": "EBike",
+    "op": "-->",
+    "target": "Controller",
+    "label": "controller",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "controller"
+  },
+  {
+    "esercizio": "Ebike",
+    "source": "DriveSystem",
+    "op": "-->",
+    "target": "Motor",
+    "label": "motor",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "motor"
+  },
+  {
+    "esercizio": "Ebike",
+    "source": "Controller",
+    "op": "-->",
+    "target": "Battery",
+    "label": "battery",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "battery"
+  },
+  {
+    "esercizio": "Ebike",
+    "source": "Controller",
+    "op": "-->",
+    "target": "State",
+    "label": "currentState",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "currentState"
+  },
+  {
+    "esercizio": "eHome2020",
+    "source": "Sensor",
+    "op": "-->",
+    "target": "Measurement",
+    "label": "lastValue",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "lastValue"
+  },
+  {
+    "esercizio": "EUScienceConnect",
+    "source": "TechnicalReport",
+    "op": "--|>",
+    "target": "Article",
+    "label": "{total; disjoint}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "EUScienceConnect",
+    "source": "ResearchInstitution",
+    "op": "--",
+    "target": "Person",
+    "label": "worksFor",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "EUScienceConnect",
+    "source": "Person",
+    "op": "--",
+    "target": "PeerReviewedPaper",
+    "label": "reviews",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "EUScienceConnect",
+    "source": "ResearchInstitution",
+    "op": "--",
+    "target": "Journal",
+    "label": "subscribesTo",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "EUScienceConnect",
+    "source": "Publisher",
+    "op": "--",
+    "target": "Journal",
+    "label": "publishes",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "EUScienceConnect",
+    "source": "ResearchInstitution",
+    "op": "--",
+    "target": "TechnicalReport",
+    "label": "publishes",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Facepage",
+    "source": "PersonalAccount",
+    "op": "--",
+    "target": "PersonalPage",
+    "label": "administrator",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "administrator"
+  },
+  {
+    "esercizio": "Facepage",
+    "source": "FriendRequest",
+    "op": "-",
+    "target": "PersonalAccount",
+    "label": "sender",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "sender"
+  },
+  {
+    "esercizio": "Facepage",
+    "source": "FriendRequest",
+    "op": "-",
+    "target": "PersonalAccount",
+    "label": "receiver",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "receiver"
+  },
+  {
+    "esercizio": "FilmSet",
+    "source": "Director",
+    "op": "--",
+    "target": "Screenplay",
+    "label": "implements",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "FilmSet",
+    "source": "Actor",
+    "op": "--",
+    "target": "Screenplay",
+    "label": "reads",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "FilmSet",
+    "source": "Film",
+    "op": "--",
+    "target": "ScreenplayAuthor",
+    "label": "MostSuccessful",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "MostSuccessful"
+  },
+  {
+    "esercizio": "FilmSet",
+    "source": "ScreenplayAuthor",
+    "op": "--",
+    "target": "Screenplay",
+    "label": "creates",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "FitnessCompanyConan",
+    "source": "Session",
+    "op": "<|--",
+    "target": "GroupSession",
+    "label": "{total; disjoint}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "FitnessCompanyConan",
+    "source": "Person",
+    "op": "<|--",
+    "target": "Member",
+    "label": "{partial; overlap}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "GameArea",
+    "source": "Shape",
+    "op": "--",
+    "target": "Shape",
+    "label": "is_connected_with",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "GameArea",
+    "source": "GameArea",
+    "op": "-->",
+    "target": "Enemy",
+    "label": "finalBoss",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "finalBoss"
+  },
+  {
+    "esercizio": "HelpingHands",
+    "source": "Volunteer",
+    "op": "*->",
+    "target": "Date",
+    "label": "availableDates",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "availableDates"
+  },
+  {
+    "esercizio": "HelpingHands",
+    "source": "Route",
+    "op": "-",
+    "target": "Item",
+    "label": "pickupRoute",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "pickupRoute"
+  },
+  {
+    "esercizio": "HelpingHands",
+    "source": "Route",
+    "op": "--",
+    "target": "SecondHandArticle",
+    "label": "dropOffRoute",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "dropOffRoute"
+  },
+  {
+    "esercizio": "HotelBookingManagementSystem",
+    "source": "SpecialOffer",
+    "op": "--",
+    "target": "BookingInfo",
+    "label": "specialOffers",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "specialOffers"
+  },
+  {
+    "esercizio": "HotelBookingManagementSystem",
+    "source": "BookingInfo",
+    "op": "--",
+    "target": "SpecialOffer",
+    "label": "bestOffers",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "bestOffers"
+  },
+  {
+    "esercizio": "Louvre",
+    "source": "Employee",
+    "op": "--",
+    "target": "Exhibition",
+    "label": "Coordinator",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "Coordinator"
+  },
+  {
+    "esercizio": "Louvre",
+    "source": "Exhibition",
+    "op": "--",
+    "target": "Location",
+    "label": "AssignedLocation",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "AssignedLocation"
+  },
+  {
+    "esercizio": "Louvre",
+    "source": "Location",
+    "op": "--",
+    "target": "Room",
+    "label": "RoomLocationAssignment",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Louvre",
+    "source": "Employee",
+    "op": "--",
+    "target": "Employee",
+    "label": "hasCoach >",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Musicmatic",
+    "source": "Song",
+    "op": "<|--",
+    "target": "Hit",
+    "label": "{total; disjoint}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "Musicmatic",
+    "source": "BusinessUser",
+    "op": "--|>",
+    "target": "User",
+    "label": "{total; overlap}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "Musicmatic",
+    "source": "RegularUser",
+    "op": "--",
+    "target": "Album",
+    "label": "compose",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Musicmatic",
+    "source": "RegularUser",
+    "op": "--",
+    "target": "Album",
+    "label": "suggestion",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "suggestion"
+  },
+  {
+    "esercizio": "OnlineTutoringSystem",
+    "source": "User",
+    "op": "*--",
+    "target": "TutoringRole",
+    "label": "roles",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "roles"
+  },
+  {
+    "esercizio": "OnlineTutoringSystem",
+    "source": "TutoringRequest",
+    "op": "*--",
+    "target": "TutoringSession",
+    "label": "allSessions",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "allSessions"
+  },
+  {
+    "esercizio": "OnlineTutoringSystem",
+    "source": "TutoringSession",
+    "op": "-->",
+    "target": "TutoringSession",
+    "label": "nextSession",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "nextSession"
+  },
+  {
+    "esercizio": "OnlineTutoringSystem",
+    "source": "TutoringRequest",
+    "op": "-->",
+    "target": "TutoringSession",
+    "label": "firstSession",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "firstSession"
+  },
+  {
+    "esercizio": "School",
+    "source": "Teacher",
+    "op": "-",
+    "target": "School",
+    "label": "Principal",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "Principal"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "SmartHome",
+    "op": "*--",
+    "target": "Address",
+    "label": "address",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "address"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "SmartHome",
+    "op": "*--",
+    "target": "Room",
+    "label": "rooms",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "rooms"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "SmartHome",
+    "op": "*--",
+    "target": "ActivityLog",
+    "label": "log",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "log"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "User",
+    "op": "--",
+    "target": "SmartHome",
+    "label": "owners",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "owners"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "Room",
+    "op": "*--",
+    "target": "Sensor",
+    "label": "sensors",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "sensors"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "Room",
+    "op": "*--",
+    "target": "Actuator",
+    "label": "actuators",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "actuators"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "ActivityLog",
+    "op": "*--",
+    "target": "SensorReading",
+    "label": "recordedReadings",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "recordedReadings"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "ActivityLog",
+    "op": "*--",
+    "target": "ControlCommand",
+    "label": "recordedCommands",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "recordedCommands"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "CommandSequence",
+    "op": "--",
+    "target": "CommandSequence",
+    "label": "nextCommand",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "nextCommand"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "CommandSequence",
+    "op": "*--",
+    "target": "ControlCommand",
+    "label": "command",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "command"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "SensorReading",
+    "op": "--",
+    "target": "Sensor",
+    "label": "sensor",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "sensor"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "ControlCommand",
+    "op": "--",
+    "target": "Actuator",
+    "label": "actuator",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "actuator"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "AlertRule",
+    "op": "*--",
+    "target": "BooleanExpression",
+    "label": "precondition",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "precondition"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "AlertRule",
+    "op": "*--",
+    "target": "CommandSequence",
+    "label": "actions",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "actions"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "NotExpression",
+    "op": "--",
+    "target": "BooleanExpression",
+    "label": "expression",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "expression"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "BinaryExpression",
+    "op": "--",
+    "target": "BooleanExpression",
+    "label": "leftExpr",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "leftExpr"
+  },
+  {
+    "esercizio": "SmartHomeAutomationSystem",
+    "source": "BinaryExpression",
+    "op": "--",
+    "target": "BooleanExpression",
+    "label": "rightExpr",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "rightExpr"
+  },
+  {
+    "esercizio": "Sober",
+    "source": "Ride",
+    "op": "<|--",
+    "target": "RideHailing",
+    "label": "{total; disjoint}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "Sober",
+    "source": "RideHailing",
+    "op": "--",
+    "target": "Customer",
+    "label": "LeadCustomer",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "LeadCustomer"
+  },
+  {
+    "esercizio": "Sober",
+    "source": "RideSharing",
+    "op": "--",
+    "target": "Customer",
+    "label": "Book",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Sober",
+    "source": "Ride",
+    "op": "-",
+    "target": "Car",
+    "label": "OperatedBy",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Sober",
+    "source": "Car",
+    "op": "<|--",
+    "target": "SoberCar",
+    "label": "{total; disjoint}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "Sober",
+    "source": "OtherCar",
+    "op": "--",
+    "target": "Customer",
+    "label": "Owns",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "TeamSportsScoutingSystem",
+    "source": "ScoutReport",
+    "op": "<-->",
+    "target": "ScoutReport",
+    "label": "nextReport",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "nextReport"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "TileO",
+    "op": "*--",
+    "target": "Game",
+    "label": "games",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "games"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "Tile",
+    "label": "tiles",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "tiles"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "Connection",
+    "label": "connections",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "connections"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "Die",
+    "label": "die",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "die"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Game",
+    "op": "*-",
+    "target": "Deck",
+    "label": "deck",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "deck"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Game",
+    "op": "-->",
+    "target": "Player",
+    "label": "currentPlayer",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "currentPlayer"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Game",
+    "op": "*--",
+    "target": "Player",
+    "label": "players",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "players"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Deck",
+    "op": "*--",
+    "target": "ActionCard",
+    "label": "cards",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "cards"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Game",
+    "op": "-->",
+    "target": "WinTile",
+    "label": "winTile",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "winTile"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Tile",
+    "op": "--",
+    "target": "Connection",
+    "label": "connections/tiles",
+    "tipo": "ruolo_doppio",
+    "ruoli": [
+      {
+        "estremo": "source",
+        "testo": "tiles"
+      },
+      {
+        "estremo": "target",
+        "testo": "connections"
+      }
+    ]
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Player",
+    "op": "-->",
+    "target": "Tile",
+    "label": "startingTile",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "startingTile"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Player",
+    "op": "-->",
+    "target": "Tile",
+    "label": "currentTile",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "currentTile"
+  },
+  {
+    "esercizio": "TileOGame",
+    "source": "Deck",
+    "op": "-->",
+    "target": "ActionCard",
+    "label": "currentCard",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "currentCard"
+  },
+  {
+    "esercizio": "TransportCompany",
+    "source": "Planner",
+    "op": "--",
+    "target": "Order",
+    "label": "creates",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "TruckLogistics",
+    "source": "Assignment",
+    "op": "-->",
+    "target": "Driver",
+    "label": "executes",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "TruckLogistics",
+    "source": "Assignment",
+    "op": "-->",
+    "target": "Location",
+    "label": "from",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "from"
+  },
+  {
+    "esercizio": "TruckLogistics",
+    "source": "Assignment",
+    "op": "-->",
+    "target": "Location",
+    "label": "to",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "to"
+  },
+  {
+    "esercizio": "TruckLogistics",
+    "source": "Driver",
+    "op": "-->",
+    "target": "Vehicle",
+    "label": "driver",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "driver"
+  },
+  {
+    "esercizio": "TruckLogistics",
+    "source": "Vehicle",
+    "op": "-->",
+    "target": "Driver",
+    "label": "driver",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "driver"
+  },
+  {
+    "esercizio": "TruckLogistics",
+    "source": "Vehicle",
+    "op": "-->",
+    "target": "VehicleStatus",
+    "label": "status",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "status"
+  },
+  {
+    "esercizio": "University",
+    "source": "Employee",
+    "op": "--",
+    "target": "Faculty",
+    "label": "leads >",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "University",
+    "source": "Lecturer",
+    "op": "--",
+    "target": "Course",
+    "label": "teaches >",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "CourseManagement",
+    "source": "Course",
+    "op": "--",
+    "target": "Teacher",
+    "label": "Preallocation",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "CourseManagement",
+    "source": "Teacher",
+    "op": "--",
+    "target": "Lesson",
+    "label": "Allocation",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "CourseManagement",
+    "source": "Course",
+    "op": "--",
+    "target": "Participant",
+    "label": "Enrolled",
+    "tipo": "associazione"
+  }
+]

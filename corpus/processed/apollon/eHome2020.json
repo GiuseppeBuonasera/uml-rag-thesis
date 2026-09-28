@@ -1,0 +1,514 @@
+{
+  "version": "4.2.0",
+  "id": "eHome2020",
+  "title": "eHome2020",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "a8fed7b3-c2ac-52ca-be48-e26af76de9ac",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "SensorController",
+        "attributes": [
+          {
+            "id": "69692b2a-ed58-5be1-a90c-efbbd8620d2e",
+            "name": "+ id"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "266c7304-2713-5ff3-aa41-770ffe4f3307",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Sensor",
+        "attributes": [
+          {
+            "id": "6375532b-3fef-520b-98c2-de2f344fa681",
+            "name": "+ id : int"
+          },
+          {
+            "id": "40bbd210-0479-59fd-9994-7e1e21aea467",
+            "name": "+ description : string"
+          },
+          {
+            "id": "b8f3bba8-77a6-5073-b731-66df24a09e97",
+            "name": "+ threshold : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "6ac97fdc-ba8c-5b36-96da-1cebc24f889e",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Measurement",
+        "attributes": [
+          {
+            "id": "adacd053-f409-5764-ad60-b1b71ddf5a98",
+            "name": "+ value : double"
+          },
+          {
+            "id": "ba1d54bf-fc8b-5585-8429-9be3de8f5c1a",
+            "name": "+ timestamp : long"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "6b5fe2a6-a039-59d8-9d30-6c8da5def1c8",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "TemperatureSensor",
+        "attributes": [
+          {
+            "id": "e5964941-1b25-50df-998d-ed1b212be9e8",
+            "name": "+ min : double"
+          },
+          {
+            "id": "198067eb-d1c5-552b-9fcb-5cad180c5f12",
+            "name": "+ max : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ab89f543-a95e-5f03-ab29-6c5d69293e75",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "PowerMeter",
+        "attributes": [
+          {
+            "id": "df1514fc-360b-5b12-97ee-3fb7a2f1416c",
+            "name": "+ totalConsumption : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "a659dc66-9f60-5934-83a7-141c438ea4a8",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Unit",
+        "attributes": [
+          {
+            "id": "02a735dd-87ed-59b1-80a4-ab53b5b0b89a",
+            "name": "CELSIUS"
+          },
+          {
+            "id": "08763ecc-4457-5b1e-bcd4-16e4c5396c17",
+            "name": "WATT"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "b90026df-a989-5bc6-9cba-ae0768899e97",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 390
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Room",
+        "attributes": [
+          {
+            "id": "e64ceaad-c074-5b54-965e-167f92befbec",
+            "name": "+ label : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "846cde7e-07a2-5042-a2bc-6a5da5768abc",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 390
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Apartment",
+        "attributes": [
+          {
+            "id": "3f5abd4c-a2b7-513b-85b0-ce0a8e09008a",
+            "name": "+ address : string"
+          },
+          {
+            "id": "e27a8ba2-c8e4-57a0-a34a-76d1232f2aa7",
+            "name": "+ email : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "4d61a5c9-1f4b-55c0-9222-602df7af37a7",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 390
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Resident",
+        "attributes": [
+          {
+            "id": "63054b41-261d-54eb-a420-80e35cd7a48c",
+            "name": "+ username : string"
+          },
+          {
+            "id": "59a67db9-638d-5120-8cb6-832eac128f20",
+            "name": "+ password : string"
+          },
+          {
+            "id": "ec09a8b2-d7e2-5928-8e82-f9191cb166ff",
+            "name": "+ isAdmin : boolean"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "b69dd3ca-df43-5ca6-a695-0413fe3be329",
+      "source": "a8fed7b3-c2ac-52ca-be48-e26af76de9ac",
+      "target": "266c7304-2713-5ff3-aa41-770ffe4f3307",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 320,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "88e21a0d-1a12-5e93-847e-7502bf1bf2da",
+      "source": "266c7304-2713-5ff3-aa41-770ffe4f3307",
+      "target": "6ac97fdc-ba8c-5b36-96da-1cebc24f889e",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 105.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "11b6c7b2-0850-55c7-9dce-0432423a6788",
+      "source": "266c7304-2713-5ff3-aa41-770ffe4f3307",
+      "target": "6ac97fdc-ba8c-5b36-96da-1cebc24f889e",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 105.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "lastValue"
+      }
+    },
+    {
+      "id": "3a8e9346-328a-5249-a1c9-85c87d07c922",
+      "source": "6b5fe2a6-a039-59d8-9d30-6c8da5def1c8",
+      "target": "266c7304-2713-5ff3-aa41-770ffe4f3307",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 280.0
+          },
+          {
+            "x": 320,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a7a82240-3abe-5a22-ac10-1133db53c5f0",
+      "source": "ab89f543-a95e-5f03-ab29-6c5d69293e75",
+      "target": "266c7304-2713-5ff3-aa41-770ffe4f3307",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 230
+          },
+          {
+            "x": 430.0,
+            "y": 170
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a77e8f96-3d6d-5dd0-80e1-0ba9a2b5e87e",
+      "source": "266c7304-2713-5ff3-aa41-770ffe4f3307",
+      "target": "a659dc66-9f60-5934-83a7-141c438ea4a8",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 105.0
+          },
+          {
+            "x": 600,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ed5784d4-57d8-5905-8829-441ec02facba",
+      "source": "a8fed7b3-c2ac-52ca-be48-e26af76de9ac",
+      "target": "b90026df-a989-5bc6-9cba-ae0768899e97",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 110
+          },
+          {
+            "x": 150.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e9ad8a1e-87ff-511d-af21-9fe61d2a5ba9",
+      "source": "846cde7e-07a2-5042-a2bc-6a5da5768abc",
+      "target": "b90026df-a989-5bc6-9cba-ae0768899e97",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 440.0
+          },
+          {
+            "x": 260,
+            "y": 425.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "2..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "74070933-ffaa-5249-b153-e4bc6ddf7d90",
+      "source": "846cde7e-07a2-5042-a2bc-6a5da5768abc",
+      "target": "4d61a5c9-1f4b-55c0-9222-602df7af37a7",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 440.0
+          },
+          {
+            "x": 600,
+            "y": 455.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f2dae868-8dd5-5c74-9e14-51c9cb280398",
+      "source": "846cde7e-07a2-5042-a2bc-6a5da5768abc",
+      "target": "266c7304-2713-5ff3-aa41-770ffe4f3307",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 390
+          },
+          {
+            "x": 430.0,
+            "y": 170
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

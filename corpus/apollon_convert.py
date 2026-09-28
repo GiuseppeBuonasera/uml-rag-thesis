@@ -47,7 +47,7 @@ Nomi di ruolo per estremo (source_role/target_role, aggiunto il 2026-09-25 per g
 esercizi tradotti in corpus/raw/translated_it/, vedi docs/decisions.md): un estremo
 di relazione puo' avere, tra virgolette, solo la molteplicita' (invariato) oppure
 "molteplicita' ruolo" separati da uno spazio (es. `"1 responsabile"`) — vedi
-split_mult_role. Nessuno dei 45 file di corpus/raw/models/ ha uno spazio dentro le
+split_mult_role. Nessuno dei 45 file di corpus/raw/models_original/ ha uno spazio dentro le
 virgolette di una molteplicita' (verificato con una scansione dedicata), quindi
 questa estensione non cambia il parsing dei 45 esistenti. Il ruolo viaggia insieme
 alla molteplicita' nello scambio source/target di relationship_kind (mai l'uno senza
@@ -138,6 +138,85 @@ DEPENDENCY_OPS = {"..>", "<.."}
 
 def stable_id(seed: str) -> str:
     return str(uuid.uuid5(NAMESPACE, seed))
+
+
+# --- Normalizzazioni FASE 1 (2026-09-25, vedi docs/decisions.md) -----------------
+# Applicate a TUTTO il corpus (44 originali + tradotti), non solo alla pipeline di
+# traduzione: prima erano fatte solo da apply_glossary.py per plantuml.txt degli
+# esercizi tradotti; ora sono qui, in un unico punto, per ogni diagramma convertito.
+
+TYPE_NORMALIZATION = {
+    "string": "string", "String": "string",
+    "int": "int", "Int": "int", "Integer": "int", "integer": "int",
+    "double": "double", "Double": "double",
+    "float": "float", "Float": "float",
+    "boolean": "boolean", "Boolean": "boolean", "bool": "boolean", "Bool": "boolean",
+    "date": "date", "Date": "date",
+    "time": "time", "Time": "time",
+    "datetime": "datetime", "DateTime": "datetime", "Datetime": "datetime",
+    "long": "long", "Long": "long",
+}
+
+
+def normalize_type_token(t: str) -> str:
+    """Tipi noti (attributi e tipi di ritorno dei metodi) normalizzati a una grafia
+    unica. Un tipo non in questa tabella e' presumibilmente il nome di una classe o
+    enum del diagramma (es. 'Suit', 'RoomType'): resta invariato, non e' compito di
+    questa funzione deciderlo — vedi il report di corpus/apollon_convert.py per
+    l'elenco di cosa e' stato normalizzato e cosa no."""
+    return TYPE_NORMALIZATION.get(t, t)
+
+
+def normalize_multiplicity(m: str) -> str:
+    """'n' -> '*': 'n' -> '*', '0..n' -> '0..*', '1..n' -> '1..*'. Applicata a ogni
+    molteplicita' scritta in un edge, qualunque sia la sua provenienza (relazione
+    diretta o classe associativa reificata)."""
+    if not m:
+        return m
+    if m == "n":
+        return "*"
+    if m.endswith("..n"):
+        return m[:-1] + "*"
+    return m
+
+
+def parse_method_signature(raw: str) -> str:
+    """Formato unico '+ nome(parametri) : tipo' (o '+ nome(parametri)' se non c'e'
+    un tipo di ritorno nel sorgente — mai inventato). Gestisce sia 'Tipo nome()'
+    (stile Java, tipo di ritorno prima) sia 'nome() : Tipo' / 'nome():Tipo' (tipo di
+    ritorno dopo, con o senza spazio prima dei due punti). Il prefisso di
+    visibilita' originale (+-#~), se presente, viene tolto e sostituito con '+' —
+    stessa convenzione gia' in uso per gli attributi in questo modulo (vedi
+    parse_attribute/build_apollon_json), non una scelta nuova: la visibilita'
+    originale non viene preservata nel JSON ne' qui ne' per gli attributi."""
+    s = raw.strip()
+    if s and s[0] in "+-#~":
+        s = s[1:].strip()
+
+    close_idx = s.rfind(")")
+    if close_idx == -1:
+        return f"+ {s}"  # forma anomala, nessuna parentesi: lasciata cosi' com'e'
+    open_idx = s.rfind("(", 0, close_idx)
+    if open_idx == -1:
+        return f"+ {s}"
+
+    before = s[:open_idx].strip()
+    params = s[open_idx + 1 : close_idx]
+    after = s[close_idx + 1 :].strip()
+
+    if after:
+        ret_type = after.lstrip(":").strip()
+        name = before
+    else:
+        parts = before.rsplit(None, 1)
+        if len(parts) == 2:
+            ret_type, name = parts
+        else:
+            ret_type, name = "", before
+
+    if ret_type:
+        return f"+ {name}({params}) : {normalize_type_token(ret_type)}"
+    return f"+ {name}({params})"
 
 
 def split_mult_role(raw: str) -> tuple[str, str]:
@@ -301,6 +380,70 @@ def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[
     return classes, relationships, warnings, unsupported
 
 
+def reify_association_classes(relationships: list[dict]) -> tuple[list[dict], list[str]]:
+    """FASE 1 punto 4 (2026-09-25): per ogni classe associativa '(A,B) .. C' (o
+    'C .. (A,B)'), rimuove l'edge binario A-B se presente nel sorgente e lo
+    sostituisce con due edge le cui molteplicita' sono DERIVATE da quelle
+    dell'associazione base, non inventate: A--C (A lato '1', C lato = la
+    molteplicita' che B aveva nell'associazione base) e C--B (C lato = la
+    molteplicita' che A aveva nell'associazione base, B lato '1'). Se
+    l'associazione base A-B non esiste nel sorgente, o non ha molteplicita'
+    esplicite, le molteplicita' di C restano vuote e viene emesso un warning
+    invece di inventarle. Sostituisce la precedente approssimazione (due edge a
+    molteplicita' sempre vuota) in uso fino al 2026-09-25, vedi docs/decisions.md."""
+    warnings: list[str] = []
+    result = list(relationships)
+    assoc_entries = [r for r in result if r["kind"] == "assoc_class"]
+
+    for assoc in assoc_entries:
+        a, b, c = assoc["a"], assoc["b"], assoc["assoc"]
+        result.remove(assoc)
+
+        base_idx = None
+        for i, r in enumerate(result):
+            if r["kind"] == "binary" and {r["source"], r["target"]} == {a, b}:
+                base_idx = i
+                break
+
+        if base_idx is None:
+            ma = mb = ""
+            warnings.append(
+                f"classe associativa '{c}': nessuna associazione base {a}-{b} trovata nel "
+                "sorgente PlantUML, molteplicita' delle relazioni reificate lasciate vuote"
+            )
+        else:
+            base = result.pop(base_idx)
+            if base["source"] == a:
+                ma, mb = base["source_mult"], base["target_mult"]
+            else:
+                ma, mb = base["target_mult"], base["source_mult"]
+            if not ma and not mb:
+                warnings.append(
+                    f"classe associativa '{c}': l'associazione base {a}-{b} non ha "
+                    "molteplicita' esplicite nel sorgente, molteplicita' delle relazioni "
+                    "reificate lasciate vuote"
+                )
+
+        result.append(
+            {
+                "kind": "binary", "source": a, "target": c, "op": "--",
+                "source_mult": "1", "target_mult": mb,
+                "source_role": "", "target_role": "", "label": "",
+                "raw": f"(reificazione classe associativa '{c}' su {a}-{b}) {a}--{c}",
+            }
+        )
+        result.append(
+            {
+                "kind": "binary", "source": c, "target": b, "op": "--",
+                "source_mult": ma, "target_mult": "1",
+                "source_role": "", "target_role": "", "label": "",
+                "raw": f"(reificazione classe associativa '{c}' su {a}-{b}) {c}--{b}",
+            }
+        )
+
+    return result, warnings
+
+
 def relationship_kind(op: str) -> tuple[str, bool, bool]:
     """Ritorna (edge_type, swapped, no_label_no_mult) usando i tipi NATIVI Apollon v4
     (non piu' un'associazione chiamata 'is-a' come nel v3): ClassInheritance,
@@ -342,6 +485,112 @@ def relationship_kind(op: str) -> tuple[str, bool, bool]:
     if op in DEPENDENCY_OPS:
         return "ClassDependency", op == "<..", False
     return "ClassBidirectional", False, False
+
+
+CONSTRAINT_RE = re.compile(r"^\{.*\}$")
+
+
+def extract_generalization_constraints(relationships: list[dict]) -> list[dict]:
+    """FASE 2 (2026-09-25, decisione dell'utente su label_classification.md): un
+    testo come '{total; disjoint}' o '{partial; overlap}' su una relazione di
+    ereditarieta'/realizzazione NON e' un'etichetta di relazione — e' un vincolo
+    UML standard su un insieme di generalizzazione (notazione OCL/UML
+    {disjoint,complete} ecc.), emerso durante la classificazione delle etichette
+    (7 casi nel corpus, categoria "vincolo" non prevista nelle istruzioni
+    originali della FASE 2). build_apollon_json forza gia' a "" il label di
+    ClassInheritance/ClassRealization (convenzione precedente), quindi questi
+    vincoli erano gia' assenti dall'edge finale — semplicemente scartati senza
+    essere salvati da nessuna parte. Questa funzione li cattura esplicitamente
+    PRIMA che vengano scartati, per esporli in un campo a se' (corpus.jsonl,
+    campo "constraints"), invece di perderli in silenzio."""
+    constraints = []
+    for r in relationships:
+        if r["kind"] != "binary":
+            continue
+        if r["op"] not in INHERITANCE_OPS and r["op"] not in REALIZATION_OPS:
+            continue
+        label = r["label"].strip()
+        if not label or not CONSTRAINT_RE.match(label):
+            continue
+        _edge_type, swapped, _ = relationship_kind(r["op"])
+        child, parent = (r["target"], r["source"]) if swapped else (r["source"], r["target"])
+        constraints.append({"generalizzazione": f"{child} extends {parent}", "vincoli": label})
+    return constraints
+
+
+LABEL_CLASSIFICATION_PATH = Path(__file__).parent / "label_classification.json"
+_LABEL_CLASSIFICATION_CACHE: dict[tuple[str, str, str, str, str], dict] | None = None
+
+
+def load_label_classification() -> dict[tuple[str, str, str, str, str], dict]:
+    global _LABEL_CLASSIFICATION_CACHE
+    if _LABEL_CLASSIFICATION_CACHE is None:
+        if not LABEL_CLASSIFICATION_PATH.exists():
+            raise SystemExit(
+                f"{LABEL_CLASSIFICATION_PATH} non trovato: esegui prima "
+                "corpus/_generate_label_classification.py"
+            )
+        entries = json.loads(LABEL_CLASSIFICATION_PATH.read_text(encoding="utf-8"))
+        _LABEL_CLASSIFICATION_CACHE = {
+            (e["esercizio"], e["source"], e["op"], e["target"], e["label"]): e for e in entries
+        }
+    return _LABEL_CLASSIFICATION_CACHE
+
+
+def apply_label_classification(
+    model_id: str, relationships: list[dict], classification: dict[tuple[str, str, str, str, str], dict]
+) -> list[tuple[str, str, str, str, str]]:
+    """FASE 2 (2026-09-28, decisione utente su label_classification.md/.json): ogni
+    etichetta binaria non vuota e' o un'ASSOCIAZIONE/QUALIFICATORE (resta in
+    "label", invariato) o un VINCOLO di generalizzazione (no-op qui: gia' estratto
+    da extract_generalization_constraints, che deve girare PRIMA di questa
+    funzione — il label viene comunque azzerato piu' avanti per gli archi di
+    ereditarieta'/realizzazione da relationship_kind's no_label_no_mult) o un
+    RUOLO/RUOLO_DOPPIO (spostato in sourceRole/targetRole sull'estremo indicato
+    dalla classificazione, "source"/"target" — posizione letterale nella riga
+    PlantUML originale, non un nome di classe, per non ambiguita' sulle
+    auto-relazioni — label azzerato).
+
+    Va chiamata PRIMA di reify_association_classes: le relazioni binarie "base"
+    di una classe associativa vengono rimosse dalla reificazione, quindi la loro
+    classificazione (se un'etichetta era li' presente) smette semplicemente di
+    essere rilevante — comportamento gia' corretto, non serve gestirlo qui.
+
+    Ritorna la lista delle chiavi (esercizio, source, op, target, label) non
+    presenti in classification: il chiamante decide come fallire (l'assenza di
+    classificazione per un'etichetta reale non e' un warning recuperabile, e' un
+    errore di dati da correggere in corpus/_generate_label_classification.py)."""
+    missing: list[tuple[str, str, str, str, str]] = []
+    for r in relationships:
+        if r["kind"] != "binary" or not r["label"]:
+            continue
+        key = (model_id, r["source"], r["op"], r["target"], r["label"])
+        entry = classification.get(key)
+        if entry is None:
+            missing.append(key)
+            continue
+
+        tipo = entry["tipo"]
+        if tipo in ("associazione", "qualificatore", "vincolo"):
+            continue
+        if tipo == "ruolo":
+            sub_roles = [{"estremo": entry["estremo"], "testo": entry["testo"]}]
+        elif tipo == "ruolo_doppio":
+            sub_roles = entry["ruoli"]
+        else:
+            raise ValueError(f"{model_id}: tipo di classificazione sconosciuto {tipo!r} per {key}")
+
+        for sub in sub_roles:
+            field = "source_role" if sub["estremo"] == "source" else "target_role"
+            if r[field]:
+                raise ValueError(
+                    f"{model_id}: conflitto, {field} gia' valorizzato ('{r[field]}') per "
+                    f"'{r['raw']}' — la classificazione vuole scriverci '{sub['testo']}'"
+                )
+            r[field] = sub["testo"]
+        r["label"] = ""
+
+    return missing
 
 
 # --- Layout ------------------------------------------------------------------
@@ -434,6 +683,7 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
     nodes: list[dict] = []
     node_by_class: dict[str, dict] = {}
     class_ids: dict[str, str] = {}
+    warnings: list[str] = []
 
     for name, pc in classes.items():
         node_id = stable_id(f"{model_id}:class:{name}")
@@ -446,15 +696,16 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
             if pc.kind == "enum":
                 display = attr_name
             elif attr_type:
-                display = f"+ {attr_name} : {attr_type}"
+                display = f"+ {attr_name} : {normalize_type_token(attr_type)}"
             else:
                 display = f"+ {attr_name}"  # nessun tipo nel sorgente: non se ne inventa uno
+                warnings.append(f"attributo '{attr_name}' della classe '{name}' senza tipo dichiarato nel sorgente")
             attributes.append({"id": attr_id, "name": display})
 
         methods = []
         for i, method_sig in enumerate(pc.methods):
             method_id = stable_id(f"{model_id}:method:{name}:{method_sig}:{i}")
-            methods.append({"id": method_id, "name": method_sig})
+            methods.append({"id": method_id, "name": parse_method_signature(method_sig)})
 
         data: dict = {"name": name, "attributes": attributes, "methods": methods}
         if pc.kind == "abstract class":
@@ -475,12 +726,13 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
         node_by_class[name] = node
 
     edges: list[dict] = []
-    warnings: list[str] = []
 
     def add_edge(edge_type, source_name, target_name, label, source_mult, target_mult, source_role="", target_role=""):
         if source_name not in class_ids or target_name not in class_ids:
             warnings.append(f"relazione scartata, classe mancante: {source_name} -> {target_name}")
             return
+        source_mult = normalize_multiplicity(source_mult)
+        target_mult = normalize_multiplicity(target_mult)
         source_box, target_box = positions[source_name], positions[target_name]
         s_center = (source_box["x"] + source_box["width"] / 2, source_box["y"] + source_box["height"] / 2)
         t_center = (target_box["x"] + target_box["width"] / 2, target_box["y"] + target_box["height"] / 2)
@@ -524,16 +776,15 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
                 src_mult = tgt_mult = ""
                 src_role = tgt_role = ""
             add_edge(edge_type, eff_src, eff_tgt, label, src_mult, tgt_mult, src_role, tgt_role)
-        else:  # classe associativa, approssimata con due associazioni semplici
+        else:
+            # Le classi associative vanno reificate PRIMA di chiamare questa funzione
+            # (vedi reify_association_classes, FASE 1 2026-09-25) — se se ne trova
+            # ancora una qui e' un bug del chiamante, non un caso da gestire.
             warnings.append(
-                f"classe associativa '{r['assoc']}' tra {r['a']} e {r['b']} approssimata con due "
-                "relazioni semplici verso i due partecipanti; molteplicita' lasciate vuote "
-                "(non ricavabili in modo affidabile dal testo). La relazione originale "
-                f"{r['a']}-{r['b']}, con le sue molteplicita' reali, resta tra le relazioni "
-                "del diagramma se presente nel sorgente."
+                f"BUG: relazione di tipo '{r['kind']}' non reificata arrivata a "
+                "build_apollon_json — chiama reify_association_classes prima di "
+                f"questa funzione. Ignorata: {r}"
             )
-            add_edge("ClassBidirectional", r["assoc"], r["a"], "", "", "")
-            add_edge("ClassBidirectional", r["assoc"], r["b"], "", "", "")
 
     max_x = max((n["position"]["x"] + n["width"] for n in nodes), default=200) + MARGIN
     max_y = max((n["position"]["y"] + n["height"] for n in nodes), default=200) + MARGIN
@@ -616,6 +867,7 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
     name_by_id = {n["id"]: n["data"]["name"] for n in diagram["nodes"]}
 
     attrs_by_class: dict[str, list[tuple[str, str]]] = {}
+    methods_by_class: dict[str, list[str]] = {}
     is_enum_by_class: dict[str, bool] = {}
     for n in diagram["nodes"]:
         is_enum = n["data"].get("stereotype") == "enumeration"
@@ -624,17 +876,28 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
             attrs_by_class[n["data"]["name"]] = sorted((a["name"], "") for a in n["data"]["attributes"])
         else:
             attrs_by_class[n["data"]["name"]] = sorted(_v4_attribute_to_tuple(a["name"]) for a in n["data"]["attributes"])
+        methods_by_class[n["data"]["name"]] = sorted(m["name"] for m in n["data"]["methods"])
 
     for name, pc in classes.items():
         if pc.placeholder:
             continue
-        expected = sorted(pc.attributes) if pc.kind != "enum" else sorted((n, "") for n, _ in pc.attributes)
+        if pc.kind == "enum":
+            expected = sorted((n, "") for n, _ in pc.attributes)
+        else:
+            expected = sorted((n, normalize_type_token(t)) for n, t in pc.attributes)
         got = attrs_by_class.get(name)
         if got is None:
             problems.append(f"{model_id}: classe '{name}' non trovata nel JSON convertito")
         elif got != expected:
             problems.append(
                 f"{model_id}: attributi di '{name}' non coincidono — originale={expected} convertito={got}"
+            )
+
+        expected_methods = sorted(parse_method_signature(m) for m in pc.methods)
+        got_methods = methods_by_class.get(name, [])
+        if got_methods != expected_methods:
+            problems.append(
+                f"{model_id}: metodi di '{name}' non coincidono — originale={expected_methods} convertito={got_methods}"
             )
 
     out_edges = list(diagram["edges"])
@@ -660,7 +923,10 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
         if no_label:
             continue  # molteplicita' forzate vuote per convenzione, niente da confrontare
         e = out_edges[candidate_idx]
-        expected = {r["source"]: r["source_mult"], r["target"]: r["target_mult"]}
+        expected = {
+            r["source"]: normalize_multiplicity(r["source_mult"]),
+            r["target"]: normalize_multiplicity(r["target_mult"]),
+        }
         got = {
             name_by_id.get(e["source"]): e["data"]["sourceMultiplicity"],
             name_by_id.get(e["target"]): e["data"]["targetMultiplicity"],
@@ -701,6 +967,7 @@ def main() -> None:
     if not SCHEMA_PATH.exists():
         raise SystemExit(f"{SCHEMA_PATH} non trovato: scarica uml-model-4.schema.json da @tumaet/apollon")
 
+    label_classification = load_label_classification()
     records = [json.loads(line) for line in CORPUS_JSONL.read_text(encoding="utf-8").splitlines() if line.strip()]
 
     APOLLON_OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -708,6 +975,8 @@ def main() -> None:
     total_problems = 0
     total_roundtrip_problems = 0
     total_schema_problems = 0
+    total_constraints = 0
+    total_missing_labels = 0
     skipped: list[str] = []
 
     for record in records:
@@ -718,6 +987,7 @@ def main() -> None:
             skipped.append(model_id)
             record["diagram_apollon_json"] = None
             record["diagram_format"] = "plantuml"
+            record["constraints"] = []
             record["apollon_conversion_warnings"] = [
                 f"modello escluso dalla conversione Apollon: {u}" for u in unsupported
             ]
@@ -725,12 +995,26 @@ def main() -> None:
             out_path.unlink(missing_ok=True)
             continue
 
+        missing_labels = apply_label_classification(model_id, relationships, label_classification)
+        if missing_labels:
+            total_missing_labels += len(missing_labels)
+            print(f"[ERRORE CLASSIFICAZIONE] {model_id}: etichette non classificate: {missing_labels}")
+
+        constraints = extract_generalization_constraints(relationships)
+        constraint_warnings = [
+            f"vincolo di generalizzazione '{c['vincoli']}' su {c['generalizzazione']} spostato nel "
+            "campo 'constraints' del record (non e' un'etichetta di relazione, non finisce nell'edge)"
+            for c in constraints
+        ]
+        total_constraints += len(constraints)
+
+        relationships, reify_warnings = reify_association_classes(relationships)
         diagram, build_warnings = build_apollon_json(model_id, classes, relationships)
         schema_problems = validate_against_schema(diagram, model_id)
         problems = verify_apollon_json(diagram, model_id)
         roundtrip_problems = round_trip_check(model_id, classes, relationships, diagram)
 
-        warnings = parse_warnings + build_warnings
+        warnings = parse_warnings + constraint_warnings + reify_warnings + build_warnings
         total_warnings += len(warnings)
         total_problems += len(problems)
         total_roundtrip_problems += len(roundtrip_problems)
@@ -738,6 +1022,7 @@ def main() -> None:
 
         record["diagram_apollon_json"] = diagram
         record["diagram_apollon_model_version"] = MODEL_VERSION
+        record["constraints"] = constraints
         record["apollon_conversion_warnings"] = warnings
 
         out_path = APOLLON_OUT_DIR / f"{model_id}.json"
@@ -754,13 +1039,16 @@ def main() -> None:
         "\n".join(json.dumps(r, ensure_ascii=False) for r in records) + "\n", encoding="utf-8"
     )
 
+    assert total_missing_labels == 0, f"{total_missing_labels} etichette non classificate rilevate, vedi sopra"
     assert total_schema_problems == 0, f"{total_schema_problems} violazioni dello schema rilevate, vedi sopra"
     assert total_problems == 0, f"{total_problems} problemi di integrita' rilevati, vedi sopra"
     assert total_roundtrip_problems == 0, f"{total_roundtrip_problems} problemi di round-trip rilevati, vedi sopra"
 
     converted = len(records) - len(skipped)
     print(f"Convertiti {converted}/{len(records)} diagrammi in Apollon v{MODEL_VERSION} (esclusi: {skipped or 'nessuno'}).")
+    print(f"Vincoli di generalizzazione estratti in corpus.jsonl (campo 'constraints'): {total_constraints}")
     print(f"Warning totali (approssimazioni/costrutti non gestiti): {total_warnings}")
+    print("Classificazione etichette (corpus/label_classification.json): 0 etichette non classificate")
     print("Validazione schema JSON ufficiale: 0 violazioni")
     print("Round-trip semantico (attributi + molteplicita' per estremo): 0 discrepanze")
     print(f"JSON Apollon scritti in {APOLLON_OUT_DIR}")

@@ -1,0 +1,578 @@
+{
+  "version": "4.2.0",
+  "id": "House",
+  "title": "House",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "941892f5-440b-54e1-a947-cc5cd2f2e805",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "ConcreteBasement",
+        "attributes": [
+          {
+            "id": "a172dfbc-002f-5eff-8882-5e88b3e524a2",
+            "name": "+ Quality : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "aa5b9260-30b9-5ab7-8f67-1a555499f46f",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Basement",
+        "attributes": [
+          {
+            "id": "c3d818ab-e9c9-50c2-826a-9347e50e3abf",
+            "name": "+ Size : double"
+          },
+          {
+            "id": "8b5b3ae1-6bdc-5f56-ace3-1e10fab40c71",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "23602308-c957-565c-a5c5-39a324c58f44",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "BMType",
+        "attributes": [
+          {
+            "id": "b69d10c1-f28b-5e6e-9420-c8f6e1c30fad",
+            "name": "wood"
+          },
+          {
+            "id": "f59e91fb-6be3-573c-a272-c6280d97f99f",
+            "name": "brick"
+          },
+          {
+            "id": "1cd20d92-6dc0-5d43-81b5-e413613453de",
+            "name": "concrete"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "2f694c60-4683-5840-a104-22c47b1267c6",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "EarthBasement",
+        "attributes": [
+          {
+            "id": "6093f9ab-d45a-5683-9deb-c14850ae2c15",
+            "name": "+ Humidity : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "a9a28d3b-c723-527f-80f7-4e17317b8787",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "SemiDetached",
+        "attributes": [
+          {
+            "id": "05f338cd-0852-5423-8773-f03759387a63",
+            "name": "+ Garden : boolean"
+          },
+          {
+            "id": "1178b01a-cb70-5cd5-9895-ccb6548d3614",
+            "name": "+ Windows : int"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "32072f7c-3b26-521c-ad34-4cb346a99e60",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "House",
+        "attributes": [
+          {
+            "id": "647457c2-12f5-54cd-af58-2368065c8072",
+            "name": "+ Address : string"
+          },
+          {
+            "id": "4a78732a-02d3-5fe0-a8c7-a6409e2efa20",
+            "name": "+ BuildingMaterial : BMType"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0533d384-025e-5d11-aea8-0c643f48aa07",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "JobLog",
+        "attributes": [
+          {
+            "id": "3cc48803-ef2c-5158-8d59-2c8701d4750d",
+            "name": "+ Hours : int"
+          },
+          {
+            "id": "a1f1d22b-93fd-5370-8fb7-b3a9055ec55e",
+            "name": "+ Price : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "22656d0b-0c2b-51c1-b653-61d8148c4d68",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 230
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "SemiDetachedWithCarport",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "efd55ac4-6347-541d-9c7b-af332b24dc5a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 390
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "SemiDetachedWithGarage",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "5b44736f-bb0e-5088-a810-35d9f087cd1e",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 390
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Company",
+        "attributes": [
+          {
+            "id": "185c9463-bcad-554c-851b-41e82a6425ec",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "cebde5a6-3e28-5f75-942e-2732284c1f23",
+            "name": "+ Address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "5b01f825-94e0-5431-ad68-2516b7a19055",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 390
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Carport",
+        "attributes": [
+          {
+            "id": "e1129c6e-aa14-5cd2-a7bf-b17995d6d623",
+            "name": "+ DoublePort : boolean"
+          },
+          {
+            "id": "2156dcde-4466-59df-a0e0-856d2b00cb26",
+            "name": "+ flatRoof : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "b6acfeb7-5019-5ebf-a177-e1a492d4605a",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 390
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Garage",
+        "attributes": [
+          {
+            "id": "8f286b3d-a93a-57ef-adcf-952088a33ef2",
+            "name": "+ Automatic : boolean"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c6ac8b31-3f24-5a8f-9227-5a8357a6731b",
+      "source": "941892f5-440b-54e1-a947-cc5cd2f2e805",
+      "target": "aa5b9260-30b9-5ab7-8f67-1a555499f46f",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 320,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ed89a315-9967-5c9f-9152-a6661e470e54",
+      "source": "2f694c60-4683-5840-a104-22c47b1267c6",
+      "target": "aa5b9260-30b9-5ab7-8f67-1a555499f46f",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 75.0
+          },
+          {
+            "x": 540,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ff7fb1ce-95bb-5f6e-b001-02696a4fb3f8",
+      "source": "aa5b9260-30b9-5ab7-8f67-1a555499f46f",
+      "target": "32072f7c-3b26-521c-ad34-4cb346a99e60",
+      "type": "ClassComposition",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 140
+          },
+          {
+            "x": 430.0,
+            "y": 230
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b50fcf53-b0ee-5635-b650-f2993a58dc63",
+      "source": "a9a28d3b-c723-527f-80f7-4e17317b8787",
+      "target": "32072f7c-3b26-521c-ad34-4cb346a99e60",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 280.0
+          },
+          {
+            "x": 320,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "5a8708e9-f96e-5119-bd64-4c138b4ffd31",
+      "source": "22656d0b-0c2b-51c1-b653-61d8148c4d68",
+      "target": "a9a28d3b-c723-527f-80f7-4e17317b8787",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 250.0
+          },
+          {
+            "x": 260,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "21fa9918-d08f-51fb-8e1f-2025a810884f",
+      "source": "efd55ac4-6347-541d-9c7b-af332b24dc5a",
+      "target": "a9a28d3b-c723-527f-80f7-4e17317b8787",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 390
+          },
+          {
+            "x": 150.0,
+            "y": 330
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "12b05759-300f-50df-8301-175d506223fd",
+      "source": "22656d0b-0c2b-51c1-b653-61d8148c4d68",
+      "target": "5b01f825-94e0-5431-ad68-2516b7a19055",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 250.0
+          },
+          {
+            "x": 820,
+            "y": 440.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "2",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "30275387-de6e-5c1e-b4a2-f836fe2f1e54",
+      "source": "efd55ac4-6347-541d-9c7b-af332b24dc5a",
+      "target": "b6acfeb7-5019-5ebf-a177-e1a492d4605a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 410.0
+          },
+          {
+            "x": 880,
+            "y": 425.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "263f76de-eee3-59f3-b8b2-d1209d1ccc78",
+      "source": "32072f7c-3b26-521c-ad34-4cb346a99e60",
+      "target": "0533d384-025e-5d11-aea8-0c643f48aa07",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 600,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "3124d091-1d96-582f-a57f-0534923885d7",
+      "source": "0533d384-025e-5d11-aea8-0c643f48aa07",
+      "target": "5b44736f-bb0e-5088-a810-35d9f087cd1e",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 280.0
+          },
+          {
+            "x": 540,
+            "y": 440.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

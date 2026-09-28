@@ -1,0 +1,360 @@
+{
+  "version": "4.2.0",
+  "id": "Sightseeing",
+  "title": "Sightseeing",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "a3139c72-047d-5468-ac2d-d0262c00187c",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "City",
+        "attributes": [
+          {
+            "id": "97d89963-ead3-5656-81f1-c1d5efeb83e9",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "b858eaf1-883b-59b0-8f64-e87ce0b814e3",
+            "name": "+ NumberOfInhabitants : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "5aa776ea-eb41-5aa2-9224-43aac6b12002",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Attraction",
+        "attributes": [
+          {
+            "id": "6b6a751e-766b-5fbb-aefc-f315da661315",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "eb027c37-b022-5e31-94ae-dff8367f46b0",
+            "name": "+ Address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "46f94449-08e3-5984-9c96-6eafa7ba42ef",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Visitor",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "c7d6200b-eee2-5b6b-9edc-07b8fe733043",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "GuidedTour",
+        "attributes": [
+          {
+            "id": "df496f5f-578e-581a-9172-c47f15c0edb0",
+            "name": "+ Number : int"
+          },
+          {
+            "id": "d63e037e-3cea-5c1d-bb32-2c2129752c7f",
+            "name": "+ Duration : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "14d9c775-9d29-5b4e-8ff3-efa38ad062bd",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Discount",
+        "attributes": [
+          {
+            "id": "39fe4731-b7e8-5a46-ab38-5660efbcd530",
+            "name": "+ Discount : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "702f2257-6993-5245-a909-f06fdae43512",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [
+          {
+            "id": "6c8d9abb-b0ae-5b52-a7e6-c32cb34e26be",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "1fa3ab95-9626-57b1-a941-eb01e811c2ac",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 360
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Guide",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "b4961730-b0c7-5aad-ab30-3b7eedf34923",
+      "source": "a3139c72-047d-5468-ac2d-d0262c00187c",
+      "target": "5aa776ea-eb41-5aa2-9224-43aac6b12002",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 320,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "47a2c012-9a45-5465-8a1f-6844cab23445",
+      "source": "5aa776ea-eb41-5aa2-9224-43aac6b12002",
+      "target": "c7d6200b-eee2-5b6b-9edc-07b8fe733043",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f8e1af84-b493-53ad-a24c-04b09e6e9f9c",
+      "source": "1fa3ab95-9626-57b1-a941-eb01e811c2ac",
+      "target": "702f2257-6993-5245-a909-f06fdae43512",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 380.0
+          },
+          {
+            "x": 600,
+            "y": 235.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "50aff77b-a65c-574e-b224-c600b386c373",
+      "source": "46f94449-08e3-5984-9c96-6eafa7ba42ef",
+      "target": "702f2257-6993-5245-a909-f06fdae43512",
+      "type": "ClassInheritance",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 80
+          },
+          {
+            "x": 710.0,
+            "y": 200
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "96ff763c-7782-5a6a-824c-3f5ed5bdc7ab",
+      "source": "c7d6200b-eee2-5b6b-9edc-07b8fe733043",
+      "target": "1fa3ab95-9626-57b1-a941-eb01e811c2ac",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 300
+          },
+          {
+            "x": 150.0,
+            "y": 360
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8057235c-26eb-5dcf-a095-887b75547ffc",
+      "source": "46f94449-08e3-5984-9c96-6eafa7ba42ef",
+      "target": "14d9c775-9d29-5b4e-8ff3-efa38ad062bd",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 540,
+            "y": 235.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "fc5dcede-f6c2-5862-b98e-b705245d100f",
+      "source": "14d9c775-9d29-5b4e-8ff3-efa38ad062bd",
+      "target": "c7d6200b-eee2-5b6b-9edc-07b8fe733043",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 235.0
+          },
+          {
+            "x": 260,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..20",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

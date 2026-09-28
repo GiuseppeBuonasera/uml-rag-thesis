@@ -1,0 +1,277 @@
+{
+  "version": "4.2.0",
+  "id": "BankAccount",
+  "title": "BankAccount",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "60e92035-8650-5ee9-8ba0-7a73ab528bdc",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Bank",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "1a2664b6-bf72-586e-964b-fd15c9eeb5a8",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Branch",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "ed4f813d-9948-5e95-b5a8-d8dad427f501",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Customer",
+        "attributes": [
+          {
+            "id": "006e559b-ae50-5341-8feb-01e4505cc654",
+            "name": "+ firstName : string"
+          },
+          {
+            "id": "95280874-1de6-5310-92f2-84ad9aef8f8a",
+            "name": "+ lastName : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "62c82d96-137b-5082-a8e3-8edb6cbb4d64",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Account",
+        "attributes": [
+          {
+            "id": "9abc5723-9ef8-5890-9833-d1c85b264ac1",
+            "name": "+ accountNumber : int"
+          },
+          {
+            "id": "44c7f176-9303-544c-bd0a-4ce387714c4c",
+            "name": "+ balance : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "2bb82f72-d8b1-5fa0-b70a-905b8e45cca7",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "SavingsAccount",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "3acd0280-c1d5-5df1-998f-0a4b7c631d55",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "CheckingAccount",
+        "attributes": [
+          {
+            "id": "913d9a9e-9e77-5dce-a08d-229bfd0e164d",
+            "name": "+ overdraftLimit : double"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "69d4c706-4b10-51f5-a845-73bf5f77249a",
+      "source": "1a2664b6-bf72-586e-964b-fd15c9eeb5a8",
+      "target": "60e92035-8650-5ee9-8ba0-7a73ab528bdc",
+      "type": "ClassAggregation",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1ad5675b-4f6a-51ac-a3b7-780c50ab319c",
+      "source": "60e92035-8650-5ee9-8ba0-7a73ab528bdc",
+      "target": "ed4f813d-9948-5e95-b5a8-d8dad427f501",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 60.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "29f348bb-e9c3-512d-adef-408d7e414546",
+      "source": "ed4f813d-9948-5e95-b5a8-d8dad427f501",
+      "target": "62c82d96-137b-5082-a8e3-8edb6cbb4d64",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1..5",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "956380ed-c8fd-513d-9aba-239065c5eeed",
+      "source": "2bb82f72-d8b1-5fa0-b70a-905b8e45cca7",
+      "target": "62c82d96-137b-5082-a8e3-8edb6cbb4d64",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 220.0
+          },
+          {
+            "x": 260,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7da4c1c9-92a9-5dae-8438-6fe8af27c1c9",
+      "source": "3acd0280-c1d5-5df1-998f-0a4b7c631d55",
+      "target": "62c82d96-137b-5082-a8e3-8edb6cbb4d64",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 235.0
+          },
+          {
+            "x": 260,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

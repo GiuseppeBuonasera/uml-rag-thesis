@@ -1,0 +1,591 @@
+{
+  "version": "4.2.0",
+  "id": "PizzaDeliveryWithEntertainment",
+  "title": "PizzaDeliveryWithEntertainment",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "151b95cf-68f9-5c55-9963-66713ff4fafb",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "User",
+        "attributes": [
+          {
+            "id": "524346df-2ea5-59bb-9e50-ac31fc7a514f",
+            "name": "+ UserID : int"
+          },
+          {
+            "id": "9f08adf0-68cd-572e-a33c-bf04a2688a16",
+            "name": "+ Birthdate : date"
+          },
+          {
+            "id": "82275034-9b6e-5692-9c3d-3a6f1d7a9328",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "92266fe3-c164-553c-8c9b-3a0f52ee70ac",
+            "name": "+ Address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7e4e23fa-0e35-5a73-b425-999f75d29f04",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Customer",
+        "attributes": [
+          {
+            "id": "6559cc70-a320-55b5-9431-b71f621c1dd9",
+            "name": "+ DeliveryAddress : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "e1242f97-a0c2-54e5-b6fc-b1aca122ef1b",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Order",
+        "attributes": [
+          {
+            "id": "c79c832d-e2af-515d-a298-af98303526bb",
+            "name": "+ OrderID : int"
+          },
+          {
+            "id": "f566157b-7305-50dd-a3e9-f0e217bb1c47",
+            "name": "+ OrderPlacement : datetime"
+          },
+          {
+            "id": "3e164e33-7c56-52d5-8ab6-d78e4d26618d",
+            "name": "+ LatestDelivery : datetime"
+          },
+          {
+            "id": "8b1188c7-d51f-5e6e-b7dd-bb351a5a853f",
+            "name": "+ NumberOfPeople : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "31ff4198-e021-5cdc-80cf-686809f749ba",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "EntertainmentOrder",
+        "attributes": [
+          {
+            "id": "d15af4ea-af5e-573e-b60b-adb6d44710fa",
+            "name": "+ EntertainmentType : string"
+          },
+          {
+            "id": "3feb43cf-f950-5882-9b18-58e3c7a2e8f8",
+            "name": "+ Duration : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "41866890-b195-5331-a50a-616e6f5833a4",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "BusinessOwner",
+        "attributes": [
+          {
+            "id": "e6de0311-5671-5647-9b5a-31704a815c65",
+            "name": "+ LinkedInAccout : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "f435ff7d-ad95-50be-ac30-c2b73a4e7580",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "PizzaRestaurant",
+        "attributes": [
+          {
+            "id": "f5f24f6b-3945-51a1-aa92-81ef7329eaac",
+            "name": "+ ZipCode : int"
+          },
+          {
+            "id": "618e59e0-0f93-5c49-9edb-580c9b536518",
+            "name": "+ Address : string"
+          },
+          {
+            "id": "b7c08faa-be15-5920-964d-1a973ea71a65",
+            "name": "+ PhoneNumber : string"
+          },
+          {
+            "id": "2bfefa4b-9aa6-5490-994b-2db94a30b3c3",
+            "name": "+ Website : string"
+          },
+          {
+            "id": "03cc4728-2e3b-5898-856f-555484f54da8",
+            "name": "+ OpeningHours : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "3980dba4-f41c-523d-b18b-257dc3ad2e17",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 510
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Pizza",
+        "attributes": [
+          {
+            "id": "fd05fb88-bc75-51fd-95f8-ae9abc0f8373",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "33d2be0e-b91d-50ee-9c2e-c39874ef0c34",
+            "name": "+ CrustStructure : string"
+          },
+          {
+            "id": "f136f146-17da-515d-9052-8e13920de90b",
+            "name": "+ Price : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "c52cf8b5-5e7e-5391-a25c-092dafa31101",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 510
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Entertainer",
+        "attributes": [
+          {
+            "id": "17b2a243-db0c-52f7-88b4-3c28964aa58f",
+            "name": "+ StageName : string"
+          },
+          {
+            "id": "5b50ab4d-49b3-5972-a09f-62c4f5aa6ac5",
+            "name": "+ Bio : string"
+          },
+          {
+            "id": "689bec73-7c04-5fc9-bd52-f3041fa4d030",
+            "name": "+ PriceThirtyMin : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "4b6041f3-034c-5c57-b4bc-26c9459d2fde",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 510
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Employment",
+        "attributes": [
+          {
+            "id": "e360e99b-fc16-5b00-aa0f-0195e066f798",
+            "name": "+ Availability : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "3ab890e3-b276-51e0-92f0-a5c024265d8d",
+      "source": "7e4e23fa-0e35-5a73-b425-999f75d29f04",
+      "target": "151b95cf-68f9-5c55-9963-66713ff4fafb",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b7256ca2-5728-5316-a2be-765a0ce46e9a",
+      "source": "41866890-b195-5331-a50a-616e6f5833a4",
+      "target": "151b95cf-68f9-5c55-9963-66713ff4fafb",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 295.0
+          },
+          {
+            "x": 260,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9082c85e-467c-5eb5-b1cb-cacf7e393a54",
+      "source": "c52cf8b5-5e7e-5391-a25c-092dafa31101",
+      "target": "151b95cf-68f9-5c55-9963-66713ff4fafb",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 510
+          },
+          {
+            "x": 150.0,
+            "y": 200
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "60551c83-e373-5222-9450-63770c7e99ba",
+      "source": "7e4e23fa-0e35-5a73-b425-999f75d29f04",
+      "target": "e1242f97-a0c2-54e5-b6fc-b1aca122ef1b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "43f7d796-f5ef-5c5a-8375-a2086bda6648",
+      "source": "31ff4198-e021-5cdc-80cf-686809f749ba",
+      "target": "e1242f97-a0c2-54e5-b6fc-b1aca122ef1b",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 310.0
+          },
+          {
+            "x": 600,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "68b89a05-7e46-5bf8-9250-a76740435612",
+      "source": "41866890-b195-5331-a50a-616e6f5833a4",
+      "target": "f435ff7d-ad95-50be-ac30-c2b73a4e7580",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 355.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a9bc007e-5882-5f05-9575-d695b5433c3e",
+      "source": "f435ff7d-ad95-50be-ac30-c2b73a4e7580",
+      "target": "3980dba4-f41c-523d-b18b-257dc3ad2e17",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 355.0
+          },
+          {
+            "x": 260,
+            "y": 575.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "36bffd30-61c1-591a-b79e-7b85cc7ea137",
+      "source": "e1242f97-a0c2-54e5-b6fc-b1aca122ef1b",
+      "target": "f435ff7d-ad95-50be-ac30-c2b73a4e7580",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 200
+          },
+          {
+            "x": 710.0,
+            "y": 260
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8c6ea56f-4b85-5121-9daa-f8b291b46a31",
+      "source": "e1242f97-a0c2-54e5-b6fc-b1aca122ef1b",
+      "target": "3980dba4-f41c-523d-b18b-257dc3ad2e17",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 120.0
+          },
+          {
+            "x": 260,
+            "y": 575.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7fccd58b-ebc4-5381-9be8-2814f5122143",
+      "source": "c52cf8b5-5e7e-5391-a25c-092dafa31101",
+      "target": "31ff4198-e021-5cdc-80cf-686809f749ba",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 575.0
+          },
+          {
+            "x": 260,
+            "y": 310.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a4143c9e-84f4-57e3-a060-26c9aeb671d2",
+      "source": "f435ff7d-ad95-50be-ac30-c2b73a4e7580",
+      "target": "4b6041f3-034c-5c57-b4bc-26c9459d2fde",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 450
+          },
+          {
+            "x": 710.0,
+            "y": 510
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f4d4985a-8f6a-5d56-9397-f60419301542",
+      "source": "4b6041f3-034c-5c57-b4bc-26c9459d2fde",
+      "target": "c52cf8b5-5e7e-5391-a25c-092dafa31101",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 545.0
+          },
+          {
+            "x": 540,
+            "y": 575.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

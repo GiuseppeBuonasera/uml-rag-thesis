@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ## Stato del progetto
 
-- [x] Costruzione corpus — prima versione: 45 esercizi (`corpus/raw/models/`),
+- [x] Costruzione corpus — prima versione: 45 esercizi (`corpus/raw/models_original/`),
       indicizzati in `corpus/processed/corpus.jsonl`, 44/45 diagrammi convertiti in
       **Apollon v4 JSON** (`corpus/apollon_convert.py`; `Cruise` escluso, costrutto
       non supportato). Revisionato il 2026-09-23: due bug reali corretti nella

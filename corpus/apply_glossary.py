@@ -19,10 +19,13 @@ virgolette (la molteplicita'), lasciando intatto un eventuale ruolo dopo lo
 spazio (es. '"1..n responsabile"' -> '"1..* responsabile"' — anche se in
 pratica un ruolo tradotto non dovrebbe mai iniziare per "n").
 
-Normalizza anche il tipo di attributo "bool" -> "boolean" — SOLO in
-plantuml.txt, mai in plantuml_it.txt. "time" non viene toccato (e' gia' nella
-lista dei tipi ammessi in prompt_template_v4.txt). Convenzione decisa il
-2026-09-25, vedi docs/decisions.md.
+Normalizza anche i tipi di attributo (String->string, Int/Integer->int,
+Double->double, Float->float, Boolean/bool->boolean, Date->date, Time->time,
+DateTime->datetime, Long->long) — SOLO in plantuml.txt, mai in
+plantuml_it.txt. Riusa la stessa tabella di apollon_convert.TYPE_NORMALIZATION
+(FASE 1, 2026-09-25, vedi docs/decisions.md) invece di duplicarla, cosi'
+plantuml.txt (l'artefatto testuale intermedio) e il JSON Apollon finale non
+possono disallinearsi sui tipi normalizzati.
 
 Uso:
     python corpus/apply_glossary.py <cartella_esercizio>
@@ -37,16 +40,15 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+import apollon_convert as ac
+
 IDENTIFIER_RE = re.compile(r"^\w+$")
 QUOTED_RE = re.compile(r'"([^"]*)"')
 
 
 def normalize_multiplicity_token(mult: str) -> str:
-    if mult == "n":
-        return "*"
-    if mult.endswith("..n"):
-        return mult[:-1] + "*"
-    return mult
+    return ac.normalize_multiplicity(mult)
 
 
 def normalize_multiplicities(text: str) -> str:
@@ -62,11 +64,12 @@ def normalize_multiplicities(text: str) -> str:
     return QUOTED_RE.sub(repl, text)
 
 
-BOOL_RE = re.compile(r"\bbool\b")
-
-
 def normalize_types(text: str) -> str:
-    return BOOL_RE.sub("boolean", text)
+    for src, dst in sorted(ac.TYPE_NORMALIZATION.items(), key=lambda kv: -len(kv[0])):
+        if src == dst:
+            continue
+        text = re.sub(r"\b" + re.escape(src) + r"\b", dst, text)
+    return text
 
 
 def load_term_glossary(glossary_path: Path) -> dict[str, str]:
@@ -105,7 +108,7 @@ def main() -> None:
 
     print(f"Glossario applicato: {len(glossary)} termini identificatore.")
     print("Molteplicita' normalizzate: 0..n->0..*, 1..n->1..*, n->* (solo plantuml.txt)")
-    print("Tipi normalizzati: bool->boolean (solo plantuml.txt)")
+    print("Tipi normalizzati secondo apollon_convert.TYPE_NORMALIZATION (solo plantuml.txt)")
     print(f"Scritto: {out_path}")
 
 

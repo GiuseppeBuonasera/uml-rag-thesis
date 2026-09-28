@@ -1,0 +1,465 @@
+{
+  "version": "4.2.0",
+  "id": "TruckLogistics",
+  "title": "TruckLogistics",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "a25423c2-3682-5998-b2c5-f7aaa800edc9",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Assignment",
+        "attributes": [
+          {
+            "id": "fd146340-0ff2-567f-9102-e4d63334a97d",
+            "name": "+ date : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "12d35a36-20f9-5071-a453-7a455e172539",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Location",
+        "attributes": [
+          {
+            "id": "8762f91d-b107-5827-9c54-a35ff6fd3a48",
+            "name": "+ address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "d1d53e34-a5dc-5024-8387-4fd9ec7f0f56",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Driver",
+        "attributes": [
+          {
+            "id": "f5a99b56-3b74-5304-a290-2587019b3c14",
+            "name": "+ firstName : string"
+          },
+          {
+            "id": "71c3f557-cf3f-5b1d-a292-eb446268a1be",
+            "name": "+ lastName : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Vehicle",
+        "attributes": [
+          {
+            "id": "1a4c41b0-1875-53c0-8194-f44155dae9bd",
+            "name": "+ vehicleNumber : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "e33c8823-4dfb-5a07-a4b3-8d42111ecef8",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Truck",
+        "attributes": [
+          {
+            "id": "ae032b67-5dc6-54b0-906b-e70fffb0d556",
+            "name": "+ tonnage : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0db20721-0d80-5aa3-aa2d-efbb72f9849b",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "PassengerCar",
+        "attributes": [
+          {
+            "id": "daa8a36a-fe21-5fdd-aeb9-a53cf665f819",
+            "name": "+ seats : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "4c92e0f5-e709-5f7f-ac7d-d4fdd5477dae",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 330
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Transporter",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "268f0f3e-ad6c-53d1-99e5-efa92caa23a1",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 330
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "VehicleStatus",
+        "attributes": [
+          {
+            "id": "cc569261-01f2-532a-8fc0-8d9063d2e963",
+            "name": "READY"
+          },
+          {
+            "id": "a97d755d-485c-5231-9ca0-6303c54f1b4d",
+            "name": "ASSIGNMENT"
+          },
+          {
+            "id": "a0368dd5-c4f4-52d9-8709-5ac9362418d0",
+            "name": "MAINTENANCE"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "10005055-f8b5-5eed-969b-aab6bd12ef2d",
+      "source": "a25423c2-3682-5998-b2c5-f7aaa800edc9",
+      "target": "d1d53e34-a5dc-5024-8387-4fd9ec7f0f56",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "executes",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "85ceb9c8-d230-5fc2-957e-6546ed164264",
+      "source": "a25423c2-3682-5998-b2c5-f7aaa800edc9",
+      "target": "12d35a36-20f9-5071-a453-7a455e172539",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "from"
+      }
+    },
+    {
+      "id": "ac8b8e6d-0f9f-58db-b6cd-20df22fa2cdc",
+      "source": "a25423c2-3682-5998-b2c5-f7aaa800edc9",
+      "target": "12d35a36-20f9-5071-a453-7a455e172539",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "to"
+      }
+    },
+    {
+      "id": "d8fcd0d3-1569-5884-bcf2-36f5dce85b5c",
+      "source": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
+      "target": "12d35a36-20f9-5071-a453-7a455e172539",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 235.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b51058b0-ce75-5a18-9278-9dfcf58f8ae5",
+      "source": "d1d53e34-a5dc-5024-8387-4fd9ec7f0f56",
+      "target": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 235.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "*",
+        "sourceRole": "driver",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9dfb499b-e6a3-5969-b77a-422f3cf5ae73",
+      "source": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
+      "target": "d1d53e34-a5dc-5024-8387-4fd9ec7f0f56",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 235.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": "driver"
+      }
+    },
+    {
+      "id": "3a997d96-3573-52bc-8b49-48a3f3514c36",
+      "source": "e33c8823-4dfb-5a07-a4b3-8d42111ecef8",
+      "target": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 235.0
+          },
+          {
+            "x": 260,
+            "y": 235.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "71999e3c-bb0d-5428-995a-41112186e0ae",
+      "source": "0db20721-0d80-5aa3-aa2d-efbb72f9849b",
+      "target": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 235.0
+          },
+          {
+            "x": 260,
+            "y": 235.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d93938fc-2c70-5991-a2e8-259aec6f5fe3",
+      "source": "4c92e0f5-e709-5f7f-ac7d-d4fdd5477dae",
+      "target": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 330
+          },
+          {
+            "x": 150.0,
+            "y": 270
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "fe02ad52-982e-5d0f-a626-220e48f9e392",
+      "source": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
+      "target": "268f0f3e-ad6c-53d1-99e5-efa92caa23a1",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 235.0
+          },
+          {
+            "x": 320,
+            "y": 395.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "status"
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

@@ -1,0 +1,280 @@
+{
+  "version": "4.2.0",
+  "id": "BusTransportationManagementSystem",
+  "title": "BusTransportationManagementSystem",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "9925532a-8da6-5f37-8cbb-758d7f1c1c93",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Shift",
+        "attributes": [
+          {
+            "id": "5559ce70-cf40-5ae5-a74e-fbeb320f9048",
+            "name": "Morning"
+          },
+          {
+            "id": "290bf949-4364-51ce-a291-d4b297e81c4c",
+            "name": "Afternoon"
+          },
+          {
+            "id": "1f19e682-3eb4-5d7f-8802-6e49f8d71851",
+            "name": "Night"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "db51eec8-d6b1-54e0-b78c-265906c45eca",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "BusVehicle",
+        "attributes": [
+          {
+            "id": "285e599e-5813-5576-b994-a0fa68d4162a",
+            "name": "+ LicencePlate : string"
+          },
+          {
+            "id": "da6fc9e9-9948-5551-90cc-46fa301780c4",
+            "name": "+ InRepairShop : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "2929dd68-92c6-5307-a109-0273e86cb2be",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Route",
+        "attributes": [
+          {
+            "id": "d37bcecf-1485-5e71-9fec-be437804614c",
+            "name": "+ Number : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "dbf00740-0738-5311-8b01-78fbbe5f1c67",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "RouteAssignment",
+        "attributes": [
+          {
+            "id": "7d9b1475-1bbe-519c-971e-5b1a28147d55",
+            "name": "+ Date : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "3435263c-784f-5c46-b963-f9db26cb1cd0",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Driver",
+        "attributes": [
+          {
+            "id": "f9d7e187-b03e-56f8-8319-f2b402618cbd",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "e5607abb-1a20-5058-abbc-6940c092a3ce",
+            "name": "+ Id : string"
+          },
+          {
+            "id": "2155c515-cb48-5a62-b5e4-93291e179c6b",
+            "name": "+ OnSickLeave : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7f6d8433-417e-5a4b-8445-74e15ac570ca",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "DriverSchedule",
+        "attributes": [
+          {
+            "id": "226a8366-6fe3-51ac-95de-4f9640c2e9af",
+            "name": "+ Shift : Shift"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "8bce81c7-70e8-582f-bb15-63033684fd4d",
+      "source": "db51eec8-d6b1-54e0-b78c-265906c45eca",
+      "target": "dbf00740-0738-5311-8b01-78fbbe5f1c67",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c597bd6b-967c-5e83-b7ec-f7cf960c964d",
+      "source": "2929dd68-92c6-5307-a109-0273e86cb2be",
+      "target": "dbf00740-0738-5311-8b01-78fbbe5f1c67",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "eab3a64a-b94f-5847-a739-ed4c5f1a1fc9",
+      "source": "3435263c-784f-5c46-b963-f9db26cb1cd0",
+      "target": "7f6d8433-417e-5a4b-8445-74e15ac570ca",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e04e2cde-92c4-51d8-8f2d-f7a1e56d9a71",
+      "source": "dbf00740-0738-5311-8b01-78fbbe5f1c67",
+      "target": "7f6d8433-417e-5a4b-8445-74e15ac570ca",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 265.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

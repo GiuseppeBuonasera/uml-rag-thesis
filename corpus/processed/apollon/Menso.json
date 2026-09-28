@@ -1,0 +1,545 @@
+{
+  "version": "4.2.0",
+  "id": "Menso",
+  "title": "Menso",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "e633401d-4084-52c7-9ddc-6ef0dbf64bf2",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "BusLine",
+        "attributes": [
+          {
+            "id": "da2335ab-bb0a-5fa0-9c93-536c41cac126",
+            "name": "+ Destination : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "405451e7-7d2b-5b45-9f38-200d06c0123c",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "PriceCategory",
+        "attributes": [
+          {
+            "id": "a2455582-9f8c-54fe-b0f6-0f44140b8d21",
+            "name": "+ Price : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "15997410-8663-5602-a3b6-cf3a60eb470b",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Trajectory",
+        "attributes": [
+          {
+            "id": "ff2ced01-2a88-548b-9589-6a1c6a4ba4bd",
+            "name": "+ Status : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "21ba3d9c-b0d7-5b30-9853-61dd14a1e45d",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Bus",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "0a88dc5b-6f32-5126-bcf2-0082bda81a0a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 170
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "BusOnTrajectory",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "ca6d5460-6de9-5906-9f18-a6fcaea562b7",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 170
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Trip",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "bcdaff15-220e-5d51-a8bb-aaf9417128f2",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 170
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "MensoTicket",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "b0013f7f-d564-5806-889e-fbb634f50239",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 170
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "MensoTrip",
+        "attributes": [
+          {
+            "id": "15964136-fb36-538f-92bf-7305662ae3dc",
+            "name": "+ TripDateTime : datetime"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "bc706df6-367f-5de0-ae0f-c739a3996f09",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 300
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "InvoiceLine",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "11673e00-d0b4-5b61-a604-7316c8e8c6f1",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 300
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Invoice",
+        "attributes": [
+          {
+            "id": "a11ae062-9647-55a2-901b-c3ecce8b8bc0",
+            "name": "+ Total : double"
+          },
+          {
+            "id": "f02181aa-c18c-5a7d-be09-71cbb73b7b5c",
+            "name": "+ Discount : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "22f6cb69-62b0-5cb9-9d3f-03b2980e402e",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 300
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Customer",
+        "attributes": [
+          {
+            "id": "17a766e9-a3db-5480-9b8b-dcc77a61dc20",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "96a83d73-0d97-5025-94d4-e6252915451c",
+            "name": "+ HomeAddress : string"
+          },
+          {
+            "id": "2cb58825-dd88-5021-bc9a-08fe79c78a45",
+            "name": "+ OfficeAddress : string"
+          },
+          {
+            "id": "29d58897-5271-5e5d-ac8f-05bec0892be7",
+            "name": "+ WorkingHours : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "f9652c66-bf03-5b26-a70e-12f1975ab573",
+      "source": "e633401d-4084-52c7-9ddc-6ef0dbf64bf2",
+      "target": "405451e7-7d2b-5b45-9f38-200d06c0123c",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "0b2cd2bf-ce2a-5765-8db0-399e88d143a9",
+      "source": "e633401d-4084-52c7-9ddc-6ef0dbf64bf2",
+      "target": "15997410-8663-5602-a3b6-cf3a60eb470b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "2b64e115-d583-53e0-99ae-3e4cf9dc626d",
+      "source": "15997410-8663-5602-a3b6-cf3a60eb470b",
+      "target": "0a88dc5b-6f32-5126-bcf2-0082bda81a0a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 190.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e86d1d69-dc66-5b51-8d52-f93425c83105",
+      "source": "21ba3d9c-b0d7-5b30-9853-61dd14a1e45d",
+      "target": "0a88dc5b-6f32-5126-bcf2-0082bda81a0a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 190.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e6374c03-44fe-5259-ab4a-3cca2e4fb986",
+      "source": "0a88dc5b-6f32-5126-bcf2-0082bda81a0a",
+      "target": "ca6d5460-6de9-5906-9f18-a6fcaea562b7",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 190.0
+          },
+          {
+            "x": 320,
+            "y": 190.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "61c2b7c1-bfbf-52dd-ab97-e6b4655955f1",
+      "source": "bcdaff15-220e-5d51-a8bb-aaf9417128f2",
+      "target": "b0013f7f-d564-5806-889e-fbb634f50239",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 190.0
+          },
+          {
+            "x": 880,
+            "y": 205.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9616067f-33e0-5de9-9329-8568ea26e8c9",
+      "source": "0a88dc5b-6f32-5126-bcf2-0082bda81a0a",
+      "target": "b0013f7f-d564-5806-889e-fbb634f50239",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 190.0
+          },
+          {
+            "x": 880,
+            "y": 205.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7be67672-9e44-57e3-9556-a02b72f72f66",
+      "source": "b0013f7f-d564-5806-889e-fbb634f50239",
+      "target": "bc706df6-367f-5de0-ae0f-c739a3996f09",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 205.0
+          },
+          {
+            "x": 260,
+            "y": 320.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f210ec7f-702f-5796-8a9c-020bb37e4b3d",
+      "source": "11673e00-d0b4-5b61-a604-7316c8e8c6f1",
+      "target": "bc706df6-367f-5de0-ae0f-c739a3996f09",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 350.0
+          },
+          {
+            "x": 260,
+            "y": 320.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1119bf48-a76a-5c0d-b724-ad2effd5d74b",
+      "source": "22f6cb69-62b0-5cb9-9d3f-03b2980e402e",
+      "target": "bcdaff15-220e-5d51-a8bb-aaf9417128f2",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 300
+          },
+          {
+            "x": 710.0,
+            "y": 210
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "88e46afa-7397-51a5-9d84-bf79e115f9ab",
+      "source": "bcdaff15-220e-5d51-a8bb-aaf9417128f2",
+      "target": "11673e00-d0b4-5b61-a604-7316c8e8c6f1",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 190.0
+          },
+          {
+            "x": 540,
+            "y": 350.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

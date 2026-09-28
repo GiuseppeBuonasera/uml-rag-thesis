@@ -1,16 +1,18 @@
 # docs/dati — materiale di riferimento (non corpus RAG)
 
 Questa cartella contiene materiale raccolto/ricevuto che **non fa parte del corpus di
-retrieval** (quello vive in `corpus/raw/models/`, vedi sotto). È organizzata per
-**studio di provenienza** — due studi distinti erano stati raggruppati per errore
+retrieval** (quello vive in `corpus/raw/models_original/`, vedi sotto). È organizzata
+per **studio di provenienza** — due studi distinti erano stati raggruppati per errore
 sotto lo stesso nome in una versione precedente di questa cartella, vedi
 `docs/decisions.md` (voce 2026-09-24) per i dettagli della verifica.
 
 ## Cosa NON c'è più qui
 
 - `models/` (45 esercizi con descrizione + diagramma PlantUML di riferimento) è in
-  [`corpus/raw/models/`](../../corpus/raw/models/) — è il corpus primario per il
-  retrieval. Vedi `corpus/processed/corpus.jsonl` per la versione indicizzata.
+  [`corpus/raw/models_original/`](../../corpus/raw/models_original/) — è il corpus
+  primario per il retrieval, rinominato in "_original" per segnalare che è la sorgente
+  immutabile (vedi `docs/decisions.md`, 2026-09-25). Vedi `corpus/processed/corpus.jsonl`
+  per la versione indicizzata.
 
 ## Cosa c'è qui
 
@@ -76,7 +78,7 @@ Materiale che definisce il formato di output scelto (Apollon **v4**, vedi
   funzioni di `corpus/apollon_convert.py` (non trascritto a mano).
 - `example_2_airtravel_v4.json` — **sostituisce l'esempio dell'orologio digitale**
   (diagramma a stati, fuori scope). È l'esercizio `AirTravel` del corpus
-  (`corpus/raw/models/AirTravel/`); il record corrispondente in
+  (`corpus/raw/models_original/AirTravel/`); il record corrispondente in
   `corpus/processed/corpus.jsonl` ha `used_as_static_example: true` — va escluso
   dalle query di valutazione quando si usa questo prompt come baseline a few-shot
   statico, per evitare leakage (vedi `docs/decisions.md`, voce sul Blocco 4).
@@ -100,8 +102,9 @@ verificato nei sorgenti e cosa no.
 
 Il target di generazione è **Apollon JSON v4** (modello `"4.2.0"`, pacchetto
 `@tumaet/apollon@5.3.0`), non PlantUML e non Apollon v3 (vedi `docs/decisions.md`,
-voci 2026-09-22 e 2026-09-23). I 44 diagrammi di riferimento in `corpus/raw/models/`
-che usano costrutti supportati sono convertiti in Apollon v4 JSON da
+voci 2026-09-22 e 2026-09-23). I 44 diagrammi di riferimento in
+`corpus/raw/models_original/` che usano costrutti supportati sono convertiti in
+Apollon v4 JSON da
 [`corpus/apollon_convert.py`](../../corpus/apollon_convert.py). Un modello (`Cruise`)
 è escluso: usa un costrutto n-ario nativo di PlantUML (`<> diamond`) senza
 equivalente Apollon documentato. Il risultato è in `corpus/processed/corpus.jsonl`

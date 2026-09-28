@@ -1,0 +1,1053 @@
+{
+  "version": "4.2.0",
+  "id": "HotelBookingManagementSystem",
+  "title": "HotelBookingManagementSystem",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "0c446a0d-b004-5c4b-92ee-9f0a107f4596",
+      "type": "class",
+      "position": {
+        "x": 33.54838709677419,
+        "y": 33.54838709677419
+      },
+      "width": 184.51612903225808,
+      "height": 109.03225806451613,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 109.03225806451613
+      },
+      "data": {
+        "name": "RoomType",
+        "attributes": [
+          {
+            "id": "3c1c9e2e-1e65-5d8b-bdbc-34799caea035",
+            "name": "SINGLE"
+          },
+          {
+            "id": "95c4039a-5cb9-5081-826f-ffb91e270c8d",
+            "name": "DOUBLE"
+          },
+          {
+            "id": "8e9ab847-3150-5c2d-aebb-72db94ab0160",
+            "name": "TWIN"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "6316c232-331c-5f1d-ada7-ee60f8c204b5",
+      "type": "class",
+      "position": {
+        "x": 268.38709677419354,
+        "y": 33.54838709677419
+      },
+      "width": 184.51612903225808,
+      "height": 184.51612903225808,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 184.51612903225808
+      },
+      "data": {
+        "name": "BookingStatus",
+        "attributes": [
+          {
+            "id": "60d0c024-6365-5973-bdc3-2a1a5a3f9e35",
+            "name": "FINALIZED"
+          },
+          {
+            "id": "0459614e-b184-579f-8c4f-3994746f158c",
+            "name": "CONFIRMED"
+          },
+          {
+            "id": "3c60f582-01b7-504d-84cb-48d71e7eb6d6",
+            "name": "CANCELLED_BY_HBMS"
+          },
+          {
+            "id": "8a2ff7d2-99c6-5374-b0a2-7e5b96c97468",
+            "name": "PRELIMINARY"
+          },
+          {
+            "id": "21ecf878-bbd6-50fb-96d9-7d6d9283f98a",
+            "name": "CANCELLED_BY_TRAVELLER"
+          },
+          {
+            "id": "421467a6-1967-5098-a823-068d704bc090",
+            "name": "CANCELLED_BY_HOTEL"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "aa15b8ef-6355-5585-b55f-04e6ff21c025",
+      "type": "class",
+      "position": {
+        "x": 503.2258064516129,
+        "y": 33.54838709677419
+      },
+      "width": 184.51612903225808,
+      "height": 83.87096774193549,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 83.87096774193549
+      },
+      "data": {
+        "name": "PaymentType",
+        "attributes": [
+          {
+            "id": "4d8d574f-cb02-59ab-bebe-ca04fad425b8",
+            "name": "PREPAID"
+          },
+          {
+            "id": "42262372-4427-5832-8346-f8c6449213a0",
+            "name": "PAID_AT_HOTEL"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "a78b0542-8d88-5092-98d6-075a4c591b09",
+      "type": "class",
+      "position": {
+        "x": 738.0645161290323,
+        "y": 33.54838709677419
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "HotelChain",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "60f7443e-f98c-558a-9655-4638018c806c",
+      "type": "class",
+      "position": {
+        "x": 972.9032258064517,
+        "y": 33.54838709677419
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "HotelBookingManager",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "9ff6c696-de6c-5f0b-a783-f8687e6d23ee",
+      "type": "class",
+      "position": {
+        "x": 33.54838709677419,
+        "y": 268.38709677419354
+      },
+      "width": 184.51612903225808,
+      "height": 83.87096774193549,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 83.87096774193549
+      },
+      "data": {
+        "name": "Traveller",
+        "attributes": [
+          {
+            "id": "95681e74-be94-5a81-bdef-4a80a20da859",
+            "name": "+ name : string"
+          },
+          {
+            "id": "87d242f0-a689-5050-8578-5078bd3f41eb",
+            "name": "+ reliabilityRating : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "fc3e0d9c-c049-5552-8129-c880673b11e3",
+      "type": "class",
+      "position": {
+        "x": 268.38709677419354,
+        "y": 268.38709677419354
+      },
+      "width": 184.51612903225808,
+      "height": 83.87096774193549,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 83.87096774193549
+      },
+      "data": {
+        "name": "BillingInformation",
+        "attributes": [
+          {
+            "id": "58afcd04-addc-5fae-a98a-baa866b6093c",
+            "name": "+ companyName : string"
+          },
+          {
+            "id": "60fcfe88-ccc6-5215-90d8-a48b78be3d60",
+            "name": "+ address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "a8cb1a54-792e-54b7-856a-590007f88f53",
+      "type": "class",
+      "position": {
+        "x": 503.2258064516129,
+        "y": 268.38709677419354
+      },
+      "width": 184.51612903225808,
+      "height": 83.87096774193549,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 83.87096774193549
+      },
+      "data": {
+        "name": "TravelPreference",
+        "attributes": [
+          {
+            "id": "a45b313f-6d8e-5487-a49d-b5807be96bb6",
+            "name": "+ preference : string"
+          },
+          {
+            "id": "0fdbdeaf-fbc0-5743-9da1-d596f1edea82",
+            "name": "+ value : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ec905936-da65-5cda-802c-4f3141963305",
+      "type": "class",
+      "position": {
+        "x": 738.0645161290323,
+        "y": 268.38709677419354
+      },
+      "width": 184.51612903225808,
+      "height": 134.19354838709677,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 134.19354838709677
+      },
+      "data": {
+        "name": "Hotel",
+        "attributes": [
+          {
+            "id": "7f9391db-4c63-5e0e-94e7-37f578dd9beb",
+            "name": "+ city : string"
+          },
+          {
+            "id": "36eec5d3-5ffb-5085-bb3d-a7d2bd3ef9bd",
+            "name": "+ country : string"
+          },
+          {
+            "id": "c13a64f4-54c0-5587-bd12-711802b87f3b",
+            "name": "+ area : string"
+          },
+          {
+            "id": "90bb8776-4f2f-53ef-880d-333731a5e94d",
+            "name": "+ availability : RoomAvailability"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "318f3c66-5268-5187-a772-f16138e8b625",
+      "type": "class",
+      "position": {
+        "x": 972.9032258064517,
+        "y": 268.38709677419354
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "Offer",
+        "attributes": [],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "5b2691c1-5506-5a27-a68a-37cd293600d4",
+      "type": "class",
+      "position": {
+        "x": 33.54838709677419,
+        "y": 452.90322580645164
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "SpecialOffer",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "66abff1e-a6d8-57d1-ba3c-3beb1e57473f",
+      "type": "class",
+      "position": {
+        "x": 268.38709677419354,
+        "y": 452.90322580645164
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "RegularOffer",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "c39810ad-c771-5a3b-9147-b571f8e1c1db",
+      "type": "class",
+      "position": {
+        "x": 503.2258064516129,
+        "y": 452.90322580645164
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "TravelSearch",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "701c58d7-2994-5208-a142-7e9ded38aef5",
+      "type": "class",
+      "position": {
+        "x": 738.0645161290323,
+        "y": 452.90322580645164
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "SearchInfo",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "1d9b5569-6a14-5d9e-91c9-21db5b85f024",
+      "type": "class",
+      "position": {
+        "x": 972.9032258064517,
+        "y": 452.90322580645164
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "RoomAvailability",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "b0b59c5c-6fef-5bba-909a-563a48087610",
+      "type": "class",
+      "position": {
+        "x": 33.54838709677419,
+        "y": 536.7741935483871
+      },
+      "width": 184.51612903225808,
+      "height": 159.35483870967744,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 159.35483870967744
+      },
+      "data": {
+        "name": "TripInfo",
+        "attributes": [
+          {
+            "id": "07bad4a6-5453-5e0a-a98a-a245aaba30cc",
+            "name": "+ numberOfRooms : int"
+          },
+          {
+            "id": "ca5f4c34-7815-5746-9592-9e6019db72cb",
+            "name": "+ roomType : RoomType"
+          },
+          {
+            "id": "a2826e78-3dd0-550f-ac62-96183448c818",
+            "name": "+ arrivalDate : date"
+          },
+          {
+            "id": "faf28f07-06f2-5a22-b287-085a00740518",
+            "name": "+ departureDate : date"
+          },
+          {
+            "id": "ae860409-d922-57ef-9878-3bec040e6ffc",
+            "name": "+ budgetPerNight : float"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "1a79cbc3-8d9f-5920-94ad-387c457b0f46",
+      "type": "class",
+      "position": {
+        "x": 268.38709677419354,
+        "y": 536.7741935483871
+      },
+      "width": 184.51612903225808,
+      "height": 33.54838709677419,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 33.54838709677419
+      },
+      "data": {
+        "name": "BookingInfo",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "99baa032-ab45-516c-ad15-045245abf6f8",
+      "type": "class",
+      "position": {
+        "x": 503.2258064516129,
+        "y": 536.7741935483871
+      },
+      "width": 184.51612903225808,
+      "height": 209.67741935483872,
+      "measured": {
+        "width": 184.51612903225808,
+        "height": 209.67741935483872
+      },
+      "data": {
+        "name": "Booking",
+        "attributes": [
+          {
+            "id": "7f52c55f-fe98-591a-94d5-e684ef985eb4",
+            "name": "+ bookingId : int"
+          },
+          {
+            "id": "bef7f8fa-dcb2-5049-b7b2-6e2aa12dd906",
+            "name": "+ cancellationDeadline : date"
+          },
+          {
+            "id": "06cd1b04-4ef7-57e0-9e38-ec75199ca21a",
+            "name": "+ creditCardNumber : string"
+          },
+          {
+            "id": "1a64e7a7-79a6-5a81-92c0-0a1591352c76",
+            "name": "+ bookingStatus : BookingStatus"
+          },
+          {
+            "id": "8138e770-92b8-52dc-99e1-6a5c906dfd5a",
+            "name": "+ paymentType : PaymentType"
+          },
+          {
+            "id": "81348ac7-edca-53d9-a88e-ef00ff606d93",
+            "name": "+ confirmationDate : date"
+          },
+          {
+            "id": "d947ee90-c24b-52e9-8651-f1b7fa8eadf4",
+            "name": "+ paidAmount : float"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "f19c7257-7da8-54f0-ac3c-9a6efc2c61af",
+      "source": "5b2691c1-5506-5a27-a68a-37cd293600d4",
+      "target": "318f3c66-5268-5187-a772-f16138e8b625",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 218.06451612903226,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 972.9032258064517,
+            "y": 285.16129032258067
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "59fbb967-4713-5adc-84fc-3045b77dc924",
+      "source": "66abff1e-a6d8-57d1-ba3c-3beb1e57473f",
+      "target": "318f3c66-5268-5187-a772-f16138e8b625",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 452.90322580645164,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 972.9032258064517,
+            "y": 285.16129032258067
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4f1ccc2a-2ae6-5ca2-80be-c23593844c42",
+      "source": "1d9b5569-6a14-5d9e-91c9-21db5b85f024",
+      "target": "b0b59c5c-6fef-5bba-909a-563a48087610",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 972.9032258064517,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 218.06451612903226,
+            "y": 616.4516129032259
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d0283ca3-7aed-5f31-a371-af27f772f3c3",
+      "source": "701c58d7-2994-5208-a142-7e9ded38aef5",
+      "target": "b0b59c5c-6fef-5bba-909a-563a48087610",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 738.0645161290323,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 218.06451612903226,
+            "y": 616.4516129032259
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d36c2ee1-0fa0-50d0-9142-2b10c196714d",
+      "source": "1a79cbc3-8d9f-5920-94ad-387c457b0f46",
+      "target": "b0b59c5c-6fef-5bba-909a-563a48087610",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 268.38709677419354,
+            "y": 553.5483870967743
+          },
+          {
+            "x": 218.06451612903226,
+            "y": 616.4516129032259
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "34596d27-4463-5872-b13b-f78ad97f5566",
+      "source": "ec905936-da65-5cda-802c-4f3141963305",
+      "target": "a78b0542-8d88-5092-98d6-075a4c591b09",
+      "type": "ClassComposition",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 830.3225806451613,
+            "y": 268.38709677419354
+          },
+          {
+            "x": 830.3225806451613,
+            "y": 67.09677419354838
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ab68d4ba-8eb4-5a3f-b35d-5d42b49b6595",
+      "source": "a78b0542-8d88-5092-98d6-075a4c591b09",
+      "target": "60f7443e-f98c-558a-9655-4638018c806c",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 922.5806451612904,
+            "y": 50.322580645161295
+          },
+          {
+            "x": 972.9032258064517,
+            "y": 50.322580645161295
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4418866e-9300-53cd-9558-c7bb3fde4adc",
+      "source": "9ff6c696-de6c-5f0b-a783-f8687e6d23ee",
+      "target": "60f7443e-f98c-558a-9655-4638018c806c",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 218.06451612903226,
+            "y": 310.3225806451613
+          },
+          {
+            "x": 972.9032258064517,
+            "y": 50.322580645161295
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a0d506f3-3cfb-55a1-8834-088bffc55a2e",
+      "source": "318f3c66-5268-5187-a772-f16138e8b625",
+      "target": "ec905936-da65-5cda-802c-4f3141963305",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 972.9032258064517,
+            "y": 285.16129032258067
+          },
+          {
+            "x": 922.5806451612904,
+            "y": 335.48387096774195
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b77c2dee-9f4c-594e-acf8-ef505b1c600d",
+      "source": "1d9b5569-6a14-5d9e-91c9-21db5b85f024",
+      "target": "ec905936-da65-5cda-802c-4f3141963305",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 972.9032258064517,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 922.5806451612904,
+            "y": 335.48387096774195
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "089e1f38-4ff1-5c03-be0d-780105e792f8",
+      "source": "c39810ad-c771-5a3b-9147-b571f8e1c1db",
+      "target": "9ff6c696-de6c-5f0b-a783-f8687e6d23ee",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 503.2258064516129,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 218.06451612903226,
+            "y": 310.3225806451613
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f29b25cc-9852-5258-9f6d-2ad87841a3f9",
+      "source": "a8cb1a54-792e-54b7-856a-590007f88f53",
+      "target": "9ff6c696-de6c-5f0b-a783-f8687e6d23ee",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 503.2258064516129,
+            "y": 310.3225806451613
+          },
+          {
+            "x": 218.06451612903226,
+            "y": 310.3225806451613
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9d7d5e0d-550a-5692-a7b3-031821c7b9f2",
+      "source": "fc3e0d9c-c049-5552-8129-c880673b11e3",
+      "target": "9ff6c696-de6c-5f0b-a783-f8687e6d23ee",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 268.38709677419354,
+            "y": 310.3225806451613
+          },
+          {
+            "x": 218.06451612903226,
+            "y": 310.3225806451613
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7d9bb834-58b5-503d-859e-65146bc04159",
+      "source": "701c58d7-2994-5208-a142-7e9ded38aef5",
+      "target": "c39810ad-c771-5a3b-9147-b571f8e1c1db",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 738.0645161290323,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 687.741935483871,
+            "y": 469.6774193548387
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "76c08c97-40eb-5abd-a832-1f419c5f19e2",
+      "source": "a8cb1a54-792e-54b7-856a-590007f88f53",
+      "target": "c39810ad-c771-5a3b-9147-b571f8e1c1db",
+      "type": "ClassComposition",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 595.483870967742,
+            "y": 352.258064516129
+          },
+          {
+            "x": 595.483870967742,
+            "y": 452.90322580645164
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "aa66a536-729b-5289-ab95-4246baa38ceb",
+      "source": "1a79cbc3-8d9f-5920-94ad-387c457b0f46",
+      "target": "99baa032-ab45-516c-ad15-045245abf6f8",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 452.90322580645164,
+            "y": 553.5483870967743
+          },
+          {
+            "x": 503.2258064516129,
+            "y": 641.6129032258065
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c4aafd5a-fd0e-57c2-a93c-0a661a2ac231",
+      "source": "66abff1e-a6d8-57d1-ba3c-3beb1e57473f",
+      "target": "c39810ad-c771-5a3b-9147-b571f8e1c1db",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 452.90322580645164,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 503.2258064516129,
+            "y": 469.6774193548387
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "60d42d80-b947-580e-a44a-fcac6eeb6a93",
+      "source": "ec905936-da65-5cda-802c-4f3141963305",
+      "target": "99baa032-ab45-516c-ad15-045245abf6f8",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 830.3225806451613,
+            "y": 402.58064516129036
+          },
+          {
+            "x": 595.483870967742,
+            "y": 536.7741935483871
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8bf72c80-bd6e-5b3d-a513-b5f601c13320",
+      "source": "99baa032-ab45-516c-ad15-045245abf6f8",
+      "target": "318f3c66-5268-5187-a772-f16138e8b625",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 687.741935483871,
+            "y": 641.6129032258065
+          },
+          {
+            "x": 972.9032258064517,
+            "y": 285.16129032258067
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9ba9b449-722a-5b3a-95d2-8c34ec8cc437",
+      "source": "99baa032-ab45-516c-ad15-045245abf6f8",
+      "target": "9ff6c696-de6c-5f0b-a783-f8687e6d23ee",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 503.2258064516129,
+            "y": 641.6129032258065
+          },
+          {
+            "x": 218.06451612903226,
+            "y": 310.3225806451613
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e612a6a2-6105-5706-aea3-27ccaaaf9e44",
+      "source": "5b2691c1-5506-5a27-a68a-37cd293600d4",
+      "target": "1a79cbc3-8d9f-5920-94ad-387c457b0f46",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 218.06451612903226,
+            "y": 469.6774193548387
+          },
+          {
+            "x": 268.38709677419354,
+            "y": 553.5483870967743
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "specialOffers",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "20632028-0144-5f70-8030-1c4fe3be1eee",
+      "source": "1a79cbc3-8d9f-5920-94ad-387c457b0f46",
+      "target": "5b2691c1-5506-5a27-a68a-37cd293600d4",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 268.38709677419354,
+            "y": 553.5483870967743
+          },
+          {
+            "x": 218.06451612903226,
+            "y": 469.6774193548387
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..5",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": "bestOffers"
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

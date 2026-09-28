@@ -1,0 +1,969 @@
+{
+  "version": "4.2.0",
+  "id": "TileOGame",
+  "title": "TileOGame",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "f0903ce5-4bd2-5e22-8450-f898b5606753",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Mode",
+        "attributes": [
+          {
+            "id": "ba53abf2-3414-533c-a54a-3508909a8375",
+            "name": "DESIGN"
+          },
+          {
+            "id": "1df54bdc-8221-5ce2-8da6-b1784adc3e9c",
+            "name": "GAME"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "3c87d422-7e45-5941-ab20-715185354db7",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Color",
+        "attributes": [
+          {
+            "id": "01018341-aa88-5fa0-a661-f4af4a899a1d",
+            "name": "RED"
+          },
+          {
+            "id": "c810fe43-8565-5374-8862-166cfa3c0240",
+            "name": "BLUE"
+          },
+          {
+            "id": "20a555bc-33ea-593b-8797-b74920846a2a",
+            "name": "GREEN"
+          },
+          {
+            "id": "f322a8a1-ee68-52f9-b019-8fdcb2e9824e",
+            "name": "YELLOW"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "8aa3a7e9-27dd-5e82-a9d5-44e6ab1b2403",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "TileO",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Game",
+        "attributes": [
+          {
+            "id": "b98dc439-7862-522e-b4e9-c0d169eb6491",
+            "name": "+ currentConnectionPieces : int"
+          },
+          {
+            "id": "56931568-cd9b-5e72-a8ab-6177a20a1f46",
+            "name": "+ mode : Mode"
+          },
+          {
+            "id": "c1328f89-feef-5d2d-9c9d-c9508cbf0b83",
+            "name": "+ 32 : const int SpareConnectionPieces ="
+          },
+          {
+            "id": "c8d9ec67-548c-5008-9cb3-6d23a862b173",
+            "name": "+ 32 : const int NumberOfActionCards ="
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "36dd338e-5250-517a-af04-a866ec77cb75",
+      "type": "class",
+      "position": {
+        "x": 1160,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Connection",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "919befc0-9437-50df-9c42-bba59f56c933",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Die",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "78d4a28d-cdc8-528c-a572-451a3173b3ca",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Deck",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "95e8c0ad-6035-5166-9ba4-ee9ef715a71d",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Tile",
+        "attributes": [
+          {
+            "id": "8cd265fc-ffe4-5acf-a74d-0e2e062d987a",
+            "name": "+ x : int"
+          },
+          {
+            "id": "9f4df14b-e340-5682-961d-e7d4b1d9c63d",
+            "name": "+ y : int"
+          },
+          {
+            "id": "ff063c6b-7336-565a-970f-a5cc6e4cfecc",
+            "name": "+ hasBeenVisited : boolean"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "c7ecd085-a98e-50f0-a7e8-52755284fbca",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "ActionCard",
+        "attributes": [
+          {
+            "id": "f80b5260-40bc-54d6-a382-21d738a9b64c",
+            "name": "+ instructions : string"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "b5aa2420-6fd6-554b-a305-998fb7ddc40d",
+      "type": "class",
+      "position": {
+        "x": 1160,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "RollDieActionCard",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "2303c539-2d2f-5b22-a3df-f6a28c47cd40",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "ConnectTilesActionCard",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "0451b7a0-d978-5be9-b46d-aa59b3a915d2",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "RemoveConnectionActionCard",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "9ad596fc-2d7a-5e12-91e3-7f38445f1a44",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "TeleportActionCard",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "4063a998-25da-5666-beac-adcc0c630ca8",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "LoseTurnActionCard",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "1b58ca67-23ee-57c7-ad4b-0f1dfce2ff08",
+      "type": "class",
+      "position": {
+        "x": 1160,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "WinTile",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "d7024aa8-a507-5a36-8be8-8740bd9dc929",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 550
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "ActionTile",
+        "attributes": [
+          {
+            "id": "0e0a8135-d2b2-571b-be15-0eb5caa9b927",
+            "name": "+ inactivityPeriod : int"
+          },
+          {
+            "id": "536d15a0-6dee-5370-9dd1-e0753797798e",
+            "name": "+ tunrsUntilActive : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0e758029-43ca-59c5-b033-906304b98b65",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 550
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "NormalTile",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "c733c7e0-5c36-55ae-adc8-f51773c636f6",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 550
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Player",
+        "attributes": [
+          {
+            "id": "42068ab7-3b6d-5828-8f49-0f6a0e1e9102",
+            "name": "+ number : int"
+          },
+          {
+            "id": "e77a20fe-1f3b-595e-9792-900462b03c63",
+            "name": "+ turnsUntilActive : int"
+          },
+          {
+            "id": "0343202b-187c-5276-9868-4e0bcaa98ab2",
+            "name": "+ color : Color"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "7807d089-a5d1-5484-a2b3-d0ddf5f01571",
+      "source": "1b58ca67-23ee-57c7-ad4b-0f1dfce2ff08",
+      "target": "95e8c0ad-6035-5166-9ba4-ee9ef715a71d",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 1160,
+            "y": 470.0
+          },
+          {
+            "x": 820,
+            "y": 325.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "03a20382-547a-5973-8f6a-8c611a7a2c32",
+      "source": "d7024aa8-a507-5a36-8be8-8740bd9dc929",
+      "target": "95e8c0ad-6035-5166-9ba4-ee9ef715a71d",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 600.0
+          },
+          {
+            "x": 600,
+            "y": 325.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "03bc3b12-f991-53ba-aff3-d2abb335ed85",
+      "source": "0e758029-43ca-59c5-b033-906304b98b65",
+      "target": "95e8c0ad-6035-5166-9ba4-ee9ef715a71d",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 570.0
+          },
+          {
+            "x": 600,
+            "y": 325.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "38f40a71-3571-5d0e-9e75-709ec67634d6",
+      "source": "b5aa2420-6fd6-554b-a305-998fb7ddc40d",
+      "target": "c7ecd085-a98e-50f0-a7e8-52755284fbca",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 1160,
+            "y": 280.0
+          },
+          {
+            "x": 1100,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4bc5e610-0980-55a8-a9d9-0f8ddf813f9e",
+      "source": "2303c539-2d2f-5b22-a3df-f6a28c47cd40",
+      "target": "c7ecd085-a98e-50f0-a7e8-52755284fbca",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 470.0
+          },
+          {
+            "x": 880,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "affd1e64-5cb8-5598-b08f-976b6235c5d3",
+      "source": "0451b7a0-d978-5be9-b46d-aa59b3a915d2",
+      "target": "c7ecd085-a98e-50f0-a7e8-52755284fbca",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 470.0
+          },
+          {
+            "x": 880,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d54afb2e-3a1b-5d23-821c-3ef76075dbf4",
+      "source": "9ad596fc-2d7a-5e12-91e3-7f38445f1a44",
+      "target": "c7ecd085-a98e-50f0-a7e8-52755284fbca",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 470.0
+          },
+          {
+            "x": 880,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "805e65b2-3dfc-5503-9493-ed6264faa251",
+      "source": "4063a998-25da-5666-beac-adcc0c630ca8",
+      "target": "c7ecd085-a98e-50f0-a7e8-52755284fbca",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 990.0,
+            "y": 450
+          },
+          {
+            "x": 990.0,
+            "y": 330
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "5f062068-7566-5759-9102-56c6938b9e45",
+      "source": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "target": "8aa3a7e9-27dd-5e82-a9d5-44e6ab1b2403",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 120.0
+          },
+          {
+            "x": 820,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "games",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "515ffd3c-71e5-53f1-8b51-641510b28ae0",
+      "source": "95e8c0ad-6035-5166-9ba4-ee9ef715a71d",
+      "target": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 325.0
+          },
+          {
+            "x": 880,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "tiles",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b5f93e21-924c-56b2-978d-99b2ac8832b0",
+      "source": "36dd338e-5250-517a-af04-a866ec77cb75",
+      "target": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 1160,
+            "y": 60.0
+          },
+          {
+            "x": 1100,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "connections",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "356e62b6-568d-5623-a737-43962ba4a863",
+      "source": "919befc0-9437-50df-9c42-bba59f56c933",
+      "target": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 280.0
+          },
+          {
+            "x": 880,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "die",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "909a4668-4c69-51bb-9af5-c68b30858d67",
+      "source": "78d4a28d-cdc8-528c-a572-451a3173b3ca",
+      "target": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 880,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "deck",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "90d19ae7-1655-519e-bfb5-f2339b819f31",
+      "source": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "target": "c733c7e0-5c36-55ae-adc8-f51773c636f6",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 990.0,
+            "y": 200
+          },
+          {
+            "x": 710.0,
+            "y": 550
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "currentPlayer"
+      }
+    },
+    {
+      "id": "24d7f21c-feda-57c6-b084-c2048ef57b16",
+      "source": "c733c7e0-5c36-55ae-adc8-f51773c636f6",
+      "target": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "type": "ClassComposition",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 550
+          },
+          {
+            "x": 990.0,
+            "y": 200
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "2..4",
+        "targetMultiplicity": "1",
+        "sourceRole": "players",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b42eda9d-03c9-5352-aa51-1c50f1e445de",
+      "source": "c7ecd085-a98e-50f0-a7e8-52755284fbca",
+      "target": "78d4a28d-cdc8-528c-a572-451a3173b3ca",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 295.0
+          },
+          {
+            "x": 540,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..32",
+        "targetMultiplicity": "1",
+        "sourceRole": "cards",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7c0debba-7fb2-58de-9a48-7626782b1959",
+      "source": "4fff250e-33dd-5596-b59a-c369c9e78001",
+      "target": "1b58ca67-23ee-57c7-ad4b-0f1dfce2ff08",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 990.0,
+            "y": 200
+          },
+          {
+            "x": 1270.0,
+            "y": 450
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "winTile"
+      }
+    },
+    {
+      "id": "2735b497-3c94-5c43-ad1c-feb507963053",
+      "source": "95e8c0ad-6035-5166-9ba4-ee9ef715a71d",
+      "target": "36dd338e-5250-517a-af04-a866ec77cb75",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 325.0
+          },
+          {
+            "x": 1160,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "2",
+        "targetMultiplicity": "0..4",
+        "sourceRole": "tiles",
+        "targetRole": "connections"
+      }
+    },
+    {
+      "id": "6a6684bc-77c1-50fc-b858-83108438a165",
+      "source": "c733c7e0-5c36-55ae-adc8-f51773c636f6",
+      "target": "95e8c0ad-6035-5166-9ba4-ee9ef715a71d",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 550
+          },
+          {
+            "x": 710.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "startingTile"
+      }
+    },
+    {
+      "id": "8358b9bb-6d62-5fbf-aa57-bf98ad76a0ec",
+      "source": "c733c7e0-5c36-55ae-adc8-f51773c636f6",
+      "target": "95e8c0ad-6035-5166-9ba4-ee9ef715a71d",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 550
+          },
+          {
+            "x": 710.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..4",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "currentTile"
+      }
+    },
+    {
+      "id": "de6c1d7c-ea99-5c4d-b284-fd78ef106044",
+      "source": "78d4a28d-cdc8-528c-a572-451a3173b3ca",
+      "target": "c7ecd085-a98e-50f0-a7e8-52755284fbca",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 880,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "currentCard"
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

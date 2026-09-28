@@ -1,0 +1,307 @@
+{
+  "version": "4.2.0",
+  "id": "HospitalHouseMD",
+  "title": "HospitalHouseMD",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "988c6e47-7a9c-5ab3-b162-c08a70c82922",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Patient",
+        "attributes": [
+          {
+            "id": "0164f946-e331-5c9a-8d35-6e9debeb0bc7",
+            "name": "+ Consent : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "5698461d-5356-5f8b-8924-3927c8d2ce7f",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Doctor",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "7ccd2074-c1a0-536e-bece-cc970a5deb80",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Diagnosis",
+        "attributes": [
+          {
+            "id": "c8347440-b53e-5ae4-812f-c41e84df35b0",
+            "name": "+ Stage : int"
+          }
+        ],
+        "methods": [
+          {
+            "id": "d434f9f7-edef-5210-a55a-c47dc76c6c5c",
+            "name": "+ ugradeStage() : int"
+          },
+          {
+            "id": "2aea2e09-196f-5ac3-85f0-0ff103e89bf4",
+            "name": "+ downgradeStage() : int"
+          },
+          {
+            "id": "d3b0142a-8e48-56dc-8cf8-d2a8fedf3d79",
+            "name": "+ priorityUpgrade() : int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "3434df3c-c2b1-5652-bfe2-fe82b035964c",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Illness",
+        "attributes": [
+          {
+            "id": "2d18b407-d2af-5680-bbe4-b75a0767a9e7",
+            "name": "+ Priority : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0136fdd0-f984-5af0-a249-d5933fe4fe63",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Treatment",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "1cf9cdaa-1daa-5c4e-a4ab-143ff2b9be15",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "AppliedTreatment",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "09e00f0b-3f0d-5460-a4ad-8ad285f183c3",
+      "source": "988c6e47-7a9c-5ab3-b162-c08a70c82922",
+      "target": "7ccd2074-c1a0-536e-bece-cc970a5deb80",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f82a86f4-1c80-5828-b8cb-22a854a730cb",
+      "source": "5698461d-5356-5f8b-8924-3927c8d2ce7f",
+      "target": "7ccd2074-c1a0-536e-bece-cc970a5deb80",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 60.0
+          },
+          {
+            "x": 600,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "25585efc-39f9-507b-bef7-75958184c2f5",
+      "source": "3434df3c-c2b1-5652-bfe2-fe82b035964c",
+      "target": "7ccd2074-c1a0-536e-bece-cc970a5deb80",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a49c4794-14fa-5239-b7c4-7f3f2f712869",
+      "source": "7ccd2074-c1a0-536e-bece-cc970a5deb80",
+      "target": "1cf9cdaa-1daa-5c4e-a4ab-143ff2b9be15",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 200
+          },
+          {
+            "x": 710.0,
+            "y": 260
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "aff17947-d536-5d47-833a-4cec4029d0a3",
+      "source": "3434df3c-c2b1-5652-bfe2-fe82b035964c",
+      "target": "0136fdd0-f984-5af0-a249-d5933fe4fe63",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 320,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4d625726-4cb8-539b-b130-8a94ea3cddae",
+      "source": "0136fdd0-f984-5af0-a249-d5933fe4fe63",
+      "target": "1cf9cdaa-1daa-5c4e-a4ab-143ff2b9be15",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 600,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

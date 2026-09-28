@@ -1,0 +1,687 @@
+{
+  "version": "4.2.0",
+  "id": "CardGameApp",
+  "title": "CardGameApp",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "3d1c637b-91fe-573d-8a92-f29f8efabf85",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Game",
+        "attributes": [
+          {
+            "id": "7a00c2fa-b100-5431-a76c-2416830f7600",
+            "name": "+ ID : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "86f0a48d-8122-5742-8752-c40dc1126242",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Player",
+        "attributes": [
+          {
+            "id": "4e359c90-6dea-5111-b594-50f3a7dd41d7",
+            "name": "+ ID : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "9a2eba97-2c92-5ddf-bfae-83f5055f84a5",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Deck",
+        "attributes": [
+          {
+            "id": "012ef152-52e3-5000-b103-414ec5f085b6",
+            "name": "+ ID : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0c566c5f-f321-5a56-bbb7-09f2bfb93275",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Card",
+        "attributes": [
+          {
+            "id": "00cf6b6f-f76c-5d70-b0fb-de13a639b8f7",
+            "name": "+ ID : int"
+          },
+          {
+            "id": "0ce5434f-5f13-5702-87cd-0e3aeabebb44",
+            "name": "+ suit : Suit"
+          }
+        ],
+        "methods": [
+          {
+            "id": "51a966ec-6a36-5bd5-9e1a-f918cd2df2b1",
+            "name": "+ compare(Card) : Compare"
+          }
+        ]
+      }
+    },
+    {
+      "id": "0600b5ca-bb2e-5ea6-ac93-493fd079b668",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Scoreboard",
+        "attributes": [
+          {
+            "id": "e6b721d2-d36b-5622-9832-bfe0b91edce2",
+            "name": "+ ID : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "4f0a52ba-36ce-5ca4-b1b3-4c1a26f25760",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Round",
+        "attributes": [
+          {
+            "id": "41361b16-74ca-5fe3-b246-533338bbaa5e",
+            "name": "+ ID : int"
+          },
+          {
+            "id": "9f53ad04-4407-5556-b9a1-888dc3fb0acd",
+            "name": "+ points : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "5292f0fc-8a6a-511c-9319-af69bfe8cfa8",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "RoundType",
+        "attributes": [
+          {
+            "id": "1d109a42-0baf-5853-9398-bb57a7c318ff",
+            "name": "+ ID : int"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "050d66e3-c009-51d1-88c1-0d8087f52174",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "SoloRound",
+        "attributes": [
+          {
+            "id": "d8530d27-64d8-52f4-90f9-7caa0ce3b406",
+            "name": "+ solo : SoloType"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "465bcc1a-fa80-59ec-8f83-cf5ded11cf58",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 390
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "MandatorySolo",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "739c07f5-0517-58bb-a5bd-7c2356ac72aa",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 390
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "DoubleRound",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "08114930-5eea-59d2-8148-cdde1939ae4a",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 390
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Suit",
+        "attributes": [
+          {
+            "id": "f00d61e9-51f0-5c32-800a-d38ffb08afc8",
+            "name": "Diamonds"
+          },
+          {
+            "id": "784f48bb-04fb-5933-9e20-21a98c218bb8",
+            "name": "Hearts"
+          },
+          {
+            "id": "b061de5b-cbe9-54d4-9d95-6c1765f06a4a",
+            "name": "Spades"
+          },
+          {
+            "id": "0fa3b744-05c8-5863-9231-f1423a00257e",
+            "name": "Clubs"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "bbcec229-f3a3-5df6-8ade-ee3928607b7f",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 390
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Compare",
+        "attributes": [
+          {
+            "id": "0fe7c7fe-7e43-558f-aa1a-62273efa90c7",
+            "name": "Lower"
+          },
+          {
+            "id": "e8200df5-f1f5-55f0-83b2-4ae44235ac5d",
+            "name": "Higher"
+          },
+          {
+            "id": "af21ff05-7144-5542-9542-1dfc8a911388",
+            "name": "Equal"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    },
+    {
+      "id": "f07237df-b8b7-5c3f-a2e5-187e2f6cc272",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 610
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "SoloType",
+        "attributes": [
+          {
+            "id": "903cf242-d210-5ef0-b4fe-ecf2d16526f7",
+            "name": "Trump"
+          },
+          {
+            "id": "45e933f4-d2f6-5f33-98cf-f0e3e16d3b7d",
+            "name": "Jacks"
+          },
+          {
+            "id": "6dd7c24b-986d-51e8-828d-5add90435213",
+            "name": "Queens"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "bb021951-877d-5048-81bd-e04d1eb026ea",
+      "source": "3d1c637b-91fe-573d-8a92-f29f8efabf85",
+      "target": "0600b5ca-bb2e-5ea6-ac93-493fd079b668",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 110
+          },
+          {
+            "x": 150.0,
+            "y": 230
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8ce2bbf7-f9c9-5c94-876a-e0f52c57356c",
+      "source": "3d1c637b-91fe-573d-8a92-f29f8efabf85",
+      "target": "9a2eba97-2c92-5ddf-bfae-83f5055f84a5",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f5d426bf-be0f-5154-a136-70715e5cc74d",
+      "source": "3d1c637b-91fe-573d-8a92-f29f8efabf85",
+      "target": "86f0a48d-8122-5742-8752-c40dc1126242",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "4",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c4bb7893-23bd-590e-9c47-666f36dd44ad",
+      "source": "9a2eba97-2c92-5ddf-bfae-83f5055f84a5",
+      "target": "0c566c5f-f321-5a56-bbb7-09f2bfb93275",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 820,
+            "y": 75.0
+          },
+          {
+            "x": 880,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "0..48",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "68a4c00b-1a60-5a0d-bfac-304dd45d8074",
+      "source": "0600b5ca-bb2e-5ea6-ac93-493fd079b668",
+      "target": "4f0a52ba-36ce-5ca4-b1b3-4c1a26f25760",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 265.0
+          },
+          {
+            "x": 320,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1284e8a4-a87a-50f6-9d5b-46cec745b5ff",
+      "source": "86f0a48d-8122-5742-8752-c40dc1126242",
+      "target": "4f0a52ba-36ce-5ca4-b1b3-4c1a26f25760",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 110
+          },
+          {
+            "x": 430.0,
+            "y": 230
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "1..3",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "cbeeb806-15e0-5d5b-aaf9-c5d0f321d050",
+      "source": "86f0a48d-8122-5742-8752-c40dc1126242",
+      "target": "5292f0fc-8a6a-511c-9319-af69bfe8cfa8",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "1..2",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1711b537-6630-5906-9484-71d7dd7a74eb",
+      "source": "050d66e3-c009-51d1-88c1-0d8087f52174",
+      "target": "5292f0fc-8a6a-511c-9319-af69bfe8cfa8",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 265.0
+          },
+          {
+            "x": 820,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "52153396-3f3f-5b6e-81f0-2835dd9b33f8",
+      "source": "739c07f5-0517-58bb-a5bd-7c2356ac72aa",
+      "target": "5292f0fc-8a6a-511c-9319-af69bfe8cfa8",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 410.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "30280a59-d90b-5ca0-8f3c-9411c40e2ab0",
+      "source": "465bcc1a-fa80-59ec-8f83-cf5ded11cf58",
+      "target": "050d66e3-c009-51d1-88c1-0d8087f52174",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 410.0
+          },
+          {
+            "x": 880,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "fa3654cd-c30d-52ac-8ed6-4c936a185cde",
+      "source": "0c566c5f-f321-5a56-bbb7-09f2bfb93275",
+      "target": "08114930-5eea-59d2-8148-cdde1939ae4a",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 990.0,
+            "y": 170
+          },
+          {
+            "x": 710.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "0f76fd42-e0ac-569a-9438-5097ef089645",
+      "source": "0c566c5f-f321-5a56-bbb7-09f2bfb93275",
+      "target": "bbcec229-f3a3-5df6-8ade-ee3928607b7f",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 990.0,
+            "y": 170
+          },
+          {
+            "x": 990.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "0e6ebf1c-8cd0-518b-85e4-d294d3f09a50",
+      "source": "050d66e3-c009-51d1-88c1-0d8087f52174",
+      "target": "f07237df-b8b7-5c3f-a2e5-187e2f6cc272",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 265.0
+          },
+          {
+            "x": 260,
+            "y": 675.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

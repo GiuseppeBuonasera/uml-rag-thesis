@@ -1,5 +1,6 @@
 """
-Costruisce corpus/processed/corpus.jsonl a partire da corpus/raw/models/ e
+Costruisce corpus/processed/corpus.jsonl a partire da corpus/raw/models_original/
+(sorgente immutabile, mai scritta da nessuno script — vedi RAW_DIRS) e
 corpus/raw/translated_it/ (esercizi tradotti dall'italiano, vedi
 docs/decisions.md — Fase 1/2 traduzione studio2025_it).
 
@@ -30,7 +31,13 @@ import json
 from pathlib import Path
 
 RAW_DIRS = [
-    Path(__file__).parent / "raw" / "models",
+    # Rinominata da "models" a "models_original" (2026-09-25, cambio fatto
+    # direttamente sul filesystem, non da questo script — corpus/raw/* e' fuori da
+    # git, quindi git non lo mostra) per segnalare che e' la sorgente immutabile:
+    # nessuno script deve MAI scrivere qui, solo leggere. Le correzioni passano dal
+    # convertitore (corpus/apollon_convert.py) o da corpus/corrections/, vedi
+    # docs/decisions.md.
+    Path(__file__).parent / "raw" / "models_original",
     Path(__file__).parent / "raw" / "translated_it",
 ]
 OUT_PATH = Path(__file__).parent / "processed" / "corpus.jsonl"

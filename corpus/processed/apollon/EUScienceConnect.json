@@ -1,0 +1,468 @@
+{
+  "version": "4.2.0",
+  "id": "EUScienceConnect",
+  "title": "EUScienceConnect",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "c8db4714-32bd-54f2-82fa-d5b66b326843",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [
+          {
+            "id": "70072a5f-19ea-5e3e-a6e8-d89199dc98be",
+            "name": "+ PersonID : int"
+          },
+          {
+            "id": "ad467eb4-86b2-5eb3-a3df-e9ca6bd1ad91",
+            "name": "+ PhoneNumber : string"
+          },
+          {
+            "id": "6987c552-bb96-5f5c-890e-885e14971353",
+            "name": "+ Keywords : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "c2ca0919-59ed-5fd0-b64c-21d58e7d78ed",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "ResearchInstitution",
+        "attributes": [
+          {
+            "id": "9a64013d-2d35-5de8-80ba-835ef05248b6",
+            "name": "+ InstitutionCode : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "14b1d5d5-aa77-5602-a5ba-abe0b5abf66d",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Article",
+        "attributes": [
+          {
+            "id": "169439a5-3093-56c1-be86-9d1db7353505",
+            "name": "+ DOI : int"
+          },
+          {
+            "id": "c248ed55-99c8-5e13-83b4-f4c59cc06f0b",
+            "name": "+ Title : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "d7f49fc4-23bd-5386-8e3a-780fd9e03707",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Author",
+        "attributes": [
+          {
+            "id": "774e16af-682f-52aa-95bb-f408d5cdfdde",
+            "name": "+ Position : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "5029d30e-84cf-5ddd-a0ae-bac7c32282eb",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "PeerReviewedPaper",
+        "attributes": [
+          {
+            "id": "3580d3c7-4fa8-5f12-b1bf-83b3144386fc",
+            "name": "+ CitationCount : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "8a2a145f-6ee9-54d8-a280-8ed6d37866dc",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "TechnicalReport",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "7633952d-b7f3-5858-859b-eb19547d2517",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 360
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Publisher",
+        "attributes": [
+          {
+            "id": "6be38fb5-21ee-5860-a495-675229baf18f",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "9707ecaa-2f95-550e-83be-a6231b5f7d71",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 360
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Journal",
+        "attributes": [
+          {
+            "id": "8844c773-b0aa-5f61-b669-d2c9a13e37f6",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "fd60a94a-64be-5079-bb09-3772a47ac5a0",
+            "name": "+ ImpactFactor : double"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e4e7714d-eaf0-52b8-865e-8d52ac2a8753",
+      "source": "8a2a145f-6ee9-54d8-a280-8ed6d37866dc",
+      "target": "14b1d5d5-aa77-5602-a5ba-abe0b5abf66d",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 230
+          },
+          {
+            "x": 710.0,
+            "y": 140
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c69dfe14-2fe7-5669-a9ab-fe63cf1b0d05",
+      "source": "5029d30e-84cf-5ddd-a0ae-bac7c32282eb",
+      "target": "14b1d5d5-aa77-5602-a5ba-abe0b5abf66d",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 265.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e2a58b60-fc05-5e1c-8a02-9ea456cd5a08",
+      "source": "c2ca0919-59ed-5fd0-b64c-21d58e7d78ed",
+      "target": "c8db4714-32bd-54f2-82fa-d5b66b326843",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "worksFor",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "aa23af93-5cd1-564e-b8af-56a8fb13824a",
+      "source": "c8db4714-32bd-54f2-82fa-d5b66b326843",
+      "target": "5029d30e-84cf-5ddd-a0ae-bac7c32282eb",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 105.0
+          },
+          {
+            "x": 320,
+            "y": 265.0
+          }
+        ],
+        "label": "reviews",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c1a8c3ab-40b1-5f2f-9bab-3b552844e593",
+      "source": "c2ca0919-59ed-5fd0-b64c-21d58e7d78ed",
+      "target": "9707ecaa-2f95-550e-83be-a6231b5f7d71",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 110
+          },
+          {
+            "x": 430.0,
+            "y": 360
+          }
+        ],
+        "label": "subscribesTo",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "25b8d298-2e65-5a62-a2b3-1857eaacc147",
+      "source": "7633952d-b7f3-5858-859b-eb19547d2517",
+      "target": "9707ecaa-2f95-550e-83be-a6231b5f7d71",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 395.0
+          },
+          {
+            "x": 320,
+            "y": 410.0
+          }
+        ],
+        "label": "publishes",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9c626ebc-495f-55e6-b86d-9dcad2268f39",
+      "source": "9707ecaa-2f95-550e-83be-a6231b5f7d71",
+      "target": "5029d30e-84cf-5ddd-a0ae-bac7c32282eb",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 360
+          },
+          {
+            "x": 430.0,
+            "y": 300
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "70da8942-4087-5529-98e9-a9faf562e718",
+      "source": "c2ca0919-59ed-5fd0-b64c-21d58e7d78ed",
+      "target": "8a2a145f-6ee9-54d8-a280-8ed6d37866dc",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 250.0
+          }
+        ],
+        "label": "publishes",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b9d84078-485e-5a73-8362-23645b8a4950",
+      "source": "14b1d5d5-aa77-5602-a5ba-abe0b5abf66d",
+      "target": "d7f49fc4-23bd-5386-8e3a-780fd9e03707",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "87b9e3bc-d21b-58ad-8e73-2c1332005984",
+      "source": "d7f49fc4-23bd-5386-8e3a-780fd9e03707",
+      "target": "c8db4714-32bd-54f2-82fa-d5b66b326843",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 230
+          },
+          {
+            "x": 150.0,
+            "y": 170
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

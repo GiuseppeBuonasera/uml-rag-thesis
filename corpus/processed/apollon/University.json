@@ -1,0 +1,479 @@
+{
+  "version": "4.2.0",
+  "id": "University",
+  "title": "University",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "a38e8570-e835-5b11-a691-7b37bad162f1",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Employee",
+        "attributes": [
+          {
+            "id": "af86b91c-b625-50d8-8514-4e845a6cfd59",
+            "name": "+ ssNo : int"
+          },
+          {
+            "id": "6993eb57-3cb3-540a-ae2c-dbc6ee60ae04",
+            "name": "+ name : string"
+          },
+          {
+            "id": "4eaf4776-d4e6-57bf-9ac4-0df206cef867",
+            "name": "+ email : string"
+          },
+          {
+            "id": "ca9d5454-e310-5f32-88f1-d6876b4533bd",
+            "name": "+ counter : int"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "1e8a15ca-aac0-5ba9-a100-89d540a62931",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Faculty",
+        "attributes": [
+          {
+            "id": "b16d79f1-a313-563c-bc8d-687367705127",
+            "name": "+ name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "a56afa77-1f92-58b5-941c-c825a14480a8",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "AdministrativeEmployee",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "8b5b96ad-4b2f-5be1-8421-aa61f01e2a67",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "ResearchAssociate",
+        "attributes": [
+          {
+            "id": "a4ca1405-089e-5e27-b037-c4013b58315f",
+            "name": "+ fieldOfStudy : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "fdeffe8d-544a-5954-bb4a-3600349df715",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Institute",
+        "attributes": [
+          {
+            "id": "bc42aee2-63f6-59cf-8924-00801c12e6ac",
+            "name": "+ name : string"
+          },
+          {
+            "id": "4b401f58-225b-5883-a8b0-f9461a21ba97",
+            "name": "+ address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "40abfb8d-6c77-5478-8cfb-267a4502968d",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Course",
+        "attributes": [
+          {
+            "id": "5b99a2d7-124f-5953-b295-24654475720f",
+            "name": "+ name : string"
+          },
+          {
+            "id": "3b4296be-17f8-5aa1-a4dc-d4b00af7de70",
+            "name": "+ id : int"
+          },
+          {
+            "id": "3568aafb-dce7-518a-a1ae-ddf3d16ac1ce",
+            "name": "+ hours : float"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "f4a87db9-6b94-5455-8fdb-638cb373f256",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 450
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Lecturer",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "c13a47b6-32b2-5091-9fed-ab98a0308430",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 450
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Project",
+        "attributes": [
+          {
+            "id": "16bec8f6-10d5-5576-bc17-0db33f99d9f3",
+            "name": "+ name : string"
+          },
+          {
+            "id": "a69cc5ab-366b-54d3-96f6-df762ab62ff1",
+            "name": "+ start : date"
+          },
+          {
+            "id": "44650640-d782-5695-ade2-157f0aad5d98",
+            "name": "+ end : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "e72ce578-7a0c-5b09-96cd-fdf7fa682387",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 450
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Participation",
+        "attributes": [
+          {
+            "id": "8da14911-afa5-52c3-b79e-95cb8cf32c44",
+            "name": "+ hours : int"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "72ad1521-2b29-5c24-a5c8-a74f71405a63",
+      "source": "a38e8570-e835-5b11-a691-7b37bad162f1",
+      "target": "1e8a15ca-aac0-5ba9-a100-89d540a62931",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 120.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "leads >",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "65061588-297c-5ccf-8f8d-a653b8cf2daa",
+      "source": "a56afa77-1f92-58b5-941c-c825a14480a8",
+      "target": "a38e8570-e835-5b11-a691-7b37bad162f1",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "204a85ac-b0c6-5e67-a075-3c632d1f1352",
+      "source": "8b5b96ad-4b2f-5be1-8421-aa61f01e2a67",
+      "target": "a38e8570-e835-5b11-a691-7b37bad162f1",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 260
+          },
+          {
+            "x": 150.0,
+            "y": 200
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9e6d4f22-7824-53fd-b16e-e3b195a45700",
+      "source": "fdeffe8d-544a-5954-bb4a-3600349df715",
+      "target": "1e8a15ca-aac0-5ba9-a100-89d540a62931",
+      "type": "ClassComposition",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 260
+          },
+          {
+            "x": 430.0,
+            "y": 110
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "6b8b25ca-8154-59a2-9fda-2c6ca8334a6e",
+      "source": "8b5b96ad-4b2f-5be1-8421-aa61f01e2a67",
+      "target": "fdeffe8d-544a-5954-bb4a-3600349df715",
+      "type": "ClassAggregation",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 320,
+            "y": 310.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "67761b9c-140d-5fee-a735-c4b39b0f0e8a",
+      "source": "f4a87db9-6b94-5455-8fdb-638cb373f256",
+      "target": "8b5b96ad-4b2f-5be1-8421-aa61f01e2a67",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 450
+          },
+          {
+            "x": 150.0,
+            "y": 330
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c299592f-1c76-53a9-bb11-fe25b99f77b8",
+      "source": "f4a87db9-6b94-5455-8fdb-638cb373f256",
+      "target": "40abfb8d-6c77-5478-8cfb-267a4502968d",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 470.0
+          },
+          {
+            "x": 600,
+            "y": 325.0
+          }
+        ],
+        "label": "teaches >",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c33be85e-b130-5c78-b222-5fe81347797c",
+      "source": "8b5b96ad-4b2f-5be1-8421-aa61f01e2a67",
+      "target": "e72ce578-7a0c-5b09-96cd-fdf7fa682387",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 485.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "98a72af0-f67c-56e6-92fc-ce75ec6481c7",
+      "source": "e72ce578-7a0c-5b09-96cd-fdf7fa682387",
+      "target": "c13a47b6-32b2-5091-9fed-ab98a0308430",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 485.0
+          },
+          {
+            "x": 540,
+            "y": 515.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

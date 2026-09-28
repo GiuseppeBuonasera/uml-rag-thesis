@@ -1,0 +1,517 @@
+{
+  "version": "4.2.0",
+  "id": "Facepage",
+  "title": "Facepage",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "92d13abc-6ade-59cf-912b-4a5f93d3f02a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "User",
+        "attributes": [
+          {
+            "id": "c71f8ddf-dc4c-53bb-8388-45e700092904",
+            "name": "+ UserID : int"
+          },
+          {
+            "id": "ca3be65d-d1df-5fe3-a787-80f077719f88",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "4a4a6d26-a47f-52c4-9fc3-6a7f95674b4d",
+            "name": "+ Email : string"
+          },
+          {
+            "id": "5f5381cf-098d-56cf-a0d7-25a017ab2707",
+            "name": "+ BirthDate : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "8df190a6-77f1-52a9-875f-3680684a1ea8",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Account",
+        "attributes": [
+          {
+            "id": "de2b2ae5-e6bb-51d7-8eb4-95b7251a831f",
+            "name": "+ AccountNumber : int"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "258cc62a-85d1-5f5e-a214-da08c17bed62",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "BusinessAccount",
+        "attributes": [
+          {
+            "id": "b74b4fb6-bc3d-5d63-a426-3f1f1976e919",
+            "name": "+ CompanyName : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "b5c88cf2-3542-5ddb-84b0-552593d8b051",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "PersonalAccount",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "e2ad021a-8947-5f69-87f7-edc1cb5eac42",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "FriendRequest",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "3cb666be-c28c-5dbd-8d83-f10908b9dd4c",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Page",
+        "attributes": [
+          {
+            "id": "4928ba23-cafc-5bcd-b2be-2199a300cf39",
+            "name": "+ PageName : string"
+          },
+          {
+            "id": "9e6e817b-c0b7-526b-977e-bef9d0e20e71",
+            "name": "+ Visits : int"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "b8f34a94-6a57-5389-b853-1b1e688e067a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 420
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "PersonalPage",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "1da75920-cf42-5adc-a85e-62e7c81ad516",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 420
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Privilege",
+        "attributes": [
+          {
+            "id": "9e090e91-7fff-51e1-8c7a-8d9680c50724",
+            "name": "+ TypeOfPrivilege : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "fd7d195b-f473-58a2-9b0f-01f08b778025",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 420
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "AdvertisementPage",
+        "attributes": [
+          {
+            "id": "fd8e5248-cf45-54a6-ad9e-c6211ead438f",
+            "name": "+ BounceRate : double"
+          },
+          {
+            "id": "5b5f8682-0c8a-598a-ab18-aa6fae428f15",
+            "name": "+ ClickThroughRate : double"
+          },
+          {
+            "id": "a0061853-2fae-5ba5-a1fa-11977ec1e0fb",
+            "name": "+ CoversionRate : double"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "ee4ec6d8-99d8-52ff-b468-62451f6b6cac",
+      "source": "92d13abc-6ade-59cf-912b-4a5f93d3f02a",
+      "target": "8df190a6-77f1-52a9-875f-3680684a1ea8",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 120.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "cb73e89a-0f65-53d4-98af-67960de3c0d5",
+      "source": "258cc62a-85d1-5f5e-a214-da08c17bed62",
+      "target": "8df190a6-77f1-52a9-875f-3680684a1ea8",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 75.0
+          },
+          {
+            "x": 540,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "2a7a810e-6c03-5676-844e-30abe39ae18d",
+      "source": "b5c88cf2-3542-5ddb-84b0-552593d8b051",
+      "target": "8df190a6-77f1-52a9-875f-3680684a1ea8",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 280.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "15ad6db0-a75b-5763-8b3e-c0091c3c3e05",
+      "source": "258cc62a-85d1-5f5e-a214-da08c17bed62",
+      "target": "fd7d195b-f473-58a2-9b0f-01f08b778025",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 110
+          },
+          {
+            "x": 710.0,
+            "y": 420
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "5b0b3ead-79c6-505f-8762-9b2e644aaeb9",
+      "source": "b5c88cf2-3542-5ddb-84b0-552593d8b051",
+      "target": "b8f34a94-6a57-5389-b853-1b1e688e067a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 300
+          },
+          {
+            "x": 150.0,
+            "y": 420
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "ec26d010-9199-5653-a737-b2d849e67ecd",
+      "source": "e2ad021a-8947-5f69-87f7-edc1cb5eac42",
+      "target": "b5c88cf2-3542-5ddb-84b0-552593d8b051",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 280.0
+          },
+          {
+            "x": 260,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "sender"
+      }
+    },
+    {
+      "id": "51f97d3c-8a9f-5fcb-9978-380f0509f7cc",
+      "source": "e2ad021a-8947-5f69-87f7-edc1cb5eac42",
+      "target": "b5c88cf2-3542-5ddb-84b0-552593d8b051",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 280.0
+          },
+          {
+            "x": 260,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "receiver"
+      }
+    },
+    {
+      "id": "228f417e-6c1f-59c3-9e37-596eb2e92714",
+      "source": "fd7d195b-f473-58a2-9b0f-01f08b778025",
+      "target": "3cb666be-c28c-5dbd-8d83-f10908b9dd4c",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 420
+          },
+          {
+            "x": 710.0,
+            "y": 360
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "fa5c0db8-8d3d-5155-bc07-95a9b0d2bd56",
+      "source": "b8f34a94-6a57-5389-b853-1b1e688e067a",
+      "target": "3cb666be-c28c-5dbd-8d83-f10908b9dd4c",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 440.0
+          },
+          {
+            "x": 600,
+            "y": 310.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "aada5016-4ad3-597a-8a3e-059d086b325f",
+      "source": "b5c88cf2-3542-5ddb-84b0-552593d8b051",
+      "target": "1da75920-cf42-5adc-a85e-62e7c81ad516",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 280.0
+          },
+          {
+            "x": 320,
+            "y": 455.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c57e70a7-fc76-5bfd-b609-17ece70fe62f",
+      "source": "1da75920-cf42-5adc-a85e-62e7c81ad516",
+      "target": "b8f34a94-6a57-5389-b853-1b1e688e067a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 455.0
+          },
+          {
+            "x": 260,
+            "y": 440.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

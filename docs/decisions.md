@@ -512,3 +512,339 @@ formato diagrammi, scelta del modello di embedding, metrica di valutazione).
 - Verificato dopo le modifiche: `corpus/check_translated.py` OK (5/5
   controlli); `corpus/test_apollon_convert.py` OK; pipeline completa — 46
   record, 45/46 convertiti, 0 violazioni su schema/integrità/round-trip.
+
+### [2026-09-25] corpus/raw/models -> corpus/raw/models_original (rinomina osservata, non fatta da me)
+- Contesto: `corpus/raw/models/` risulta rinominata in
+  `corpus/raw/models_original/` direttamente sul filesystem (visibile
+  dall'IDE dell'utente, non da git — `corpus/raw/*` è gitignored, quindi git
+  non registra questo cambio). Non è un'operazione che ho eseguito io in
+  questa o nelle sessioni precedenti.
+- Decisione presa: adattare `corpus/build_manifest.py` (`RAW_DIRS`) al nuovo
+  nome invece di rinominare di nuovo o di crearne una copia — la lettura
+  resta read-only, nessuno script scrive mai in `models_original/`. Il nome
+  stesso ("_original") rende esplicito che è la sorgente immutabile, in
+  linea con l'istruzione esplicita di questo giro di lavoro ("mai modificare
+  i plantuml.txt originali").
+- Verificato: `corpus/build_manifest.py` rieseguito, legge correttamente i
+  45 esercizi da `models_original/`.
+
+### [2026-09-25] FASE 1 — Normalizzazioni automatiche applicate a tutto il corpus
+- Contesto: obiettivo dichiarato di portare tutti i diagrammi (44 originali +
+  tradotti) a un JSON Apollon v4 uniforme. Le normalizzazioni erano finora
+  fatte solo per la pipeline di traduzione (`apply_glossary.py`, testuali, su
+  `plantuml.txt`); ora sono in `corpus/apollon_convert.py`, applicate a ogni
+  diagramma convertito, indipendentemente dalla provenienza.
+- **Tipi**: `TYPE_NORMALIZATION` — String→string, Int/Integer→int,
+  Double→double, Float→float, Boolean/bool→boolean, Date→date, Time→time,
+  DateTime→datetime, Long→long. Un tipo non in tabella (nome di classe/enum
+  del diagramma, es. `Suit`, `RoomType`) resta invariato. Attributi senza
+  tipo nel sorgente restano senza tipo (non se ne inventa uno) ma generano
+  un warning elencato in `apollon_conversion_warnings` (2 casi nel corpus:
+  `Frame.steel` in Ebike, `SensorController.id` in eHome2020). `datetime` e
+  `long` aggiunti all'elenco dei tipi ammessi in `prompt_template_v4.txt`
+  (mancavano, pur essendo già nel corpus).
+- **Metodi**: `parse_method_signature` — formato unico
+  `+ nome(parametri) : tipo` (o `+ nome(parametri)` senza tipo di ritorno se
+  assente nel sorgente, mai inventato). Gestisce sia `Tipo nome()` (stile
+  Java, tipo di ritorno prima) sia `nome():Tipo` (tipo dopo, con o senza
+  spazio prima dei due punti). Il prefisso di visibilità originale
+  (`+-#~`), quando presente, non viene preservato: sostituito sempre con
+  `+`, stessa convenzione già in uso per gli attributi in questo modulo fin
+  dalla prima versione (non una scelta nuova, resa esplicita ora che si
+  applica anche ai metodi).
+- **Molteplicità**: `normalize_multiplicity` (n→\*, 0..n→0..\*, 1..n→1..\*)
+  applicata direttamente in `add_edge`, quindi a ogni edge del JSON finale,
+  incluse le due relazioni derivate dalla reificazione delle classi
+  associative (sotto). `apply_glossary.py` non duplica più questa logica:
+  importa `apollon_convert.normalize_multiplicity` e
+  `apollon_convert.TYPE_NORMALIZATION`, così `plantuml.txt` (l'artefatto
+  testuale intermedio della pipeline di traduzione) e il JSON finale non
+  possono disallinearsi sui tipi/molteplicità normalizzati.
+- **Reificazione delle classi associative** (`reify_association_classes`):
+  sostituisce l'approssimazione precedente (due edge a molteplicità sempre
+  vuota, in uso dal 2026-09-24). Per `A "ma" -- "mb" B` con `(A,B) .. C`:
+  rimuove l'edge A-B, crea A–C (A lato "1", C lato "mb") e C–B (C lato "ma",
+  B lato "1") — molteplicità derivate da quelle reali dell'associazione
+  base, non inventate. Se A-B non esiste nel sorgente o non ha molteplicità
+  esplicite, quelle di C restano vuote con un warning. Applicata in
+  `main()` tra `parse_plantuml` e `build_apollon_json`, così
+  `round_trip_check` verifica anche le relazioni reificate (nessuna
+  eccezione nel suo codice per questo caso). **Nessun warning di
+  reificazione emesso sui 45 esercizi**: ogni classe associativa del corpus
+  ha trovato un'associazione base con molteplicità esplicite — verificato
+  non solo assenza di errori ma il contenuto esatto per i due casi guida:
+  AirTravel (`FlightExecution "1" → Ticket "0..*"`,
+  `Ticket "0..*" → Passenger "1"`, nessun edge diretto
+  FlightExecution–Passenger) e University (`ResearchAssociate "1" →
+  Participation "0..*"`, `Participation "1..*" → Project "1"`).
+- Ogni regola ha un test dedicato in `corpus/test_apollon_convert.py`
+  (`check_type_normalization`, `check_multiplicity_normalization`,
+  `check_method_normalization`, `check_reification` — il caso AirTravel
+  richiesto esplicitamente — `check_reification_missing_base`,
+  `check_edge_always_has_all_data_fields`). Il vecchio test sui ruoli
+  aggiornato per aspettarsi la molteplicità normalizzata nell'output JSON
+  (il valore parsato dal sorgente resta non normalizzato, solo l'edge
+  finale lo è).
+- `round_trip_check` esteso: normalizza la molteplicità attesa prima del
+  confronto (altrimenti "0..n" nel sorgente non avrebbe mai coincisco con
+  "0..\*" nell'output); normalizza il tipo atteso degli attributi allo
+  stesso modo; aggiunto un confronto sui metodi (assente prima — nessun
+  controllo di round-trip esisteva sui metodi, gap pre-esistente colmato
+  qui). Il confronto sui metodi riusa `parse_method_signature` (la stessa
+  funzione sotto test, non una verifica indipendente come per il resto):
+  limite noto, compensato dai casi hardcoded in
+  `check_method_normalization`.
+- Verificato dopo l'implementazione: pipeline completa rieseguita — 45/46
+  diagrammi convertiti (Cruise sempre escluso), **0 violazioni** su
+  schema/integrità/round-trip, warning totali scesi da 27 a 8 (spariti i 19
+  warning "classe associativa approssimata", rimasti solo i 2 vincoli XOR
+  scartati, le 2 classi placeholder legittime, i 2 attributi senza tipo, e
+  Cruise escluso). `corpus/test_apollon_convert.py` — tutti i test passano.
+
+### [2026-09-25] FASE 2 — Classificazione delle etichette (associazione vs ruolo): STOP 1
+- Contesto: in Apollon v4 un edge ha sia `label` (nome dell'intera
+  associazione) sia `sourceRole`/`targetRole` (nome di ruolo per estremo,
+  finora usati solo per gli esercizi tradotti). Nei 44 esercizi originali,
+  ogni etichetta `: testo` del PlantUML sorgente finisce oggi in `label`,
+  indipendentemente dal fatto che semanticamente sia un nome di associazione
+  o un nome di ruolo di una delle due classi.
+- Estratte e classificate **tutte le 126 etichette non vuote** del corpus
+  (44 originali + CourseManagement) con uno script dedicato
+  (`corpus/_generate_label_classification.py`, non parte della pipeline
+  permanente), che genera `corpus/label_classification.md`. Nessuna
+  applicata al codice in questo passo — solo analisi, in attesa di
+  conferma.
+- Risultato: 84 ruolo, 29 associazione, 7 **vincolo**, 6 dubbio.
+- **Categoria emersa durante l'analisi, non prevista nelle istruzioni
+  originali**: "vincolo". 7 etichette (es. `{total; disjoint}`,
+  `{partial; overlap}` su relazioni di generalizzazione in EUScienceConnect,
+  FitnessCompanyConan, Musicmatic, Sober) non sono affatto etichette di
+  relazione — sono vincoli UML standard su un insieme di generalizzazione
+  (notazione OCL/UML `{disjoint,complete}` ecc.), catturati genericamente
+  dal parser come `: label` perché seguono la stessa sintassi testuale.
+  Segnalata come categoria a parte invece di forzarla in
+  "associazione"/"ruolo": nessuna delle due sarebbe corretta, e "dubbio"
+  avrebbe nascosto che in realtà QUI la natura del testo è chiara (è
+  proprio un caso diverso), solo non gestibile con le due categorie
+  proposte.
+- 6 casi "dubbio", segnalati non decisi: `BuildingManagement` `id`/
+  `username` (sospetto attributo mal posizionato più che etichetta di
+  relazione), `Louvre` `RoomLocationAssignment` (composita, poco chiara),
+  `Musicmatic` `suggestion` (sostantivo isolato, ruolo o associazione non
+  determinabile con sicurezza), `Sober` `Book` (verbo o refuso), `TileOGame`
+  `connections/tiles` (sembra unire due nomi di ruolo con "/").
+- Punto di confine segnalato esplicitamente (non "dubbio", ma degno di nota):
+  `ClothingCompany` `responsibleFor` — classificato "associazione" (frase
+  verbale), ma vicino all'esempio "responsible" che l'utente stesso ha dato
+  come caso di ruolo.
+- **Non ancora fatto, in attesa della conferma dell'utente** (STOP 1):
+  nessuna correzione applicata al convertitore o ai dati. Dopo conferma, la
+  classificazione va congelata in `corpus/label_classification.json` (dato,
+  non regole codificate) e letta da `apollon_convert.py` per instradare
+  ogni etichetta verso `label` o `sourceRole`/`targetRole` di conseguenza.
+
+### [2026-09-25] Risposte STOP 1: vincoli, qualificatori, responsibleFor, colonna "lettura"
+- Contesto: risposte dell'utente alla FASE 2. **Non è stata applicata la
+  classificazione ruolo/associazione al convertitore** — resta esplicitamente
+  in sospeso, come richiesto ("Non applicare ancora la classificazione"). Le
+  quattro decisioni sotto invece sì, perché complete e non condizionate ai 4
+  dubbi ancora aperti.
+- **Vincoli di generalizzazione (`{total; disjoint}` ecc.)**: implementato
+  `apollon_convert.py::extract_generalization_constraints`. Rimossi da
+  qualunque edge (in realtà erano già scartati in silenzio da
+  `build_apollon_json`, che forza `label=""` per `ClassInheritance`/
+  `ClassRealization` — la funzione li cattura PRIMA che vengano scartati,
+  invece di perderli senza traccia) e salvati in un nuovo campo
+  `constraints` di ogni record in `corpus.jsonl` (lista di
+  `{generalizzazione: "Figlio extends Genitore", vincoli: "{...}"}`, figlio/
+  genitore derivati da `relationship_kind`, non dalla posizione testuale
+  source/target). Un warning per ogni vincolo estratto, elencato in
+  `apollon_conversion_warnings`. Test dedicato
+  (`check_generalization_constraints`) con il caso reale EUScienceConnect.
+  Verificato: **7/7 vincoli estratti correttamente** (EUScienceConnect,
+  FitnessCompanyConan ×2, Musicmatic ×2, Sober ×2), 0 errori sulla pipeline
+  completa (45/46 convertiti, 0 violazioni su schema/integrità/round-trip).
+- **BuildingManagement `id`/`username`**: riclassificati da "dubbio" a nuova
+  categoria **"qualificatore"** (non prevista nelle istruzioni originali,
+  introdotta su indicazione dell'utente) — verosimilmente un qualifier UML
+  (es. `WebPortal[id] -> Entry`), non un nome di associazione né di ruolo.
+  Restano in `label` per mancanza di un posto migliore: **Apollon non
+  supporta i qualificatori UML**, nessun campo dedicato nello schema
+  ufficiale né nell'editor (verificato nei sorgenti durante la migrazione a
+  v4, non ri-controllato ora — coerente con l'assenza di un tipo
+  "qualifier" in `DiagramEdgeType`/`DiagramNodeType` dello schema letto il
+  2026-09-23). Nessuna modifica al convertitore: comportamento identico a
+  prima (finiscono in `label`), cambia solo la classificazione nel report.
+- **ClothingCompany `responsibleFor`**: confermato "associazione" (frase
+  verbale), nonostante il confine con l'esempio di ruolo "responsible" dato
+  dall'utente in precedenza.
+- **Gli altri 4 dubbi** (Louvre `RoomLocationAssignment`, Musicmatic
+  `suggestion`, Sober `Book`, TileOGame `connections/tiles`): lasciati
+  "dubbio", in attesa — l'utente li risolverà direttamente.
+- **Colonna "lettura"** aggiunta a `corpus/label_classification.md` per
+  tutte le 84 righe "ruolo": frase
+  `"<Classe dell'estremo scelto> è il/la <ruolo> di <altra classe>"`,
+  generata automaticamente da `corpus/_generate_label_classification.py`
+  (non scritta a mano), per permettere la verifica degli estremi scelti
+  senza dover rileggere ogni riga PlantUML.
+- **Riferimenti a `corpus/raw/models/` aggiornati** a
+  `corpus/raw/models_original/` in `README.md`,
+  `corpus/apollon_convert.py` (docstring) e `docs/dati/README.md` — tutti
+  documenti che descrivono lo stato ATTUALE del repository. Le voci
+  precedenti di questo file (`docs/decisions.md`) NON sono state riscritte:
+  sono un log datato, accurate per come stavano le cose quando sono state
+  scritte (la cartella si chiamava davvero `models/` a quelle date) — la
+  voce del 2026-09-25 sulla rinomina resta il punto di riferimento per il
+  cambio di nome. `CLAUDE.md` non menziona `models/` esplicitamente (solo
+  `corpus/raw/` in generale): nessuna modifica necessaria.
+- Nota aperta, non affrontata qui: il resto del contenuto sostanziale delle
+  voci di stato in `README.md` (conteggi, checklist) non è stato
+  aggiornato oltre al riferimento di percorso — riflette ancora lo stato
+  del 2026-09-24, non le modifiche di FASE 1/2 di oggi. Non richiesto in
+  questo giro, segnalato per completezza.
+
+### [2026-09-27] Risoluzione dei 4 dubbi residui di label_classification.md
+- Contesto: per ciascuno dei 4 casi rimasti "dubbio" ho estratto (senza
+  modificare nulla) la riga di `label_classification.md`, le righe di
+  `plantuml.txt` con le dichiarazioni delle classi coinvolte, le frasi di
+  `description.md` pertinenti, e se l'etichetta coincidesse col nome di una
+  classe. L'utente ha deciso sulla base di questi elementi:
+- **Louvre `RoomLocationAssignment`** (`Location -- Room`) → **associazione**.
+  Concatena i nomi di entrambe le classi, ma è il nome del legame nel suo
+  complesso, non il ruolo di una delle due. Resta in `label`, nessuna
+  modifica al testo.
+- **Musicmatic `suggestion`** (`RegularUser -- Album`) → **ruolo**
+  sull'estremo `Album`. Motivato da description.md: "the album of regular
+  users can be turned into a suggestion to other regular users". **Nota**:
+  `Album` non è mai dichiarata come classe nel `plantuml.txt` di questo
+  esercizio (verificato: nessun `class Album {...}`) — è un placeholder
+  creato per uso implicito in una relazione, legale in PlantUML (stesso
+  meccanismo già noto per altri esercizi, es. `ResearchGroupMember` in
+  ProjectManagement). Segnalato esplicitamente nella motivazione della riga,
+  come richiesto.
+- **Sober `Book`** (`RideSharing -- Customer`) → **associazione** (verbo
+  "prenotare"). Motivato da description.md: "a customer who books 20 uses
+  of the Sober ride-sharing service". Testo invariato in `label`.
+- **TileOGame `connections/tiles`** (`Tile -- Connection`) → **due ruoli
+  distinti**, uno per estremo, `label` vuoto: `tiles` sull'estremo `Tile`,
+  `connections` sull'estremo `Connection`. Caso unico nel corpus: un'unica
+  etichetta impacchettava due nomi di ruolo invece di uno. **Decisione
+  esplicita dell'utente sul formato**: non generalizzare il carattere "/"
+  come regola di parsing (nessun altro caso nel corpus ne ha bisogno) — va
+  gestito come dato specifico di questa singola relazione. Il formato dati
+  di `corpus/_generate_label_classification.py` è stato esteso per
+  supportarlo: una classificazione può ora essere `"ruolo_doppio"` con una
+  lista di `{testo, estremo}` invece di un singolo `(estremo, testo)` — usata
+  finora da un solo caso, non un meccanismo generale già sfruttato altrove.
+- **Colonna "lettura"**: generata automaticamente anche per le nuove righe
+  "ruolo" (incluse le due di TileOGame). Nota: per Musicmatic l'utente aveva
+  scritto a mano "Album è **la** suggestion di RegularUser"; lo script
+  genera uniformemente "è il/la" per tutte le righe (placeholder non
+  risolto per genere) per coerenza con le altre 84 — non corretto qui perché
+  l'utente ha esplicitamente detto di voler rivedere l'intera colonna
+  "lettura" prima di qualunque applicazione, quindi non ha senso risolvere
+  il genere riga per riga adesso.
+- Risultato in `corpus/label_classification.md`: **31 associazione, 87
+  ruolo (85 singoli + 2 dal caso doppio di TileOGame), 7 vincolo, 2
+  qualificatore, 0 dubbio** — tutti i 126 casi originali (127 righe in
+  tabella, per lo sdoppiamento) ora hanno una classificazione.
+- **Non ancora applicato**: nessuna modifica al convertitore né a
+  `corpus/label_classification.json`. L'utente rivede prima la colonna
+  "lettura" di tutte le 87 righe "ruolo" (era il punto esplicitamente
+  rimandato nella risposta precedente, non ancora affrontato).
+
+### [2026-09-28] Revisione di roles_to_review.md e applicazione della
+### classificazione al convertitore
+- Contesto: l'utente ha revisionato tutte le 67 righe incluse in
+  `corpus/roles_to_review.md` (criteri A-E) più le 20 escluse come ovvie.
+  Decisioni:
+- **CORREZIONE — FilmSet `MostSuccessful`**: l'estremo giusto è `Film`, non
+  `ScreenplayAuthor` (errore nella prima classificazione). Motivazione da
+  `description.md`: "The name and most successful film of a screenwriter
+  are stored" — è il *film* a essere "il più di successo" (di quello
+  screenwriter), non l'autore. Lettura corretta: "Film è il MostSuccessful
+  di ScreenplayAuthor". Corretto in `CLASSIFICATION`
+  (`corpus/_generate_label_classification.py`) e rigenerato
+  `label_classification.md`/`.json`.
+- **Auto-associazioni** (`OnlineTutoringSystem.nextSession`,
+  `SmartHomeAutomationSystem.nextCommand`, `TeamSportsScoutingSystem.nextReport`
+  — tutte relazioni di una classe con se stessa): per queste il nome della
+  classe non può disambiguare quale delle due occorrenze porta il ruolo.
+  **Decisione sul formato dati**: l'"estremo" per questi 3 casi non è più un
+  nome di classe ma la **posizione letterale** nella riga PlantUML
+  sorgente, `"source"` o `"target"` (`"target"` = lato destro della riga,
+  scelto per tutti e 3 i casi — il ruolo descrive sempre "l'elemento
+  successivo"). `corpus/_generate_label_classification.py` ha guadagnato
+  due funzioni per questo: `resolve_endpoint_name` (posizione → nome di
+  classe, per la visualizzazione in `label_classification.md`) e
+  `resolve_position` (nome di classe o posizione → posizione, per
+  `label_classification.json`, che è quello che il convertitore consuma
+  davvero). Aggiunto un test dedicato
+  (`test_apollon_convert.py::check_label_classification_auto_association`)
+  che verifica esplicitamente che il ruolo finisca su `targetRole`, mai su
+  `sourceRole`, per un'auto-relazione.
+- **Tutte le altre righe di `roles_to_review.md` e le 20 escluse come
+  ovvie**: approvate senza modifiche.
+- **`corpus/label_classification.json` creato**: `corpus/_generate_label_classification.py`
+  ora scrive, oltre al `.md`, un file dati (126 voci, una per ogni
+  etichetta binaria non vuota del corpus) con lo schema
+  `{esercizio, source, op, target, label, tipo, estremo?, testo?, ruoli?}`
+  — `estremo` è sempre una posizione (`"source"`/`"target"`), mai un nome
+  di classe, cioè già risolto da `resolve_position`. Il convertitore legge
+  **questo file**, non un dizionario codificato nello script.
+- **`corpus/apollon_convert.py` aggiornato**: nuove funzioni
+  `load_label_classification()` (carica e cache-a il JSON) e
+  `apply_label_classification(model_id, relationships, classification)`,
+  chiamata in `main()` subito dopo `parse_plantuml` e **prima** di
+  `extract_generalization_constraints`/`reify_association_classes`. Per
+  ogni relazione binaria con etichetta non vuota: `associazione`/
+  `qualificatore`/`vincolo` → nessuna modifica (il vincolo resta gestito da
+  `extract_generalization_constraints`, che deve girare prima); `ruolo`/
+  `ruolo_doppio` → l'etichetta viene spostata in `sourceRole`/`targetRole`
+  sull'estremo indicato e `label` viene svuotato. **`round_trip_check` non
+  ha richiesto alcuna modifica**: confronta già `r["label"]`/
+  `r["source_role"]`/`r["target_role"]` letti dal dizionario di relazione,
+  che a questo punto sono già stati mutati da `apply_label_classification`
+  — è quindi già "classification-aware" per costruzione, senza bisogno di
+  duplicare la logica di classificazione al suo interno.
+- **Fallimento esplicito su etichetta non classificata**: se una relazione
+  binaria ha un'etichetta non vuota assente da `label_classification.json`,
+  `apply_label_classification` la riporta in una lista `missing` (non
+  solleva subito un'eccezione, per poter accumulare — stesso stile già in
+  uso per schema/integrità/round-trip); `main()` somma tutte le occorrenze
+  in `total_missing_labels` e fa fallire l'intera esecuzione con un
+  `assert` se il totale non è zero, stampando ogni etichetta mancante prima
+  di fallire. Nessuna congettura silenziosa per un'etichetta nuova non
+  ancora vista da un umano.
+- **Rigenerazione completa eseguita** (`build_manifest.py` →
+  `apollon_convert.py` → `test_apollon_convert.py` →
+  `check_translated.py --all`): 45/46 diagrammi convertiti (Cruise ancora
+  escluso, costrutto diamante), **0 etichette non classificate, 0
+  violazioni di schema, 0 problemi di integrità, 0 discrepanze di
+  round-trip**, `CourseManagement: OK`. Relazioni finali di AirTravel e
+  CourseManagement mostrate all'utente (ruoli `Source`/`Destination` su
+  Airport-Flight, `Captain`/`Co-pilot` su FlightExecution-Pilot,
+  `responsible` su Course-InternalTeacher; le relazioni reificate
+  FlightExecution-Ticket-Passenger restano correttamente senza ruoli).
+- **Limite segnalato esplicitamente, non aggirato**: non è disponibile
+  Node.js/npm in questo ambiente, quindi l'"import check" richiesto (un
+  test che importi davvero un JSON convertito nel pacchetto
+  `@tumaet/apollon`) non è mai stato scritto e non può essere eseguito né
+  verificato qui — `tools/apollon_import_check` non esiste. Restano gli
+  altri tre livelli di verifica realmente eseguibili (schema, integrità
+  referenziale, round-trip semantico), tutti a 0 errori. Da fare quando
+  sarà disponibile un ambiente Node.
+
+#### FASE 3 — annotazioni da valutare (NON applicate in questo giro)
+- **BuildingManagement `author`**: relazione `User -> Building` senza un
+  riscontro testuale individuato in `description.md` — da valutare
+  l'eventuale rimozione (o va cercato meglio il testo che la giustifica).
+- **HotelBookingManagementSystem `bestOffers`**: `description.md` dice
+  "five best special offers", che suggerisce una molteplicità `0..5` sul
+  lato `SpecialOffer`; nel `plantuml.txt` sorgente la molteplicità `0..5`
+  è invece sul lato `BookingInfo` — probabile errore di trascrizione da
+  verificare contro il diagramma originale.
+- **TruckLogistics `driver`**: risultano due associazioni `Driver-Vehicle`
+  con la stessa etichetta ma molteplicità incompatibili tra loro — quasi
+  certamente un duplicato/errore di trascrizione, da controllare contro il
+  PlantUML/immagine originali.

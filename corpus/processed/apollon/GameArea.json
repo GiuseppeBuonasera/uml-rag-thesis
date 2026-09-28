@@ -1,0 +1,328 @@
+{
+  "version": "4.2.0",
+  "id": "GameArea",
+  "title": "GameArea",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "0aa70fd1-a508-5e36-907f-46c6ff1062ac",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "GameArea",
+        "attributes": [
+          {
+            "id": "94959ca3-9894-588f-8ab1-bd1dd7f9ef0d",
+            "name": "+ name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "382ffdb0-d22e-57e7-8b00-2acb35f5f0cf",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "GameCharacter",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "59c5f765-d950-59ac-860a-8f42bef948d9",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "GameElement",
+        "attributes": [
+          {
+            "id": "25cdd071-82d4-56bd-b6be-b150414f7bb8",
+            "name": "+ x : long"
+          },
+          {
+            "id": "b131b795-fc34-59bd-be43-199c20cad39d",
+            "name": "+ y : long"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "585c0d1a-8160-53d3-893b-b7e285a8e45a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Shape",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "e081ca7c-c1c1-5de2-910f-a0c68eb62673",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Item",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "ccc31d92-2bf6-5ba4-80a9-bff74a9d3b09",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Enemy",
+        "attributes": [
+          {
+            "id": "bee20964-e02c-52f8-a41e-94ea92466de9",
+            "name": "+ numberOfLives : int"
+          }
+        ],
+        "methods": [
+          {
+            "id": "52fee14c-8894-55b7-972d-00b605f690c1",
+            "name": "+ toKill()"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "0dca4fee-3de1-57f4-8811-919e02d5fdd5",
+      "source": "382ffdb0-d22e-57e7-8b00-2acb35f5f0cf",
+      "target": "0aa70fd1-a508-5e36-907f-46c6ff1062ac",
+      "type": "ClassAggregation",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..2",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b862f2fd-5834-55a7-a1e6-625546395ae6",
+      "source": "59c5f765-d950-59ac-860a-8f42bef948d9",
+      "target": "0aa70fd1-a508-5e36-907f-46c6ff1062ac",
+      "type": "ClassAggregation",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8f8b5816-72d2-5995-9271-b1a3d6f3cf6b",
+      "source": "585c0d1a-8160-53d3-893b-b7e285a8e45a",
+      "target": "59c5f765-d950-59ac-860a-8f42bef948d9",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 220.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8447ae55-1ca3-5d89-a671-efd2ac9c3753",
+      "source": "e081ca7c-c1c1-5de2-910f-a0c68eb62673",
+      "target": "59c5f765-d950-59ac-860a-8f42bef948d9",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 220.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "dcedcf86-a241-51ab-a05a-89836197699c",
+      "source": "ccc31d92-2bf6-5ba4-80a9-bff74a9d3b09",
+      "target": "59c5f765-d950-59ac-860a-8f42bef948d9",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 200
+          },
+          {
+            "x": 710.0,
+            "y": 140
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "3cd1c528-2af3-5950-b028-ba8cceff9916",
+      "source": "585c0d1a-8160-53d3-893b-b7e285a8e45a",
+      "target": "585c0d1a-8160-53d3-893b-b7e285a8e45a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 220.0
+          },
+          {
+            "x": 260,
+            "y": 220.0
+          }
+        ],
+        "label": "is_connected_with",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "6ac4eada-deca-58b5-9319-80f564b0a9b2",
+      "source": "0aa70fd1-a508-5e36-907f-46c6ff1062ac",
+      "target": "ccc31d92-2bf6-5ba4-80a9-bff74a9d3b09",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "finalBoss"
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

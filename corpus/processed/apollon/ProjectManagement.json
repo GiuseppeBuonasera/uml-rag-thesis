@@ -1,0 +1,367 @@
+{
+  "version": "4.2.0",
+  "id": "ProjectManagement",
+  "title": "ProjectManagement",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "9c415523-9ac0-5a8f-9b50-da509d0b2c2b",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "ResearchGroup",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "50ae456b-6fd7-5da3-acd7-3646b4e84583",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Department",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "d444187a-bc2e-5b06-8a63-9e481d019c2a",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Researcher",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "75bfad23-feec-57a1-809b-b95d955ec0d1",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 140
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Project",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "802d4f78-fd79-5d41-aa83-bc408d373b9b",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 140
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "WorkPackage",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "7af242bc-18b2-5473-8748-12b09fb1b427",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 140
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "WorkPackageLeader",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "bc985040-f0e2-56aa-b4f6-9e77adf5e209",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 240
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Service",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "4b012415-e940-539d-9299-8e54871df909",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 240
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "ResearchGroupMember",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "053fe50f-0410-5a28-89a7-aef1578e2681",
+      "source": "50ae456b-6fd7-5da3-acd7-3646b4e84583",
+      "target": "9c415523-9ac0-5a8f-9b50-da509d0b2c2b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "e4c41ad0-66c8-5a4a-85fb-79bc3ac8f998",
+      "source": "75bfad23-feec-57a1-809b-b95d955ec0d1",
+      "target": "802d4f78-fd79-5d41-aa83-bc408d373b9b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 160.0
+          },
+          {
+            "x": 320,
+            "y": 160.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d8d4ee7e-d07c-525a-a75a-a5316bd7524a",
+      "source": "4b012415-e940-539d-9299-8e54871df909",
+      "target": "bc985040-f0e2-56aa-b4f6-9e77adf5e209",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 260.0
+          },
+          {
+            "x": 260,
+            "y": 260.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d3a40180-0741-5e11-a5d2-997b8a77e3b0",
+      "source": "7af242bc-18b2-5473-8748-12b09fb1b427",
+      "target": "bc985040-f0e2-56aa-b4f6-9e77adf5e209",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 160.0
+          },
+          {
+            "x": 260,
+            "y": 260.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "63a7479d-2a3e-55dd-922d-a21793cecc10",
+      "source": "9c415523-9ac0-5a8f-9b50-da509d0b2c2b",
+      "target": "4b012415-e940-539d-9299-8e54871df909",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 60.0
+          },
+          {
+            "x": 320,
+            "y": 260.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8c220548-7f0e-523b-a63b-cca4330f0c1c",
+      "source": "4b012415-e940-539d-9299-8e54871df909",
+      "target": "d444187a-bc2e-5b06-8a63-9e481d019c2a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 260.0
+          },
+          {
+            "x": 600,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "907cb93b-1d40-5a1e-be13-b18223a6141d",
+      "source": "802d4f78-fd79-5d41-aa83-bc408d373b9b",
+      "target": "7af242bc-18b2-5473-8748-12b09fb1b427",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 160.0
+          },
+          {
+            "x": 600,
+            "y": 160.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4660e1df-8ec6-5528-99dc-3466a7e3a4d1",
+      "source": "7af242bc-18b2-5473-8748-12b09fb1b427",
+      "target": "9c415523-9ac0-5a8f-9b50-da509d0b2c2b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 160.0
+          },
+          {
+            "x": 260,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

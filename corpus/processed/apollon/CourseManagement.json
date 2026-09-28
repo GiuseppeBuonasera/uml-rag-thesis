@@ -1,0 +1,560 @@
+{
+  "version": "4.2.0",
+  "id": "CourseManagement",
+  "title": "CourseManagement",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "fcb2f52e-1a2a-5ee5-b122-9f38dab78a38",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Course",
+        "attributes": [
+          {
+            "id": "6e364c0f-7d9d-5302-8896-ba3a05a24c20",
+            "name": "+ name : string"
+          },
+          {
+            "id": "f7e61e69-24b2-5d33-aa22-b67fe5b053ae",
+            "name": "+ edition : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7cb3265a-7f10-5863-9523-03107f28c2bd",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Teacher",
+        "attributes": [
+          {
+            "id": "6c0c6519-72e1-55da-a73c-ed4aa417f463",
+            "name": "+ name : string"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "bd46c2a2-9907-55cd-9dd1-122c0c32ba47",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "InternalTeacher",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "139a79d5-e188-5b23-9d39-8be86531c013",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "ExternalTeacher",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "c48aef6d-4047-50dd-a1a6-90a86fdcd3e8",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "Lesson",
+        "attributes": [
+          {
+            "id": "3be167c0-ffc5-5023-8b20-33f31e7893c3",
+            "name": "+ number : int"
+          },
+          {
+            "id": "e01cad7d-ea33-53be-bb69-004c76daab67",
+            "name": "+ topic : string"
+          },
+          {
+            "id": "b81d4b41-d997-57ac-bb22-708878a4414e",
+            "name": "+ date : date"
+          },
+          {
+            "id": "40d071e1-01ff-5acd-9646-223a64a38240",
+            "name": "+ startTime : time"
+          },
+          {
+            "id": "9e172c11-b235-5ff2-859d-dc849f1b2976",
+            "name": "+ endTime : time"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7f701a4e-5b38-5388-8b95-13875d3dcfba",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Participant",
+        "attributes": [],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "10918ceb-5b95-5361-b189-04bf439640f2",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Student",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "5b63a4c4-b9ee-5026-a1f7-ce0e190f4965",
+      "type": "class",
+      "position": {
+        "x": 880,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Auditor",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "6f149289-7af3-5da6-ad39-883b5588fc8c",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 450
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Room",
+        "attributes": [
+          {
+            "id": "ac47e5ba-9864-5172-bedc-cddc83a747b9",
+            "name": "+ name : string"
+          },
+          {
+            "id": "d74f16e0-8b8f-525f-aa38-b1ceba168c6a",
+            "name": "+ capacity : int"
+          },
+          {
+            "id": "d2bcfe49-1edb-57fc-a486-83db0b685819",
+            "name": "+ videoBeam : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "a24012dc-1e55-5af8-96e0-3e529601c8cc",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 450
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Resource",
+        "attributes": [
+          {
+            "id": "9ce7e1d5-5e2f-5d74-bd83-27f9be7bdc8f",
+            "name": "+ name : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "f3aa56de-8b7e-5320-bb59-38539f413dce",
+      "source": "fcb2f52e-1a2a-5ee5-b122-9f38dab78a38",
+      "target": "bd46c2a2-9907-55cd-9dd1-122c0c32ba47",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 600,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": "responsible"
+      }
+    },
+    {
+      "id": "a382d1c7-f98d-5a19-97a3-e8fa6f3a792b",
+      "source": "fcb2f52e-1a2a-5ee5-b122-9f38dab78a38",
+      "target": "7cb3265a-7f10-5863-9523-03107f28c2bd",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "Preallocation",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d5ff7d9e-77cc-529e-84fb-17f18ef6a755",
+      "source": "bd46c2a2-9907-55cd-9dd1-122c0c32ba47",
+      "target": "7cb3265a-7f10-5863-9523-03107f28c2bd",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 540,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "3708f211-98d8-56ad-804a-431e0b945f69",
+      "source": "139a79d5-e188-5b23-9d39-8be86531c013",
+      "target": "7cb3265a-7f10-5863-9523-03107f28c2bd",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 60.0
+          },
+          {
+            "x": 540,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "3f09ddd8-9e05-5767-9887-885be4a2978c",
+      "source": "7cb3265a-7f10-5863-9523-03107f28c2bd",
+      "target": "c48aef6d-4047-50dd-a1a6-90a86fdcd3e8",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "Allocation",
+        "sourceMultiplicity": "1..2",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a1bf2da5-683d-57a9-8677-ca1ae22af48e",
+      "source": "c48aef6d-4047-50dd-a1a6-90a86fdcd3e8",
+      "target": "fcb2f52e-1a2a-5ee5-b122-9f38dab78a38",
+      "type": "ClassAggregation",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 200
+          },
+          {
+            "x": 150.0,
+            "y": 140
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9eac0e70-fc06-5d88-b350-72c46332ac97",
+      "source": "fcb2f52e-1a2a-5ee5-b122-9f38dab78a38",
+      "target": "7f701a4e-5b38-5388-8b95-13875d3dcfba",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 320,
+            "y": 220.0
+          }
+        ],
+        "label": "Enrolled",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4fe977c1-83e8-5af0-aba0-389f96766fc5",
+      "source": "10918ceb-5b95-5361-b189-04bf439640f2",
+      "target": "7f701a4e-5b38-5388-8b95-13875d3dcfba",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 220.0
+          },
+          {
+            "x": 540,
+            "y": 220.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "0773f613-5ee1-5f1a-ac54-980f75fabd22",
+      "source": "5b63a4c4-b9ee-5026-a1f7-ce0e190f4965",
+      "target": "7f701a4e-5b38-5388-8b95-13875d3dcfba",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 880,
+            "y": 220.0
+          },
+          {
+            "x": 540,
+            "y": 220.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "daf38bfb-9036-59f0-b1ea-483f3348e6c8",
+      "source": "c48aef6d-4047-50dd-a1a6-90a86fdcd3e8",
+      "target": "6f149289-7af3-5da6-ad39-883b5588fc8c",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 390
+          },
+          {
+            "x": 150.0,
+            "y": 450
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "eb23e861-a905-511d-855a-61691e49b8e0",
+      "source": "c48aef6d-4047-50dd-a1a6-90a86fdcd3e8",
+      "target": "a24012dc-1e55-5af8-96e0-3e529601c8cc",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 320,
+            "y": 485.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "61b3656d-f74a-5d61-9c53-eb7858e6d6ba",
+      "source": "7f701a4e-5b38-5388-8b95-13875d3dcfba",
+      "target": "c48aef6d-4047-50dd-a1a6-90a86fdcd3e8",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 220.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}
