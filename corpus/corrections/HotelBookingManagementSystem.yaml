@@ -1,0 +1,10 @@
+# Correzioni FASE 3 (STOP 2, 2026-09-28) — vedi docs/decisions.md.
+- type: replace_line
+  match: 'BookingInfo "0..5" -- "*" SpecialOffer : bestOffers'
+  replacement: 'BookingInfo "*" -- "0..5" SpecialOffer : bestOffers'
+  reason: >-
+    SOLO scambio di lato della molteplicita' '0..5' (da BookingInfo a
+    SpecialOffer, senza introdurre un '1' non richiesto dal testo):
+    description.md, "HBMS sends the five best special offers to the
+    traveller" — sono le SpecialOffer (al massimo 5) associate a UNA
+    BookingInfo, non il contrario.

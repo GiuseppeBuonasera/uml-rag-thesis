@@ -45,8 +45,8 @@
         "name": "Employee",
         "attributes": [
           {
-            "id": "86532f78-7cab-5462-a2ee-07a17c2b6406",
-            "name": "+ Nmae : string"
+            "id": "43daf900-e79f-59b1-8fd8-7e71b145277b",
+            "name": "+ Name : string"
           },
           {
             "id": "959d3a1c-b322-5ef6-9d06-5fa5c1b6f320",
@@ -265,8 +265,8 @@
             "name": "+ Description : string"
           },
           {
-            "id": "43c284d0-cc85-52a0-a536-a2abdc8b7659",
-            "name": "+ Enterainment : boolean"
+            "id": "001358c4-d576-58bb-8810-827a71f9606d",
+            "name": "+ Entertainment : boolean"
           },
           {
             "id": "744465f4-863f-5690-9034-aabe44896ca5",
@@ -457,7 +457,7 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
+        "sourceMultiplicity": "1",
         "targetMultiplicity": "0..*",
         "sourceRole": "Source",
         "targetRole": ""
@@ -482,7 +482,7 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
+        "sourceMultiplicity": "1",
         "targetMultiplicity": "0..*",
         "sourceRole": "Destination",
         "targetRole": ""
@@ -558,7 +558,7 @@
         ],
         "label": "",
         "sourceMultiplicity": "0..*",
-        "targetMultiplicity": "0..1",
+        "targetMultiplicity": "1",
         "sourceRole": "",
         "targetRole": "Captain"
       }
@@ -583,7 +583,7 @@
         ],
         "label": "",
         "sourceMultiplicity": "0..*",
-        "targetMultiplicity": "0..2",
+        "targetMultiplicity": "1..2",
         "sourceRole": "",
         "targetRole": "Co-pilot"
       }
@@ -707,7 +707,7 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
+        "sourceMultiplicity": "1",
         "targetMultiplicity": "0..*",
         "sourceRole": "",
         "targetRole": ""

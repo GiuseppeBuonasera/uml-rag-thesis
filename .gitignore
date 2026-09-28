@@ -9,9 +9,11 @@ __pycache__/
 # Dati e risultati (di solito troppo pesanti/sperimentali per Git)
 corpus/raw/*
 !corpus/raw/.gitkeep
+!corpus/raw/models_original/
 corpus/processed/*
 !corpus/processed/.gitkeep
 !corpus/processed/apollon/
+!corpus/processed/corpus.jsonl
 data/results/*
 !data/results/.gitkeep
 

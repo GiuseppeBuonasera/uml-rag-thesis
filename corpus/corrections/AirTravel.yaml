@@ -1,0 +1,42 @@
+# Correzioni FASE 3 (STOP 2/STOP 3, 2026-09-28) — vedi docs/decisions.md.
+- type: rename_token
+  from: Nmae
+  to: Name
+  reason: "refuso di 'Name' nell'attributo Employee.Nmae."
+- type: rename_token
+  from: Enterainment
+  to: Entertainment
+  reason: >-
+    refuso di 'Entertainment' nell'attributo SeatCategory.Enterainment —
+    description.md: "whether or not it offers an entertainment program".
+- type: replace_line
+  match: 'Airport "0..1"--"0..*" Flight : Source'
+  replacement: 'Airport "1"--"0..*" Flight : Source'
+  reason: >-
+    description.md: "Each flight has a departure airport and a destination
+    airport" — esattamente 1, non opzionale.
+- type: replace_line
+  match: 'Airport "0..1"--"0..*" Flight : Destination'
+  replacement: 'Airport "1"--"0..*" Flight : Destination'
+  reason: "stessa frase sopra, lato destination airport."
+- type: replace_line
+  match: 'FlightExecution "0..*"-"0..1" Pilot : Captain'
+  replacement: 'FlightExecution "0..*"-"1" Pilot : Captain'
+  reason: >-
+    description.md: "One pilot flies the aircraft as the captain" —
+    esattamente 1, non opzionale.
+- type: replace_line
+  match: 'FlightExecution "0..*"-"0..2" Pilot : Co-pilot'
+  replacement: 'FlightExecution "0..*"-"1..2" Pilot : Co-pilot'
+  reason: >-
+    description.md: "one or two other pilots act as co-pilots" — almeno 1,
+    non 0.
+- type: replace_line
+  match: 'SeatCategory "0..1"--"0..*" Ticket'
+  replacement: 'SeatCategory "1"--"0..*" Ticket'
+  reason: >-
+    description.md: "Each ticket is for a specific seat category" —
+    esattamente 1, non opzionale. NOTA: la molteplicita' speculare
+    PassengerPlane–SeatCategory (0..1 lato PassengerPlane) e' stata
+    valutata e RESPINTA (decisione utente, STOP 2 punto b): il testo non
+    lo dice esplicitamente, resta invariata.

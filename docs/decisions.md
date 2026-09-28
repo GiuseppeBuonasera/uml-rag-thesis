@@ -848,3 +848,164 @@ formato diagrammi, scelta del modello di embedding, metrica di valutazione).
   con la stessa etichetta ma molteplicità incompatibili tra loro — quasi
   certamente un duplicato/errore di trascrizione, da controllare contro il
   PlantUML/immagine originali.
+
+### [2026-09-28] FASE 3 STOP 2/STOP 3 — correzioni di contenuto applicate,
+### meccanismo corpus/corrections/, FASE 4 (stile + diff report) e FASE 5
+### (leakage)
+
+**Meccanismo delle correzioni** (`corpus/apply_corrections.py`,
+`corpus/corrections/<id>.yaml`, dipendenza nuova: `pyyaml`, aggiunta a
+`requirements.txt`): ogni correzione di contenuto (refuso di nome, riga di
+relazione errata/duplicata) è dichiarata come DATO in un file YAML per
+esercizio, mai codificata a mano nello script. Applicata da
+`corpus/build_manifest.py` subito dopo aver letto `plantuml.txt`, PRIMA che il
+testo diventi il campo `diagram_plantuml` di `corpus.jsonl` — `corpus/raw/`
+non viene mai scritto. Tre operazioni: `rename_token` (confine di parola,
+tutto il testo), `remove_line`, `replace_line` (match esatto dopo strip).
+Fallisce esplicitamente (`ValueError`) se il testo bersaglio non è trovato —
+nessuna correzione si applica "a caso" o resta silenziosamente inapplicata.
+L'elenco delle correzioni effettivamente applicate (con motivazione) finisce
+nel campo `corrections_applied` di ciascun record, ed è anche la prima
+sezione di `corpus/diff_report.md` (sotto).
+
+**26 correzioni applicate su 15 esercizi** (STOP 2, revisione utente di
+`roles_to_review.md`/tabelle a/b/c):
+- **TransportCompany**: `Sting`→`String`, `VerhicleType`→`VehicleType` (enum
+  già esistente coi 4 valori corretti, non un tipo esterno mancante),
+  `RefrigiratedTruck`→`RefrigeratedTruck`, `Milage`→`Mileage` (variante
+  ortografica accettata ma incoerente con `description.md`, che usa
+  "mileage").
+- **BuildingManagement**: rimossa la relazione duplicata `User->Building :
+  author` (nessun riscontro testuale distinto da `owner`).
+- **HotelBookingManagementSystem**: `bestOffers` — molteplicità `0..5`
+  spostata dal lato `BookingInfo` al lato `SpecialOffer` ("the five best
+  special offers"), senza introdurre un `1` non richiesto dal testo.
+- **TruckLogistics**: le due relazioni `Driver-Vehicle : driver`
+  incompatibili unificate in una sola, `Vehicle "*" -- "0..1 driver"
+  Driver` — ruolo instradato con la sintassi `"molteplicità ruolo"`
+  (`split_mult_role`), non con `label_classification.json` (non c'è più un
+  `: label` testuale).
+- **University**: `ResearchAssociate`→`ResearchAssistant` (tutte le
+  occorrenze — il testo usa sempre "research assistant (RA)").
+- **AirTravel**: `Nmae`→`Name`, `Enterainment`→`Entertainment`; cardinalità
+  `Airport-Flight` (Source/Destination) `0..1`→`1`, `Captain` `0..1`→`1`,
+  `Co-pilot` `0..2`→`1..2`, `SeatCategory-Ticket` `0..1`→`1` (lato
+  SeatCategory) — tutte con riscontro testuale esplicito ("One pilot...",
+  "one or two...", "a departure airport and a destination airport", "Each
+  ticket is for a specific seat category"). **Respinta**: la molteplicità
+  speculare `PassengerPlane-SeatCategory` (`0..1` lato PassengerPlane)
+  resta invariata — il testo non lo dice esplicitamente.
+- **Facepage**: `CoversionRate`→`ConversionRate`.
+- **FilmSet**: `AssistentName`→`AssistantName`.
+- **Musicmatic**: `lenght`→`length`.
+- **PizzaDeliveryWithEntertainment**: `LinkedInAccout`→`LinkedInAccount`.
+- **TileOGame**: `tunrsUntilActive`→`turnsUntilActive`.
+- **AlphaInsurance**: `calculateCompenstationSum`→`calculateCompensationSum`.
+- **Boeing**: `AirPlaneId`→`AirplaneId` (refuso di capitalizzazione, la
+  classe è `Airplane`), `NegotiatedPice`→`NegotiatedPrice`.
+- **ProjectManagement**: `WorkPackage-ResearchGroup` `0..1`→`1` (via la
+  classe associativa `WorkPackageLeader` — la correzione sulla relazione
+  BASE si propaga correttamente attraverso `reify_association_classes` alle
+  due relazioni derivate, verificato).
+- **SellingGoods**: `Order-OrderLine` `0..*`→`1..*` ("orders consist of one
+  or more order lines").
+
+**Refuso trovato ma NON applicato** (utente, STOP 2 punto a): Sober
+`Top3AccidentHotSports()` — possibile refuso di "HotSpots", ma nessuna frase
+di `description.md` lo giustifica (metodo senza alcun riscontro testuale) —
+troppo incerto per una correzione.
+
+**Metodo di ricerca refusi (item a)**: installato `pyspellchecker` (offline,
+via pip) solo per questa analisi una tantum — NON aggiunto a
+`requirements.txt`, non è una dipendenza della pipeline; per rieseguire la
+stessa scansione in futuro, reinstallare con `pip install pyspellchecker`.
+Ogni identificatore del corpus è stato spezzato in parole (camelCase-split)
+e confrontato col dizionario; una parola non riconosciuta la cui correzione
+suggerita è a edit-distance 1 e di lunghezza simile è stata proposta come
+refuso candidato, poi verificata a mano contro `description.md` prima di
+essere proposta (non applicata automaticamente).
+
+**FASE 4 — controllo di stile** (`corpus/apollon_convert.py::style_check`,
+integrato in `main()` come quarto livello di verifica dopo schema/integrità/
+round-trip, stesso stile: accumula e fa fallire l'intera esecuzione se non
+zero): tipi di attributo ammessi (primitivo normalizzato, notazione `Tipo[]`,
+o classe/enum dichiarata nello stesso diagramma), formato `+ nome(...) :
+tipo` per ogni metodo, nessuna molteplicità con `n` letterale residua,
+nessun campo `data.*` mancante su un edge. **0 violazioni su 45 diagrammi**
+dopo le correzioni.
+
+**FASE 4 — `corpus/diff_report.py`** (nuovo script, sola lettura):
+genera `corpus/diff_report.md`, le differenze tra PlantUML sorgente e JSON
+Apollon finale raggruppate per causa (non per esercizio): correzioni di
+contenuto (26), normalizzazione tipi negli attributi (430) e nei metodi (6),
+normalizzazione molteplicità `n`→`*` (0 residue, atteso), classificazione
+etichette→ruolo (83), reificazione di classe associativa (21), vincoli di
+generalizzazione estratti (7), modificatori/default di attributi (6 — i 4
+`{frozen}` di Sober + i 2 `{static} const ... =` di TileOGame).
+
+**FASE 4 — `example_2_airtravel_v4.json` rigenerato** dalla pipeline
+corrente (era rimasto alla versione pre-normalizzazione-tipi/pre-fix-Nmae di
+FASE 1) e verificato **byte-per-byte identico** a
+`corpus/processed/apollon/AirTravel.json`.
+
+**FASE 5 — controllo di leakage ProjectManagement/FilmSet vs De Bari**
+(richiesto perché i nomi sono superficialmente simili a due dei 20 esercizi
+De Bari): letto `docs/dati/debari/Exercises.pdf` (20 esercizi, titoli e testo
+completi). Risultato: **nessuna leakage reale**, per contenuto (non solo per
+nome):
+- **ProjectManagement** (corpus) vs **"1. Project Management System"** (De
+  Bari): il nostro parla di Dipartimenti/Gruppi di ricerca/Ricercatori/Work
+  Package/Servizi (dominio accademico); De Bari #1 parla di WorkProduct/
+  Requirement/System/Manager/Team (dominio genionale di project management
+  software, fonte *Learning UML* di Sinan Si Alhir) — entità completamente
+  diverse, nessuna sovrapposizione oltre al nome della cartella.
+- **FilmSet** (corpus) vs **"2. Hollywood Approach"** (De Bari): il nostro
+  parla di Director/Actor/Screenplay/ScreenplayAuthor/Genre/Employee
+  (autorship e personale di produzione); De Bari #2 parla di Scene/Setup/
+  Take/Internal/External/Location (logistica di ripresa fisica, fonte *
+  Formalization of UML Class Diagrams in First Order Logic* di De Giacomo) —
+  entità completamente diverse.
+
+Nessuna azione necessaria: i due esercizi possono restare nel corpus di
+retrieval senza rischio di leakage con il test set De Bari.
+
+**Dubbi FASE 3 — non corretti, annotati come limiti noti del dataset**
+(decisione utente, STOP 2/3: non correggere senza aggiungere/modificare
+relazioni, fuori scope di una "correzione di cardinalità"):
+- **HospitalHouseMD**: "Patients are assigned one or more doctors" non ha
+  una relazione diretta Patient-Doctor nel diagramma (solo indiretta via
+  `Diagnosis`, che collega 1 Patient + 1 Doctor + 1 Illness per record) —
+  correggerlo richiederebbe aggiungere una relazione diretta, non solo
+  cambiare una molteplicità esistente.
+- **TreatmentPlans**: "Every single examination is of only one type" — la
+  corrispondenza esatta tra `AdvisedExamination`/`FreeExamination` e
+  `ExaminationType`/`AdvisedExaminationType` non è univoca dalla sola frase
+  (manca l'analogo `FreeExaminationType`) — rischio concreto di applicare
+  la correzione al legame sbagliato.
+- **Cruise**: già escluso dalla conversione Apollon (costrutto diamante
+  n-ario `<> diamond` non supportato) — "a ticket belongs to exactly one
+  cruise" passa da una relazione ternaria (Guest/Ticket/Cruise), non da un
+  edge binario correggibile con lo stesso meccanismo delle altre correzioni.
+
+**Pipeline rieseguita per intero dopo tutte le correzioni**: `build_manifest.py`
+→ `apollon_convert.py` → `test_apollon_convert.py` → `check_translated.py
+--all`. Risultato: 45/46 convertiti (Cruise escluso, invariato), 26
+correzioni applicate, 0 etichette non classificate, 0 violazioni di schema,
+0 problemi di integrità, 0 discrepanze di round-trip, **0 violazioni di
+stile**, `CourseManagement: OK`.
+
+**Riconciliazione 87 vs 83 "ruoli da etichette" in `diff_report.md`**
+(richiesta utente dopo STOP 3): dei 87 ruoli di `label_classification.json`,
+3 sono legittimamente scomparsi dal PlantUML corrente perché le relazioni
+che li portavano sono state rimosse/riscritte dalle correzioni approvate
+(`BuildingManagement User->Building:author` rimossa; le due
+`TruckLogistics Driver-Vehicle:driver` unificate in una relazione senza più
+un'etichetta testuale — il ruolo ora vive nella sintassi `"molteplicità
+ruolo"`, non in `label_classification.json`). Il quarto scarto (87-3-1=83
+invece di 84) **non era un problema dei dati**: era un bug di
+`corpus/diff_report.py`, che contava una voce `ruolo_doppio` (TileOGame
+`connections/tiles`, ancora presente invariata nel diagramma) come 1 sola
+occorrenza invece di 2 (non la espandeva in `tiles`+`connections` come fa
+`_generate_label_classification.py`). Corretto: `diff_report.py` ora
+espande anche `ruolo_doppio` in piu' righe — il conteggio corretto e' **84**
+(87 - 3 rimosse da correzioni), rigenerato e verificato.

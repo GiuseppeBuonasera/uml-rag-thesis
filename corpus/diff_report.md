@@ -1,0 +1,609 @@
+# Diff report — PlantUML sorgente -> JSON Apollon finale
+
+Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa: la prima sezione confronta il PlantUML VERAMENTE originale (`corpus/raw/`) col PlantUML corretto (`corpus.jsonl.diagram_plantuml`, dopo `corpus/corrections/<id>.yaml`); tutte le altre confrontano il PlantUML corretto col JSON Apollon finale, prodotte da `corpus/apollon_convert.py`.
+
+## Correzioni di contenuto (corpus/corrections/<id>.yaml) (26)
+
+- **AirTravel** — rename_token: 'Nmae' -> 'Name' (refuso di 'Name' nell'attributo Employee.Nmae.)
+- **AirTravel** — rename_token: 'Enterainment' -> 'Entertainment' (refuso di 'Entertainment' nell'attributo SeatCategory.Enterainment — description.md: "whether or not it offers an entertainment program".)
+- **AirTravel** — replace_line: 'Airport "0..1"--"0..*" Flight : Source' -> 'Airport "1"--"0..*" Flight : Source' (description.md: "Each flight has a departure airport and a destination airport" — esattamente 1, non opzionale.)
+- **AirTravel** — replace_line: 'Airport "0..1"--"0..*" Flight : Destination' -> 'Airport "1"--"0..*" Flight : Destination' (stessa frase sopra, lato destination airport.)
+- **AirTravel** — replace_line: 'FlightExecution "0..*"-"0..1" Pilot : Captain' -> 'FlightExecution "0..*"-"1" Pilot : Captain' (description.md: "One pilot flies the aircraft as the captain" — esattamente 1, non opzionale.)
+- **AirTravel** — replace_line: 'FlightExecution "0..*"-"0..2" Pilot : Co-pilot' -> 'FlightExecution "0..*"-"1..2" Pilot : Co-pilot' (description.md: "one or two other pilots act as co-pilots" — almeno 1, non 0.)
+- **AirTravel** — replace_line: 'SeatCategory "0..1"--"0..*" Ticket' -> 'SeatCategory "1"--"0..*" Ticket' (description.md: "Each ticket is for a specific seat category" — esattamente 1, non opzionale. NOTA: la molteplicita' speculare PassengerPlane–SeatCategory (0..1 lato PassengerPlane) e' stata valutata e RESPINTA (decisione utente, STOP 2 punto b): il testo non lo dice esplicitamente, resta invariata.)
+- **AlphaInsurance** — rename_token: 'calculateCompenstationSum' -> 'calculateCompensationSum' (refuso di 'Compensation' nel nome del metodo (compensazione dovuta).)
+- **Boeing** — rename_token: 'AirPlaneId' -> 'AirplaneId' (refuso di capitalizzazione: la classe si chiama 'Airplane' (una parola sola), non 'AirPlane'.)
+- **Boeing** — rename_token: 'NegotiatedPice' -> 'NegotiatedPrice' (refuso di 'Price' nell'attributo Acquisition.NegotiatedPice.)
+- **BuildingManagement** — remove_line: 'User "1" --> "*" Building : author' rimossa (duplicato della relazione 'owner' (stessa molteplicita' 1/*, stesso verso): description.md assegna un building a "a user as the owner", non introduce un ruolo "author" distinto — "users can create buildings" e' generico e coincide semanticamente con 'owner'.)
+- **Facepage** — rename_token: 'CoversionRate' -> 'ConversionRate' (refuso di 'ConversionRate' nell'attributo AdvertisementPage.CoversionRate.)
+- **FilmSet** — rename_token: 'AssistentName' -> 'AssistantName' (refuso di 'Assistant' nell'attributo Director.AssistentName — description.md: "the name of the director's assistant is stored".)
+- **HotelBookingManagementSystem** — replace_line: 'BookingInfo "0..5" -- "*" SpecialOffer : bestOffers' -> 'BookingInfo "*" -- "0..5" SpecialOffer : bestOffers' (SOLO scambio di lato della molteplicita' '0..5' (da BookingInfo a SpecialOffer, senza introdurre un '1' non richiesto dal testo): description.md, "HBMS sends the five best special offers to the traveller" — sono le SpecialOffer (al massimo 5) associate a UNA BookingInfo, non il contrario.)
+- **Musicmatic** — rename_token: 'lenght' -> 'length' (refuso di 'length' nell'attributo Song.lenght — description.md: "title, year, length, and genre".)
+- **PizzaDeliveryWithEntertainment** — rename_token: 'LinkedInAccout' -> 'LinkedInAccount' (refuso di 'Account' nell'attributo BusinessOwner.LinkedInAccout — description.md: "provide their LinkedIn account so we can add them to our profession network".)
+- **ProjectManagement** — replace_line: 'WorkPackage "0..*" - "0..1" ResearchGroup' -> 'WorkPackage "0..*" - "1" ResearchGroup' (description.md: "each WP has exactly one research group assigned to it as WP leader" — esattamente 1, non opzionale. Unica relazione WorkPackage-ResearchGroup nel diagramma, nessuna ambiguita' su quale relazione sia quella del "leader".)
+- **SellingGoods** — replace_line: 'Order "1" -- "0..*" OrderLine' -> 'Order "1" -- "1..*" OrderLine' (description.md: "orders consist of one or more order lines" — almeno 1, non 0.)
+- **TileOGame** — rename_token: 'tunrsUntilActive' -> 'turnsUntilActive' (refuso di 'turns' nell'attributo ActionTile.tunrsUntilActive (lettere trasposte) — description.md: "the action tile turns into a regular tile for a number of turns".)
+- **TransportCompany** — rename_token: 'Sting' -> 'String' (refuso di 'String' nell'attributo Order.Comment (poi normalizzato a 'string' come ogni altro 'String' dalla pipeline di normalizzazione tipi).)
+- **TransportCompany** — rename_token: 'VerhicleType' -> 'VehicleType' (refuso nel nome dell'enum: l'attributo Vehicle.Type gia' referenzia 'VehicleType' (grafia corretta), ma l'enum era dichiarato come 'VerhicleType' — non e' un tipo esterno mancante, l'enum esiste gia' con i 4 valori corretti. description.md: "I distinguish between different types of vehicles, such as refrigerated trucks, small vans, loading platforms, and box trucks" corrisponde esattamente ai 4 valori dell'enum.)
+- **TransportCompany** — rename_token: 'RefrigiratedTruck' -> 'RefrigeratedTruck' (refuso ortografico nel valore enum ('refrigerated trucks' in description.md).)
+- **TransportCompany** — rename_token: 'Milage' -> 'Mileage' ('Milage' e' una variante ortografica accettata in alcuni dizionari, ma description.md usa esplicitamente 'mileage' — corretto per coerenza col testo (STOP 2, 2026-09-28).)
+- **TruckLogistics** — remove_line: 'Driver "1..*" --> "*" Vehicle : driver' rimossa (duplicato/incompatibile con l'altra relazione Vehicle-Driver etichettata "driver" — le due insieme non corrispondono a description.md ("vehicles are assigned up to one driver who drives these vehicles"), sostituite da un'unica relazione (vedi replace_line sotto).)
+- **TruckLogistics** — replace_line: 'Vehicle "0..1" --> "*" Driver : driver' -> 'Vehicle "*" -- "0..1 driver" Driver' (unica relazione Vehicle-Driver rimasta: molteplicita' 0..1 spostata sul lato Driver (non piu' sul lato Vehicle, che ora e' '*') e ruolo "driver" sull'estremo Driver, tramite la sintassi '"molteplicita' ruolo"' gia' in uso per gli esercizi tradotti (vedi apollon_convert.py::split_mult_role) — non serve una nuova voce in label_classification.json perche' non c'e' piu' un ': label' testuale. description.md: "vehicles are assigned up to one driver who drives these vehicles" -> 0..1 sul lato Driver, per veicolo.)
+- **University** — rename_token: 'ResearchAssociate' -> 'ResearchAssistant' (description.md usa sempre "research assistant (RA)", mai "associate" — la classe nel PlantUML sorgente era denominata ResearchAssociate in modo coerente in tutte le occorrenze ma in contrasto col testo.)
+
+## Normalizzazione tipi primitivi negli attributi (430)
+
+- **AirTravel** — `Airline.Name` : `String` -> `string`
+- **AirTravel** — `Employee.Name` : `String` -> `string`
+- **AirTravel** — `Employee.StartDate` : `Date` -> `date`
+- **AirTravel** — `Airport.Name` : `String` -> `string`
+- **AirTravel** — `Airport.Address` : `String` -> `string`
+- **AirTravel** — `Airport.RunwayCount` : `Int` -> `int`
+- **AirTravel** — `FlightAttendant.Purser` : `Boolean` -> `boolean`
+- **AirTravel** — `Airplane.Name` : `String` -> `string`
+- **AirTravel** — `Airplane.Type` : `String` -> `string`
+- **AirTravel** — `Airplane.ConstructionYear` : `Date` -> `date`
+- **AirTravel** — `Airplane.NextInspection` : `Date` -> `date`
+- **AirTravel** — `Flight.FlightNumber` : `String` -> `string`
+- **AirTravel** — `Pilot.License` : `String` -> `string`
+- **AirTravel** — `PassengerPlane.Seats` : `Int` -> `int`
+- **AirTravel** — `FlightExecution.Date` : `Date` -> `date`
+- **AirTravel** — `SeatCategory.Description` : `String` -> `string`
+- **AirTravel** — `SeatCategory.Entertainment` : `Boolean` -> `boolean`
+- **AirTravel** — `SeatCategory.SeatCount` : `Int` -> `int`
+- **AirTravel** — `Passenger.Name` : `String` -> `string`
+- **AirTravel** — `Passenger.PassportNumber` : `String` -> `string`
+- **AirTravel** — `Ticket.TicketId` : `String` -> `string`
+- **AirTravel** — `Ticket.Price` : `Float` -> `float`
+- **AirTravel** — `Ticket.Upgrade` : `Boolean` -> `boolean`
+- **AlphaInsurance** — `Customer.Name` : `String` -> `string`
+- **AlphaInsurance** — `Customer.email` : `String` -> `string`
+- **AlphaInsurance** — `InsurancePolicy.Type` : `String` -> `string`
+- **AlphaInsurance** — `InsurancePolicy.MonthlyPrice` : `Double` -> `double`
+- **AlphaInsurance** — `InsurancePolicy.YearlyPrice` : `Double` -> `double`
+- **AlphaInsurance** — `Contract.Status` : `String` -> `string`
+- **AlphaInsurance** — `Contract.InvoiceFrequency` : `String` -> `string`
+- **AlphaInsurance** — `Broker.Name` : `String` -> `string`
+- **AlphaInsurance** — `Claim.CompensationTotal` : `Double` -> `double`
+- **AlphaInsurance** — `ClaimCase.Status` : `String` -> `string`
+- **AlphaInsurance** — `ClaimCase.CompensationDecision` : `String` -> `string`
+- **AlphaInsurance** — `Estimator.AreaOfExpertise` : `String` -> `string`
+- **AlphaInsurance** — `CompensationPayment.PaymentDate` : `Date` -> `date`
+- **BankAccount** — `Customer.firstName` : `String` -> `string`
+- **BankAccount** — `Customer.lastName` : `String` -> `string`
+- **Boeing** — `AirplaneModel.ModelId` : `Int` -> `int`
+- **Boeing** — `Airplane.AirplaneId` : `Int` -> `int`
+- **Boeing** — `Acquisition.AcquisitionId` : `Int` -> `int`
+- **Boeing** — `Acquisition.NegotiatedPrice` : `Float` -> `float`
+- **Boeing** — `Acquisition.Options` : `String` -> `string`
+- **Boeing** — `Acquisition.DeliveryDate` : `DateTime` -> `datetime`
+- **Boeing** — `Contract.ContractId` : `Int` -> `int`
+- **Boeing** — `Contract.Text` : `String` -> `string`
+- **Boeing** — `Employee.EmployeeId` : `Int` -> `int`
+- **Boeing** — `Airline.Name` : `String` -> `string`
+- **BuildingManagement** — `User.username` : `String` -> `string`
+- **BuildingManagement** — `User.password` : `String` -> `string`
+- **BuildingManagement** — `User.email` : `String` -> `string`
+- **BuildingManagement** — `Administrator.idCardNumber` : `String` -> `string`
+- **BuildingManagement** — `WebPortal.versionNumber` : `String` -> `string`
+- **BuildingManagement** — `WebPortal.url` : `String` -> `string`
+- **BuildingManagement** — `Building.id` : `String` -> `string`
+- **BuildingManagement** — `Building.label` : `String` -> `string`
+- **BuildingManagement** — `Building.address` : `String` -> `string`
+- **BuildingManagement** — `Entry.name` : `String` -> `string`
+- **BuildingManagement** — `TextEntry.text` : `String` -> `string`
+- **BuildingManagement** — `NumericEntry.unit` : `String` -> `string`
+- **BuildingManagement** — `Comment.text` : `String` -> `string`
+- **BuildingManagement** — `Image.fileName` : `String` -> `string`
+- **BusTransportationManagementSystem** — `BusVehicle.LicencePlate` : `String` -> `string`
+- **BusTransportationManagementSystem** — `BusVehicle.InRepairShop` : `Boolean` -> `boolean`
+- **BusTransportationManagementSystem** — `Route.Number` : `Int` -> `int`
+- **BusTransportationManagementSystem** — `RouteAssignment.Date` : `Date` -> `date`
+- **BusTransportationManagementSystem** — `Driver.Name` : `String` -> `string`
+- **BusTransportationManagementSystem** — `Driver.Id` : `String` -> `string`
+- **BusTransportationManagementSystem** — `Driver.OnSickLeave` : `Boolean` -> `boolean`
+- **CelO** — `Person.LastName` : `String` -> `string`
+- **CelO** — `Person.FirstName` : `String` -> `string`
+- **CelO** — `Person.EmailAddress` : `String` -> `string`
+- **CelO** — `Person.Password` : `String` -> `string`
+- **CelO** — `Organizer.Address` : `String` -> `string`
+- **CelO** — `Organizer.PhoneNumber` : `String` -> `string`
+- **CelO** — `CheckListTask.Description` : `String` -> `string`
+- **CelO** — `Location.Name` : `String` -> `string`
+- **CelO** — `Location.Address` : `String` -> `string`
+- **CelO** — `Event.Occasion` : `String` -> `string`
+- **CelO** — `Event.StartTime` : `Date` -> `date`
+- **CelO** — `Event.EndTime` : `Date` -> `date`
+- **CelO** — `EventType.Name` : `String` -> `string`
+- **ClothingCompany** — `Order.OrderNumber` : `Int` -> `int`
+- **ClothingCompany** — `Order.OrderQuantity` : `Int` -> `int`
+- **ClothingCompany** — `Order.OrderDate` : `Date` -> `date`
+- **ClothingCompany** — `Order.DeliveryDate` : `Date` -> `date`
+- **ClothingCompany** — `Category.Name` : `String` -> `string`
+- **ClothingCompany** — `Product.Name` : `String` -> `string`
+- **ClothingCompany** — `Product.Description` : `String` -> `string`
+- **ClothingCompany** — `Product.NetPrice` : `Double` -> `double`
+- **ClothingCompany** — `Representative.FirstName` : `String` -> `string`
+- **ClothingCompany** — `Representative.LastName` : `String` -> `string`
+- **ClothingCompany** — `Representative.Ssn` : `Int` -> `int`
+- **ClothingCompany** — `Representative.PhoneNumber` : `String` -> `string`
+- **ClothingCompany** — `Representative.Email` : `String` -> `string`
+- **ClothingCompany** — `Manufacturer.Name` : `String` -> `string`
+- **ClothingCompany** — `Country.Name` : `String` -> `string`
+- **ClothingCompany** — `Country.VAT` : `Double` -> `double`
+- **ClothingCompany** — `Country.Currency` : `String` -> `string`
+- **ClothingCompany** — `Country.ConversionRate` : `Float` -> `float`
+- **ClothingCompany** — `Customer.Name` : `String` -> `string`
+- **ClothingCompany** — `Customer.Address` : `String` -> `string`
+- **ClothingCompany** — `Customer.PhoneNumber` : `String` -> `string`
+- **ClothingCompany** — `Customer.Email` : `String` -> `string`
+- **eHome2020** — `Sensor.id` : `Integer` -> `int`
+- **eHome2020** — `Sensor.description` : `String` -> `string`
+- **eHome2020** — `Sensor.threshold` : `Double` -> `double`
+- **eHome2020** — `Measurement.value` : `Double` -> `double`
+- **eHome2020** — `Measurement.timestamp` : `Long` -> `long`
+- **eHome2020** — `TemperatureSensor.min` : `Double` -> `double`
+- **eHome2020** — `TemperatureSensor.max` : `Double` -> `double`
+- **eHome2020** — `PowerMeter.totalConsumption` : `Double` -> `double`
+- **eHome2020** — `Room.label` : `String` -> `string`
+- **eHome2020** — `Apartment.address` : `String` -> `string`
+- **eHome2020** — `Apartment.email` : `String` -> `string`
+- **eHome2020** — `Resident.username` : `String` -> `string`
+- **eHome2020** — `Resident.password` : `String` -> `string`
+- **eHome2020** — `Resident.isAdmin` : `Boolean` -> `boolean`
+- **EUScienceConnect** — `Person.PersonID` : `Int` -> `int`
+- **EUScienceConnect** — `Person.PhoneNumber` : `String` -> `string`
+- **EUScienceConnect** — `Person.Keywords` : `String` -> `string`
+- **EUScienceConnect** — `ResearchInstitution.InstitutionCode` : `Int` -> `int`
+- **EUScienceConnect** — `Article.DOI` : `Int` -> `int`
+- **EUScienceConnect** — `Article.Title` : `String` -> `string`
+- **EUScienceConnect** — `Author.Position` : `Int` -> `int`
+- **EUScienceConnect** — `PeerReviewedPaper.CitationCount` : `Int` -> `int`
+- **EUScienceConnect** — `Publisher.Name` : `String` -> `string`
+- **EUScienceConnect** — `Journal.Name` : `String` -> `string`
+- **EUScienceConnect** — `Journal.ImpactFactor` : `Double` -> `double`
+- **Facepage** — `User.UserID` : `Int` -> `int`
+- **Facepage** — `User.Name` : `String` -> `string`
+- **Facepage** — `User.Email` : `String` -> `string`
+- **Facepage** — `User.BirthDate` : `Date` -> `date`
+- **Facepage** — `Account.AccountNumber` : `Int` -> `int`
+- **Facepage** — `BusinessAccount.CompanyName` : `String` -> `string`
+- **Facepage** — `Page.PageName` : `String` -> `string`
+- **Facepage** — `Page.Visits` : `Int` -> `int`
+- **Facepage** — `Privilege.TypeOfPrivilege` : `String` -> `string`
+- **Facepage** — `AdvertisementPage.BounceRate` : `Double` -> `double`
+- **Facepage** — `AdvertisementPage.ClickThroughRate` : `Double` -> `double`
+- **Facepage** — `AdvertisementPage.ConversionRate` : `Double` -> `double`
+- **FilmSet** — `Employee.Name` : `String` -> `string`
+- **FilmSet** — `Employee.Ssn` : `Int` -> `int`
+- **FilmSet** — `CreativeEmployee.Oscar` : `Boolean` -> `boolean`
+- **FilmSet** — `Technician.FieldOfActivity` : `String` -> `string`
+- **FilmSet** — `Director.AssistantName` : `String` -> `string`
+- **FilmSet** — `Actor.Education` : `String` -> `string`
+- **FilmSet** — `Screenplay.Title` : `String` -> `string`
+- **FilmSet** — `Screenplay.Version` : `String` -> `string`
+- **FilmSet** — `Screenplay.Date` : `Date` -> `date`
+- **FilmSet** — `Screenplay.NumberOfScenes` : `Int` -> `int`
+- **FilmSet** — `Screenplay.Plot` : `String` -> `string`
+- **FilmSet** — `FilmSet.Location` : `String` -> `string`
+- **FilmSet** — `Film.Title` : `String` -> `string`
+- **FilmSet** — `Film.Year` : `Int` -> `int`
+- **FilmSet** — `ScreenplayAuthor.Name` : `String` -> `string`
+- **FilmSet** — `Book.Title` : `String` -> `string`
+- **FilmSet** — `Book.Author` : `String` -> `string`
+- **FitnessCompanyConan** — `Center.name` : `String` -> `string`
+- **FitnessCompanyConan** — `Center.Address` : `String` -> `string`
+- **FitnessCompanyConan** — `Room.RoomNr` : `Int` -> `int`
+- **FitnessCompanyConan** — `Room.MaxCapacity` : `Int` -> `int`
+- **FitnessCompanyConan** — `Session.StartDateTime` : `DateTime` -> `datetime`
+- **FitnessCompanyConan** — `GroupSession.Type` : `String` -> `string`
+- **FitnessCompanyConan** — `Person.FirstName` : `String` -> `string`
+- **FitnessCompanyConan** — `Person.Lastname` : `String` -> `string`
+- **FitnessCompanyConan** — `Person.BirthDate` : `Date` -> `date`
+- **FitnessCompanyConan** — `Trainer.Diploma` : `String` -> `string`
+- **GameArea** — `GameArea.name` : `String` -> `string`
+- **GasStation_KUL** — `CardHolder.Name` : `String` -> `string`
+- **GasStation_KUL** — `CardHolder.Suspended` : `Boolean` -> `boolean`
+- **GasStation_KUL** — `Invoice.Number` : `Int` -> `int`
+- **GasStation_KUL** — `Invoice.Discount` : `Double` -> `double`
+- **GasStation_KUL** — `Invoice.status` : `String` -> `string`
+- **GasStation_KUL** — `InvoiceLine.Number` : `Int` -> `int`
+- **GasStation_KUL** — `GasStation.Name` : `String` -> `string`
+- **GasStation_KUL** — `Pump.Type` : `String` -> `string`
+- **GasStation_KUL** — `Pump.InUse` : `Boolean` -> `boolean`
+- **GasStation_KUL** — `Pump.RefillThreshold` : `Double` -> `double`
+- **GasStation_KUL** — `Pump.Blocked` : `Boolean` -> `boolean`
+- **GasStation_KUL** — `RefuelTurn.RefuelTurnNumber` : `Int` -> `int`
+- **GasStation_TUW** — `GasStation.Id` : `Int` -> `int`
+- **GasStation_TUW** — `GasStation.Address` : `String` -> `string`
+- **GasStation_TUW** — `DailyPrice.Date` : `Date` -> `date`
+- **GasStation_TUW** — `DailyPrice.Price` : `Double` -> `double`
+- **GasStation_TUW** — `FuelPurchase.Id` : `Int` -> `int`
+- **GasStation_TUW** — `FuelPurchase.Liter` : `Int` -> `int`
+- **GasStation_TUW** — `FuelPump.PumpNumber` : `Int` -> `int`
+- **GasStation_TUW** — `FuelPump.SelfService` : `Boolean` -> `boolean`
+- **GasStation_TUW** — `Fuel.Name` : `String` -> `string`
+- **GasStation_TUW** — `Fuel.Octane` : `Int` -> `int`
+- **HelpingHands** — `Person.Name` : `String` -> `string`
+- **HelpingHands** — `Person.Address` : `String` -> `string`
+- **HelpingHands** — `Person.PhoneNumber` : `String` -> `string`
+- **HelpingHands** — `Person.EmailAddress` : `String` -> `string`
+- **HelpingHands** — `SecondHandArticle.CodeRFID` : `String` -> `string`
+- **HelpingHands** — `SecondHandArticle.Discarded` : `Boolean` -> `boolean`
+- **HelpingHands** — `Vehicle.Dimension` : `String` -> `string`
+- **HelpingHands** — `Vehicle.WeightRestriction` : `Int` -> `int`
+- **HelpingHands** — `Item.Description` : `String` -> `string`
+- **HelpingHands** — `Item.Dimension` : `String` -> `string`
+- **HelpingHands** — `Item.Weight` : `Int` -> `int`
+- **HelpingHands** — `Item.RequestedPickedDate` : `Date` -> `date`
+- **HelpingHands** — `Route.date` : `Date` -> `date`
+- **HomeForTheElderly** — `Category.Price` : `Double` -> `double`
+- **HomeForTheElderly** — `Category.Type` : `String` -> `string`
+- **HomeForTheElderly** — `Proposal.Status` : `String` -> `string`
+- **HomeForTheElderly** — `Proposal.Validated` : `Boolean` -> `boolean`
+- **HomeForTheElderly** — `Stay.IntakeDate` : `Date` -> `date`
+- **HomeForTheElderly** — `Stay.EndDate` : `Date` -> `date`
+- **HomeForTheElderly** — `Person.Name` : `String` -> `string`
+- **HomeForTheElderly** — `Person.Birthdate` : `Date` -> `date`
+- **HomeForTheElderly** — `Person.RegistrationDate` : `Date` -> `date`
+- **HomeForTheElderly** — `Person.Abilities` : `String` -> `string`
+- **HomeForTheElderly** — `Invoice.InvoiceDate` : `Date` -> `date`
+- **HomeForTheElderly** — `Invoice.OutstandingAmount` : `Double` -> `double`
+- **HomeForTheElderly** — `Invoice.Status` : `String` -> `string`
+- **HospitalHouseMD** — `Patient.Consent` : `Boolean` -> `boolean`
+- **HospitalHouseMD** — `Diagnosis.Stage` : `Int` -> `int`
+- **HospitalHouseMD** — `Illness.Priority` : `String` -> `string`
+- **House** — `ConcreteBasement.Quality` : `Double` -> `double`
+- **House** — `Basement.Size` : `Double` -> `double`
+- **House** — `Basement.Name` : `String` -> `string`
+- **House** — `EarthBasement.Humidity` : `Double` -> `double`
+- **House** — `SemiDetached.Garden` : `Boolean` -> `boolean`
+- **House** — `SemiDetached.Windows` : `Int` -> `int`
+- **House** — `House.Address` : `String` -> `string`
+- **House** — `JobLog.Hours` : `Int` -> `int`
+- **House** — `JobLog.Price` : `Double` -> `double`
+- **House** — `Company.Name` : `String` -> `string`
+- **House** — `Company.Address` : `String` -> `string`
+- **House** — `Carport.DoublePort` : `Boolean` -> `boolean`
+- **House** — `Carport.flatRoof` : `Boolean` -> `boolean`
+- **House** — `Garage.Automatic` : `Boolean` -> `boolean`
+- **Kinepolis** — `Cinema.Name` : `String` -> `string`
+- **Kinepolis** — `Cinema.City` : `String` -> `string`
+- **Kinepolis** — `Theatre.Number` : `Int` -> `int`
+- **Kinepolis** — `Movie.Title` : `String` -> `string`
+- **Kinepolis** — `Movie.durationMinutes` : `Int` -> `int`
+- **Kinepolis** — `MovieCopy.Id` : `Int` -> `int`
+- **Kinepolis** — `CopyLocation.StartDate` : `DateTime` -> `datetime`
+- **Kinepolis** — `CopyLocation.EndDate` : `DateTime` -> `datetime`
+- **Kinepolis** — `Seat.SeatNumber` : `Int` -> `int`
+- **Kinepolis** — `Show.StartTime` : `DateTime` -> `datetime`
+- **Kinepolis** — `Show.EndTime` : `DateTime` -> `datetime`
+- **Kinepolis** — `Ticket.TicketId` : `Int` -> `int`
+- **Kinepolis** — `Ticket.Price` : `Float` -> `float`
+- **Kinepolis** — `Customer.Name` : `String` -> `string`
+- **Kinepolis** — `Customer.CustomerId` : `Int` -> `int`
+- **Kinepolis** — `OnlineTicket.OnlineTicketId` : `Int` -> `int`
+- **Kinepolis** — `OnlineTicket.Price` : `Float` -> `float`
+- **Kinepolis** — `AlternativeOffer.AlternativeOfferId` : `Int` -> `int`
+- **LabTracker** — `Person.LastName` : `String` -> `string`
+- **LabTracker** — `Person.FirstName` : `String` -> `string`
+- **LabTracker** — `Person.Address` : `String` -> `string`
+- **LabTracker** — `Person.PhoneNumber` : `String` -> `string`
+- **LabTracker** — `PersonRole.IdNumber` : `Int` -> `int`
+- **LabTracker** — `Patient.DateOfBirth` : `String` -> `string`
+- **LabTracker** — `Doctor.Signature` : `String` -> `string`
+- **LabTracker** — `Requisition.EffectiveDate` : `String` -> `string`
+- **LabTracker** — `Requisition.RepetitionCount` : `Int` -> `int`
+- **LabTracker** — `TestResult.Result` : `Boolean` -> `boolean`
+- **LabTracker** — `TestResult.Report` : `String` -> `string`
+- **LabTracker** — `SpecificTest.Date` : `Date` -> `date`
+- **LabTracker** — `Appointment.Confirmation` : `String` -> `string`
+- **LabTracker** — `Appointment.Date` : `Date` -> `date`
+- **LabTracker** — `Appointment.startTime` : `String` -> `string`
+- **LabTracker** — `Appointment.endTime` : `String` -> `string`
+- **LabTracker** — `BusinessHour.startTime` : `String` -> `string`
+- **LabTracker** — `BusinessHour.endTime` : `String` -> `string`
+- **LabTracker** — `Lab.RegistrationNumber` : `String` -> `string`
+- **LabTracker** — `Lab.Name` : `String` -> `string`
+- **LabTracker** — `Lab.Address` : `String` -> `string`
+- **LabTracker** — `Lab.ChangeCancelFee` : `Boolean` -> `boolean`
+- **LabTracker** — `Test.Name` : `String` -> `string`
+- **LabTracker** — `Test.Duration` : `String` -> `string`
+- **LabTracker** — `TestType.Name` : `String` -> `string`
+- **LabTracker** — `TestType.DurationAdditive` : `String` -> `string`
+- **Louvre** — `Piece.Title` : `String` -> `string`
+- **Louvre** — `Piece.Description` : `String` -> `string`
+- **Louvre** — `Item.Description` : `String` -> `string`
+- **Louvre** — `Exhibition.Title` : `String` -> `string`
+- **Louvre** — `Exhibition.Stage` : `String` -> `string`
+- **Louvre** — `Employee.Level` : `String` -> `string`
+- **Menso** — `BusLine.Destination` : `String` -> `string`
+- **Menso** — `PriceCategory.Price` : `Double` -> `double`
+- **Menso** — `Trajectory.Status` : `String` -> `string`
+- **Menso** — `MensoTrip.TripDateTime` : `DateTime` -> `datetime`
+- **Menso** — `Invoice.Total` : `Double` -> `double`
+- **Menso** — `Invoice.Discount` : `Double` -> `double`
+- **Menso** — `Customer.Name` : `String` -> `string`
+- **Menso** — `Customer.HomeAddress` : `String` -> `string`
+- **Menso** — `Customer.OfficeAddress` : `String` -> `string`
+- **Menso** — `Customer.WorkingHours` : `String` -> `string`
+- **Musicmatic** — `Song.Title` : `String` -> `string`
+- **Musicmatic** — `Song.Year` : `Int` -> `int`
+- **Musicmatic** — `Song.length` : `Int` -> `int`
+- **Musicmatic** — `Song.Genre` : `String` -> `string`
+- **Musicmatic** — `Artist.BirthDate` : `Date` -> `date`
+- **Musicmatic** — `Artist.Name` : `String` -> `string`
+- **Musicmatic** — `Artist.Website` : `String` -> `string`
+- **Musicmatic** — `User.UserID` : `Int` -> `int`
+- **Musicmatic** — `User.Name` : `String` -> `string`
+- **Musicmatic** — `User.Address` : `String` -> `string`
+- **Musicmatic** — `BusinessUser.VATnumber` : `Int` -> `int`
+- **Musicmatic** — `Track.TrackNumber` : `Int` -> `int`
+- **OnlineTutoringSystem** — `TutorAvailability.startTime` : `Date` -> `date`
+- **OnlineTutoringSystem** — `TutorAvailability.endTime` : `Time` -> `time`
+- **OnlineTutoringSystem** — `TutoringSession.sessionDate` : `Date` -> `date`
+- **PizzaDeliveryWithEntertainment** — `User.UserID` : `Int` -> `int`
+- **PizzaDeliveryWithEntertainment** — `User.Birthdate` : `Date` -> `date`
+- **PizzaDeliveryWithEntertainment** — `User.Name` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `User.Address` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `Customer.DeliveryAddress` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `Order.OrderID` : `Int` -> `int`
+- **PizzaDeliveryWithEntertainment** — `Order.OrderPlacement` : `DateTime` -> `datetime`
+- **PizzaDeliveryWithEntertainment** — `Order.LatestDelivery` : `DateTime` -> `datetime`
+- **PizzaDeliveryWithEntertainment** — `Order.NumberOfPeople` : `Int` -> `int`
+- **PizzaDeliveryWithEntertainment** — `EntertainmentOrder.EntertainmentType` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `EntertainmentOrder.Duration` : `Int` -> `int`
+- **PizzaDeliveryWithEntertainment** — `BusinessOwner.LinkedInAccount` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `PizzaRestaurant.ZipCode` : `Int` -> `int`
+- **PizzaDeliveryWithEntertainment** — `PizzaRestaurant.Address` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `PizzaRestaurant.PhoneNumber` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `PizzaRestaurant.Website` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `PizzaRestaurant.OpeningHours` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `Pizza.Name` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `Pizza.CrustStructure` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `Pizza.Price` : `Double` -> `double`
+- **PizzaDeliveryWithEntertainment** — `Entertainer.StageName` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `Entertainer.Bio` : `String` -> `string`
+- **PizzaDeliveryWithEntertainment** — `Entertainer.PriceThirtyMin` : `Double` -> `double`
+- **PizzaDeliveryWithEntertainment** — `Employment.Availability` : `String` -> `string`
+- **School** — `Person.FirstName` : `String` -> `string`
+- **School** — `Person.LastName` : `String` -> `string`
+- **School** — `Teacher.Email` : `String` -> `string`
+- **School** — `ClassGroup.Name` : `String` -> `string`
+- **School** — `TeacherAssignment.Hours` : `Int` -> `int`
+- **School** — `School.Name` : `String` -> `string`
+- **School** — `Room.Name` : `String` -> `string`
+- **School** — `ClassRoom.Capacity` : `Int` -> `int`
+- **School** — `OtherRoom.Size` : `Double` -> `double`
+- **SellingGoods** — `Product.Name` : `String` -> `string`
+- **SellingGoods** — `Product.Stock` : `Int` -> `int`
+- **SellingGoods** — `Customer.Name` : `String` -> `string`
+- **SellingGoods** — `Customer.Address` : `String` -> `string`
+- **SellingGoods** — `Customer.VATnumber` : `String` -> `string`
+- **SellingGoods** — `OrderLine.LineNumber` : `String` -> `string`
+- **SellingGoods** — `OrderLine.Quantity` : `Int` -> `int`
+- **SellingGoods** — `Order.OrderNumber` : `String` -> `string`
+- **SellingGoods** — `Order.DeliveryAddress` : `String` -> `string`
+- **Sightseeing** — `City.Name` : `String` -> `string`
+- **Sightseeing** — `City.NumberOfInhabitants` : `Int` -> `int`
+- **Sightseeing** — `Attraction.Name` : `String` -> `string`
+- **Sightseeing** — `Attraction.Address` : `String` -> `string`
+- **Sightseeing** — `GuidedTour.Number` : `Int` -> `int`
+- **Sightseeing** — `GuidedTour.Duration` : `Int` -> `int`
+- **Sightseeing** — `Discount.Discount` : `Int` -> `int`
+- **Sightseeing** — `Person.Name` : `String` -> `string`
+- **SmartHomeAutomationSystem** — `Address.address` : `String` -> `string`
+- **SmartHomeAutomationSystem** — `User.name` : `String` -> `string`
+- **SmartHomeAutomationSystem** — `Device.deviceID` : `Integer` -> `int`
+- **SmartHomeAutomationSystem** — `RuntimeElement.timestamp` : `Time` -> `time`
+- **SmartHomeAutomationSystem** — `SensorReading.value` : `Double` -> `double`
+- **Sober** — `Ride.RideNr` : `Int` -> `int`
+- **Sober** — `Ride.PickupDateTime` : `DateTime` -> `datetime`
+- **Sober** — `Ride.DropoffDateTime` : `DateTime` -> `datetime`
+- **Sober** — `Ride.Duration` : `Int` -> `int`
+- **Sober** — `Ride.PickupLocation` : `String` -> `string`
+- **Sober** — `Ride.DropoffLocation` : `String` -> `string`
+- **Sober** — `Ride.Distance` : `Int` -> `int`
+- **Sober** — `Ride.Fee` : `Int` -> `int`
+- **Sober** — `RideHailing.Passengers` : `Int` -> `int`
+- **Sober** — `RideHailing.WaitTime` : `Time` -> `time`
+- **Sober** — `RideHailing.RequestType` : `String` -> `string`
+- **Sober** — `Customer.CustNr` : `Int` -> `int`
+- **Sober** — `Customer.CustName` : `String` -> `string`
+- **Sober** — `Car.CarNr` : `Int` -> `int`
+- **Sober** — `Car.CarType` : `String` -> `string`
+- **Sober** — `Involved.DamageAmount` : `Int` -> `int`
+- **Sober** — `Accident.AccNr` : `Int` -> `int`
+- **Sober** — `Accident.AccLocation` : `String` -> `string`
+- **Sober** — `Accident.AccDateTime` : `DateTime` -> `datetime`
+- **TeamSportsScoutingSystem** — `Person.FirstName` : `String` -> `string`
+- **TeamSportsScoutingSystem** — `Person.LastName` : `String` -> `string`
+- **TeamSportsScoutingSystem** — `Offer.Value` : `Int` -> `int`
+- **TeamSportsScoutingSystem** — `ScoutReport.Pro` : `String` -> `string`
+- **TeamSportsScoutingSystem** — `ScoutReport.Con` : `String` -> `string`
+- **TeamSportsScoutingSystem** — `PlayerAttribute.Name` : `String` -> `string`
+- **TeamSportsScoutingSystem** — `PlayerAttribute.Value` : `Int` -> `int`
+- **TileOGame** — `Tile.hasBeenVisited` : `Boolean` -> `boolean`
+- **TransportCompany** — `RepairShop.Name` : `String` -> `string`
+- **TransportCompany** — `RepairShop.Address` : `String` -> `string`
+- **TransportCompany** — `Repair.Duration` : `Int` -> `int`
+- **TransportCompany** — `Repair.Cost` : `Double` -> `double`
+- **TransportCompany** — `Vehicle.LicensePlateNumber` : `String` -> `string`
+- **TransportCompany** — `Vehicle.Mileage` : `Int` -> `int`
+- **TransportCompany** — `Order.PacketSize` : `Int` -> `int`
+- **TransportCompany** — `Order.Date` : `Date` -> `date`
+- **TransportCompany** — `Order.Comment` : `String` -> `string`
+- **TransportCompany** — `Order.StartTime` : `Time` -> `time`
+- **TransportCompany** — `Order.EndTime` : `Time` -> `time`
+- **TransportCompany** — `Order.PickUpAddress` : `String` -> `string`
+- **TransportCompany** — `Order.DeliveryAddress` : `String` -> `string`
+- **TransportCompany** — `Employee.Ssn` : `Int` -> `int`
+- **TransportCompany** — `Employee.FirstName` : `String` -> `string`
+- **TransportCompany** — `Employee.LastName` : `String` -> `string`
+- **TransportCompany** — `OtherEmployee.UserName` : `String` -> `string`
+- **TransportCompany** — `OtherEmployee.Password` : `String` -> `string`
+- **TransportCompany** — `AdministrationEmployee.FieldOfActivity` : `String` -> `string`
+- **TransportCompany** — `PartnerFirm.Name` : `String` -> `string`
+- **TransportCompany** — `PartnerFirm.Address` : `String` -> `string`
+- **TransportCompany** — `Customer.Name` : `String` -> `string`
+- **TransportCompany** — `Customer.Address` : `String` -> `string`
+- **TreatmentPlans** — `ProblemType.Type` : `String` -> `string`
+- **TreatmentPlans** — `ExaminationType.Type` : `String` -> `string`
+- **TruckLogistics** — `Assignment.date` : `Date` -> `date`
+- **TruckLogistics** — `Location.address` : `String` -> `string`
+- **TruckLogistics** — `Driver.firstName` : `String` -> `string`
+- **TruckLogistics** — `Driver.lastName` : `String` -> `string`
+- **University** — `Employee.name` : `String` -> `string`
+- **University** — `Employee.email` : `String` -> `string`
+- **University** — `Faculty.name` : `String` -> `string`
+- **University** — `ResearchAssistant.fieldOfStudy` : `String` -> `string`
+- **University** — `Institute.name` : `String` -> `string`
+- **University** — `Institute.address` : `String` -> `string`
+- **University** — `Course.name` : `String` -> `string`
+- **University** — `Project.name` : `String` -> `string`
+- **University** — `Project.start` : `Date` -> `date`
+- **University** — `Project.end` : `Date` -> `date`
+
+## Normalizzazione tipi primitivi nei metodi (tipo di ritorno) (6)
+
+- **AlphaInsurance** — metodo `Double calculateCompensationSum()`: 'Double' -> 'double'
+- **Ebike** — metodo `nextInspection() : Date`: 'Date' -> 'date'
+- **HomeForTheElderly** — metodo `Double payment(paymentAmount)`: 'Double' -> 'double'
+- **HospitalHouseMD** — metodo `Int ugradeStage()`: 'Int' -> 'int'
+- **HospitalHouseMD** — metodo `Int downgradeStage()`: 'Int' -> 'int'
+- **HospitalHouseMD** — metodo `Int priorityUpgrade()`: 'Int' -> 'int'
+
+## Normalizzazione molteplicita' ('n' -> '*') (0)
+
+_Nessuna occorrenza._
+
+## Classificazione etichette -> ruolo (sourceRole/targetRole, label svuotato) (84)
+
+- **AirTravel** — `Airport "1"--"0..*" Flight : Source`: label 'Source' -> ruolo su estremo
+- **AirTravel** — `Airport "1"--"0..*" Flight : Destination`: label 'Destination' -> ruolo su estremo
+- **AirTravel** — `FlightExecution "0..*"-"1" Pilot : Captain`: label 'Captain' -> ruolo su estremo
+- **AirTravel** — `FlightExecution "0..*"-"1..2" Pilot : Co-pilot`: label 'Co-pilot' -> ruolo su estremo
+- **BuildingManagement** — `User "1" --> "*" Building : owner`: label 'owner' -> ruolo su estremo
+- **BuildingManagement** — `Building "1" --> "1" Image : profilePicture`: label 'profilePicture' -> ruolo su estremo
+- **DestroyBlockGame** — `Game "1" *-- "*" Block : blocks`: label 'blocks' -> ruolo su estremo
+- **DestroyBlockGame** — `Game "1" *-- "1" Paddle : paddle`: label 'paddle' -> ruolo su estremo
+- **DestroyBlockGame** — `Game "1" *-- "1" Ball : ball`: label 'ball' -> ruolo su estremo
+- **DestroyBlockGame** — `Game "1" *-- "1..99" Level : levels`: label 'levels' -> ruolo su estremo
+- **DestroyBlockGame** — `Game "1" *-- "*" BlockAssignment : blockAssignments`: label 'blockAssignments' -> ruolo su estremo
+- **DestroyBlockGame** — `Game "1" --> "0..1" HallOfFameEntry : mostRecentEntry`: label 'mostRecentEntry' -> ruolo su estremo
+- **DestroyBlockGame** — `Game "1" -- "*" PlayedGame : game`: label 'game' -> ruolo su estremo
+- **DestroyBlockGame** — `Level "1" -- "*" BlockAssignment : level`: label 'level' -> ruolo su estremo
+- **DestroyBlockGame** — `PlayedGame "1" *-- "*" PlayedBlockAssignment : blocks`: label 'blocks' -> ruolo su estremo
+- **DestroyBlockGame** — `Player "1" -- "1" User : player`: label 'player' -> ruolo su estremo
+- **DestroyBlockGame** — `Player "1" -- "*" PlayedGame : player`: label 'player' -> ruolo su estremo
+- **DestroyBlockGame** — `Player "1" -- "*" HallOfFameEntry : player`: label 'player' -> ruolo su estremo
+- **DestroyBlockGame** — `Admin "0..1" -- "1" User : admin`: label 'admin' -> ruolo su estremo
+- **DestroyBlockGame** — `Admin "1" -- "*" Game : admin`: label 'admin' -> ruolo su estremo
+- **DestroyBlockGame** — `Block "1" -- "*" PlayedBlockAssignment : block`: label 'block' -> ruolo su estremo
+- **Ebike** — `EBike --> Wheel : wheel`: label 'wheel' -> ruolo su estremo
+- **Ebike** — `EBike --> Battery : battery`: label 'battery' -> ruolo su estremo
+- **Ebike** — `EBike --> Frame : frame`: label 'frame' -> ruolo su estremo
+- **Ebike** — `EBike --> DriveSystem : driveSystem`: label 'driveSystem' -> ruolo su estremo
+- **Ebike** — `EBike --> Controller : controller`: label 'controller' -> ruolo su estremo
+- **Ebike** — `DriveSystem --> Motor : motor`: label 'motor' -> ruolo su estremo
+- **Ebike** — `Controller --> Battery : battery`: label 'battery' -> ruolo su estremo
+- **Ebike** — `Controller --> State : currentState`: label 'currentState' -> ruolo su estremo
+- **eHome2020** — `Sensor "1" --> "1" Measurement : lastValue`: label 'lastValue' -> ruolo su estremo
+- **Facepage** — `PersonalAccount "1"--"*" PersonalPage : administrator`: label 'administrator' -> ruolo su estremo
+- **Facepage** — `FriendRequest "*"-"1" PersonalAccount : sender`: label 'sender' -> ruolo su estremo
+- **Facepage** — `FriendRequest "*"-"1" PersonalAccount : receiver`: label 'receiver' -> ruolo su estremo
+- **FilmSet** — `Film "1"--"0..1" ScreenplayAuthor : MostSuccessful`: label 'MostSuccessful' -> ruolo su estremo
+- **GameArea** — `GameArea "1" --> "1" Enemy : finalBoss`: label 'finalBoss' -> ruolo su estremo
+- **HelpingHands** — `Volunteer *-> "0..*" Date : availableDates`: label 'availableDates' -> ruolo su estremo
+- **HelpingHands** — `Route "0..1" - "0..*" Item : pickupRoute`: label 'pickupRoute' -> ruolo su estremo
+- **HelpingHands** — `Route "0..*" -- "0..*" SecondHandArticle : dropOffRoute`: label 'dropOffRoute' -> ruolo su estremo
+- **HotelBookingManagementSystem** — `SpecialOffer "*" -- "1" BookingInfo : specialOffers`: label 'specialOffers' -> ruolo su estremo
+- **HotelBookingManagementSystem** — `BookingInfo "*" -- "0..5" SpecialOffer : bestOffers`: label 'bestOffers' -> ruolo su estremo
+- **Louvre** — `Employee "1" -- "0..*" Exhibition : Coordinator`: label 'Coordinator' -> ruolo su estremo
+- **Louvre** — `Exhibition "0..*" -- "0..1" Location : AssignedLocation`: label 'AssignedLocation' -> ruolo su estremo
+- **Musicmatic** — `RegularUser "*"--"*" Album : suggestion`: label 'suggestion' -> ruolo su estremo
+- **OnlineTutoringSystem** — `User "1" *-- "0..2" TutoringRole : roles`: label 'roles' -> ruolo su estremo
+- **OnlineTutoringSystem** — `TutoringRequest "1" *-- "*" TutoringSession : allSessions`: label 'allSessions' -> ruolo su estremo
+- **OnlineTutoringSystem** — `TutoringSession "1" --> "0..1" TutoringSession : nextSession`: label 'nextSession' -> ruolo su estremo
+- **OnlineTutoringSystem** — `TutoringRequest "1" --> "0..1" TutoringSession : firstSession`: label 'firstSession' -> ruolo su estremo
+- **School** — `Teacher "1"-"0..1" School : Principal`: label 'Principal' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `SmartHome "1" *-- "0..1" Address : address`: label 'address' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `SmartHome "1" *-- "*" Room : rooms`: label 'rooms' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `SmartHome "1" *-- "0..1" ActivityLog : log`: label 'log' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `User "*" -- "*" SmartHome : owners`: label 'owners' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `Room "1" *-- "*" Sensor : sensors`: label 'sensors' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `Room "1" *-- "*" Actuator : actuators`: label 'actuators' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `ActivityLog "1" *-- "*" SensorReading : recordedReadings`: label 'recordedReadings' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `ActivityLog "1" *-- "*" ControlCommand : recordedCommands`: label 'recordedCommands' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `CommandSequence "*" -- "0..1" CommandSequence : nextCommand`: label 'nextCommand' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `CommandSequence "1" *-- "0..1" ControlCommand : command`: label 'command' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `SensorReading "*" -- "1" Sensor : sensor`: label 'sensor' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `ControlCommand "*" -- "1" Actuator : actuator`: label 'actuator' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `AlertRule "1" *-- "0..1" BooleanExpression : precondition`: label 'precondition' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `AlertRule "1" *-- "*" CommandSequence : actions`: label 'actions' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `NotExpression "0..1" -- "1" BooleanExpression : expression`: label 'expression' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `BinaryExpression "0..1" -- "1" BooleanExpression : leftExpr`: label 'leftExpr' -> ruolo su estremo
+- **SmartHomeAutomationSystem** — `BinaryExpression "0..1" -- "1" BooleanExpression : rightExpr`: label 'rightExpr' -> ruolo su estremo
+- **Sober** — `RideHailing "*"--"1" Customer : LeadCustomer`: label 'LeadCustomer' -> ruolo su estremo
+- **TeamSportsScoutingSystem** — `ScoutReport "0..1" <--> "0..1" ScoutReport : nextReport`: label 'nextReport' -> ruolo su estremo
+- **TileOGame** — `TileO "1" *-- "*" Game : games`: label 'games' -> ruolo su estremo
+- **TileOGame** — `Game  "1" *-- "*" Tile : tiles`: label 'tiles' -> ruolo su estremo
+- **TileOGame** — `Game  "1" *-- "*" Connection : connections`: label 'connections' -> ruolo su estremo
+- **TileOGame** — `Game  "1" *-- "1" Die : die`: label 'die' -> ruolo su estremo
+- **TileOGame** — `Game  "1" *- "1" Deck : deck`: label 'deck' -> ruolo su estremo
+- **TileOGame** — `Game  "1" --> "0..1" Player : currentPlayer`: label 'currentPlayer' -> ruolo su estremo
+- **TileOGame** — `Game  "1" *-- "2..4" Player : players`: label 'players' -> ruolo su estremo
+- **TileOGame** — `Deck  "1" *-- "0..32" ActionCard : cards`: label 'cards' -> ruolo su estremo
+- **TileOGame** — `Game  "1" --> "0..1" WinTile : winTile`: label 'winTile' -> ruolo su estremo
+- **TileOGame** — `Tile  "2" -- "0..4" Connection : connections/tiles`: label 'connections/tiles' -> ruolo 'tiles' su estremo source
+- **TileOGame** — `Tile  "2" -- "0..4" Connection : connections/tiles`: label 'connections/tiles' -> ruolo 'connections' su estremo target
+- **TileOGame** — `Player "1" --> "0..1" Tile : startingTile`: label 'startingTile' -> ruolo su estremo
+- **TileOGame** — `Player "0..4" --> "0..1" Tile : currentTile`: label 'currentTile' -> ruolo su estremo
+- **TileOGame** — `Deck  "1" --> "0..1" ActionCard : currentCard`: label 'currentCard' -> ruolo su estremo
+- **TruckLogistics** — `Assignment "*" --> "1" Location : from`: label 'from' -> ruolo su estremo
+- **TruckLogistics** — `Assignment "*" --> "1" Location : to`: label 'to' -> ruolo su estremo
+- **TruckLogistics** — `Vehicle "1" --> "1" VehicleStatus : status`: label 'status' -> ruolo su estremo
+
+## Reificazione classe associativa (21)
+
+- **AirTravel** — classe associativa 'Ticket' su FlightExecution-Passenger: sostituita da FlightExecution--Ticket e Ticket--Passenger (molteplicita' derivate)
+- **AlphaInsurance** — classe associativa 'Report' su ClaimCase-Estimator: sostituita da ClaimCase--Report e Report--Estimator (molteplicita' derivate)
+- **CelO** — classe associativa 'Registration' su Attendee-Event: sostituita da Attendee--Registration e Registration--Event (molteplicita' derivate)
+- **CelO** — classe associativa 'TaskStatus' su Event-CheckListTask: sostituita da Event--TaskStatus e TaskStatus--CheckListTask (molteplicita' derivate)
+- **ClothingCompany** — classe associativa 'Product' su Manufacturer-Country: sostituita da Manufacturer--Product e Product--Country (molteplicita' derivate)
+- **EUScienceConnect** — classe associativa 'Author' su Article-Person: sostituita da Article--Author e Author--Person (molteplicita' derivate)
+- **Facepage** — classe associativa 'Privilege' su PersonalAccount-PersonalPage: sostituita da PersonalAccount--Privilege e Privilege--PersonalPage (molteplicita' derivate)
+- **HomeForTheElderly** — classe associativa 'Proposal' su Bed-Person: sostituita da Bed--Proposal e Proposal--Person (molteplicita' derivate)
+- **House** — classe associativa 'JobLog' su House-Company: sostituita da House--JobLog e JobLog--Company (molteplicita' derivate)
+- **LabTracker** — classe associativa 'Appointment' su Lab-Requisition: sostituita da Lab--Appointment e Appointment--Requisition (molteplicita' derivate)
+- **Musicmatic** — classe associativa 'Track' su Hit-Album: sostituita da Hit--Track e Track--Album (molteplicita' derivate)
+- **PizzaDeliveryWithEntertainment** — classe associativa 'Employment' su PizzaRestaurant-Entertainer: sostituita da PizzaRestaurant--Employment e Employment--Entertainer (molteplicita' derivate)
+- **ProjectManagement** — classe associativa 'ResearchGroupMember' su ResearchGroup-Researcher: sostituita da ResearchGroup--ResearchGroupMember e ResearchGroupMember--Researcher (molteplicita' derivate)
+- **ProjectManagement** — classe associativa 'WorkPackageLeader' su WorkPackage-ResearchGroup: sostituita da WorkPackage--WorkPackageLeader e WorkPackageLeader--ResearchGroup (molteplicita' derivate)
+- **School** — classe associativa 'TeacherAssignment' su Teacher-School: sostituita da Teacher--TeacherAssignment e TeacherAssignment--School (molteplicita' derivate)
+- **Sightseeing** — classe associativa 'Discount' su Visitor-GuidedTour: sostituita da Visitor--Discount e Discount--GuidedTour (molteplicita' derivate)
+- **Sober** — classe associativa 'Involved' su Car-Accident: sostituita da Car--Involved e Involved--Accident (molteplicita' derivate)
+- **StudentAppointment** — classe associativa 'CourseSubscription' su Student-Course: sostituita da Student--CourseSubscription e CourseSubscription--Course (molteplicita' derivate)
+- **StudentAppointment** — classe associativa 'TeachingAssistant' su Course-Assistant: sostituita da Course--TeachingAssistant e TeachingAssistant--Assistant (molteplicita' derivate)
+- **TreatmentPlans** — classe associativa 'AdvisedExaminationType' su TreatmentPlan-ExaminationType: sostituita da TreatmentPlan--AdvisedExaminationType e AdvisedExaminationType--ExaminationType (molteplicita' derivate)
+- **University** — classe associativa 'Participation' su ResearchAssistant-Project: sostituita da ResearchAssistant--Participation e Participation--Project (molteplicita' derivate)
+
+## Vincoli di generalizzazione estratti (campo 'constraints', mai nell'edge) (7)
+
+- **EUScienceConnect** — TechnicalReport extends Article: `{total; disjoint}`
+- **FitnessCompanyConan** — GroupSession extends Session: `{total; disjoint}`
+- **FitnessCompanyConan** — Member extends Person: `{partial; overlap}`
+- **Musicmatic** — Hit extends Song: `{total; disjoint}`
+- **Musicmatic** — BusinessUser extends User: `{total; overlap}`
+- **Sober** — RideHailing extends Ride: `{total; disjoint}`
+- **Sober** — SoberCar extends Car: `{total; disjoint}`
+
+## Modificatori/default di attributi ({static}/{abstract}/{frozen}/const/'=') (6)
+
+- **Sober** — `Ride.RideNr`: modificatori=['frozen'] default=None
+- **Sober** — `Customer.CustNr`: modificatori=['frozen'] default=None
+- **Sober** — `Car.CarNr`: modificatori=['frozen'] default=None
+- **Sober** — `Accident.AccNr`: modificatori=['frozen'] default=None
+- **TileOGame** — `Game.SpareConnectionPieces`: modificatori=['static', 'const'] default='32'
+- **TileOGame** — `Game.NumberOfActionCards`: modificatori=['static', 'const'] default='32'
+

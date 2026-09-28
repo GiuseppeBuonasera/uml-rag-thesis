@@ -1,0 +1,7 @@
+# Correzioni FASE 3 (STOP 2/STOP 3, 2026-09-28) — vedi docs/decisions.md.
+- type: replace_line
+  match: 'Order "1" -- "0..*" OrderLine'
+  replacement: 'Order "1" -- "1..*" OrderLine'
+  reason: >-
+    description.md: "orders consist of one or more order lines" — almeno 1,
+    non 0.

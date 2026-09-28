@@ -16,6 +16,16 @@ Le cartelle in corpus/raw/translated_it/ hanno anche file aggiuntivi
 render_it.png) non letti da questo script — servono solo per la tracciabilità
 della traduzione, vedi corpus/apply_glossary.py e corpus/check_translated.py.
 
+Correzioni di contenuto (FASE 3, 2026-09-28, vedi docs/decisions.md): subito
+dopo aver letto plantuml.txt, questo script applica le eventuali correzioni
+dichiarate in corpus/corrections/<id>.yaml (corpus/apply_corrections.py) —
+refusi di nomi, relazioni duplicate/errate da rimuovere o correggere. Il testo
+CORRETTO e' quello che finisce nel campo "diagram_plantuml" di corpus.jsonl;
+corpus/raw/models_original/<id>/plantuml.txt NON viene mai toccato. L'elenco
+delle correzioni effettivamente applicate (con motivazione) finisce nel campo
+"corrections_applied" del record, per tracciabilita' — vuoto se l'esercizio
+non ha un file corrections/<id>.yaml.
+
 Il diagramma target finale è Apollon JSON (vedi docs/decisions.md): questo script
 scrive solo il PlantUML originale (diagram_apollon_json resta a None). La conversione
 in Apollon JSON è un passo successivo, vedi corpus/apollon_convert.py — va eseguito
@@ -29,6 +39,8 @@ Uso:
 
 import json
 from pathlib import Path
+
+import apply_corrections as ac_corr
 
 RAW_DIRS = [
     # Rinominata da "models" a "models_original" (2026-09-25, cambio fatto
@@ -79,6 +91,9 @@ def build_record(model_dir: Path) -> dict:
 
     tags = [t.strip() for t in metadata.get("tags", "").split(",") if t.strip()]
 
+    corrections = ac_corr.load_corrections(model_dir.name)
+    plantuml, corrections_applied = ac_corr.apply_corrections(model_dir.name, plantuml, corrections)
+
     return {
         "id": model_dir.name,
         "name": metadata.get("name") or model_dir.name,
@@ -93,6 +108,7 @@ def build_record(model_dir: Path) -> dict:
         "n_requirements": count_requirements(description),
         "diagram_format": "plantuml",
         "diagram_plantuml": plantuml,
+        "corrections_applied": corrections_applied,
         "diagram_apollon_json": None,  # TODO: conversione PlantUML -> Apollon JSON
         "has_extramaterial": (model_dir / "extramaterial").is_dir(),
         "raw_dir": str(model_dir.relative_to(Path(__file__).parent.parent)).replace("\\", "/"),
@@ -153,6 +169,10 @@ def verify(records: list[dict]) -> None:
 
     translated_ids = sorted(r["id"] for r in records if r["translated"])
     print(f"Esercizi tradotti (translated=true, tag 'translated_it'): {translated_ids}")
+
+    n_corrections = sum(len(r["corrections_applied"]) for r in records)
+    corrected_ids = sorted(r["id"] for r in records if r["corrections_applied"])
+    print(f"Correzioni di contenuto applicate (corpus/corrections/*.yaml): {n_corrections} su {corrected_ids}")
 
 
 if __name__ == "__main__":

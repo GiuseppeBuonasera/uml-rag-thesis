@@ -1,0 +1,29 @@
+# Correzioni FASE 3 (STOP 2, 2026-09-28) — vedi docs/decisions.md.
+- type: rename_token
+  from: Sting
+  to: String
+  reason: >-
+    refuso di 'String' nell'attributo Order.Comment (poi normalizzato a
+    'string' come ogni altro 'String' dalla pipeline di normalizzazione tipi).
+- type: rename_token
+  from: VerhicleType
+  to: VehicleType
+  reason: >-
+    refuso nel nome dell'enum: l'attributo Vehicle.Type gia' referenzia
+    'VehicleType' (grafia corretta), ma l'enum era dichiarato come
+    'VerhicleType' — non e' un tipo esterno mancante, l'enum esiste gia' con
+    i 4 valori corretti. description.md: "I distinguish between different
+    types of vehicles, such as refrigerated trucks, small vans, loading
+    platforms, and box trucks" corrisponde esattamente ai 4 valori
+    dell'enum.
+- type: rename_token
+  from: RefrigiratedTruck
+  to: RefrigeratedTruck
+  reason: "refuso ortografico nel valore enum ('refrigerated trucks' in description.md)."
+- type: rename_token
+  from: Milage
+  to: Mileage
+  reason: >-
+    'Milage' e' una variante ortografica accettata in alcuni dizionari, ma
+    description.md usa esplicitamente 'mileage' — corretto per coerenza col
+    testo (STOP 2, 2026-09-28).

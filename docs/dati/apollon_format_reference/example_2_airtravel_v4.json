@@ -22,7 +22,7 @@
         "attributes": [
           {
             "id": "bbe5ad62-72ac-5db1-8cc7-e121e5c1664d",
-            "name": "+ Name : String"
+            "name": "+ Name : string"
           }
         ],
         "methods": []
@@ -45,12 +45,12 @@
         "name": "Employee",
         "attributes": [
           {
-            "id": "86532f78-7cab-5462-a2ee-07a17c2b6406",
-            "name": "+ Nmae : String"
+            "id": "43daf900-e79f-59b1-8fd8-7e71b145277b",
+            "name": "+ Name : string"
           },
           {
             "id": "959d3a1c-b322-5ef6-9d06-5fa5c1b6f320",
-            "name": "+ StartDate : Date"
+            "name": "+ StartDate : date"
           }
         ],
         "methods": []
@@ -74,15 +74,15 @@
         "attributes": [
           {
             "id": "219f0c44-623f-5ed2-8c3d-4e7d7d01cba3",
-            "name": "+ Name : String"
+            "name": "+ Name : string"
           },
           {
             "id": "e4461a9d-e3f5-50e8-b85f-685414ff99a3",
-            "name": "+ Address : String"
+            "name": "+ Address : string"
           },
           {
             "id": "05b8bb1e-eef3-5a17-9929-0f67acfad21e",
-            "name": "+ RunwayCount : Int"
+            "name": "+ RunwayCount : int"
           }
         ],
         "methods": []
@@ -106,7 +106,7 @@
         "attributes": [
           {
             "id": "260fa505-efd7-54b0-bf24-4e0f69604287",
-            "name": "+ Purser : Boolean"
+            "name": "+ Purser : boolean"
           }
         ],
         "methods": []
@@ -130,19 +130,19 @@
         "attributes": [
           {
             "id": "f3e6271f-a1a6-5b96-97f0-4ed299f85b48",
-            "name": "+ Name : String"
+            "name": "+ Name : string"
           },
           {
             "id": "e348bfbd-cfa1-552c-9cfb-5121d03cf489",
-            "name": "+ Type : String"
+            "name": "+ Type : string"
           },
           {
             "id": "f6721d46-c58f-5d2e-9a0b-f1214ad3d1ff",
-            "name": "+ ConstructionYear : Date"
+            "name": "+ ConstructionYear : date"
           },
           {
             "id": "aa7365e5-3b05-5eef-b85e-ab81e81ef64a",
-            "name": "+ NextInspection : Date"
+            "name": "+ NextInspection : date"
           }
         ],
         "methods": []
@@ -166,7 +166,7 @@
         "attributes": [
           {
             "id": "e2f60b17-997b-5de7-83bd-44f7f130483b",
-            "name": "+ FlightNumber : String"
+            "name": "+ FlightNumber : string"
           }
         ],
         "methods": []
@@ -190,7 +190,7 @@
         "attributes": [
           {
             "id": "102702f9-18e3-5f04-896c-c078f27a0143",
-            "name": "+ License : String"
+            "name": "+ License : string"
           }
         ],
         "methods": []
@@ -214,7 +214,7 @@
         "attributes": [
           {
             "id": "eb5d712b-b1fe-58fa-90d5-500e6dc4cf0f",
-            "name": "+ Seats : Int"
+            "name": "+ Seats : int"
           }
         ],
         "methods": []
@@ -238,7 +238,7 @@
         "attributes": [
           {
             "id": "f3a6d299-a31d-5253-bf06-6b52d3f4b8a1",
-            "name": "+ Date : Date"
+            "name": "+ Date : date"
           }
         ],
         "methods": []
@@ -262,15 +262,15 @@
         "attributes": [
           {
             "id": "ccfefe15-9737-5927-93e7-6b3a8ac34e11",
-            "name": "+ Description : String"
+            "name": "+ Description : string"
           },
           {
-            "id": "43c284d0-cc85-52a0-a536-a2abdc8b7659",
-            "name": "+ Enterainment : Boolean"
+            "id": "001358c4-d576-58bb-8810-827a71f9606d",
+            "name": "+ Entertainment : boolean"
           },
           {
             "id": "744465f4-863f-5690-9034-aabe44896ca5",
-            "name": "+ SeatCount : Int"
+            "name": "+ SeatCount : int"
           }
         ],
         "methods": []
@@ -294,11 +294,11 @@
         "attributes": [
           {
             "id": "ecb68cfb-7533-5d03-8595-9c3e2126e29f",
-            "name": "+ Name : String"
+            "name": "+ Name : string"
           },
           {
             "id": "4b34c0c9-59d8-5c72-b453-b9c81c1fca6e",
-            "name": "+ PassportNumber : String"
+            "name": "+ PassportNumber : string"
           }
         ],
         "methods": []
@@ -322,15 +322,15 @@
         "attributes": [
           {
             "id": "fa2cd935-1b6e-5dc6-895d-cb6c91854529",
-            "name": "+ TicketId : String"
+            "name": "+ TicketId : string"
           },
           {
             "id": "4cdd81e1-1664-5c9d-8ab7-3913211f8084",
-            "name": "+ Price : Float"
+            "name": "+ Price : float"
           },
           {
             "id": "fa43ee0c-b8cc-54cb-aee7-3d2ab9a60805",
-            "name": "+ Upgrade : Boolean"
+            "name": "+ Upgrade : boolean"
           }
         ],
         "methods": []
@@ -439,7 +439,7 @@
       }
     },
     {
-      "id": "a25736e6-6266-5112-b8c0-aa9f66f0f3c3",
+      "id": "0a720f57-7648-5925-9aa4-c3c9e097a5a0",
       "source": "903f0ec5-50ab-55a9-92e9-05807a3d6eec",
       "target": "38efaa76-6d31-5dc1-90a1-f421e76ee4c5",
       "type": "ClassBidirectional",
@@ -456,15 +456,15 @@
             "y": 265.0
           }
         ],
-        "label": "Source",
-        "sourceMultiplicity": "0..1",
+        "label": "",
+        "sourceMultiplicity": "1",
         "targetMultiplicity": "0..*",
-        "sourceRole": "",
+        "sourceRole": "Source",
         "targetRole": ""
       }
     },
     {
-      "id": "ccd96fc4-3764-5f81-bc1c-c982bcadf3f8",
+      "id": "000615bd-23dd-56bb-b4cf-e60581c4b592",
       "source": "903f0ec5-50ab-55a9-92e9-05807a3d6eec",
       "target": "38efaa76-6d31-5dc1-90a1-f421e76ee4c5",
       "type": "ClassBidirectional",
@@ -481,10 +481,10 @@
             "y": 265.0
           }
         ],
-        "label": "Destination",
-        "sourceMultiplicity": "0..1",
+        "label": "",
+        "sourceMultiplicity": "1",
         "targetMultiplicity": "0..*",
-        "sourceRole": "",
+        "sourceRole": "Destination",
         "targetRole": ""
       }
     },
@@ -539,7 +539,7 @@
       }
     },
     {
-      "id": "c284c69c-ea3a-571d-9ff4-701a8adf856c",
+      "id": "e03aadcd-14b3-59ab-9955-688afb1a9ff8",
       "source": "7eb74b43-7d5e-5e97-8a64-1e462632f03a",
       "target": "8f2cab22-153c-5f5b-9c2a-83487760e0cc",
       "type": "ClassBidirectional",
@@ -554,67 +554,42 @@
           {
             "x": 600,
             "y": 265.0
-          }
-        ],
-        "label": "Captain",
-        "sourceMultiplicity": "0..*",
-        "targetMultiplicity": "0..1",
-        "sourceRole": "",
-        "targetRole": ""
-      }
-    },
-    {
-      "id": "7c76c82d-3ae4-55d4-a76e-89fe519b2a15",
-      "source": "7eb74b43-7d5e-5e97-8a64-1e462632f03a",
-      "target": "8f2cab22-153c-5f5b-9c2a-83487760e0cc",
-      "type": "ClassBidirectional",
-      "sourceHandle": "right",
-      "targetHandle": "left",
-      "data": {
-        "points": [
-          {
-            "x": 260,
-            "y": 485.0
-          },
-          {
-            "x": 600,
-            "y": 265.0
-          }
-        ],
-        "label": "Co-pilot",
-        "sourceMultiplicity": "0..*",
-        "targetMultiplicity": "0..2",
-        "sourceRole": "",
-        "targetRole": ""
-      }
-    },
-    {
-      "id": "7435a988-856b-545d-8c31-5fccd0daf137",
-      "source": "7eb74b43-7d5e-5e97-8a64-1e462632f03a",
-      "target": "a7374f8e-8c9d-53e6-a04a-d9141a3f4454",
-      "type": "ClassBidirectional",
-      "sourceHandle": "right",
-      "targetHandle": "left",
-      "data": {
-        "points": [
-          {
-            "x": 260,
-            "y": 485.0
-          },
-          {
-            "x": 600,
-            "y": 500.0
           }
         ],
         "label": "",
         "sourceMultiplicity": "0..*",
-        "targetMultiplicity": "0..*",
+        "targetMultiplicity": "1",
         "sourceRole": "",
-        "targetRole": ""
+        "targetRole": "Captain"
       }
     },
     {
-      "id": "d05ac847-97fc-5083-8e9f-acbb9fade8fc",
+      "id": "50225431-638b-580e-b17e-a81a63a7972d",
+      "source": "7eb74b43-7d5e-5e97-8a64-1e462632f03a",
+      "target": "8f2cab22-153c-5f5b-9c2a-83487760e0cc",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 485.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1..2",
+        "sourceRole": "",
+        "targetRole": "Co-pilot"
+      }
+    },
+    {
+      "id": "bfb933c7-0efc-51a2-9296-be3c0d8f2901",
       "source": "93dca602-4055-5c84-8b1a-3d233c498596",
       "target": "d6abb110-8707-57fb-bd86-7dec4197e4ea",
       "type": "ClassInheritance",
@@ -639,7 +614,7 @@
       }
     },
     {
-      "id": "6d632715-64bb-5215-b9a4-4b74cf92c794",
+      "id": "6c4ec329-3930-5375-afc7-31db0fe03973",
       "source": "8f2cab22-153c-5f5b-9c2a-83487760e0cc",
       "target": "d6abb110-8707-57fb-bd86-7dec4197e4ea",
       "type": "ClassInheritance",
@@ -664,7 +639,7 @@
       }
     },
     {
-      "id": "9e72465b-489f-5a31-bf3b-f5b1e342bfb5",
+      "id": "e037c802-e82e-531f-b8e6-c2318fdc9375",
       "source": "975d28ed-b14c-59a4-9e11-9ec453ced742",
       "target": "e1b22f1a-1e6d-53bc-ac04-8461bb4e61ed",
       "type": "ClassInheritance",
@@ -689,7 +664,7 @@
       }
     },
     {
-      "id": "bf51d41e-98dd-508f-8033-5a71afde5f06",
+      "id": "44d1c857-6c71-59a4-b75f-b9c67c72abb2",
       "source": "4e89c37c-bee3-5249-a24f-32066aa26c7e",
       "target": "975d28ed-b14c-59a4-9e11-9ec453ced742",
       "type": "ClassComposition",
@@ -714,7 +689,7 @@
       }
     },
     {
-      "id": "4a80202c-2d6c-5383-b566-81aac2dd0524",
+      "id": "7a6ab506-6202-558f-99a6-f8c1ff45e650",
       "source": "4e89c37c-bee3-5249-a24f-32066aa26c7e",
       "target": "e085eb12-ab02-552e-a497-4135d18d48c4",
       "type": "ClassBidirectional",
@@ -732,39 +707,39 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
+        "sourceMultiplicity": "1",
         "targetMultiplicity": "0..*",
         "sourceRole": "",
         "targetRole": ""
       }
     },
     {
-      "id": "21116fae-de0e-59d9-9126-03a252c7b27e",
-      "source": "e085eb12-ab02-552e-a497-4135d18d48c4",
-      "target": "7eb74b43-7d5e-5e97-8a64-1e462632f03a",
+      "id": "c1529d7b-545b-5cbf-a698-1efd58983370",
+      "source": "7eb74b43-7d5e-5e97-8a64-1e462632f03a",
+      "target": "e085eb12-ab02-552e-a497-4135d18d48c4",
       "type": "ClassBidirectional",
-      "sourceHandle": "left",
-      "targetHandle": "right",
+      "sourceHandle": "right",
+      "targetHandle": "left",
       "data": {
         "points": [
           {
-            "x": 880,
-            "y": 515.0
-          },
-          {
             "x": 260,
             "y": 485.0
+          },
+          {
+            "x": 880,
+            "y": 515.0
           }
         ],
         "label": "",
-        "sourceMultiplicity": "",
-        "targetMultiplicity": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
         "sourceRole": "",
         "targetRole": ""
       }
     },
     {
-      "id": "ce52031e-6835-59f6-9189-800143698b9a",
+      "id": "1a9f5acb-bfe8-5011-ba64-8495cd7806ce",
       "source": "e085eb12-ab02-552e-a497-4135d18d48c4",
       "target": "a7374f8e-8c9d-53e6-a04a-d9141a3f4454",
       "type": "ClassBidirectional",
@@ -782,8 +757,8 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "",
-        "targetMultiplicity": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
         "sourceRole": "",
         "targetRole": ""
       }

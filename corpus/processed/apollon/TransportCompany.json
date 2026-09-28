@@ -81,8 +81,8 @@
             "name": "+ LicensePlateNumber : string"
           },
           {
-            "id": "8c8ca865-8b98-5c51-8fe7-b9c9f10532c4",
-            "name": "+ Milage : int"
+            "id": "de76f78d-d173-50ea-b2a9-7cfba33c7bc4",
+            "name": "+ Mileage : int"
           },
           {
             "id": "103c27b0-7bcf-5859-a4f0-7a933c2b8311",
@@ -118,7 +118,7 @@
           },
           {
             "id": "111559cd-4ebb-5966-bdb0-fe22921157f6",
-            "name": "+ Comment : Sting"
+            "name": "+ Comment : string"
           },
           {
             "id": "4a64c215-ea44-51a1-9ca8-1f3f350d80d5",
@@ -321,7 +321,7 @@
       }
     },
     {
-      "id": "11b7d0be-02d5-5e8b-9e79-8b1099d0c01f",
+      "id": "ab4ae065-f40e-5e32-8b1f-ac621d5af1a9",
       "type": "class",
       "position": {
         "x": 880,
@@ -334,22 +334,22 @@
         "height": 160
       },
       "data": {
-        "name": "VerhicleType",
+        "name": "VehicleType",
         "attributes": [
           {
-            "id": "4fab5168-7548-5454-9d7d-c1a6234f59ba",
-            "name": "RefrigiratedTruck"
+            "id": "9ec369f4-4f23-5963-800e-e929095e122d",
+            "name": "RefrigeratedTruck"
           },
           {
-            "id": "c31d9668-8831-5979-86bb-3e4b523ddc2a",
+            "id": "5d236cb8-c50b-5618-976d-a52002cae66c",
             "name": "SmallVan"
           },
           {
-            "id": "38eee9eb-4fc1-5a7c-8964-dd27142a9e56",
+            "id": "01efd03d-66ac-5cfb-8e70-c87e5c37e99b",
             "name": "LoadingPlatform"
           },
           {
-            "id": "72782c19-e7a0-5c1a-adf6-79ea4a342c48",
+            "id": "ee722be4-fcd3-5058-909a-230f6f540b7e",
             "name": "BoxTruck"
           }
         ],

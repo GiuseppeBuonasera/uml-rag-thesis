@@ -1,0 +1,8 @@
+# Correzioni FASE 3 (STOP 2, 2026-09-28) — vedi docs/decisions.md.
+- type: rename_token
+  from: ResearchAssociate
+  to: ResearchAssistant
+  reason: >-
+    description.md usa sempre "research assistant (RA)", mai "associate" —
+    la classe nel PlantUML sorgente era denominata ResearchAssociate in modo
+    coerente in tutte le occorrenze ma in contrasto col testo.

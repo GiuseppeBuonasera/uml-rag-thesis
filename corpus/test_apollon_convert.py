@@ -13,6 +13,7 @@ Uso:
 from __future__ import annotations
 
 import apollon_convert as ac
+import apply_corrections as ac_corr
 
 
 def make_diagram(op: str, source_mult: str, target_mult: str):
@@ -310,6 +311,108 @@ def check_label_classification_ruolo_doppio_and_missing() -> None:
     print("  OK  ruolo_doppio instrada entrambi gli estremi; etichetta non classificata riportata come 'missing'")
 
 
+def check_attribute_modifiers_const_default() -> None:
+    """FASE 3 (2026-09-28): {static}/{abstract}/{frozen}/const e default '= x' non
+    devono piu' essere persi in silenzio ne', peggio, far collassare nome/tipo
+    (bug reale trovato in TileOGame: 'const int SpareConnectionPieces = 32' senza
+    questa gestione produceva nome='32', tipo='const int SpareConnectionPieces =').
+    Casi reali usati come test: Sober 'Int CustNr {frozen}', TileOGame
+    '{static} const int SpareConnectionPieces = 32'."""
+    name, typ, extra = ac.parse_attribute("Int CustNr {frozen}")
+    assert (name, typ) == ("CustNr", "Int"), (name, typ)
+    assert extra == {"default": None, "modifiers": ["frozen"]}, extra
+
+    name, typ, extra = ac.parse_attribute("{static} const int SpareConnectionPieces = 32")
+    assert (name, typ) == ("SpareConnectionPieces", "int"), (name, typ)
+    assert extra["default"] == "32", extra
+    assert extra["modifiers"] == ["static", "const"], extra
+
+    # nessun modificatore/default: comportamento invariato rispetto a prima
+    name, typ, extra = ac.parse_attribute("String Name")
+    assert (name, typ) == ("Name", "String"), (name, typ)
+    assert extra == {"default": None, "modifiers": []}, extra
+
+    name, typ, extra = ac.parse_attribute("name : Type")
+    assert (name, typ) == ("name", "Type"), (name, typ)
+
+    # round-trip end-to-end: il default deve comparire nella stringa d'attributo
+    # e sopravvivere a round_trip_check
+    classes = {"Game": ac.ParsedClass("Game", "class")}
+    classes["Game"].attributes = [("SpareConnectionPieces", "int")]
+    classes["Game"].attribute_extras = [{"default": "32", "modifiers": ["static", "const"]}]
+    diagram, build_warnings = ac.build_apollon_json("test-modifiers", classes, [])
+    assert any("modificatori" in w for w in build_warnings), build_warnings
+    attr_name = diagram["nodes"][0]["data"]["attributes"][0]["name"]
+    assert attr_name == "+ SpareConnectionPieces : int = 32", attr_name
+    problems = ac.round_trip_check("test-modifiers", classes, [], diagram)
+    assert not problems, problems
+    print("  OK  '{static} const int X = 32' e 'Int Y {frozen}' -> nome/tipo/default corretti, modificatori riportati (mai persi in silenzio)")
+
+
+def check_array_notation_type() -> None:
+    """FASE 3 (2026-09-28, caso reale HelpingHands 'ItemCategory[] neededCategories',
+    dove ItemCategory e' un enum regolarmente dichiarato): il tipo base viene
+    normalizzato, il suffisso '[]' preservato."""
+    assert ac.normalize_type_token("String[]") == "string[]"
+    assert ac.normalize_type_token("ItemCategory[]") == "ItemCategory[]"  # non e' un tipo noto, invariato
+    assert ac.normalize_type_token("int") == "int"  # invariato, nessuna regressione senza '[]'
+    print("  OK  notazione 'Tipo[]' per attributi multi-valore: tipo base normalizzato, '[]' preservato")
+
+
+def check_corrections_rename_token() -> None:
+    plantuml = 'class Order {\n    Sting Comment\n}\n'
+    corrected, applied = ac_corr.apply_corrections(
+        "test-corr", plantuml, [{"type": "rename_token", "from": "Sting", "to": "String", "reason": "refuso"}]
+    )
+    assert "String Comment" in corrected and "Sting" not in corrected, corrected
+    assert len(applied) == 1 and "Sting" in applied[0] and "String" in applied[0], applied
+    print("  OK  rename_token: 'Sting' -> 'String' in tutto il testo")
+
+
+def check_corrections_remove_and_replace_line() -> None:
+    plantuml = (
+        'User "1" --> "*" Building : owner\n'
+        'User "1" --> "*" Building : author\n'
+    )
+    corrected, applied = ac_corr.apply_corrections(
+        "test-corr",
+        plantuml,
+        [{"type": "remove_line", "match": 'User "1" --> "*" Building : author', "reason": "duplicato"}],
+    )
+    assert corrected.strip() == 'User "1" --> "*" Building : owner', corrected
+    assert len(applied) == 1
+
+    plantuml2 = 'BookingInfo "0..5" -- "*" SpecialOffer : bestOffers\n'
+    corrected2, applied2 = ac_corr.apply_corrections(
+        "test-corr",
+        plantuml2,
+        [{
+            "type": "replace_line",
+            "match": 'BookingInfo "0..5" -- "*" SpecialOffer : bestOffers',
+            "replacement": 'BookingInfo "*" -- "0..5" SpecialOffer : bestOffers',
+            "reason": "lato sbagliato",
+        }],
+    )
+    assert corrected2.strip() == 'BookingInfo "*" -- "0..5" SpecialOffer : bestOffers', corrected2
+    print("  OK  remove_line rimuove solo la riga indicata; replace_line la sostituisce")
+
+
+def check_corrections_fail_if_not_found() -> None:
+    """Nessuna correzione deve applicarsi silenziosamente se il testo bersaglio non
+    c'e' piu' (sorgente cambiato, o errore nella correzione stessa)."""
+    for op in (
+        {"type": "rename_token", "from": "NonEsiste", "to": "X", "reason": "r"},
+        {"type": "remove_line", "match": "riga inesistente", "reason": "r"},
+        {"type": "replace_line", "match": "riga inesistente", "replacement": "x", "reason": "r"},
+    ):
+        try:
+            ac_corr.apply_corrections("test-corr", "class A {}\n", [op])
+            assert False, f"doveva fallire per {op}"
+        except ValueError:
+            pass
+    print("  OK  ogni correzione fallisce esplicitamente (ValueError) se il testo bersaglio non e' trovato")
+
+
 def main() -> None:
     print("FASE 1 — normalizzazioni automatiche:")
     check_type_normalization()
@@ -323,6 +426,15 @@ def main() -> None:
     print("Classificazione etichette (label_classification.json):")
     check_label_classification_auto_association()
     check_label_classification_ruolo_doppio_and_missing()
+    print()
+    print("FASE 3 — modificatori/const/default attributi e notazione Tipo[]:")
+    check_attribute_modifiers_const_default()
+    check_array_notation_type()
+    print()
+    print("FASE 3 — correzioni di contenuto (corpus/corrections/<id>.yaml):")
+    check_corrections_rename_token()
+    check_corrections_remove_and_replace_line()
+    check_corrections_fail_if_not_found()
     print()
     print("Ruoli per estremo (sintassi '\"molteplicita' ruolo\"'):")
     check_role_parsing()

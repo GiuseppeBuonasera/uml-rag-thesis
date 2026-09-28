@@ -114,12 +114,12 @@
             "name": "+ mode : Mode"
           },
           {
-            "id": "c1328f89-feef-5d2d-9c9d-c9508cbf0b83",
-            "name": "+ 32 : const int SpareConnectionPieces ="
+            "id": "13602a3c-0035-51cb-9e07-f9c933f2e9e8",
+            "name": "+ SpareConnectionPieces : int = 32"
           },
           {
-            "id": "c8d9ec67-548c-5008-9cb3-6d23a862b173",
-            "name": "+ 32 : const int NumberOfActionCards ="
+            "id": "fb911910-57c5-51ae-ade5-092e2dc8291f",
+            "name": "+ NumberOfActionCards : int = 32"
           }
         ],
         "methods": []
@@ -375,8 +375,8 @@
             "name": "+ inactivityPeriod : int"
           },
           {
-            "id": "536d15a0-6dee-5370-9dd1-e0753797798e",
-            "name": "+ tunrsUntilActive : int"
+            "id": "d1c40d50-e52d-539e-9d41-c27255056838",
+            "name": "+ turnsUntilActive : int"
           }
         ],
         "methods": []

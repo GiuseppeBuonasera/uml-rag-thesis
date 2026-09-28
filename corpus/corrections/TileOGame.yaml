@@ -1,0 +1,8 @@
+# Correzioni FASE 3 (STOP 2/STOP 3, 2026-09-28) — vedi docs/decisions.md.
+- type: rename_token
+  from: tunrsUntilActive
+  to: turnsUntilActive
+  reason: >-
+    refuso di 'turns' nell'attributo ActionTile.tunrsUntilActive (lettere
+    trasposte) — description.md: "the action tile turns into a regular
+    tile for a number of turns".

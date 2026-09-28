@@ -1,0 +1,5 @@
+# Correzioni FASE 3 (STOP 2/STOP 3, 2026-09-28) — vedi docs/decisions.md.
+- type: rename_token
+  from: CoversionRate
+  to: ConversionRate
+  reason: "refuso di 'ConversionRate' nell'attributo AdvertisementPage.CoversionRate."

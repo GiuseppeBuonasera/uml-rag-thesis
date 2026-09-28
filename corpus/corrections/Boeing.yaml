@@ -1,0 +1,11 @@
+# Correzioni FASE 3 (STOP 2/STOP 3, 2026-09-28) — vedi docs/decisions.md.
+- type: rename_token
+  from: AirPlaneId
+  to: AirplaneId
+  reason: >-
+    refuso di capitalizzazione: la classe si chiama 'Airplane' (una parola
+    sola), non 'AirPlane'.
+- type: rename_token
+  from: NegotiatedPice
+  to: NegotiatedPrice
+  reason: "refuso di 'Price' nell'attributo Acquisition.NegotiatedPice."

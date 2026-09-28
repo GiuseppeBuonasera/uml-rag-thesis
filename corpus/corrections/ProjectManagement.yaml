@@ -1,0 +1,9 @@
+# Correzioni FASE 3 (STOP 2/STOP 3, 2026-09-28) — vedi docs/decisions.md.
+- type: replace_line
+  match: 'WorkPackage "0..*" - "0..1" ResearchGroup'
+  replacement: 'WorkPackage "0..*" - "1" ResearchGroup'
+  reason: >-
+    description.md: "each WP has exactly one research group assigned to it
+    as WP leader" — esattamente 1, non opzionale. Unica relazione
+    WorkPackage-ResearchGroup nel diagramma, nessuna ambiguita' su quale
+    relazione sia quella del "leader".

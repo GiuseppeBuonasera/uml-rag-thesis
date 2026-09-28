@@ -16,6 +16,7 @@ pydantic
 # Evaluation
 scikit-learn
 jsonschema  # validazione dei diagrammi Apollon v4 contro uml-model-4.schema.json
+pyyaml  # corpus/corrections/<id>.yaml (correzioni di contenuto FASE 3, vedi docs/decisions.md)
 
 # Notebook / analysis
 jupyter

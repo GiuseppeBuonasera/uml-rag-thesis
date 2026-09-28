@@ -163,7 +163,16 @@ def normalize_type_token(t: str) -> str:
     unica. Un tipo non in questa tabella e' presumibilmente il nome di una classe o
     enum del diagramma (es. 'Suit', 'RoomType'): resta invariato, non e' compito di
     questa funzione deciderlo — vedi il report di corpus/apollon_convert.py per
-    l'elenco di cosa e' stato normalizzato e cosa no."""
+    l'elenco di cosa e' stato normalizzato e cosa no.
+
+    Notazione 'Tipo[]' per attributi multi-valore (FASE 3, 2026-09-28, caso reale:
+    HelpingHands 'ItemCategory[] neededCategories', dove ItemCategory e' un enum
+    regolarmente dichiarato nel diagramma): il tipo base viene normalizzato come al
+    solito, il suffisso '[]' e' preservato invariato — non esiste un costrutto
+    Apollon dedicato per attributi multi-valore, questa e' solo una convenzione
+    testuale nel nome visualizzato (vedi anche prompt_template_v4.txt)."""
+    if t.endswith("[]"):
+        return f"{normalize_type_token(t[:-2])}[]"
     return TYPE_NORMALIZATION.get(t, t)
 
 
@@ -245,25 +254,72 @@ class ParsedClass:
         self.name = name
         self.kind = kind  # "class" | "abstract class" | "enum"
         self.attributes: list[tuple[str, str]] = []  # (nome, tipo) — tipo vuoto per i valori enum
+        # Parallela a self.attributes (stesso indice): {"default": str|None,
+        # "modifiers": list[str]} — modificatori {static}/{abstract}/{frozen}/
+        # const e valore di default "= x", aggiunta FASE 3 (2026-09-28) per non
+        # perderli in silenzio (vedi parse_attribute). Sempre un dict, mai
+        # assente, anche per i valori enum (default=None, modifiers=[]).
+        self.attribute_extras: list[dict] = []
         self.methods: list[str] = []
         self.placeholder = False  # referenziata in una relazione ma mai dichiarata (legale in PlantUML)
 
 
-def parse_attribute(line: str) -> tuple[str, str]:
+_ATTR_MODIFIER_RE = re.compile(r"\{([^}]*)\}")
+
+
+def parse_attribute(line: str) -> tuple[str, str, dict]:
     """Gestisce sia 'Tipo nome' (stile Java) sia 'nome : Tipo' (stile PlantUML piu'
-    comune), rimuove il prefisso di visibilita' (+-#~) e i modificatori {static}/
-    {abstract}."""
+    comune), rimuove il prefisso di visibilita' (+-#~).
+
+    FASE 3 (2026-09-28, caso reale: Sober 'Int CustNr {frozen}', TileOGame
+    '{static} const int SpareConnectionPieces = 32'): i modificatori UML tra
+    graffe ({static}/{abstract}/{frozen}/...), la parola chiave informale 'const'
+    (non standard PlantUML, ma usata cosi' in questo corpus) e un valore di
+    default '= valore' NON vengono piu' silenziosamente scartati o, peggio,
+    fatti collassare nel nome/tipo per errore (bug precedente: senza gestire
+    '=', 'int SpareConnectionPieces = 32' veniva interpretato con
+    rsplit(None,1) risultando in nome='32', tipo='int SpareConnectionPieces =').
+    Sono ora estratti esplicitamente e ritornati nel terzo elemento della tupla
+    (extra['modifiers'], extra['default']) — il chiamante (parse_plantuml) li
+    salva in ParsedClass.attribute_extras; build_apollon_json li rende in un
+    warning esplicito (nessun campo JSON Apollon rappresenta i modificatori)."""
     s = line.strip()
     if s and s[0] in "+-#~":
         s = s[1:].strip()
-    s = re.sub(r"\{[^}]*\}", "", s).strip()
+
+    modifiers: list[str] = []
+
+    def _collect(m: re.Match) -> str:
+        for tok in re.split(r"[,\s]+", m.group(1).strip()):
+            tok = tok.strip().lower()
+            if tok:
+                modifiers.append(tok)
+        return " "
+
+    s = _ATTR_MODIFIER_RE.sub(_collect, s)
+    s = re.sub(r"\s+", " ", s).strip()
+
+    if s.startswith("const "):
+        s = s[len("const "):].strip()
+        modifiers.append("const")
+
+    default = None
+    if "=" in s:
+        s, _, default_raw = s.partition("=")
+        s = s.strip()
+        default = default_raw.strip()
+
     if ":" in s:
         name, _, typ = s.partition(":")
-        return name.strip(), typ.strip()
-    parts = s.rsplit(None, 1)
-    if len(parts) == 2:
-        return parts[1], parts[0]
-    return s, ""
+        name, typ = name.strip(), typ.strip()
+    else:
+        parts = s.rsplit(None, 1)
+        if len(parts) == 2:
+            typ, name = parts[0], parts[1]
+        else:
+            typ, name = "", s
+
+    return name, typ, {"default": default, "modifiers": modifiers}
 
 
 def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[str], list[str]]:
@@ -288,10 +344,13 @@ def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[
                 continue
             if current.kind == "enum":
                 current.attributes.append((line, ""))
+                current.attribute_extras.append({"default": None, "modifiers": []})
             elif "(" in line:
                 current.methods.append(line)
             else:
-                current.attributes.append(parse_attribute(line))
+                name, typ, extra = parse_attribute(line)
+                current.attributes.append((name, typ))
+                current.attribute_extras.append(extra)
             continue
 
         m = CLASS_HEADER_RE.match(line)
@@ -693,6 +752,9 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
         attributes = []
         for i, (attr_name, attr_type) in enumerate(pc.attributes):
             attr_id = stable_id(f"{model_id}:attr:{name}:{attr_name}:{i}")
+            extra = pc.attribute_extras[i] if i < len(pc.attribute_extras) else {"default": None, "modifiers": []}
+            default = extra.get("default")
+
             if pc.kind == "enum":
                 display = attr_name
             elif attr_type:
@@ -700,6 +762,17 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
             else:
                 display = f"+ {attr_name}"  # nessun tipo nel sorgente: non se ne inventa uno
                 warnings.append(f"attributo '{attr_name}' della classe '{name}' senza tipo dichiarato nel sorgente")
+            if default and pc.kind != "enum":
+                display += f" = {default}"
+
+            if extra.get("modifiers"):
+                warnings.append(
+                    f"attributo '{attr_name}' della classe '{name}' ha modificatori "
+                    f"{extra['modifiers']} non rappresentabili in Apollon (nessun campo JSON "
+                    "corrispondente per gli attributi, a differenza dei metodi che hanno "
+                    "isAbstract): scartati dalla stringa visualizzata, riportati qui invece "
+                    "di essere persi in silenzio"
+                )
             attributes.append({"id": attr_id, "name": display})
 
         methods = []
@@ -841,12 +914,20 @@ def verify_apollon_json(diagram: dict, model_id: str) -> list[str]:
     return problems
 
 
-def _v4_attribute_to_tuple(name: str) -> tuple[str, str]:
+def _v4_attribute_to_tuple(name: str) -> tuple[str, str, str]:
+    """(nome, tipo, default) dalla stringa visualizzata '+ nome : tipo = valore'
+    (default e tipo opzionali) — default esteso FASE 3 (2026-09-28) per
+    verificare in round-trip anche i valori di default preservati da
+    parse_attribute, non solo nome/tipo."""
     s = name[2:] if name.startswith("+ ") else name
+    default = ""
+    if " = " in s:
+        s, _, default_raw = s.partition(" = ")
+        default = default_raw.strip()
     if " : " in s:
         nm, _, tp = s.partition(" : ")
-        return nm.strip(), tp.strip()
-    return s.strip(), ""
+        return nm.strip(), tp.strip(), default
+    return s.strip(), "", default
 
 
 def _expected_container(op: str, source: str, target: str) -> str:
@@ -873,7 +954,7 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
         is_enum = n["data"].get("stereotype") == "enumeration"
         is_enum_by_class[n["data"]["name"]] = is_enum
         if is_enum:
-            attrs_by_class[n["data"]["name"]] = sorted((a["name"], "") for a in n["data"]["attributes"])
+            attrs_by_class[n["data"]["name"]] = sorted((a["name"], "", "") for a in n["data"]["attributes"])
         else:
             attrs_by_class[n["data"]["name"]] = sorted(_v4_attribute_to_tuple(a["name"]) for a in n["data"]["attributes"])
         methods_by_class[n["data"]["name"]] = sorted(m["name"] for m in n["data"]["methods"])
@@ -882,9 +963,13 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
         if pc.placeholder:
             continue
         if pc.kind == "enum":
-            expected = sorted((n, "") for n, _ in pc.attributes)
+            expected = sorted((n, "", "") for n, _ in pc.attributes)
         else:
-            expected = sorted((n, normalize_type_token(t)) for n, t in pc.attributes)
+            expected = []
+            for i, (n, t) in enumerate(pc.attributes):
+                extra = pc.attribute_extras[i] if i < len(pc.attribute_extras) else {}
+                expected.append((n, normalize_type_token(t), (extra or {}).get("default") or ""))
+            expected = sorted(expected)
         got = attrs_by_class.get(name)
         if got is None:
             problems.append(f"{model_id}: classe '{name}' non trovata nel JSON convertito")
@@ -958,6 +1043,61 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
     return problems
 
 
+ALLOWED_PRIMITIVE_TYPES = set(TYPE_NORMALIZATION.values())
+_EDGE_DATA_FIELDS = ("points", "label", "sourceMultiplicity", "targetMultiplicity", "sourceRole", "targetRole")
+
+
+def style_check(diagram: dict, model_id: str) -> list[str]:
+    """Controllo di stile FASE 4 (2026-09-28, STOP 3): a differenza di
+    round_trip_check (contenuto semantico vs PlantUML sorgente), questo verifica
+    la FORMA del JSON gia' prodotto, indipendentemente dal sorgente — tipi
+    ammessi (primitivi normalizzati o classe/enum dichiarata nello stesso
+    diagramma), formato '+ nome(...) : tipo' per i metodi, nessuna molteplicita'
+    con 'n' letterale residua (avrebbe dovuto essere normalizzata a '*' da
+    normalize_multiplicity), nessun campo data mancante su un edge."""
+    problems = []
+    declared_names = {n["data"]["name"] for n in diagram["nodes"]}
+
+    for n in diagram["nodes"]:
+        cname = n["data"]["name"]
+        is_enum = n["data"].get("stereotype") == "enumeration"
+        for a in n["data"].get("attributes", []):
+            nm = a["name"]
+            if is_enum:
+                if nm.startswith("+ ") or " : " in nm:
+                    problems.append(f"{model_id}: valore enum '{nm}' non e' un nome nudo (classe {cname})")
+                continue
+            if not nm.startswith("+ "):
+                problems.append(f"{model_id}: attributo '{nm}' non inizia con '+ ' (classe {cname})")
+                continue
+            body = nm[2:].split(" = ", 1)[0]
+            if " : " in body:
+                _, _, typ = body.partition(" : ")
+                base_type = typ[:-2] if typ.endswith("[]") else typ
+                if base_type not in ALLOWED_PRIMITIVE_TYPES and base_type not in declared_names:
+                    problems.append(
+                        f"{model_id}: tipo '{typ}' dell'attributo '{nm}' non e' ne' un tipo primitivo "
+                        f"ammesso ne' una classe/enum dichiarata in questo diagramma (classe {cname})"
+                    )
+        for m in n["data"].get("methods", []):
+            nm = m["name"]
+            if not nm.startswith("+ ") or "(" not in nm or ")" not in nm:
+                problems.append(f"{model_id}: metodo '{nm}' non rispetta il formato '+ nome(...) : tipo' (classe {cname})")
+
+    for e in diagram["edges"]:
+        for field in _EDGE_DATA_FIELDS:
+            if field not in e["data"]:
+                problems.append(f"{model_id}: edge {e['id']} senza il campo data.{field}")
+        for mult_field in ("sourceMultiplicity", "targetMultiplicity"):
+            mult = e["data"].get(mult_field, "")
+            if mult == "n" or mult.endswith("..n"):
+                problems.append(
+                    f"{model_id}: edge {e['id']} ha {mult_field}={mult!r}, molteplicita' 'n' non normalizzata a '*'"
+                )
+
+    return problems
+
+
 # --- Main ----------------------------------------------------------------------
 
 
@@ -977,6 +1117,7 @@ def main() -> None:
     total_schema_problems = 0
     total_constraints = 0
     total_missing_labels = 0
+    total_style_problems = 0
     skipped: list[str] = []
 
     for record in records:
@@ -1013,12 +1154,14 @@ def main() -> None:
         schema_problems = validate_against_schema(diagram, model_id)
         problems = verify_apollon_json(diagram, model_id)
         roundtrip_problems = round_trip_check(model_id, classes, relationships, diagram)
+        style_problems = style_check(diagram, model_id)
 
         warnings = parse_warnings + constraint_warnings + reify_warnings + build_warnings
         total_warnings += len(warnings)
         total_problems += len(problems)
         total_roundtrip_problems += len(roundtrip_problems)
         total_schema_problems += len(schema_problems)
+        total_style_problems += len(style_problems)
 
         record["diagram_apollon_json"] = diagram
         record["diagram_apollon_model_version"] = MODEL_VERSION
@@ -1034,6 +1177,8 @@ def main() -> None:
             print(f"[ERRORE INTEGRITA'] {model_id}: {problems}")
         if roundtrip_problems:
             print(f"[ERRORE ROUND-TRIP] {model_id}: {roundtrip_problems}")
+        if style_problems:
+            print(f"[ERRORE STILE] {model_id}: {style_problems}")
 
     CORPUS_JSONL.write_text(
         "\n".join(json.dumps(r, ensure_ascii=False) for r in records) + "\n", encoding="utf-8"
@@ -1043,6 +1188,7 @@ def main() -> None:
     assert total_schema_problems == 0, f"{total_schema_problems} violazioni dello schema rilevate, vedi sopra"
     assert total_problems == 0, f"{total_problems} problemi di integrita' rilevati, vedi sopra"
     assert total_roundtrip_problems == 0, f"{total_roundtrip_problems} problemi di round-trip rilevati, vedi sopra"
+    assert total_style_problems == 0, f"{total_style_problems} problemi di stile rilevati, vedi sopra"
 
     converted = len(records) - len(skipped)
     print(f"Convertiti {converted}/{len(records)} diagrammi in Apollon v{MODEL_VERSION} (esclusi: {skipped or 'nessuno'}).")
@@ -1051,6 +1197,7 @@ def main() -> None:
     print("Classificazione etichette (corpus/label_classification.json): 0 etichette non classificate")
     print("Validazione schema JSON ufficiale: 0 violazioni")
     print("Round-trip semantico (attributi + molteplicita' per estremo): 0 discrepanze")
+    print("Controllo di stile (tipi ammessi, formato metodi, niente 'n' letterale, campi data completi): 0 violazioni")
     print(f"JSON Apollon scritti in {APOLLON_OUT_DIR}")
     print("corpus.jsonl aggiornato con diagram_apollon_json + apollon_conversion_warnings")
 

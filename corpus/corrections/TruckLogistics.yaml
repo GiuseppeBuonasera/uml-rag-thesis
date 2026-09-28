@@ -1,0 +1,20 @@
+# Correzioni FASE 3 (STOP 2, 2026-09-28) — vedi docs/decisions.md.
+- type: remove_line
+  match: 'Driver "1..*" --> "*" Vehicle : driver'
+  reason: >-
+    duplicato/incompatibile con l'altra relazione Vehicle-Driver etichettata
+    "driver" — le due insieme non corrispondono a description.md ("vehicles
+    are assigned up to one driver who drives these vehicles"), sostituite da
+    un'unica relazione (vedi replace_line sotto).
+- type: replace_line
+  match: 'Vehicle "0..1" --> "*" Driver : driver'
+  replacement: 'Vehicle "*" -- "0..1 driver" Driver'
+  reason: >-
+    unica relazione Vehicle-Driver rimasta: molteplicita' 0..1 spostata sul
+    lato Driver (non piu' sul lato Vehicle, che ora e' '*') e ruolo "driver"
+    sull'estremo Driver, tramite la sintassi '"molteplicita' ruolo"' gia' in
+    uso per gli esercizi tradotti (vedi
+    apollon_convert.py::split_mult_role) — non serve una nuova voce in
+    label_classification.json perche' non c'e' piu' un ': label' testuale.
+    description.md: "vehicles are assigned up to one driver who drives these
+    vehicles" -> 0..1 sul lato Driver, per veicolo.

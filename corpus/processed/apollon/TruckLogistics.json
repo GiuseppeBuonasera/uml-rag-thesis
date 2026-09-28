@@ -307,35 +307,10 @@
       }
     },
     {
-      "id": "b51058b0-ce75-5a18-9278-9dfcf58f8ae5",
-      "source": "d1d53e34-a5dc-5024-8387-4fd9ec7f0f56",
-      "target": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
-      "type": "ClassUnidirectional",
-      "sourceHandle": "left",
-      "targetHandle": "right",
-      "data": {
-        "points": [
-          {
-            "x": 600,
-            "y": 90.0
-          },
-          {
-            "x": 260,
-            "y": 235.0
-          }
-        ],
-        "label": "",
-        "sourceMultiplicity": "1..*",
-        "targetMultiplicity": "*",
-        "sourceRole": "driver",
-        "targetRole": ""
-      }
-    },
-    {
-      "id": "9dfb499b-e6a3-5969-b77a-422f3cf5ae73",
+      "id": "483e5321-bf68-539d-82b3-cd6bc5887bc7",
       "source": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
       "target": "d1d53e34-a5dc-5024-8387-4fd9ec7f0f56",
-      "type": "ClassUnidirectional",
+      "type": "ClassBidirectional",
       "sourceHandle": "right",
       "targetHandle": "left",
       "data": {
@@ -350,14 +325,14 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
-        "targetMultiplicity": "*",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "0..1",
         "sourceRole": "",
         "targetRole": "driver"
       }
     },
     {
-      "id": "3a997d96-3573-52bc-8b49-48a3f3514c36",
+      "id": "2ca5a9d7-eceb-500e-b26b-18c0ba14b18a",
       "source": "e33c8823-4dfb-5a07-a4b3-8d42111ecef8",
       "target": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
       "type": "ClassInheritance",
@@ -382,7 +357,7 @@
       }
     },
     {
-      "id": "71999e3c-bb0d-5428-995a-41112186e0ae",
+      "id": "77621455-9f10-5903-be7c-3a7ecebad02e",
       "source": "0db20721-0d80-5aa3-aa2d-efbb72f9849b",
       "target": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
       "type": "ClassInheritance",
@@ -407,7 +382,7 @@
       }
     },
     {
-      "id": "d93938fc-2c70-5991-a2e8-259aec6f5fe3",
+      "id": "b304b107-f446-5dc5-b5af-3ffedaf96fb4",
       "source": "4c92e0f5-e709-5f7f-ac7d-d4fdd5477dae",
       "target": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
       "type": "ClassInheritance",
@@ -432,7 +407,7 @@
       }
     },
     {
-      "id": "fe02ad52-982e-5d0f-a626-220e48f9e392",
+      "id": "479a0b60-66b9-5fbb-a06e-664b8bf63857",
       "source": "d0cef43f-1abd-56cb-8ad9-3ff02a06749b",
       "target": "268f0f3e-ad6c-53d1-99e5-efa92caa23a1",
       "type": "ClassUnidirectional",

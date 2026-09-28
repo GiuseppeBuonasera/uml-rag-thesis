@@ -1038,8 +1038,8 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..5",
-        "targetMultiplicity": "*",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "0..5",
         "sourceRole": "",
         "targetRole": "bestOffers"
       }
