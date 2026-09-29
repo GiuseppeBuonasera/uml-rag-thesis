@@ -1009,3 +1009,317 @@ occorrenza invece di 2 (non la espandeva in `tiles`+`connections` come fa
 `_generate_label_classification.py`). Corretto: `diff_report.py` ora
 espande anche `ruolo_doppio` in piu' righe — il conteggio corretto e' **84**
 (87 - 3 rimosse da correzioni), rigenerato e verificato.
+
+### [2026-09-29] Nuova categoria "chiarimento di modellazione" + 3 nuovi tipi
+### di correzione (change_edge_type, remove_label, set_role) — caso Boeing
+
+**1. Definizione della categoria e differenza da "correzione di errore"**
+
+Tutte le correzioni fin qui (26, vedi voce precedente) erano **correzioni di
+errore**: il PlantUML sorgente contraddiceva esplicitamente `description.md`
+(un refuso di ortografia, una molteplicità in contrasto con un numero
+scritto nel testo, una relazione duplicata senza riscontro testuale). Un
+**chiarimento di modellazione** è diverso: il PlantUML sorgente non è
+"sbagliato" in senso stretto — è una scelta di modellazione valida ma meno
+precisa/ricca di quella che `description.md` descrive esplicitamente a
+parole. Due casi tipici:
+- un'etichetta testuale (`: label`) usata al posto di un costrutto UML più
+  preciso che il testo implica (es. un'associazione semplice dove il testo
+  descrive chiaramente un rapporto whole-part con etichetta "part of" — il
+  costrutto giusto è la composizione, non un'etichetta che lo dice a
+  parole);
+- un ruolo o una relazione descritti in `description.md` con termini
+  specifici (es. "mother"/"daughter") che nel diagramma non hanno alcun
+  riscontro strutturale, nemmeno errato — semplicemente non erano stati
+  modellati.
+
+Marcata nel campo `category` di ogni operazione YAML
+(`corpus/corrections/<id>.yaml`): `correzione_errore` (default, se omesso) o
+`chiarimento_modellazione`. `corpus/apply_corrections.py` antepone
+`[correzione_errore]`/`[chiarimento_modellazione]` a ogni voce di
+`corrections_applied`; `corpus/diff_report.py` smista sulla base di questo
+tag in due sezioni separate del report.
+
+**2. Le 5 operazioni su Boeing** (`corpus/corrections/Boeing.yaml`), tutte
+`category: chiarimento_modellazione`:
+
+| # | Relazione | Prima | Dopo | Frase di `description.md` |
+|---|---|---|---|---|
+| 1 | Acquisition–Contract | associazione semplice, etichetta `part of` | `ClassComposition`, Contract = contenitore | "a single contract may consist of several acquisitions of airplanes" |
+| 2 | Acquisition–Contract | (segue da #1) | etichetta `part of` rimossa | ridondante: il tipo composizione lo esprime già |
+| 3 | Airplane–Acquisition | etichetta `part of` | etichetta rimossa, tipo invariato (associazione semplice) | "Each acquisition of an airplane has further specific details" — l'acquisizione *ha* dettagli sull'aereo, non lo contiene; l'aereo non è "parte di" l'acquisizione |
+| 4 | Airplane–Acquisition | molteplicità lato Acquisition `0..1` | `1` | "they are only built on demand, meaning that first a sales agreement is made with a customer, before the airplane is actually built" (il caso "demo versions... out of scope" è esplicitamente fuori scope nel testo, non modellato) |
+| 5 | Airline–Airline (auto-relazione) | nessun ruolo sui due estremi | `mother` sull'estremo `0..1`, `daughter` sull'estremo `0..*` | "main airlines often have a low cost daughter airline company. Boeing therefore keep track... of the mother-daughter relationships between airline companies" |
+
+**3. Tre nuovi tipi di correzione** (`corpus/apply_corrections.py`), tutti
+identificano la relazione per `(class_a, class_b, label)` — non per testo
+grezzo della riga come `remove_line`/`replace_line` — così la correzione
+resta leggibile senza dover scrivere a mano la sintassi degli operatori
+PlantUML:
+- **`change_edge_type`**: cambia il tipo di relazione. Per
+  `aggregation`/`composition` richiede `container` (nome classe): il
+  convertitore lo mette sempre come target dell'edge (vedi
+  `apollon_convert.py::relationship_kind`), quindi qui basta scegliere
+  l'operatore con `*`/`o` adiacente al lato giusto della riga — nessuno
+  scambio manuale di classi o molteplicità, la riga viene ricostruita dai
+  campi già parsati.
+- **`remove_label`**: svuota l'etichetta di una relazione, lasciando
+  tipo/molteplicità invariati.
+- **`set_role`** — **non uno dei due tipi originariamente richiesti,
+  aggiunto perché necessario per l'operazione #5 su Boeing**: Airline–Airline
+  è un'**auto-associazione** (`class_a == class_b == "Airline"`), quindi
+  l'estremo su cui assegnare un ruolo non può essere individuato per nome
+  di classe (stesso problema già risolto per le 3 auto-relazioni di
+  `label_classification.json`, dove l'estremo è codificato per posizione
+  `"source"`/`"target"` nella riga PlantUML). Per `set_role` si è scelto un
+  meccanismo diverso, più leggibile in un file di correzione: l'estremo si
+  individua dalla sua **molteplicità attuale** (es. `endpoint_mult: "0..1"`
+  → ruolo `mother`), che deve comparire su un solo estremo — fallisce
+  esplicitamente se la molteplicità è ambigua (assente o presente su
+  entrambi gli estremi).
+
+Tutti e tre falliscono esplicitamente (`ValueError`) se la relazione
+indicata non è individuabile in modo univoco — stessa filosofia delle
+operazioni precedenti. 6 nuovi test in `corpus/test_apollon_convert.py`
+(3 casi positivi + verifica dei fallimenti per container/molteplicità non
+trovati o ambigui).
+
+**4. Totali aggiornati**: **31 correzioni** (26 correzioni di errore + 5
+chiarimenti di modellazione) su 15 esercizi. Pipeline completa rieseguita:
+45/46 diagrammi convertiti (Cruise escluso, invariato), 0 etichette non
+classificate, 0 violazioni di schema, 0 problemi di integrità, 0
+discrepanze di round-trip, 0 violazioni di stile, `CourseManagement: OK`.
+`corpus/diff_report.md`: 585 differenze su 9 categorie (era 8 — "Chiarimenti
+di modellazione" ora sezione separata da "Correzioni di contenuto —
+errori").
+
+### [2026-09-29] 3 ulteriori chiarimenti di modellazione su AirTravel
+
+Aggiunti a `corpus/corrections/AirTravel.yaml` (`category:
+chiarimento_modellazione`, stessa categoria introdotta col caso Boeing sopra):
+
+| # | Relazione | Prima | Dopo | Frase di `description.md` |
+|---|---|---|---|---|
+| 1 | Airplane–Airport | nessun ruolo sull'estremo Airport | ruolo `homeAirport` sull'estremo Airport (`0..1`, invariato) | "Each aircraft can have a home airport" |
+| 2 | Airplane–FlightExecution | molteplicità lato Airplane `0..1` | `1` | "An aircraft performs several flights" — ogni esecuzione di volo è sempre eseguita da esattamente un aereo, mai zero |
+| 3 | Flight–FlightExecution | molteplicità lato Flight `0..1` | `1` | "An aircraft performs several flights, the flight number and date of which are stored" — ogni esecuzione appartiene sempre a esattamente un volo |
+
+L'operazione #1 usa `set_role` (identificazione dell'estremo Airport tramite
+la sua molteplicità attuale `0..1`, non ambigua qui perché Airplane–Airport
+non è un'auto-relazione — stesso meccanismo del caso Boeing, riusato senza
+modifiche al codice). Le operazioni #2 e #3 usano il `replace_line`
+generico, non richiedono un tipo di correzione nuovo.
+
+**Totali aggiornati**: **34 correzioni** (26 errori + 8 chiarimenti di
+modellazione: 5 Boeing + 3 AirTravel) su 16 esercizi. Pipeline rieseguita
+per intero: 45/46 convertiti, 0 errori a ogni livello (schema, integrità,
+round-trip, stile), `CourseManagement: OK`. `example_2_airtravel_v4.json`
+rigenerato dalla pipeline e riverificato **byte-identico** al corpus (le
+molteplicità/ruolo erano cambiati, l'esempio era rimasto alla versione
+precedente). `corpus/diff_report.md`: 588 differenze su 9 categorie (3 in
+più nella sezione "Chiarimenti di modellazione": 5 → 8).
+
+### [2026-09-29] BuildingManagement — diagramma incompleto rispetto a
+### description.md, 5 chiarimenti di modellazione + nuovo tipo `add_line` +
+### esclusione paragrafo di consegna dal testo indicizzato
+
+**Diagnosi**: revisione approfondita di BuildingManagement ha mostrato che il
+diagramma PlantUML sorgente è **incompleto** rispetto a `description.md`, non
+solo impreciso — mancavano relazioni intere (Entry irraggiungibile da
+Building, nessuna collezione generale di immagini), non solo cardinalità
+sbagliate. Tutte e 5 le proposte sono state approvate e applicate
+(`corpus/corrections/BuildingManagement.yaml`, `category:
+chiarimento_modellazione`):
+
+| # | Relazione | Prima | Dopo | Frase di `description.md` |
+|---|---|---|---|---|
+| 1 | User–Building `author` | relazione duplicata di `owner` (era stata solo **rimossa** allo STOP 2 — revisione: andava **spostata**, non eliminata) | **User→Comment**, ruolo `author` sull'estremo User (`1`), Comment `*` | "comment on other users' buildings" |
+| 2 | WebPortal–Entry `id` (qualificatore) | qualificatore su **Entry** (che non ha mai un ID nel testo) | **WebPortal→Building**, stesso qualificatore `id` | "provides a catalog of buildings" + "A building has a unique ID" |
+| 3 | Building–EntryGroup | **nessuna relazione** (EntryGroup esisteva già, composto da Entry, ma irraggiungibile da Building) | **aggiunta** `Building "1" -- "1" EntryGroup` | "add additional entries to the buildings" |
+| 4 | Building–Image | solo `profilePicture` (`1`), nessuna collezione generale | **aggiunta** `Building "1" -- "*" Image`, `profilePicture` invariata | "each building has a number of images, one of which is used as a profile photo" |
+| 5 | WebPortal–User `username` | molteplicità **invertite** (`WebPortal "0..1"` / `User "1"` — un portale con esattamente 1 utente) | `WebPortal "1" --> "*" User` | "Visitors can register with a web portal as a user with a unique user name" (unicità *all'interno* di un portale → un portale ha molti utenti) |
+
+`corpus/label_classification.json`/`.md` aggiornati di conseguenza: la voce
+qualificatore per l'operazione #2 è stata rinominata da chiave
+`(BuildingManagement, WebPortal, -->, Entry, id)` a `(..., Building, id)` in
+`corpus/_generate_label_classification.py` (il convertitore fallisce se una
+label non è classificata per la sua chiave esatta — la rinomina era
+necessaria, non opzionale).
+
+**Nuovo tipo di correzione — `add_line`** (`corpus/apply_corrections.py`):
+serviva per i punti #3 e #4, che richiedono relazioni **assenti dal
+sorgente**, non solo da correggere — nessuna delle operazioni esistenti
+(`rename_token`/`remove_line`/`replace_line`/`change_edge_type`/
+`remove_label`/`set_role`) può inserire una riga che non esiste. Campo:
+`line` (la riga di relazione da aggiungere, inserita prima di `@enduml` se
+presente). Fallisce se la riga è **già presente** (stesso principio
+hard-fail, in direzione opposta: un `add_line` che troverebbe la riga già lì
+non è più la correzione per cui era stata scritta). Un test dedicato in
+`corpus/test_apollon_convert.py` (posizionamento prima di `@enduml` +
+fallimento su riga duplicata).
+
+**Nuovo meccanismo — esclusione di paragrafi da `description.md`**
+(`corpus/clean_description.py`, `corpus/description_exclusions/<id>.yaml`):
+stesso principio di `apply_corrections.py` (dato dichiarativo, mai scritto
+su `corpus/raw/`, hard-fail se il paragrafo non è trovato) ma applicato al
+testo di `description.md` invece che al PlantUML — chiamato da
+`build_manifest.py` subito dopo la lettura di `description.md`, prima di
+scrivere il campo `description` di `corpus.jsonl`. Tracciabilità nel nuovo
+campo `description_exclusions_applied` del record. Applicato **solo** a
+BuildingManagement: il paragrafo finale "Create a UML class diagram based on
+the project description. Assign the use cases to the corresponding actors.
+For the evaluation of the task, 10 meaningful use cases are sufficient. Use
+the concepts of generalization and, if possible, model meaningful
+relationships between the individual use cases." è una consegna per lo
+studente, non un requisito di dominio — esclusa dal testo che il retriever
+indicizzerà.
+
+**SellingGoods — limite noto, NON modificato**: ha istruzioni metodologiche
+intrecciate in tutto il testo (struttura a `STEP 1`–`STEP 4`, con frasi come
+"First, create a class diagram for the use case described in STEP 1, and add
+attributes, event types, non-default FSMs and constraints if necessary. For
+each step, revise your model...") — non un singolo paragrafo isolabile come
+in BuildingManagement. Un'esclusione meccanica per paragrafo non risolverebbe
+il problema (l'istruzione è distribuita, non concentrata) — servirebbe una
+revisione strutturale diversa, fuori scope qui. Lasciata invariata, segnalata
+come limite noto.
+
+**Limite generale del dataset**: i diagrammi di riferimento originali
+(`corpus/raw/models_original/`) possono essere **incompleti**, non solo
+imprecisi, rispetto alle loro `description.md` — relazioni intere mancanti,
+non solo cardinalità/etichette sbagliate. Sono stati corretti **solo i casi
+emersi durante la revisione svolta finora**, non un audit sistematico di
+tutti i 45 esercizi per completezza strutturale. Esercizi con correzioni di
+questo tipo (`category: chiarimento_modellazione`) ad oggi: **AirTravel**
+(3 correzioni), **Boeing** (5), **BuildingManagement** (5). Gli altri 42
+esercizi non sono stati riesaminati con lo stesso livello di dettaglio per
+completezza strutturale — non è da assumere che siano privi di lacune
+analoghe.
+
+**Pipeline rieseguita per intero**: 45/46 convertiti (Cruise escluso,
+invariato), **38 correzioni** (26 errori + 8 chiarimenti Boeing/AirTravel +
+5 chiarimenti BuildingManagement, di cui 1 sostituiva la vecchia correzione
+"remove author": netto 34 - 1 + 5 = 38), 1 paragrafo escluso da
+`description.md`, 0 etichette non classificate, 0 violazioni di schema, 0
+problemi di integrità, 0 discrepanze di round-trip, 0 violazioni di stile,
+`CourseManagement: OK`. `example_2_airtravel_v4.json` riverificato
+byte-identico al corpus (nessuna modifica ad AirTravel in questo giro).
+`corpus/diff_report.md`: 592 differenze su 9 categorie.
+
+### [2026-09-29] Annullamento delle correzioni di BuildingManagement — fedeltà
+### all'originale
+
+**Decisione utente**: `corpus/corrections/BuildingManagement.yaml` va **svuotato**
+di ogni correzione di contenuto — sia la rimozione di `author` dello STOP 2
+(2026-09-28) sia i 5 chiarimenti di modellazione della voce precedente
+(2026-09-29). Il diagramma Apollon di BuildingManagement deve derivare
+**esattamente** da `corpus/raw/models_original/BuildingManagement/plantuml.txt`,
+senza alcuna relazione aggiunta/rimossa/modificata e senza alcuna
+molteplicità corretta. Verificato: `diagram_plantuml` in `corpus.jsonl` è ora
+**byte-identico** (dopo `.strip()`) al `plantuml.txt` originale.
+
+**Cosa resta invariato**:
+- `corpus/description_exclusions/BuildingManagement.yaml` (il paragrafo di
+  consegna finale escluso dal testo indicizzato) — riguarda il testo per il
+  retriever, non il diagramma, non tocca `plantuml.txt`.
+- La classificazione delle etichette globali (`corpus/label_classification.json`),
+  che si applica a tutto il corpus: `owner` e `author` restano ruoli
+  sull'estremo User verso Building (molteplicità 1/*, come nell'originale —
+  la relazione `author` era gia' presente in `plantuml.txt`, la correzione
+  STOP 2 l'aveva solo *rimossa*, quindi ripristinarla è sufficiente perché
+  ricompaia come ruolo, nessuna nuova voce di classificazione necessaria);
+  `profilePicture` resta ruolo sull'estremo Image; `id` e `username` restano
+  qualificatori (testo in `label`). **Unica correzione necessaria** alla
+  classificazione: la chiave del qualificatore `id` è tornata da
+  `(WebPortal, -->, Building, id)` a `(WebPortal, -->, Entry, id)` in
+  `corpus/_generate_label_classification.py` — il target originale nel
+  PlantUML è `Entry`, non `Building` (lo spostamento era esso stesso una
+  delle correzioni annullate).
+
+**Limiti noti del dataset per BuildingManagement — annotati, NON corretti**
+(quelli che le correzioni annullate provavano a colmare):
+- **Entry non collegate agli edifici**: `EntryGroup` esiste (composta da
+  `Entry`) ma nessuna relazione la collega a `Building` — gli entry sono
+  strutturalmente irraggiungibili da un edificio, nonostante
+  description.md dica "add additional entries to the buildings".
+- **Commenti senza autore**: `Building --> Comment` esiste, ma nessuna
+  relazione collega `Comment` a un `User` autore, nonostante description.md
+  dica "comment on other users' buildings".
+- **Nessuna relazione WebPortal–Building**: il qualificatore `id` è
+  sull'estremo `Entry` (che non ha mai un ID nel testo), non su `Building`
+  (che ce l'ha esplicitamente: "A building has a unique ID") — manca quindi
+  una relazione diretta WebPortal–Building nonostante "provides a catalog of
+  buildings".
+- **Building con una sola immagine**: solo `profilePicture` (`1`), nessuna
+  collezione generale di immagini, nonostante "each building has a number of
+  images".
+- **WebPortal–User `username` con molteplicità sospette**: `WebPortal
+  "0..1"` / `User "1"` (un portale con esattamente 1 utente) non corrisponde
+  al senso di "Visitors can register with a web portal as a user with a
+  unique user name" (un portale ha molti utenti).
+
+**Totali aggiornati** (contati direttamente da `corrections_applied` in
+`corpus.jsonl`, non a mente — corregge anche un errore aritmetico nelle voci
+precedenti, che riportavano "26 errori" invece di 25): **33 correzioni** (25
+errori + 8 chiarimenti di modellazione: 5 Boeing + 3 AirTravel —
+BuildingManagement non contribuisce più) su 15 esercizi (era 16). Pipeline
+rieseguita per intero: 45/46
+convertiti (Cruise escluso, invariato), 0 etichette non classificate, 0
+violazioni di schema, 0 problemi di integrità, 0 discrepanze di round-trip,
+0 violazioni di stile, `CourseManagement: OK`, `example_2_airtravel_v4.json`
+riverificato byte-identico. `corpus/diff_report.md`: 588 differenze su 9
+categorie (tornato al valore di prima dei 5 chiarimenti BuildingManagement,
+meno le differenze introdotte da quelli).
+
+### [2026-09-29] Riclassificazioni: fine della categoria "qualificatore",
+### auto-relazione Louvre "coach", rimozione del marcatore di verso di
+### lettura PlantUML ('>'/'<')
+
+**1-2. BuildingManagement `id`/`username`: da qualificatore a ruolo.**
+Decisione utente: non serviva la lettura UML "qualifier" — `id` e
+`username` sono semplicemente il nome della proprietà di navigazione,
+stessa convenzione già in uso per `profilePicture`/`wheel`/ecc. Entrambe
+riclassificate `ruolo` in `corpus/_generate_label_classification.py`:
+`WebPortal→Entry` targetRole `id`, `WebPortal→User` targetRole `username`,
+label svuotato in entrambi i casi. **La categoria "qualificatore" ha ora 0
+voci** — lasciata documentata nel convertitore (`apollon_convert.py::apply_label_classification`,
+`if tipo in ("associazione", "qualificatore", "vincolo")`) e nel generatore,
+non rimossa dal codice, per un futuro caso reale che non si presti alla
+stessa lettura come ruolo.
+
+**3. Louvre `hasCoach >` (auto-relazione Employee-Employee): da associazione
+a ruolo.** Senza un ruolo esplicito i due estremi di un'auto-relazione non
+si distinguono (stesso principio già applicato alle 3 auto-relazioni di
+FASE 2). Ruolo `coach` — **non** `hasCoach`: il nome del ruolo è il
+sostantivo, non la frase verbale usata come etichetta — sull'estremo con
+molteplicità `0..1` (posizione `target` nella riga PlantUML), label
+svuotato. Questo ha richiesto un'estensione al formato dati: la voce
+`"ruolo"` di `CLASSIFICATION` accetta ora, oltre alla forma esistente
+(stringa = solo l'estremo, il testo del ruolo coincide con l'etichetta),
+anche un dict `{"estremo": ..., "testo": ...}` quando il nome del ruolo deve
+differire dall'etichetta originale — retrocompatibile, tutte le altre voci
+`"ruolo"` esistenti restano invariate (stringa semplice).
+
+**4. Rimozione del marcatore di verso di lettura PlantUML.** Verificato:
+`hasCoach >` (Louvre), `leads >` e `teaches >` (University) finivano
+**letteralmente** nel JSON compilato con il carattere `>` finale — il
+simbolo indica solo in che verso leggere l'etichetta (`A -- B : verbo >` si
+legge "A verbo B"), non fa parte del nome. Nuova funzione
+`apollon_convert.py::strip_reading_direction()`, chiamata da
+`parse_plantuml` su ogni etichetta estratta (rimuove un `' >'`/`' <'`
+finale o un `'< '`/`'> '` iniziale, con esattamente uno spazio — verificato
+che non ci sono altri casi nel corpus con spaziatura diversa). Le chiavi di
+`label_classification.json`/`.py` per questi 3 casi sono state aggiornate
+di conseguenza (senza il marcatore): `leads`/`teaches` restano
+`associazione` (non sono auto-relazioni, nessun bisogno di un ruolo).
+Verificato **esaustivamente** su tutti i 45 JSON compilati: nessun
+carattere `>`/`<` residuo in `label`/`sourceRole`/`targetRole` su nessun
+edge. Nuovo test in `corpus/test_apollon_convert.py::check_strip_reading_direction`.
+
+**Pipeline rieseguita per intero**: 45/46 convertiti (Cruise escluso,
+invariato), 0 etichette non classificate, 0 violazioni di schema, 0
+problemi di integrità, 0 discrepanze di round-trip, 0 violazioni di stile,
+`CourseManagement: OK`, `example_2_airtravel_v4.json` riverificato
+byte-identico. `label_classification.json`: 122 voci (associazione 28,
+ruolo 88, vincolo 7, qualificatore 0, dubbio 0). `corpus/diff_report.md`:
+591 differenze su 9 categorie.

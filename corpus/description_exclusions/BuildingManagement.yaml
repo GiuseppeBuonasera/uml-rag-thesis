@@ -1,0 +1,10 @@
+# Esclusioni di paragrafi da description.md (2026-09-29) — vedi docs/decisions.md
+# e corpus/clean_description.py. Paragrafo di consegna/istruzioni per lo
+# studente, non un requisito di dominio: non deve contaminare il testo
+# indicizzato per il retrieval.
+- >-
+  Create a UML class diagram based on the project description. Assign the
+  use cases to the corresponding actors. For the evaluation of the task, 10
+  meaningful use cases are sufficient. Use the concepts of generalization
+  and, if possible, model meaningful relationships between the individual
+  use cases.

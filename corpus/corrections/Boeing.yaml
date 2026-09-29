@@ -9,3 +9,73 @@
   from: NegotiatedPice
   to: NegotiatedPrice
   reason: "refuso di 'Price' nell'attributo Acquisition.NegotiatedPice."
+
+# --- Chiarimenti di modellazione (2026-09-28) ---
+# Categoria distinta dalle correzioni di refuso/cardinalita' sopra: qui il
+# PlantUML non e' "sbagliato" in senso stretto, ma la relazione disegnata e'
+# meno precisa di quanto description.md descriva esplicitamente (tipo di
+# relazione, etichetta ridondante/fuorviante, ruolo non esplicitato su
+# un'auto-relazione). Vedi docs/decisions.md e corpus/diff_report.py
+# (categoria "Chiarimenti di modellazione").
+- type: change_edge_type
+  category: chiarimento_modellazione
+  class_a: Acquisition
+  class_b: Contract
+  label: "part of"
+  new_type: composition
+  container: Contract
+  reason: >-
+    CHIARIMENTO DI MODELLAZIONE: description.md, "a single contract may
+    consist of several acquisitions of airplanes" — un contratto e'
+    composto da piu' acquisizioni (whole-part, lifecycle delle acquisizioni
+    legato al contratto), non una semplice associazione.
+- type: remove_label
+  category: chiarimento_modellazione
+  class_a: Acquisition
+  class_b: Contract
+  label: "part of"
+  reason: >-
+    CHIARIMENTO DI MODELLAZIONE: l'etichetta "part of" e' ridondante dopo il
+    cambio a ClassComposition sopra — il tipo di relazione lo esprime gia'.
+- type: remove_label
+  category: chiarimento_modellazione
+  class_a: Airplane
+  class_b: Acquisition
+  label: "part of"
+  reason: >-
+    CHIARIMENTO DI MODELLAZIONE: l'aereo non e' "parte di" l'acquisizione —
+    description.md non descrive qui un rapporto whole-part, solo "Each
+    acquisition of an airplane has further specific details" (l'acquisizione
+    HA dei dettagli sull'aereo, non lo contiene). L'etichetta "part of" era
+    fuorviante (duplicava semanticamente quella tra Acquisition e Contract);
+    rimossa senza cambiare il tipo di relazione, che resta un'associazione
+    semplice.
+- type: replace_line
+  category: chiarimento_modellazione
+  match: 'Airplane "0..1" -- "0..1" Acquisition'
+  replacement: 'Airplane "0..1" -- "1" Acquisition'
+  reason: >-
+    CHIARIMENTO DI MODELLAZIONE: description.md, "they are only built on
+    demand, meaning that first a sales agreement is made with a customer,
+    before the airplane is actually built" — ogni aereo esiste solo in
+    seguito a un'acquisizione, quindi lato Acquisition e' 1 (obbligatoria),
+    non 0..1. (Il caso "demo versions... out of scope" descritto nel testo
+    e' esplicitamente fuori scope, non modellato.)
+- type: set_role
+  category: chiarimento_modellazione
+  class_a: Airline
+  class_b: Airline
+  roles:
+    - endpoint_mult: "0..1"
+      role: mother
+    - endpoint_mult: "0..*"
+      role: daughter
+  reason: >-
+    CHIARIMENTO DI MODELLAZIONE: description.md, "main airlines often have a
+    low cost daughter airline company. Boeing therefore keep track... of the
+    mother-daughter relationships between airline companies" — auto-
+    relazione Airline-Airline, ruolo per estremo individuato dalla
+    molteplicita' attuale (0..1=mother, 0..*=daughter) perche' il nome
+    classe non puo' disambiguare i due estremi di un'auto-relazione (stesso
+    principio delle 3 auto-relazioni gia' risolte in
+    label_classification.json, vedi docs/decisions.md 2026-09-28).

@@ -61,6 +61,26 @@ def check_container_is_target(op: str, edge_type: str) -> None:
     print(f"  OK  Order \"1\" {op} \"*\" Line  ->  source=Line(*) target=Order(1)  [{edge_type}]")
 
 
+def check_strip_reading_direction() -> None:
+    """Il marcatore di verso di lettura PlantUML (' >' finale, es. 'hasCoach >')
+    non fa parte del nome dell'etichetta — casi reali: Louvre 'hasCoach >',
+    University 'leads >'/'teaches >' (2026-09-29)."""
+    assert ac.strip_reading_direction("hasCoach >") == "hasCoach"
+    assert ac.strip_reading_direction("leads >") == "leads"
+    assert ac.strip_reading_direction("< manages") == "manages"
+    assert ac.strip_reading_direction("no arrow here") == "no arrow here"
+
+    text = '@startuml\nclass Employee {}\nEmployee "0..*" -- "0..1" Employee : hasCoach >\n@enduml\n'
+    classes, relationships, warnings, unsupported = ac.parse_plantuml(text)
+    assert not unsupported, unsupported
+    assert relationships[0]["label"] == "hasCoach", relationships[0]
+
+    diagram, build_warnings = ac.build_apollon_json("test-reading-dir", classes, relationships)
+    assert not build_warnings, build_warnings
+    assert diagram["edges"][0]["data"]["label"] == "hasCoach", diagram["edges"][0]["data"]
+    print("  OK  'hasCoach >' -> label 'hasCoach' (il '>' e' solo verso di lettura, non parte del nome)")
+
+
 def check_role_parsing() -> None:
     """Sintassi '\"molteplicita' ruolo\"' introdotta il 2026-09-25 per gli
     esercizi tradotti (es. '+responsabile' su un estremo in CourseManagement).
@@ -413,6 +433,108 @@ def check_corrections_fail_if_not_found() -> None:
     print("  OK  ogni correzione fallisce esplicitamente (ValueError) se il testo bersaglio non e' trovato")
 
 
+def check_corrections_change_edge_type() -> None:
+    """change_edge_type individua la relazione per (class_a, class_b, label), non
+    per testo esatto della riga — caso reale Boeing Acquisition-Contract."""
+    plantuml = 'class Acquisition {}\nclass Contract {}\nAcquisition "0..*" -- "1" Contract : part of\n'
+    corrected, applied = ac_corr.apply_corrections(
+        "test-corr", plantuml,
+        [{
+            "type": "change_edge_type", "class_a": "Acquisition", "class_b": "Contract",
+            "label": "part of", "new_type": "composition", "container": "Contract", "reason": "r",
+        }],
+    )
+    assert 'Acquisition "0..*" --* "1" Contract : part of' in corrected, corrected
+    assert len(applied) == 1 and "new_type='composition'" in applied[0], applied
+
+    # il contenitore puo' essere indicato anche se e' l'estremo "source" della riga
+    plantuml2 = 'class A {}\nclass B {}\nA "1" -- "0..*" B\n'
+    corrected2, _ = ac_corr.apply_corrections(
+        "test-corr", plantuml2,
+        [{"type": "change_edge_type", "class_a": "A", "class_b": "B", "new_type": "aggregation", "container": "A", "reason": "r"}],
+    )
+    assert 'A "1" o-- "0..*" B' in corrected2, corrected2
+
+    # container che non corrisponde a nessuno dei due estremi -> fallisce
+    try:
+        ac_corr.apply_corrections(
+            "test-corr", plantuml,
+            [{"type": "change_edge_type", "class_a": "Acquisition", "class_b": "Contract", "label": "part of",
+              "new_type": "composition", "container": "NonEsiste", "reason": "r"}],
+        )
+        assert False, "doveva fallire per container inesistente"
+    except ValueError:
+        pass
+    print("  OK  change_edge_type: relazione individuata per (classi, label), contenitore -> operatore corretto")
+
+
+def check_corrections_remove_label() -> None:
+    plantuml = 'class Airplane {}\nclass Acquisition {}\nAirplane "0..1" -- "0..1" Acquisition : part of\n'
+    corrected, applied = ac_corr.apply_corrections(
+        "test-corr", plantuml,
+        [{"type": "remove_label", "class_a": "Airplane", "class_b": "Acquisition", "label": "part of", "reason": "r"}],
+    )
+    assert 'Airplane "0..1" -- "0..1" Acquisition' in corrected and "part of" not in corrected, corrected
+    assert len(applied) == 1
+    print("  OK  remove_label: etichetta svuotata, tipo/molteplicita' invariati")
+
+
+def check_corrections_set_role() -> None:
+    """set_role: auto-relazione Airline-Airline, estremo individuato dalla
+    molteplicita' (il nome classe non puo' disambiguare un self-loop)."""
+    plantuml = 'class Airline {}\nAirline "0..1" -- "0..*" Airline\n'
+    corrected, applied = ac_corr.apply_corrections(
+        "test-corr", plantuml,
+        [{
+            "type": "set_role", "class_a": "Airline", "class_b": "Airline",
+            "roles": [{"endpoint_mult": "0..1", "role": "mother"}, {"endpoint_mult": "0..*", "role": "daughter"}],
+            "reason": "r",
+        }],
+    )
+    assert 'Airline "0..1 mother" -- "0..* daughter" Airline' in corrected, corrected
+    assert len(applied) == 1
+
+    # molteplicita' ambigua (stessa su entrambi gli estremi) -> fallisce
+    plantuml_ambiguous = 'class Airline {}\nAirline "0..*" -- "0..*" Airline\n'
+    try:
+        ac_corr.apply_corrections(
+            "test-corr", plantuml_ambiguous,
+            [{"type": "set_role", "class_a": "Airline", "class_b": "Airline",
+              "roles": [{"endpoint_mult": "0..*", "role": "x"}], "reason": "r"}],
+        )
+        assert False, "doveva fallire per molteplicita' ambigua"
+    except ValueError:
+        pass
+    print("  OK  set_role: ruolo assegnato per molteplicita' su un'auto-relazione, ambiguita' rilevata")
+
+
+def check_corrections_add_line() -> None:
+    """add_line: caso reale BuildingManagement — EntryGroup esisteva gia' nel
+    diagramma ma senza alcun collegamento a Building."""
+    plantuml = 'class Building {}\nclass EntryGroup {}\n@enduml\n'
+    corrected, applied = ac_corr.apply_corrections(
+        "test-corr", plantuml,
+        [{"type": "add_line", "line": 'Building "1" -- "1" EntryGroup', "reason": "r"}],
+    )
+    lines = corrected.splitlines()
+    assert 'Building "1" -- "1" EntryGroup' in lines, corrected
+    assert lines.index('Building "1" -- "1" EntryGroup') < lines.index("@enduml"), (
+        "la riga aggiunta deve stare PRIMA di @enduml"
+    )
+    assert len(applied) == 1
+
+    # riga gia' presente -> fallisce (non si aggiunge due volte silenziosamente)
+    try:
+        ac_corr.apply_corrections(
+            "test-corr", corrected,
+            [{"type": "add_line", "line": 'Building "1" -- "1" EntryGroup', "reason": "r"}],
+        )
+        assert False, "doveva fallire, riga gia' presente"
+    except ValueError:
+        pass
+    print("  OK  add_line: riga aggiunta prima di @enduml; fallisce se gia' presente")
+
+
 def main() -> None:
     print("FASE 1 — normalizzazioni automatiche:")
     check_type_normalization()
@@ -435,6 +557,13 @@ def main() -> None:
     check_corrections_rename_token()
     check_corrections_remove_and_replace_line()
     check_corrections_fail_if_not_found()
+    check_corrections_change_edge_type()
+    check_corrections_remove_label()
+    check_corrections_set_role()
+    check_corrections_add_line()
+    print()
+    print("Marcatore di verso di lettura PlantUML ('>'/'<'):")
+    check_strip_reading_direction()
     print()
     print("Ruoli per estremo (sintassi '\"molteplicita' ruolo\"'):")
     check_role_parsing()

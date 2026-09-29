@@ -1,8 +1,12 @@
-# Correzioni FASE 3 (STOP 2, 2026-09-28) — vedi docs/decisions.md.
-- type: remove_line
-  match: 'User "1" --> "*" Building : author'
-  reason: >-
-    duplicato della relazione 'owner' (stessa molteplicita' 1/*, stesso
-    verso): description.md assegna un building a "a user as the owner", non
-    introduce un ruolo "author" distinto — "users can create buildings" e'
-    generico e coincide semanticamente con 'owner'.
+# Nessuna correzione di contenuto per BuildingManagement (2026-09-29, decisione
+# utente: fedeltà all'originale). Il diagramma è convertito ESATTAMENTE come in
+# corpus/raw/models_original/BuildingManagement/plantuml.txt — nessuna
+# relazione aggiunta, rimossa o modificata, molteplicità originali.
+#
+# Storico (annullato, vedi docs/decisions.md voce 2026-09-29 "annullamento
+# correzioni BuildingManagement"): questo file conteneva in precedenza la
+# rimozione della relazione User->Building:author (STOP 2, 2026-09-28) e poi
+# 5 chiarimenti di modellazione (STOP successivo, 2026-09-29) — entrambi
+# annullati. I limiti che quelle correzioni provavano a colmare restano
+# annotati in docs/decisions.md come limiti noti del dataset, non applicati.
+[]

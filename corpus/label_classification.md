@@ -1,19 +1,17 @@
 # Classificazione delle etichette — associazione, ruolo o vincolo
 
-Generata da `corpus/_generate_label_classification.py` da tutte le 126 etichette non vuote (`: testo`) trovate nelle relazioni binarie dei 45 esercizi convertibili (44 originali + CourseManagement).
+Generata da `corpus/_generate_label_classification.py` da tutte le 122 etichette non vuote (`: testo`) trovate nelle relazioni binarie dei 45 esercizi convertibili (44 originali + CourseManagement).
 
 Categorie: **associazione** (verbo/descrizione del legame, resta in `label`), **ruolo** (nome di come si chiama una classe in quella relazione, va in `sourceRole`/`targetRole` sull'estremo indicato — colonna "Lettura" per verificare l'estremo), **vincolo** (testo di vincolo UML su una generalizzazione, es. `{disjoint,complete}` — non e' un'etichetta di relazione: dal 2026-09-25 estratto automaticamente nel campo `constraints` di corpus.jsonl, mai lasciato nell'edge, vedi `corpus/apollon_convert.py::extract_generalization_constraints`), **qualificatore** (verosimilmente un qualifier UML che Apollon non supporta — resta in `label` per mancanza di un posto migliore), **ruolo_doppio** (caso unico, TileOGame: un'etichetta con DUE nomi di ruolo distinti, uno per estremo — espansa in due righe qui sotto), **dubbio** (nessuna classificazione proposta, in attesa dell'utente).
 
 | Esercizio | Relazione (sorgente) | Etichetta | Classificazione | Estremo proposto | Lettura | Motivazione |
 |---|---|---|---|---|---|---|
-| AirTravel | `Airport "0..1"--"0..*" Flight : Source` | Source | ruolo | Airport | Airport è il/la Source di Flight | Nome di ruolo: descrive cosa E' l'Airport per questo Flight (l'aeroporto di partenza), non un verbo che lega le due classi. Coppia con 'Destination' sotto: due relazioni distinte Airport-Flight, distinte dal ruolo dell'Airport in ciascuna. |
-| AirTravel | `Airport "0..1"--"0..*" Flight : Destination` | Destination | ruolo | Airport | Airport è il/la Destination di Flight | Come 'Source' sopra, ma per l'aeroporto di arrivo. |
-| AirTravel | `FlightExecution "0..*"-"0..1" Pilot : Captain` | Captain | ruolo | Pilot | Pilot è il/la Captain di FlightExecution | Nome di ruolo esplicitamente dato come esempio dall'utente: descrive cosa E' il Pilot in questa relazione (il comandante), non un verbo. |
-| AirTravel | `FlightExecution "0..*"-"0..2" Pilot : Co-pilot` | Co-pilot | ruolo | Pilot | Pilot è il/la Co-pilot di FlightExecution | Come 'Captain' sopra, per il secondo pilota. |
-| Boeing | `Airplane "0..1" -- "0..1" Acquisition : part of` | part of | associazione | — | — | Frase verbale che descrive il legame ('e' parte di'), leggibile come frase sull'intera relazione, non un nome che qualifica una delle due classi. |
-| Boeing | `Acquisition "0..*" -- "1" Contract : part of` | part of | associazione | — | — | Come sopra. |
-| BuildingManagement | `WebPortal "1" --> "*" Entry : id` | id | qualificatore | — | — | Decisione utente (STOP 1): verosimilmente un qualificatore UML (WebPortal[id] -> Entry), non un nome di associazione ne' di ruolo. Apollon non supporta i qualificatori (nessun campo dedicato in schema o editor): resta in 'label' per mancanza di un posto migliore, segnalato qui e in docs/decisions.md come limite noto del formato. |
-| BuildingManagement | `WebPortal "0..1" --> "1" User : username` | username | qualificatore | — | — | Come 'id' sopra. |
+| AirTravel | `Airport "1"--"0..*" Flight : Source` | Source | ruolo | Airport | Airport è il/la Source di Flight | Nome di ruolo: descrive cosa E' l'Airport per questo Flight (l'aeroporto di partenza), non un verbo che lega le due classi. Coppia con 'Destination' sotto: due relazioni distinte Airport-Flight, distinte dal ruolo dell'Airport in ciascuna. |
+| AirTravel | `Airport "1"--"0..*" Flight : Destination` | Destination | ruolo | Airport | Airport è il/la Destination di Flight | Come 'Source' sopra, ma per l'aeroporto di arrivo. |
+| AirTravel | `FlightExecution "0..*"-"1" Pilot : Captain` | Captain | ruolo | Pilot | Pilot è il/la Captain di FlightExecution | Nome di ruolo esplicitamente dato come esempio dall'utente: descrive cosa E' il Pilot in questa relazione (il comandante), non un verbo. |
+| AirTravel | `FlightExecution "0..*"-"1..2" Pilot : Co-pilot` | Co-pilot | ruolo | Pilot | Pilot è il/la Co-pilot di FlightExecution | Come 'Captain' sopra, per il secondo pilota. |
+| BuildingManagement | `WebPortal "1" --> "*" Entry : id` | id | ruolo | Entry | Entry è il/la id di WebPortal | RICLASSIFICATO (2026-09-29, decisione utente — categoria 'qualificatore' abbandonata, era una lettura UML non necessaria): 'id' non e' un qualificatore, e' il nome della proprieta' di navigazione (stessa convenzione di 'profilePicture', 'wheel', ecc. — nomi comuni, non frasi verbali) — targetRole 'id' sull'estremo Entry, label vuoto. Storico: NON piu' spostato su Building (quella correzione 'chiarimento_modellazione' e' stata annullata, BuildingManagement resta fedele all'originale, vedi docs/decisions.md) — il limite (Entry non ha mai un ID esplicito in description.md, solo Building) resta annotato ma non corretto. |
+| BuildingManagement | `WebPortal "0..1" --> "1" User : username` | username | ruolo | User | User è il/la username di WebPortal | RICLASSIFICATO (2026-09-29, stessa motivazione di 'id' sopra): targetRole 'username' sull'estremo User, label vuoto. |
 | BuildingManagement | `User "1" --> "*" Building : owner` | owner | ruolo | User | User è il/la owner di Building | Nome di ruolo esplicitamente dato come esempio dall'utente: descrive cosa E' lo User per quel Building. |
 | BuildingManagement | `User "1" --> "*" Building : author` | author | ruolo | User | User è il/la author di Building | Come 'owner': relazione distinta (Building ha sia un owner sia un author, entrambi User ma ruoli diversi). |
 | BuildingManagement | `Building "1" --> "1" Image : profilePicture` | profilePicture | ruolo | Image | Image è il/la profilePicture di Building | Descrive cosa E' l'Image per quel Building (la sua immagine profilo). |
@@ -69,11 +67,11 @@ Categorie: **associazione** (verbo/descrizione del legame, resta in `label`), **
 | HelpingHands | `Route "0..1" - "0..*" Item : pickupRoute` | pickupRoute | ruolo | Route | Route è il/la pickupRoute di Item | Coincide (parzialmente) col nome della classe source: 'Item.pickupRoute -> la Route'. |
 | HelpingHands | `Route "0..*" -- "0..*" SecondHandArticle : dropOffRoute` | dropOffRoute | ruolo | Route | Route è il/la dropOffRoute di SecondHandArticle | Come sopra, relazione distinta (route di consegna anziche' di ritiro). |
 | HotelBookingManagementSystem | `SpecialOffer "*" -- "1" BookingInfo : specialOffers` | specialOffers | ruolo | SpecialOffer | SpecialOffer è il/la specialOffers di BookingInfo | Coincide col nome della classe source (plurale). |
-| HotelBookingManagementSystem | `BookingInfo "0..5" -- "*" SpecialOffer : bestOffers` | bestOffers | ruolo | SpecialOffer | SpecialOffer è il/la bestOffers di BookingInfo | Coincide (parzialmente) col nome della classe target: le offerte migliori. |
+| HotelBookingManagementSystem | `BookingInfo "*" -- "0..5" SpecialOffer : bestOffers` | bestOffers | ruolo | SpecialOffer | SpecialOffer è il/la bestOffers di BookingInfo | Coincide (parzialmente) col nome della classe target: le offerte migliori. |
 | Louvre | `Employee "1" -- "0..*" Exhibition : Coordinator` | Coordinator | ruolo | Employee | Employee è il/la Coordinator di Exhibition | Descrive cosa E' quell'Employee per quella Exhibition. |
 | Louvre | `Exhibition "0..*" -- "0..1" Location : AssignedLocation` | AssignedLocation | ruolo | Location | Location è il/la AssignedLocation di Exhibition | Coincide (parzialmente) col nome della classe target. |
 | Louvre | `Location "0..*" -- "0..*" Room : RoomLocationAssignment` | RoomLocationAssignment | associazione | — | — | Decisione utente (2026-09-27): nome dell'associazione (non un ruolo di una delle due classi), nonostante concateni entrambi i nomi di classe. Resta in 'label'. |
-| Louvre | `Employee "0..*" -- "0..1" Employee : hasCoach >` | hasCoach > | associazione | — | — | Frase verbale ('ha un coach'); il simbolo finale '>' e' un marcatore di verso di lettura di PlantUML, non parte del testo semantico. |
+| Louvre | `Employee "0..*" -- "0..1" Employee : hasCoach >` | hasCoach | ruolo | Employee | Employee è il/la coach di Employee | RICLASSIFICATO (2026-09-29, decisione utente): auto-relazione Employee-Employee — senza un ruolo esplicito i due estremi non si distinguono. Ruolo 'coach' (il sostantivo, non la frase verbale 'hasCoach' usata come etichetta) sull'estremo con molteplicita' 0..1 (il dipendente che fa da coach, presente 0 o 1 volta), posizione 'target' nella riga PlantUML (il simbolo finale '>', gia' rimosso dall'etichetta da apollon_convert.py::strip_reading_direction, era solo un marcatore di verso di lettura, non parte del nome). |
 | Musicmatic | `Song <\|-- Hit : {total; disjoint}` | {total; disjoint} | vincolo | — | — | Vincolo UML su generalizzazione. |
 | Musicmatic | `BusinessUser --\|> User : {total; overlap}` | {total; overlap} | vincolo | — | — | Vincolo UML su generalizzazione. |
 | Musicmatic | `RegularUser "1"--"*" Album : compose` | compose | associazione | — | — | Verbo. |
@@ -125,19 +123,17 @@ Categorie: **associazione** (verbo/descrizione del legame, resta in `label`), **
 | TruckLogistics | `Assignment "0..1" --> "*" Driver : executes` | executes | associazione | — | — | Verbo. |
 | TruckLogistics | `Assignment "*" --> "1" Location : from` | from | ruolo | Location | Location è il/la from di Assignment | Nome di ruolo classico (preposizione sostantivata): l'origine. |
 | TruckLogistics | `Assignment "*" --> "1" Location : to` | to | ruolo | Location | Location è il/la to di Assignment | Come 'from': la destinazione (relazione distinta). |
-| TruckLogistics | `Driver "1..*" --> "*" Vehicle : driver` | driver | ruolo | Driver | Driver è il/la driver di Vehicle | Coincide col nome della classe source: 'Vehicle.driver -> il Driver che lo guida'. |
-| TruckLogistics | `Vehicle "0..1" --> "*" Driver : driver` | driver | ruolo | Driver | Driver è il/la driver di Vehicle | Coincide col nome della classe target in questa riga (relazione inversa rispetto alla precedente). |
 | TruckLogistics | `Vehicle "1" --> "1" VehicleStatus : status` | status | ruolo | VehicleStatus | VehicleStatus è il/la status di Vehicle | Coincide (parzialmente) col nome della classe target. |
-| University | `Employee "1" -- "0..1" Faculty : leads >` | leads > | associazione | — | — | Frase verbale ('guida'); '>' e' un marcatore di verso di lettura di PlantUML. |
-| University | `Lecturer "1..*" -- "1..*" Course : teaches >` | teaches > | associazione | — | — | Frase verbale ('insegna'); '>' e' un marcatore di verso di lettura. |
+| University | `Employee "1" -- "0..1" Faculty : leads >` | leads | associazione | — | — | Frase verbale ('guida'); il simbolo '>' che seguiva l'etichetta nel sorgente e' un marcatore di verso di lettura di PlantUML, non parte del testo — rimosso da apollon_convert.py::strip_reading_direction (2026-09-29), quindi anche dalla chiave di classificazione qui. |
+| University | `Lecturer "1..*" -- "1..*" Course : teaches >` | teaches | associazione | — | — | Frase verbale ('insegna'); stessa nota sul marcatore '>' sopra. |
 | CourseManagement | `Course "0..*" -- "1..*" Teacher : Preallocation` | Preallocation | associazione | — | — | Nome di associazione (sostantivo che descrive il legame nel suo complesso), non un ruolo di una delle due classi. |
 | CourseManagement | `Teacher "1..2" -- "0..*" Lesson : Allocation` | Allocation | associazione | — | — | Come 'Preallocation': nome dell'associazione. |
 | CourseManagement | `Course "1..*" -- "1..*" Participant : Enrolled` | Enrolled | associazione | — | — | Come 'Preallocation'/'Allocation' nello stesso esercizio: nome dell'associazione, non un ruolo. |
 
 ## Totali
-- Etichette originali nel PlantUML sorgente: 126 (1 delle quali, TileOGame `connections/tiles`, sdoppiata in 2 righe di ruolo distinte — 127 righe totali in tabella)
-- associazione: 31
-- ruolo: 87
+- Etichette originali nel PlantUML sorgente: 122 (1 delle quali, TileOGame `connections/tiles`, sdoppiata in 2 righe di ruolo distinte — 123 righe totali in tabella)
+- associazione: 28
+- ruolo: 88
 - vincolo: 7
-- qualificatore: 2
+- qualificatore: 0
 - dubbio: 0

@@ -410,7 +410,7 @@
         "sourceMultiplicity": "0..*",
         "targetMultiplicity": "0..1",
         "sourceRole": "",
-        "targetRole": ""
+        "targetRole": "homeAirport"
       }
     },
     {
@@ -432,7 +432,7 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
+        "sourceMultiplicity": "1",
         "targetMultiplicity": "0..*",
         "sourceRole": "",
         "targetRole": ""
@@ -507,7 +507,7 @@
           }
         ],
         "label": "",
-        "sourceMultiplicity": "0..1",
+        "sourceMultiplicity": "1",
         "targetMultiplicity": "0..*",
         "sourceRole": "",
         "targetRole": ""

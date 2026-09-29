@@ -40,3 +40,34 @@
     PassengerPlane–SeatCategory (0..1 lato PassengerPlane) e' stata
     valutata e RESPINTA (decisione utente, STOP 2 punto b): il testo non
     lo dice esplicitamente, resta invariata.
+
+# --- Chiarimenti di modellazione (2026-09-29) ---
+# Categoria distinta dalle correzioni di errore sopra — vedi docs/decisions.md,
+# voce 2026-09-29 (introdotta col caso Boeing).
+- type: set_role
+  category: chiarimento_modellazione
+  class_a: Airplane
+  class_b: Airport
+  roles:
+    - endpoint_mult: "0..1"
+      role: homeAirport
+  reason: >-
+    CHIARIMENTO DI MODELLAZIONE: description.md, "Each aircraft can have a
+    home airport" — il ruolo "homeAirport" sull'estremo Airport (0..1, gia'
+    opzionale, coerente con "can have") non era esplicitato nel diagramma.
+- type: replace_line
+  category: chiarimento_modellazione
+  match: 'Airplane "0..1"-"0..*" FlightExecution'
+  replacement: 'Airplane "1"-"0..*" FlightExecution'
+  reason: >-
+    CHIARIMENTO DI MODELLAZIONE: description.md, "An aircraft performs
+    several flights" — ogni FlightExecution e' sempre eseguita da
+    esattamente un aereo (mai zero), quindi lato Airplane e' 1, non 0..1.
+- type: replace_line
+  category: chiarimento_modellazione
+  match: 'Flight "0..1"--"0..*" FlightExecution'
+  replacement: 'Flight "1"--"0..*" FlightExecution'
+  reason: >-
+    CHIARIMENTO DI MODELLAZIONE: description.md, "An aircraft performs
+    several flights, the flight number and date of which are stored" — ogni
+    FlightExecution appartiene sempre a esattamente un Flight, non 0..1.

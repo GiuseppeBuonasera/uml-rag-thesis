@@ -246,6 +246,21 @@ def split_mult_role(raw: str) -> tuple[str, str]:
     return parts[0], ""
 
 
+def strip_reading_direction(label: str) -> str:
+    """Rimuove un marcatore di verso di lettura PlantUML (' >' o ' <' finale,
+    '< '/'> ' iniziale) da un'etichetta di relazione — 2026-09-29, casi reali:
+    Louvre 'hasCoach >', University 'leads >'/'teaches >'. Il simbolo indica
+    solo in che verso leggere l'etichetta (es. 'A -- B : verb >' si legge
+    "A verb B"), non fa parte del nome — senza questa pulizia finiva
+    letteralmente nel JSON finale (label/ruolo con un '>' appeso)."""
+    label = label.strip()
+    if label.endswith((" >", " <")):
+        return label[:-2].rstrip()
+    if label.startswith(("< ", "> ")):
+        return label[2:].lstrip()
+    return label
+
+
 # --- Parsing del PlantUML (invariato: agnostico rispetto al formato di output) ---
 
 
@@ -405,7 +420,7 @@ def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[
                     "target_mult": tgt_mult,
                     "target_role": tgt_role,
                     "target": tgt,
-                    "label": (label or "").strip(),
+                    "label": strip_reading_direction(label or ""),
                     "raw": line,
                 }
             )
@@ -630,6 +645,11 @@ def apply_label_classification(
             continue
 
         tipo = entry["tipo"]
+        # "qualificatore" e' una categoria riservata ma attualmente inutilizzata
+        # (0 voci in label_classification.json dal 2026-09-29: gli unici 2 casi,
+        # BuildingManagement id/username, sono stati riclassificati come "ruolo" —
+        # non serviva una lettura UML cosi' specifica). Tenuta qui, non rimossa,
+        # per un futuro caso reale che non si presti alla stessa lettura.
         if tipo in ("associazione", "qualificatore", "vincolo"):
             continue
         if tipo == "ruolo":

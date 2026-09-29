@@ -246,7 +246,7 @@
   ],
   "edges": [
     {
-      "id": "72ad1521-2b29-5c24-a5c8-a74f71405a63",
+      "id": "9072942c-3866-50f1-9a74-a10e6daaead2",
       "source": "a38e8570-e835-5b11-a691-7b37bad162f1",
       "target": "1e8a15ca-aac0-5ba9-a100-89d540a62931",
       "type": "ClassBidirectional",
@@ -263,7 +263,7 @@
             "y": 75.0
           }
         ],
-        "label": "leads >",
+        "label": "leads",
         "sourceMultiplicity": "1",
         "targetMultiplicity": "0..1",
         "sourceRole": "",
@@ -396,7 +396,7 @@
       }
     },
     {
-      "id": "c299592f-1c76-53a9-bb11-fe25b99f77b8",
+      "id": "6acb80bd-ccbb-5b39-8c72-7fad7dbc4d7d",
       "source": "f4a87db9-6b94-5455-8fdb-638cb373f256",
       "target": "40abfb8d-6c77-5478-8cfb-267a4502968d",
       "type": "ClassBidirectional",
@@ -413,7 +413,7 @@
             "y": 325.0
           }
         ],
-        "label": "teaches >",
+        "label": "teaches",
         "sourceMultiplicity": "1..*",
         "targetMultiplicity": "1..*",
         "sourceRole": "",

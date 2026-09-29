@@ -13,12 +13,16 @@ qualificatore, dubbio}.
   automaticamente da corpus/apollon_convert.py::extract_generalization_constraints
   nel campo "constraints" di corpus.jsonl, mai lasciato nell'edge (decisione utente,
   STOP 1).
-- "qualificatore": (BuildingManagement id/username, decisione utente STOP 1) un
-  nome che nel diagramma UML originale e' verosimilmente un "qualifier" (attributo
-  che discrimina l'accesso lungo l'associazione, es. WebPortal[id] -> Entry) — un
-  costrutto UML che Apollon non supporta affatto (nessun campo dedicato nello
-  schema/nell'editor). Restano in "label" per mancanza di un posto migliore dove
-  metterli, non perche' siano un nome di associazione vero e proprio.
+- "qualificatore": categoria RISERVATA MA ATTUALMENTE INUTILIZZATA (0 voci,
+  dal 2026-09-29) — usata fino ad allora per BuildingManagement id/username,
+  letti come un "qualifier" UML (attributo che discrimina l'accesso lungo
+  l'associazione, es. WebPortal[id] -> Entry). Riclassificati come "ruolo"
+  (decisione utente, 2026-09-29): non serviva una lettura UML cosi'
+  specifica — "id"/"username" sono semplicemente il nome della proprieta' di
+  navigazione, stessa convenzione di "profilePicture"/"wheel", quindi vanno
+  in sourceRole/targetRole come ogni altro ruolo. La categoria resta
+  documentata (non rimossa dal convertitore) per un futuro caso reale di
+  qualifier che non si presti alla stessa lettura.
 - "ruolo" ha una colonna aggiuntiva "lettura": una frase
   "<Classe dell'estremo scelto> e' il/la <ruolo> di <altra classe>", per permettere
   la verifica dell'estremo scelto senza dover rileggere ogni riga PlantUML.
@@ -68,15 +72,22 @@ CLASSIFICATION = {
         "associazione", None, "Come sopra."
     ),
     ("BuildingManagement", "WebPortal", "-->", "Entry", "id"): (
-        "qualificatore", None,
-        "Decisione utente (STOP 1): verosimilmente un qualificatore UML "
-        "(WebPortal[id] -> Entry), non un nome di associazione ne' di ruolo. "
-        "Apollon non supporta i qualificatori (nessun campo dedicato in schema o "
-        "editor): resta in 'label' per mancanza di un posto migliore, segnalato qui "
-        "e in docs/decisions.md come limite noto del formato."
+        "ruolo", "target",
+        "RICLASSIFICATO (2026-09-29, decisione utente — categoria "
+        "'qualificatore' abbandonata, era una lettura UML non necessaria): "
+        "'id' non e' un qualificatore, e' il nome della proprieta' di "
+        "navigazione (stessa convenzione di 'profilePicture', 'wheel', ecc. "
+        "— nomi comuni, non frasi verbali) — targetRole 'id' sull'estremo "
+        "Entry, label vuoto. Storico: NON piu' spostato su Building (quella "
+        "correzione 'chiarimento_modellazione' e' stata annullata, "
+        "BuildingManagement resta fedele all'originale, vedi docs/decisions.md) "
+        "— il limite (Entry non ha mai un ID esplicito in description.md, "
+        "solo Building) resta annotato ma non corretto."
     ),
     ("BuildingManagement", "WebPortal", "-->", "User", "username"): (
-        "qualificatore", None, "Come 'id' sopra."
+        "ruolo", "target",
+        "RICLASSIFICATO (2026-09-29, stessa motivazione di 'id' sopra): "
+        "targetRole 'username' sull'estremo User, label vuoto."
     ),
     ("BuildingManagement", "User", "-->", "Building", "owner"): (
         "ruolo", "User",
@@ -232,10 +243,17 @@ CLASSIFICATION = {
         "delle due classi), nonostante concateni entrambi i nomi di classe. Resta in "
         "'label'."
     ),
-    ("Louvre", "Employee", "--", "Employee", "hasCoach >"): (
-        "associazione", None,
-        "Frase verbale ('ha un coach'); il simbolo finale '>' e' un marcatore di "
-        "verso di lettura di PlantUML, non parte del testo semantico."
+    ("Louvre", "Employee", "--", "Employee", "hasCoach"): (
+        "ruolo", {"estremo": "target", "testo": "coach"},
+        "RICLASSIFICATO (2026-09-29, decisione utente): auto-relazione "
+        "Employee-Employee — senza un ruolo esplicito i due estremi non si "
+        "distinguono. Ruolo 'coach' (il sostantivo, non la frase verbale "
+        "'hasCoach' usata come etichetta) sull'estremo con molteplicita' "
+        "0..1 (il dipendente che fa da coach, presente 0 o 1 volta), "
+        "posizione 'target' nella riga PlantUML (il simbolo finale '>', "
+        "gia' rimosso dall'etichetta da "
+        "apollon_convert.py::strip_reading_direction, era solo un "
+        "marcatore di verso di lettura, non parte del nome)."
     ),
     ("Musicmatic", "Song", "<|--", "Hit", "{total; disjoint}"): ("vincolo", None, "Vincolo UML su generalizzazione."),
     ("Musicmatic", "BusinessUser", "--|>", "User", "{total; overlap}"): ("vincolo", None, "Vincolo UML su generalizzazione."),
@@ -374,11 +392,16 @@ CLASSIFICATION = {
     ("TruckLogistics", "Vehicle", "-->", "VehicleStatus", "status"): (
         "ruolo", "VehicleStatus", "Coincide (parzialmente) col nome della classe target."
     ),
-    ("University", "Employee", "--", "Faculty", "leads >"): (
-        "associazione", None, "Frase verbale ('guida'); '>' e' un marcatore di verso di lettura di PlantUML."
+    ("University", "Employee", "--", "Faculty", "leads"): (
+        "associazione", None,
+        "Frase verbale ('guida'); il simbolo '>' che seguiva l'etichetta nel "
+        "sorgente e' un marcatore di verso di lettura di PlantUML, non parte "
+        "del testo — rimosso da apollon_convert.py::strip_reading_direction "
+        "(2026-09-29), quindi anche dalla chiave di classificazione qui."
     ),
-    ("University", "Lecturer", "--", "Course", "teaches >"): (
-        "associazione", None, "Frase verbale ('insegna'); '>' e' un marcatore di verso di lettura."
+    ("University", "Lecturer", "--", "Course", "teaches"): (
+        "associazione", None,
+        "Frase verbale ('insegna'); stessa nota sul marcatore '>' sopra."
     ),
     ("CourseManagement", "Course", "--", "Teacher", "Preallocation"): (
         "associazione", None, "Nome di associazione (sostantivo che descrive il legame nel suo complesso), non un ruolo di una delle due classi."
@@ -492,10 +515,19 @@ def main() -> None:
         else:
             counts[classification] += 1
             if classification == "ruolo":
-                entry["estremo"] = resolve_position(endpoint_or_list, src, tgt)
-                entry["testo"] = label
-                endpoint_str = resolve_endpoint_name(endpoint_or_list, src, tgt)
-                lettura = lettura_ruolo(endpoint_or_list, label, src, tgt)
+                # normalmente il testo del ruolo e' l'etichetta stessa (endpoint_or_list
+                # e' solo l'estremo, una stringa); un dict {"estremo","testo"} permette
+                # un testo diverso dall'etichetta originale — caso Louvre 'hasCoach' ->
+                # ruolo 'coach' (2026-09-29): il nome del ruolo e' il sostantivo, non la
+                # frase verbale usata come etichetta della relazione.
+                if isinstance(endpoint_or_list, dict):
+                    estremo_raw, ruolo_testo = endpoint_or_list["estremo"], endpoint_or_list["testo"]
+                else:
+                    estremo_raw, ruolo_testo = endpoint_or_list, label
+                entry["estremo"] = resolve_position(estremo_raw, src, tgt)
+                entry["testo"] = ruolo_testo
+                endpoint_str = resolve_endpoint_name(estremo_raw, src, tgt)
+                lettura = lettura_ruolo(estremo_raw, ruolo_testo, src, tgt)
             else:
                 endpoint_str, lettura = "—", "—"
             md_lines.append(

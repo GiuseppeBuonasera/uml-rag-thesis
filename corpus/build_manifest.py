@@ -26,6 +26,12 @@ delle correzioni effettivamente applicate (con motivazione) finisce nel campo
 "corrections_applied" del record, per tracciabilita' — vuoto se l'esercizio
 non ha un file corrections/<id>.yaml.
 
+Esclusioni di paragrafi da description.md (2026-09-29, vedi docs/decisions.md
+e corpus/clean_description.py): stesso principio, ma sul testo di
+description.md invece che su plantuml.txt — dichiarate in
+corpus/description_exclusions/<id>.yaml, tracciate nel campo
+"description_exclusions_applied".
+
 Il diagramma target finale è Apollon JSON (vedi docs/decisions.md): questo script
 scrive solo il PlantUML originale (diagram_apollon_json resta a None). La conversione
 in Apollon JSON è un passo successivo, vedi corpus/apollon_convert.py — va eseguito
@@ -41,6 +47,7 @@ import json
 from pathlib import Path
 
 import apply_corrections as ac_corr
+import clean_description as cd
 
 RAW_DIRS = [
     # Rinominata da "models" a "models_original" (2026-09-25, cambio fatto
@@ -94,6 +101,9 @@ def build_record(model_dir: Path) -> dict:
     corrections = ac_corr.load_corrections(model_dir.name)
     plantuml, corrections_applied = ac_corr.apply_corrections(model_dir.name, plantuml, corrections)
 
+    exclusions = cd.load_exclusions(model_dir.name)
+    description, description_exclusions_applied = cd.apply_exclusions(model_dir.name, description, exclusions)
+
     return {
         "id": model_dir.name,
         "name": metadata.get("name") or model_dir.name,
@@ -105,6 +115,7 @@ def build_record(model_dir: Path) -> dict:
         "tags": tags,
         "translated": "translated_it" in tags,
         "description": description,
+        "description_exclusions_applied": description_exclusions_applied,
         "n_requirements": count_requirements(description),
         "diagram_format": "plantuml",
         "diagram_plantuml": plantuml,
@@ -173,6 +184,10 @@ def verify(records: list[dict]) -> None:
     n_corrections = sum(len(r["corrections_applied"]) for r in records)
     corrected_ids = sorted(r["id"] for r in records if r["corrections_applied"])
     print(f"Correzioni di contenuto applicate (corpus/corrections/*.yaml): {n_corrections} su {corrected_ids}")
+
+    n_exclusions = sum(len(r["description_exclusions_applied"]) for r in records)
+    excluded_ids = sorted(r["id"] for r in records if r["description_exclusions_applied"])
+    print(f"Paragrafi esclusi da description.md (corpus/description_exclusions/*.yaml): {n_exclusions} su {excluded_ids}")
 
 
 if __name__ == "__main__":

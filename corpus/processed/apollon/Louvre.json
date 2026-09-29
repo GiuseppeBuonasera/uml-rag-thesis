@@ -318,7 +318,7 @@
       }
     },
     {
-      "id": "7fde3cf0-9ad2-536b-93f4-a32cbfb23d2a",
+      "id": "dd6f3e06-fcf1-5689-ad9d-62c4434a7b07",
       "source": "b5c1c28d-2234-5959-a5ef-eeda6800935f",
       "target": "b5c1c28d-2234-5959-a5ef-eeda6800935f",
       "type": "ClassBidirectional",
@@ -335,11 +335,11 @@
             "y": 395.0
           }
         ],
-        "label": "hasCoach >",
+        "label": "",
         "sourceMultiplicity": "0..*",
         "targetMultiplicity": "0..1",
         "sourceRole": "",
-        "targetRole": ""
+        "targetRole": "coach"
       }
     }
   ],

@@ -192,7 +192,7 @@
       }
     },
     {
-      "id": "5b0232de-0dde-5f6e-8b04-49d63c40bcd0",
+      "id": "46746d2e-6944-54df-8d33-bf5b92c8d891",
       "source": "52338840-f56d-55b8-b9cf-e012cd34a6e2",
       "target": "4a1ee006-a512-5d37-890b-0541949ef416",
       "type": "ClassBidirectional",
@@ -209,18 +209,18 @@
             "y": 120.0
           }
         ],
-        "label": "part of",
+        "label": "",
         "sourceMultiplicity": "0..1",
-        "targetMultiplicity": "0..1",
+        "targetMultiplicity": "1",
         "sourceRole": "",
         "targetRole": ""
       }
     },
     {
-      "id": "c886d918-c1d5-5153-8aa7-1f8fd81acd2e",
+      "id": "0d0c4d7f-2f3b-5600-a0d4-97d2bd30de27",
       "source": "4a1ee006-a512-5d37-890b-0541949ef416",
       "target": "2eee8327-b3bf-54f1-8284-e10a5d0fad52",
-      "type": "ClassBidirectional",
+      "type": "ClassComposition",
       "sourceHandle": "left",
       "targetHandle": "right",
       "data": {
@@ -234,7 +234,7 @@
             "y": 310.0
           }
         ],
-        "label": "part of",
+        "label": "",
         "sourceMultiplicity": "0..*",
         "targetMultiplicity": "1",
         "sourceRole": "",
@@ -312,8 +312,8 @@
         "label": "",
         "sourceMultiplicity": "0..1",
         "targetMultiplicity": "0..*",
-        "sourceRole": "",
-        "targetRole": ""
+        "sourceRole": "mother",
+        "targetRole": "daughter"
       }
     }
   ],

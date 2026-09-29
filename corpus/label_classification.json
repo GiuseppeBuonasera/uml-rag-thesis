@@ -40,28 +40,14 @@
     "testo": "Co-pilot"
   },
   {
-    "esercizio": "Boeing",
-    "source": "Airplane",
-    "op": "--",
-    "target": "Acquisition",
-    "label": "part of",
-    "tipo": "associazione"
-  },
-  {
-    "esercizio": "Boeing",
-    "source": "Acquisition",
-    "op": "--",
-    "target": "Contract",
-    "label": "part of",
-    "tipo": "associazione"
-  },
-  {
     "esercizio": "BuildingManagement",
     "source": "WebPortal",
     "op": "-->",
     "target": "Entry",
     "label": "id",
-    "tipo": "qualificatore"
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "id"
   },
   {
     "esercizio": "BuildingManagement",
@@ -69,7 +55,9 @@
     "op": "-->",
     "target": "User",
     "label": "username",
-    "tipo": "qualificatore"
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "username"
   },
   {
     "esercizio": "BuildingManagement",
@@ -626,8 +614,10 @@
     "source": "Employee",
     "op": "--",
     "target": "Employee",
-    "label": "hasCoach >",
-    "tipo": "associazione"
+    "label": "hasCoach",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "coach"
   },
   {
     "esercizio": "Musicmatic",
@@ -1119,26 +1109,6 @@
   },
   {
     "esercizio": "TruckLogistics",
-    "source": "Driver",
-    "op": "-->",
-    "target": "Vehicle",
-    "label": "driver",
-    "tipo": "ruolo",
-    "estremo": "source",
-    "testo": "driver"
-  },
-  {
-    "esercizio": "TruckLogistics",
-    "source": "Vehicle",
-    "op": "-->",
-    "target": "Driver",
-    "label": "driver",
-    "tipo": "ruolo",
-    "estremo": "target",
-    "testo": "driver"
-  },
-  {
-    "esercizio": "TruckLogistics",
     "source": "Vehicle",
     "op": "-->",
     "target": "VehicleStatus",
@@ -1152,7 +1122,7 @@
     "source": "Employee",
     "op": "--",
     "target": "Faculty",
-    "label": "leads >",
+    "label": "leads",
     "tipo": "associazione"
   },
   {
@@ -1160,7 +1130,7 @@
     "source": "Lecturer",
     "op": "--",
     "target": "Course",
-    "label": "teaches >",
+    "label": "teaches",
     "tipo": "associazione"
   },
   {
