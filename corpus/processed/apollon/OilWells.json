@@ -1,0 +1,307 @@
+{
+  "version": "4.2.0",
+  "id": "OilWells",
+  "title": "OilWells",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "073f878c-ed48-528e-8bc6-34ad32e5446f",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Well",
+        "attributes": [
+          {
+            "id": "84d572eb-721c-591a-bc96-26573d21cdde",
+            "name": "+ code : string"
+          }
+        ],
+        "methods": [
+          {
+            "id": "3984c9e1-2cb8-5b17-a402-d8cb28c9801c",
+            "name": "+ Pollution() : int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "d907dcb1-dcb4-5344-be89-fec0b93ae3da",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Company",
+        "attributes": [
+          {
+            "id": "09e4e78c-1972-580c-85ca-305cf3a5e936",
+            "name": "+ taxCode : string"
+          },
+          {
+            "id": "d4ecc125-e64e-5809-9e12-ffa00157526d",
+            "name": "+ numberOfEmployees : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "66253cd4-46cb-5342-a656-84d4fe91168e",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Extraction",
+        "attributes": [
+          {
+            "id": "3af64c8d-7661-575c-b2f4-e61b9c6f7f30",
+            "name": "+ quantity : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "948f56dc-e486-5dc0-9516-5337247a2c17",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "OnshoreWell",
+        "attributes": [
+          {
+            "id": "b8de3cb9-a45b-5bb9-8d13-6677ace57c6b",
+            "name": "+ area : int"
+          }
+        ],
+        "methods": [
+          {
+            "id": "54e49136-b2d2-5bc1-9575-f248cc798526",
+            "name": "+ Pollution() : int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "c0ffde1a-1d20-511f-9f80-2c495f545a51",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "OffshoreWell",
+        "attributes": [
+          {
+            "id": "9b447266-63d9-5ebc-afea-47a8da172a3e",
+            "name": "+ year : int"
+          }
+        ],
+        "methods": [
+          {
+            "id": "37e4dbf5-a1c4-55f9-84cc-3aa46e314936",
+            "name": "+ Pollution() : int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "f4b853ef-9dd9-55cc-8a30-77f841e71a86",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Area",
+        "attributes": [
+          {
+            "id": "07931684-5dea-579b-977d-8dfd346cc521",
+            "name": "+ code : string"
+          },
+          {
+            "id": "0828acde-5a46-5f03-a3c7-4642665d95a6",
+            "name": "+ importance : int"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "8773548f-0b78-5e50-be32-ed8ca0def9e4",
+      "source": "948f56dc-e486-5dc0-9516-5337247a2c17",
+      "target": "073f878c-ed48-528e-8bc6-34ad32e5446f",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 200
+          },
+          {
+            "x": 150.0,
+            "y": 140
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c12755b7-f7f0-5450-a346-f5f23ad19e3a",
+      "source": "c0ffde1a-1d20-511f-9f80-2c495f545a51",
+      "target": "073f878c-ed48-528e-8bc6-34ad32e5446f",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 250.0
+          },
+          {
+            "x": 260,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "71bea6a0-2622-5b03-b228-6c203f870663",
+      "source": "c0ffde1a-1d20-511f-9f80-2c495f545a51",
+      "target": "f4b853ef-9dd9-55cc-8a30-77f841e71a86",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 250.0
+          },
+          {
+            "x": 600,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..1",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": "location"
+      }
+    },
+    {
+      "id": "22769046-d245-590e-b34e-a586b18b16d0",
+      "source": "073f878c-ed48-528e-8bc6-34ad32e5446f",
+      "target": "66253cd4-46cb-5342-a656-84d4fe91168e",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 600,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d9b69012-a0a6-5b15-955b-8ed6129cbc3a",
+      "source": "66253cd4-46cb-5342-a656-84d4fe91168e",
+      "target": "d907dcb1-dcb4-5344-be89-fec0b93ae3da",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 75.0
+          },
+          {
+            "x": 540,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

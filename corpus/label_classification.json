@@ -1134,6 +1134,64 @@
     "tipo": "associazione"
   },
   {
+    "esercizio": "ApartmentBuilding",
+    "source": "Apartment",
+    "op": "--",
+    "target": "Person",
+    "label": "isOwnedBy",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Bookmaker",
+    "source": "Bet",
+    "op": "-->",
+    "target": "Race",
+    "label": "race",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "race"
+  },
+  {
+    "esercizio": "Bookmaker",
+    "source": "Bet",
+    "op": "-->",
+    "target": "Runner",
+    "label": "runner",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "runner"
+  },
+  {
+    "esercizio": "Bookmaker",
+    "source": "Race",
+    "op": "-->",
+    "target": "Runner",
+    "label": "winner",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "winner"
+  },
+  {
+    "esercizio": "Bookmaker",
+    "source": "Runner",
+    "op": "-->",
+    "target": "Jockey",
+    "label": "jockey",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "jockey"
+  },
+  {
+    "esercizio": "Bookmaker",
+    "source": "Runner",
+    "op": "-->",
+    "target": "Horse",
+    "label": "horse",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "horse"
+  },
+  {
     "esercizio": "CourseManagement",
     "source": "Course",
     "op": "--",
@@ -1155,6 +1213,240 @@
     "op": "--",
     "target": "Participant",
     "label": "Enrolled",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "EatAtHome",
+    "source": "Customer",
+    "op": "--",
+    "target": "Order",
+    "label": "makes",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "EatAtHome",
+    "source": "Order",
+    "op": "--",
+    "target": "Dish",
+    "label": "contains",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "EatAtHome",
+    "source": "Dish",
+    "op": "--",
+    "target": "Ingredient",
+    "label": "contains",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ElevatorControl",
+    "source": "ElevatorController",
+    "op": "..>",
+    "target": "Elevator",
+    "label": "controls",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ElevatorControl",
+    "source": "ElevatorController",
+    "op": "..>",
+    "target": "Door",
+    "label": "controls",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ElevatorControl",
+    "source": "ElevatorController",
+    "op": "--",
+    "target": "Button",
+    "label": "communicates",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Gym",
+    "source": "Subscription",
+    "op": "--",
+    "target": "Service",
+    "label": "AdditionalServices",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "AdditionalServices"
+  },
+  {
+    "esercizio": "Gym",
+    "source": "Subscription",
+    "op": "--",
+    "target": "Service",
+    "label": "BaseServices",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "BaseServices"
+  },
+  {
+    "esercizio": "MilanLibrary",
+    "source": "Library",
+    "op": "--",
+    "target": "ItemTransferRequest",
+    "label": "request destination",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "request destination"
+  },
+  {
+    "esercizio": "MilanLibrary",
+    "source": "Library",
+    "op": "--",
+    "target": "ItemTransferRequest",
+    "label": "request source",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "request source"
+  },
+  {
+    "esercizio": "MilanLibrary",
+    "source": "Library",
+    "op": "o--",
+    "target": "User",
+    "label": "Has",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "OilWells",
+    "source": "OnshoreWell",
+    "op": "--|>",
+    "target": "Well",
+    "label": "{disjoint, complete}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "OilWells",
+    "source": "OffshoreWell",
+    "op": "--|>",
+    "target": "Well",
+    "label": "{disjoint, complete}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "OilWells",
+    "source": "OffshoreWell",
+    "op": "--",
+    "target": "Area",
+    "label": "location",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "location"
+  },
+  {
+    "esercizio": "RepairShops",
+    "source": "RepairShop",
+    "op": "--",
+    "target": "Employee",
+    "label": "WorksAt",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "RepairShops",
+    "source": "RepairShop",
+    "op": "--",
+    "target": "Director",
+    "label": "manages",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "RepairShops",
+    "source": "RepairShop",
+    "op": "--",
+    "target": "Repair",
+    "label": "performs",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "RepairShops",
+    "source": "Vehicle",
+    "op": "--",
+    "target": "Owner",
+    "label": "belongsTo",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ResearchCenter",
+    "source": "Researcher",
+    "op": "--",
+    "target": "Area",
+    "label": "Belongs to",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ResearchCenter",
+    "source": "SeniorResearcher",
+    "op": "--",
+    "target": "Team",
+    "label": "Leads",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "ResearchCenter",
+    "source": "Team",
+    "op": "--",
+    "target": "Project",
+    "label": "Carries out",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Restaurant",
+    "source": "Customer",
+    "op": "--",
+    "target": "Assignment",
+    "label": "books",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Restaurant",
+    "source": "Assignment",
+    "op": "--",
+    "target": "Table",
+    "label": "includes",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "Restaurant",
+    "source": "Assignment",
+    "op": "--",
+    "target": "Waiter",
+    "label": "serves",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "UniversityExams",
+    "source": "Student",
+    "op": "--",
+    "target": "Place",
+    "label": "Student_born_in",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "UniversityExams",
+    "source": "Professor",
+    "op": "--",
+    "target": "Place",
+    "label": "Prof_born_in",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "UniversityExams",
+    "source": "Faculty",
+    "op": "--",
+    "target": "Course",
+    "label": "BelongsTo",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "UniversityExams",
+    "source": "Professor",
+    "op": "--",
+    "target": "Course",
+    "label": "Teaches",
     "tipo": "associazione"
   }
 ]

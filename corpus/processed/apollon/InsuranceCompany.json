@@ -1,0 +1,359 @@
+{
+  "version": "4.2.0",
+  "id": "InsuranceCompany",
+  "title": "InsuranceCompany",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "8300ac8b-a986-5081-b6eb-928a6cec698f",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Customer",
+        "attributes": [
+          {
+            "id": "0df960e4-f7d2-577d-8ec5-643c4d241a7b",
+            "name": "+ name : string"
+          },
+          {
+            "id": "11ab10e6-c623-516d-844b-b87473787361",
+            "name": "+ dateOfBirth : date"
+          },
+          {
+            "id": "0b789d7a-5704-5859-850b-7fdda4ca78c3",
+            "name": "+ address : string"
+          },
+          {
+            "id": "f9306697-749c-5b35-b48c-4ad7b3530ccf",
+            "name": "+ taxCode : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "39123a74-3d08-5141-bb0a-5fcc9831a118",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Contract",
+        "attributes": [
+          {
+            "id": "d1d80c18-9cff-512b-a69e-d88fd0f363b9",
+            "name": "+ number : int"
+          },
+          {
+            "id": "2673aef3-fffe-5ca8-887f-6acdcc4a3632",
+            "name": "+ signingDate : date"
+          },
+          {
+            "id": "59520fdd-9f10-5e9f-b45a-8a19a557315c",
+            "name": "+ insuredAmount"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "151a7c30-92d2-513d-a185-8370ea186ffd",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Company",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "3fb4ac59-fc4c-55bf-b798-187ffe5c33fd",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Policy",
+        "attributes": [
+          {
+            "id": "572afdee-bbb6-5618-b1b7-e6a795cf758f",
+            "name": "+ text : string"
+          }
+        ],
+        "methods": [],
+        "isAbstract": true
+      }
+    },
+    {
+      "id": "257794bb-d45f-5c9a-843c-a4c9f18ba90d",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Life",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "032f6a52-3624-5858-aaa6-cf32fabe2868",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "CarLiability",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "79bee9f5-da29-548e-b530-0faa21b6ce09",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 390
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Theft",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "3382fce5-bb94-5708-8c88-694efecd1896",
+      "source": "8300ac8b-a986-5081-b6eb-928a6cec698f",
+      "target": "39123a74-3d08-5141-bb0a-5fcc9831a118",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 120.0
+          },
+          {
+            "x": 320,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f408bcd0-9826-5054-bf28-06b69ea0f9ab",
+      "source": "151a7c30-92d2-513d-a185-8370ea186ffd",
+      "target": "39123a74-3d08-5141-bb0a-5fcc9831a118",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 540,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9fb6aa1b-7016-5c66-90c5-e259f936c579",
+      "source": "3fb4ac59-fc4c-55bf-b798-187ffe5c33fd",
+      "target": "151a7c30-92d2-513d-a185-8370ea186ffd",
+      "type": "ClassAggregation",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9305b6ae-99f7-50db-8fde-a947532d0c36",
+      "source": "39123a74-3d08-5141-bb0a-5fcc9831a118",
+      "target": "3fb4ac59-fc4c-55bf-b798-187ffe5c33fd",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 105.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "462b554c-6c3c-5edf-986c-7c684e84087e",
+      "source": "257794bb-d45f-5c9a-843c-a4c9f18ba90d",
+      "target": "3fb4ac59-fc4c-55bf-b798-187ffe5c33fd",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 280.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "9c576c31-97bb-5f6b-b2b8-f2343cf056c2",
+      "source": "032f6a52-3624-5858-aaa6-cf32fabe2868",
+      "target": "3fb4ac59-fc4c-55bf-b798-187ffe5c33fd",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 280.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1f9569b9-3689-5dc0-9220-1cf67ec515ad",
+      "source": "79bee9f5-da29-548e-b530-0faa21b6ce09",
+      "target": "3fb4ac59-fc4c-55bf-b798-187ffe5c33fd",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 390
+          },
+          {
+            "x": 150.0,
+            "y": 330
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

@@ -12,7 +12,8 @@ Controlli:
 3. ogni nome di classe/attributo/etichetta di plantuml.txt compare nel
    glossario come valore di traduzione (o e' un tipo primitivo esente);
 4. nessun termine italiano residuo (parola intera) in description.md o
-   plantuml.txt;
+   plantuml.txt — esclusi gli omografi inglese/italiano in ENGLISH_HOMOGRAPHS
+   (es. "serve"), che non sono residui di traduzione;
 5. nessun termine italiano residuo nel JSON Apollon compilato
    (corpus/processed/apollon/<id>.json) — non solo in plantuml.txt: un bug
    nella conversione potrebbe introdurre un residuo che il solo controllo 4
@@ -43,8 +44,12 @@ PRIMITIVE_TYPES = {
 
 
 def load_glossary(folder: Path) -> dict[str, str]:
-    raw = json.loads((folder / "glossary.json").read_text(encoding="utf-8"))
-    return {k: v for k, v in raw.items() if not k.startswith("_")}
+    """Glossario condiviso (corpus/raw/translated_it/glossary_shared.json) +
+    locale, uniti da apply_glossary.load_merged_glossary (fallisce se lo stesso
+    termine ha traduzioni diverse tra i due file) — non filtrato per
+    identificatore: qui serve anche per le frasi libere (controllo residuo
+    italiano)."""
+    return ag.load_merged_glossary(folder)
 
 
 def identifier_terms_from_parse(classes: dict, relationships: list[dict]) -> set[str]:
@@ -166,9 +171,21 @@ def check_structural_correspondence(classes_it, rels_it, classes_en, rels_en, gl
     return problems
 
 
+# Parole che sono chiavi italiane del glossario ma anche parole inglesi valide e
+# comuni (omografi): la loro presenza in un testo inglese NON indica un residuo di
+# traduzione, quindi sono escluse dai controlli 4 e 5. Aggiunte solo caso per caso,
+# con l'esercizio che le ha fatte emergere (regola utente 2026-09-30: mai modificare
+# i dati per far passare un controllo — si corregge il controllo).
+ENGLISH_HOMOGRAPHS = {
+    "serve",  # Restaurant (IT "serve" = EN "serves"; "who serve customers" e' inglese corretto)
+}
+
+
 def italian_terms_in_text(label: str, text: str, it_only_terms: list[str]) -> list[str]:
     problems = []
     for term in it_only_terms:
+        if term.lower() in ENGLISH_HOMOGRAPHS:
+            continue
         if re.search(r"\b" + re.escape(term) + r"\b", text):
             problems.append(f"{label}: termine italiano residuo '{term}'")
     return problems

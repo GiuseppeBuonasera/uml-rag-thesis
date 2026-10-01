@@ -1,0 +1,6 @@
+# Correzioni Gruppo B (2026-09-30, approvate dall'utente).
+- type: rename_token
+  category: correzione_errore
+  from: sting
+  to: string
+  reason: "refuso nell'immagine (Cliente.nome: sting)"

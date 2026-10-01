@@ -8,7 +8,9 @@ pipeline, non da una rilettura indipendente dell'immagine.
 
 Una riga per ogni relazione: classe A (IT ed EN), classe B (IT ed EN), tipo
 (associazione / aggregazione / composizione / generalizzazione / dipendenza),
-molteplicita' lato A, molteplicita' lato B, ruoli, etichetta. In fondo: numero
+molteplicita' lato A, molteplicita' lato B, ruolo estremo A, ruolo estremo B
+(colonne sempre presenti, "—" se vuote, cosi' l'assenza di un nome di ruolo e'
+visibile in revisione — richiesta utente 2026-10-01), etichetta. In fondo: numero
 totale di classi e di relazioni. I nomi EN sono ottenuti applicando
 glossary.json (apply_glossary.apply_glossary), non riparsando plantuml.txt —
 la corrispondenza IT/EN esatta e' gia' verificata da check_translated.py.
@@ -39,19 +41,14 @@ TYPE_LABELS = {
 }
 
 
-def relation_row(r: dict, glossary: dict[str, str]) -> tuple[str, str, str, str, str, str, str, str, str]:
+def relation_row(r: dict, glossary: dict[str, str]) -> tuple[str, str, str, str, str, str, str, str, str, str]:
     """(classeA_it, classeA_en, classeB_it, classeB_en, tipo, molt.A, molt.B,
-    ruoli, etichetta) — A e B nello stesso ordine source/target del PlantUML
+    ruolo estremo A, ruolo estremo B, etichetta) — A e B nello stesso ordine source/target del PlantUML
     originale, NON riordinati secondo la convenzione source/target di Apollon
     (quella e' interna alla conversione, qui si riporta la relazione cosi'
     com'e' scritta in plantuml_it.txt)."""
     edge_type, _swapped, _no_label_no_mult = ac.relationship_kind(r["op"])
     tipo = TYPE_LABELS.get(edge_type, edge_type)
-    ruoli = []
-    if r.get("source_role"):
-        ruoli.append(f"A={r['source_role']}")
-    if r.get("target_role"):
-        ruoli.append(f"B={r['target_role']}")
     return (
         r["source"],
         ag.apply_glossary(r["source"], glossary),
@@ -60,7 +57,8 @@ def relation_row(r: dict, glossary: dict[str, str]) -> tuple[str, str, str, str,
         tipo,
         r["source_mult"] or "—",
         r["target_mult"] or "—",
-        ", ".join(ruoli) if ruoli else "—",
+        r.get("source_role") or "—",
+        r.get("target_role") or "—",
         r["label"] or "—",
     )
 
@@ -76,7 +74,7 @@ def main() -> None:
     if not glossary_path.exists():
         raise SystemExit(f"non trovato: {glossary_path}")
 
-    glossary = ag.load_term_glossary(glossary_path)
+    glossary = ag.load_term_glossary(folder)
     text = it_path.read_text(encoding="utf-8")
     classes, relationships, warnings, unsupported = ac.parse_plantuml(text)
     if unsupported:
@@ -93,21 +91,21 @@ def main() -> None:
         f"{sum(1 for r in relationships if r['kind']=='assoc_class')} classi associative). "
         "Nomi EN da glossary.json.",
         "",
-        "| Classe A (IT) | Classe A (EN) | Classe B (IT) | Classe B (EN) | Tipo | Molt. A | Molt. B | Ruoli | Etichetta |",
-        "|---|---|---|---|---|---|---|---|---|",
+        "| Classe A (IT) | Classe A (EN) | Classe B (IT) | Classe B (EN) | Tipo | Molt. A | Molt. B | Ruolo estremo A | Ruolo estremo B | Etichetta |",
+        "|---|---|---|---|---|---|---|---|---|---|",
     ]
 
     for r in relationships:
         if r["kind"] == "binary":
-            a_it, a_en, b_it, b_en, tipo, ma, mb, ruoli, etichetta = relation_row(r, glossary)
-            lines.append(f"| {a_it} | {a_en} | {b_it} | {b_en} | {tipo} | {ma} | {mb} | {ruoli} | {etichetta} |")
+            a_it, a_en, b_it, b_en, tipo, ma, mb, ra, rb, etichetta = relation_row(r, glossary)
+            lines.append(f"| {a_it} | {a_en} | {b_it} | {b_en} | {tipo} | {ma} | {mb} | {ra} | {rb} | {etichetta} |")
         elif r["kind"] == "assoc_class":
             assoc_en = ag.apply_glossary(r["assoc"], glossary)
             a_en = ag.apply_glossary(r["a"], glossary)
             b_en = ag.apply_glossary(r["b"], glossary)
             lines.append(
                 f"| {r['assoc']} | {assoc_en} | {r['a']}, {r['b']} | {a_en}, {b_en} | classe associativa "
-                f"| — | — | — | approssimata con 2 associazioni semplici (vedi apollon_conversion_warnings) |"
+                f"| — | — | — | — | approssimata con 2 associazioni semplici (vedi apollon_conversion_warnings) |"
             )
 
     if warnings:

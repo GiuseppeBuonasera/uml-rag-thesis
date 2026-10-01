@@ -2,7 +2,7 @@
 
 Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa: la prima sezione confronta il PlantUML VERAMENTE originale (`corpus/raw/`) col PlantUML corretto (`corpus.jsonl.diagram_plantuml`, dopo `corpus/corrections/<id>.yaml`); tutte le altre confrontano il PlantUML corretto col JSON Apollon finale, prodotte da `corpus/apollon_convert.py`.
 
-## Correzioni di contenuto — errori (corpus/corrections/<id>.yaml) (25)
+## Correzioni di contenuto — errori (corpus/corrections/<id>.yaml) (31)
 
 - **AirTravel** — [correzione_errore] rename_token: 'Nmae' -> 'Name' (refuso di 'Name' nell'attributo Employee.Nmae.)
 - **AirTravel** — [correzione_errore] rename_token: 'Enterainment' -> 'Entertainment' (refuso di 'Entertainment' nell'attributo SeatCategory.Enterainment — description.md: "whether or not it offers an entertainment program".)
@@ -29,8 +29,14 @@ Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa:
 - **TruckLogistics** — [correzione_errore] remove_line: 'Driver "1..*" --> "*" Vehicle : driver' rimossa (duplicato/incompatibile con l'altra relazione Vehicle-Driver etichettata "driver" — le due insieme non corrispondono a description.md ("vehicles are assigned up to one driver who drives these vehicles"), sostituite da un'unica relazione (vedi replace_line sotto).)
 - **TruckLogistics** — [correzione_errore] replace_line: 'Vehicle "0..1" --> "*" Driver : driver' -> 'Vehicle "*" -- "0..1 driver" Driver' (unica relazione Vehicle-Driver rimasta: molteplicita' 0..1 spostata sul lato Driver (non piu' sul lato Vehicle, che ora e' '*') e ruolo "driver" sull'estremo Driver, tramite la sintassi '"molteplicita' ruolo"' gia' in uso per gli esercizi tradotti (vedi apollon_convert.py::split_mult_role) — non serve una nuova voce in label_classification.json perche' non c'e' piu' un ': label' testuale. description.md: "vehicles are assigned up to one driver who drives these vehicles" -> 0..1 sul lato Driver, per veicolo.)
 - **University** — [correzione_errore] rename_token: 'ResearchAssociate' -> 'ResearchAssistant' (description.md usa sempre "research assistant (RA)", mai "associate" — la classe nel PlantUML sorgente era denominata ResearchAssociate in modo coerente in tutte le occorrenze ma in contrasto col testo.)
+- **Bookmaker** — [correzione_errore] replace_line: 'acceptBet(sc : Bettor, s : Bet..' -> 'acceptBet(sc : Bettor, s : Bet)' (nome troncato nell'immagine: il parametro s e' completato con il tipo Bet (classe presente nel diagramma); tipo di ritorno non visibile, omesso.)
+- **RealEstateAgency** — [correzione_errore] rename_token: 'kay' -> 'key' (refuso nell'immagine (parametro di Contains, 4 occorrenze))
+- **RepairShops** — [correzione_errore] replace_line: '-phoneNumbers : string{1..*}' -> '-phoneNumbers : string[]' (attributo multi-valore ({1..*} nell'immagine): notazione 'tipo[]' gia' approvata per gli attributi multi-valore; senza correzione la molteplicita' finiva solo nei warning.)
+- **Restaurant** — [correzione_errore] rename_token: 'sting' -> 'string' (refuso nell'immagine (Cliente.nome: sting))
+- **UniversityExams** — [correzione_errore] replace_line: 'dateOfBirth: d..' -> 'dateOfBirth: date' (tipo troncato nell'immagine ('d...'): completato con date, come Studente.dataNascita)
+- **UniversityExams** — [correzione_errore] rename_token: 'sttring' -> 'string' (refuso nell'immagine (Facolta.nome: sttring))
 
-## Chiarimenti di modellazione (corpus/corrections/<id>.yaml) (8)
+## Chiarimenti di modellazione (corpus/corrections/<id>.yaml) (10)
 
 - **AirTravel** — [chiarimento_modellazione] set_role: (Airplane, Airport) ruoli [{'endpoint_mult': '0..1', 'role': 'homeAirport'}] (CHIARIMENTO DI MODELLAZIONE: description.md, "Each aircraft can have a home airport" — il ruolo "homeAirport" sull'estremo Airport (0..1, gia' opzionale, coerente con "can have") non era esplicitato nel diagramma.)
 - **AirTravel** — [chiarimento_modellazione] replace_line: 'Airplane "0..1"-"0..*" FlightExecution' -> 'Airplane "1"-"0..*" FlightExecution' (CHIARIMENTO DI MODELLAZIONE: description.md, "An aircraft performs several flights" — ogni FlightExecution e' sempre eseguita da esattamente un aereo (mai zero), quindi lato Airplane e' 1, non 0..1.)
@@ -40,6 +46,8 @@ Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa:
 - **Boeing** — [chiarimento_modellazione] remove_label: (Airplane, Acquisition) label 'part of' -> '' (CHIARIMENTO DI MODELLAZIONE: l'aereo non e' "parte di" l'acquisizione — description.md non descrive qui un rapporto whole-part, solo "Each acquisition of an airplane has further specific details" (l'acquisizione HA dei dettagli sull'aereo, non lo contiene). L'etichetta "part of" era fuorviante (duplicava semanticamente quella tra Acquisition e Contract); rimossa senza cambiare il tipo di relazione, che resta un'associazione semplice.)
 - **Boeing** — [chiarimento_modellazione] replace_line: 'Airplane "0..1" -- "0..1" Acquisition' -> 'Airplane "0..1" -- "1" Acquisition' (CHIARIMENTO DI MODELLAZIONE: description.md, "they are only built on demand, meaning that first a sales agreement is made with a customer, before the airplane is actually built" — ogni aereo esiste solo in seguito a un'acquisizione, quindi lato Acquisition e' 1 (obbligatoria), non 0..1. (Il caso "demo versions... out of scope" descritto nel testo e' esplicitamente fuori scope, non modellato.))
 - **Boeing** — [chiarimento_modellazione] set_role: (Airline, Airline) ruoli [{'endpoint_mult': '0..1', 'role': 'mother'}, {'endpoint_mult': '0..*', 'role': 'daughter'}] (CHIARIMENTO DI MODELLAZIONE: description.md, "main airlines often have a low cost daughter airline company. Boeing therefore keep track... of the mother-daughter relationships between airline companies" — auto- relazione Airline-Airline, ruolo per estremo individuato dalla molteplicita' attuale (0..1=mother, 0..*=daughter) perche' il nome classe non puo' disambiguare i due estremi di un'auto-relazione (stesso principio delle 3 auto-relazioni gia' risolte in label_classification.json, vedi docs/decisions.md 2026-09-28).)
+- **EatAtHome** — [chiarimento_modellazione] replace_line: 'status : enum{placed, in preparation, in delivery, delivered, canceled}' -> '  status : OrderStatus' (enum inline non rappresentabile in Apollon: convenzione 'enum inline -> enumerazione separata <Classe><Attributo>'.)
+- **EatAtHome** — [chiarimento_modellazione] add_block: dichiarazione 'OrderStatus' aggiunta (enumerazione separata OrderStatus con i valori originali dell'enum inline di Order.status.)
 
 ## Normalizzazione tipi primitivi negli attributi (430)
 
@@ -487,7 +495,7 @@ Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa:
 
 _Nessuna occorrenza._
 
-## Classificazione etichette -> ruolo (sourceRole/targetRole, label svuotato) (88)
+## Classificazione etichette -> ruolo (sourceRole/targetRole, label svuotato) (98)
 
 - **AirTravel** — `Airport "1"--"0..*" Flight : Source`: label 'Source' -> ruolo su estremo
 - **AirTravel** — `Airport "1"--"0..*" Flight : Destination`: label 'Destination' -> ruolo su estremo
@@ -577,8 +585,18 @@ _Nessuna occorrenza._
 - **TruckLogistics** — `Assignment "*" --> "1" Location : from`: label 'from' -> ruolo su estremo
 - **TruckLogistics** — `Assignment "*" --> "1" Location : to`: label 'to' -> ruolo su estremo
 - **TruckLogistics** — `Vehicle "1" --> "1" VehicleStatus : status`: label 'status' -> ruolo su estremo
+- **Bookmaker** — `Bet --> Race : race`: label 'race' -> ruolo su estremo
+- **Bookmaker** — `Bet --> Runner : runner`: label 'runner' -> ruolo su estremo
+- **Bookmaker** — `Race --> Runner : winner`: label 'winner' -> ruolo su estremo
+- **Bookmaker** — `Runner --> Jockey : jockey`: label 'jockey' -> ruolo su estremo
+- **Bookmaker** — `Runner --> Horse : horse`: label 'horse' -> ruolo su estremo
+- **Gym** — `Subscription "1..*" -- "0..*" Service : AdditionalServices`: label 'AdditionalServices' -> ruolo su estremo
+- **Gym** — `Subscription "1..*" -- "1..*" Service : BaseServices`: label 'BaseServices' -> ruolo su estremo
+- **MilanLibrary** — `Library "1" -- "0..*" ItemTransferRequest : request destination`: label 'request destination' -> ruolo su estremo
+- **MilanLibrary** — `Library "1" -- "0..*" ItemTransferRequest : request source`: label 'request source' -> ruolo su estremo
+- **OilWells** — `OffshoreWell "0..1" -- "0..1" Area : location`: label 'location' -> ruolo su estremo
 
-## Reificazione classe associativa (21)
+## Reificazione classe associativa (28)
 
 - **AirTravel** — classe associativa 'Ticket' su FlightExecution-Passenger: sostituita da FlightExecution--Ticket e Ticket--Passenger (molteplicita' derivate)
 - **AlphaInsurance** — classe associativa 'Report' su ClaimCase-Estimator: sostituita da ClaimCase--Report e Report--Estimator (molteplicita' derivate)
@@ -601,8 +619,15 @@ _Nessuna occorrenza._
 - **StudentAppointment** — classe associativa 'TeachingAssistant' su Course-Assistant: sostituita da Course--TeachingAssistant e TeachingAssistant--Assistant (molteplicita' derivate)
 - **TreatmentPlans** — classe associativa 'AdvisedExaminationType' su TreatmentPlan-ExaminationType: sostituita da TreatmentPlan--AdvisedExaminationType e AdvisedExaminationType--ExaminationType (molteplicita' derivate)
 - **University** — classe associativa 'Participation' su ResearchAssistant-Project: sostituita da ResearchAssistant--Participation e Participation--Project (molteplicita' derivate)
+- **Gym** — classe associativa 'WorkoutPlanExercise' su WorkoutPlan-Exercise: sostituita da WorkoutPlan--WorkoutPlanExercise e WorkoutPlanExercise--Exercise (molteplicita' derivate)
+- **Hospital** — classe associativa 'Period' su Department-Admission: sostituita da Department--Period e Period--Admission (molteplicita' derivate)
+- **OilWells** — classe associativa 'Extraction' su Well-Company: sostituita da Well--Extraction e Extraction--Company (molteplicita' derivate)
+- **RepairShops** — classe associativa 'WorksAt' su RepairShop-Employee: sostituita da RepairShop--WorksAt e WorksAt--Employee (molteplicita' derivate)
+- **Restaurant** — classe associativa 'OnBill' su Assignment-Dish: sostituita da Assignment--OnBill e OnBill--Dish (molteplicita' derivate)
+- **UniversityExams** — classe associativa 'EnrolledIn' su Student-Faculty: sostituita da Student--EnrolledIn e EnrolledIn--Faculty (molteplicita' derivate)
+- **UniversityExams** — classe associativa 'Exam' su Student-Course: sostituita da Student--Exam e Exam--Course (molteplicita' derivate)
 
-## Vincoli di generalizzazione estratti (campo 'constraints', mai nell'edge) (7)
+## Vincoli di generalizzazione estratti (campo 'constraints', mai nell'edge) (9)
 
 - **EUScienceConnect** — TechnicalReport extends Article: `{total; disjoint}`
 - **FitnessCompanyConan** — GroupSession extends Session: `{total; disjoint}`
@@ -611,6 +636,8 @@ _Nessuna occorrenza._
 - **Musicmatic** — BusinessUser extends User: `{total; overlap}`
 - **Sober** — RideHailing extends Ride: `{total; disjoint}`
 - **Sober** — SoberCar extends Car: `{total; disjoint}`
+- **OilWells** — OnshoreWell extends Well: `{disjoint, complete}`
+- **OilWells** — OffshoreWell extends Well: `{disjoint, complete}`
 
 ## Modificatori/default di attributi ({static}/{abstract}/{frozen}/const/'=') (6)
 

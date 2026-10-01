@@ -1,0 +1,180 @@
+{
+  "version": "4.2.0",
+  "id": "ApartmentBuilding",
+  "title": "ApartmentBuilding",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "8bc787e0-545a-58e1-aec4-f3a7c42921bd",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Apartment",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "08623216-78ec-569e-9e2a-65ffe86084a5",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Building",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "1a469053-a3c9-5679-9abe-5af73f8181e1",
+            "name": "+ getNumberOfFloors()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "36220855-87fe-57d2-b4ac-14086dd214ba",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 170
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Room",
+        "attributes": [
+          {
+            "id": "17e26abf-01e7-5e55-ac09-03a8c9b8da31",
+            "name": "+ width : float"
+          },
+          {
+            "id": "12083500-35d2-52af-b96b-810b24b6d1d2",
+            "name": "+ length : float"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "364ec70a-4253-5129-9b3e-376e73fd5344",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 170
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "0d773a65-df0f-578f-b060-4c1e2fe57e69",
+      "source": "8bc787e0-545a-58e1-aec4-f3a7c42921bd",
+      "target": "08623216-78ec-569e-9e2a-65ffe86084a5",
+      "type": "ClassComposition",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 60.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "143836a0-59e3-5ce7-aa13-4bad12a6be58",
+      "source": "36220855-87fe-57d2-b4ac-14086dd214ba",
+      "target": "8bc787e0-545a-58e1-aec4-f3a7c42921bd",
+      "type": "ClassComposition",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 170
+          },
+          {
+            "x": 150.0,
+            "y": 80
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a955d8e8-e2bb-5110-9ec7-cd4df44f8936",
+      "source": "8bc787e0-545a-58e1-aec4-f3a7c42921bd",
+      "target": "364ec70a-4253-5129-9b3e-376e73fd5344",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 60.0
+          },
+          {
+            "x": 320,
+            "y": 190.0
+          }
+        ],
+        "label": "isOwnedBy",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

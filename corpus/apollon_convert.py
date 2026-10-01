@@ -182,9 +182,10 @@ def normalize_multiplicity(m: str) -> str:
     diretta o classe associativa reificata)."""
     if not m:
         return m
-    if m == "n":
+    # 'N' maiuscola (es. RealEstateAgency, 2026-09-30) trattata come 'n'
+    if m in ("n", "N"):
         return "*"
-    if m.endswith("..n"):
+    if m.endswith(("..n", "..N")):
         return m[:-1] + "*"
     return m
 
@@ -252,12 +253,20 @@ def strip_reading_direction(label: str) -> str:
     Louvre 'hasCoach >', University 'leads >'/'teaches >'. Il simbolo indica
     solo in che verso leggere l'etichetta (es. 'A -- B : verb >' si legge
     "A verb B"), non fa parte del nome — senza questa pulizia finiva
-    letteralmente nel JSON finale (label/ruolo con un '>' appeso)."""
+    letteralmente nel JSON finale (label/ruolo con un '>' appeso).
+
+    Esteso il 2026-10-01 (es. 11 Officine: '<Lavora', '<dirige', 'effettua>',
+    'appartiene>'): il marcatore puo' essere attaccato alla parola, senza spazio.
+    Doppi '<<'/'>>' (stereotipi) non vengono toccati."""
     label = label.strip()
     if label.endswith((" >", " <")):
         return label[:-2].rstrip()
     if label.startswith(("< ", "> ")):
         return label[2:].lstrip()
+    if len(label) > 1 and label[-1] in "<>" and label[-2] not in "<>-":
+        return label[:-1].rstrip()
+    if len(label) > 1 and label[0] in "<>" and label[1] not in "<>":
+        return label[1:].lstrip()
     return label
 
 
@@ -1110,7 +1119,7 @@ def style_check(diagram: dict, model_id: str) -> list[str]:
                 problems.append(f"{model_id}: edge {e['id']} senza il campo data.{field}")
         for mult_field in ("sourceMultiplicity", "targetMultiplicity"):
             mult = e["data"].get(mult_field, "")
-            if mult == "n" or mult.endswith("..n"):
+            if mult in ("n", "N") or mult.endswith(("..n", "..N")):
                 problems.append(
                     f"{model_id}: edge {e['id']} ha {mult_field}={mult!r}, molteplicita' 'n' non normalizzata a '*'"
                 )

@@ -412,6 +412,63 @@ CLASSIFICATION = {
     ("CourseManagement", "Course", "--", "Participant", "Enrolled"): (
         "associazione", None, "Come 'Preallocation'/'Allocation' nello stesso esercizio: nome dell'associazione, non un ruolo."
     ),
+    # --- Gruppo A traduzione (es. 2-5), proposte APPROVATE dall'utente (2026-09-30), chiavi in inglese ---
+    ("ResearchCenter", "Researcher", "--", "Area", "Belongs to"): (
+        "associazione", None, "Frase verbale ('appartiene a'), non un nome di ruolo."
+    ),
+    ("ResearchCenter", "SeniorResearcher", "--", "Team", "Leads"): (
+        "associazione", None, "Frase verbale ('guida'); 'Guidato da' sull'altro estremo e' solo la forma passiva, scartata in trascrizione."
+    ),
+    ("ResearchCenter", "Team", "--", "Project", "Carries out"): (
+        "associazione", None, "Frase verbale ('svolge')."
+    ),
+    ("MilanLibrary", "Library", "--", "ItemTransferRequest", "request destination"): (
+        "ruolo", "Library",
+        "Approvato dall'utente: ruolo della biblioteca nella richiesta (destinataria), nonostante il testo centrato sulla linea."
+    ),
+    ("MilanLibrary", "Library", "--", "ItemTransferRequest", "request source"): (
+        "ruolo", "Library", "Come 'request destination' (biblioteca mittente)."
+    ),
+    ("MilanLibrary", "Library", "o--", "User", "Has"): (
+        "associazione", None, "Frase verbale ('possiede')."
+    ),
+    ("Bookmaker", "Bet", "-->", "Race", "race"): (
+        "ruolo", "Race", "Nome di campo Java = nome della proprieta' di navigazione (stessa convenzione di profilePicture)."
+    ),
+    ("Bookmaker", "Bet", "-->", "Runner", "runner"): ("ruolo", "Runner", "Come 'race'."),
+    ("Bookmaker", "Race", "-->", "Runner", "winner"): ("ruolo", "Runner", "Come 'race'."),
+    ("Bookmaker", "Runner", "-->", "Jockey", "jockey"): ("ruolo", "Jockey", "Come 'race'."),
+    ("Bookmaker", "Runner", "-->", "Horse", "horse"): ("ruolo", "Horse", "Come 'race'."),
+    # --- Gruppo B traduzione (es. 6-9), APPROVATE dall'utente (2026-09-30): tutte associazione ---
+    ("UniversityExams", "Student", "--", "Place", "Student_born_in"): ("associazione", None, "Nome dell'associazione ('nato a'), centrato sulla linea."),
+    ("UniversityExams", "Professor", "--", "Place", "Prof_born_in"): ("associazione", None, "Come 'Student_born_in'."),
+    ("UniversityExams", "Faculty", "--", "Course", "BelongsTo"): ("associazione", None, "Frase verbale ('< Appartenente'; il '<' e' verso di lettura, rimosso)."),
+    ("UniversityExams", "Professor", "--", "Course", "Teaches"): ("associazione", None, "Frase verbale ('< Insegna')."),
+    ("Restaurant", "Customer", "--", "Assignment", "books"): ("associazione", None, "Verbo ('prenota')."),
+    ("Restaurant", "Assignment", "--", "Table", "includes"): ("associazione", None, "Verbo ('include')."),
+    ("Restaurant", "Assignment", "--", "Waiter", "serves"): ("associazione", None, "Verbo ('serve')."),
+    ("ElevatorControl", "ElevatorController", "..>", "Elevator", "controls"): ("associazione", None, "Verbo ('controlla'), su dipendenza (tratteggiata: verifica visiva dell'autore 2026-10-01, prima trascritta -->)."),
+    ("ElevatorControl", "ElevatorController", "..>", "Door", "controls"): ("associazione", None, "Verbo ('controlla'), su dipendenza."),
+    ("ElevatorControl", "ElevatorController", "--", "Button", "communicates"): ("associazione", None, "Verbo ('comunica'), in corsivo al centro della linea."),
+    # --- Gruppo C traduzione (es. 10-11), APPROVATE dall'utente (2026-10-01) ---
+    ("OilWells", "OnshoreWell", "--|>", "Well", "{disjoint, complete}"): ("vincolo", None, "Vincolo UML sull'insieme di generalizzazione (scritto una volta sul tronco comune)."),
+    ("OilWells", "OffshoreWell", "--|>", "Well", "{disjoint, complete}"): ("vincolo", None, "Come sopra."),
+    ("OilWells", "OffshoreWell", "--", "Area", "location"): (
+        "ruolo", "Area",
+        "Decisione utente: 'luogo' e' un sostantivo -> ruolo sull'estremo Area, anche se scritto al centro della linea (la posizione non conta)."
+    ),
+    ("RepairShops", "RepairShop", "--", "Employee", "WorksAt"): ("associazione", None, "Verbo ('<Lavora'; '<' = verso di lettura)."),
+    ("RepairShops", "RepairShop", "--", "Director", "manages"): ("associazione", None, "Verbo ('<dirige')."),
+    ("RepairShops", "RepairShop", "--", "Repair", "performs"): ("associazione", None, "Verbo ('effettua>')."),
+    ("RepairShops", "Vehicle", "--", "Owner", "belongsTo"): ("associazione", None, "Verbo ('appartiene>')."),
+    # --- Gym (es. 12), APPROVATE dall'utente (2026-10-01) ---
+    ("Gym", "Subscription", "--", "Service", "AdditionalServices"): ("ruolo", "Service", "Sostantivo ('ServiziAggiuntivi'): regola 'sostantivo = ruolo, la posizione non conta'."),
+    ("Gym", "Subscription", "--", "Service", "BaseServices"): ("ruolo", "Service", "Come 'AdditionalServices' ('ServiziBase')."),
+    # --- Gruppo D traduzione (es. 13-15), APPROVATE dall'utente (2026-10-01): tutte associazione ---
+    ("EatAtHome", "Customer", "--", "Order", "makes"): ("associazione", None, "Verbo ('makes ►', diagramma gia' in inglese)."),
+    ("EatAtHome", "Order", "--", "Dish", "contains"): ("associazione", None, "Verbo ('contains ►')."),
+    ("EatAtHome", "Dish", "--", "Ingredient", "contains"): ("associazione", None, "Verbo ('contains ►')."),
+    ("ApartmentBuilding", "Apartment", "--", "Person", "isOwnedBy"): ("associazione", None, "Verbo ('è posseduto'), al centro della linea."),
 }
 
 

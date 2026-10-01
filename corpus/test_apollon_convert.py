@@ -69,6 +69,10 @@ def check_strip_reading_direction() -> None:
     assert ac.strip_reading_direction("leads >") == "leads"
     assert ac.strip_reading_direction("< manages") == "manages"
     assert ac.strip_reading_direction("no arrow here") == "no arrow here"
+    # senza spazio (es. 11 Officine, 2026-10-01); gli stereotipi <<...>> restano invariati
+    assert ac.strip_reading_direction("<Lavora") == "Lavora"
+    assert ac.strip_reading_direction("effettua>") == "effettua"
+    assert ac.strip_reading_direction("<<interface>>") == "<<interface>>"
 
     text = '@startuml\nclass Employee {}\nEmployee "0..*" -- "0..1" Employee : hasCoach >\n@enduml\n'
     classes, relationships, warnings, unsupported = ac.parse_plantuml(text)
@@ -137,11 +141,35 @@ def check_type_normalization() -> None:
 
 
 def check_multiplicity_normalization() -> None:
-    cases = [("n", "*"), ("0..n", "0..*"), ("1..n", "1..*"), ("0..1", "0..1"), ("*", "*"), ("", "")]
+    # "N" maiuscola aggiunta il 2026-09-30 (RealEstateAgency, regola approvata dall'utente)
+    cases = [("n", "*"), ("0..n", "0..*"), ("1..n", "1..*"), ("0..1", "0..1"), ("*", "*"), ("", ""),
+             ("N", "*"), ("0..N", "0..*"), ("1..N", "1..*")]
     for src, expected in cases:
         got = ac.normalize_multiplicity(src)
         assert got == expected, f"normalize_multiplicity({src!r}) = {got!r}, atteso {expected!r}"
     print("  OK  molteplicita' normalizzate (n->*, 0..n->0..*, 1..n->1..*)")
+
+
+def check_shared_type_glossary() -> None:
+    """Regole globali dei tipi non standard nel glossario condiviso (Number->int,
+    Calendar->datetime approvati per MilanLibrary; currency->double approvato per
+    Restaurant, 2026-09-30): applicati da apply_glossary a ogni esercizio tradotto."""
+    from pathlib import Path
+    import apply_glossary as ag
+    folder = Path(__file__).parent / "raw" / "translated_it" / "Restaurant"
+    glossary = ag.load_term_glossary(folder)
+    assert glossary["currency"] == "double" and glossary["Number"] == "int" and glossary["Calendar"] == "datetime"
+    out = ag.normalize_types(ag.apply_glossary("prezzo: currency", glossary))
+    assert out == "price: double", out
+    print("  OK  tipi non standard dal glossario condiviso: currency->double, Number->int, Calendar->datetime")
+
+
+def check_english_homograph_whitelist() -> None:
+    """check_translated: gli omografi inglese/italiano (es. 'serve') non sono residui."""
+    import check_translated as ct
+    assert ct.italian_terms_in_text("t", "waiters who serve customers", ["serve"]) == []
+    assert ct.italian_terms_in_text("t", "il cameriere prenota", ["prenota"]) != []
+    print("  OK  whitelist omografi ('serve') nel controllo residuo italiano; altri termini ancora segnalati")
 
 
 def check_method_normalization() -> None:
@@ -535,10 +563,64 @@ def check_corrections_add_line() -> None:
     print("  OK  add_line: riga aggiunta prima di @enduml; fallisce se gia' presente")
 
 
+def check_corrections_add_block() -> None:
+    """add_block: caso reale EatAtHome — enum inline sostituito da un'enumerazione
+    separata <Classe><Attributo> (OrderStatus) dichiarata su piu' righe."""
+    plantuml = "class Order {\n  status : enum{placed, delivered}\n}\n@enduml\n"
+    block = "enum OrderStatus {\n  placed\n  delivered\n}"
+    ops = [
+        {"type": "replace_line", "match": "status : enum{placed, delivered}",
+         "replacement": "status : OrderStatus", "reason": "r"},
+        {"type": "add_block", "block": block, "reason": "r"},
+    ]
+    corrected, applied = ac_corr.apply_corrections("test-corr", plantuml, ops)
+    classes, rels, _w, unsupported = ac.parse_plantuml(corrected)
+    assert not unsupported and not rels, corrected
+    assert classes["OrderStatus"].kind == "enum", corrected
+    assert [a for a, _t in classes["OrderStatus"].attributes] == ["placed", "delivered"], corrected
+    assert classes["Order"].attributes == [("status", "OrderStatus")], corrected
+    lines = corrected.splitlines()
+    assert lines.index("enum OrderStatus {") < lines.index("@enduml"), corrected
+    assert len(applied) == 2
+
+    # nome gia' dichiarato -> fallisce
+    try:
+        ac_corr.apply_corrections("test-corr", corrected, [{"type": "add_block", "block": block, "reason": "r"}])
+        assert False, "doveva fallire, OrderStatus gia' dichiarata"
+    except ValueError:
+        pass
+    # blocco che non e' una sola dichiarazione -> fallisce
+    for bad in ("enum A {\n  x\n}\nenum B {\n  y\n}", 'A "1" -- "1" B', "enum A {\n  x"):
+        try:
+            ac_corr.apply_corrections("test-corr", plantuml, [{"type": "add_block", "block": bad, "reason": "r"}])
+            assert False, f"doveva fallire: {bad!r}"
+        except ValueError:
+            pass
+    print("  OK  add_block: dichiarazione multi-riga aggiunta prima di @enduml; hard-fail su duplicato/blocco non valido")
+
+
+def check_description_exclusion_mid_line() -> None:
+    """Esclusione a meta' riga (caso InsuranceCompany): niente spazi residui; paragrafo
+    assente -> ValueError."""
+    import clean_description as cd
+    text = "We describe a company.\nWe produce a class diagram. The company issues policies."
+    out, applied = cd.apply_exclusions("test-excl", text, ["We produce a class diagram."])
+    assert out == "We describe a company.\nThe company issues policies.", repr(out)
+    assert len(applied) == 1
+    try:
+        cd.apply_exclusions("test-excl", text, ["frase inesistente"])
+        assert False, "doveva fallire"
+    except ValueError:
+        pass
+    print("  OK  esclusione a meta' riga: nessuno spazio residuo; hard-fail se il testo non c'e'")
+
+
 def main() -> None:
     print("FASE 1 — normalizzazioni automatiche:")
     check_type_normalization()
     check_multiplicity_normalization()
+    check_shared_type_glossary()
+    check_english_homograph_whitelist()
     check_method_normalization()
     check_reification()
     check_reification_missing_base()
@@ -561,6 +643,8 @@ def main() -> None:
     check_corrections_remove_label()
     check_corrections_set_role()
     check_corrections_add_line()
+    check_corrections_add_block()
+    check_description_exclusion_mid_line()
     print()
     print("Marcatore di verso di lettura PlantUML ('>'/'<'):")
     check_strip_reading_direction()

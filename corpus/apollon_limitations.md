@@ -206,6 +206,15 @@ ruolo concettuale preciso.
 |---|---|---|
 | Cruise | `<> diamond` (diamante n-ario nativo PlantUML) | Nessun costrutto Apollon v4 documentato equivalente a un'associazione n-aria — il modello è escluso per intero (`diagram_apollon_json: null`), non approssimato |
 
+## 9. Visibilità di attributi e metodi non conservata (sempre `+`)
+
+(Aggiunto 2026-10-01, decisione utente: limite generale.) `parse_attribute` e
+`parse_method_signature` tolgono il prefisso di visibilità originale (`+ - # ~`) e
+il nome visualizzato in Apollon inizia sempre con `+ `. Nel corpus attuale i
+membri non pubblici sono 25 (tutti `-`, privati) in 4 esercizi: ApartmentBuilding
+(`-getNumeroPiani()`), MilanLibrary, RealEstateAgency, RepairShops. L'informazione
+resta solo in `diagram_plantuml` di `corpus.jsonl`.
+
 ---
 
 ## Tabella riassuntiva
@@ -220,3 +229,4 @@ ruolo concettuale preciso.
 | 6 | Qualificatori → ruolo | 2 | 1 | Riclassificati come ruolo (`sourceRole`/`targetRole`); categoria "qualificatore" riservata ma con 0 voci attive |
 | 7 | Classi implicite (mai dichiarate) | 2 | 2 | Nodo creato senza attributi/metodi (legale in PlantUML, non un errore) |
 | 8 | Esercizi esclusi | 1 modello (1 costrutto) | 1 | Intero modello escluso dalla conversione (`diagram_apollon_json: null`), non approssimato |
+| 9 | Visibilità non pubblica (`-`) | 25 | 4 | Prefisso rimosso, sempre `+ ` nel JSON; conservata solo in `diagram_plantuml` |

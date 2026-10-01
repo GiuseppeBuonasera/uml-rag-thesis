@@ -97,7 +97,7 @@ def main() -> None:
             if r["kind"] != "binary":
                 continue
             for side, mult in (("source", r.get("source_mult")), ("target", r.get("target_mult"))):
-                if mult and (mult == "n" or mult.endswith("..n")):
+                if mult and ac.normalize_multiplicity(mult) != mult:
                     causes[CAUSES[4]].append(
                         f"**{model_id}** — `{r['raw']}` (lato {side}): `{mult}` -> `{ac.normalize_multiplicity(mult)}`"
                     )

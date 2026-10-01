@@ -1,0 +1,556 @@
+{
+  "version": "4.2.0",
+  "id": "Bookmaker",
+  "title": "Bookmaker",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "2a94f581-24bf-5954-b654-0694b6ff7c90",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "90476a23-3188-56f4-92b3-290359f6548b",
+            "name": "+ Person(name : string, surname : string)"
+          },
+          {
+            "id": "8674c3ed-a4a6-5cd0-bcb3-c780a8f5e015",
+            "name": "+ toString() : string"
+          },
+          {
+            "id": "c6aa174e-9fe9-5649-b624-9789e3f3a98d",
+            "name": "+ equals(p : Object) : boolean"
+          },
+          {
+            "id": "a30a5fca-4d83-5599-9408-5f11c7922051",
+            "name": "+ main(args : string[]) : void"
+          }
+        ]
+      }
+    },
+    {
+      "id": "95dd54d3-da69-5060-849e-275bc9c67bef",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 220,
+      "measured": {
+        "width": 220,
+        "height": 220
+      },
+      "data": {
+        "name": "Bookmaker",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "92c7690f-2db5-5142-a539-154e43eb9145",
+            "name": "+ Bookmaker(name : string, surname : string)"
+          },
+          {
+            "id": "b940f547-ce41-5661-8576-44bace0de1d6",
+            "name": "+ addBettor(s : Bettor) : void"
+          },
+          {
+            "id": "d46d2a6e-5891-58a4-8749-57f88af038ae",
+            "name": "+ acceptBet(sc : Bettor, s : Bet)"
+          },
+          {
+            "id": "01581466-a38f-50ab-816a-2cd299f53e5a",
+            "name": "+ totalWinnings() : int"
+          },
+          {
+            "id": "b05298e5-4fcd-540e-93e7-528c9d0cca41",
+            "name": "+ totalLosses() : int"
+          },
+          {
+            "id": "c84eacd1-6cd9-5eae-a01e-a7361fc0fc72",
+            "name": "+ main(args : string[]) : void"
+          }
+        ]
+      }
+    },
+    {
+      "id": "7626e4c8-e1a0-5b16-8293-8d7d23c8c90d",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "Jockey",
+        "attributes": [
+          {
+            "id": "bc9116d9-ca45-5988-a085-12b68fe79f60",
+            "name": "+ weight : float"
+          },
+          {
+            "id": "c5a7f76a-326f-5a56-b9ef-067246dbfea6",
+            "name": "+ height : float"
+          },
+          {
+            "id": "25a2e62d-c408-5c4c-8383-b25ff5981da6",
+            "name": "+ numberOfWins : int"
+          }
+        ],
+        "methods": [
+          {
+            "id": "9c526aa5-1084-50db-97bb-4762be71543d",
+            "name": "+ Jockey(name : string, surname : string, p : float, a : float, n : int)"
+          },
+          {
+            "id": "56d4eeee-430b-54ba-b637-d12b35f5fd9f",
+            "name": "+ equals(f : Object) : boolean"
+          }
+        ]
+      }
+    },
+    {
+      "id": "70f1d709-659c-59ce-9e51-cd2e79fbd5c2",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 320
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "Bettor",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "dda3a9d2-65f0-5649-9d3b-d44861e53749",
+            "name": "+ Bettor(name : string, surname : string)"
+          },
+          {
+            "id": "f0557e1c-fe53-54ae-a689-fa12df2b0b1b",
+            "name": "+ addBet(s : Bet) : void"
+          },
+          {
+            "id": "8610342d-9883-5678-a88f-7f0f0d5b55ab",
+            "name": "+ totalBets() : int"
+          },
+          {
+            "id": "e5f042fb-e423-5e67-bd41-e1a8c38bedd1",
+            "name": "+ totalWinnings() : int"
+          },
+          {
+            "id": "60aa49f4-2f97-5fdb-87a1-348cad05ce14",
+            "name": "+ equals(s : Object) : boolean"
+          }
+        ]
+      }
+    },
+    {
+      "id": "e2b93ad8-4698-5d03-a95c-87183bd290c5",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 320
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Runner",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "6ce76814-b8d7-59db-b01b-bc3b6265278d",
+            "name": "+ Runner(f : Jockey, c : Horse)"
+          },
+          {
+            "id": "b9581041-3cc9-5fb5-9522-3ca1f9c17e59",
+            "name": "+ equals(c : Object) : boolean"
+          }
+        ]
+      }
+    },
+    {
+      "id": "8fb897f9-3e22-576a-a74b-81473c9511bc",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 320
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Bet",
+        "attributes": [
+          {
+            "id": "cad99e04-eb57-52dc-8fb0-15cc5939c0b2",
+            "name": "+ amount : int"
+          },
+          {
+            "id": "08fb680f-fba7-5497-bda7-2fb7cfd29f98",
+            "name": "+ odds : float"
+          }
+        ],
+        "methods": [
+          {
+            "id": "a8bd52e7-0cd2-5412-b597-d1edf2d0f037",
+            "name": "+ Bet(c : Race, runner : Runner, amt : int, odd : int)"
+          },
+          {
+            "id": "944293f0-217c-5793-a3c5-db1bdfa05a69",
+            "name": "+ won() : boolean"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b04ee5b1-c6a1-5ff7-927a-02efeda71942",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 570
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Horse",
+        "attributes": [
+          {
+            "id": "0c5033aa-509e-5cc6-aedf-8d6c2be959e0",
+            "name": "+ weight : float"
+          }
+        ],
+        "methods": [
+          {
+            "id": "b926cf71-bbfe-5331-872c-1d557d388f4d",
+            "name": "+ Horse(n : string, p : float)"
+          },
+          {
+            "id": "59cb5d8b-b153-5005-bf03-14de9fb5f153",
+            "name": "+ equals(c : Object) : boolean"
+          }
+        ]
+      }
+    },
+    {
+      "id": "b93ae25a-8b3f-5d03-98f4-fc52fec75b11",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 570
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Race",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "50b14539-4bdf-5ef1-99e0-dc2f54988e6e",
+            "name": "+ addRunner(c : Runner) : void"
+          },
+          {
+            "id": "03ae09b7-bc8e-5397-89c3-67533a8a18a0",
+            "name": "+ setWinner(v : Runner) : void"
+          },
+          {
+            "id": "66cd3616-0ad5-5fac-b979-42d8f9f31c36",
+            "name": "+ equals(c : Object) : boolean"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "a194f3e6-67a6-5274-b45f-b77584ad3e5c",
+      "source": "95dd54d3-da69-5060-849e-275bc9c67bef",
+      "target": "2a94f581-24bf-5954-b654-0694b6ff7c90",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 150.0
+          },
+          {
+            "x": 260,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "24ffcb60-a74d-58ad-9b72-d2777119a40d",
+      "source": "70f1d709-659c-59ce-9e51-cd2e79fbd5c2",
+      "target": "2a94f581-24bf-5954-b654-0694b6ff7c90",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 320
+          },
+          {
+            "x": 150.0,
+            "y": 200
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "0bc94ac8-daa5-53ee-86df-86a56ab4fdf5",
+      "source": "7626e4c8-e1a0-5b16-8293-8d7d23c8c90d",
+      "target": "2a94f581-24bf-5954-b654-0694b6ff7c90",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 135.0
+          },
+          {
+            "x": 260,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1c404782-5950-502c-aa38-f723d36e9b17",
+      "source": "95dd54d3-da69-5060-849e-275bc9c67bef",
+      "target": "70f1d709-659c-59ce-9e51-cd2e79fbd5c2",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 150.0
+          },
+          {
+            "x": 260,
+            "y": 415.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "89666be6-593d-572c-9dcb-4b7ca5caa6ab",
+      "source": "70f1d709-659c-59ce-9e51-cd2e79fbd5c2",
+      "target": "8fb897f9-3e22-576a-a74b-81473c9511bc",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 415.0
+          },
+          {
+            "x": 600,
+            "y": 400.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b2456805-811c-5d59-a5c3-3e0d3d582ca3",
+      "source": "8fb897f9-3e22-576a-a74b-81473c9511bc",
+      "target": "b93ae25a-8b3f-5d03-98f4-fc52fec75b11",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 400.0
+          },
+          {
+            "x": 540,
+            "y": 635.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": "race"
+      }
+    },
+    {
+      "id": "c4240197-97cf-5ded-8ccf-cfe4f62c0288",
+      "source": "8fb897f9-3e22-576a-a74b-81473c9511bc",
+      "target": "e2b93ad8-4698-5d03-a95c-87183bd290c5",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 400.0
+          },
+          {
+            "x": 540,
+            "y": 370.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": "runner"
+      }
+    },
+    {
+      "id": "252095a2-3bd3-569e-8049-00bee75b0018",
+      "source": "b93ae25a-8b3f-5d03-98f4-fc52fec75b11",
+      "target": "e2b93ad8-4698-5d03-a95c-87183bd290c5",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 570
+          },
+          {
+            "x": 430.0,
+            "y": 420
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": "winner"
+      }
+    },
+    {
+      "id": "f73bef4f-9437-5643-bf5b-dd3810f82216",
+      "source": "e2b93ad8-4698-5d03-a95c-87183bd290c5",
+      "target": "7626e4c8-e1a0-5b16-8293-8d7d23c8c90d",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 370.0
+          },
+          {
+            "x": 600,
+            "y": 135.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": "jockey"
+      }
+    },
+    {
+      "id": "32f0cecf-13ca-50ba-871c-21b0fd9dec9f",
+      "source": "e2b93ad8-4698-5d03-a95c-87183bd290c5",
+      "target": "b04ee5b1-c6a1-5ff7-927a-02efeda71942",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 370.0
+          },
+          {
+            "x": 260,
+            "y": 635.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": "horse"
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

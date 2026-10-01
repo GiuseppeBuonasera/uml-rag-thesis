@@ -9,7 +9,7 @@ modulo: aggiungere una correzione significa scrivere un nuovo file YAML, non
 toccare il codice — stesso principio gia' in uso per
 corpus/label_classification.json.
 
-Sette operazioni supportate, ciascuna con "reason" obbligatorio (motivazione
+Otto operazioni supportate, ciascuna con "reason" obbligatorio (motivazione
 testuale, riportata in corpus.jsonl campo "corrections_applied" per
 tracciabilita'):
 - rename_token: sostituisce un identificatore intero (confine di parola \\b) in
@@ -48,6 +48,14 @@ tracciabilita'):
   Fallisce se la riga e' GIA' presente (stesso principio hard-fail, in
   direzione opposta: un `add_line` che troverebbe la riga gia' li' non e'
   piu' la correzione per cui era stata scritta).
+- add_block (2026-10-01, caso EatAtHome: enum inline 'status : enum{...}' non
+  rappresentabile, sostituito da un'enumerazione separata): aggiunge UNA
+  dichiarazione completa di classe/enum su piu' righe (intestazione, membri,
+  "}"), inserita prima di "@enduml" — add_line non basta perche' aggiunge una
+  sola riga e non puo' inserire un "}" gia' presente altrove. Campo: block
+  (stringa multi-riga). Fallisce se il blocco non e' esattamente una
+  dichiarazione (1 classe/enum, 0 relazioni) o se il nome dichiarato esiste
+  gia' nel diagramma.
 
 Le operazioni change_edge_type/remove_label/set_role ri-analizzano il
 PlantUML corrente (non operano sulla riga grezza data dall'utente) per
@@ -245,6 +253,33 @@ def apply_corrections(model_id: str, plantuml: str, ops: list[dict]) -> tuple[st
             lines.insert(insert_idx, new_rel_line)
             plantuml = "\n".join(lines)
             applied.append(f"[{category}] add_line: {new_rel_line!r} aggiunta ({reason})")
+
+        elif op_type == "add_block":
+            block_lines = [line.rstrip() for line in op["block"].strip().splitlines()]
+            b_classes, b_rels, _w, b_unsupported = ac.parse_plantuml("\n".join(block_lines))
+            declared = [c for c in b_classes.values() if not c.placeholder]
+            if len(declared) != 1 or b_rels or b_unsupported or block_lines[-1].strip() != "}":
+                raise ValueError(
+                    f"{model_id}: correzione 'add_block' fallita — il blocco deve essere esattamente una "
+                    f"dichiarazione di classe/enum chiusa da '}}' (trovate {len(declared)} classi, "
+                    f"{len(b_rels)} relazioni)"
+                )
+            new_name = declared[0].name
+            existing, _r, _w, _u = ac.parse_plantuml(plantuml)
+            if new_name in existing and not existing[new_name].placeholder:
+                raise ValueError(
+                    f"{model_id}: correzione 'add_block' fallita — '{new_name}' gia' dichiarata nel diagramma "
+                    "(il diagramma non e' piu' quello per cui la correzione era stata scritta)"
+                )
+            lines = plantuml.splitlines()
+            insert_idx = len(lines)
+            for i, line in enumerate(lines):
+                if line.strip().lower() == "@enduml":
+                    insert_idx = i
+                    break
+            lines[insert_idx:insert_idx] = block_lines + [""]
+            plantuml = "\n".join(lines)
+            applied.append(f"[{category}] add_block: dichiarazione '{new_name}' aggiunta ({reason})")
 
         else:
             raise ValueError(f"{model_id}: tipo di correzione sconosciuto: {op_type!r}")

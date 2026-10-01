@@ -1,6 +1,6 @@
 # Classificazione delle etichette — associazione, ruolo o vincolo
 
-Generata da `corpus/_generate_label_classification.py` da tutte le 122 etichette non vuote (`: testo`) trovate nelle relazioni binarie dei 45 esercizi convertibili (44 originali + CourseManagement).
+Generata da `corpus/_generate_label_classification.py` da tutte le 156 etichette non vuote (`: testo`) trovate nelle relazioni binarie dei 45 esercizi convertibili (44 originali + CourseManagement).
 
 Categorie: **associazione** (verbo/descrizione del legame, resta in `label`), **ruolo** (nome di come si chiama una classe in quella relazione, va in `sourceRole`/`targetRole` sull'estremo indicato — colonna "Lettura" per verificare l'estremo), **vincolo** (testo di vincolo UML su una generalizzazione, es. `{disjoint,complete}` — non e' un'etichetta di relazione: dal 2026-09-25 estratto automaticamente nel campo `constraints` di corpus.jsonl, mai lasciato nell'edge, vedi `corpus/apollon_convert.py::extract_generalization_constraints`), **qualificatore** (verosimilmente un qualifier UML che Apollon non supporta — resta in `label` per mancanza di un posto migliore), **ruolo_doppio** (caso unico, TileOGame: un'etichetta con DUE nomi di ruolo distinti, uno per estremo — espansa in due righe qui sotto), **dubbio** (nessuna classificazione proposta, in attesa dell'utente).
 
@@ -126,14 +126,48 @@ Categorie: **associazione** (verbo/descrizione del legame, resta in `label`), **
 | TruckLogistics | `Vehicle "1" --> "1" VehicleStatus : status` | status | ruolo | VehicleStatus | VehicleStatus è il/la status di Vehicle | Coincide (parzialmente) col nome della classe target. |
 | University | `Employee "1" -- "0..1" Faculty : leads >` | leads | associazione | — | — | Frase verbale ('guida'); il simbolo '>' che seguiva l'etichetta nel sorgente e' un marcatore di verso di lettura di PlantUML, non parte del testo — rimosso da apollon_convert.py::strip_reading_direction (2026-09-29), quindi anche dalla chiave di classificazione qui. |
 | University | `Lecturer "1..*" -- "1..*" Course : teaches >` | teaches | associazione | — | — | Frase verbale ('insegna'); stessa nota sul marcatore '>' sopra. |
+| ApartmentBuilding | `Apartment "1..*" -- "1..*" Person : isOwnedBy` | isOwnedBy | associazione | — | — | Verbo ('è posseduto'), al centro della linea. |
+| Bookmaker | `Bet --> Race : race` | race | ruolo | Race | Race è il/la race di Bet | Nome di campo Java = nome della proprieta' di navigazione (stessa convenzione di profilePicture). |
+| Bookmaker | `Bet --> Runner : runner` | runner | ruolo | Runner | Runner è il/la runner di Bet | Come 'race'. |
+| Bookmaker | `Race --> Runner : winner` | winner | ruolo | Runner | Runner è il/la winner di Race | Come 'race'. |
+| Bookmaker | `Runner --> Jockey : jockey` | jockey | ruolo | Jockey | Jockey è il/la jockey di Runner | Come 'race'. |
+| Bookmaker | `Runner --> Horse : horse` | horse | ruolo | Horse | Horse è il/la horse di Runner | Come 'race'. |
 | CourseManagement | `Course "0..*" -- "1..*" Teacher : Preallocation` | Preallocation | associazione | — | — | Nome di associazione (sostantivo che descrive il legame nel suo complesso), non un ruolo di una delle due classi. |
 | CourseManagement | `Teacher "1..2" -- "0..*" Lesson : Allocation` | Allocation | associazione | — | — | Come 'Preallocation': nome dell'associazione. |
 | CourseManagement | `Course "1..*" -- "1..*" Participant : Enrolled` | Enrolled | associazione | — | — | Come 'Preallocation'/'Allocation' nello stesso esercizio: nome dell'associazione, non un ruolo. |
+| EatAtHome | `Customer "1" -- "0..*" Order : makes >` | makes | associazione | — | — | Verbo ('makes ►', diagramma gia' in inglese). |
+| EatAtHome | `Order "*" -- "1..*" Dish : contains >` | contains | associazione | — | — | Verbo ('contains ►'). |
+| EatAtHome | `Dish "1" -- "1..*" Ingredient : contains >` | contains | associazione | — | — | Verbo ('contains ►'). |
+| ElevatorControl | `ElevatorController ..> Elevator : controls` | controls | associazione | — | — | Verbo ('controlla'), su dipendenza (tratteggiata: verifica visiva dell'autore 2026-10-01, prima trascritta -->). |
+| ElevatorControl | `ElevatorController ..> Door : controls` | controls | associazione | — | — | Verbo ('controlla'), su dipendenza. |
+| ElevatorControl | `ElevatorController "1" -- "*" Button : communicates` | communicates | associazione | — | — | Verbo ('comunica'), in corsivo al centro della linea. |
+| Gym | `Subscription "1..*" -- "0..*" Service : AdditionalServices` | AdditionalServices | ruolo | Service | Service è il/la AdditionalServices di Subscription | Sostantivo ('ServiziAggiuntivi'): regola 'sostantivo = ruolo, la posizione non conta'. |
+| Gym | `Subscription "1..*" -- "1..*" Service : BaseServices` | BaseServices | ruolo | Service | Service è il/la BaseServices di Subscription | Come 'AdditionalServices' ('ServiziBase'). |
+| MilanLibrary | `Library "1" -- "0..*" ItemTransferRequest : request destination` | request destination | ruolo | Library | Library è il/la request destination di ItemTransferRequest | Approvato dall'utente: ruolo della biblioteca nella richiesta (destinataria), nonostante il testo centrato sulla linea. |
+| MilanLibrary | `Library "1" -- "0..*" ItemTransferRequest : request source` | request source | ruolo | Library | Library è il/la request source di ItemTransferRequest | Come 'request destination' (biblioteca mittente). |
+| MilanLibrary | `Library o-- "1..*" User : Has` | Has | associazione | — | — | Frase verbale ('possiede'). |
+| OilWells | `OnshoreWell --\|> Well : {disjoint, complete}` | {disjoint, complete} | vincolo | — | — | Vincolo UML sull'insieme di generalizzazione (scritto una volta sul tronco comune). |
+| OilWells | `OffshoreWell --\|> Well : {disjoint, complete}` | {disjoint, complete} | vincolo | — | — | Come sopra. |
+| OilWells | `OffshoreWell "0..1" -- "0..1" Area : location` | location | ruolo | Area | Area è il/la location di OffshoreWell | Decisione utente: 'luogo' e' un sostantivo -> ruolo sull'estremo Area, anche se scritto al centro della linea (la posizione non conta). |
+| RepairShops | `RepairShop "1" -- "1..*" Employee : <WorksAt` | WorksAt | associazione | — | — | Verbo ('<Lavora'; '<' = verso di lettura). |
+| RepairShops | `RepairShop "1" -- "1" Director : <manages` | manages | associazione | — | — | Verbo ('<dirige'). |
+| RepairShops | `RepairShop "1" -- "0..*" Repair : performs>` | performs | associazione | — | — | Verbo ('effettua>'). |
+| RepairShops | `Vehicle "1..*" -- "1" Owner : belongsTo>` | belongsTo | associazione | — | — | Verbo ('appartiene>'). |
+| ResearchCenter | `Researcher "1..*" -- "1" Area : Belongs to >` | Belongs to | associazione | — | — | Frase verbale ('appartiene a'), non un nome di ruolo. |
+| ResearchCenter | `SeniorResearcher "1" -- "1" Team : Leads` | Leads | associazione | — | — | Frase verbale ('guida'); 'Guidato da' sull'altro estremo e' solo la forma passiva, scartata in trascrizione. |
+| ResearchCenter | `Team -- Project : Carries out >` | Carries out | associazione | — | — | Frase verbale ('svolge'). |
+| Restaurant | `Customer "1..1" -- "0..*" Assignment : books` | books | associazione | — | — | Verbo ('prenota'). |
+| Restaurant | `Assignment "0..*" -- "1..*" Table : includes` | includes | associazione | — | — | Verbo ('include'). |
+| Restaurant | `Assignment "0..*" -- "0..*" Waiter : serves` | serves | associazione | — | — | Verbo ('serve'). |
+| UniversityExams | `Student -- "1" Place : Student_born_in` | Student_born_in | associazione | — | — | Nome dell'associazione ('nato a'), centrato sulla linea. |
+| UniversityExams | `Professor -- "1" Place : Prof_born_in` | Prof_born_in | associazione | — | — | Come 'Student_born_in'. |
+| UniversityExams | `Faculty "1" -- "1..*" Course : < BelongsTo` | BelongsTo | associazione | — | — | Frase verbale ('< Appartenente'; il '<' e' verso di lettura, rimosso). |
+| UniversityExams | `Professor "1..*" -- Course : < Teaches` | Teaches | associazione | — | — | Frase verbale ('< Insegna'). |
 
 ## Totali
-- Etichette originali nel PlantUML sorgente: 122 (1 delle quali, TileOGame `connections/tiles`, sdoppiata in 2 righe di ruolo distinte — 123 righe totali in tabella)
-- associazione: 28
-- ruolo: 88
-- vincolo: 7
+- Etichette originali nel PlantUML sorgente: 156 (1 delle quali, TileOGame `connections/tiles`, sdoppiata in 2 righe di ruolo distinte — 157 righe totali in tabella)
+- associazione: 50
+- ruolo: 98
+- vincolo: 9
 - qualificatore: 0
 - dubbio: 0

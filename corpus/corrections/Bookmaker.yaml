@@ -1,0 +1,8 @@
+# Correzioni Gruppo A (2026-09-30, decisione utente).
+- type: replace_line
+  category: correzione_errore
+  match: 'acceptBet(sc : Bettor, s : Bet..'
+  replacement: 'acceptBet(sc : Bettor, s : Bet)'
+  reason: >-
+    nome troncato nell'immagine: il parametro s e' completato con il tipo Bet
+    (classe presente nel diagramma); tipo di ritorno non visibile, omesso.

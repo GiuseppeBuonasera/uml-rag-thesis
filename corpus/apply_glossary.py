@@ -27,6 +27,13 @@ plantuml_it.txt. Riusa la stessa tabella di apollon_convert.TYPE_NORMALIZATION
 plantuml.txt (l'artefatto testuale intermedio) e il JSON Apollon finale non
 possono disallinearsi sui tipi normalizzati.
 
+Glossario condiviso (2026-09-29, traduzione esercizi 2-15): i termini comuni a
+piu' esercizi (es. "Corso", "Docente", "Cliente") vivono in
+corpus/raw/translated_it/glossary_shared.json, non ripetuti in ogni
+glossary.json — load_merged_glossary() unisce condiviso + locale, e fallisce
+esplicitamente se lo stesso termine italiano ha una traduzione diversa nei
+due file (deve essere identica in tutto il corpus tradotto).
+
 Uso:
     python corpus/apply_glossary.py <cartella_esercizio>
     (richiede <cartella_esercizio>/plantuml_it.txt e <cartella_esercizio>/glossary.json,
@@ -43,8 +50,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 import apollon_convert as ac
 
-IDENTIFIER_RE = re.compile(r"^\w+$")
+# identificatori singoli oppure frasi di parole separate da spazio singolo (es. etichette
+# di associazione come "Appartiene a") — le frasi libere del glossario non compaiono in
+# plantuml_it.txt, quindi applicarle non ha effetti collaterali.
+IDENTIFIER_RE = re.compile(r"^\w+( \w+)*$")
 QUOTED_RE = re.compile(r'"([^"]*)"')
+SHARED_GLOSSARY_PATH = Path(__file__).parent / "raw" / "translated_it" / "glossary_shared.json"
 
 
 def normalize_multiplicity_token(mult: str) -> str:
@@ -72,9 +83,35 @@ def normalize_types(text: str) -> str:
     return text
 
 
-def load_term_glossary(glossary_path: Path) -> dict[str, str]:
-    raw = json.loads(glossary_path.read_text(encoding="utf-8"))
-    return {k: v for k, v in raw.items() if not k.startswith("_") and IDENTIFIER_RE.match(k)}
+def load_merged_glossary(folder: Path) -> dict[str, str]:
+    """Unisce corpus/raw/translated_it/glossary_shared.json (termini comuni a
+    piu' esercizi) con <folder>/glossary.json (specifico dell'esercizio).
+    Fallisce esplicitamente se lo stesso termine italiano ha una traduzione
+    diversa nei due file — deve essere la stessa in tutto il corpus tradotto
+    (decisione utente, 2026-09-29). Il glossario locale puo' aggiungere nuovi
+    termini, non contraddire quelli condivisi."""
+    merged: dict[str, str] = {}
+    if SHARED_GLOSSARY_PATH.exists():
+        shared_raw = json.loads(SHARED_GLOSSARY_PATH.read_text(encoding="utf-8"))
+        merged.update({k: v for k, v in shared_raw.items() if not k.startswith("_")})
+
+    local_raw = json.loads((folder / "glossary.json").read_text(encoding="utf-8"))
+    for k, v in local_raw.items():
+        if k.startswith("_"):
+            continue
+        if k in merged and merged[k] != v:
+            raise ValueError(
+                f"{folder.name}: termine '{k}' ha traduzioni diverse tra glossario "
+                f"condiviso ('{merged[k]}') e glossario locale ('{v}') — deve essere "
+                "la stessa in tutto il corpus tradotto"
+            )
+        merged[k] = v
+    return merged
+
+
+def load_term_glossary(folder: Path) -> dict[str, str]:
+    merged = load_merged_glossary(folder)
+    return {k: v for k, v in merged.items() if IDENTIFIER_RE.match(k)}
 
 
 def apply_glossary(text: str, glossary: dict[str, str]) -> str:
@@ -99,7 +136,7 @@ def main() -> None:
     if not glossary_path.exists():
         raise SystemExit(f"non trovato: {glossary_path}")
 
-    glossary = load_term_glossary(glossary_path)
+    glossary = load_term_glossary(folder)
     text_it = it_path.read_text(encoding="utf-8")
     text_en = apply_glossary(text_it, glossary)
     text_en = normalize_multiplicities(text_en)

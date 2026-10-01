@@ -1,0 +1,26 @@
+# Correzioni Gruppo D (2026-10-01, approvate dall'utente, opzione a).
+# Nell'immagine Order ha l'enumerazione inline
+#   status : enum{placed, in preparation, in delivery, delivered, canceled}
+# non rappresentabile in Apollon. Convenzione meccanica (decisione utente): enum inline ->
+# enumerazione separata <Classe><Attributo> = OrderStatus, con i valori originali invariati
+# (anche quelli con spazi), e l'attributo tipizzato con la nuova enumerazione.
+# Categoria chiarimento_modellazione: il diagramma non e' sbagliato, cambia solo la notazione.
+- type: replace_line
+  category: chiarimento_modellazione
+  match: 'status : enum{placed, in preparation, in delivery, delivered, canceled}'
+  replacement: '  status : OrderStatus'
+  reason: >-
+    enum inline non rappresentabile in Apollon: convenzione 'enum inline -> enumerazione
+    separata <Classe><Attributo>'.
+- type: add_block
+  category: chiarimento_modellazione
+  block: |
+    enum OrderStatus {
+      placed
+      in preparation
+      in delivery
+      delivered
+      canceled
+    }
+  reason: >-
+    enumerazione separata OrderStatus con i valori originali dell'enum inline di Order.status.

@@ -1,0 +1,11 @@
+# Correzioni Gruppo B (2026-09-30, approvate dall'utente).
+- type: replace_line
+  category: correzione_errore
+  match: 'dateOfBirth: d..'
+  replacement: 'dateOfBirth: date'
+  reason: "tipo troncato nell'immagine ('d...'): completato con date, come Studente.dataNascita"
+- type: rename_token
+  category: correzione_errore
+  from: sttring
+  to: string
+  reason: "refuso nell'immagine (Facolta.nome: sttring)"

@@ -1,0 +1,8 @@
+# Correzioni Gruppo C (2026-10-01, approvate dall'utente).
+- type: replace_line
+  category: correzione_errore
+  match: '-phoneNumbers : string{1..*}'
+  replacement: '-phoneNumbers : string[]'
+  reason: >-
+    attributo multi-valore ({1..*} nell'immagine): notazione 'tipo[]' gia' approvata per gli
+    attributi multi-valore; senza correzione la molteplicita' finiva solo nei warning.

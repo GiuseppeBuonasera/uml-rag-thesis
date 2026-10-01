@@ -1,0 +1,291 @@
+{
+  "version": "4.2.0",
+  "id": "EatAtHome",
+  "title": "EatAtHome",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "fabd3469-4b42-5611-8eee-fee4910e91d2",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "Customer",
+        "attributes": [
+          {
+            "id": "42aad93f-f6bd-5d08-8623-26449a630b26",
+            "name": "+ name : string"
+          },
+          {
+            "id": "5270ac10-7407-56cf-8342-4ef4054e2861",
+            "name": "+ surname : string"
+          },
+          {
+            "id": "63cde611-e1ac-557a-ad31-a0ca7a99fb3c",
+            "name": "+ email : string"
+          },
+          {
+            "id": "f0401293-c5f8-51e0-91c4-9ea4520d5b7c",
+            "name": "+ telephone : string"
+          },
+          {
+            "id": "4db9ea2e-278d-5407-ba46-c1de6c690da6",
+            "name": "+ address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "8f65c78d-a441-556d-82f2-b0cc497afc4e",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "Order",
+        "attributes": [
+          {
+            "id": "b5188c7f-85ce-5c83-ac19-83cb10184708",
+            "name": "+ delivery_time : time"
+          },
+          {
+            "id": "c9ed46fe-ae58-5343-8853-c6d2406a50c7",
+            "name": "+ transport_time : time"
+          },
+          {
+            "id": "7e50f835-e0d6-507d-933c-5da61873c33e",
+            "name": "+ total_cost : double"
+          },
+          {
+            "id": "a6a25607-bb8c-5be4-9ac4-7db1d970b643",
+            "name": "+ kitchen_workload : int"
+          },
+          {
+            "id": "f8a2ce91-174a-531d-bde7-0b8e5b9a8982",
+            "name": "+ status : OrderStatus"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ec77f0f2-dd20-51e8-89d4-3159d1008af3",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 250,
+      "measured": {
+        "width": 220,
+        "height": 250
+      },
+      "data": {
+        "name": "Dish",
+        "attributes": [
+          {
+            "id": "a068b8bd-f455-5957-8eb6-56a61f24d83d",
+            "name": "+ name : string"
+          },
+          {
+            "id": "425b0020-7662-5748-b0c8-48770d8103ee",
+            "name": "+ photo_url : string"
+          },
+          {
+            "id": "9c8f3b91-9dc6-5d83-b077-ed8f34eab45c",
+            "name": "+ preparation_time : time"
+          },
+          {
+            "id": "92dd2a17-be8b-59de-af80-a32496af412b",
+            "name": "+ price : double"
+          },
+          {
+            "id": "bac8caf9-bacb-517b-87f0-a957f6a16242",
+            "name": "+ ingredients : string"
+          },
+          {
+            "id": "2b3b3101-6062-5914-9c7c-e87865a63e93",
+            "name": "+ allergen_information : string"
+          },
+          {
+            "id": "f4f50cab-d5fa-590f-929f-09ee432bc68e",
+            "name": "+ nutritional_information : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "d8788827-829c-5796-828c-81f747a5194a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 350
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Ingredient",
+        "attributes": [
+          {
+            "id": "9b3eeab1-867a-5ab2-a080-14f8a601ed54",
+            "name": "+ name : string"
+          },
+          {
+            "id": "5ee523da-84cd-5411-a79a-5ae4551da51e",
+            "name": "+ quantity : float"
+          },
+          {
+            "id": "66c6e734-cd53-57ff-9c97-de27cec5515f",
+            "name": "+ allergen : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "6f2eb5cc-9e7c-5261-9b2f-eea666f50092",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 350
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "OrderStatus",
+        "attributes": [
+          {
+            "id": "a6931fde-a4ce-5d7b-98f4-dcdf834e9693",
+            "name": "placed"
+          },
+          {
+            "id": "21b81869-fa54-578f-93a5-a8914df3aaf1",
+            "name": "in preparation"
+          },
+          {
+            "id": "a2604a56-f2dd-500d-8826-907ee1e2a4ca",
+            "name": "in delivery"
+          },
+          {
+            "id": "aa5fea03-db90-5d95-b378-f0724a6b449e",
+            "name": "delivered"
+          },
+          {
+            "id": "4bddc409-e191-516e-b966-426fdb866f5b",
+            "name": "canceled"
+          }
+        ],
+        "methods": [],
+        "stereotype": "enumeration"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "9c449a6d-bf05-5d82-a2bb-c4076dd2e638",
+      "source": "fabd3469-4b42-5611-8eee-fee4910e91d2",
+      "target": "8f65c78d-a441-556d-82f2-b0cc497afc4e",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 135.0
+          },
+          {
+            "x": 320,
+            "y": 135.0
+          }
+        ],
+        "label": "makes",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "cef46e01-adcc-53e9-8c2a-5f17fe8a59eb",
+      "source": "8f65c78d-a441-556d-82f2-b0cc497afc4e",
+      "target": "ec77f0f2-dd20-51e8-89d4-3159d1008af3",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 135.0
+          },
+          {
+            "x": 600,
+            "y": 165.0
+          }
+        ],
+        "label": "contains",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "1fb0da44-2747-54c7-a07d-ebc6b19a9dff",
+      "source": "ec77f0f2-dd20-51e8-89d4-3159d1008af3",
+      "target": "d8788827-829c-5796-828c-81f747a5194a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 165.0
+          },
+          {
+            "x": 260,
+            "y": 415.0
+          }
+        ],
+        "label": "contains",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

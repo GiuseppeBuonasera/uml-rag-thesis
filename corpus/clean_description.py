@@ -57,5 +57,9 @@ def apply_exclusions(model_id: str, description: str, paragraphs: list[str]) -> 
     if applied:
         # ripulisce le righe vuote multiple lasciate dalla rimozione del paragrafo
         description = re.sub(r"\n{3,}", "\n\n", description).strip()
+        # un'esclusione a meta' riga (es. InsuranceCompany, 2026-10-01: frasi di consegna
+        # nella stessa riga dei requisiti) lascia spazi doppi o a inizio/fine riga
+        description = re.sub(r"[ \t]{2,}", " ", description)
+        description = re.sub(r"(?m)^[ \t]+|[ \t]+$", "", description)
 
     return description, applied

@@ -1,0 +1,303 @@
+{
+  "version": "4.2.0",
+  "id": "ElevatorControl",
+  "title": "ElevatorControl",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "d1b95772-f93c-5455-89fb-08ed71258b50",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 220,
+      "measured": {
+        "width": 220,
+        "height": 220
+      },
+      "data": {
+        "name": "Elevator",
+        "attributes": [
+          {
+            "id": "d64437a7-2a28-5973-b69e-c18dedf00bc1",
+            "name": "+ direction : boolean"
+          },
+          {
+            "id": "59093e24-5406-5797-a85e-9664c0a1f81e",
+            "name": "+ currentFloor : int"
+          },
+          {
+            "id": "292d70f1-4dcd-5b57-8d1f-7d9916484534",
+            "name": "+ idle : boolean"
+          }
+        ],
+        "methods": [
+          {
+            "id": "06969ec6-ccfd-54bc-9ed3-c414d3e3c558",
+            "name": "+ move()"
+          },
+          {
+            "id": "65ace81a-95bc-56b1-bfe7-7bb455ab1953",
+            "name": "+ stop()"
+          },
+          {
+            "id": "279ba40e-c63a-5ed4-9ca5-840999a310e9",
+            "name": "+ status()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "528cbab4-bf7f-59ef-8dd7-697eed1a64e9",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "ElevatorController",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "6371ac48-2ca9-5d3d-b482-c4f7025c8771",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Door",
+        "attributes": [
+          {
+            "id": "2992a25c-ea43-539e-b828-78ef60f3f068",
+            "name": "+ closed : boolean"
+          }
+        ],
+        "methods": [
+          {
+            "id": "9d80c4da-e303-54fe-a8e7-f4c1129716dc",
+            "name": "+ open()"
+          },
+          {
+            "id": "ba9de5e8-890f-5550-9ec8-4ebc63a1dcce",
+            "name": "+ close()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "1482fc17-7a1a-545a-a5cf-241ed8bb94be",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 320
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Button",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "26260103-23ab-5719-85a8-383349708bf2",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 320
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "ElevatorButton",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "e28b04bc-f533-5c9b-8e2a-1a2409a33fe1",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 320
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "FloorButton",
+        "attributes": [
+          {
+            "id": "7b6df16f-8eb9-582c-b19a-5a093a6e8d49",
+            "name": "+ floorNumber : int"
+          },
+          {
+            "id": "7cef00e5-bc21-5367-a073-567925b9a2fc",
+            "name": "+ direction : boolean"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "a95788fd-e17e-580a-b776-f2395cd0c65d",
+      "source": "528cbab4-bf7f-59ef-8dd7-697eed1a64e9",
+      "target": "d1b95772-f93c-5455-89fb-08ed71258b50",
+      "type": "ClassDependency",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 150.0
+          }
+        ],
+        "label": "controls",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "cb77de13-751a-55b7-a39c-5f625a5b67f2",
+      "source": "528cbab4-bf7f-59ef-8dd7-697eed1a64e9",
+      "target": "6371ac48-2ca9-5d3d-b482-c4f7025c8771",
+      "type": "ClassDependency",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 60.0
+          },
+          {
+            "x": 600,
+            "y": 105.0
+          }
+        ],
+        "label": "controls",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "46f1e41c-b24d-516b-bf55-820434fad5fb",
+      "source": "528cbab4-bf7f-59ef-8dd7-697eed1a64e9",
+      "target": "1482fc17-7a1a-545a-a5cf-241ed8bb94be",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 340.0
+          }
+        ],
+        "label": "communicates",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "89986656-a17a-5cbb-b3da-4a16c2a380f9",
+      "source": "26260103-23ab-5719-85a8-383349708bf2",
+      "target": "1482fc17-7a1a-545a-a5cf-241ed8bb94be",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 340.0
+          },
+          {
+            "x": 260,
+            "y": 340.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "fa79e63d-d551-55b6-9099-af63fe317bd3",
+      "source": "e28b04bc-f533-5c9b-8e2a-1a2409a33fe1",
+      "target": "1482fc17-7a1a-545a-a5cf-241ed8bb94be",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 370.0
+          },
+          {
+            "x": 260,
+            "y": 340.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

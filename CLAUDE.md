@@ -58,6 +58,7 @@ UML.
 
 ## Note per l'agente
 
+- Leggere `docs/STATUS.md` a inizio sessione (stato, comandi, regole attive, prossimi passi).
 - Quando implementi un componente nuovo, aggiungi anche un test minimo o un piccolo
   script di verifica in `notebooks/` o accanto al modulo.
 - Tieni traccia delle scelte di design importanti in questo file o in

@@ -1323,3 +1323,225 @@ problemi di integrità, 0 discrepanze di round-trip, 0 violazioni di stile,
 byte-identico. `label_classification.json`: 122 voci (associazione 28,
 ruolo 88, vincolo 7, qualificatore 0, dubbio 0). `corpus/diff_report.md`:
 591 differenze su 9 categorie.
+
+### [2026-09-30] Traduzione Gruppo A (es. 2-5): Hospital, ResearchCenter, MilanLibrary, Bookmaker
+
+- **Glossario condiviso** `corpus/raw/translated_it/glossary_shared.json` (Nome, nome, Data,
+  Cognome, cognome, Cliente, cliente, Persona, Utente, Editore): `apply_glossary.load_merged_glossary`
+  unisce condiviso + locale e fallisce se lo stesso termine ha traduzioni diverse. `check_translated.py`,
+  `generate_relations_table.py`, `apply_glossary.py` usano tutti la stessa funzione.
+  `load_term_glossary` ora applica anche chiavi a frase (parole con spazio singolo, es. etichetta
+  "Appartiene a"); chiavi con altra punteggiatura restano solo di riferimento.
+- **Cartelle in inglese** (id corpus = nome cartella): Hospital, ResearchCenter, MilanLibrary, Bookmaker.
+- **Tipi non standard mappati dal glossario** (il formato ammette solo primitivi/classi dichiarate):
+  MilanLibrary `Number`->`int`, `Calendar`->`datetime` (da confermare).
+- **Inferenza dichiarata**: Bookmaker `accettaScommessa(sc : Scommettitore, s : Scommess...` e' troncato
+  nell'immagine, completato con `Scommessa` (vedi transcription_notes).
+- **Classificazione etichette NON applicata**: proposte in `corpus/label_proposals_gruppoA.md` (chiavi
+  inglesi). `corpus.jsonl` e i JSON Apollon dei 4 esercizi sono stati generati con le proposte iniettate
+  *solo in memoria* (0 errori a ogni livello): `python corpus/apollon_convert.py` da solo fallisce finche'
+  le proposte non sono approvate e portate in `_generate_label_classification.py`.
+- **Leakage** (nuovo `corpus/leakage_check.py`, TF-IDF): tutti < 0.4; max ResearchCenter vs
+  ProjectManagement 0.273, MilanLibrary vs De Bari 18 0.141, Hospital vs De Bari 4 0.115.
+- Render generati con `.tools/plantuml-old.jar` (Java 8), non verificati contro l'immagine.
+
+### [2026-09-30] Gruppo A — esito revisione parziale
+- **Etichette approvate** (label_proposals_gruppoA.md, incluse request destination/source come ruoli su
+  Library): portate in `CLASSIFICATION` di `_generate_label_classification.py`. NON rigenerati
+  `label_classification.md/.json` (attesa chiusura revisione visiva): fino ad allora `apollon_convert.py`
+  fallisce sulle 11 etichette dei 4 esercizi (corpus.jsonl/JSON attuali dei 4 sono provvisori).
+- **Tipi non standard** `Number`->`int`, `Calendar`->`datetime` approvati, spostati in `glossary_shared.json`.
+- **REGOLA (tutti gli esercizi)**: `plantuml_it.txt` trascrive l'IMMAGINE, mai il testo. Se l'immagine
+  contraddice il testo: trascrivere l'immagine, annotare in `transcription_notes.md`, proporre una
+  correzione (commentata) in `corpus/corrections/<id>.yaml`; decide l'utente.
+  - Hospital: ripristinato il rombo su `PersonaleMedico` (come nell'immagine); proposta di inversione
+    in `corpus/corrections/Hospital.yaml` (non attiva).
+  - Bookmaker `accettaScommessa`: trascritto solo il leggibile (`... s : Scommess..`, parentesi non chiusa);
+    `Scommess`->`Bet` nel glossario; proposta di completamento in `corpus/corrections/Bookmaker.yaml`
+    (non attiva). `style_check` segnalera' il metodo (manca ")") finche' non si decide.
+- `.tools/` era gia' nel `.gitignore`.
+
+### [2026-09-30] Gruppo A — chiusura
+- **Hospital**: ingrandimento 6x di `es02.png` (x 560-720, y 620-710): il vertice del rombo tocca `RepartoConStaff`
+  (opzione b). La lettura a bassa risoluzione "rombo su PersonaleMedico" era errata; `plantuml_it.txt` ripristinato a
+  `RepartoConStaff "1" o-- "1..n" PersonaleMedico`, `corpus/corrections/Hospital.yaml` vuoto, render rigenerati.
+- **Bookmaker**: correzione attiva (`correzione_errore`, "nome troncato nell'immagine"): `acceptBet(sc : Bettor, s : Bet..`
+  -> `acceptBet(sc : Bettor, s : Bet)`. Nessuna deroga a `style_check`.
+- Rigenerati `label_classification.md/.json` (133 voci JSON = 32 associazione + 93 ruolo + 1 ruolo_doppio + 7 vincolo; 95 istanze di ruolo; 134 righe nel .md, vedi riconciliazione sotto) e pipeline
+  completa: 49/50 convertiti (Cruise escluso), 34 correzioni, 0 etichette non classificate, 0 errori di schema,
+  integrita', round-trip, stile; test OK; `check_translated` 5/5; `example_2_airtravel_v4.json` identico.
+
+### [2026-09-30] Riconciliazione conteggi label_classification (nessuna modifica ai dati)
+Tre unita' di misura diverse erano state mescolate:
+- **Voci JSON** (una per etichetta, chiave esercizio/source/op/target/label): **133** = 32 associazione + 93 ruolo
+  + 1 ruolo_doppio (TileOGame `connections/tiles`) + 7 vincolo + 0 qualificatore.
+- **Righe del .md / contatore stampato dallo script**: **134** = 133 + 1, perche' il ruolo_doppio e' espanso in 2 righe
+  (e il contatore "ruolo" conta le istanze). Da qui "32 + 95 + 7 = 134".
+- **Istanze di ruolo**: **95** = 93 + 2 (ruolo_doppio).
+
+Perche' 95 e non 97: le 97 istanze attese sono quelle del dict `CLASSIFICATION` (137 voci, 97 istanze di ruolo:
+87 + 2 ex-qualificatori `id`/`username` + `hasCoach` + 7 Gruppo A). Il generatore emette pero' solo le voci la cui
+relazione esiste nel PlantUML *corretto*; 4 voci del dict non lo sono, per correzioni approvate e ancora attive:
+| Voce del dict | Tipo | Motivo dell'assenza |
+|---|---|---|
+| TruckLogistics `Driver --> Vehicle : driver` | ruolo | rimossa (`remove_line`, STOP 2) |
+| TruckLogistics `Vehicle --> Driver : driver` | ruolo | riscritta come `Vehicle "*" -- "0..1 driver" Driver` (ruolo nella sintassi tra virgolette, non piu' un'etichetta) |
+| Boeing `Acquisition -- Contract : part of` | associazione | `remove_label` (chiarimento di modellazione) |
+| Boeing `Airplane -- Acquisition : part of` | associazione | `remove_label` (chiarimento di modellazione) |
+
+Quindi: ruoli 97 - 2 = 95; associazioni 34 - 2 = 32; voci 137 - 4 = 133. Il ruolo `driver` di TruckLogistics resta nel
+diagramma finale (targetRole su Driver), solo non passa da `label_classification.json`. BuildingManagement `author`,
+ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 voci orfane restano nel dict (innocue).
+
+### [2026-09-30] Traduzione Gruppo B (es. 6-9): UniversityExams, Restaurant, ElevatorControl, RealEstateAgency
+- Cartelle/id: `UniversityExams` (non "University", gia' usato da un esercizio originale), `Restaurant`,
+  `ElevatorControl`, `RealEstateAgency`.
+- Regola "trascrivere l'immagine" applicata: refusi/troncamenti trascritti fedelmente (`sttring`, `d..`, `sting`,
+  `kay`), mappati su se stessi nel glossario; correzioni proposte COMMENTATE in `corpus/corrections/`
+  (UniversityExams, Restaurant, RealEstateAgency). Nessuna attiva.
+- Ingrandimenti su es. 6 (tre zone) e su es. 8 (le due frecce "controlla"): coordinate in transcription_notes.
+  Es. 8: freccia verso Porta tratteggiata (`..>`); verso Ascensore trascritta continua (`-->`) ma NON distinguibile
+  con certezza (un solo buco nella linea).
+- Es. 6: nota/commento sulla classe Persona esclusa, nessuna generalizzazione (decisione utente).
+- Proposte aperte (non applicate): etichette in `corpus/label_proposals_gruppoB.md` (10, tutte associazione);
+  tipo `currency -> double` nel glossario condiviso; estendere `normalize_multiplicity` a `N` maiuscola (es. 9).
+- Glossario condiviso: spostati i termini ormai comuni a piu' esercizi (Corso, Studente, Numero, numero, tipo,
+  telefono, durata, DataNascita/dataNascita, codice/Codice, citta/Citta) — nessun conflitto.
+- Stato pipeline: senza le proposte `apollon_convert.py` fallisce (10 etichette non classificate; stile: `d..`,
+  `sttring`, `sting`, `currency`). Con proposte iniettate SOLO in memoria: 53/54 convertiti, 0 errori a ogni
+  livello, test OK, check_translated 9/9. `corpus.jsonl`/JSON dei 4 esercizi sono provvisori (run in memoria).
+- Restaurant/description.md: "who serve customers" -> "who wait on customers" per un falso positivo lessicale del
+  controllo "residuo italiano" (`serve` e' sia italiano sia inglese).
+- Leakage: tutto < 0.4 (max UniversityExams vs University 0.231, Restaurant vs De Bari 10 Restaurant 0.183).
+
+### [2026-09-30] Gruppo B — chiusura
+- **Regola (utente): mai modificare i dati per far passare un controllo.** Ripristinato "who serve customers" in
+  Restaurant/description.md; il falso positivo si corregge nel controllo: `check_translated.ENGLISH_HOMOGRAPHS`
+  (whitelist di parole valide in inglese che coincidono con chiavi italiane del glossario, oggi solo `serve`;
+  aggiunte caso per caso con l'esercizio che le motiva). Test: `check_english_homograph_whitelist`.
+- Correzioni attivate (`correzione_errore`): UniversityExams `d..`->`date`, `sttring`->`string`; Restaurant
+  `sting`->`string`; RealEstateAgency `kay`->`key`.
+- Regole globali approvate: `currency -> double` nel glossario condiviso dei tipi; `normalize_multiplicity` estesa a
+  `N` maiuscola (`N`, `x..N` -> `*`), usata anche da `style_check` e `diff_report`. Test: `check_shared_type_glossary`,
+  casi `N` in `check_multiplicity_normalization`.
+- Etichette approvate (10, tutte associazione) portate in `CLASSIFICATION`. ElevatorControl "controls" verso
+  Elevator resta `-->` con nota di incertezza, salvo diversa indicazione dopo verifica visiva.
+- Pipeline ufficiale completa: 53/54 convertiti (Cruise escluso), 38 correzioni, `label_classification.json`
+  143 voci (42 associazione + 93 ruolo + 1 ruolo_doppio + 7 vincolo; 95 istanze di ruolo), 0 etichette non
+  classificate, 0 errori di schema/integrita'/round-trip/stile, test OK, check_translated 9/9, diff_report 607
+  differenze; `example_2_airtravel_v4.json` identico.
+
+### [2026-10-01] Gruppo B — correzioni dopo verifica visiva dell'autore + controllo nomi di ruolo
+- **ElevatorControl**: entrambe le frecce "controlla" sono tratteggiate (verifica visiva dell'autore); la freccia
+  verso Ascensore, prima trascritta `-->`, diventa `..>` in `plantuml_it.txt` (correzione di trascrizione, non di
+  dato). Aggiornati transcription_notes, relations_table, render, e la chiave in `CLASSIFICATION`
+  (`ElevatorController ..> Elevator : controls`, sempre associazione).
+- **UniversityExams**: classe associativa `Iscritto_a` tradotta `EnrolledIn` (prima `Enrollment`); termine solo
+  nel glossario dell'esercizio. `description.md` non contiene il nome della classe: invariata.
+- **Controllo nomi di ruolo agli estremi** (es. 1-9, ingrandimenti 1.8-2.2x a quadranti + 2x a quadranti di
+  es06): in UniversityExams **nessun nome di ruolo trovato** vicino alle classi (solo le 4 etichette gia'
+  trascritte e le molteplicita'); nessuna modifica. Testi in posizione di ruolo trovati altrove: es. 3
+  "Guida" (estremo RicercatoreSenior) e "Guidato da" (estremo Team), es. 4 "Possiede" (estremo Utente), es. 5
+  i 5 nomi minuscoli (gia' ruoli via classificazione). Elenco completo nel messaggio di revisione; nessuna
+  modifica in attesa di decisione utente.
+- **relations_table.md**: colonne "Ruolo estremo A" e "Ruolo estremo B" sempre presenti ("—" se vuote) al posto
+  della colonna unica "Ruoli". Rigenerate per ora solo UniversityExams ed ElevatorControl.
+- **Procedura gruppi C e D**: controllare gli estremi di ogni relazione per i nomi di ruolo, oltre alle
+  molteplicita'.
+- Pipeline NON rieseguita: finche' non si rigenerano `label_classification.json` e la pipeline, la chiave
+  ElevatorControl `..>` Elevator risulta non classificata nel json attuale.
+
+### [2026-10-01] Regola: verbi vicino agli estremi = nome di associazione, non ruoli
+- **Regola (utente)**: un verbo scritto vicino all'estremo di una relazione è il nome dell'associazione letto in
+  un verso, non un nome di ruolo. Un verbo e la sua forma nel verso opposto (es. "Guida" / "Guidato da") sono la
+  stessa associazione: si trascrive una sola etichetta, non due.
+- Applicata: ResearchCenter "Guida"/"Guidato da" e MilanLibrary "Possiede" restano nomi di associazione
+  (classificazione invariata). UniversityExams: nessun ruolo da aggiungere (verificato dall'utente).
+
+### [2026-10-01] Traduzione Gruppo C (es. 10-12): OilWells, RepairShops; es. 12 Palestra ESCLUSO
+- **Es. 12 Palestra escluso** (decisione utente presa in anticipo): la classe senza nome (Numero : Integer,
+  Frequenza : String, classe associativa sulla relazione Scheda–Esercizio) non riceve un nome univoco dalla
+  traccia. La frase pertinente è "Ad ogni cliente è associata una scheda – per la sala pesi – che definisce gli
+  esercizi da compiere, il numero di ripetizioni e la frequenza": descrive gli attributi, non nomina la classe.
+  Nessun file creato per es. 12.
+- `strip_reading_direction` esteso ai marcatori attaccati alla parola ("<Lavora", "effettua>"), stereotipi
+  `<<...>>` esclusi; test aggiunto. Nessuna etichetta esistente cambia (0 non classificate nella run).
+- es. 11: "<Lavora" -> "Lavora" (etichetta e nome della classe associativa, decisione utente).
+- Proposte aperte: etichette in `corpus/label_proposals_gruppoC.md` (2 vincoli, 5 associazioni); correzione
+  commentata in `corpus/corrections/RepairShops.yaml` (`string{1..*}` -> `string[]`).
+- Glossario condiviso: spostati Area, Superficie, anniServizio (comuni a piu' esercizi), nessun conflitto.
+- Pipeline: senza proposte fallisce su 7 etichette non classificate; con proposte in memoria 55/56 convertiti,
+  0 errori, test OK, check_translated 11/11. corpus.jsonl/JSON dei 2 esercizi provvisori.
+- Leakage: tutto < 0.4 (max RepairShops vs TransportCompany 0.210, vs De Bari 9 Auto Repair 0.157).
+
+### [2026-10-01] Gruppo C — decisioni; regole "sostantivo = ruolo" e "classe associativa senza nome"
+- **Regola (utente): un'etichetta che è un sostantivo è un ruolo, anche se scritta al centro della linea** (la
+  posizione non conta). Applicata a OilWells "location" (da "luogo"): ruolo sull'estremo Area, label vuoto
+  (lettura "Area è il location di OffshoreWell"). Completa la regola precedente: verbo = nome di associazione.
+- Approvate le altre 6 etichette (2 vincoli OilWells, 4 associazioni RepairShops), portate in `CLASSIFICATION`.
+- RepairShops: correzione attiva (`correzione_errore`) `phoneNumbers : string{1..*}` -> `string[]`.
+- **Convenzione meccanica (utente): una classe associativa senza nome nell'immagine si chiama concatenando le due
+  classi che collega** (es. `SchedaEsercizio` / `WorkoutPlanExercise`). È una convenzione, non un nome ricavato
+  dal contenuto; va dichiarata nelle transcription_notes. Applicata a es. 12 Palestra, quindi **Palestra non è più
+  escluso**: creato come `Gym` con la procedura standard (la voce precedente che lo escludeva è superata).
+- Gym: etichette "ServiziAggiuntivi"/"ServiziBase" proposte come ruoli sull'estremo Service (sostantivi), in
+  attesa di approvazione.
+
+### [2026-10-01] Gruppo C chiuso (Gym approvato)
+- Ruoli Gym approvati (AdditionalServices, BaseServices sull'estremo Service) e portati in `CLASSIFICATION`;
+  `corpus/label_proposals_gruppoC.md` rimosso.
+- Classificazione rigenerata ufficialmente: 152 voci JSON (46 associazione + 96 ruolo + 1 ruolo_doppio +
+  9 vincolo; 98 istanze di ruolo). Pipeline ufficiale, nessuna voce solo in memoria: 56/57 convertiti
+  (Cruise escluso), 39 correzioni, 9 vincoli di generalizzazione, 0 etichette non classificate, 0 errori di
+  schema/integrita'/round-trip/stile, test OK, check_translated 12/12, diff_report 616 differenze,
+  `example_2_airtravel_v4.json` identico.
+
+### [2026-10-01] Gruppo D (es. 13-15) — trascrizione, in attesa di revisione
+- Id: es. 13 Eat@Home = `EatAtHome`, es. 14 Compagnia di assicurazioni = `InsuranceCompany`, es. 15
+  Appartamento e Palazzo = `ApartmentBuilding`.
+- es. 13 (diagramma gia' in inglese, decisione utente): `plantuml_it.txt` copia fedele, glossario identita';
+  `Currency` -> `double` aggiunto al glossario condiviso (accanto a `currency`). Note escluse; Ingredient
+  ("alternativa" secondo una nota) trascritta come disegnata.
+- es. 13 `status : enum{...}` inline: non rappresentabile, style check fallisce. Proposta commentata in
+  `corpus/corrections/EatAtHome.yaml`: (a) enum separata (serve estendere le correzioni con un'op a blocco) o
+  (b) `replace_line` -> `status : string`. Non applicata.
+- es. 14: Compagnia–Contratto senza molteplicita' (verificato), `ImportoAssicurato` senza tipo: trascritti cosi'.
+  "Furto" vs testo "rischi diversi": contraddizione dubbia, `rename_token` commentato in
+  `corpus/corrections/InsuranceCompany.yaml`.
+- es. 15: `+` davanti ai nomi di classe = visibilita' dello strumento, non trascritta; "e' posseduto" -> `isOwnedBy`.
+- Etichette proposte (4 associazioni) in `corpus/label_proposals_gruppoD.md`, non applicate.
+- `leakage_check.py`: aggiunta opzione `--vs <id>` per riportare il punteggio verso un esercizio specifico
+  (richiesta utente: es. 15 vs House anche sotto soglia). ApartmentBuilding vs House = 0.024.
+- Pipeline ufficiale: fallisce su 4 etichette non classificate + 1 errore di stile (EatAtHome enum). Run
+  provvisoria in memoria con le proposte: resta solo l'errore di stile EatAtHome (dato, in attesa di decisione).
+  check_translated 15/15, test OK, diff_report 617. Leakage: tutto < 0.4.
+
+### [2026-10-01] Gruppo D chiuso — decisioni utente; traduzione dei 15 esercizi italiani completata
+- Etichette approvate (4 associazioni: EatAtHome makes/contains/contains, ApartmentBuilding isOwnedBy), portate in
+  `CLASSIFICATION`; `corpus/label_proposals_gruppoD.md` rimosso.
+- **Convenzione meccanica (utente): enum inline -> enumerazione separata `<Classe><Attributo>`** con i valori
+  originali invariati (anche con spazi) e l'attributo tipizzato con la nuova enumerazione. Applicata a EatAtHome:
+  `Order.status : enum{...}` -> `status : OrderStatus` + `enum OrderStatus {placed, in preparation, in delivery,
+  delivered, canceled}`. Correzioni attive in `corpus/corrections/EatAtHome.yaml`, categoria
+  `chiarimento_modellazione` (il diagramma non e' sbagliato, cambia solo la notazione).
+- **Nuova operazione di correzione `add_block`** (`corpus/apply_corrections.py`, ora 8 operazioni): aggiunge una
+  dichiarazione multi-riga di classe/enum prima di `@enduml`; hard-fail se il blocco non e' esattamente una
+  dichiarazione chiusa (1 classe, 0 relazioni) o se il nome e' gia' dichiarato. Test
+  `check_corrections_add_block`.
+- **EatAtHome contiene due alternative** di modellazione degli ingredienti: gli attributi `ingredients` /
+  `allergen_information` di Dish e la classe `Ingredient` (disegnata in grigio, "alternativa" secondo una nota
+  dell'autore che chiede di rimuovere gli attributi in quel caso). Entrambe mantenute per fedelta' all'immagine.
+- InsuranceCompany "Furto" vs testo "rischi diversi": **caso dubbio, nessuna correzione**; il `rename_token`
+  resta commentato in `corpus/corrections/InsuranceCompany.yaml`.
+- InsuranceCompany, frasi di consegna ("We are interested in describing the problem domain, ... We produce a class
+  diagram."): **separabili** (un unico tratto contiguo senza contenuto di dominio) -> caso BuildingManagement,
+  escluse con `corpus/description_exclusions/InsuranceCompany.yaml`. Poiche' l'esclusione e' a meta' riga,
+  `clean_description.apply_exclusions` ora ripulisce spazi doppi / a inizio-fine riga (BuildingManagement
+  verificato invariato; test `check_description_exclusion_mid_line`). description.md non modificato.
+- **Limite generale: la visibilita' di attributi e metodi non e' conservata** (sempre `+` nel JSON Apollon;
+  25 membri `-` in 4 esercizi). Documentato in `corpus/apollon_limitations.md` §9.
+- Pipeline ufficiale, nessuna voce solo in memoria: 59/60 convertiti (Cruise escluso), 41 correzioni, 2 esclusioni
+  di paragrafi, `label_classification.json` 156 voci (50 associazione + 98 ruolo + 9 vincolo; ruolo_doppio su 2
+  righe), 0 etichette non classificate, 0 errori schema/round-trip/stile, warning 27, test OK, check_translated
+  15/15, diff_report 618, `example_2_airtravel_v4.json` invariato. Leakage Gruppo D tutto < 0.4
+  (max InsuranceCompany vs AlphaInsurance 0.192; ApartmentBuilding vs House 0.024).
