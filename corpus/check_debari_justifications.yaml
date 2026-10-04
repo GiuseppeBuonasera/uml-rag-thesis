@@ -1,0 +1,239 @@
+# Giustificazioni delle discrepanze tra ground truth (immagine trascritta) e Analysis.xlsx, lette da
+# corpus/check_debari.py. Una voce per discrepanza, testo identico a quello del report. Nessuna
+# discrepanza si corregge automaticamente: qui si classifica soltanto.
+# classificazione: errore_trascrizione | imprecisione_xlsx | convenzione | refuso_immagine
+# Le voci marcate PROVVISORIA dipendono da decisioni utente ancora aperte (STOP del gruppo).
+
+_ancore:
+  # definizioni condivise (non e' un id di esercizio: chiave ignorata da check_debari)
+  - &count_assoc_class
+    discrepanza: "(modello)"
+    classificazione: convenzione
+    motivo: >-
+      il ground truth conta come relazione anche il collegamento della classe associativa ((A, B) .. C);
+      l'xlsx conta solo le generalizzazioni e le associazioni della Given Solution (es. 11: 9 = 2 + 7).
+      Differenza di metodo di conteggio, non di contenuto.
+
+DB02_HollywoodApproach:
+  - discrepanza: "relazione solo nell'xlsx: association(externals - location)"
+    classificazione: imprecisione_xlsx
+    motivo: l'xlsx scrive 'Externals'; nell'immagine la classe e' 'External' (riquadro in basso al centro).
+  - discrepanza: "relazione solo nel ground truth: association(external - location)"
+    classificazione: imprecisione_xlsx
+    motivo: stessa relazione External-Location 'located', scritta 'Externals' nell'xlsx.
+  - discrepanza: "relazione solo nell'xlsx: generalization(extenal - scene)"
+    classificazione: imprecisione_xlsx
+    motivo: refuso 'Extenal' nell'xlsx; nell'immagine External --|> Scene.
+  - discrepanza: "relazione solo nel ground truth: generalization(external - scene)"
+    classificazione: imprecisione_xlsx
+    motivo: stessa generalizzazione, scritta 'Extenal' nell'xlsx.
+  - discrepanza: "conteggio Attributes + Operations: xlsx 35, ground truth 12"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      valori scambiati tra le righe 2 e 3 di "Estimated Difficulty": la formula '=12+23' dell'es. 2 e'
+      il conteggio dell'es. 3 (12 attributi + 23 operazioni, verificato sul PlantUML), mentre l'es. 2 ha
+      12 attributi e 0 operazioni (immagine: 6 classi senza operazioni).
+
+DB03_WordProcessor:
+  - &db03_ops
+    discrepanza: "membro solo nel ground truth: cell.edit"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      la Given Solution dell'xlsx elenca le operazioni solo per Document; nell'immagine tutte le classi
+      hanno il comparto operazioni con '+nome()' leggibile (es. Cell: +edit()).
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: character.bold"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: character.italic"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: character.normal"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: character.underline"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: page.hidefooter"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: page.hideheader"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: page.insertpicture"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: page.inserttable"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: page.newpage"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: picture.delete"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: picture.insert"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: table.insertcolumn"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: table.insertpicture"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: table.insertrow"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: table.newtable"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: trimming.change"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: trimming.display"}
+  - {<<: *db03_ops, discrepanza: "membro solo nel ground truth: trimming.hide"}
+  - discrepanza: "conteggio Attributes + Operations: xlsx 12, ground truth 35"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      valori scambiati con l'es. 2 in "Estimated Difficulty" (vedi DB02): 12 e' il conteggio dell'es. 2;
+      l'es. 3 ha 12 attributi + 23 operazioni = 35.
+
+DB05_MovieShop:
+  - &db05_enum
+    discrepanza: "classe solo nel ground truth: movietype"
+    classificazione: convenzione
+    motivo: >-
+      enumerazione separata creata dalla convenzione approvata 'enum inline -> <Classe><Attributo>'
+      (corrections/DB05_MovieShop.yaml); nell'immagine e' l'enum inline di Movie.type.
+  - {<<: *db05_enum, discrepanza: "classe solo nel ground truth: movierentstatus"}
+  - {<<: *db05_enum, discrepanza: "classe solo nel ground truth: moviebuystatus"}
+  - discrepanza: "conteggio Classes: xlsx 8, ground truth 11"
+    classificazione: convenzione
+    motivo: le 8 classi dell'immagine piu' le 3 enumerazioni create dalla convenzione enum inline.
+  - discrepanza: "membro solo nell'xlsx: movierent.date"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      l'immagine scrive '+data prestito' (Movie-Rent, 2a riga), tradotto fedelmente 'loanDate'
+      (glossary.json, decisione utente 2026-10-03); l'xlsx semplifica in 'date'.
+  - discrepanza: "membro solo nel ground truth: movierent.loandate"
+    classificazione: imprecisione_xlsx
+    motivo: vedi movierent.date.
+  - discrepanza: "membro solo nell'xlsx: moviebuy.pricesell"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      l'immagine scrive '+prezzo-vendita' (Movie-Buy, 2a riga), tradotto fedelmente 'sellingPrice';
+      l'xlsx scrive 'Price-Sell' (calco della parola composta).
+  - discrepanza: "membro solo nel ground truth: moviebuy.sellingprice"
+    classificazione: imprecisione_xlsx
+    motivo: vedi moviebuy.pricesell.
+
+DB06_Flights:
+  - discrepanza: "conteggio Associations: xlsx 12, ground truth 13"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      la Given Solution dell'xlsx elenca essa stessa 13 relazioni (10 associazioni + 3 generalizzazioni,
+      con Aircraft Type - Pilot due volte: Navigator of / Copilot of), come l'immagine; il conteggio di
+      "Estimated Difficulty" dice 12.
+
+DB07_BankSystem:
+  - discrepanza: "conteggio Attributes + Operations: xlsx 5, ground truth 7"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      l'immagine ha 7 attributi (Customer 2, Account 1, SavingAccount 1, Stock 2, StockOrder 1), tutti
+      elencati anche nella Given Solution dell'xlsx; il conteggio di "Estimated Difficulty" dice 5.
+  - discrepanza: "conteggio Associations: xlsx 7, ground truth 5"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      l'immagine ha 5 relazioni (3 associazioni + 2 generalizzazioni), le stesse 5 della Given Solution
+      dell'xlsx; il conteggio di "Estimated Difficulty" dice 7.
+
+DB10_Restaurant:
+  - &db10_assoc
+    discrepanza: "classe solo nel ground truth: ingredientdish"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      l'immagine ha due classi associative senza nome (riquadri con intestazione vuota collegati da linea
+      tratteggiata: 'Quantity' su INGREDIENT-DISH, 'Times_Served' su DISH-Meal), nominate per concatenazione
+      (convenzione approvata); la Given Solution dell'xlsx non le elenca, ne' i loro attributi.
+  - {<<: *db10_assoc, discrepanza: "classe solo nel ground truth: dishmeal"}
+  - {<<: *db10_assoc, discrepanza: "membro solo nel ground truth: ingredientdish.quantity"}
+  - {<<: *db10_assoc, discrepanza: "membro solo nel ground truth: dishmeal.timesserved"}
+  - {<<: *db10_assoc, discrepanza: "relazione solo nel ground truth: association_class(dish - ingredient)"}
+  - {<<: *db10_assoc, discrepanza: "relazione solo nel ground truth: association_class(dish - meal)"}
+  - {<<: *db10_assoc, discrepanza: "conteggio Classes: xlsx 7, ground truth 9"}
+  - {<<: *db10_assoc, discrepanza: "conteggio Attributes + Operations: xlsx 15, ground truth 17"}
+  - {<<: *count_assoc_class, discrepanza: "conteggio Associations: xlsx 7, ground truth 9"}
+
+DB11_Deliveries:
+  - &db11_assoc
+    discrepanza: "classe solo nel ground truth: packagedeliverycenter"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      classe associativa senza nome (riquadro con intestazione vuota e linea tratteggiata sulla seconda
+      linea Package-DeliveryCenter, attributi DateTimeArrival / DateTimeDeparture), nominata per
+      concatenazione; la Given Solution non la elenca (i conteggi di "Estimated Difficulty", 6 classi e 11
+      attributi, invece la includono).
+  - {<<: *db11_assoc, discrepanza: "membro solo nel ground truth: packagedeliverycenter.datetimearrival"}
+  - {<<: *db11_assoc, discrepanza: "membro solo nel ground truth: packagedeliverycenter.datetimedeparture"}
+  - {<<: *db11_assoc, discrepanza: "relazione solo nel ground truth: association_class(deliverycenter - package)"}
+  - {<<: *count_assoc_class, discrepanza: "conteggio Associations: xlsx 9, ground truth 10"}
+
+DB12_Furniture:
+  - &db12_assoc
+    discrepanza: "classe solo nel ground truth: piececomponent"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      due classi associative senza nome (riquadri con intestazione vuota, 'Quantity', linee tratteggiate su
+      Piece-Component e Piece-Order), nominate per concatenazione; la Given Solution e i conteggi dell'xlsx
+      non le includono.
+  - {<<: *db12_assoc, discrepanza: "classe solo nel ground truth: pieceorder"}
+  - {<<: *db12_assoc, discrepanza: "membro solo nel ground truth: piececomponent.quantity"}
+  - {<<: *db12_assoc, discrepanza: "membro solo nel ground truth: pieceorder.quantity"}
+  - {<<: *db12_assoc, discrepanza: "relazione solo nel ground truth: association_class(component - piece)"}
+  - {<<: *db12_assoc, discrepanza: "relazione solo nel ground truth: association_class(order - piece)"}
+  - {<<: *db12_assoc, discrepanza: "conteggio Classes: xlsx 6, ground truth 8"}
+  - {<<: *db12_assoc, discrepanza: "conteggio Attributes + Operations: xlsx 11, ground truth 13"}
+  - {<<: *count_assoc_class, discrepanza: "conteggio Associations: xlsx 5, ground truth 7"}
+
+DB13_Factory:
+  - &db13_assoc
+    discrepanza: "classe solo nel ground truth: productpurchaseorder"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      classe associativa senza nome ('Quantity', linea tratteggiata su PRODUCT-PURCHASE ORDER), nominata per
+      concatenazione; la Given Solution e i conteggi dell'xlsx non la includono.
+  - {<<: *db13_assoc, discrepanza: "membro solo nel ground truth: productpurchaseorder.quantity"}
+  - {<<: *db13_assoc, discrepanza: "relazione solo nel ground truth: association_class(product - purchaseorder)"}
+  - {<<: *db13_assoc, discrepanza: "conteggio Classes: xlsx 8, ground truth 9"}
+  - {<<: *db13_assoc, discrepanza: "conteggio Attributes + Operations: xlsx 19, ground truth 20"}
+  - {<<: *count_assoc_class, discrepanza: "conteggio Associations: xlsx 8, ground truth 9"}
+
+DB14_BicycleRental:
+  - discrepanza: "relazione solo nell'xlsx: association(bicycle - byciclemodel)"
+    classificazione: imprecisione_xlsx
+    motivo: refuso 'BycicleModel' nell'xlsx; nell'immagine la classe e' BicycleModel.
+  - discrepanza: "relazione solo nel ground truth: association(bicycle - bicyclemodel)"
+    classificazione: imprecisione_xlsx
+    motivo: stessa relazione Bicycle-BicycleModel, scritta 'BycicleModel' nell'xlsx.
+
+DB16_OOBank:
+  - &db16_sub
+    discrepanza: "classe solo nell'xlsx: subdivision"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      nell'immagine 'subdivision' e' il nome di ruolo dell'auto-associazione di OrganizationalUnit (estremo '*',
+      altro estremo '0..1'), SENZA rombo (verificato con ingrandimento 3x); l'xlsx ne fa una classe 'Subdivision'
+      in composizione con OrganizationalUnit. Per questo i conteggi dell'xlsx per l'es. 16 non coincidono con il
+      ground truth.
+  - {<<: *db16_sub, discrepanza: "relazione solo nell'xlsx: composition(organizationalunit - subdivision)"}
+  - {<<: *db16_sub, discrepanza: "relazione solo nel ground truth: association(organizationalunit)"}
+  - discrepanza: "conteggio Associations: xlsx 13, ground truth 14"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      l'immagine ha 14 relazioni (8 associazioni, inclusa l'auto-associazione, + 6 generalizzazioni) e la Given
+      Solution dell'xlsx ne elenca anch'essa 14; il conteggio di "Estimated Difficulty" dice 13.
+
+DB17_PrepaidCellPhone:
+  - &db17_iso
+    discrepanza: "relazione solo nell'xlsx: generalization(option - phone)"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      nell'immagine i riquadri Phone e Double Transfer (in basso a destra) NON sono collegati a nessuna classe:
+      solo Data e SMS hanno la linea verso Option. L'xlsx aggiunge le due generalizzazioni mancanti (lettura del
+      testo, non del diagramma); il ground truth trascrive l'immagine.
+  - {<<: *db17_iso, discrepanza: "relazione solo nell'xlsx: generalization(doubletransfer - option)"}
+  - {<<: *db17_iso, discrepanza: "conteggio Associations: xlsx 8, ground truth 6"}
+
+DB18_LibrarySystem:
+  - &db18_real
+    discrepanza: "relazione solo nell'xlsx: generalization(adult - user)"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      nell'immagine Under_aged e Adult sono collegate a User (<<interface>>) da linee TRATTEGGIATE con triangolo
+      vuoto: realizzazione, non generalizzazione (l'xlsx le chiama Generalization).
+  - {<<: *db18_real, discrepanza: "relazione solo nell'xlsx: generalization(underaged - user)"}
+  - {<<: *db18_real, discrepanza: "relazione solo nel ground truth: implementation(adult - user)"}
+  - {<<: *db18_real, discrepanza: "relazione solo nel ground truth: implementation(underaged - user)"}
+  - &db18_dep
+    discrepanza: "relazione solo nell'xlsx: dependency(book - borrow)"
+    classificazione: imprecisione_xlsx
+    motivo: >-
+      nell'immagine Borrow -> Book e' una linea CONTINUA con freccia (associazione navigabile), non tratteggiata;
+      l'xlsx la chiama Dependencies.
+  - {<<: *db18_dep, discrepanza: "relazione solo nel ground truth: association(book - borrow)"}
+
+DB19_MyDoctor:
+  - &db19_typo
+    discrepanza: "membro solo nell'xlsx: patienti.age"
+    classificazione: imprecisione_xlsx
+    motivo: refuso 'Patienti' nell'xlsx; nell'immagine la classe e' Patient (Age, Address).
+  - {<<: *db19_typo, discrepanza: "membro solo nell'xlsx: patienti.address"}
+  - {<<: *db19_typo, discrepanza: "membro solo nel ground truth: patient.age"}
+  - {<<: *db19_typo, discrepanza: "membro solo nel ground truth: patient.address"}

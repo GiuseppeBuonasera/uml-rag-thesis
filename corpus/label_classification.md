@@ -1,6 +1,6 @@
 # Classificazione delle etichette — associazione, ruolo o vincolo
 
-Generata da `corpus/_generate_label_classification.py` da tutte le 156 etichette non vuote (`: testo`) trovate nelle relazioni binarie dei 45 esercizi convertibili (44 originali + CourseManagement).
+Generata da `corpus/_generate_label_classification.py` da tutte le 203 etichette non vuote (`: testo`) trovate nelle relazioni binarie dei 45 esercizi convertibili (44 originali + CourseManagement).
 
 Categorie: **associazione** (verbo/descrizione del legame, resta in `label`), **ruolo** (nome di come si chiama una classe in quella relazione, va in `sourceRole`/`targetRole` sull'estremo indicato — colonna "Lettura" per verificare l'estremo), **vincolo** (testo di vincolo UML su una generalizzazione, es. `{disjoint,complete}` — non e' un'etichetta di relazione: dal 2026-09-25 estratto automaticamente nel campo `constraints` di corpus.jsonl, mai lasciato nell'edge, vedi `corpus/apollon_convert.py::extract_generalization_constraints`), **qualificatore** (verosimilmente un qualifier UML che Apollon non supporta — resta in `label` per mancanza di un posto migliore), **ruolo_doppio** (caso unico, TileOGame: un'etichetta con DUE nomi di ruolo distinti, uno per estremo — espansa in due righe qui sotto), **dubbio** (nessuna classificazione proposta, in attesa dell'utente).
 
@@ -163,11 +163,58 @@ Categorie: **associazione** (verbo/descrizione del legame, resta in `label`), **
 | UniversityExams | `Professor -- "1" Place : Prof_born_in` | Prof_born_in | associazione | — | — | Come 'Student_born_in'. |
 | UniversityExams | `Faculty "1" -- "1..*" Course : < BelongsTo` | BelongsTo | associazione | — | — | Frase verbale ('< Appartenente'; il '<' e' verso di lettura, rimosso). |
 | UniversityExams | `Professor "1..*" -- Course : < Teaches` | Teaches | associazione | — | — | Frase verbale ('< Insegna'). |
+| DB01_ProjectManagementSystem | `Project -- Requirement : Input` | Input | associazione | — | — | Decisione utente: nome di ASSOCIAZIONE, non ruolo, perche' ha il triangolo pieno del verso di lettura (◄), che i nomi di ruolo non hanno (anche se 'Input' e' anche un sostantivo). |
+| DB01_ProjectManagementSystem | `Project -- System : Output` | Output | associazione | — | — | Come 'Input': triangolo pieno di verso di lettura (►), quindi nome di associazione. |
+| DB01_ProjectManagementSystem | `Manager -- Project : Manage` | Manage | associazione | — | — | Verbo con triangolo pieno di verso di lettura (►). |
+| DB01_ProjectManagementSystem | `Team -- Project : Execute` | Execute | associazione | — | — | Verbo con triangolo pieno di verso di lettura (◄). |
+| DB01_ProjectManagementSystem | `Manager -- Team : Lead` | Lead | associazione | — | — | Verbo al centro della linea. |
+| DB02_HollywoodApproach | `Take "1...*" -- "1" Setup : tk_of_stp` | tk_of_stp | associazione | — | — | Nome di relazione al centro della linea ('take of setup'). |
+| DB02_HollywoodApproach | `Scene "1" -- "1...*" Setup : stp_for_scn` | stp_for_scn | associazione | — | — | Nome di relazione al centro della linea ('setup for scene'). |
+| DB02_HollywoodApproach | `Internal --\|> Scene : {complete, disjoint}` | {complete, disjoint} | vincolo | — | — | Vincolo UML sull'insieme di generalizzazione Internal/External. |
+| DB02_HollywoodApproach | `External --\|> Scene : {complete, disjoint}` | {complete, disjoint} | vincolo | — | — | Come sopra. |
+| DB02_HollywoodApproach | `External "0...*" -- "1" Location : located` | located | associazione | — | — | Verbo (participio) al centro della linea. |
+| DB04_PatientRecordAndSchedulingSystem | `FamilyInsured "1..*" -- "1" Doctor : hasPrimaryCare` | hasPrimaryCare | associazione | — | — | Verbo. |
+| DB05_MovieShop | `User "*" --> "1" MovieShop : uses` | uses | associazione | — | — | Verbo. |
+| DB05_MovieShop | `MovieShop "1" -- "*" Card : make` | make | associazione | — | — | Verbo. |
+| DB05_MovieShop | `MovieShop "1" --> "*" Order : make` | make | associazione | — | — | Verbo. |
+| DB05_MovieShop | `Subscriber "1" --> "1" Card : has` | has | associazione | — | — | Verbo. |
+| DB05_MovieShop | `Order "*" -- "1..*" MovieBuy : related to` | related to | associazione | — | — | Verbo. |
+| DB05_MovieShop | `Subscriber "*" --> "1..*" MovieRent : hire` | hire | associazione | — | — | Verbo. |
+| DB06_Flights | `Airline "1" -- "*" Flight : offers` | offers | associazione | — | — | Verbo. |
+| DB06_Flights | `Airline "*" -- "*" Aircraft : owns` | owns | associazione | — | — | Verbo. |
+| DB06_Flights | `Flight "*" -- "1" Airport : arrives to` | arrives to | associazione | — | — | Verbo. |
+| DB06_Flights | `Flight "*" -- "1" Airport : departs from` | departs from | associazione | — | — | Verbo. |
+| DB06_Flights | `Aircraft "1" -- "*" Flight : uses` | uses | associazione | — | — | Verbo. |
+| DB06_Flights | `Flight -- "2..n" Pilot : Driven by` | Driven by | associazione | — | — | Verbo (passivo). |
+| DB06_Flights | `Aircraft "*" -- "1" AircraftType : is of` | is of | associazione | — | — | Verbo. |
+| DB06_Flights | `AircraftType "*" -- "*" Pilot : Navigator of` | Navigator of | ruolo | Pilot | Pilot è il/la Navigator di AircraftType | Decisione utente (2026-10-03): 'X of' = sostantivo + preposizione, senza triangolo di verso di lettura -> RUOLO sull'estremo Pilot, testo = il sostantivo con la maiuscola come scritto (precedente Louvre hasCoach -> coach). |
+| DB06_Flights | `AircraftType "*" -- "1..n" Pilot : Copilot of` | Copilot of | ruolo | Pilot | Pilot è il/la Copilot di AircraftType | Decisione utente (2026-10-03): 'X of' = sostantivo + preposizione, senza triangolo di verso di lettura -> RUOLO sull'estremo Pilot, testo = il sostantivo con la maiuscola come scritto (precedente Louvre hasCoach -> coach). |
+| DB06_Flights | `AircraftType "*" -- "1" Pilot3 : Captain of` | Captain of | ruolo | Pilot3 | Pilot3 è il/la Captain di AircraftType | Decisione utente (2026-10-03): 'X of' = sostantivo + preposizione, senza triangolo di verso di lettura -> RUOLO sull'estremo Pilot3, testo = il sostantivo con la maiuscola come scritto (precedente Louvre hasCoach -> coach). |
+| DB08_VeterinaryClinic | `Owner --\|> Person : {DISJOINT, COMPLETE}` | {DISJOINT, COMPLETE} | vincolo | — | — | Vincolo sull'insieme di generalizzazione. |
+| DB08_VeterinaryClinic | `Physician --\|> Person : {DISJOINT, COMPLETE}` | {DISJOINT, COMPLETE} | vincolo | — | — | Come sopra. |
+| DB09_AutoRepair | `Employee --\|> Person : {Disjoint, Complete}` | {Disjoint, Complete} | vincolo | — | — | Vincolo sull'insieme di generalizzazione (scritto a mano; classi dopo la correzione 'maiuscolo tipografico'). |
+| DB09_AutoRepair | `Owner --\|> Person : {Disjoint, Complete}` | {Disjoint, Complete} | vincolo | — | — | Come sopra. |
+| DB10_Restaurant | `Client --\|> Person : {OVERLAPPING, COMPLETE}` | {OVERLAPPING, COMPLETE} | vincolo | — | — | Vincolo sull'insieme di generalizzazione. |
+| DB10_Restaurant | `Waiter --\|> Person : {OVERLAPPING, COMPLETE}` | {OVERLAPPING, COMPLETE} | vincolo | — | — | Come sopra. |
+| DB11_Deliveries | `CUSTOMER --\|> Person : {DISJOINT, COMPLETE}` | {DISJOINT, COMPLETE} | vincolo | — | — | Vincolo sull'insieme di generalizzazione. |
+| DB11_Deliveries | `COURIER --\|> Person : {DISJOINT, COMPLETE}` | {DISJOINT, COMPLETE} | vincolo | — | — | Come sopra. |
+| DB11_Deliveries | `CUSTOMER "1" -- "*" Package : Sender` | Sender | ruolo | CUSTOMER | CUSTOMER è il/la Sender di Package | Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo CUSTOMER, testo come scritto. |
+| DB11_Deliveries | `CUSTOMER "1" -- "*" Package : Recipient` | Recipient | ruolo | CUSTOMER | CUSTOMER è il/la Recipient di Package | Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo CUSTOMER, testo come scritto. |
+| DB11_Deliveries | `Package "*" -- "1" DeliveryCenter : Dropoff point` | Dropoff point | ruolo | DeliveryCenter | DeliveryCenter è il/la Dropoff point di Package | Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo DeliveryCenter, testo come scritto. |
+| DB13_Factory | `CLIENT --\|> Person : {DISJOINT, COMPLETE}` | {DISJOINT, COMPLETE} | vincolo | — | — | Vincolo sull'insieme di generalizzazione. |
+| DB13_Factory | `WORKER --\|> Person : {DISJOINT, COMPLETE}` | {DISJOINT, COMPLETE} | vincolo | — | — | Come sopra. |
+| DB13_Factory | `CLIENT "1" -- "*" PURCHASEORDER : Issuer` | Issuer | ruolo | CLIENT | CLIENT è il/la Issuer di PURCHASEORDER | Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo CLIENT, testo come scritto. |
+| DB14_BicycleRental | `Reservation "*" -- "1" Bicycle : Actual Rented bike` | Actual Rented bike | ruolo | Bicycle | Bicycle è il/la Actual Rented bike di Reservation | Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo Bicycle, testo come scritto. |
+| DB14_BicycleRental | `Reservation "*" -- "1" BicycleModel : Desired Model` | Desired Model | ruolo | BicycleModel | BicycleModel è il/la Desired Model di Reservation | Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo BicycleModel, testo come scritto. |
+| DB16_OOBank | `OrganizationalUnit -- "*" Employee : worksFor` | worksFor | associazione | — | — | Verbo al centro della linea. |
+| DB16_OOBank | `Employee -- "*" Customer : personalBanker` | personalBanker | ruolo | Employee | Employee è il/la personalBanker di Customer | Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo Employee, testo come scritto. |
+| DB16_OOBank | `Customer "1..2" -- "*" Account : accountHolder` | accountHolder | ruolo | Customer | Customer è il/la accountHolder di Account | Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo Customer, testo come scritto. |
+| DB18_LibrarySystem | `User "1" -- "1..4" Book : borrow` | borrow | associazione | — | — | Verbo al centro della linea. |
 
 ## Totali
-- Etichette originali nel PlantUML sorgente: 156 (1 delle quali, TileOGame `connections/tiles`, sdoppiata in 2 righe di ruolo distinte — 157 righe totali in tabella)
-- associazione: 50
-- ruolo: 98
-- vincolo: 9
+- Etichette originali nel PlantUML sorgente: 203 (1 delle quali, TileOGame `connections/tiles`, sdoppiata in 2 righe di ruolo distinte — 204 righe totali in tabella)
+- associazione: 74
+- ruolo: 109
+- vincolo: 21
 - qualificatore: 0
 - dubbio: 0

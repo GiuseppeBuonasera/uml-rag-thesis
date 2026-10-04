@@ -1448,5 +1448,403 @@
     "target": "Course",
     "label": "Teaches",
     "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB01_ProjectManagementSystem",
+    "source": "Project",
+    "op": "--",
+    "target": "Requirement",
+    "label": "Input",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB01_ProjectManagementSystem",
+    "source": "Project",
+    "op": "--",
+    "target": "System",
+    "label": "Output",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB01_ProjectManagementSystem",
+    "source": "Manager",
+    "op": "--",
+    "target": "Project",
+    "label": "Manage",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB01_ProjectManagementSystem",
+    "source": "Team",
+    "op": "--",
+    "target": "Project",
+    "label": "Execute",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB01_ProjectManagementSystem",
+    "source": "Manager",
+    "op": "--",
+    "target": "Team",
+    "label": "Lead",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB02_HollywoodApproach",
+    "source": "Take",
+    "op": "--",
+    "target": "Setup",
+    "label": "tk_of_stp",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB02_HollywoodApproach",
+    "source": "Scene",
+    "op": "--",
+    "target": "Setup",
+    "label": "stp_for_scn",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB02_HollywoodApproach",
+    "source": "Internal",
+    "op": "--|>",
+    "target": "Scene",
+    "label": "{complete, disjoint}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB02_HollywoodApproach",
+    "source": "External",
+    "op": "--|>",
+    "target": "Scene",
+    "label": "{complete, disjoint}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB02_HollywoodApproach",
+    "source": "External",
+    "op": "--",
+    "target": "Location",
+    "label": "located",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB04_PatientRecordAndSchedulingSystem",
+    "source": "FamilyInsured",
+    "op": "--",
+    "target": "Doctor",
+    "label": "hasPrimaryCare",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB05_MovieShop",
+    "source": "User",
+    "op": "-->",
+    "target": "MovieShop",
+    "label": "uses",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB05_MovieShop",
+    "source": "MovieShop",
+    "op": "--",
+    "target": "Card",
+    "label": "make",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB05_MovieShop",
+    "source": "MovieShop",
+    "op": "-->",
+    "target": "Order",
+    "label": "make",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB05_MovieShop",
+    "source": "Subscriber",
+    "op": "-->",
+    "target": "Card",
+    "label": "has",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB05_MovieShop",
+    "source": "Order",
+    "op": "--",
+    "target": "MovieBuy",
+    "label": "related to",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB05_MovieShop",
+    "source": "Subscriber",
+    "op": "-->",
+    "target": "MovieRent",
+    "label": "hire",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "Airline",
+    "op": "--",
+    "target": "Flight",
+    "label": "offers",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "Airline",
+    "op": "--",
+    "target": "Aircraft",
+    "label": "owns",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "Flight",
+    "op": "--",
+    "target": "Airport",
+    "label": "arrives to",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "Flight",
+    "op": "--",
+    "target": "Airport",
+    "label": "departs from",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "Aircraft",
+    "op": "--",
+    "target": "Flight",
+    "label": "uses",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "Flight",
+    "op": "--",
+    "target": "Pilot",
+    "label": "Driven by",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "Aircraft",
+    "op": "--",
+    "target": "AircraftType",
+    "label": "is of",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "AircraftType",
+    "op": "--",
+    "target": "Pilot",
+    "label": "Navigator of",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "Navigator"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "AircraftType",
+    "op": "--",
+    "target": "Pilot",
+    "label": "Copilot of",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "Copilot"
+  },
+  {
+    "esercizio": "DB06_Flights",
+    "source": "AircraftType",
+    "op": "--",
+    "target": "Pilot3",
+    "label": "Captain of",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "Captain"
+  },
+  {
+    "esercizio": "DB08_VeterinaryClinic",
+    "source": "Owner",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{DISJOINT, COMPLETE}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB08_VeterinaryClinic",
+    "source": "Physician",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{DISJOINT, COMPLETE}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB09_AutoRepair",
+    "source": "Employee",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{Disjoint, Complete}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB09_AutoRepair",
+    "source": "Owner",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{Disjoint, Complete}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB10_Restaurant",
+    "source": "Client",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{OVERLAPPING, COMPLETE}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB10_Restaurant",
+    "source": "Waiter",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{OVERLAPPING, COMPLETE}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB11_Deliveries",
+    "source": "CUSTOMER",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{DISJOINT, COMPLETE}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB11_Deliveries",
+    "source": "COURIER",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{DISJOINT, COMPLETE}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB11_Deliveries",
+    "source": "CUSTOMER",
+    "op": "--",
+    "target": "Package",
+    "label": "Sender",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "Sender"
+  },
+  {
+    "esercizio": "DB11_Deliveries",
+    "source": "CUSTOMER",
+    "op": "--",
+    "target": "Package",
+    "label": "Recipient",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "Recipient"
+  },
+  {
+    "esercizio": "DB11_Deliveries",
+    "source": "Package",
+    "op": "--",
+    "target": "DeliveryCenter",
+    "label": "Dropoff point",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "Dropoff point"
+  },
+  {
+    "esercizio": "DB13_Factory",
+    "source": "CLIENT",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{DISJOINT, COMPLETE}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB13_Factory",
+    "source": "WORKER",
+    "op": "--|>",
+    "target": "Person",
+    "label": "{DISJOINT, COMPLETE}",
+    "tipo": "vincolo"
+  },
+  {
+    "esercizio": "DB13_Factory",
+    "source": "CLIENT",
+    "op": "--",
+    "target": "PURCHASEORDER",
+    "label": "Issuer",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "Issuer"
+  },
+  {
+    "esercizio": "DB14_BicycleRental",
+    "source": "Reservation",
+    "op": "--",
+    "target": "Bicycle",
+    "label": "Actual Rented bike",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "Actual Rented bike"
+  },
+  {
+    "esercizio": "DB14_BicycleRental",
+    "source": "Reservation",
+    "op": "--",
+    "target": "BicycleModel",
+    "label": "Desired Model",
+    "tipo": "ruolo",
+    "estremo": "target",
+    "testo": "Desired Model"
+  },
+  {
+    "esercizio": "DB16_OOBank",
+    "source": "OrganizationalUnit",
+    "op": "--",
+    "target": "Employee",
+    "label": "worksFor",
+    "tipo": "associazione"
+  },
+  {
+    "esercizio": "DB16_OOBank",
+    "source": "Employee",
+    "op": "--",
+    "target": "Customer",
+    "label": "personalBanker",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "personalBanker"
+  },
+  {
+    "esercizio": "DB16_OOBank",
+    "source": "Customer",
+    "op": "--",
+    "target": "Account",
+    "label": "accountHolder",
+    "tipo": "ruolo",
+    "estremo": "source",
+    "testo": "accountHolder"
+  },
+  {
+    "esercizio": "DB18_LibrarySystem",
+    "source": "User",
+    "op": "--",
+    "target": "Book",
+    "label": "borrow",
+    "tipo": "associazione"
   }
 ]

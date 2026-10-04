@@ -5,10 +5,20 @@ del corpus (corpus.jsonl) e (b) i 20 esercizi De Bari (docs/dati/debari/Exercise
 Top-3 con punteggio e titolo per ciascun confronto; segnala se il punteggio > 0.4.
 
 Vettorizzazione: TfidfVectorizer(stop_words="english", sublinear_tf=True) addestrata
-sull'unione corpus + De Bari (idf comune). Richiede pypdf e scikit-learn.
+sull'unione dei testi indicizzati (idf comune). Richiede pypdf e scikit-learn.
+
+Opzioni (2026-10-03, FASE 5 test set De Bari; senza opzioni il comportamento e' invariato):
+- --debari-test: i 20 esercizi De Bari sono presi da corpus/processed/testset_debari.jsonl
+  (descrizioni pulite, id DBNN_...) invece che dal testo grezzo del PDF; i bersagli possono
+  essere id DBNN_ (oppure --all-debari per tutti e 20).
+- --prompt: indicizza anche le descrizioni degli esempi few-shot del prompt statico
+  (docs/dati/apollon_format_reference/prompt_template_v4.txt: bank loans, AirTravel) come pool
+  separato "prompt" (id PROMPT_example_1_bank_loans, PROMPT_example_2_airtravel).
 
 Uso:
     python corpus/leakage_check.py Hospital ResearchCenter ...
+    python corpus/leakage_check.py --debari-test --prompt --all-debari
+    python corpus/leakage_check.py --debari-test --prompt DB06_Flights --vs AirTravel
 """
 
 from __future__ import annotations
@@ -24,6 +34,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 ROOT = Path(__file__).parent.parent
 THRESHOLD = 0.4
+PROMPT_PATH = ROOT / "docs/dati/apollon_format_reference/prompt_template_v4.txt"
+TESTSET_PATH = ROOT / "corpus/processed/testset_debari.jsonl"
 
 
 def load_debari() -> dict[str, str]:
@@ -35,6 +47,23 @@ def load_debari() -> dict[str, str]:
     return out
 
 
+def load_debari_test() -> dict[str, str]:
+    if not TESTSET_PATH.exists():
+        raise SystemExit(f"{TESTSET_PATH} non trovato: esegui build_manifest.py --split debari_test")
+    records = [json.loads(l) for l in TESTSET_PATH.read_text(encoding="utf-8").splitlines() if l.strip()]
+    return {r["id"]: r["description"] for r in records}
+
+
+def load_prompt_examples() -> dict[str, str]:
+    """Descrizioni degli esempi few-shot del prompt statico ('Example N — text:' ... 'Example N — JSON: see
+    file <nome>.json'), con id PROMPT_<nome file senza _v4.json>."""
+    text = PROMPT_PATH.read_text(encoding="utf-8")
+    found = re.findall(r"Example (\d) — text:\n(.*?)\nExample \1 — JSON: see file (\S+?)_v4\.json", text, re.S)
+    if len(found) != 2:
+        raise SystemExit(f"{PROMPT_PATH.name}: attesi 2 esempi few-shot, trovati {len(found)}")
+    return {f"PROMPT_{name}": body.strip() for _, body, name in found}
+
+
 def main() -> None:
     args = sys.argv[1:]
     # --vs <id>: riporta anche il punteggio verso un esercizio specifico, anche se sotto
@@ -44,25 +73,39 @@ def main() -> None:
         i = args.index("--vs")
         extra.append(args[i + 1])
         del args[i : i + 2]
-    targets = args
-    if not targets:
-        raise SystemExit("uso: python corpus/leakage_check.py <id> [<id> ...] [--vs <id>]")
+    debari_test = "--debari-test" in args
+    with_prompt = "--prompt" in args
+    all_debari = "--all-debari" in args
+    targets = [a for a in args if a not in ("--debari-test", "--prompt", "--all-debari")]
+
     records = [json.loads(l) for l in (ROOT / "corpus/processed/corpus.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
     corpus = {r["id"]: r["description"] for r in records}
-    debari = load_debari()
+    debari = load_debari_test() if debari_test else load_debari()
+    prompt = load_prompt_examples() if with_prompt else {}
+    if all_debari:
+        targets += list(debari)
+    if not targets:
+        raise SystemExit("uso: python corpus/leakage_check.py <id> [<id> ...] [--vs <id>] "
+                         "[--debari-test] [--prompt] [--all-debari]")
 
-    names = list(corpus) + list(debari)
-    texts = list(corpus.values()) + list(debari.values())
+    names = list(corpus) + list(debari) + list(prompt)
+    texts = list(corpus.values()) + list(debari.values()) + list(prompt.values())
     vec = TfidfVectorizer(stop_words="english", sublinear_tf=True)
     matrix = vec.fit_transform(texts)
     index = {n: i for i, n in enumerate(names)}
 
+    pools = [("corpus", list(corpus))]
+    if not debari_test:
+        pools.append(("De Bari", list(debari)))
+    if prompt:
+        pools.append(("prompt statico", list(prompt)))
+
     for t in targets:
         if t not in index:
-            print(f"{t}: non nel corpus (esegui build_manifest.py)")
+            print(f"{t}: non indicizzato (esegui build_manifest.py)")
             continue
         sims = cosine_similarity(matrix[index[t]], matrix)[0]
-        for label, pool in (("corpus", list(corpus)), ("De Bari", list(debari))):
+        for label, pool in pools:
             ranked = sorted(((sims[index[n]], n) for n in pool if n != t), reverse=True)[:3]
             flag = "  <-- > 0.4" if ranked and ranked[0][0] > THRESHOLD else ""
             print(f"{t} vs {label}:{flag}")

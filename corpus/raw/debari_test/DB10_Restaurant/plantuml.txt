@@ -1,0 +1,57 @@
+@startuml
+
+class INGREDIENT {
+  Name
+  Unit
+  Stock
+}
+
+class DISH {
+  ID
+  NAME
+}
+
+class Meal {
+  DATE
+  STARTTIME
+  ENDTIME
+}
+
+class TABLE {
+  ID
+  CAPACITY
+}
+
+class Person {
+  NAME
+  ADDRESS
+}
+
+class Client {
+  TAX_ID
+}
+
+class Waiter {
+  ID
+  PHONE
+}
+
+class INGREDIENTDISH {
+  Quantity
+}
+
+class DISHMeal {
+  Times_Served
+}
+
+INGREDIENT "1..*" -- "*" DISH
+(INGREDIENT, DISH) .. INGREDIENTDISH
+DISH "*" -- "*" Meal
+(DISH, Meal) .. DISHMeal
+Meal "*" -- "1" TABLE
+Meal "*" -- "0..1" Client
+Meal "*" -- "1" Waiter
+Client --|> Person : {OVERLAPPING, COMPLETE}
+Waiter --|> Person : {OVERLAPPING, COMPLETE}
+
+@enduml

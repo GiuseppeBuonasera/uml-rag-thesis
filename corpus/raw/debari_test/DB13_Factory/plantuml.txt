@@ -1,0 +1,60 @@
+@startuml
+
+class Person {
+  FIRSTNAME
+  SURNAME
+  ADDRESS
+}
+
+class CLIENT {
+  PHONE
+  CONTACT_PERSON
+}
+
+class WORKER {
+  BIRTH_DATE
+}
+
+class SKILL {
+  NAME
+}
+
+class MACHINE {
+  SERIAL
+  MAKE
+  MODEL
+  PURCHASE_DATE
+}
+
+class PRODUCT_TYPE {
+  MATERIAL
+  WEIGHT
+}
+
+class PRODUCT {
+  ID
+  NAME
+}
+
+class PURCHASEORDER {
+  NUMBER
+  DATE
+  EXPECTED_DEL
+  ACTUAL_DEL
+}
+
+class PRODUCTPURCHASEORDER {
+  Quantity
+}
+
+CLIENT --|> Person : {DISJOINT, COMPLETE}
+WORKER --|> Person : {DISJOINT, COMPLETE}
+WORKER "*" -- "*" SKILL
+WORKER "*" -- "*" MACHINE
+MACHINE "1" -- "*" PRODUCT_TYPE
+PRODUCT_TYPE "1" -- "*" PRODUCT
+CLIENT "1" -- "*" PURCHASEORDER : Issuer
+PRODUCT "*" -- "*" PURCHASEORDER
+(PRODUCT, PURCHASEORDER) .. PRODUCTPURCHASEORDER
+
+@enduml

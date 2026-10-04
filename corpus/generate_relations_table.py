@@ -15,10 +15,15 @@ totale di classi e di relazioni. I nomi EN sono ottenuti applicando
 glossary.json (apply_glossary.apply_glossary), non riparsando plantuml.txt —
 la corrispondenza IT/EN esatta e' gia' verificata da check_translated.py.
 
+Modalita' --english (2026-10-02, test set De Bari): per esercizi gia' in
+inglese legge plantuml.txt, nessun glossario, colonne IT omesse.
+
 Uso:
     python corpus/generate_relations_table.py <cartella_esercizio>
     (legge <cartella_esercizio>/plantuml_it.txt e glossary.json, scrive
     <cartella_esercizio>/relations_table.md)
+    python corpus/generate_relations_table.py --english <cartella_esercizio>
+    (legge <cartella_esercizio>/plantuml.txt, scrive relations_table.md)
 """
 
 from __future__ import annotations
@@ -63,19 +68,22 @@ def relation_row(r: dict, glossary: dict[str, str]) -> tuple[str, str, str, str,
     )
 
 
-def main() -> None:
-    if len(sys.argv) != 2:
-        raise SystemExit("uso: python corpus/generate_relations_table.py <cartella_esercizio>")
-    folder = Path(sys.argv[1])
-    it_path = folder / "plantuml_it.txt"
-    glossary_path = folder / "glossary.json"
-    if not it_path.exists():
-        raise SystemExit(f"non trovato: {it_path}")
-    if not glossary_path.exists():
-        raise SystemExit(f"non trovato: {glossary_path}")
+def build_table(folder: Path, english: bool = False) -> list[str]:
+    """Righe di relations_table.md. english=True: sorgente plantuml.txt, nessun glossario,
+    solo colonne EN; altrimenti plantuml_it.txt + glossary.json, colonne IT ed EN."""
+    src_name = "plantuml.txt" if english else "plantuml_it.txt"
+    src_path = folder / src_name
+    if not src_path.exists():
+        raise SystemExit(f"non trovato: {src_path}")
+    if english:
+        glossary: dict[str, str] = {}
+    else:
+        glossary_path = folder / "glossary.json"
+        if not glossary_path.exists():
+            raise SystemExit(f"non trovato: {glossary_path}")
+        glossary = ag.load_term_glossary(folder)
 
-    glossary = ag.load_term_glossary(folder)
-    text = it_path.read_text(encoding="utf-8")
+    text = src_path.read_text(encoding="utf-8")
     classes, relationships, warnings, unsupported = ac.parse_plantuml(text)
     if unsupported:
         raise SystemExit(f"costrutti non supportati, tabella non generata: {unsupported}")
@@ -83,30 +91,48 @@ def main() -> None:
     n_classes = sum(1 for pc in classes.values() if not pc.placeholder)
     n_placeholder = sum(1 for pc in classes.values() if pc.placeholder)
 
-    lines = [
-        f"# Tabella delle relazioni — {folder.name}",
-        "",
-        f"Generata da `corpus/generate_relations_table.py` a partire da `plantuml_it.txt` "
+    counts = (
         f"({sum(1 for r in relationships if r['kind']=='binary')} relazioni binarie, "
-        f"{sum(1 for r in relationships if r['kind']=='assoc_class')} classi associative). "
-        "Nomi EN da glossary.json.",
-        "",
-        "| Classe A (IT) | Classe A (EN) | Classe B (IT) | Classe B (EN) | Tipo | Molt. A | Molt. B | Ruolo estremo A | Ruolo estremo B | Etichetta |",
-        "|---|---|---|---|---|---|---|---|---|---|",
-    ]
+        f"{sum(1 for r in relationships if r['kind']=='assoc_class')} classi associative)."
+    )
+    if english:
+        lines = [
+            f"# Tabella delle relazioni — {folder.name}",
+            "",
+            f"Generata da `corpus/generate_relations_table.py --english` a partire da `plantuml.txt` {counts}",
+            "",
+            "| Classe A | Classe B | Tipo | Molt. A | Molt. B | Ruolo estremo A | Ruolo estremo B | Etichetta |",
+            "|---|---|---|---|---|---|---|---|",
+        ]
+    else:
+        lines = [
+            f"# Tabella delle relazioni — {folder.name}",
+            "",
+            f"Generata da `corpus/generate_relations_table.py` a partire da `plantuml_it.txt` {counts} "
+            "Nomi EN da glossary.json.",
+            "",
+            "| Classe A (IT) | Classe A (EN) | Classe B (IT) | Classe B (EN) | Tipo | Molt. A | Molt. B | Ruolo estremo A | Ruolo estremo B | Etichetta |",
+            "|---|---|---|---|---|---|---|---|---|---|",
+        ]
 
     for r in relationships:
         if r["kind"] == "binary":
             a_it, a_en, b_it, b_en, tipo, ma, mb, ra, rb, etichetta = relation_row(r, glossary)
-            lines.append(f"| {a_it} | {a_en} | {b_it} | {b_en} | {tipo} | {ma} | {mb} | {ra} | {rb} | {etichetta} |")
+            if english:
+                lines.append(f"| {a_en} | {b_en} | {tipo} | {ma} | {mb} | {ra} | {rb} | {etichetta} |")
+            else:
+                lines.append(f"| {a_it} | {a_en} | {b_it} | {b_en} | {tipo} | {ma} | {mb} | {ra} | {rb} | {etichetta} |")
         elif r["kind"] == "assoc_class":
             assoc_en = ag.apply_glossary(r["assoc"], glossary)
             a_en = ag.apply_glossary(r["a"], glossary)
             b_en = ag.apply_glossary(r["b"], glossary)
-            lines.append(
-                f"| {r['assoc']} | {assoc_en} | {r['a']}, {r['b']} | {a_en}, {b_en} | classe associativa "
-                f"| — | — | — | — | approssimata con 2 associazioni semplici (vedi apollon_conversion_warnings) |"
-            )
+            tail = "| — | — | — | — | approssimata con 2 associazioni semplici (vedi apollon_conversion_warnings) |"
+            if english:
+                lines.append(f"| {assoc_en} | {a_en}, {b_en} | classe associativa {tail}")
+            else:
+                lines.append(
+                    f"| {r['assoc']} | {assoc_en} | {r['a']}, {r['b']} | {a_en}, {b_en} | classe associativa {tail}"
+                )
 
     if warnings:
         lines.append("")
@@ -118,7 +144,17 @@ def main() -> None:
     lines.append("## Totali")
     lines.append(f"- Classi: {n_classes}" + (f" (+ {n_placeholder} placeholder non dichiarate)" if n_placeholder else ""))
     lines.append(f"- Relazioni: {len(relationships)}")
+    return lines
 
+
+def main() -> None:
+    args = sys.argv[1:]
+    english = "--english" in args
+    args = [a for a in args if a != "--english"]
+    if len(args) != 1:
+        raise SystemExit("uso: python corpus/generate_relations_table.py [--english] <cartella_esercizio>")
+    folder = Path(args[0])
+    lines = build_table(folder, english)
     out_path = folder / "relations_table.md"
     out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Scritto: {out_path}")

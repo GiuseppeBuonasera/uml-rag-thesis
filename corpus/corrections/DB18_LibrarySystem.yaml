@@ -1,0 +1,13 @@
+# Test set De Bari, es. 18 Library System (2026-10-03). Tipi generici Java 'List<X>' non rappresentabili
+# come tipo ammesso: convenzione gia' approvata per gli attributi multi-valore 'tipo[]' (RepairShops,
+# string{1..*} -> string[]). Categoria chiarimento_modellazione: cambia solo la notazione.
+- type: replace_line
+  category: chiarimento_modellazione
+  match: '-borrow_his:List<Borrow>'
+  replacement: '  -borrow_his:Borrow[]'
+  reason: "tipo generico List<Borrow> -> Borrow[] (convenzione multi-valore 'tipo[]')."
+- type: replace_line
+  category: chiarimento_modellazione
+  match: '-Books:List<Book>'
+  replacement: '  -Books:Book[]'
+  reason: "tipo generico List<Book> -> Book[] (convenzione multi-valore 'tipo[]')."

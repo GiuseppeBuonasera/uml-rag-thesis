@@ -469,6 +469,61 @@ CLASSIFICATION = {
     ("EatAtHome", "Order", "--", "Dish", "contains"): ("associazione", None, "Verbo ('contains ►')."),
     ("EatAtHome", "Dish", "--", "Ingredient", "contains"): ("associazione", None, "Verbo ('contains ►')."),
     ("ApartmentBuilding", "Apartment", "--", "Person", "isOwnedBy"): ("associazione", None, "Verbo ('è posseduto'), al centro della linea."),
+    # --- Test set De Bari, Gruppo DB-A (es. 1-5), APPROVATE dall'utente (2026-10-03) ---
+    ("DB01_ProjectManagementSystem", "Project", "--", "Requirement", "Input"): (
+        "associazione", None,
+        "Decisione utente: nome di ASSOCIAZIONE, non ruolo, perche' ha il triangolo pieno del verso di "
+        "lettura (◄), che i nomi di ruolo non hanno (anche se 'Input' e' anche un sostantivo)."
+    ),
+    ("DB01_ProjectManagementSystem", "Project", "--", "System", "Output"): ("associazione", None, "Come 'Input': triangolo pieno di verso di lettura (►), quindi nome di associazione."),
+    ("DB01_ProjectManagementSystem", "Manager", "--", "Project", "Manage"): ("associazione", None, "Verbo con triangolo pieno di verso di lettura (►)."),
+    ("DB01_ProjectManagementSystem", "Team", "--", "Project", "Execute"): ("associazione", None, "Verbo con triangolo pieno di verso di lettura (◄)."),
+    ("DB01_ProjectManagementSystem", "Manager", "--", "Team", "Lead"): ("associazione", None, "Verbo al centro della linea."),
+    ("DB02_HollywoodApproach", "Take", "--", "Setup", "tk_of_stp"): ("associazione", None, "Nome di relazione al centro della linea ('take of setup')."),
+    ("DB02_HollywoodApproach", "Scene", "--", "Setup", "stp_for_scn"): ("associazione", None, "Nome di relazione al centro della linea ('setup for scene')."),
+    ("DB02_HollywoodApproach", "External", "--", "Location", "located"): ("associazione", None, "Verbo (participio) al centro della linea."),
+    ("DB02_HollywoodApproach", "Internal", "--|>", "Scene", "{complete, disjoint}"): ("vincolo", None, "Vincolo UML sull'insieme di generalizzazione Internal/External."),
+    ("DB02_HollywoodApproach", "External", "--|>", "Scene", "{complete, disjoint}"): ("vincolo", None, "Come sopra."),
+    ("DB04_PatientRecordAndSchedulingSystem", "FamilyInsured", "--", "Doctor", "hasPrimaryCare"): ("associazione", None, "Verbo."),
+    ("DB05_MovieShop", "User", "-->", "MovieShop", "uses"): ("associazione", None, "Verbo."),
+    ("DB05_MovieShop", "MovieShop", "--", "Card", "make"): ("associazione", None, "Verbo."),
+    ("DB05_MovieShop", "MovieShop", "-->", "Order", "make"): ("associazione", None, "Verbo."),
+    ("DB05_MovieShop", "Subscriber", "-->", "Card", "has"): ("associazione", None, "Verbo."),
+    ("DB05_MovieShop", "Order", "--", "MovieBuy", "related to"): ("associazione", None, "Verbo."),
+    ("DB05_MovieShop", "Subscriber", "-->", "MovieRent", "hire"): ("associazione", None, "Verbo."),
+    # --- Test set De Bari, Gruppo DB-B (es. 6-10), APPROVATE dall'utente (2026-10-03) ---
+    ("DB06_Flights", "Airline", "--", "Flight", "offers"): ("associazione", None, "Verbo."),
+    ("DB06_Flights", "Airline", "--", "Aircraft", "owns"): ("associazione", None, "Verbo."),
+    ("DB06_Flights", "Flight", "--", "Airport", "arrives to"): ("associazione", None, "Verbo."),
+    ("DB06_Flights", "Flight", "--", "Airport", "departs from"): ("associazione", None, "Verbo."),
+    ("DB06_Flights", "Aircraft", "--", "Flight", "uses"): ("associazione", None, "Verbo."),
+    ("DB06_Flights", "Flight", "--", "Pilot", "Driven by"): ("associazione", None, "Verbo (passivo)."),
+    ("DB06_Flights", "Aircraft", "--", "AircraftType", "is of"): ("associazione", None, "Verbo."),
+    ("DB06_Flights", "AircraftType", "--", "Pilot", "Navigator of"): ("ruolo", {"estremo": "Pilot", "testo": "Navigator"}, "Decisione utente (2026-10-03): 'X of' = sostantivo + preposizione, senza triangolo di verso di lettura -> RUOLO sull'estremo Pilot, testo = il sostantivo con la maiuscola come scritto (precedente Louvre hasCoach -> coach)."),
+    ("DB06_Flights", "AircraftType", "--", "Pilot", "Copilot of"): ("ruolo", {"estremo": "Pilot", "testo": "Copilot"}, "Decisione utente (2026-10-03): 'X of' = sostantivo + preposizione, senza triangolo di verso di lettura -> RUOLO sull'estremo Pilot, testo = il sostantivo con la maiuscola come scritto (precedente Louvre hasCoach -> coach)."),
+    ("DB06_Flights", "AircraftType", "--", "Pilot3", "Captain of"): ("ruolo", {"estremo": "Pilot3", "testo": "Captain"}, "Decisione utente (2026-10-03): 'X of' = sostantivo + preposizione, senza triangolo di verso di lettura -> RUOLO sull'estremo Pilot3, testo = il sostantivo con la maiuscola come scritto (precedente Louvre hasCoach -> coach)."),
+    ("DB08_VeterinaryClinic", "Owner", "--|>", "Person", "{DISJOINT, COMPLETE}"): ("vincolo", None, "Vincolo sull'insieme di generalizzazione."),
+    ("DB08_VeterinaryClinic", "Physician", "--|>", "Person", "{DISJOINT, COMPLETE}"): ("vincolo", None, "Come sopra."),
+    ("DB09_AutoRepair", "Employee", "--|>", "Person", "{Disjoint, Complete}"): ("vincolo", None, "Vincolo sull'insieme di generalizzazione (scritto a mano; classi dopo la correzione 'maiuscolo tipografico')."),
+    ("DB09_AutoRepair", "Owner", "--|>", "Person", "{Disjoint, Complete}"): ("vincolo", None, "Come sopra."),
+    ("DB10_Restaurant", "Client", "--|>", "Person", "{OVERLAPPING, COMPLETE}"): ("vincolo", None, "Vincolo sull'insieme di generalizzazione."),
+    ("DB10_Restaurant", "Waiter", "--|>", "Person", "{OVERLAPPING, COMPLETE}"): ("vincolo", None, "Come sopra."),
+    # --- Test set De Bari, Gruppo DB-C (es. 11-15), APPROVATE dall'utente (2026-10-03) ---
+    ("DB11_Deliveries", "CUSTOMER", "--|>", "Person", "{DISJOINT, COMPLETE}"): ("vincolo", None, "Vincolo sull'insieme di generalizzazione."),
+    ("DB11_Deliveries", "COURIER", "--|>", "Person", "{DISJOINT, COMPLETE}"): ("vincolo", None, "Come sopra."),
+    ("DB11_Deliveries", "CUSTOMER", "--", "Package", "Sender"): ("ruolo", {"estremo": "CUSTOMER", "testo": "Sender"}, "Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo CUSTOMER, testo come scritto."),
+    ("DB11_Deliveries", "CUSTOMER", "--", "Package", "Recipient"): ("ruolo", {"estremo": "CUSTOMER", "testo": "Recipient"}, "Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo CUSTOMER, testo come scritto."),
+    ("DB11_Deliveries", "Package", "--", "DeliveryCenter", "Dropoff point"): ("ruolo", {"estremo": "DeliveryCenter", "testo": "Dropoff point"}, "Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo DeliveryCenter, testo come scritto."),
+    ("DB13_Factory", "CLIENT", "--|>", "Person", "{DISJOINT, COMPLETE}"): ("vincolo", None, "Vincolo sull'insieme di generalizzazione."),
+    ("DB13_Factory", "WORKER", "--|>", "Person", "{DISJOINT, COMPLETE}"): ("vincolo", None, "Come sopra."),
+    ("DB13_Factory", "CLIENT", "--", "PURCHASEORDER", "Issuer"): ("ruolo", {"estremo": "CLIENT", "testo": "Issuer"}, "Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo CLIENT, testo come scritto."),
+    ("DB14_BicycleRental", "Reservation", "--", "Bicycle", "Actual Rented bike"): ("ruolo", {"estremo": "Bicycle", "testo": "Actual Rented bike"}, "Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo Bicycle, testo come scritto."),
+    ("DB14_BicycleRental", "Reservation", "--", "BicycleModel", "Desired Model"): ("ruolo", {"estremo": "BicycleModel", "testo": "Desired Model"}, "Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo BicycleModel, testo come scritto."),
+    # --- Test set De Bari, Gruppo DB-D (es. 16-20), APPROVATE dall'utente (2026-10-03) ---
+    ("DB16_OOBank", "OrganizationalUnit", "--", "Employee", "worksFor"): ("associazione", None, "Verbo al centro della linea."),
+    ("DB16_OOBank", "Employee", "--", "Customer", "personalBanker"): ("ruolo", {"estremo": "Employee", "testo": "personalBanker"}, "Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo Employee, testo come scritto."),
+    ("DB16_OOBank", "Customer", "--", "Account", "accountHolder"): ("ruolo", {"estremo": "Customer", "testo": "accountHolder"}, "Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull'estremo Customer, testo come scritto."),
+    ("DB18_LibrarySystem", "User", "--", "Book", "borrow"): ("associazione", None, "Verbo al centro della linea."),
 }
 
 
@@ -504,6 +559,11 @@ def lettura_ruolo(estremo: str, role_text: str, src: str, tgt: str) -> str:
 
 def main() -> None:
     corpus = [json.loads(l) for l in open("corpus/processed/corpus.jsonl", encoding="utf-8")]
+    # test set De Bari (2026-10-03): stesse regole di classificazione, stesso file json
+    # (gli id DBNN_ non collidono con il corpus, vedi build_manifest.check_split_separation)
+    debari_path = Path("corpus/processed/testset_debari.jsonl")
+    if debari_path.exists():
+        corpus += [json.loads(l) for l in debari_path.read_text(encoding="utf-8").splitlines() if l.strip()]
     rows = []
     for rec in corpus:
         if not rec.get("diagram_plantuml"):

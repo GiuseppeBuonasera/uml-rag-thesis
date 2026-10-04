@@ -10,10 +10,14 @@ __pycache__/
 corpus/raw/*
 !corpus/raw/.gitkeep
 !corpus/raw/models_original/
+# test set De Bari (2026-10-02): versionato, tenuto fuori dal retrieval
+!corpus/raw/debari_test/
 corpus/processed/*
 !corpus/processed/.gitkeep
 !corpus/processed/apollon/
 !corpus/processed/corpus.jsonl
+!corpus/processed/testset_debari.jsonl
+!corpus/processed/apollon_debari/
 data/results/*
 !data/results/.gitkeep
 

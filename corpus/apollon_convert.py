@@ -85,7 +85,9 @@ Verifica a piu' livelli, ciascuno con uno scopo diverso:
 
 Uso:
     python corpus/build_manifest.py
-    python corpus/apollon_convert.py
+    python corpus/apollon_convert.py                       # split corpus (default)
+    python corpus/build_manifest.py --split debari_test
+    python corpus/apollon_convert.py --split debari_test   # test set De Bari
 """
 
 from __future__ import annotations
@@ -100,6 +102,15 @@ NAMESPACE = uuid.UUID("a5f3d2b0-6b8e-4e6a-9b1f-9b7f6f6b0a11")  # namespace fisso
 
 CORPUS_JSONL = Path(__file__).parent / "processed" / "corpus.jsonl"
 APOLLON_OUT_DIR = Path(__file__).parent / "processed" / "apollon"
+# Split (2026-10-02, vedi docs/decisions.md): "corpus" = corpus di retrieval
+# (comportamento storico), "debari_test" = test set De Bari, tenuto fuori dal retrieval.
+SPLITS = {
+    "corpus": (CORPUS_JSONL, APOLLON_OUT_DIR),
+    "debari_test": (
+        Path(__file__).parent / "processed" / "testset_debari.jsonl",
+        Path(__file__).parent / "processed" / "apollon_debari",
+    ),
+}
 SCHEMA_PATH = Path(__file__).parent.parent / "evaluation" / "uml-model-4.schema.json"
 
 MODEL_VERSION = "4.2.0"
@@ -123,8 +134,13 @@ REL_RE = re.compile(
 ASSOC1_RE = re.compile(r"^\s*(\w+)\s*\.{1,2}\s*\(\s*(\w+)\s*,\s*(\w+)\s*\)\s*$")
 ASSOC2_RE = re.compile(r"^\s*\(\s*(\w+)\s*,\s*(\w+)\s*\)\s*\.{1,2}\s*(\w+)\s*$")
 NOTE_RE = re.compile(r"^note\b.*\bas\s+(\w+)", re.IGNORECASE)
+NOTE_TEXT_RE = re.compile(r'^note\s+"([^"]*)"', re.IGNORECASE)
+END_CONSTRAINT_RE = re.compile(r"\{[^}]*\}")
+# "interface X" e "class X <<interface>>" -> kind "interface" (stereotype Apollon
+# "interface", 2026-10-02, test set De Bari es. 18): prima la parola chiave non era
+# riconosciuta e il blocco veniva scartato con un semplice warning.
 CLASS_HEADER_RE = re.compile(
-    r"^(abstract\s+class|class|enum)\s+(\w+)(?:\s*<<\w+>>)?\s*(\{)?\s*(\})?\s*$"
+    r"^(abstract\s+class|class|enum|interface)\s+(\w+)(?:\s*<<(\w+)>>)?\s*(\{)?\s*(\})?\s*$"
 )
 DIAMOND_RE = re.compile(r"^<>\s+(\w+)\s*$")
 
@@ -155,10 +171,27 @@ TYPE_NORMALIZATION = {
     "time": "time", "Time": "time",
     "datetime": "datetime", "DateTime": "datetime", "Datetime": "datetime",
     "long": "long", "Long": "long",
+    # regola generale approvata il 2026-10-03 (test set De Bari es. 2, accanto a Number -> int dei
+    # tradotti): Real -> double, Text -> string
+    "Real": "double",
+    "Text": "string",
+}
+
+# Tipi di dominio non disegnati (regola generale approvata il 2026-10-03, test set De Bari es. 19-20):
+# mappature globali come Number -> int, applicate SOLO in posizione di tipo e SOLO con queste maiuscole
+# (address/phone/price sono anche nomi di attributo). Tabella separata da TYPE_NORMALIZATION perche'
+# apply_glossary.normalize_types sostituisce per parola intera e non deve toccarle; e non si applicano se il
+# diagramma dichiara una classe con quel nome (es. SmartHomeAutomationSystem dichiara 'Address').
+DOMAIN_TYPE_MAPPING = {
+    "Guid": "string",
+    "Address": "string",
+    "Phone": "string",
+    "Supplier": "string",
+    "Price": "double",
 }
 
 
-def normalize_type_token(t: str) -> str:
+def normalize_type_token(t: str, declared: frozenset[str] | set[str] = frozenset()) -> str:
     """Tipi noti (attributi e tipi di ritorno dei metodi) normalizzati a una grafia
     unica. Un tipo non in questa tabella e' presumibilmente il nome di una classe o
     enum del diagramma (es. 'Suit', 'RoomType'): resta invariato, non e' compito di
@@ -172,7 +205,9 @@ def normalize_type_token(t: str) -> str:
     Apollon dedicato per attributi multi-valore, questa e' solo una convenzione
     testuale nel nome visualizzato (vedi anche prompt_template_v4.txt)."""
     if t.endswith("[]"):
-        return f"{normalize_type_token(t[:-2])}[]"
+        return f"{normalize_type_token(t[:-2], declared)}[]"
+    if t in DOMAIN_TYPE_MAPPING and t not in declared:
+        return DOMAIN_TYPE_MAPPING[t]
     return TYPE_NORMALIZATION.get(t, t)
 
 
@@ -182,6 +217,10 @@ def normalize_multiplicity(m: str) -> str:
     diretta o classe associativa reificata)."""
     if not m:
         return m
+    # tre punti '1...*' -> '1..*' (regola approvata il 2026-10-03, test set De Bari es. 2): notazione
+    # non UML, normalizzata come 'n' -> '*'; build_apollon_json ne registra un warning
+    if "..." in m:
+        m = re.sub(r"\.{3,}", "..", m)
     # 'N' maiuscola (es. RealEstateAgency, 2026-09-30) trattata come 'n'
     if m in ("n", "N"):
         return "*"
@@ -190,7 +229,7 @@ def normalize_multiplicity(m: str) -> str:
     return m
 
 
-def parse_method_signature(raw: str) -> str:
+def parse_method_signature(raw: str, declared: frozenset[str] | set[str] = frozenset()) -> str:
     """Formato unico '+ nome(parametri) : tipo' (o '+ nome(parametri)' se non c'e'
     un tipo di ritorno nel sorgente — mai inventato). Gestisce sia 'Tipo nome()'
     (stile Java, tipo di ritorno prima) sia 'nome() : Tipo' / 'nome():Tipo' (tipo di
@@ -225,7 +264,7 @@ def parse_method_signature(raw: str) -> str:
             ret_type, name = "", before
 
     if ret_type:
-        return f"+ {name}({params}) : {normalize_type_token(ret_type)}"
+        return f"+ {name}({params}) : {normalize_type_token(ret_type, declared)}"
     return f"+ {name}({params})"
 
 
@@ -238,7 +277,9 @@ def split_mult_role(raw: str) -> tuple[str, str]:
     sull'intera associazione. Nessuno dei 45 file originali del corpus ha uno
     spazio dentro le virgolette di una molteplicita' (verificato), quindi il
     parsing dei 45 esistenti non cambia comportamento."""
-    raw = raw.strip()
+    # vincolo di estremo '{ordered, unique}' (regola generale approvata il 2026-10-03, test set De Bari es. 20):
+    # tolto dal testo, non e' ne' molteplicita' ne' ruolo; parse_plantuml ne registra un warning (come i {XOR})
+    raw = " ".join(END_CONSTRAINT_RE.sub(" ", raw).split())
     if not raw:
         return "", ""
     parts = raw.split(None, 1)
@@ -276,7 +317,7 @@ def strip_reading_direction(label: str) -> str:
 class ParsedClass:
     def __init__(self, name: str, kind: str):
         self.name = name
-        self.kind = kind  # "class" | "abstract class" | "enum"
+        self.kind = kind  # "class" | "abstract class" | "enum" | "interface"
         self.attributes: list[tuple[str, str]] = []  # (nome, tipo) — tipo vuoto per i valori enum
         # Parallela a self.attributes (stesso indice): {"default": str|None,
         # "modifiers": list[str]} — modificatori {static}/{abstract}/{frozen}/
@@ -354,6 +395,7 @@ def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[
     warnings: list[str] = []
     unsupported: list[str] = []
     notes: set[str] = set()
+    note_texts: dict[str, str] = {}
 
     current: ParsedClass | None = None
 
@@ -379,7 +421,11 @@ def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[
 
         m = CLASS_HEADER_RE.match(line)
         if m:
-            kind, name, has_open, has_close = m.groups()
+            kind, name, stereotype, has_open, has_close = m.groups()
+            if stereotype == "interface":
+                kind = "interface"
+            elif stereotype and not (kind == "enum" and stereotype == "enum"):
+                warnings.append(f"stereotipo <<{stereotype}>> su '{name}' non rappresentato in Apollon")
             pc = ParsedClass(name, kind)
             classes[name] = pc
             if has_open and not has_close:
@@ -396,6 +442,8 @@ def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[
         note_m = NOTE_RE.match(line)
         if note_m:
             notes.add(note_m.group(1))
+            text_m = NOTE_TEXT_RE.match(line)
+            note_texts[note_m.group(1)] = text_m.group(1) if text_m else ""
             continue
 
         assoc_m = ASSOC1_RE.match(line) or ASSOC2_RE.match(line)
@@ -415,8 +463,23 @@ def parse_plantuml(text: str) -> tuple[dict[str, ParsedClass], list[dict], list[
             continue
 
         m = REL_RE.match(line)
+        if m and (m.group(1) in notes or m.group(5) in notes):
+            # nota/vincolo testuale attaccato a UNA classe ('N1 .. Reservation', 2026-10-03, test set De
+            # Bari es. 14): scartato come i vincoli {XOR} su coppie (stessa decisione), con il testo nel warning
+            note, other = (m.group(1), m.group(5)) if m.group(1) in notes else (m.group(5), m.group(1))
+            warnings.append(
+                f"scartato vincolo/nota '{note}' ({note_texts.get(note, '')!r}) su {other}: nessun costrutto "
+                "Apollon equivalente documentato"
+            )
+            continue
         if m:
             src, src_mult_raw, op, tgt_mult_raw, tgt, label = m.groups()
+            for side, raw_end in (("source", src_mult_raw), ("target", tgt_mult_raw)):
+                for constraint in END_CONSTRAINT_RE.findall(raw_end or ""):
+                    warnings.append(
+                        f"scartato vincolo di estremo '{constraint}' ({side} di {src} {op} {tgt}): nessun costrutto "
+                        "Apollon equivalente documentato"
+                    )
             src_mult, src_role = split_mult_role(src_mult_raw or "")
             tgt_mult, tgt_role = split_mult_role(tgt_mult_raw or "")
             relationships.append(
@@ -787,7 +850,7 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
             if pc.kind == "enum":
                 display = attr_name
             elif attr_type:
-                display = f"+ {attr_name} : {normalize_type_token(attr_type)}"
+                display = f"+ {attr_name} : {normalize_type_token(attr_type, set(classes))}"
             else:
                 display = f"+ {attr_name}"  # nessun tipo nel sorgente: non se ne inventa uno
                 warnings.append(f"attributo '{attr_name}' della classe '{name}' senza tipo dichiarato nel sorgente")
@@ -807,13 +870,15 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
         methods = []
         for i, method_sig in enumerate(pc.methods):
             method_id = stable_id(f"{model_id}:method:{name}:{method_sig}:{i}")
-            methods.append({"id": method_id, "name": parse_method_signature(method_sig)})
+            methods.append({"id": method_id, "name": parse_method_signature(method_sig, set(classes))})
 
         data: dict = {"name": name, "attributes": attributes, "methods": methods}
         if pc.kind == "abstract class":
             data["isAbstract"] = True
         elif pc.kind == "enum":
             data["stereotype"] = "enumeration"
+        elif pc.kind == "interface":
+            data["stereotype"] = "interface"
 
         node = {
             "id": node_id,
@@ -833,6 +898,12 @@ def build_apollon_json(model_id: str, classes: dict[str, ParsedClass], relations
         if source_name not in class_ids or target_name not in class_ids:
             warnings.append(f"relazione scartata, classe mancante: {source_name} -> {target_name}")
             return
+        for side, mult in (("source", source_mult), ("target", target_mult)):
+            if "..." in mult:
+                warnings.append(
+                    f"molteplicita' '{mult}' ({side} di {source_name} -> {target_name}) normalizzata a "
+                    f"'{normalize_multiplicity(mult)}' (tre punti, notazione non UML)"
+                )
         source_mult = normalize_multiplicity(source_mult)
         target_mult = normalize_multiplicity(target_mult)
         source_box, target_box = positions[source_name], positions[target_name]
@@ -997,7 +1068,7 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
             expected = []
             for i, (n, t) in enumerate(pc.attributes):
                 extra = pc.attribute_extras[i] if i < len(pc.attribute_extras) else {}
-                expected.append((n, normalize_type_token(t), (extra or {}).get("default") or ""))
+                expected.append((n, normalize_type_token(t, set(classes)), (extra or {}).get("default") or ""))
             expected = sorted(expected)
         got = attrs_by_class.get(name)
         if got is None:
@@ -1007,7 +1078,7 @@ def round_trip_check(model_id: str, classes: dict[str, ParsedClass], relationshi
                 f"{model_id}: attributi di '{name}' non coincidono — originale={expected} convertito={got}"
             )
 
-        expected_methods = sorted(parse_method_signature(m) for m in pc.methods)
+        expected_methods = sorted(parse_method_signature(m, set(classes)) for m in pc.methods)
         got_methods = methods_by_class.get(name, [])
         if got_methods != expected_methods:
             problems.append(
@@ -1130,16 +1201,43 @@ def style_check(diagram: dict, model_id: str) -> list[str]:
 # --- Main ----------------------------------------------------------------------
 
 
-def main() -> None:
-    if not CORPUS_JSONL.exists():
-        raise SystemExit(f"{CORPUS_JSONL} non trovato: esegui prima corpus/build_manifest.py")
+def apollon_counts(diagram: dict) -> dict:
+    """Conteggi del ground truth calcolati dal JSON Apollon (2026-10-03, test set De Bari): da usare
+    nell'analisi al posto dei conteggi di Analysis.xlsx, che restano nel record solo per tracciabilita'
+    (righe 2/3 scambiate, operazioni omesse nell'es. 3, ...). Le classi associative reificate contano come
+    classi e le loro 2 relazioni derivate come relazioni, come nel JSON."""
+    nodes = diagram["nodes"]
+    stereo = [n["data"].get("stereotype") for n in nodes]
+    plain = [n for n, s in zip(nodes, stereo) if s not in ("enumeration", "interface")]
+    typed = [n for n, s in zip(nodes, stereo) if s != "enumeration"]
+    by_type: dict[str, int] = {}
+    for e in diagram["edges"]:
+        by_type[e["type"]] = by_type.get(e["type"], 0) + 1
+    return {
+        "classes": len(plain),
+        "abstract_classes": sum(1 for n in plain if n["data"].get("isAbstract")),
+        "interfaces": stereo.count("interface"),
+        "enumerations": stereo.count("enumeration"),
+        "attributes": sum(len(n["data"]["attributes"]) for n in typed),
+        "operations": sum(len(n["data"]["methods"]) for n in typed),
+        "enum_values": sum(len(n["data"]["attributes"]) for n, s in zip(nodes, stereo) if s == "enumeration"),
+        "relations": len(diagram["edges"]),
+        "relations_by_type": dict(sorted(by_type.items())),
+    }
+
+
+def convert_split(jsonl_path: Path, out_dir: Path) -> None:
+    """Converte tutti i record di jsonl_path (scritto da build_manifest.py) in Apollon v4:
+    un JSON per esercizio in out_dir, jsonl_path riscritto con diagram_apollon_json & co."""
+    if not jsonl_path.exists():
+        raise SystemExit(f"{jsonl_path} non trovato: esegui prima corpus/build_manifest.py")
     if not SCHEMA_PATH.exists():
         raise SystemExit(f"{SCHEMA_PATH} non trovato: scarica uml-model-4.schema.json da @tumaet/apollon")
 
     label_classification = load_label_classification()
-    records = [json.loads(line) for line in CORPUS_JSONL.read_text(encoding="utf-8").splitlines() if line.strip()]
+    records = [json.loads(line) for line in jsonl_path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
-    APOLLON_OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
     total_warnings = 0
     total_problems = 0
     total_roundtrip_problems = 0
@@ -1147,11 +1245,18 @@ def main() -> None:
     total_constraints = 0
     total_missing_labels = 0
     total_style_problems = 0
+    total_unrecognized = 0
     skipped: list[str] = []
 
     for record in records:
         model_id = record["id"]
         classes, relationships, parse_warnings, unsupported = parse_plantuml(record["diagram_plantuml"])
+        # una riga ignorata e' contenuto perso in silenzio (es. un blocco 'interface' prima
+        # del 2026-10-02): errore, non warning
+        unrecognized = [w for w in parse_warnings if w.startswith("riga non riconosciuta")]
+        if unrecognized:
+            total_unrecognized += len(unrecognized)
+            print(f"[ERRORE PARSER] {model_id}: {unrecognized}")
 
         if unsupported:
             skipped.append(model_id)
@@ -1161,7 +1266,7 @@ def main() -> None:
             record["apollon_conversion_warnings"] = [
                 f"modello escluso dalla conversione Apollon: {u}" for u in unsupported
             ]
-            out_path = APOLLON_OUT_DIR / f"{model_id}.json"
+            out_path = out_dir / f"{model_id}.json"
             out_path.unlink(missing_ok=True)
             continue
 
@@ -1196,8 +1301,11 @@ def main() -> None:
         record["diagram_apollon_model_version"] = MODEL_VERSION
         record["constraints"] = constraints
         record["apollon_conversion_warnings"] = warnings
+        if record.get("split") == "debari_test":
+            # solo test set: i record del corpus restano byte-identici
+            record["gt_counts"] = apollon_counts(diagram)
 
-        out_path = APOLLON_OUT_DIR / f"{model_id}.json"
+        out_path = out_dir / f"{model_id}.json"
         out_path.write_text(json.dumps(diagram, ensure_ascii=False, indent=2), encoding="utf-8")
 
         if schema_problems:
@@ -1209,7 +1317,7 @@ def main() -> None:
         if style_problems:
             print(f"[ERRORE STILE] {model_id}: {style_problems}")
 
-    CORPUS_JSONL.write_text(
+    jsonl_path.write_text(
         "\n".join(json.dumps(r, ensure_ascii=False) for r in records) + "\n", encoding="utf-8"
     )
 
@@ -1218,17 +1326,29 @@ def main() -> None:
     assert total_problems == 0, f"{total_problems} problemi di integrita' rilevati, vedi sopra"
     assert total_roundtrip_problems == 0, f"{total_roundtrip_problems} problemi di round-trip rilevati, vedi sopra"
     assert total_style_problems == 0, f"{total_style_problems} problemi di stile rilevati, vedi sopra"
+    assert total_unrecognized == 0, f"{total_unrecognized} righe PlantUML non riconosciute, vedi sopra"
 
     converted = len(records) - len(skipped)
     print(f"Convertiti {converted}/{len(records)} diagrammi in Apollon v{MODEL_VERSION} (esclusi: {skipped or 'nessuno'}).")
-    print(f"Vincoli di generalizzazione estratti in corpus.jsonl (campo 'constraints'): {total_constraints}")
+    print(f"Vincoli di generalizzazione estratti in {jsonl_path.name} (campo 'constraints'): {total_constraints}")
     print(f"Warning totali (approssimazioni/costrutti non gestiti): {total_warnings}")
     print("Classificazione etichette (corpus/label_classification.json): 0 etichette non classificate")
     print("Validazione schema JSON ufficiale: 0 violazioni")
     print("Round-trip semantico (attributi + molteplicita' per estremo): 0 discrepanze")
     print("Controllo di stile (tipi ammessi, formato metodi, niente 'n' letterale, campi data completi): 0 violazioni")
-    print(f"JSON Apollon scritti in {APOLLON_OUT_DIR}")
-    print("corpus.jsonl aggiornato con diagram_apollon_json + apollon_conversion_warnings")
+    print(f"JSON Apollon scritti in {out_dir}")
+    print(f"{jsonl_path.name} aggiornato con diagram_apollon_json + apollon_conversion_warnings")
+
+
+def main() -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Conversione PlantUML -> Apollon v4 per uno split.")
+    parser.add_argument("--split", choices=sorted(SPLITS), default="corpus",
+                        help="corpus (default, corpus di retrieval) o debari_test (test set De Bari)")
+    args = parser.parse_args()
+    jsonl_path, out_dir = SPLITS[args.split]
+    convert_split(jsonl_path, out_dir)
 
 
 if __name__ == "__main__":

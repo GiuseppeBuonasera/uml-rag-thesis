@@ -129,7 +129,7 @@ def check_type_normalization() -> None:
         ("String", "string"), ("Int", "int"), ("Integer", "int"), ("integer", "int"),
         ("Double", "double"), ("Float", "float"), ("Boolean", "boolean"), ("bool", "boolean"),
         ("Bool", "boolean"), ("Date", "date"), ("Time", "time"), ("DateTime", "datetime"),
-        ("Long", "long"),
+        ("Long", "long"), ("Real", "double"), ("Text", "string"),  # Real/Text: 2026-10-03
     ]
     for src, expected in cases:
         got = ac.normalize_type_token(src)
@@ -137,17 +137,25 @@ def check_type_normalization() -> None:
     # un tipo che e' il nome di una classe/enum del diagramma resta invariato
     assert ac.normalize_type_token("Suit") == "Suit"
     assert ac.normalize_type_token("RoomType") == "RoomType"
+    # solo le grafie maiuscole: "text" e' un nome di attributo nel corpus (InsuranceCompany)
+    assert ac.normalize_type_token("text") == "text"
     print("  OK  tipi noti normalizzati (String->string, Int->int, ...); nomi di classe/enum invariati")
 
 
 def check_multiplicity_normalization() -> None:
     # "N" maiuscola aggiunta il 2026-09-30 (RealEstateAgency, regola approvata dall'utente)
     cases = [("n", "*"), ("0..n", "0..*"), ("1..n", "1..*"), ("0..1", "0..1"), ("*", "*"), ("", ""),
-             ("N", "*"), ("0..N", "0..*"), ("1..N", "1..*")]
+             ("N", "*"), ("0..N", "0..*"), ("1..N", "1..*"),
+             # tre punti (2026-10-03, De Bari es. 2)
+             ("1...*", "1..*"), ("0...*", "0..*"), ("1...n", "1..*")]
     for src, expected in cases:
         got = ac.normalize_multiplicity(src)
         assert got == expected, f"normalize_multiplicity({src!r}) = {got!r}, atteso {expected!r}"
-    print("  OK  molteplicita' normalizzate (n->*, 0..n->0..*, 1..n->1..*)")
+    classes, rels, _, _ = ac.parse_plantuml('@startuml\nclass A\nclass B\nA "1...*" -- "1" B\n@enduml\n')
+    diagram, warnings = ac.build_apollon_json("t", classes, rels)
+    assert diagram["edges"][0]["data"]["sourceMultiplicity"] == "1..*"
+    assert any("tre punti" in w for w in warnings), warnings
+    print("  OK  molteplicita' normalizzate (n->*, 0..n->0..*, 1..n->1..*, 1...*->1..* con warning)")
 
 
 def check_shared_type_glossary() -> None:
@@ -615,7 +623,295 @@ def check_description_exclusion_mid_line() -> None:
     print("  OK  esclusione a meta' riga: nessuno spazio residuo; hard-fail se il testo non c'e'")
 
 
+def check_known_issues_validation() -> None:
+    """known_issues.yaml: voci = codici ammessi (stringa) o dizionari con 'tipo'; id inesistente, codice
+    sconosciuto, lista vuota, duplicati, dizionario senza 'tipo' -> ValueError. File reale: EatAtHome
+    two_alternative_models; DB06_Flights domain_overlap_static_example con classi condivise e Jaccard
+    coerenti con quelli ricalcolati dai JSON Apollon (decisione STOP B, 2026-10-04)."""
+    import json
+    from pathlib import Path
+    import build_manifest as bm
+    ids = {"EatAtHome", "Gym"}
+    assert bm.validate_known_issues(None, ids) == {}
+    ok = {"EatAtHome": ["two_alternative_models"], "Gym": [{"tipo": "domain_overlap_static_example", "x": 1}]}
+    assert bm.validate_known_issues(ok, ids) == ok
+    for bad in (
+        {"Inesistente": ["two_alternative_models"]},
+        {"EatAtHome": ["codice_sconosciuto"]},
+        {"EatAtHome": []},
+        {"EatAtHome": ["two_alternative_models", "two_alternative_models"]},
+        {"EatAtHome": [{"x": 1}]},
+        {"EatAtHome": [{"tipo": "codice_sconosciuto"}]},
+    ):
+        try:
+            bm.validate_known_issues(bad, ids)
+            assert False, f"doveva fallire: {bad}"
+        except ValueError:
+            pass
+    real = bm.load_known_issues(bm.split_ids("corpus") | bm.split_ids("debari_test"))
+    assert real["EatAtHome"] == ["two_alternative_models"], real
+    db06 = real["DB06_Flights"][0]
+    assert db06["tipo"] == "domain_overlap_static_example" and db06["altro_esercizio"] == "AirTravel"
+    processed = Path(bm.__file__).parent / "processed"
+    a_path, b_path = processed / "apollon_debari" / "DB06_Flights.json", processed / "apollon" / "AirTravel.json"
+    if a_path.exists() and b_path.exists():
+        names = [{n["data"]["name"].lower(): n["data"]["name"] for n in json.loads(p.read_text(encoding="utf-8"))["nodes"]}
+                 for p in (a_path, b_path)]
+        shared = sorted(names[0][k] for k in set(names[0]) & set(names[1]))
+        jaccard = round(len(shared) / len(set(names[0]) | set(names[1])), 4)
+        assert shared == sorted(db06["classi_condivise"]) and len(shared) == db06["n_classi_condivise"], shared
+        assert jaccard == db06["jaccard_nomi_classe"], jaccard
+    print("  OK  known_issues: codici e voci strutturate; DB06 vs AirTravel coerente con i JSON (4 classi, J=0.2353)")
+
+
+def _write_exercise(folder, name: str, plantuml: str, tags: str) -> None:
+    folder.mkdir(parents=True)
+    (folder / "description.md").write_text("A shop sells items.\n", encoding="utf-8")
+    (folder / "metadata.txt").write_text(
+        f"name: {name}\nlanguage: English\ntags: {tags}\ndomain: Sales\nsource: test\ncitation:\ncontact:\n",
+        encoding="utf-8")
+    (folder / "plantuml.txt").write_text(plantuml, encoding="utf-8")
+
+
+def check_split_separation() -> None:
+    """Test set De Bari mai nel corpus, e viceversa: id sovrapposti, id DBNN_ o tag debari_test nel
+    corpus, record De Bari senza split, JSON Apollon nella cartella sbagliata -> AssertionError."""
+    import tempfile
+    from pathlib import Path
+    import build_manifest as bm
+
+    def fails(fn, *args) -> bool:
+        try:
+            fn(*args)
+            return False
+        except AssertionError:
+            return True
+
+    corpus_rec = {"id": "Shop", "tags": [], "split": None}
+    db_rec = {"id": "DB01_ProjectManagementSystem", "tags": ["debari_test"], "split": "debari_test"}
+    bm.check_split_separation("corpus", [corpus_rec], {db_rec["id"]})
+    bm.check_split_separation("debari_test", [db_rec], {"Shop"})
+    assert fails(bm.check_split_separation, "corpus", [corpus_rec], {"Shop"})
+    assert fails(bm.check_split_separation, "corpus", [corpus_rec, db_rec], set())
+    assert fails(bm.check_split_separation, "corpus", [{"id": "X", "tags": ["debari_test"]}], set())
+    assert fails(bm.check_split_separation, "debari_test", [{**db_rec, "split": None}], set())
+    assert fails(bm.check_split_separation, "debari_test", [{**db_rec, "id": "Restaurant"}], set())
+
+    with tempfile.TemporaryDirectory() as tmp:
+        c, d = Path(tmp) / "apollon", Path(tmp) / "apollon_debari"
+        c.mkdir(); d.mkdir()
+        (c / "Shop.json").write_text("{}"); (d / "DB01_X.json").write_text("{}")
+        bm.check_apollon_dir_separation(c, d)
+        (c / "DB02_Y.json").write_text("{}")
+        assert fails(bm.check_apollon_dir_separation, c, d)
+    print("  OK  separazione split: id/tag/split/cartelle Apollon sovrapposti -> hard-fail")
+
+
+def check_debari_record_fields() -> None:
+    """build_record(split='debari_test'): split, debari_number dal prefisso DBNN_, debari_title da
+    metadata name; id fuori formato -> ValueError. Split corpus: nessun campo extra."""
+    import tempfile
+    from pathlib import Path
+    import build_manifest as bm
+    uml = "@startuml\nclass Shop {\n  name : String\n}\n@enduml\n"
+    # dentro il repo: raw_dir del record e' relativo alla radice del progetto
+    with tempfile.TemporaryDirectory(dir=Path(bm.__file__).parent, prefix="_tmp_test_") as tmp:
+        folder = Path(tmp) / "DB07_BankSystem"
+        _write_exercise(folder, "Bank System", uml, "debari_test")
+        rec = bm.build_record(folder, "debari_test")
+        assert (rec["split"], rec["debari_number"], rec["debari_title"]) == ("debari_test", 7, "Bank System"), rec
+        assert rec["used_as_static_example"] is False
+        # "Estimated Difficulty" dell'xlsx, es. 7: 6 / 5 / 7, ED 1-1-1
+        assert rec["debari_xlsx_counts"] == {"classes": 6, "attributes_operations": 5, "associations": 7}, rec
+        assert rec["debari_ed_avg"] == 1.0, rec["debari_ed_avg"]
+        corpus_rec = bm.build_record(folder, "corpus")
+        assert "split" not in corpus_rec and "debari_number" not in corpus_rec
+        bad = Path(tmp) / "BankSystem"
+        _write_exercise(bad, "Bank System", uml, "debari_test")
+        try:
+            bm.build_record(bad, "debari_test")
+            assert False, "doveva fallire"
+        except ValueError:
+            pass
+    print("  OK  record De Bari: split / debari_number / debari_title; id fuori formato -> errore")
+
+
+def check_relations_table_english() -> None:
+    """generate_relations_table --english: legge plantuml.txt senza glossario, niente colonne IT."""
+    import tempfile
+    from pathlib import Path
+    import generate_relations_table as grt
+    uml = '@startuml\nclass Bank\nclass Account\nBank "1" -- "0..* accounts" Account : holds\n@enduml\n'
+    with tempfile.TemporaryDirectory() as tmp:
+        folder = Path(tmp) / "DB07_BankSystem"
+        _write_exercise(folder, "Bank System", uml, "debari_test")
+        lines = grt.build_table(folder, english=True)
+        assert "| Classe A | Classe B | Tipo |" in lines[4], lines[4]
+        assert "| Bank | Account | associazione | 1 | 0..* | — | accounts | holds |" in lines, lines
+        assert not any("(IT)" in l for l in lines)
+    print("  OK  relations_table --english: plantuml.txt, nessun glossario, colonne IT omesse")
+
+
+def check_convert_split_paths() -> None:
+    """apollon_convert.SPLITS: corpus invariato, debari_test su file/cartella separati."""
+    from pathlib import Path
+    assert ac.SPLITS["corpus"] == (ac.CORPUS_JSONL, ac.APOLLON_OUT_DIR)
+    jsonl, out = ac.SPLITS["debari_test"]
+    assert jsonl.name == "testset_debari.jsonl" and out.name == "apollon_debari"
+    assert jsonl != ac.CORPUS_JSONL and out != ac.APOLLON_OUT_DIR
+    print("  OK  split di conversione: corpus -> corpus.jsonl/apollon, debari_test -> testset_debari.jsonl/apollon_debari")
+
+
+def check_debari_xlsx_comparison() -> None:
+    """check_debari: normalizzazione nomi; lettura della Given Solution reale (Part 2 - 1);
+    discrepanze per classe/membro/relazione/conteggio su un caso sintetico."""
+    import openpyxl
+    import build_manifest as bm
+    import check_debari as cdb
+    assert cdb.norm("Work Product") == cdb.norm("WorkProduct") == "workproduct"
+    assert cdb.norm("+Validate()") == "validate" and cdb.norm("Movie-Shop") == "movieshop"
+    xs = cdb.xlsx_solution(openpyxl.load_workbook(bm.DEBARI_XLSX, data_only=True), 1)
+    assert len(xs["classes"]) == 6 and ("workproduct", "percentcomplete") in xs["members"], xs
+    assert ("generalization", frozenset({"workproduct", "requirement"})) in xs["relations"]
+    gt = {"classes": {"a", "b"}, "members": {("a", "x")}, "relations": {("association", frozenset({"a", "b"}))},
+          "counts": {"classes": 2, "attributes_operations": 1, "associations": 1}}
+    xl = {"classes": {"a", "c"}, "members": {("a", "x")}, "relations": {("composition", frozenset({"a", "b"}))}}
+    diff = {"debari_xlsx_counts": {"classes": 2, "attributes_operations": 2, "associations": 1}}
+    found = cdb.discrepancies(0, gt, xl, diff)
+    assert found == [
+        "classe solo nell'xlsx: c", "classe solo nel ground truth: b",
+        "relazione solo nell'xlsx: composition(a - b)", "relazione solo nel ground truth: association(a - b)",
+        "conteggio Attributes + Operations: xlsx 2, ground truth 1",
+    ], found
+    print("  OK  check_debari: normalizzazione, Given Solution reale, discrepanze classe/relazione/conteggio")
+
+
+def check_ambiguities_and_apollon_counts() -> None:
+    """ambiguities.yaml: campi obbligatori, id del test set, lista non vuota di letture alternative;
+    apollon_counts: classi / interfacce / enum / attributi / operazioni / relazioni per tipo dal JSON."""
+    import build_manifest as bm
+    ok = {"DB05_MovieShop": [{"elemento": "e", "letture_alternative": ["a", "b"], "scelta": "a", "motivazione": "m"}]}
+    assert bm.validate_ambiguities(ok, {"DB05_MovieShop"}) == ok
+    for bad in ({"DB99_X": ok["DB05_MovieShop"]},
+                {"DB05_MovieShop": [{"elemento": "e", "scelta": "a", "motivazione": "m"}]},
+                {"DB05_MovieShop": [{**ok["DB05_MovieShop"][0], "letture_alternative": []}]}):
+        try:
+            bm.validate_ambiguities(bad, {"DB05_MovieShop"})
+            assert False, f"doveva fallire: {bad}"
+        except ValueError:
+            pass
+    real_ids = {d.name for d in bm.list_model_dirs([bm.DEBARI_RAW_DIR])}
+    assert bm.load_ambiguities(real_ids)["DB05_MovieShop"][0]["scelta"].startswith("estremo Subscriber")
+    text = ("@startuml\ninterface I {\n  x : int\n}\nabstract class A {\n  y : int\n  f()\n}\n"
+            "enum E {\n  V1\n  V2\n}\nclass B\nB ..|> I\nB --|> A\nA \"1\" -- \"*\" B\n@enduml\n")
+    classes, rels, _, _ = ac.parse_plantuml(text)
+    diagram, _ = ac.build_apollon_json("t", classes, rels)
+    counts = ac.apollon_counts(diagram)
+    assert counts == {"classes": 2, "abstract_classes": 1, "interfaces": 1, "enumerations": 1, "attributes": 2,
+                      "operations": 1, "enum_values": 2, "relations": 3,
+                      "relations_by_type": {"ClassBidirectional": 1, "ClassInheritance": 1,
+                                            "ClassRealization": 1}}, counts
+    print("  OK  ambiguities.yaml validato; conteggi del ground truth calcolati dal JSON Apollon")
+
+
+def check_note_on_single_class() -> None:
+    """Nota/vincolo testuale attaccato a una sola classe ('N1 .. Reservation', es. 14): nessuna classe
+    implicita N1, nessuna relazione, warning con il testo della nota (come i {XOR} su coppie)."""
+    text = ('@startuml\nclass Reservation {\n  Pickup_Day\n}\n'
+            'note "{Return_Day >= Pickup_Day}" as N1\nN1 .. Reservation\n@enduml\n')
+    classes, rels, warnings, unsupported = ac.parse_plantuml(text)
+    assert not unsupported and list(classes) == ["Reservation"] and rels == [], (classes, rels)
+    assert any("scartato vincolo/nota 'N1'" in w and "Return_Day >= Pickup_Day" in w and "Reservation" in w
+               for w in warnings), warnings
+    assert not any(w.startswith("riga non riconosciuta") for w in warnings), warnings
+    print("  OK  nota su una sola classe: scartata con warning (testo incluso), nessuna classe implicita")
+
+
+def check_domain_types_and_end_constraints() -> None:
+    """Tipi di dominio (2026-10-03): Guid/Address/Phone/Supplier -> string, Price -> double, solo in posizione di
+    tipo, solo con la maiuscola, non se il diagramma dichiara la classe omonima; apply_glossary.normalize_types non
+    li tocca. Vincolo di estremo '{ordered, unique}': tolto dal ruolo con warning."""
+    import apply_glossary as ag
+    assert ac.normalize_type_token("Guid") == "string" and ac.normalize_type_token("Price") == "double"
+    assert ac.normalize_type_token("Address[]") == "string[]"
+    assert ac.normalize_type_token("Address", {"Address"}) == "Address"  # classe dichiarata (SmartHome)
+    assert ac.normalize_type_token("address") == "address" and ac.normalize_type_token("phone") == "phone"
+    assert ag.normalize_types("Address : Address") == "Address : Address"  # nessuna sostituzione testuale
+    text = ("@startuml\nclass A {\n  Address : Address\n  price : Price\n  find() : Supplier\n}\n"
+            "class B\nA \"1\" -- \"* {ordered, unique} line_item\" B\nA \"{ordered}\" -- \"0..1\" B\n@enduml\n")
+    classes, rels, warnings, _ = ac.parse_plantuml(text)
+    assert (rels[0]["target_mult"], rels[0]["target_role"]) == ("*", "line_item"), rels[0]
+    assert (rels[1]["source_mult"], rels[1]["source_role"]) == ("", ""), rels[1]
+    assert sum("scartato vincolo di estremo" in w for w in warnings) == 2, warnings
+    diagram, _ = ac.build_apollon_json("t", classes, rels)
+    a = next(n for n in diagram["nodes"] if n["data"]["name"] == "A")["data"]
+    assert [x["name"] for x in a["attributes"]] == ["+ Address : string", "+ price : double"], a["attributes"]
+    assert a["methods"][0]["name"] == "+ find() : string", a["methods"]
+    assert ac.style_check(diagram, "t") == [] and ac.round_trip_check("t", classes, rels, diagram) == []
+    classes, rels, _, _ = ac.parse_plantuml("@startuml\nclass Address\nclass H {\n  a : Address\n}\n@enduml\n")
+    diagram, _ = ac.build_apollon_json("t", classes, rels)
+    h = next(n for n in diagram["nodes"] if n["data"]["name"] == "H")["data"]
+    assert h["attributes"][0]["name"] == "+ a : Address", h["attributes"]
+    print("  OK  tipi di dominio solo in posizione di tipo (classe omonima rispettata); {ordered, unique} fuori dal ruolo")
+
+
+def check_leakage_prompt_examples() -> None:
+    """leakage_check --prompt: i 2 esempi few-shot del prompt statico estratti da prompt_template_v4.txt;
+    --debari-test: 20 record del test set (se testset_debari.jsonl esiste)."""
+    import leakage_check as lc
+    ex = lc.load_prompt_examples()
+    assert sorted(ex) == ["PROMPT_example_1_bank_loans", "PROMPT_example_2_airtravel"], sorted(ex)
+    assert ex["PROMPT_example_1_bank_loans"].startswith("Develop an object-oriented application to manage the loans")
+    assert "home airport" in ex["PROMPT_example_2_airtravel"]
+    if lc.TESTSET_PATH.exists():
+        assert all(k.startswith("DB") for k in lc.load_debari_test())
+    print("  OK  leakage: esempi del prompt statico (bank loans, AirTravel) estratti dal template")
+
+
+def check_interface_stereotype() -> None:
+    """'interface X {...}' e 'class X <<interface>>' -> kind interface -> stereotype "interface"
+    nel JSON Apollon, attributi conservati; '..|>' verso l'interfaccia resta ClassRealization;
+    'enum X <<enum>>' invariato; una riga non riconosciuta resta un warning del parser
+    (convert_split la tratta come errore)."""
+    text = (
+        "@startuml\n"
+        "interface User {\n  -last_name : String\n}\n"
+        "class Shape <<interface>>\n"
+        "enum Kind <<enum>> {\n  A\n}\n"
+        "class Adult {\n  -id : int\n}\n"
+        "Adult ..|> User\n"
+        "@enduml\n"
+    )
+    classes, relationships, warnings, unsupported = ac.parse_plantuml(text)
+    assert not unsupported and not warnings, (unsupported, warnings)
+    assert classes["User"].kind == "interface" and classes["Shape"].kind == "interface"
+    assert classes["Kind"].kind == "enum"
+    assert [a for a, _ in classes["User"].attributes] == ["last_name"], classes["User"].attributes
+    diagram, _ = ac.build_apollon_json("t", classes, relationships)
+    by_name = {n["data"]["name"]: n for n in diagram["nodes"]}
+    assert by_name["User"]["data"]["stereotype"] == "interface"
+    assert by_name["Shape"]["data"]["stereotype"] == "interface"
+    assert by_name["Kind"]["data"]["stereotype"] == "enumeration"
+    assert "stereotype" not in by_name["Adult"]["data"]
+    assert diagram["edges"][0]["type"] == "ClassRealization", diagram["edges"][0]["type"]
+    _, _, warnings, _ = ac.parse_plantuml("@startuml\nfoo bar baz\n@enduml\n")
+    assert any(w.startswith("riga non riconosciuta") for w in warnings), warnings
+    print("  OK  interface: stereotype \"interface\" nel JSON, attributi conservati, ..|> = ClassRealization")
+
+
 def main() -> None:
+    print("Split corpus / test set De Bari:")
+    check_split_separation()
+    check_debari_record_fields()
+    check_relations_table_english()
+    check_convert_split_paths()
+    check_interface_stereotype()
+    check_note_on_single_class()
+    check_domain_types_and_end_constraints()
+    check_leakage_prompt_examples()
+    check_debari_xlsx_comparison()
+    check_ambiguities_and_apollon_counts()
+    print()
     print("FASE 1 — normalizzazioni automatiche:")
     check_type_normalization()
     check_multiplicity_normalization()
@@ -645,6 +941,7 @@ def main() -> None:
     check_corrections_add_line()
     check_corrections_add_block()
     check_description_exclusion_mid_line()
+    check_known_issues_validation()
     print()
     print("Marcatore di verso di lettura PlantUML ('>'/'<'):")
     check_strip_reading_direction()

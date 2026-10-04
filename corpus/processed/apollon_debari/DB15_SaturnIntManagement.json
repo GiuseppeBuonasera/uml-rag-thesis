@@ -1,0 +1,394 @@
+{
+  "version": "4.2.0",
+  "id": "DB15_SaturnIntManagement",
+  "title": "DB15_SaturnIntManagement",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "1d406acb-6834-5a87-9297-22240adf889e",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "CarPark",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "3e592615-4f14-505f-98ae-5cc046e9102a",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Barrier",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "a4b88757-4e80-5d72-bc59-42c4cc923116",
+            "name": "+ raise()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a7954735-b646-5a27-9504-a93645b1c054",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "CardReader",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "d8c1bf29-8b30-52e9-b9d5-3c232f7d5c9b",
+            "name": "+ insertStaffCard()"
+          },
+          {
+            "id": "7f6f610f-7e24-594b-bfd7-79b97fa60d9b",
+            "name": "+ showSuccessMessage()"
+          },
+          {
+            "id": "3324ed8f-910d-5dc4-9688-72cdbf18fe9e",
+            "name": "+ showFailMessage()"
+          },
+          {
+            "id": "e4daf2a7-1350-5dc3-a54b-44c7535477c1",
+            "name": "+ ejectCard()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "3e30a14e-0a0d-5af9-ada1-29b0a5824aba",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Signal",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "a81c6ab5-9c15-5c90-b6f2-6d788d9b8830",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "GuestCard",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "eca73fde-bc3a-54ac-85c2-e6dbbe55ed9b",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 260
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Card",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "1fea46b9-55cc-59fd-95df-f3bd96335343",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 360
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "StaffCard",
+        "attributes": [],
+        "methods": [
+          {
+            "id": "607c3b88-638c-5a45-89b3-cb184ad883d4",
+            "name": "+ setLastAccess()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "7e4c2e6c-3383-598d-b264-d80d08176331",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 360
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Access",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "971082ef-0383-59c5-8dd2-a4696ee700a0",
+      "source": "3e592615-4f14-505f-98ae-5cc046e9102a",
+      "target": "1d406acb-6834-5a87-9297-22240adf889e",
+      "type": "ClassAggregation",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "2..*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "5b59703c-071b-5131-b940-49d4e0b9f89c",
+      "source": "a7954735-b646-5a27-9504-a93645b1c054",
+      "target": "1d406acb-6834-5a87-9297-22240adf889e",
+      "type": "ClassAggregation",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 120.0
+          },
+          {
+            "x": 260,
+            "y": 60.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "2..*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8b0bcef7-5c17-5045-8922-a8d729ecf94e",
+      "source": "a81c6ab5-9c15-5c90-b6f2-6d788d9b8830",
+      "target": "a7954735-b646-5a27-9504-a93645b1c054",
+      "type": "ClassAggregation",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 600,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7dc10dc2-77df-5d17-bc48-7b4172dc2d64",
+      "source": "3e30a14e-0a0d-5af9-ada1-29b0a5824aba",
+      "target": "a7954735-b646-5a27-9504-a93645b1c054",
+      "type": "ClassAggregation",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 280.0
+          },
+          {
+            "x": 600,
+            "y": 120.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "6078de84-8831-5ec4-90f3-44083058f53d",
+      "source": "3e592615-4f14-505f-98ae-5cc046e9102a",
+      "target": "3e30a14e-0a0d-5af9-ada1-29b0a5824aba",
+      "type": "ClassDependency",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d03af4c2-da6e-5aa4-8524-d38cb8da8dfb",
+      "source": "a81c6ab5-9c15-5c90-b6f2-6d788d9b8830",
+      "target": "eca73fde-bc3a-54ac-85c2-e6dbbe55ed9b",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 600,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "fb2cae6c-3d21-5eac-87d0-d06ae935ccef",
+      "source": "1fea46b9-55cc-59fd-95df-f3bd96335343",
+      "target": "eca73fde-bc3a-54ac-85c2-e6dbbe55ed9b",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 395.0
+          },
+          {
+            "x": 600,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a34e10ea-1181-5cae-af46-a82227dc5290",
+      "source": "7e4c2e6c-3383-598d-b264-d80d08176331",
+      "target": "eca73fde-bc3a-54ac-85c2-e6dbbe55ed9b",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 380.0
+          },
+          {
+            "x": 600,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

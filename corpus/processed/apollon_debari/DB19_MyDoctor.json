@@ -1,0 +1,500 @@
+{
+  "version": "4.2.0",
+  "id": "DB19_MyDoctor",
+  "title": "DB19_MyDoctor",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "736b2631-3caa-5d0d-878b-ff5b9d399211",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 190,
+      "measured": {
+        "width": 220,
+        "height": 190
+      },
+      "data": {
+        "name": "User",
+        "attributes": [
+          {
+            "id": "69d7516f-05c1-56f6-a89d-1d3ed455118d",
+            "name": "+ Id : string"
+          },
+          {
+            "id": "72a6dfc2-3717-5164-ac81-f5cc831b1c2d",
+            "name": "+ FirstName : string"
+          },
+          {
+            "id": "2bdc049c-29f3-56bd-bc3f-7684beb39b55",
+            "name": "+ LastName : string"
+          }
+        ],
+        "methods": [
+          {
+            "id": "bd242f84-d368-562f-91b3-9bbe80a0da73",
+            "name": "+ Login()"
+          },
+          {
+            "id": "e0130ead-9e1f-505a-aae8-fba288b2aefc",
+            "name": "+ Logout()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "316937e0-1f28-5c96-b116-c96091cbd394",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Office",
+        "attributes": [
+          {
+            "id": "92484353-4ebd-572f-b4bd-a31e810b1dc4",
+            "name": "+ Id : string"
+          },
+          {
+            "id": "07cd1c92-c07f-5086-8d0d-2f7138640f8e",
+            "name": "+ Name : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "06b35612-62b6-585a-91f0-93eed30f5b2c",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Doctor",
+        "attributes": [
+          {
+            "id": "821f441a-fda0-5fee-bfda-a446c4f43c2b",
+            "name": "+ GraduationYear : date"
+          },
+          {
+            "id": "596a74e3-6426-58b0-8b7a-44d307566f23",
+            "name": "+ FieldOfActivity : string"
+          }
+        ],
+        "methods": [
+          {
+            "id": "0581df45-8256-51ac-8b3d-d78c1c3a96f8",
+            "name": "+ CreateSchedule()"
+          },
+          {
+            "id": "e59f7583-b322-56b0-b723-0039932fbe59",
+            "name": "+ CheckOfficeAvailability(startDate: Date, endDate: Date)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "3d06827c-1280-5c2d-9672-323a4832d32f",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 290
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Patient",
+        "attributes": [
+          {
+            "id": "6e477325-2d0b-5c60-bcb4-86c61fca64e2",
+            "name": "+ Age : int"
+          },
+          {
+            "id": "7c46089b-f1b9-58ba-9a6d-ea0b3c2d01e0",
+            "name": "+ Address : string"
+          }
+        ],
+        "methods": [
+          {
+            "id": "a3fcd5c8-187b-54a6-b3d5-bb225c417a8d",
+            "name": "+ CreateAppointment()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bc42a76e-49ad-5cd3-b6c9-125f91986b1a",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 290
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Schedule",
+        "attributes": [
+          {
+            "id": "573fcc91-2527-5263-9047-067a06430309",
+            "name": "+ Id : string"
+          },
+          {
+            "id": "2fb5a384-f5ee-519f-b609-0104b1dfa4d0",
+            "name": "+ StartDate : date"
+          },
+          {
+            "id": "b254201e-8577-50f8-ab75-426cb48871a6",
+            "name": "+ EndDate : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "a76f78a4-f9cd-54a8-985e-8c5241f9a4a0",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 290
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Appointment",
+        "attributes": [
+          {
+            "id": "45e36bb3-5e93-599b-ae7e-ece57c6b67dc",
+            "name": "+ Id : string"
+          },
+          {
+            "id": "662bc41c-f2f9-5a36-a19b-7f1df3a25a24",
+            "name": "+ StartDate : date"
+          },
+          {
+            "id": "14ea7b5a-c93e-5eee-9341-c401fe23cc82",
+            "name": "+ EndDate : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "2fdc02ec-03ce-59f4-b836-5c1ed5b8bdb4",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 480
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "BloodTest",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "e6c81a96-30f8-5948-9028-156e062d907e",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 480
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Consultation",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "5b05843b-c86c-5493-b10e-fe9abdfbdd55",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 480
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Surgery",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "9f11d375-cc7e-52c8-a062-8031d1c66d34",
+      "source": "06b35612-62b6-585a-91f0-93eed30f5b2c",
+      "target": "736b2631-3caa-5d0d-878b-ff5b9d399211",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 120.0
+          },
+          {
+            "x": 260,
+            "y": 135.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c2ffbe8c-a7c2-5351-b9ce-bc248adcdad0",
+      "source": "3d06827c-1280-5c2d-9672-323a4832d32f",
+      "target": "736b2631-3caa-5d0d-878b-ff5b9d399211",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 290
+          },
+          {
+            "x": 150.0,
+            "y": 230
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "642b228c-92c0-5738-9dad-c5e0353e13f6",
+      "source": "316937e0-1f28-5c96-b116-c96091cbd394",
+      "target": "bc42a76e-49ad-5cd3-b6c9-125f91986b1a",
+      "type": "ClassAggregation",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 140
+          },
+          {
+            "x": 430.0,
+            "y": 290
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b5699aa1-690f-5eb7-b38e-e842a4318a81",
+      "source": "06b35612-62b6-585a-91f0-93eed30f5b2c",
+      "target": "bc42a76e-49ad-5cd3-b6c9-125f91986b1a",
+      "type": "ClassAggregation",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 120.0
+          },
+          {
+            "x": 540,
+            "y": 355.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "acbeee05-37ee-5eb6-a50d-f56b6a1aca47",
+      "source": "3d06827c-1280-5c2d-9672-323a4832d32f",
+      "target": "a76f78a4-f9cd-54a8-985e-8c5241f9a4a0",
+      "type": "ClassAggregation",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 355.0
+          },
+          {
+            "x": 600,
+            "y": 355.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "54450454-c2be-5978-9606-868dc39560a2",
+      "source": "a76f78a4-f9cd-54a8-985e-8c5241f9a4a0",
+      "target": "bc42a76e-49ad-5cd3-b6c9-125f91986b1a",
+      "type": "ClassComposition",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 355.0
+          },
+          {
+            "x": 540,
+            "y": 355.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "dc42a18e-181d-5db8-a7f7-e227a2c1fbf4",
+      "source": "2fdc02ec-03ce-59f4-b836-5c1ed5b8bdb4",
+      "target": "a76f78a4-f9cd-54a8-985e-8c5241f9a4a0",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 500.0
+          },
+          {
+            "x": 600,
+            "y": 355.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4be57f00-e728-569a-a955-349ad9759f9c",
+      "source": "e6c81a96-30f8-5948-9028-156e062d907e",
+      "target": "a76f78a4-f9cd-54a8-985e-8c5241f9a4a0",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 500.0
+          },
+          {
+            "x": 600,
+            "y": 355.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "90d4a91a-fbbe-5d91-87b2-75a17756b5bc",
+      "source": "5b05843b-c86c-5493-b10e-fe9abdfbdd55",
+      "target": "a76f78a4-f9cd-54a8-985e-8c5241f9a4a0",
+      "type": "ClassInheritance",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 480
+          },
+          {
+            "x": 710.0,
+            "y": 420
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

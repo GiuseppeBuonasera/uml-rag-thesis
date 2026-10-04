@@ -1,0 +1,39 @@
+@startuml
+
+class Take {
+  nbr : Integer
+  filmed_meters : Real
+  reel : String
+}
+
+class Setup {
+  code : String
+  photographic_pars : Text
+}
+
+class Scene {
+  code : String
+  description : Text
+}
+
+class Internal {
+  theater : String
+}
+
+class External {
+  night_scene : Boolean
+}
+
+class Location {
+  name : String
+  address : String
+  description : Text
+}
+
+Take "1...*" -- "1" Setup : tk_of_stp
+Scene "1" -- "1...*" Setup : stp_for_scn
+Internal --|> Scene : {complete, disjoint}
+External --|> Scene : {complete, disjoint}
+External "0...*" -- "1" Location : located
+
+@enduml

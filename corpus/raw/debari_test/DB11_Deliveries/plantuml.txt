@@ -1,0 +1,42 @@
+@startuml
+
+class Person {
+  VAT
+  NAME
+  PHONE
+}
+
+class CUSTOMER {
+  ADDRESS
+}
+
+class COURIER
+
+class Package {
+  Id
+  Weight
+  Urgency
+}
+
+class DeliveryCenter {
+  NAME
+  Address
+}
+
+class PackageDeliveryCenter {
+  DateTimeArrival
+  DateTimeDeparture
+}
+
+CUSTOMER --|> Person : {DISJOINT, COMPLETE}
+COURIER --|> Person : {DISJOINT, COMPLETE}
+CUSTOMER "1" -- "*" Package : Sender
+CUSTOMER "1" -- "*" Package : Recipient
+CUSTOMER "*" -- "1" DeliveryCenter
+COURIER "*" -- "1" DeliveryCenter
+Package "*" -- "1" DeliveryCenter : Dropoff point
+Package "*" -- "*" DeliveryCenter
+(Package, DeliveryCenter) .. PackageDeliveryCenter
+COURIER "1" -- "*" Package
+
+@enduml

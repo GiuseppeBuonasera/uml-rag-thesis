@@ -215,6 +215,21 @@ membri non pubblici sono 25 (tutti `-`, privati) in 4 esercizi: ApartmentBuildin
 (`-getNumeroPiani()`), MilanLibrary, RealEstateAgency, RepairShops. L'informazione
 resta solo in `diagram_plantuml` di `corpus.jsonl`.
 
+## 10. Due modellazioni alternative nello stesso diagramma (EatAtHome)
+
+(Aggiunto il 2026-10-01 per decisione dell'utente. È un limite del dato, non del formato
+Apollon.) Il diagramma di EatAtHome (es. 13) modella gli ingredienti in due modi: con gli
+attributi `ingredients` e `allergen_information` di `Dish`, e con la classe `Ingredient`.
+Nell'immagine `Ingredient` è disegnata in grigio, e una nota dell'autore dice di non tenere
+insieme le due soluzioni: "alternative to keeping ingredients and allergen as strings. note:
+in that case REMOVE ingredients and allergens from the dish class". Per fedeltà all'immagine
+le due alternative sono state mantenute entrambe, come scelta consapevole, e il diagramma non
+è stato modificato. La nota non è rappresentabile, perché le note sono escluse dalla
+trascrizione. Il record di EatAtHome in `corpus.jsonl` ha quindi
+`known_issues: ["two_alternative_models"]` (da `corpus/known_issues.yaml`), così l'esercizio
+si può filtrare negli esperimenti, per esempio escluderlo dagli esempi few-shot o dalle query
+di valutazione.
+
 ---
 
 ## Tabella riassuntiva
@@ -230,3 +245,4 @@ resta solo in `diagram_plantuml` di `corpus.jsonl`.
 | 7 | Classi implicite (mai dichiarate) | 2 | 2 | Nodo creato senza attributi/metodi (legale in PlantUML, non un errore) |
 | 8 | Esercizi esclusi | 1 modello (1 costrutto) | 1 | Intero modello escluso dalla conversione (`diagram_apollon_json: null`), non approssimato |
 | 9 | Visibilità non pubblica (`-`) | 25 | 4 | Prefisso rimosso, sempre `+ ` nel JSON; conservata solo in `diagram_plantuml` |
+| 10 | Due modellazioni alternative nello stesso diagramma | 1 | 1 (EatAtHome) | Entrambe mantenute (fedeltà all'immagine); segnalato con `known_issues: ["two_alternative_models"]` in `corpus.jsonl` |

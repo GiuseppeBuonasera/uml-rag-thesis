@@ -1,0 +1,35 @@
+# Test set De Bari, es. 10 Restaurant (2026-10-03, decisione utente: eccezione 'maiuscolo tipografico',
+# solo classi). Diagramma a grafia mista: le intestazioni INGREDIENT, DISH, TABLE sono maiuscolo
+# tipografico (stile delle intestazioni) -> PascalCase, come nell'xlsx; le classi associative di
+# convenzione seguono (IngredientDish, DishMeal). Attributi invariati (categoria a grafia mista:
+# Name/Unit/Stock accanto a NAME/STARTTIME). plantuml.txt resta fedele all'immagine.
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: INGREDIENTDISH
+  to: IngredientDish
+  reason: "maiuscolo tipografico: intestazione di classe in maiuscolo -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: DISHMeal
+  to: DishMeal
+  reason: "maiuscolo tipografico: intestazione di classe in maiuscolo -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: INGREDIENT
+  to: Ingredient
+  reason: "maiuscolo tipografico: intestazione di classe in maiuscolo -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: DISH
+  to: Dish
+  reason: "maiuscolo tipografico: intestazione di classe in maiuscolo -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: TABLE
+  to: Table
+  reason: "maiuscolo tipografico: intestazione di classe in maiuscolo -> PascalCase (confini di parola dall'xlsx)"

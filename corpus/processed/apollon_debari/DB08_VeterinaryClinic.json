@@ -1,0 +1,397 @@
+{
+  "version": "4.2.0",
+  "id": "DB08_VeterinaryClinic",
+  "title": "DB08_VeterinaryClinic",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "efff94c6-a6f3-53af-9650-2de214df5438",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Animal",
+        "attributes": [
+          {
+            "id": "bb729be8-a8b9-5b78-8823-6dc93e9de104",
+            "name": "+ ID"
+          },
+          {
+            "id": "759cc794-506e-540c-8e6d-08604479f210",
+            "name": "+ Name"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "4462e8ad-1f03-5f1c-889e-47eec9aab0b6",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Breed",
+        "attributes": [
+          {
+            "id": "e28abc29-7fbb-54b0-ade1-dc47dd7242df",
+            "name": "+ NAME"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "31230a5e-f18f-5272-bdbe-e6597ff7e5f3",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Condition",
+        "attributes": [
+          {
+            "id": "0b31ab84-57d1-5da9-ab03-83ffca72f5ac",
+            "name": "+ COMMON_NAME"
+          },
+          {
+            "id": "0393445b-6c82-516b-bb76-215b3da805c5",
+            "name": "+ SCI_NAME"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7c3f834c-6806-578a-9db6-49c1ac572540",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Appointment",
+        "attributes": [
+          {
+            "id": "6f6c3d66-e79d-563e-be34-cd96aad4709f",
+            "name": "+ DATE"
+          },
+          {
+            "id": "7f33d451-b56d-5184-818f-99d659e39b33",
+            "name": "+ TIME"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "10a58f82-c52e-541d-b62b-cb6bc2261a68",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [
+          {
+            "id": "6ac0ab63-4a50-56ae-a883-ff7102640226",
+            "name": "+ ID"
+          },
+          {
+            "id": "24cdac87-f983-5c88-89ff-ee6299191960",
+            "name": "+ NAME"
+          },
+          {
+            "id": "55332c52-d4ef-5506-9516-2539a57ef484",
+            "name": "+ ADDRESS"
+          },
+          {
+            "id": "02c7d4ae-8338-54fd-9598-e9935c8efcaa",
+            "name": "+ PHONE"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "cfe953ca-6bd5-5f61-9a59-3ce987076011",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Owner",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "5d54eaeb-4b06-5137-8e51-724551496d62",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 420
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "Physician",
+        "attributes": [],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "cd24f084-665a-5004-9a9c-ae2df9709899",
+      "source": "efff94c6-a6f3-53af-9650-2de214df5438",
+      "target": "4462e8ad-1f03-5f1c-889e-47eec9aab0b6",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "311098de-51fe-5176-b762-d77c40d20267",
+      "source": "4462e8ad-1f03-5f1c-889e-47eec9aab0b6",
+      "target": "31230a5e-f18f-5272-bdbe-e6597ff7e5f3",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 75.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f7dc0a6f-16c2-514d-a960-83a4187baff6",
+      "source": "efff94c6-a6f3-53af-9650-2de214df5438",
+      "target": "7c3f834c-6806-578a-9db6-49c1ac572540",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 140
+          },
+          {
+            "x": 150.0,
+            "y": 200
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f7d98f9e-0835-5329-b90e-2ad6e91b5644",
+      "source": "31230a5e-f18f-5272-bdbe-e6597ff7e5f3",
+      "target": "7c3f834c-6806-578a-9db6-49c1ac572540",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 260,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7e4d6925-cf9b-55d9-8c49-e4db1642135b",
+      "source": "7c3f834c-6806-578a-9db6-49c1ac572540",
+      "target": "5d54eaeb-4b06-5137-8e51-724551496d62",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 300
+          },
+          {
+            "x": 150.0,
+            "y": 420
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c0e9ebec-68d4-51fd-abe3-ca4dabcaadec",
+      "source": "efff94c6-a6f3-53af-9650-2de214df5438",
+      "target": "cfe953ca-6bd5-5f61-9a59-3ce987076011",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 600,
+            "y": 220.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "65a6040b-cbc5-5af8-b4a0-87c39793d3dd",
+      "source": "cfe953ca-6bd5-5f61-9a59-3ce987076011",
+      "target": "10a58f82-c52e-541d-b62b-cb6bc2261a68",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 220.0
+          },
+          {
+            "x": 540,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "22f4ab9b-8117-51fc-9568-1166f1a86e34",
+      "source": "5d54eaeb-4b06-5137-8e51-724551496d62",
+      "target": "10a58f82-c52e-541d-b62b-cb6bc2261a68",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 440.0
+          },
+          {
+            "x": 320,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

@@ -1545,3 +1545,360 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   righe), 0 etichette non classificate, 0 errori schema/round-trip/stile, warning 27, test OK, check_translated
   15/15, diff_report 618, `example_2_airtravel_v4.json` invariato. Leakage Gruppo D tutto < 0.4
   (max InsuranceCompany vs AlphaInsurance 0.192; ApartmentBuilding vs House 0.024).
+
+### [2026-10-01] EatAtHome — due alternative: confermato "lasciamo cosi'"
+- Proposta di applicarne una sola (nota su Ingredient: "in that case REMOVE ingredients and allergens from the
+  dish class") valutata e **scartata dall'utente**: il diagramma resta con entrambe le alternative (attributi
+  `ingredients`/`allergen_information` su Dish e classe `Ingredient`), come da voce del Gruppo D. Nessuna
+  correzione aggiunta, nessuna nuova operazione.
+- **Precisazione (stesso giorno)**: il diagramma contiene **due alternative** di modellazione degli
+  ingredienti: gli attributi `ingredients`/`allergen_information` di Dish e la classe `Ingredient`. La nota
+  sull'immagine dice di **non tenerle insieme**. Sono state mantenute entrambe **per fedeltà all'immagine,
+  come scelta consapevole dell'autore**, senza nessuna modifica al diagramma. Ne segue che le note dei
+  diagrammi non sono sempre semplici commenti: alcune contengono istruzioni di modellazione (verifica sugli
+  altri 14 esercizi nella voce successiva).
+- **Limite noto**: aggiunta la §10 in `corpus/apollon_limitations.md` e la voce in `docs/STATUS.md`.
+- **Filtrabilità**: nuovo file dati `corpus/known_issues.yaml` (`{id: [codici]}`), letto da
+  `corpus/build_manifest.py`. Ogni record di `corpus.jsonl` ha il campo `known_issues` (lista vuota se
+  l'esercizio non ha problemi noti) e EatAtHome ha `["two_alternative_models"]`. I codici ammessi sono in
+  `KNOWN_ISSUE_CODES`; un codice sconosciuto, un id inesistente, una lista vuota o un codice duplicato fanno
+  fallire la pipeline. Il file non tocca né il diagramma né la descrizione. Test:
+  `check_known_issues_validation`.
+
+### [2026-10-01] Note dei diagrammi negli altri 14 esercizi tradotti — solo verifica, nessuna modifica
+- Ho controllato le immagini sorgente (`corpus/raw/translated_it/_images/es01..es15.png`, tranne es13), non
+  solo le transcription_notes.
+- **Solo es. 6 UniversityExams** ha una nota, e contiene un'istruzione di modellazione: propone una
+  soluzione alternativa con una classe `Persona` che generalizza Studente e Professore, con l'attributo
+  `dataNascita` e l'associazione `nato_a` verso Luogo ("verrà presentata nella prossima esercitazione"). Era
+  già stata esclusa per decisione utente (transcription_notes, punto 1), quindi nel corpus c'è solo la
+  soluzione disegnata, senza alternative.
+- Gli altri 13 esercizi non hanno note. `{disjoint, complete}` in es. 10 OilWells è un vincolo di
+  generalizzazione già trascritto, non una nota.
+
+### [2026-10-02] Test set De Bari — FASE 1: split corpus / debari_test (refactoring senza cambi di comportamento)
+- Obiettivo del passo: i 20 esercizi di `docs/dati/debari/Exercises.pdf` portati in Apollon v4 con la stessa
+  pipeline del corpus, come **test set tenuto fuori dal retrieval** (ground truth di De Bari et al.).
+- `corpus/apollon_convert.py`: il corpo di `main()` diventa `convert_split(jsonl_path, out_dir)`; CLI
+  `--split corpus|debari_test` (default `corpus` = comportamento storico). `debari_test` legge/scrive
+  `corpus/processed/testset_debari.jsonl` e `corpus/processed/apollon_debari/`.
+- `corpus/build_manifest.py`: stessa CLI. Split `debari_test`: raw `corpus/raw/debari_test/`, uscita
+  `testset_debari.jsonl`, nessun esempio statico; campi extra `split: "debari_test"`, `debari_number` (dal
+  prefisso `DBNN_` dell'id), `debari_title` (campo `name` di metadata.txt). I record del corpus **non** hanno
+  campi nuovi (byte-identità).
+- **Invarianti hard-fail** (`check_split_separation`, `check_apollon_dir_separation`): un id in entrambi gli split
+  (cartelle raw o jsonl), un id `DBNN_`/tag `debari_test`/`split: debari_test` nel corpus, un record De Bari senza
+  split o con id fuori formato, un JSON Apollon nella cartella dell'altro split. `known_issues.yaml` si valida
+  sull'unione degli id dei due split.
+- `corpus/generate_relations_table.py --english`: per esercizi già in inglese legge `plantuml.txt`, nessun
+  glossario, colonne IT omesse (`build_table` estratta da `main`).
+- `.gitignore`: eccezioni `!corpus/raw/debari_test/`, `!corpus/processed/testset_debari.jsonl`,
+  `!corpus/processed/apollon_debari/` (verificato con `git check-ignore`).
+- Test: `check_split_separation`, `check_debari_record_fields`, `check_relations_table_english`,
+  `check_convert_split_paths`.
+- **Verifica byte-identità**: sha256 salvati prima del refactoring (corpus.jsonl, 59 JSON in
+  `processed/apollon/`, `example_2_airtravel_v4.json`), ricontrollati dopo la pipeline completa: identici. Le 15
+  `relations_table.md` tradotte rigenerate: identiche. Pipeline corpus: 59/60, 0 errori, test OK,
+  check_translated 15/15, diff_report 618.
+
+### [2026-10-02] Test set De Bari — FASE 2: estrazione (STOP A, in attesa di approvazione)
+- `corpus/extract_debari.py` scrive in `corpus/raw/debari_test/`: `_images/dbNN.png` (20 immagini, pypdf; le 10
+  `.jp2` convertite in PNG con Pillow), e per ogni esercizio `description.md`, `metadata.txt` e
+  `extraction_notes.md` (generato). Non scrive mai `plantuml.txt` (FASE 3). Lo script è idempotente.
+- **Immagini verificate una per una** aprendole, non per ordine o nome file: titolo e classi coerenti con la
+  traccia e con la colonna "Given Solution" del foglio "Part 2 - N" (letto per nome; i fogli 16 e 17 sono solo in
+  posizione invertita, il contenuto corrisponde al nome). Le classi coincidono in tutti i 20 casi, a meno delle
+  differenze elencate nel report STOP A.
+- Testo: `leakage_check.load_debari` (stessa segmentazione del leakage); `Source:` e `Reference Solution:`
+  esclusi. Righe del PDF ricomposte in un paragrafo per riga, con gli elementi puntati come `- `. Regola di a capo
+  nella docstring dello script; i 5 casi ambigui sono stati verificati sul PDF renderizzato (`pdftoppm`): 2 sono a
+  capo di impaginazione su righe giustificate (`FORCE_JOIN`, es. 15 e 19), 3 sono a capo veri. I due spazi a
+  fine riga nel testo estratto segnano la fine di un paragrafo.
+- **Artefatti di estrazione corretti** (`TEXT_FIXES`/`SOURCE_FIXES`, ciascuno verificato sul rendering,
+  hard-fail se assente): `wor k`, `sce ne`, `Approach” .`, `physicia n`, `owner -less`, `Hi -Key-Ah`,
+  `account number ;`, `a ttached`, `w hich`; nelle fonti `Changin g`, `Models ,`, `us ing`. Gli spazi doppi
+  (`made  up`, `address  and`, `number  and`) sono ridotti a uno.
+- **Non corretti perché presenti nel PDF**: `ordered .` (es. 5) e `rented- Each` (es. 14), confermati sul rendering,
+  oltre ai refusi dell'originale (`appointement`, `ammount`, `weigth`, `followig`, `Bycicle`, `id to design`).
+- Id `DBNN_<NomePascalCase>`; nessuna collisione esatta con il corpus. Solo `DB10_Restaurant` ha lo stesso
+  suffisso di `Restaurant` (segnalato dallo script). Proposta: `DB14_BicycleRental` (id corretto) con
+  `debari_title` originale "Bycicle Rental".
+- `metadata.txt`: `name` = titolo originale; `citation` = autori e titolo del paper da CLAUDE.md (la venue non è
+  nel repo, non inventata) più il numero dell'esercizio; `domain` dal vocabolario del corpus (proposta).
+- Dipendenze aggiunte a `requirements.txt`: `pypdf`, `pillow` (già usati ma non elencati), `openpyxl` (installato).
+
+### [2026-10-02] Test set De Bari — STOP A approvato; nuove regole e costrutti
+- **Regola (utente): parti illeggibili o tagliate dell'immagine → si completano da Analysis.xlsx**, annotando
+  in transcription_notes OGNI token completato e la fonte. Se l'xlsx non copre il punto → STOP e domanda.
+  Primo caso, es. 4 (tagliato a destra): `Appointment` e `Medication` dall'xlsx. `Perscripti…` → `Perscription`
+  (decisione utente: si completa il prefisso visibile con il suo refuso; rename → Prescription proposto
+  commentato). `NumberRe…` → `NumberRe` come visibile (decisione utente: l'xlsx `Number` non copre il prefisso).
+  Il taglio non tocca molteplicità né ruoli (le linee arrivano sul lato sinistro, visibile).
+- **Convenzione (utente): nomi con spazi / '-' / '/' → PascalCase** (classi, attributi, metodi): si tolgono i
+  separatori, maiuscola sulla prima lettera di ogni parola successiva, il resto resta come scritto
+  ("Work Product" → `WorkProduct`, "data prestito" → `dataPrestito`, "Part/Acc" → `PartAcc`). Underscore e
+  MAIUSCOLO invariati, "Pilot1" invariato. Precedente: `ControlloreAscensore` nei tradotti. Ogni
+  ricomposizione è annotata. Motivo tecnico: `parse_attribute` legge "Percent Complete" come attributo
+  `Complete` di tipo `Percent`.
+- `DB14_BicycleRental` approvato (`debari_title` "Bycicle Rental" invariato). Domini approvati come
+  **PROVVISORI**, assegnati dal trascrittore e non dalla fonte: riga `domain_note` in ogni metadata.txt.
+- Es. 16: il testo del libro nell'immagine è escluso come nota. L'auto-associazione di OrganizationalUnit
+  **non ha rombo** (verificato con ingrandimento 3x): associazione con ruolo "subdivision" (`*`) e `0..1`. La
+  voce xlsx "Composition (OrganizationalUnit - Subdivision)" va classificata da check_debari come imprecisione
+  dell'xlsx (conteggi dell'es. 16 non più allineati al ground truth).
+- **`<<interface>>` (decisione utente: implementato subito)**: prima `interface X {` non era riconosciuto e
+  il blocco veniva scartato con un semplice warning. Ora `CLASS_HEADER_RE` accetta `interface X` e
+  `class X <<interface>>` → kind `interface` → `stereotype: "interface"` nel JSON Apollon (valore ammesso
+  da ClassStereotype.ts); `..|>` resta ClassRealization. Uno stereotipo diverso da interface/enum dà un
+  warning. **Ogni riga PlantUML non riconosciuta è ora un errore** in `convert_split` (prima era un
+  warning; nel corpus erano 0). Test `check_interface_stereotype`. Corpus byte-identico.
+
+### [2026-10-02] Test set De Bari — FASE 4: corpus/check_debari.py
+- Confronto indipendente del ground truth (plantuml.txt + correzioni attive, riparsato) con Analysis.xlsx:
+  "Given Solution" di "Part 2 - N" (letto per nome) per classi / membri / relazioni (nomi normalizzati:
+  minuscole, solo alfanumerici), e "Estimated Difficulty" per Classes / Attributes+Operations / Associations
+  (valori in cache) e per AVG ED.
+- Le discrepanze non si correggono: ognuna va classificata in `corpus/check_debari_justifications.yaml`
+  (errore_trascrizione | imprecisione_xlsx | convenzione | refuso_immagine). Lo script fallisce se resta una
+  discrepanza non giustificata o una giustificazione orfana. Report generato in `corpus/check_debari_report.md`.
+- Nel record De Bari (build_manifest) entrano `debari_xlsx_counts`, `debari_ed` (ED 1-3) e `debari_ed_avg`,
+  presi dall'xlsx senza ricalcolarli.
+- Test `check_debari_xlsx_comparison`; `check_debari_record_fields` esteso.
+
+### [2026-10-02] Test set De Bari — Gruppo DB-A (es. 1-5): trascrizione, in attesa di revisione (STOP)
+- 5 `plantuml.txt` + `transcription_notes.md` + `relations_table.md` (generata con `--english`). Etichette
+  proposte in `corpus/label_proposals_debari_DB-A.md` (17: 15 associazioni + 2 vincoli), NON in
+  CLASSIFICATION.
+- Correzioni: `DB05_MovieShop.yaml` ATTIVE (3 enum inline → MovieType / MovieRentStato / MovieBuyStato,
+  convenzione già approvata). `DB04` (Perscription, Temeperature, `0..!`) e `DB02` (`1...*` / `0...*`)
+  proposte COMMENTATE.
+- Proposte di costrutti nuovi: operazioni senza parentesi nel terzo comparto → `Nome()` (es. 1, applicato
+  in via provvisoria); tipi `Real` → double e `Text` → string (es. 2, NON applicato: lo style check ufficiale
+  fallisce senza questa mappatura).
+- Dubbi aperti: `*` isolato nell'es. 3; `*` in grassetto nell'es. 5 (attribuzione provvisoria all'estremo
+  Subscriber di "hire"); attributi in italiano nell'es. 5 (xlsx tradotto).
+- **Run provvisoria** (in memoria, etichette proposte + Real/Text iniettate, output solo nello scratchpad):
+  5/5 convertiti, 0 errori di schema / integrità / round-trip / stile / etichette, 67 warning (65 "senza
+  tipo", 2 vincoli). Senza la mappatura Real/Text: 4 errori di stile sull'es. 2.
+- check_debari: 5 esercizi, tutte le discrepanze giustificate. DB01 senza discrepanze. Righe 2 e 3 di
+  "Attributes + Operations" scambiate nell'xlsx (35 = 12 + 23 è l'es. 3). L'xlsx omette 19 operazioni
+  dell'es. 3. Refusi dell'xlsx "Extenal" / "Externals".
+- Corpus byte-identico dopo ogni passo.
+
+### [2026-10-03] Test set De Bari — Gruppo DB-A chiuso: decisioni utente e pipeline ufficiale
+- **Etichette DB-A approvate** e portate in `CLASSIFICATION` (15 associazioni + 2 vincoli);
+  `_generate_label_classification.py` legge ora anche `testset_debari.jsonl` (stesso json, id DBNN_ non
+  collidono). Es. 1: Input/Output/Manage/Execute sono nomi di ASSOCIAZIONE perché hanno il triangolo pieno
+  del verso di lettura, che i ruoli non hanno (motivazione registrata nella classificazione).
+  `label_classification.json`: 173 voci. `label_proposals_debari_DB-A.md` rimosso.
+- **Regola generale: `Real` → `double`, `Text` → `string`** in `TYPE_NORMALIZATION`, accanto a Number → int.
+  Solo le grafie maiuscole: `text` è un nome di attributo nel corpus (InsuranceCompany `text : string`) e
+  `apply_glossary.normalize_types` sostituisce per parola intera. Verificato che rigenerare i 15
+  `plantuml.txt` tradotti dà testo identico. Test esteso.
+- **Regola generale: molteplicità con tre punti** (`1...*`) → `1..*` in `normalize_multiplicity`, con warning
+  nel record (in `build_apollon_json`). Nessuna correzione per esercizio: `corrections/DB02_*.yaml`
+  rimosso. Test esteso.
+- **Operazioni senza parentesi** nel comparto operazioni → `Nome()` (stessa lettura dell'xlsx).
+- **Nomi composti di attributi e metodi**: confermata la regola già applicata, uguale per tutti gli
+  esercizi: separatori tolti, prima parola come scritta, maiuscola sulle successive (`PercentComplete`,
+  `InitiateProject()`, ma `dataPrestito`). Precedente: nel corpus convertito i nomi composti sono 180
+  PascalCase e 177 camelCase, e ognuno segue la propria fonte.
+- **Es. 4**: le 3 correzioni sono attive (Perscription → Prescription, Temeperature → Temperature,
+  `0..!` → `0..1`). **Revisione della decisione dello STOP A**: `NumberRe…` → `Number` dall'xlsx (vale la
+  regola del completamento); la lettura probabile `NumberRefills` è annotata. check_debari: 0 discrepanze.
+- **Es. 3**: il `*` isolato non è trascritto. Tutti e 4 i rami dell'aggregazione di Page hanno già la
+  propria molteplicità: è un residuo senza estremo.
+- **Es. 5**: il `*` in grassetto resta sull'estremo Subscriber di "hire" (regola dell'estremo più vicino).
+  **Nuovo campo `ambiguities`** nei record del test set (da `corpus/ambiguities.yaml`, validato: {elemento,
+  letture_alternative, scelta, motivazione}), con questo caso e l'indizio contrario.
+- **Es. 5 tradotto** con il meccanismo di translated_it: `plantuml_it.txt` (immagine) + `glossary.json`
+  (dalle letture dell'xlsx; traduzione fedele dove l'xlsx semplifica: loanDate, sellingPrice; valori enum
+  present / to order) → `plantuml.txt` (`apply_glossary.py`). Enum della convenzione: MovieType,
+  MovieRentStatus, MovieBuyStatus. Nuovo `check_translated.py --debari` (JSON in `apollon_debari/`): OK.
+- **Conteggi per l'analisi**: `apollon_convert.apollon_counts` calcola dal JSON Apollon trascritto il campo
+  `gt_counts` (classi, classi astratte, interfacce, enum, attributi, operazioni, valori enum, relazioni per
+  tipo); solo record del test set. I conteggi dell'xlsx (`debari_xlsx_counts`) restano solo per
+  tracciabilità.
+- **ED 1-3**: nel file non c'è una seconda copia indipendente ("Part 1" e "Part 2 - Tot" contengono
+  punteggi), quindi lo scambio non si può verificare direttamente. Indizi contrari allo scambio: nelle
+  righe 2-3 Classes e Associations corrispondono al ground truth (è scambiata solo la cella "Attributes +
+  Operations"); le formule AVG puntano alla propria riga; le ED seguono la complessità (es. 2 = 2/1/1 con
+  12 attributi e 0 operazioni, es. 3 = 5/5/4 con 35 membri e composizioni).
+- `build_manifest --split debari_test` salta, segnalandoli, gli esercizi senza `plantuml.txt` (trascrizione
+  a gruppi).
+- **Pipeline ufficiale DB-A**: 5/5 convertiti, 0 errori di schema / integrità / round-trip / stile, 0
+  etichette non classificate, 70 warning; check_translated --debari 1/1; check_debari OK; test OK; corpus
+  byte-identico.
+
+### [2026-10-03] Test set De Bari — Gruppo DB-B (es. 6-10): trascrizione, in attesa di revisione (STOP)
+- 5 `plantuml.txt` + `transcription_notes.md` + `relations_table.md` (`--english`). Etichette proposte in
+  `corpus/label_proposals_debari_DB-B.md` (7 associazioni, 3 ruoli proposti, 6 vincoli), NON in
+  CLASSIFICATION: la pipeline ufficiale del test set resta quella di DB-A (5 record) finché non arriva
+  l'approvazione.
+- Es. 9 (scritto a mano): separatori incerti e lettere illeggibili completati da Analysis.xlsx (CAR_KM,
+  ADM_DATE da "AOM - DATE", FINISH_DATE, CURRENT_PRICE), ogni token annotato. `1...*` normalizzato
+  automaticamente.
+- Es. 10: due classi associative senza nome → `INGREDIENTDISH`, `DISHMeal` (convenzione di concatenazione).
+- Punti aperti: "Navigator of" / "Copilot of" / "Captain of" (es. 6), ruolo o associazione; regola
+  "MAIUSCOLO invariato" applicata ai nomi scritti a mano o in maiuscolo (CARMODEL, PARTACC, DISHMeal).
+- **Run provvisoria** (etichette proposte in memoria, output solo nello scratchpad): 10/10 convertiti, 0
+  errori di schema / integrità / round-trip / stile / etichette.
+- check_debari: 10 esercizi, tutte le discrepanze giustificate. Es. 8 e 9 senza discrepanze. Imprecisioni
+  dell'xlsx: es. 6 Associations 12 contro le 13 relazioni della sua stessa Given Solution; es. 7 conteggi
+  5 / 7 contro 7 / 5; es. 10 Given Solution senza le 2 classi associative né i loro attributi.
+- Corpus byte-identico.
+
+### [2026-10-03] Test set De Bari — Gruppo DB-B chiuso; eccezione "maiuscolo tipografico"
+- **Etichette DB-B approvate** e portate in `CLASSIFICATION` (189 voci). Es. 6: "Navigator of" / "Copilot of"
+  / "Captain of" sono RUOLI `Navigator` / `Copilot` / `Captain` sull'estremo Pilot / Pilot3 ("X of" =
+  sostantivo + preposizione, senza triangolo; precedente Louvre hasCoach → coach; maiuscola come scritta).
+  Verificato che le due associazioni AircraftType–Pilot restano due edge distinti nel JSON.
+- Es. 6, "owns" `*`–`*`: confermato come disegnato. Il testo vincola solo il lato Aircraft, quindi non c'è
+  contraddizione.
+- **Eccezione alla regola "MAIUSCOLO invariato" (utente)**: se un diagramma, o una categoria di elementi al
+  suo interno (es. le intestazioni di classe), è interamente in maiuscolo, il maiuscolo è TIPOGRAFICO:
+  classi → PascalCase (confini di parola dall'xlsx), attributi → minuscolo con i separatori come scritti.
+  Resta invariato quando è informativo: acronimi e diagrammi a grafia mista in cui solo alcuni nomi sono
+  maiuscoli. `plantuml.txt` resta fedele all'immagine; la normalizzazione passa da
+  `corrections/<id>.yaml` (rename_token, categoria chiarimento_modellazione, motivo "maiuscolo
+  tipografico"), tracciata in `corrections_applied`.
+  - **Acronimi riconosciuti** (approvati): ID, SSN, VAT, NIN, TIN, SMS, DVD, VHS, ASCII. NON acronimi (→
+    minuscolo): KM, NO, FAX, TAX. Nei composti l'acronimo resta maiuscolo (TAX_ID → tax_ID; SERIAL_NO →
+    serial_no; CAR_KM → car_km).
+  - Es. 9 (interamente maiuscolo): 9 classi → Person, Employee, Owner, Service, Car, PartAcc, CarModel, Make,
+    PartType; 11 attributi → minuscolo; ID invariato (20 correzioni).
+  - Es. 10 (grafia mista, decisione utente "solo classi"): INGREDIENT / DISH / TABLE → Ingredient / Dish /
+    Table, classi associative IngredientDish / DishMeal; attributi invariati (5 correzioni).
+  - Es. 11 e 13: NON applicata in automatico; proposta caso per caso allo STOP DB-C.
+- **Pipeline ufficiale DB-A + DB-B**: 10/10 convertiti, 0 errori di schema / integrità / round-trip / stile,
+  0 etichette non classificate, 130 warning; check_translated --debari 1/1; check_debari OK (10 esercizi).
+
+### [2026-10-03] Test set De Bari — Gruppo DB-C (es. 11-15): trascrizione, in attesa di revisione (STOP)
+- 5 `plantuml.txt` + `transcription_notes.md` + `relations_table.md`. Etichette proposte in
+  `corpus/label_proposals_debari_DB-C.md` (4 vincoli, 6 ruoli: Sender, Recipient, Dropoff point, Issuer,
+  Actual Rented bike, Desired Model), NON in CLASSIFICATION: la pipeline ufficiale resta a 10 record.
+- Classi associative senza nome per concatenazione: PackageDeliveryCenter (11), PieceComponent e PieceOrder
+  (12), PRODUCTPURCHASEORDER (13).
+- `check_debari.py`: il parser dell'xlsx accetta "Association (A - B) 1" (numero dopo la parentesi, es. 11) e
+  "Client. Name" (punto attaccato alla classe, es. 14); DB-A/B invariati.
+- Differenza sul conteggio delle relazioni dovuta al collegamento della classe associativa (il ground truth
+  lo conta, l'xlsx no): classificata come **convenzione** (ancora condivisa `count_assoc_class`), anche per gli
+  es. 10, 12, 13, che prima erano "imprecisione_xlsx".
+- Punti aperti: maiuscolo degli es. 11 e 13 (proposta caso per caso); nomi tutti in minuscolo nell'es. 15
+  (carPark …); vincoli testuali dell'es. 14 non trascritti (costrutto nuovo).
+- **Run provvisoria** (etichette proposte in memoria): 15/15 convertiti, 0 errori. check_debari: 15 esercizi,
+  tutte le discrepanze giustificate (es. 15 senza discrepanze; es. 14 solo il refuso "BycicleModel" dell'xlsx).
+- Corpus byte-identico.
+
+### [2026-10-03] Test set De Bari — Gruppo DB-C chiuso: decisioni utente e pipeline ufficiale
+- **Etichette DB-C approvate** come ruoli, con il testo come scritto (Sender e Recipient su CUSTOMER, Dropoff
+  point su DeliveryCenter, Issuer su CLIENT, Actual Rented bike su Bicycle, Desired Model su BicycleModel),
+  più 4 vincoli. `label_classification.json`: 199 voci.
+- **La regola del maiuscolo tipografico si applica SOLO ALLA LETTERA** (decisione utente): serve una
+  categoria INTERAMENTE in maiuscolo. Es. 11 (2 intestazioni maiuscole su 5) ed es. 13 (tutte tranne Person;
+  attributi tutti tranne Quantity) non la soddisfano: TUTTO INVARIATO, nessuna estensione caso per caso.
+- **Regola simmetrica "minuscolo tipografico"** (decisione utente): una categoria interamente in minuscolo
+  → classi in PascalCase, via corrections con motivazione, `plantuml.txt` fedele, operazioni invariate. Es. 15:
+  Barrier, Signal, Card, Access (4 correzioni). **Correzione dell'applicazione precedente**: "car park" &
+  co. sono nomi di classe con spazi, e per le classi la convenzione è PascalCase anche sulla prima parola
+  (CarPark, CardReader, GuestCard, StaffCard, direttamente in `plantuml.txt`); la regola "prima parola come
+  scritta" vale per attributi e metodi. Verifica sul corpus: 0 diagrammi con classi tutte minuscole, 0
+  con classi tutte maiuscole, 0 con attributi tutti maiuscoli.
+- **Es. 14, vincoli testuali ESCLUSI**, come i `{XOR}` di FilmSet e TransportCompany: trascritti come note
+  attaccate alla classe (`note "..." as N1` + `N1 .. Reservation`). `parse_plantuml` scarta ora anche una
+  relazione con una nota come estremo, con un warning che riporta il testo della nota (prima `N1` sarebbe
+  diventata una classe implicita). Nel corpus non esiste questa forma: byte-identico. Test
+  `check_note_on_single_class`. Niente enum, niente campo nuovo.
+- **Pipeline ufficiale DB-A..C**: 15/15 convertiti, 0 errori di schema / integrità / round-trip / stile, 0
+  etichette non classificate, 192 warning; check_translated --debari 1/1; check_debari OK (15 esercizi);
+  test OK; corpus byte-identico.
+- Creata in `docs/STATUS.md` la **tabella di coerenza delle regole corpus / test set** (richiesta utente; prima
+  non esisteva).
+
+### [2026-10-03] Test set De Bari — Gruppo DB-D (es. 16-20): trascrizione, in attesa di revisione (STOP)
+- 5 `plantuml.txt` + `transcription_notes.md` + `relations_table.md`. Etichette proposte in
+  `corpus/label_proposals_debari_DB-D.md` (2 associazioni, 2 ruoli: personalBanker, accountHolder), NON in
+  CLASSIFICATION: la pipeline ufficiale resta a 15 record. I ruoli vicino agli estremi (subdivision, manager,
+  line_item) sono scritti direttamente con la sintassi `"molt ruolo"`.
+- Es. 16: auto-associazione senza rombo con ruolo `subdivision`; testo del libro escluso come nota.
+- Es. 17: frecce piene identiche → ambiguità generalizzazione / associazione registrata in
+  `corpus/ambiguities.yaml`, con lettura provvisoria come l'xlsx; Contract in corsivo → `abstract class`; Phone e
+  DoubleTransfer non collegati (trascritti isolati).
+- Es. 18: `interface User`; `List<X>` → `X[]` con correzioni attive (convenzione multi-valore già approvata).
+- Costrutti nuovi proposti: tipi non primitivi non dichiarati (`Guid` es. 19; `Address`, `Phone`, `Price`,
+  `Supplier` es. 20); `{ordered, unique}` sugli estremi (es. 20), che oggi il parser leggerebbe come nome di
+  ruolo.
+- **Run provvisoria** (etichette, tipi e `{ordered, unique}` tolto dal ruolo, tutto in memoria): 20/20
+  convertiti, 0 errori. check_debari: 20 esercizi, tutte le discrepanze giustificate (es. 20 senza discrepanze).
+- Corpus byte-identico.
+
+### [2026-10-03] Test set De Bari — Gruppo DB-D chiuso; trascrizione dei 20 esercizi completata
+- **Etichette DB-D approvate**: worksFor e borrow sono associazioni; personalBanker (estremo Employee) e
+  accountHolder (estremo Customer) sono ruoli. `label_classification.json`: 203 voci.
+- **Regola generale, tipi di dominio**: `Guid`, `Address`, `Phone`, `Supplier` → string; `Price` → double. Mappature
+  globali come Number / Calendar / currency, applicate SOLO in posizione di tipo e SOLO con queste maiuscole. Sono
+  in una tabella separata, `DOMAIN_TYPE_MAPPING`: `apply_glossary.normalize_types` sostituisce per parola intera e
+  non deve toccarle (address / phone / price sono nomi di attributo in 22 esercizi). Non si applicano se il
+  diagramma dichiara una classe con quel nome: SmartHomeAutomationSystem dichiara `Address`, ma non lo usa come
+  tipo. Verifiche: corpus byte-identico; i 15 tradotti + DB05 rigenerati sono identici; test
+  `check_domain_types_and_end_constraints`. Niente "tipo esterno". Es. 20: `Supplier` è probabilmente
+  un'entità non disegnata, e non si crea una classe (si inventerebbe una relazione).
+- **Regola generale, vincoli di estremo** `{ordered, unique}`: `split_mult_role` li toglie dal testo
+  dell'estremo (non sono né molteplicità né ruolo) e `parse_plantuml` li registra come warning ("scartato
+  vincolo di estremo"), come i {XOR}. Casi nel corpus: 0 (le uniche `{` tra virgolette sono le note {XOR}).
+- **Es. 17 confermato**: Data/SMS → Option sono generalizzazioni; Client/Option → Contract sono associazioni
+  navigabili (voce in ambiguities.yaml). Phone e Double Transfer restano isolati: le generalizzazioni dell'xlsx
+  sono imprecisione dell'xlsx. Contract è `abstract class`. Le due linee tratteggiate BasicContract/Option →
+  Contract sono `..|>` → ClassRealization, come le realizzazioni tratteggiate dell'es. 18 (verificato nel JSON).
+- **Pipeline ufficiale, 20/20**: 0 errori di schema / integrità / round-trip / stile, 0 etichette non
+  classificate, 215 warning, 12 vincoli di generalizzazione; check_translated --debari 1/1; check_debari OK (20
+  esercizi, tutte le discrepanze giustificate); test OK; corpus byte-identico.
+
+### [2026-10-03] Test set De Bari — FASE 5: leakage (STOP B, in attesa di decisione)
+- `corpus/leakage_check.py` esteso (senza opzioni il comportamento è invariato: ApartmentBuilding vs House resta
+  0.024). `--debari-test`: bersagli dai 20 record di `testset_debari.jsonl` (descrizioni pulite) invece che dal
+  testo grezzo del PDF. `--prompt`: indicizza anche gli esempi few-shot del prompt statico
+  (`prompt_template_v4.txt`: PROMPT_example_1_bank_loans, PROMPT_example_2_airtravel) come pool separato. TF-IDF
+  invariato (stop words inglesi, sublinear_tf, idf comune), soglia 0.4. Test `check_leakage_prompt_examples`.
+- Esito (`--debari-test --prompt --all-debari`): **un solo caso sopra soglia: es. 6 Flights vs AirTravel = 0.418**,
+  sia verso il record del corpus sia verso l'esempio 2 del prompt statico (stesso testo). Tutti gli altri top-1
+  sono < 0.4 (massimo successivo: es. 7 Bank System vs BankAccount 0.332).
+- Coppie richieste (sempre riportate, con `--vs`): 6 vs AirTravel 0.418 (anche vs prompt 0.418); 7 vs bank loans
+  0.090 (vs BankAccount 0.332); 16 vs bank loans 0.095 (vs BankAccount 0.323); 10 vs Restaurant 0.177; 18 vs
+  MilanLibrary 0.144; 9 vs RepairShops 0.159; 4 vs Hospital 0.118, vs HospitalHouseMD 0.210.
+- Nessuna esclusione automatica: decisione utente allo STOP B.
+
+### [2026-10-04] Test set De Bari — STOP B: es. 6 Flights resta nel test set e nel retrieval (opzione a)
+- **Decisione utente**: l'es. 6 resta nel test set; AirTravel resta candidato legittimo del retrieval per l'es. 6;
+  nessuna esclusione.
+- **Motivazione**: è una sovrapposizione di dominio sotto la soglia di duplicato (TF-IDF 0.418, appena sopra la
+  soglia di attenzione 0.4; 4 classi condivise su 17, Jaccard dei nomi di classe 0.24). Escludere AirTravel dal
+  retrieval penalizzerebbe il RAG proprio dove dovrebbe aiutare (recuperare un esempio dello stesso dominio è lo
+  scopo del retrieval). Escludere l'es. 6 dal test set ridurrebbe la confrontabilità con De Bari et al. (stessi 20
+  esercizi, stessi punteggi di Analysis.xlsx).
+- **Tracciabilità**: `known_issues` dell'es. 6 con una voce strutturata `{tipo: domain_overlap_static_example,
+  altro_esercizio: AirTravel, tfidf: 0.418, tfidf_soglia: 0.4, classi_condivise: [Airline, Airport, Flight, Pilot],
+  n_classi_condivise: 4, jaccard_nomi_classe: 0.2353, nota}`. Classi condivise e Jaccard sono ricalcolati dai JSON
+  Apollon (DB06_Flights.json, AirTravel.json; confronto case-insensitive: 4/17 = 0.2353, cioè 0.24 a 2 decimali,
+  coincide con il valore indicato dall'utente). L'esempio 2 del prompt ha le stesse classi del record AirTravel.
+  `known_issues.yaml` accetta ora anche voci strutturate (dizionario con `tipo`); le voci a stringa restano
+  invariate (corpus byte-identico). Il test verifica la coerenza dei numeri con i JSON.
+- **Requisito della valutazione** (in STATUS.md): ogni metrica va riportata su 20 esercizi e su 19 (senza l'es. 6),
+  per tutte le condizioni, in particolare few-shot statico vs retrieval.
+
+### [2026-10-04] Test set De Bari — FASE 6: chiusura
+- `build_manifest.py --split debari_test` richiede ora tutti e 20 gli esercizi trascritti (prima, durante la
+  trascrizione a gruppi, saltava quelli senza `plantuml.txt`).
+- **Pipeline completa su entrambi gli split** (ordine in STATUS.md): corpus 59/60 (Cruise escluso), test set
+  20/20; 0 errori di schema / integrità / round-trip / stile, 0 righe non riconosciute, 0 etichette non
+  classificate (`label_classification.json`: 203 voci = 74 associazioni, 109 ruoli + 2 righe di ruolo doppio, 21
+  vincoli); test OK; check_translated 15/15 (corpus) e 1/1 (--debari); diff_report 618; check_debari OK (84
+  discrepanze, tutte giustificate: 76 imprecisione_xlsx, 8 convenzione); leakage: solo es. 6 sopra soglia
+  (deciso, opzione a). **Corpus byte-identico** agli sha256 salvati prima della FASE 1 (corpus.jsonl, 59 JSON
+  Apollon, example_2_airtravel_v4.json).
+- **Test set**: 150 classi (1 astratta) + 1 interfaccia + 5 enumerazioni, 264 attributi, 47 operazioni, 167
+  relazioni (93 associazioni bidirezionali, 10 unidirezionali, 37 generalizzazioni, 16 aggregazioni, 6
+  composizioni, 4 realizzazioni, 1 dipendenza); 40 correzioni su 6 esercizi; 2 ambiguità (es. 5, 17); 1
+  known_issue (es. 6); ED medio 2.8.
+- **Domini** (provvisori per il test set): vocabolario di 13 domini, conteggi corpus / test in STATUS.md. Il test
+  set non copre Insurance, Personal Activities, Research, Social Networks.

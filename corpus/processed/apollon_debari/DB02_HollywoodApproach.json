@@ -1,0 +1,308 @@
+{
+  "version": "4.2.0",
+  "id": "DB02_HollywoodApproach",
+  "title": "DB02_HollywoodApproach",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "f8437dd6-9c54-5db0-bea5-58081566ab43",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Take",
+        "attributes": [
+          {
+            "id": "9b532637-bf34-59cb-9082-2d2b13e89c58",
+            "name": "+ nbr : int"
+          },
+          {
+            "id": "e59ef61e-d188-52df-9a6d-a510f8856eb3",
+            "name": "+ filmed_meters : double"
+          },
+          {
+            "id": "f4434bf1-f980-55c4-9685-74b7214ce977",
+            "name": "+ reel : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "19df3296-f03e-5722-b30c-32391390be85",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Setup",
+        "attributes": [
+          {
+            "id": "2c9889ad-5311-502c-95bd-1840e369b294",
+            "name": "+ code : string"
+          },
+          {
+            "id": "9481c6fe-dd79-55e3-8c2d-221d0b78eb40",
+            "name": "+ photographic_pars : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "929d7253-1dc1-5418-a3c4-a75aa532cd22",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Scene",
+        "attributes": [
+          {
+            "id": "aa3f88c4-247d-5321-b498-03cd3acd9cce",
+            "name": "+ code : string"
+          },
+          {
+            "id": "c62cd054-c3f1-54c8-ba23-3abb2a187fd1",
+            "name": "+ description : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "d58fc598-0d1f-5ef8-bf8a-7d2b1736af00",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Internal",
+        "attributes": [
+          {
+            "id": "e5c4c952-c41f-5c34-bc5a-b57fa0e4d005",
+            "name": "+ theater : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "226195d2-fa91-50e5-9239-a6ce0c370423",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "External",
+        "attributes": [
+          {
+            "id": "4c43b53f-55b6-5b50-a62b-894ac7babd8e",
+            "name": "+ night_scene : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "c60b8e88-cc4d-5c8c-8e32-f72cdaa05625",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Location",
+        "attributes": [
+          {
+            "id": "cd0cd0ef-6e24-5eed-afe4-5cdb6c8f24b8",
+            "name": "+ name : string"
+          },
+          {
+            "id": "2b1eb8bf-1f43-5f9f-bc27-936310514b67",
+            "name": "+ address : string"
+          },
+          {
+            "id": "d23e91cf-ffff-5273-a9b7-dc0cb71648fa",
+            "name": "+ description : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "b8955349-76ad-5b41-a3f4-487b3feea5c5",
+      "source": "f8437dd6-9c54-5db0-bea5-58081566ab43",
+      "target": "19df3296-f03e-5722-b30c-32391390be85",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 105.0
+          },
+          {
+            "x": 320,
+            "y": 90.0
+          }
+        ],
+        "label": "tk_of_stp",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7a64ca92-6bb1-5677-b72d-b86493e83815",
+      "source": "929d7253-1dc1-5418-a3c4-a75aa532cd22",
+      "target": "19df3296-f03e-5722-b30c-32391390be85",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 540,
+            "y": 90.0
+          }
+        ],
+        "label": "stp_for_scn",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "2db05934-e412-5a47-a7f5-40f1a786d57b",
+      "source": "d58fc598-0d1f-5ef8-bf8a-7d2b1736af00",
+      "target": "929d7253-1dc1-5418-a3c4-a75aa532cd22",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 265.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "646a60f5-7912-579c-8f86-e51f601cd9ff",
+      "source": "226195d2-fa91-50e5-9239-a6ce0c370423",
+      "target": "929d7253-1dc1-5418-a3c4-a75aa532cd22",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 265.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a48636b5-4009-5c9d-a83d-f173ee7a7f92",
+      "source": "226195d2-fa91-50e5-9239-a6ce0c370423",
+      "target": "c60b8e88-cc4d-5c8c-8e32-f72cdaa05625",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 265.0
+          },
+          {
+            "x": 600,
+            "y": 295.0
+          }
+        ],
+        "label": "located",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

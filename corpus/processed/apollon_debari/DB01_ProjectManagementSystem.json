@@ -1,0 +1,382 @@
+{
+  "version": "4.2.0",
+  "id": "DB01_ProjectManagementSystem",
+  "title": "DB01_ProjectManagementSystem",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "9cbf06f3-8b0c-518e-b654-c0063dfdf50e",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "WorkProduct",
+        "attributes": [
+          {
+            "id": "fd313abe-c31d-5aa2-ac70-49306a5fc3ee",
+            "name": "+ PercentComplete"
+          },
+          {
+            "id": "41fe57e4-7745-54dd-a60c-dd54f4581c11",
+            "name": "+ Description"
+          }
+        ],
+        "methods": [
+          {
+            "id": "837c91ef-0996-539e-b6ce-a0cecde82d27",
+            "name": "+ Validate()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2f697b70-97f9-51d0-bfe5-554dde21ae63",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Requirement",
+        "attributes": [
+          {
+            "id": "80832e38-3188-52a9-9024-d8dc71d929ff",
+            "name": "+ Media"
+          }
+        ],
+        "methods": [
+          {
+            "id": "4a23dcd0-02c9-542f-ab8e-6b338012ff75",
+            "name": "+ Validate()"
+          },
+          {
+            "id": "50a93733-a7a3-540f-a52f-5a80b1ecaa49",
+            "name": "+ Publish()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "7074e4e7-3f3c-538b-b292-cc4c5a0f686d",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "System",
+        "attributes": [
+          {
+            "id": "2ba2662b-774d-5f27-9c83-e671ac4835f9",
+            "name": "+ Platform"
+          }
+        ],
+        "methods": [
+          {
+            "id": "14db8306-b3ab-5710-9c7b-a9fafe575239",
+            "name": "+ Validate()"
+          },
+          {
+            "id": "9a7265da-8451-5c1e-bc5e-a231a8986447",
+            "name": "+ Deploy()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "c7a714f4-2892-5128-b012-6aab9211277f",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Project",
+        "attributes": [
+          {
+            "id": "2bf50f68-c1bc-5c41-95b6-92a914e1c81c",
+            "name": "+ Name"
+          },
+          {
+            "id": "e33f3496-8d50-5584-97ac-3b26d013caf5",
+            "name": "+ StartDate"
+          },
+          {
+            "id": "21608efa-3835-5ecf-b472-c0aef0abeb0f",
+            "name": "+ EndDate"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7cedf11c-7f29-5dd4-8bec-2b774df794b3",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Manager",
+        "attributes": [
+          {
+            "id": "353b9b36-0f93-5344-836a-df20f26e2218",
+            "name": "+ Name"
+          },
+          {
+            "id": "8603672c-8892-51cd-a0c9-db10eb38bb3b",
+            "name": "+ PhoneNumber"
+          }
+        ],
+        "methods": [
+          {
+            "id": "acbf149a-24c5-596e-a04b-13769cc351a7",
+            "name": "+ InitiateProject()"
+          },
+          {
+            "id": "1d70c60f-be97-5225-8aaa-3fba906e7027",
+            "name": "+ TerminateProject()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "045fed36-a0d2-5a5f-b7f6-e7e929959c13",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Team",
+        "attributes": [
+          {
+            "id": "8289c408-a1c0-54f7-b23f-08c523996b2a",
+            "name": "+ Description"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "dd819df0-c791-532b-81fc-c2335839a3ac",
+      "source": "2f697b70-97f9-51d0-bfe5-554dde21ae63",
+      "target": "9cbf06f3-8b0c-518e-b654-c0063dfdf50e",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 105.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "417130de-c4df-500b-88d1-8f870d40376d",
+      "source": "7074e4e7-3f3c-538b-b292-cc4c5a0f686d",
+      "target": "9cbf06f3-8b0c-518e-b654-c0063dfdf50e",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 105.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "04f6d496-0d31-5976-9ca0-3423a6551a0e",
+      "source": "c7a714f4-2892-5128-b012-6aab9211277f",
+      "target": "2f697b70-97f9-51d0-bfe5-554dde21ae63",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 320,
+            "y": 105.0
+          }
+        ],
+        "label": "Input",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "44724545-a207-59f8-af69-83bfe92dd8d3",
+      "source": "c7a714f4-2892-5128-b012-6aab9211277f",
+      "target": "7074e4e7-3f3c-538b-b292-cc4c5a0f686d",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 105.0
+          }
+        ],
+        "label": "Output",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "0346a870-fa90-59cb-af7a-916e13edb04c",
+      "source": "7cedf11c-7f29-5dd4-8bec-2b774df794b3",
+      "target": "c7a714f4-2892-5128-b012-6aab9211277f",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 310.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "Manage",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "11f4c434-c260-54a2-bef5-b41812e96804",
+      "source": "045fed36-a0d2-5a5f-b7f6-e7e929959c13",
+      "target": "c7a714f4-2892-5128-b012-6aab9211277f",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 265.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "Execute",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "439081b4-373a-568c-b315-12f408796a9d",
+      "source": "7cedf11c-7f29-5dd4-8bec-2b774df794b3",
+      "target": "045fed36-a0d2-5a5f-b7f6-e7e929959c13",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 310.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "Lead",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

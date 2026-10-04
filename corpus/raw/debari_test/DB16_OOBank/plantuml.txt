@@ -1,0 +1,58 @@
+@startuml
+
+class Person {
+  name
+}
+
+class Employee
+class Customer
+class OrganizationalUnit
+
+class AccountType {
+  interestRate
+  monthlyFee
+  checksAllowed
+  insuranceAvailable
+}
+
+class Branch {
+  address
+  number
+}
+
+class Account {
+  number
+  balance
+  creditOrOverdraftLimit
+}
+
+class CreditCard {
+  name
+}
+
+class ChequingAccount
+
+class MortgageAccount {
+  collateralProperty
+}
+
+class CreditCardAccount {
+  expiryDate
+}
+
+Employee --|> Person
+Customer --|> Person
+OrganizationalUnit "0..1" -- "* subdivision" OrganizationalUnit
+OrganizationalUnit -- "*" Employee : worksFor
+OrganizationalUnit "0..1" -- "0..1 manager" Employee
+Employee -- "*" Customer : personalBanker
+Branch --|> OrganizationalUnit
+Customer "1..2" -- "*" Account : accountHolder
+AccountType -- "*" Account
+Branch -- "*" Account
+ChequingAccount --|> Account
+MortgageAccount --|> Account
+CreditCardAccount --|> Account
+CreditCard "1..*" -- CreditCardAccount
+
+@enduml

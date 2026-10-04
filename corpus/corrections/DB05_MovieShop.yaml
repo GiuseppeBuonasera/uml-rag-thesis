@@ -1,0 +1,53 @@
+# Test set De Bari, es. 5 Movie-Shop (2026-10-02; dal 2026-10-03 sul plantuml.txt TRADOTTO da
+# plantuml_it.txt con glossary.json). Tre enumerazioni inline nell'immagine:
+#   Movie:      +type: {DVD, VHS}
+#   Movie-Rent: +Stato {in,out}                    -> tradotto '+status {in,out}'
+#   Movie-Buy:  +Stato: {presente, da ordinare}    -> tradotto '+status: {present, to order}'
+# non rappresentabili in Apollon. Convenzione meccanica gia' approvata (Gruppo D, EatAtHome):
+# enum inline -> enumerazione separata <Classe><Attributo>, valori originali invariati (anche con
+# spazi), attributo tipizzato con la nuova enumerazione. Categoria chiarimento_modellazione.
+- type: replace_line
+  category: chiarimento_modellazione
+  match: '+type: {DVD, VHS}'
+  replacement: '  +type : MovieType'
+  reason: >-
+    enum inline non rappresentabile in Apollon: convenzione 'enum inline -> enumerazione
+    separata <Classe><Attributo>'.
+- type: add_block
+  category: chiarimento_modellazione
+  block: |
+    enum MovieType {
+      DVD
+      VHS
+    }
+  reason: enumerazione separata MovieType con i valori originali di Movie.type.
+- type: replace_line
+  category: chiarimento_modellazione
+  match: '+status {in,out}'
+  replacement: '  +status : MovieRentStatus'
+  reason: >-
+    enum inline (senza i due punti nell'immagine) non rappresentabile in Apollon: convenzione
+    'enum inline -> enumerazione separata <Classe><Attributo>'.
+- type: add_block
+  category: chiarimento_modellazione
+  block: |
+    enum MovieRentStatus {
+      in
+      out
+    }
+  reason: enumerazione separata MovieRentStatus con i valori originali di MovieRent.status.
+- type: replace_line
+  category: chiarimento_modellazione
+  match: '+status: {present, to order}'
+  replacement: '  +status : MovieBuyStatus'
+  reason: >-
+    enum inline non rappresentabile in Apollon: convenzione 'enum inline -> enumerazione
+    separata <Classe><Attributo>'.
+- type: add_block
+  category: chiarimento_modellazione
+  block: |
+    enum MovieBuyStatus {
+      present
+      to order
+    }
+  reason: enumerazione separata MovieBuyStatus con i valori (tradotti) di MovieBuy.status.

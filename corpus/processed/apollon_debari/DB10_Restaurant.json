@@ -1,0 +1,488 @@
+{
+  "version": "4.2.0",
+  "id": "DB10_Restaurant",
+  "title": "DB10_Restaurant",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "50fef59e-23d0-5570-b3ad-12baebdc9ec8",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Ingredient",
+        "attributes": [
+          {
+            "id": "bc507710-5d48-530b-af9a-9f64a42006eb",
+            "name": "+ Name"
+          },
+          {
+            "id": "e687bf81-8e66-5a9c-9701-13578619b1aa",
+            "name": "+ Unit"
+          },
+          {
+            "id": "d0d80f8f-020a-5e05-88a7-254665b603ba",
+            "name": "+ Stock"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "3302a6c9-8beb-557a-86ca-338d8aea6b10",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Dish",
+        "attributes": [
+          {
+            "id": "a66d8b61-6f78-5fda-88ba-725d4a390c5b",
+            "name": "+ ID"
+          },
+          {
+            "id": "e284d6b3-c481-55a0-8810-21f5cc81122e",
+            "name": "+ NAME"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "2931cdb6-9f70-5d01-bc6e-8b613686abdf",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Meal",
+        "attributes": [
+          {
+            "id": "0218c386-9f27-50e8-afe0-e0157234473c",
+            "name": "+ DATE"
+          },
+          {
+            "id": "b294903a-2288-5e8c-86bf-d14066d60394",
+            "name": "+ STARTTIME"
+          },
+          {
+            "id": "507b3d4e-e281-5cdb-85ff-2c9ce9fe0173",
+            "name": "+ ENDTIME"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "b43637bc-656e-5635-abe2-862ad78d894a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Table",
+        "attributes": [
+          {
+            "id": "c428325d-2ab6-5283-9bca-063946812b66",
+            "name": "+ ID"
+          },
+          {
+            "id": "54b92256-4c0a-519f-8533-efca70448b6e",
+            "name": "+ CAPACITY"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "2c039294-231b-54d2-a790-8e3ac2b234cc",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [
+          {
+            "id": "62546e31-f65e-597b-b89d-89554b0fb462",
+            "name": "+ NAME"
+          },
+          {
+            "id": "9dc69382-0a13-5590-84ef-6a3a9a75e65e",
+            "name": "+ ADDRESS"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "3b05e6cb-0675-5b92-b882-50a6c76990b7",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Client",
+        "attributes": [
+          {
+            "id": "625c00df-bf58-55cb-8857-c26481d068a4",
+            "name": "+ TAX_ID"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "e671000d-9bd9-551b-9a4e-69461da8a619",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 390
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Waiter",
+        "attributes": [
+          {
+            "id": "fab44d48-e779-55f1-a23f-1f08a1283b98",
+            "name": "+ ID"
+          },
+          {
+            "id": "e8f0ffea-6a8a-52fa-aa8c-88650cff18f7",
+            "name": "+ PHONE"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "d722d71c-7f6e-525b-a721-3ed861e971de",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 390
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "IngredientDish",
+        "attributes": [
+          {
+            "id": "b8d697bd-a227-5a63-84a0-3f8def987d1a",
+            "name": "+ Quantity"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "93b628a6-a2e5-5904-82ae-68af655f1fa2",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 390
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "DishMeal",
+        "attributes": [
+          {
+            "id": "5974e978-4754-50a4-be9d-6924431f1570",
+            "name": "+ Times_Served"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "81ba65fe-11c1-57d3-bd51-507278bd51b7",
+      "source": "2931cdb6-9f70-5d01-bc6e-8b613686abdf",
+      "target": "b43637bc-656e-5635-abe2-862ad78d894a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 105.0
+          },
+          {
+            "x": 260,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "92b21d8a-0aee-52dc-8985-6c833686bca5",
+      "source": "2931cdb6-9f70-5d01-bc6e-8b613686abdf",
+      "target": "3b05e6cb-0675-5b92-b882-50a6c76990b7",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 170
+          },
+          {
+            "x": 710.0,
+            "y": 230
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "edaf69fb-efd1-5026-9f34-5abd7608cc61",
+      "source": "2931cdb6-9f70-5d01-bc6e-8b613686abdf",
+      "target": "e671000d-9bd9-551b-9a4e-69461da8a619",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 105.0
+          },
+          {
+            "x": 260,
+            "y": 440.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d733af20-d5ea-5719-a2c6-dd3cd4373f61",
+      "source": "3b05e6cb-0675-5b92-b882-50a6c76990b7",
+      "target": "2c039294-231b-54d2-a790-8e3ac2b234cc",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 265.0
+          },
+          {
+            "x": 540,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b57d8b7d-f0b7-50a3-91de-ed8de8a29752",
+      "source": "e671000d-9bd9-551b-9a4e-69461da8a619",
+      "target": "2c039294-231b-54d2-a790-8e3ac2b234cc",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 440.0
+          },
+          {
+            "x": 320,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "8b33ae1e-0d13-55c2-9b75-6e353f4a44ec",
+      "source": "50fef59e-23d0-5570-b3ad-12baebdc9ec8",
+      "target": "d722d71c-7f6e-525b-a721-3ed861e971de",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 170
+          },
+          {
+            "x": 430.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "49892ecb-272c-5644-a972-65d0596cf2b5",
+      "source": "d722d71c-7f6e-525b-a721-3ed861e971de",
+      "target": "3302a6c9-8beb-557a-86ca-338d8aea6b10",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 390
+          },
+          {
+            "x": 430.0,
+            "y": 140
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "63dac269-46ac-570a-a683-3c2d7f02ef6e",
+      "source": "3302a6c9-8beb-557a-86ca-338d8aea6b10",
+      "target": "93b628a6-a2e5-5904-82ae-68af655f1fa2",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 140
+          },
+          {
+            "x": 710.0,
+            "y": 390
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "df12f036-27d7-5b55-8eee-96bc6542d78f",
+      "source": "93b628a6-a2e5-5904-82ae-68af655f1fa2",
+      "target": "2931cdb6-9f70-5d01-bc6e-8b613686abdf",
+      "type": "ClassBidirectional",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 710.0,
+            "y": 390
+          },
+          {
+            "x": 710.0,
+            "y": 170
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

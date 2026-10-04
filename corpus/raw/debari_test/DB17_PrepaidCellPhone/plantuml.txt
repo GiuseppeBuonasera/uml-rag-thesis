@@ -1,0 +1,30 @@
+@startuml
+
+abstract class Contract {
+  + getCharges(): double
+  + getBalance(): double
+  + setBalance(double)
+}
+
+class Client
+
+class BasicContract {
+  - balance: double
+  - contractNumber: int
+}
+
+class Option
+
+class Data
+class SMS
+class Phone
+class DoubleTransfer
+
+Client --> Contract
+Option --> Contract
+BasicContract ..|> Contract
+Option ..|> Contract
+Data --|> Option
+SMS --|> Option
+
+@enduml

@@ -1,0 +1,428 @@
+{
+  "version": "4.2.0",
+  "id": "DB11_Deliveries",
+  "title": "DB11_Deliveries",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "1d8dd284-df63-54a7-aa1a-c0bf7607d00a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Person",
+        "attributes": [
+          {
+            "id": "4a64153b-ed06-5d73-a112-e1b6a4f5ede4",
+            "name": "+ VAT"
+          },
+          {
+            "id": "5d355eae-8699-5b41-839e-d49b6913470a",
+            "name": "+ NAME"
+          },
+          {
+            "id": "ce8227b8-9b49-591d-9c8c-4aa693c57784",
+            "name": "+ PHONE"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "7bff8923-7f28-5e6b-bf1e-96ffaf33ea6c",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "CUSTOMER",
+        "attributes": [
+          {
+            "id": "3e495f13-c862-57ae-895c-3c6162336014",
+            "name": "+ ADDRESS"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "c0bc8543-c3b3-5531-9149-65d676f35a08",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "COURIER",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "5e9ccf52-65b3-5acc-b096-9aca37211719",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "Package",
+        "attributes": [
+          {
+            "id": "c9ed0f81-7036-5d2e-b958-0b3d86084bb4",
+            "name": "+ Id"
+          },
+          {
+            "id": "e2fe9a48-7f8c-5425-bb22-d5f87d0a3fd1",
+            "name": "+ Weight"
+          },
+          {
+            "id": "3ed1e239-21fe-599b-9a20-62061a97d0b9",
+            "name": "+ Urgency"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "8c67b56f-4d28-5f7b-944c-4b03bc277eba",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "DeliveryCenter",
+        "attributes": [
+          {
+            "id": "908150bb-18b5-55d9-8b22-dbe4c310988d",
+            "name": "+ NAME"
+          },
+          {
+            "id": "ba20afd9-5f0b-5f5c-8daf-e991ad8ddd7d",
+            "name": "+ Address"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0c58d943-cf09-55b2-9dc3-e7d2cbe96afb",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "PackageDeliveryCenter",
+        "attributes": [
+          {
+            "id": "ee3e3c84-2300-52cb-934c-a1abb5e83ae8",
+            "name": "+ DateTimeArrival"
+          },
+          {
+            "id": "cafeaf82-5409-5eca-8586-1ed8a8a50671",
+            "name": "+ DateTimeDeparture"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "437967b0-ce00-5104-baf4-655d47df0e57",
+      "source": "7bff8923-7f28-5e6b-bf1e-96ffaf33ea6c",
+      "target": "1d8dd284-df63-54a7-aa1a-c0bf7607d00a",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "694d6c15-f3f1-509a-bb46-9484abbdde46",
+      "source": "c0bc8543-c3b3-5531-9149-65d676f35a08",
+      "target": "1d8dd284-df63-54a7-aa1a-c0bf7607d00a",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "601238fc-cae6-504d-b918-6e052063c65a",
+      "source": "7bff8923-7f28-5e6b-bf1e-96ffaf33ea6c",
+      "target": "5e9ccf52-65b3-5acc-b096-9aca37211719",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "Sender",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "04440a24-699b-5af9-8a89-19ef9e93a12b",
+      "source": "7bff8923-7f28-5e6b-bf1e-96ffaf33ea6c",
+      "target": "5e9ccf52-65b3-5acc-b096-9aca37211719",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "Recipient",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4111df5c-73dc-52b5-9a05-132cd107a64c",
+      "source": "7bff8923-7f28-5e6b-bf1e-96ffaf33ea6c",
+      "target": "8c67b56f-4d28-5f7b-944c-4b03bc277eba",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 110
+          },
+          {
+            "x": 430.0,
+            "y": 230
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c5c1f195-ec20-5685-ad1a-9cc70300a38d",
+      "source": "c0bc8543-c3b3-5531-9149-65d676f35a08",
+      "target": "8c67b56f-4d28-5f7b-944c-4b03bc277eba",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 540,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "c9be0d30-cedc-5208-9e19-513f1ac3b171",
+      "source": "5e9ccf52-65b3-5acc-b096-9aca37211719",
+      "target": "8c67b56f-4d28-5f7b-944c-4b03bc277eba",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 320,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f18033e5-875b-54fc-8bf5-7a2f6f8f9c33",
+      "source": "c0bc8543-c3b3-5531-9149-65d676f35a08",
+      "target": "5e9ccf52-65b3-5acc-b096-9aca37211719",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 260,
+            "y": 295.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "38570624-21b5-5c85-a507-f37a11e8ff60",
+      "source": "5e9ccf52-65b3-5acc-b096-9aca37211719",
+      "target": "0c58d943-cf09-55b2-9dc3-e7d2cbe96afb",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 295.0
+          },
+          {
+            "x": 600,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a9f49ff6-1f10-5bb4-9946-db49ac82e2d4",
+      "source": "0c58d943-cf09-55b2-9dc3-e7d2cbe96afb",
+      "target": "8c67b56f-4d28-5f7b-944c-4b03bc277eba",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 280.0
+          },
+          {
+            "x": 540,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

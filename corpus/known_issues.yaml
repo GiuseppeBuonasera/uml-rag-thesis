@@ -1,0 +1,28 @@
+# Problemi noti per esercizio (2026-10-01, decisione utente) — letti da corpus/build_manifest.py
+# e riportati nel campo "known_issues" di corpus.jsonl (lista di codici, vuota se assente qui),
+# per poter filtrare gli esercizi negli esperimenti. NON modificano il diagramma né la descrizione.
+# Codici ammessi: KNOWN_ISSUE_CODES in build_manifest.py (codice sconosciuto o id inesistente -> errore).
+# Vedi docs/decisions.md e corpus/apollon_limitations.md §10.
+
+EatAtHome:
+  # Il diagramma contiene due alternative di modellazione degli ingredienti: gli attributi
+  # ingredients / allergen_information di Dish E la classe Ingredient. La nota sull'immagine
+  # dice di non tenerle insieme ("in that case REMOVE ingredients and allergens from the dish
+  # class"); mantenute entrambe per fedeltà all'immagine (scelta consapevole dell'autore).
+  - two_alternative_models
+
+DB06_Flights:
+  # Test set De Bari es. 6 (decisione utente STOP B, 2026-10-04, opzione a): resta nel test set e resta
+  # candidato del retrieval; marcato per riportare ogni metrica su 20 e su 19 esercizi.
+  - tipo: domain_overlap_static_example
+    altro_esercizio: AirTravel
+    tfidf: 0.418
+    tfidf_soglia: 0.4
+    classi_condivise: [Airline, Airport, Flight, Pilot]
+    n_classi_condivise: 4
+    jaccard_nomi_classe: 0.2353
+    nota: >-
+      AirTravel e' sia nel corpus di retrieval sia l'esempio 2 del prompt statico (example_2_airtravel_v4.json,
+      stesse classi del record del corpus). Sovrapposizione di dominio, non duplicato. TF-IDF da
+      corpus/leakage_check.py --debari-test --prompt; classi condivise e Jaccard (4/17, 0.24 a 2 decimali)
+      calcolati dai JSON Apollon (DB06_Flights.json, AirTravel.json), confronto case-insensitive.

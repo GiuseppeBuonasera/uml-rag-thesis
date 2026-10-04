@@ -1,0 +1,55 @@
+@startuml
+
+class User {
+  - Id: Guid
+  - FirstName: string
+  - LastName: string
+  + Login()
+  + Logout()
+}
+
+class Office {
+  - Id: Guid
+  - Name: string
+}
+
+class Doctor {
+  - GraduationYear : Date
+  - FieldOfActivity: string
+  + CreateSchedule()
+  + CheckOfficeAvailability(startDate: Date, endDate: Date)
+}
+
+class Patient {
+  - Age: int
+  - Address: string
+  + CreateAppointment()
+}
+
+class Schedule {
+  - Id: Guid
+  - StartDate: Date
+  - EndDate: Date
+}
+
+class Appointment {
+  - Id: Guid
+  - StartDate: Date
+  - EndDate: Date
+}
+
+class BloodTest
+class Consultation
+class Surgery
+
+Doctor --|> User
+Patient --|> User
+Schedule o-- Office
+Schedule o-- Doctor
+Appointment o-- Patient
+Schedule *-- Appointment
+BloodTest --|> Appointment
+Consultation --|> Appointment
+Surgery --|> Appointment
+
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+
+class Piece {
+  Ref
+  Price
+}
+
+class Line {
+  Type
+}
+
+class Component {
+  Code
+  Price
+}
+
+class ComponentType {
+  Name
+}
+
+class Order {
+  Number
+  Date
+}
+
+class Store {
+  Name
+  Address
+  FAX
+}
+
+class PieceComponent {
+  Quantity
+}
+
+class PieceOrder {
+  Quantity
+}
+
+Piece "*" -- "1" Line
+Piece "*" -- "1..*" Component
+(Piece, Component) .. PieceComponent
+Piece "*" -- "*" Order
+(Piece, Order) .. PieceOrder
+Component "*" -- "1" ComponentType
+Order "*" -- "1" Store
+
+@enduml

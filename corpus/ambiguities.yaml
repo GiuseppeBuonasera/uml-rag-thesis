@@ -1,0 +1,29 @@
+# Ambiguita' di lettura delle immagini del test set De Bari (2026-10-03, decisione utente), lette da
+# corpus/build_manifest.py --split debari_test e riportate nel campo "ambiguities" del record (lista
+# vuota se l'esercizio non compare qui). In valutazione un elemento ambiguo puo' essere escluso o
+# trattato a parte. Campi: elemento, letture_alternative (lista), scelta, motivazione.
+
+DB05_MovieShop:
+  - elemento: "molteplicita' '*' in grassetto a sinistra di Subscriber (circa x 165, y 495 in db05.png)"
+    letture_alternative:
+      - "estremo Subscriber di Subscriber --> MovieRent ('hire')"
+      - "estremo User di User --> MovieBuy (oggi senza molteplicita')"
+    scelta: "estremo Subscriber di 'hire' (Subscriber \"*\" --> \"1..*\" MovieRent)"
+    motivazione: >-
+      regola dell'estremo piu' vicino: il '*' e' subito sopra l'inizio della linea 'hire' sul lato
+      sinistro di Subscriber, mentre la linea di User parte dal lato sinistro di User, piu' in alto.
+      Indizio contrario: lo stesso grassetto del '1..*' vicino a Movie-Buy, che e' sulla linea
+      User --> MovieBuy (le due annotazioni potrebbero essere state aggiunte insieme). Decisione
+      utente 2026-10-03.
+
+DB17_PrepaidCellPhone:
+  - elemento: "frecce piene identiche (stile draw.io) su linee continue: Client -> Contract, Option -> Contract, Data -> Option, SMS -> Option"
+    letture_alternative:
+      - "Data, SMS: generalizzazione verso Option; Client, Option -> Contract: associazioni navigabili"
+      - "tutte associazioni navigabili (lettura letterale della notazione: punta piena = navigabilita')"
+    scelta: "Data --|> Option, SMS --|> Option; Client --> Contract, Option --> Contract"
+    motivazione: >-
+      la notazione non distingue i due casi (stessa punta). Per la generalizzazione: Data e SMS convergono su un
+      tronco comune verso Option (forma tipica di una gerarchia), il testo chiede il pattern decorator (opzioni
+      come decoratori) e Analysis.xlsx legge 'Generalization (Option - Data/SMS)' e 'Association (Contract -
+      Client/Option)'. Le linee tratteggiate verso Contract sono realizzazioni (xlsx: Implementation).

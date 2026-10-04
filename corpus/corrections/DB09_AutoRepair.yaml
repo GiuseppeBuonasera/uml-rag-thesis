@@ -1,0 +1,125 @@
+# Test set De Bari, es. 9 Auto Repair (2026-10-03, decisione utente: eccezione 'maiuscolo tipografico').
+# Il diagramma (scritto a mano) e' interamente in maiuscolo: il maiuscolo e' tipografico, non informativo.
+# plantuml.txt resta fedele all'immagine; qui: classi -> PascalCase (confini di parola da Analysis.xlsx:
+# Part/Acc, Car Model, Part Type), attributi -> minuscolo con i separatori come scritti. Acronimi
+# riconosciuti invariati (ID, SSN, VAT, NIN, TIN, SMS, DVD, VHS, ASCII): qui solo ID.
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: PERSON
+  to: Person
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: EMPLOYEE
+  to: Employee
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: OWNER
+  to: Owner
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: SERVICE
+  to: Service
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: CAR
+  to: Car
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: PARTACC
+  to: PartAcc
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: CARMODEL
+  to: CarModel
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: MAKE
+  to: Make
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: PARTTYPE
+  to: PartType
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, classe -> PascalCase (confini di parola dall'xlsx)"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: NAME
+  to: name
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: ADDRESS
+  to: address
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: CAR_KM
+  to: car_km
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: HOURS_SPENT
+  to: hours_spent
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: ADM_DATE
+  to: adm_date
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: FINISH_DATE
+  to: finish_date
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: PLATE
+  to: plate
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: COLOR
+  to: color
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: SERIAL_NO
+  to: serial_no
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: PRICE
+  to: price
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"
+
+- type: rename_token
+  category: chiarimento_modellazione
+  from: CURRENT_PRICE
+  to: current_price
+  reason: "maiuscolo tipografico: diagramma interamente in maiuscolo, attributo -> minuscolo con separatori come scritti"

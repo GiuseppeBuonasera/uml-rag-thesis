@@ -1,0 +1,81 @@
+@startuml
+
+class WebUser {
+  login_id: String {id}
+  password: String
+  state: UserState
+}
+
+enum UserState {
+  New
+  Active
+  Blocked
+  Banned
+}
+
+class Customer {
+  id: String {id}
+  address: Address
+  phone: Phone
+  email: String
+}
+
+class Account {
+  id: String {id}
+  billing_address: Address
+  is_closed: Boolean
+  open: Date
+  closed: Date
+}
+
+class Payment {
+  id: String {id}
+  paid: Date
+  total: Real
+  details: String
+}
+
+class ShoppingCart {
+  created: Date
+}
+
+class Order {
+  number: String {id}
+  ordered: Date
+  shipped: Date
+  ship_to: Address
+  status: OrderStatus
+  total: Real
+}
+
+class LineItem {
+  quantity: Integer
+  price: Price
+}
+
+class Product {
+  id: String {id}
+  name: String
+  supplier: Supplier
+}
+
+enum OrderStatus {
+  New
+  Hold
+  Shipped
+  Delivered
+  Closed
+}
+
+WebUser "0..1" -- "1" Customer
+WebUser "1" -- "0..1" ShoppingCart
+Customer "1" *-- "1" Account
+Account "1" *-- "1" ShoppingCart
+Account "1" *-- "* {ordered, unique}" Order
+Account "1" -- "0..*" Payment
+Payment "* {ordered, unique}" -- "1" Order
+ShoppingCart "1" -- "* {ordered, unique} line_item" LineItem
+Order "1" -- "* {ordered, unique} line_item" LineItem
+LineItem "*" -- "1" Product
+
+@enduml

@@ -1,0 +1,287 @@
+{
+  "version": "4.2.0",
+  "id": "DB07_BankSystem",
+  "title": "DB07_BankSystem",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "6e84911c-8ef2-5f69-96a5-83d6bbb8533a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Customer",
+        "attributes": [
+          {
+            "id": "9f81aaf1-a1b2-584c-a8c9-603e96672dd3",
+            "name": "+ name : string"
+          },
+          {
+            "id": "5552823a-5361-54c4-84a5-eafa749f36ee",
+            "name": "+ address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "aaa8a2fe-2960-55dc-8d56-f6d2e3de574f",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Account",
+        "attributes": [
+          {
+            "id": "8582817e-5924-5869-8443-792e721a579a",
+            "name": "+ cashBalance : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "05755921-1ead-5ceb-939a-d78287596033",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 40,
+      "measured": {
+        "width": 220,
+        "height": 40
+      },
+      "data": {
+        "name": "InvestmentAccount",
+        "attributes": [],
+        "methods": []
+      }
+    },
+    {
+      "id": "41728bc3-8daa-5bf0-b7bc-9c8315dd83f6",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "SavingAccount",
+        "attributes": [
+          {
+            "id": "fccdbe30-210a-566c-852d-e61c3779a88e",
+            "name": "+ interestRate : double"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "cfa30dd9-6b10-59ac-9001-17f1094b859b",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Stock",
+        "attributes": [
+          {
+            "id": "bf7c65a9-17a9-55f3-9baf-33cc5bf6d851",
+            "name": "+ ticker : string"
+          },
+          {
+            "id": "2b96e138-1b61-547a-b261-6073279f9f1d",
+            "name": "+ quantity : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "9e70a9a1-98e2-5355-99c8-e3e581e7257a",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "StockOrder",
+        "attributes": [
+          {
+            "id": "07f4bbe6-8515-5d49-9345-c904d6268f48",
+            "name": "+ commission : double"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "8a447821-08f7-592d-875c-7dad2e7f12ca",
+      "source": "6e84911c-8ef2-5f69-96a5-83d6bbb8533a",
+      "target": "aaa8a2fe-2960-55dc-8d56-f6d2e3de574f",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7c839a47-f186-5091-b9d3-ef38bb9cf2d6",
+      "source": "05755921-1ead-5ceb-939a-d78287596033",
+      "target": "cfa30dd9-6b10-59ac-9001-17f1094b859b",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 540,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "fbbb2f1f-c7c7-5513-854d-d8e6b0ba818d",
+      "source": "9e70a9a1-98e2-5355-99c8-e3e581e7257a",
+      "target": "cfa30dd9-6b10-59ac-9001-17f1094b859b",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 235.0
+          },
+          {
+            "x": 540,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "d27d280b-4ced-578a-9860-32d3ad6a6650",
+      "source": "05755921-1ead-5ceb-939a-d78287596033",
+      "target": "aaa8a2fe-2960-55dc-8d56-f6d2e3de574f",
+      "type": "ClassInheritance",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 60.0
+          },
+          {
+            "x": 540,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "735cce79-0dcb-597b-bf9c-6ee7977b27c4",
+      "source": "41728bc3-8daa-5bf0-b7bc-9c8315dd83f6",
+      "target": "aaa8a2fe-2960-55dc-8d56-f6d2e3de574f",
+      "type": "ClassInheritance",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 235.0
+          },
+          {
+            "x": 320,
+            "y": 75.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

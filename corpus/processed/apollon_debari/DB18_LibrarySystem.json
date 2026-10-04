@@ -1,0 +1,326 @@
+{
+  "version": "4.2.0",
+  "id": "DB18_LibrarySystem",
+  "title": "DB18_LibrarySystem",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "97864f0a-8e04-545a-9989-04b551ba82cd",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 130,
+      "measured": {
+        "width": 220,
+        "height": 130
+      },
+      "data": {
+        "name": "User",
+        "attributes": [
+          {
+            "id": "6c42c6e9-a77a-5690-b65b-931c508fd8ae",
+            "name": "+ last_name : string"
+          },
+          {
+            "id": "5aed412c-00aa-58bc-a44b-99f003609209",
+            "name": "+ first_name : string"
+          },
+          {
+            "id": "577d9c1a-50e7-542c-ad70-ea36d91a2f60",
+            "name": "+ borrow_his : Borrow[]"
+          }
+        ],
+        "methods": [],
+        "stereotype": "interface"
+      }
+    },
+    {
+      "id": "33b31682-e4ef-571e-a3c6-ddfee80a15b1",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Under_aged",
+        "attributes": [
+          {
+            "id": "4f58f3a7-a3db-58a5-b896-6a0793cda0a7",
+            "name": "+ id_student : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0a4646d0-3ab8-5e09-be29-1da3879aab35",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Adult",
+        "attributes": [
+          {
+            "id": "d05edec7-d1e1-5c91-bce8-3dfc9dfe303c",
+            "name": "+ id : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "199e4a7c-23e2-586b-906a-7d83f73da491",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Borrow",
+        "attributes": [
+          {
+            "id": "fba6b45d-fad4-5c81-9dff-ddddeda3e76a",
+            "name": "+ date : date"
+          },
+          {
+            "id": "e1763dda-c13c-553c-8e8c-d5962cd82c74",
+            "name": "+ book : Book"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "a7049dde-cc2a-5cef-890a-e0240ae2362f",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 230
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Book",
+        "attributes": [
+          {
+            "id": "db9b5a52-2bea-5431-9499-54014ef317c1",
+            "name": "+ author : string"
+          },
+          {
+            "id": "419b6ea5-1c9e-567e-b0b5-5c82208ff2e3",
+            "name": "+ title : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "eec99fa0-1749-57b8-b8fe-85339a982454",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 230
+      },
+      "width": 220,
+      "height": 70,
+      "measured": {
+        "width": 220,
+        "height": 70
+      },
+      "data": {
+        "name": "Library",
+        "attributes": [
+          {
+            "id": "453b7902-f148-5f36-99c5-a3029b1c941f",
+            "name": "+ Books : Book[]"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "05e6f9f8-c1ba-593b-b21a-9076ca42a0e2",
+      "source": "33b31682-e4ef-571e-a3c6-ddfee80a15b1",
+      "target": "97864f0a-8e04-545a-9989-04b551ba82cd",
+      "type": "ClassRealization",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "b233221a-1a10-5630-9fc9-a7b07346277a",
+      "source": "0a4646d0-3ab8-5e09-be29-1da3879aab35",
+      "target": "97864f0a-8e04-545a-9989-04b551ba82cd",
+      "type": "ClassRealization",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 75.0
+          },
+          {
+            "x": 260,
+            "y": 105.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "7c50e0c3-1813-5661-81e3-30a9de542fe6",
+      "source": "199e4a7c-23e2-586b-906a-7d83f73da491",
+      "target": "97864f0a-8e04-545a-9989-04b551ba82cd",
+      "type": "ClassAggregation",
+      "sourceHandle": "top",
+      "targetHandle": "bottom",
+      "data": {
+        "points": [
+          {
+            "x": 150.0,
+            "y": 230
+          },
+          {
+            "x": 150.0,
+            "y": 170
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "4d4aedee-9538-5ac5-b049-0bcab4805fd6",
+      "source": "199e4a7c-23e2-586b-906a-7d83f73da491",
+      "target": "a7049dde-cc2a-5cef-890a-e0240ae2362f",
+      "type": "ClassUnidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 280.0
+          },
+          {
+            "x": 320,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "6399999b-0a8b-5e9d-ada8-6d872e6edb29",
+      "source": "97864f0a-8e04-545a-9989-04b551ba82cd",
+      "target": "a7049dde-cc2a-5cef-890a-e0240ae2362f",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 105.0
+          },
+          {
+            "x": 320,
+            "y": 280.0
+          }
+        ],
+        "label": "borrow",
+        "sourceMultiplicity": "1",
+        "targetMultiplicity": "1..4",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "93acf1f7-3484-5df3-85c5-a97325c62504",
+      "source": "a7049dde-cc2a-5cef-890a-e0240ae2362f",
+      "target": "eec99fa0-1749-57b8-b8fe-85339a982454",
+      "type": "ClassAggregation",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 600,
+            "y": 265.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "",
+        "targetMultiplicity": "",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

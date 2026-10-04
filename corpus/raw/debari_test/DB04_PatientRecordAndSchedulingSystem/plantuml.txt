@@ -1,0 +1,60 @@
+@startuml
+
+class FamilyInsured {
+  NameOfFamilyHead
+  Address
+  Telephone
+  InsuranceCarrier
+  PolicyNumber
+}
+
+class Patient {
+  Name
+  Gender
+  Birthdate
+  LastVisitDate
+  Allergies
+  Notes
+}
+
+class Appointment {
+  Date
+  Time
+  Reason
+}
+
+class Doctor {
+  Name
+  Specialty
+  Address
+  Telephone
+  PagerNumber
+  SSN
+}
+
+class Visit {
+  Date
+  Weight
+  BloodPressure
+  Temeperature
+  Reason
+  DiagnosisNotes
+  TreatmentNotes
+}
+
+class Perscription {
+  Date
+  Medication
+  Dosage
+  Number
+}
+
+FamilyInsured "1" -- "1..*" Patient
+FamilyInsured "1..*" -- "1" Doctor : hasPrimaryCare
+Patient "1" -- "0..*" Appointment
+Patient "1" -- "0..*" Visit
+Visit "0..!" -- "0..1" Appointment
+Doctor "1" -- "1..*" Visit
+Visit "1" -- "0..*" Perscription
+
+@enduml

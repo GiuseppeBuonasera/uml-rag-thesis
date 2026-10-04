@@ -42,7 +42,12 @@ riferimento già esistente (i punteggi in `Analysis.xlsx`), non corpus few-shot 
 retrieval. **Punto aperto, da discutere con i relatori**: se e come riusare questi 20
 esercizi anche come sorgente di esempi per il retrieval (leave-one-out: quando si
 valuta l'esercizio N, il corpus di retrieval può contenere gli altri 19 ma non N).
-Non ancora deciso — nessuno script della pipeline usa oggi questi file.
+Non ancora deciso. **Aggiornamento 2026-10-04**: i 20 esercizi sono stati trascritti come TEST SET
+tenuto fuori dal retrieval (`corpus/raw/debari_test/`, `corpus/processed/testset_debari.jsonl`,
+`corpus/processed/apollon_debari/`) da `corpus/extract_debari.py` + trascrizione dalle immagini;
+`Analysis.xlsx` è usato da `corpus/build_manifest.py --split debari_test` (Estimated Difficulty) e da
+`corpus/check_debari.py` (controllo indipendente). Leave-one-out non adottato. Vedi `docs/STATUS.md`
+e `docs/decisions.md`.
 
 ### `studio2025_it/`
 - `Exercises.docx` — 15 esercizi in **italiano** (+ i 2 esempi in inglese del prompt

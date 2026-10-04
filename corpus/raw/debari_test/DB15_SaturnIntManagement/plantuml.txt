@@ -1,0 +1,37 @@
+@startuml
+
+class CarPark
+
+class barrier {
+  +raise()
+}
+
+class CardReader {
+  +insertStaffCard()
+  +showSuccessMessage()
+  +showFailMessage()
+  +ejectCard()
+}
+
+class signal
+
+class GuestCard
+
+class card
+
+class StaffCard {
+  +setLastAccess()
+}
+
+class access
+
+CarPark o-- "2..*" barrier
+CarPark o-- "2..*" CardReader
+CardReader o-- "*" GuestCard
+CardReader o-- signal
+barrier ..> signal
+GuestCard "*" -- "1" card
+StaffCard --|> card
+access --|> card
+
+@enduml

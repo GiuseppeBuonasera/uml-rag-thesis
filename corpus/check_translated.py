@@ -22,6 +22,9 @@ Controlli:
 Uso:
     python corpus/check_translated.py <cartella_esercizio>
     python corpus/check_translated.py --all
+    python corpus/check_translated.py --debari   (esercizi del test set De Bari tradotti
+        dall'italiano, cioe' con plantuml_it.txt — es. 5 Movie-Shop, 2026-10-03; JSON in
+        corpus/processed/apollon_debari/)
 """
 
 from __future__ import annotations
@@ -226,7 +229,8 @@ def check_no_residual_italian_in_apollon_json(folder: Path, glossary: dict[str, 
     davvero nella pipeline/nei pochi-shot — non solo plantuml.txt: un bug nella
     conversione potrebbe lasciar passare un termine italiano anche se
     plantuml.txt e' pulito."""
-    apollon_path = Path(__file__).parent / "processed" / "apollon" / f"{folder.name}.json"
+    apollon_dir = "apollon_debari" if folder.parent.name == "debari_test" else "apollon"
+    apollon_path = Path(__file__).parent / "processed" / apollon_dir / f"{folder.name}.json"
     if not apollon_path.exists():
         return [f"{apollon_path.name}: non trovato — esegui prima corpus/apollon_convert.py"]
     diagram = json.loads(apollon_path.read_text(encoding="utf-8"))
@@ -287,10 +291,14 @@ def check_exercise(folder: Path) -> list[str]:
 
 def main() -> None:
     if len(sys.argv) != 2:
-        raise SystemExit("uso: python corpus/check_translated.py <cartella_esercizio> | --all")
+        raise SystemExit("uso: python corpus/check_translated.py <cartella_esercizio> | --all | --debari")
 
     if sys.argv[1] == "--all":
         folders = sorted(p for p in TRANSLATED_IT_DIR.iterdir() if p.is_dir() and not p.name.startswith("_"))
+    elif sys.argv[1] == "--debari":
+        debari_dir = Path(__file__).parent / "raw" / "debari_test"
+        folders = sorted(p for p in debari_dir.iterdir()
+                         if p.is_dir() and not p.name.startswith("_") and (p / "plantuml_it.txt").exists())
     else:
         folders = [Path(sys.argv[1])]
 

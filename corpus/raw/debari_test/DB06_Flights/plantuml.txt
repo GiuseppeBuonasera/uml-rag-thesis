@@ -1,0 +1,51 @@
+@startuml
+
+class Airline {
+  ID
+  name
+}
+
+class Flight {
+  -ID
+  -arrival_time
+  -departure_time
+}
+
+class Airport {
+  -ID
+  -name
+}
+
+class Aircraft {
+  -name
+  -repair
+  -landed
+}
+
+class AircraftType {
+  name
+}
+
+class Pilot {
+  name
+}
+
+class Pilot1
+class Pilot2
+class Pilot3
+
+Airline "1" -- "*" Flight : offers
+Airline "*" -- "*" Aircraft : owns
+Flight "*" -- "1" Airport : arrives to
+Flight "*" -- "1" Airport : departs from
+Aircraft "1" -- "*" Flight : uses
+Flight -- "2..n" Pilot : Driven by
+Aircraft "*" -- "1" AircraftType : is of
+AircraftType "*" -- "*" Pilot : Navigator of
+AircraftType "*" -- "1..n" Pilot : Copilot of
+AircraftType "*" -- "1" Pilot3 : Captain of
+Pilot1 --|> Pilot
+Pilot2 --|> Pilot
+Pilot3 --|> Pilot
+
+@enduml

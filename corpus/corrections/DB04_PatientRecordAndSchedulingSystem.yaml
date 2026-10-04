@@ -1,0 +1,23 @@
+# Test set De Bari, es. 4 (2026-10-02, ATTIVATE dall'utente il 2026-10-03): tre refusi visibili
+# nell'immagine, trascritti come disegnati in plantuml.txt e corretti qui.
+
+# 1. Classe 'Perscription' (prefisso visibile 'Perscripti', classe tagliata a destra).
+- type: rename_token
+  category: correzione_errore
+  from: Perscription
+  to: Prescription
+  reason: refuso nel nome di classe; testo ("prescriptions") e Analysis.xlsx scrivono Prescription.
+
+# 2. Attributo 'Temeperature' di Visit.
+- type: rename_token
+  category: correzione_errore
+  from: Temeperature
+  to: Temperature
+  reason: refuso nel nome di attributo; Analysis.xlsx scrive 'Visit .Temperature'.
+
+# 3. Molteplicita' '0..!' sull'estremo Visit di Visit-Appointment.
+- type: replace_line
+  category: correzione_errore
+  match: 'Visit "0..!" -- "0..1" Appointment'
+  replacement: 'Visit "0..1" -- "0..1" Appointment'
+  reason: molteplicita' non valida, refuso evidente di 0..1 ('!' al posto di '1').

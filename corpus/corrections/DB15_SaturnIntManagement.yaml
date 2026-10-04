@@ -1,0 +1,25 @@
+# Test set De Bari, es. 15 Saturn Int. Management (2026-10-03, decisione utente: regola simmetrica
+# "minuscolo tipografico"). Le intestazioni di classe dell'immagine sono TUTTE in minuscolo ("car park",
+# "barrier", "card reader", ...): il minuscolo e' tipografico -> classi in PascalCase. I nomi composti sono
+# gia' PascalCase in plantuml.txt (convenzione approvata per i nomi di classe: CarPark, CardReader, GuestCard,
+# StaffCard); qui si correggono i nomi a una parola. Operazioni invariate. plantuml.txt resta fedele.
+- type: rename_token
+  category: chiarimento_modellazione
+  from: barrier
+  to: Barrier
+  reason: "minuscolo tipografico: intestazioni di classe interamente in minuscolo, classe -> PascalCase"
+- type: rename_token
+  category: chiarimento_modellazione
+  from: signal
+  to: Signal
+  reason: "minuscolo tipografico: intestazioni di classe interamente in minuscolo, classe -> PascalCase"
+- type: rename_token
+  category: chiarimento_modellazione
+  from: card
+  to: Card
+  reason: "minuscolo tipografico: intestazioni di classe interamente in minuscolo, classe -> PascalCase"
+- type: rename_token
+  category: chiarimento_modellazione
+  from: access
+  to: Access
+  reason: "minuscolo tipografico: intestazioni di classe interamente in minuscolo, classe -> PascalCase"

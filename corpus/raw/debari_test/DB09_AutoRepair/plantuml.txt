@@ -1,0 +1,50 @@
+@startuml
+
+class PERSON {
+  ID
+  NAME
+  ADDRESS
+}
+
+class EMPLOYEE
+class OWNER
+
+class SERVICE {
+  CAR_KM
+  HOURS_SPENT
+  ADM_DATE
+  FINISH_DATE
+}
+
+class CAR {
+  PLATE
+  COLOR
+}
+
+class PARTACC {
+  SERIAL_NO
+  PRICE
+}
+
+class CARMODEL
+
+class MAKE {
+  NAME
+}
+
+class PARTTYPE {
+  CURRENT_PRICE
+}
+
+EMPLOYEE --|> PERSON : {Disjoint, Complete}
+OWNER --|> PERSON : {Disjoint, Complete}
+EMPLOYEE "1" -- "*" SERVICE
+OWNER "1" -- "*" CAR
+SERVICE "*" -- "1" CAR
+SERVICE "1" -- "1...*" PARTACC
+CAR "*" -- "1" CARMODEL
+CARMODEL "*" -- "1" MAKE
+PARTACC "*" -- "1" PARTTYPE
+CARMODEL "*" -- "*" PARTTYPE
+
+@enduml

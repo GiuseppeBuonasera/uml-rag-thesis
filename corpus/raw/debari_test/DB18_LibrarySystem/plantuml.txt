@@ -1,0 +1,38 @@
+@startuml
+
+interface User {
+  -last_name:String
+  -first_name:String
+  -borrow_his:List<Borrow>
+}
+
+class Under_aged {
+  -id_student:int
+}
+
+class Adult {
+  -id:int
+}
+
+class Borrow {
+  -date:Date
+  -book:Book
+}
+
+class Book {
+  -author:String
+  -title:String
+}
+
+class Library {
+  -Books:List<Book>
+}
+
+Under_aged ..|> User
+Adult ..|> User
+User o-- Borrow
+Borrow --> Book
+User "1" -- "1..4" Book : borrow
+Library o-- Book
+
+@enduml
