@@ -1902,3 +1902,11 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   known_issue (es. 6); ED medio 2.8.
 - **Domini** (provvisori per il test set): vocabolario di 13 domini, conteggi corpus / test in STATUS.md. Il test
   set non copre Insurance, Personal Activities, Research, Social Networks.
+
+### [2026-10-04] Tag `testset-v1`: test set De Bari congelato
+- Tag annotato `testset-v1` sul commit `eb4d28b` ("Test set De Bari congelato prima degli esperimenti"): i 20
+  esercizi De Bari (ground truth in `corpus/raw/debari_test/`, `corpus/processed/testset_debari.jsonl`,
+  `corpus/processed/apollon_debari/`) sono congelati prima degli esperimenti. Il push del tag lo fa l'utente.
+- Da qui vale la regola di versionamento registrata in `docs/STATUS.md` (Regole attive, "Solo test set De Bari"):
+  ogni modifica successiva al ground truth richiede un commit dedicato, una voce in questo file e un nuovo tag
+  (`testset-v2`, …); ogni run sperimentale salva nel proprio config il commit e il tag del test set usato.

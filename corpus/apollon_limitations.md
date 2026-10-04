@@ -200,7 +200,13 @@ ruolo concettuale preciso.
 
 ## 8. Esercizi esclusi dalla conversione, e motivo
 
-**1 esercizio su 46 (45 convertiti):**
+Conteggi aggiornati al 2026-10-04 (prima: "1 esercizio su 46, 45 convertiti", cioè 45 originali + il pilota
+CourseManagement, prima della traduzione degli altri 14 esercizi italiani):
+
+| Split | Record | Convertiti | Esclusi |
+|---|---|---|---|
+| Corpus di retrieval (`corpus.jsonl`: 45 originali + 15 tradotti) | 60 | 59 | 1 (Cruise) |
+| Test set De Bari (`testset_debari.jsonl`) | 20 | 20 | 0 |
 
 | Esercizio | Costrutto non supportato | Motivo |
 |---|---|---|
@@ -243,6 +249,6 @@ di valutazione.
 | 5 | Modificatori attributo (`static`/`abstract`/`frozen`/`const`) | 6 | 2 | Scartati dalla stringa visualizzata, riportati in `apollon_conversion_warnings` (mai persi in silenzio); il default (`= valore`), quando presente, è preservato |
 | 6 | Qualificatori → ruolo | 2 | 1 | Riclassificati come ruolo (`sourceRole`/`targetRole`); categoria "qualificatore" riservata ma con 0 voci attive |
 | 7 | Classi implicite (mai dichiarate) | 2 | 2 | Nodo creato senza attributi/metodi (legale in PlantUML, non un errore) |
-| 8 | Esercizi esclusi | 1 modello (1 costrutto) | 1 | Intero modello escluso dalla conversione (`diagram_apollon_json: null`), non approssimato |
+| 8 | Esercizi esclusi | 1 modello (1 costrutto) su 60 del corpus; 0 su 20 del test set | 1 | Intero modello escluso dalla conversione (`diagram_apollon_json: null`), non approssimato |
 | 9 | Visibilità non pubblica (`-`) | 25 | 4 | Prefisso rimosso, sempre `+ ` nel JSON; conservata solo in `diagram_plantuml` |
 | 10 | Due modellazioni alternative nello stesso diagramma | 1 | 1 (EatAtHome) | Entrambe mantenute (fedeltà all'immagine); segnalato con `known_issues: ["two_alternative_models"]` in `corpus.jsonl` |

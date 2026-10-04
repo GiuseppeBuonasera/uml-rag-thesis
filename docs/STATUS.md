@@ -101,6 +101,11 @@ python corpus/leakage_check.py <id>... [--vs <id>]   # forma storica (tradotti v
 - `interface X` / `class X <<interface>>` → stereotype "interface"; ogni riga PlantUML non riconosciuta è un errore.
 - Traduzione: `glossary_shared.json` + `glossary.json` locale (stesso termine = stessa traduzione, conflitto = errore).
 ### Solo test set De Bari
+- **Versionamento del ground truth**: il test set è congelato nel tag annotato `testset-v1` (commit `eb4d28b`,
+  2026-10-04). Qualsiasi modifica successiva al ground truth (`corpus/raw/debari_test/`, correzioni `DB*`, regole che
+  cambiano `testset_debari.jsonl` o `apollon_debari/`) richiede un **commit dedicato**, una **voce in
+  `docs/decisions.md`** e un **nuovo tag** (`testset-v2`, `testset-v3`, …). Ogni run sperimentale salva nel proprio
+  config il commit e il tag del test set usato.
 - Parti illeggibili o tagliate → completate da Analysis.xlsx, ogni token annotato con la fonte; se l'xlsx non copre il
   punto → STOP e domanda.
 - Discrepanze contro Analysis.xlsx mai corrette: classificate in `corpus/check_debari_justifications.yaml`.
@@ -164,14 +169,40 @@ python corpus/leakage_check.py <id>... [--vs <id>]   # forma storica (tradotti v
 
 ## In sospeso
 1. `.gitignore` riga 10 (`corpus/raw/*`) esclude ancora `corpus/raw/translated_it/`: le 15 cartelle tradotte non sono
-   versionate (`models_original/` e `debari_test/` sì). Decisione utente pendente.
-2. **SOURCE.md**: `corpus/raw/models_original/SOURCE.md` creato (DOI da verificare: versione o concept);
-   `corpus/raw/translated_it/SOURCE.md` mancante (licenza da verificare con gli autori). Per `debari_test/`
-   provenienza in metadata.txt (fonte originale di ogni esercizio + citazione De Bari et al.).
-3. **Domande per i relatori**: permesso per gli esercizi italiani; conferma del ruolo dei 20 De Bari (oggi test set
-   tenuto fuori dal retrieval; leave-one-out non adottato); conferma delle scelte di formato e delle convenzioni.
-4. `corpus/apollon_limitations.md` §8 riporta ancora i conteggi del corpus a 46/45 (prima della traduzione): da
-   aggiornare a 60/59.
+   versionate (`models_original/` e `debari_test/` sì). Dipende dalla licenza: vedi "Domande per i relatori", punti 1-2.
+2. **SOURCE.md**: `corpus/raw/models_original/SOURCE.md` creato (DOI Zenodo da verificare: versione o concept);
+   `corpus/raw/translated_it/SOURCE.md` mancante (licenza da verificare con gli autori). Per `debari_test/` la
+   provenienza è in metadata.txt (fonte originale di ogni esercizio + citazione De Bari et al.).
+3. Tag `testset-v1` creato in locale (2026-10-04): il push lo fa l'utente.
+
+## Domande per i relatori
+Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 2026-10-01.
+1. **Esercizi italiani (studio 2025, Garaccione et al., figshare 10.6084/m9.figshare.29492624)**: permesso di usarli
+   nel corpus di retrieval e di ridistribuirne le traduzioni; licenza dell'item figshare da verificare con gli autori.
+2. **Dove conservare `corpus/raw/translated_it/`** se la licenza non ne permette la pubblicazione: repository
+   privato / archivio separato / solo i file derivati necessari alla pipeline (oggi la cartella è esclusa da git).
+3. **Ruolo dei 20 esercizi De Bari**: confermare la scelta attuale (test set tenuto fuori dal retrieval, congelato in
+   `testset-v1`) e se adottare in aggiunta un leave-one-out (gli altri 19 come candidati del retrieval).
+4. **Es. 6 Flights** (TF-IDF 0.418 vs AirTravel, che è anche l'esempio 2 del prompt statico): confermare la scelta di
+   tenerlo nel test set e nel retrieval, riportando ogni metrica su 20 e su 19 esercizi.
+5. **Formato e convenzioni**: confermare Apollon JSON v4 come target (non PlantUML, a differenza di De Bari et al.) e
+   le convenzioni di trascrizione/traduzione (tabella di coerenza sopra), in particolare quelle senza precedenti
+   esterni (maiuscolo/minuscolo tipografico, tipi di dominio, completamento dei token tagliati da Analysis.xlsx).
+6. **Domini del test set**: sono assegnati dal trascrittore (provvisori) e 4 domini del corpus non hanno esercizi di
+   test; confermarli o indicare una fonte.
+7. **Analysis.xlsx**: 76 discrepanze classificate come imprecisioni dell'xlsx (es. righe 2/3 scambiate in "Attributes
+   + Operations", operazioni omesse nell'es. 3, classi associative non elencate negli es. 10-13): segnalarle agli
+   autori di De Bari et al.? Nei confronti con i loro punteggi si usano i conteggi del ground truth (`gt_counts`).
+8. **LLM e parametri di generazione**: quale LLM (o quali), temperatura, numero di ripetizioni per cella. Vincolo: con
+   k=3 esempi recuperati il prompt arriva a circa 20k token.
+9. **Baseline few-shot statica**: il prompt non è identico a quello di De Bari et al. (l'esempio dell'orologio
+   digitale, diagramma a stati, è stato sostituito da AirTravel). Va bene come baseline ufficiale?
+10. **Quasi-duplicati nel leave-one-out** (es. GasStation_KUL / GasStation_TUW nel corpus): ammessi o esclusi come
+    vicini recuperabili?
+11. **Metriche**: criterio di matching dei nomi per la qualità semantica (esatto, lemma, sinonimi, LLM); qualità
+    pragmatica con LLM-as-judge, valutazione umana o un campione valutato a mano.
+12. **Tassonomia per l'analisi finale**, da fissare prima di vedere i risultati: difficoltà (`debari_ed_avg`),
+    dimensione (`gt_counts`), punteggio normalizzato del top-1 del retrieval; il dominio solo come descrittivo.
 
 ## Prossimi passi
 1. ~~Trascrizione De Bari (20 esercizi, test set)~~ — FATTO il 2026-10-04.
