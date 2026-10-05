@@ -1,0 +1,17 @@
+# Prova end-to-end con MockClient (Passo 3a): nessun LLM, risposte preparate e SINTETICHE in
+# experiments/mock_responses/ (diagrammi minimi non legati agli esercizi). Serve a provare il runner, la cache,
+# il post-processing e i file di output.
+run_id: mock_e2e_2026-10-05
+split: testset
+query_ids: [DB01_ProjectManagementSystem, DB06_Flights, DB13_Factory]
+conditions: [zero_shot, static, random, bm25, oracle]
+k: [3]
+repetitions: 2
+seed: 0
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+client:
+  kind: mock
+  model: mock
+  responses_dir: experiments/mock_responses   # <id esercizio>.txt, altrimenti default.txt
+  finish_reasons: {DB13_Factory: length}       # simula una risposta troncata dal limite di token
+generation: {temperature: 0.0, top_p: 1.0, max_tokens: 8192, seed: 42, structured_output: false}

@@ -7,7 +7,7 @@ faiss-cpu
 # LLM / API
 anthropic
 openai
-tiktoken
+tiktoken==0.14.0  # stima dei token dei prompt (cl100k_base, approssimazione); scarica la codifica al primo uso
 
 # Data handling
 pandas

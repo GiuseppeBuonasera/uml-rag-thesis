@@ -1,0 +1,34 @@
+# MODELLO per le run con LM Studio (Passo 3b, BLOCCATO fino alle risposte dei relatori alle domande 8, 9, 11 e
+# alla domanda sull'output strutturato). I segnaposto TODO fanno rifiutare la partenza al runner: vanno
+# sostituiti con i valori reali, letti in LM Studio, prima di qualsiasi run.
+run_id: TODO_modello_data
+split: testset
+conditions: [zero_shot, static, random, bm25]
+k: [3]
+repetitions: 1
+seed: 0
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+client:
+  kind: lmstudio
+  base_url: http://localhost:1234/v1
+  model: TODO            # identificativo del modello come lo espone LM Studio (GET /v1/models)
+  timeout_s: 600
+  retries: 3
+  backoff_s: 2.0
+generation:
+  temperature: 0.0
+  top_p: 1.0
+  max_tokens: 8192
+  seed: 42
+  structured_output: false   # response_format json_schema: DISATTIVATO (domanda ai relatori)
+model_metadata:              # obbligatori (con client.model e generation.*): il runner rifiuta un client reale
+                             # se uno manca o vale TODO
+  model_id: TODO             # es. nome e versione del modello (pagina del modello in LM Studio)
+  quantization: TODO         # es. Q4_K_M
+  context_length: TODO       # lunghezza di contesto impostata al caricamento in LM Studio
+  lmstudio_version: TODO
+  hardware:
+    cpu: TODO
+    gpu: TODO
+    ram_gb: TODO
+    vram_gb: TODO

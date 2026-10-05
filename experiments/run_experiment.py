@@ -1,0 +1,345 @@
+"""
+Runner degli esperimenti di generazione (Passo 3a, 2026-10-05).
+
+Uso:
+    python experiments/run_experiment.py experiments/configs/<config>.yaml            # run
+    python experiments/run_experiment.py experiments/configs/<config>.yaml --resume   # ripresa di una run interrotta
+    python experiments/run_experiment.py experiments/configs/<config>.yaml --dry-run  # solo prompt e stime, nessuna chiamata
+
+Output in data/results/generation/<run_id>/ (la cartella esistente NON si sovrascrive; --resume la riprende):
+    config.json        configurazione + provenienza (commit, tag testset-v1, sha256 di config_bm25.yaml, versioni)
+    prompts/<call>.json  messaggi inviati + id degli esempi
+    raw/<call>.json      risposta grezza e metadati (GenerationResult)
+    parsed/<call>.json   JSON estratto (se decodificabile)
+    validation.csv       livelli L0-L4 e istruzioni non rispettate, una riga per chiamata
+    manifest.jsonl       una riga per chiamata: condizione, k, ripetizione, esempi, caratteri e token del prompt
+                         (stimati con tiktoken cl100k_base e, se il server li fornisce, reali), finish_reason, livello
+    cache/               cache su disco delle risposte (chiave = sha256 di messaggi, modello, parametri, ripetizione)
+--dry-run scrive invece dry_run/<run_id>/: dry_run.csv (lunghezza dei prompt per esercizio, condizione e k),
+    summary.md (tabelle: lunghezze, token di output stimati dai ground truth, finestre di contesto 8k/16k/32k).
+
+Un client reale (lmstudio) parte solo se la config contiene TUTTI i metadati del modello (MODEL_METADATA_REQUIRED),
+senza segnaposto. Regola metodologica (STOP 2, decisions.md voce 66): per uno stesso modello (model_id +
+quantization) la lunghezza di contesto impostata in LM Studio e max_tokens sono IDENTICI per tutte le condizioni e
+tutti i k; dentro una config sono unici per costruzione, tra config diverse il runner confronta la nuova run con le
+run gia' presenti nella cartella dei risultati e rifiuta di partire se differiscono. Ripetizioni: indice r = 0..n-1 nella chiave di cache; se generation.seed e' impostato, la
+ripetizione r usa seed + r.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import json
+import platform
+import statistics
+import subprocess
+import sys
+import time
+from dataclasses import asdict, replace
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "generation"))
+import postprocess as pp  # noqa: E402
+from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient  # noqa: E402
+from prompt_builder import BM25_CONFIG, CONDITIONS, PromptBuilder, PromptSpec, cl, serialize_diagram  # noqa: E402
+
+RESULTS = ROOT / "data" / "results" / "generation"
+TOKENIZER = "cl100k_base"
+WINDOWS = (8192, 16384, 32768)
+MODEL_METADATA_REQUIRED = ("model_id", "quantization", "context_length", "lmstudio_version",
+                           "hardware.cpu", "hardware.gpu", "hardware.ram_gb", "hardware.vram_gb")
+GENERATION_REQUIRED = ("temperature", "top_p", "max_tokens", "seed")  # parametri di generazione espliciti in config
+PLACEHOLDERS = {"", "TODO", "todo", "?", None}
+
+
+def token_counter():
+    """Stima dei token con tiktoken cl100k_base: APPROSSIMAZIONE (i modelli locali hanno tokenizer propri)."""
+    import tiktoken
+    enc = tiktoken.get_encoding(TOKENIZER)
+    return lambda s: len(enc.encode(s))
+
+
+def git(*args: str) -> str:
+    try:
+        return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        return ""
+
+
+def provenance() -> dict:
+    import tiktoken
+    return {"commit": git("rev-parse", "HEAD"), "worktree_dirty": bool(git("status", "--porcelain")),
+            "testset_tag": "testset-v1", "testset_tag_commit": git("rev-parse", "testset-v1^{commit}"),
+            "config_bm25": str(BM25_CONFIG.relative_to(ROOT)).replace("\\", "/"),
+            "config_bm25_sha256": hashlib.sha256(BM25_CONFIG.read_bytes()).hexdigest(),
+            "python": platform.python_version(), "tiktoken": tiktoken.__version__,
+            "token_estimate": f"tiktoken {TOKENIZER} (approssimazione)",
+            "started_at": time.strftime("%Y-%m-%dT%H:%M:%S")}
+
+
+def missing_metadata(meta: dict | None) -> list[str]:
+    out = []
+    for key in MODEL_METADATA_REQUIRED:
+        cur = meta or {}
+        for part in key.split("."):
+            cur = cur.get(part) if isinstance(cur, dict) else None
+        if cur in PLACEHOLDERS or cur == {}:
+            out.append(key)
+    return out
+
+
+def model_key(cfg: dict) -> tuple[str, str] | None:
+    meta = cfg.get("model_metadata") or {}
+    if cfg.get("client", {}).get("kind") != "lmstudio":
+        return None
+    return str(meta.get("model_id")), str(meta.get("quantization"))
+
+
+def inconsistent_runs(cfg: dict, results_root: Path) -> list[str]:
+    """Run gia' presenti dello stesso modello con context_length o max_tokens diversi da quelli di cfg."""
+    key = model_key(cfg)
+    if key is None or not results_root.exists():
+        return []
+    mine = ((cfg.get("model_metadata") or {}).get("context_length"), (cfg.get("generation") or {}).get("max_tokens"))
+    out = []
+    for path in sorted(results_root.glob("*/config.json")):
+        other = json.loads(path.read_text(encoding="utf-8")).get("config", {})
+        if other.get("run_id") == cfg.get("run_id") or model_key(other) != key:
+            continue
+        theirs = ((other.get("model_metadata") or {}).get("context_length"),
+                  (other.get("generation") or {}).get("max_tokens"))
+        if theirs != mine:
+            out.append(f"{path.parent.name}: context_length={theirs[0]}, max_tokens={theirs[1]}")
+    return out
+
+
+def make_client(cfg: dict):
+    c = cfg["client"]
+    if c["kind"] == "mock":
+        rdir = c.get("responses_dir")
+        return MockClient(responses_dir=ROOT / rdir if rdir else None, model=c.get("model", "mock"),
+                          finish_reasons=c.get("finish_reasons"))
+    if c["kind"] == "lmstudio":
+        missing = missing_metadata(cfg.get("model_metadata"))
+        missing += [f"generation.{k}" for k in GENERATION_REQUIRED if k not in (cfg.get("generation") or {})]
+        if c.get("model") in PLACEHOLDERS:
+            missing.append("client.model")
+        if missing:
+            raise SystemExit(f"client reale senza metadati obbligatori del modello: {missing} (vedi model_metadata)")
+        return LMStudioClient(model=c["model"], base_url=c.get("base_url", "http://localhost:1234/v1"),
+                              timeout_s=c.get("timeout_s", 600), retries=c.get("retries", 3),
+                              backoff_s=c.get("backoff_s", 2.0))
+    raise SystemExit(f"client sconosciuto: {c['kind']}")
+
+
+def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int]]:
+    """(query, spec, ripetizione) nell'ordine di esecuzione. zero_shot e static non dipendono da k: una sola volta."""
+    p = cfg.get("prompt", {})
+    ids = cfg.get("query_ids")
+    sel = [q for q in queries if not ids or q["id"] in ids]
+    if ids and len(sel) != len(ids):
+        raise SystemExit(f"query_ids non trovati nel test set: {sorted(set(ids) - {q['id'] for q in sel})}")
+    out = []
+    for q in sel:
+        for cond in cfg["conditions"]:
+            if cond not in CONDITIONS:
+                raise SystemExit(f"condizione sconosciuta: {cond}")
+            ks = [0] if cond == "zero_shot" else [2] if cond == "static" else cfg["k"]
+            for k in ks:
+                spec = PromptSpec(condition=cond, k=k, seed=cfg.get("seed", 0),
+                                  serialization=p.get("serialization", "compact"),
+                                  layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True))
+                for r in range(cfg.get("repetitions", 1)):
+                    out.append((q, spec, r))
+    return out
+
+
+def call_id(qid: str, spec: PromptSpec, r: int) -> str:
+    return f"{qid}__{spec.condition}__k{spec.k}__r{r}"
+
+
+def params_for(cfg: dict, r: int) -> GenerationParams:
+    g = dict(cfg.get("generation", {}))
+    params = GenerationParams(**g)
+    return replace(params, seed=params.seed + r) if params.seed is not None else params
+
+
+def stats(xs: list[int]) -> tuple[int, float, int]:
+    return min(xs), statistics.median(xs), max(xs)
+
+
+# --- dry run --------------------------------------------------------------------------------------------------------
+
+
+def dry_run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path) -> str:
+    ntok = token_counter()
+    cfg = {**cfg, "repetitions": 1}
+    rows = []
+    for q, spec, _ in plan(cfg, queries):
+        bp = builder.build(q, spec)
+        rows.append({"query_id": q["id"], "condition": spec.condition, "k": spec.k, "analysis_only": bp.analysis_only,
+                     "example_ids": "|".join(bp.example_ids), "prompt_chars": len(bp.text),
+                     "prompt_tokens_est": ntok(bp.text)})
+    gt_c = {q["id"]: ntok(serialize_diagram(q["diagram_apollon_json"], "compact", True)) for q in queries}
+    gt_i = {q["id"]: ntok(serialize_diagram(q["diagram_apollon_json"], "indent2", True)) for q in queries}
+
+    out_dir.mkdir(parents=True)
+    with (out_dir / "dry_run.csv").open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=[*rows[0], "gt_output_tokens_compact", "gt_output_tokens_indent2"])
+        w.writeheader()
+        for r in rows:
+            w.writerow({**r, "gt_output_tokens_compact": gt_c[r["query_id"]],
+                        "gt_output_tokens_indent2": gt_i[r["query_id"]]})
+
+    groups: dict[tuple[str, int], list[dict]] = {}
+    for r in rows:
+        groups.setdefault((r["condition"], r["k"]), []).append(r)
+    L = [f"# Dry run `{cfg['run_id']}`", "",
+         f"Nessuna chiamata a un LLM. {len({r['query_id'] for r in rows})} esercizi del test set, prompt costruiti con "
+         f"serializzazione `{cfg.get('prompt', {}).get('serialization', 'compact')}`, layout "
+         f"`{cfg.get('prompt', {}).get('layout', 'user_only')}`. Token stimati con tiktoken `{TOKENIZER}`: "
+         "**approssimazione**, i modelli locali usano tokenizer propri e i conteggi reali possono differire "
+         "(il manifest delle run registra anche i token riportati dal server). Finestre: 8k = 8192, 16k = 16384, "
+         "32k = 32768 token. oracle = solo analisi.", "",
+         "## Lunghezza dei prompt (min / mediana / max sui 20 esercizi)", "",
+         "| condizione | k | caratteri | token stimati |", "|---|---|---|---|"]
+    for (c, k), g in groups.items():
+        ch, tk = stats([r["prompt_chars"] for r in g]), stats([r["prompt_tokens_est"] for r in g])
+        L.append(f"| {c} | {k} | {ch[0]} / {ch[1]:.0f} / {ch[2]} | {tk[0]} / {tk[1]:.0f} / {tk[2]} |")
+    oc, oi = stats(list(gt_c.values())), stats(list(gt_i.values()))
+    L += ["", "## Token di output stimati dai 20 ground truth (senza `interactive`)", "",
+          "| serializzazione | min | mediana | max |", "|---|---|---|---|",
+          f"| compatta (stima richiesta) | {oc[0]} | {oc[1]:.0f} | {oc[2]} |",
+          f"| indentata a 2 spazi (se il modello indenta) | {oi[0]} | {oi[1]:.0f} | {oi[2]} |", "",
+          "Non include eventuali token di ragionamento (`<think>`) dei modelli che li producono.", "",
+          "## Finestre di contesto: input + output stimato", "",
+          "Per ogni esercizio: token del prompt + token del suo ground truth compatto. Celle = esercizi su 20 che "
+          "stanno nella finestra; tra parentesi il caso peggiore (prompt piu' lungo + output massimo compatto, "
+          f"{oc[2]} token): si / no.", "",
+          "| condizione | k | " + " | ".join(f"{w // 1024}k" for w in WINDOWS) + " |",
+          "|---|---|" + "---|" * len(WINDOWS)]
+    for (c, k), g in groups.items():
+        cells = []
+        worst = max(r["prompt_tokens_est"] for r in g) + oc[2]
+        for wnd in WINDOWS:
+            n = sum(1 for r in g if r["prompt_tokens_est"] + gt_c[r["query_id"]] <= wnd)
+            cells.append(f"{n}/{len(g)} ({'si' if worst <= wnd else 'no'})")
+        L.append(f"| {c} | {k} | " + " | ".join(cells) + " |")
+    L += ["", "Stessa tabella con output indentato (ground truth indentato di ciascun esercizio):", "",
+          "| condizione | k | " + " | ".join(f"{w // 1024}k" for w in WINDOWS) + " |",
+          "|---|---|" + "---|" * len(WINDOWS)]
+    for (c, k), g in groups.items():
+        cells = [f"{sum(1 for r in g if r['prompt_tokens_est'] + gt_i[r['query_id']] <= wnd)}/{len(g)}"
+                 for wnd in WINDOWS]
+        L.append(f"| {c} | {k} | " + " | ".join(cells) + " |")
+    summary = "\n".join(L) + "\n"
+    (out_dir / "summary.md").write_text(summary, encoding="utf-8")
+    (out_dir / "config.json").write_text(json.dumps({"config": cfg, "provenance": provenance()}, indent=2,
+                                                    ensure_ascii=False), encoding="utf-8")
+    return summary
+
+
+# --- run ------------------------------------------------------------------------------------------------------------
+
+
+def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, resume: bool) -> dict:
+    client = make_client(cfg)
+    clash = inconsistent_runs(cfg, out_dir.parent)
+    if clash:
+        meta = cfg.get("model_metadata") or {}
+        raise SystemExit(f"stesso modello ({meta.get('model_id')}, {meta.get('quantization')}) con context_length o "
+                         f"max_tokens diversi da run esistenti: {clash}. Devono essere identici per tutte le "
+                         f"condizioni e tutti i k (docs/STATUS.md, regole della generazione)")
+    ntok = token_counter()
+    if out_dir.exists() and not resume:
+        raise SystemExit(f"{out_dir} esiste gia': non si sovrascrive (usa --resume per riprendere)")
+    if resume:
+        saved = json.loads((out_dir / "config.json").read_text(encoding="utf-8"))["config"]
+        if saved != cfg:
+            raise SystemExit("--resume con una configurazione diversa da quella della run salvata")
+    for sub in ("prompts", "raw", "parsed"):
+        (out_dir / sub).mkdir(parents=True, exist_ok=True)
+    if not resume:
+        (out_dir / "config.json").write_text(json.dumps({"config": cfg, "provenance": provenance()}, indent=2,
+                                                        ensure_ascii=False), encoding="utf-8")
+    cached = CachedClient(client, out_dir / "cache")
+    manifest_path = out_dir / "manifest.jsonl"
+    done = set()
+    if manifest_path.exists():
+        done = {json.loads(line)["call_id"] for line in manifest_path.read_text(encoding="utf-8").splitlines() if line}
+    val_path = out_dir / "validation.csv"
+    counts = {"calls": 0, "skipped_done": 0, "from_cache": 0}
+    for q, spec, r in plan(cfg, queries):
+        cid = call_id(q["id"], spec, r)
+        if cid in done:
+            counts["skipped_done"] += 1
+            continue
+        bp = builder.build(q, spec)
+        (out_dir / "prompts" / f"{cid}.json").write_text(json.dumps(
+            {"messages": bp.messages, "example_ids": bp.example_ids, "spec": asdict(spec)}, ensure_ascii=False,
+            indent=1), encoding="utf-8")
+        params = params_for(cfg, r)
+        res = cached.generate(bp.messages, params, r, key=q["id"])
+        counts["calls"] += 1
+        counts["from_cache"] += res.cached
+        (out_dir / "raw" / f"{cid}.json").write_text(json.dumps(asdict(res), ensure_ascii=False, indent=1),
+                                                     encoding="utf-8")
+        v = pp.validate_response(res.text, res.finish_reason)
+        if v.diagram is not None:
+            (out_dir / "parsed" / f"{cid}.json").write_text(json.dumps(v.diagram, ensure_ascii=False, indent=1),
+                                                            encoding="utf-8")
+        row = {"call_id": cid, "query_id": q["id"], "condition": spec.condition, "k": spec.k, "repetition": r,
+               **v.row()}
+        new_file = not val_path.exists()
+        with val_path.open("a", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=list(row))
+            if new_file:
+                w.writeheader()
+            w.writerow(row)
+        entry = {"call_id": cid, "query_id": q["id"], "condition": spec.condition, "k": spec.k, "repetition": r,
+                 "analysis_only": bp.analysis_only, "example_ids": bp.example_ids,
+                 "prompt_sha256": hashlib.sha256(json.dumps(bp.messages, ensure_ascii=False).encode()).hexdigest(),
+                 "prompt_chars": len(bp.text), "prompt_tokens_est": ntok(bp.text),
+                 "prompt_tokens_server": res.prompt_tokens, "completion_tokens_server": res.completion_tokens,
+                 "model": res.model, "params": res.params, "finish_reason": res.finish_reason,
+                 "latency_s": round(res.latency_s, 3), "cached": res.cached, "level": v.level, "failure": v.failure,
+                 "l4_rewrites": v.l4_rewrites, "style_raw_count": len(v.style_raw),
+                 "format_issues": sorted(v.format_issues), "layout_issues": sorted(v.layout_issues),
+                 "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")}
+        with manifest_path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    return counts
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("config")
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--results-dir", default=str(RESULTS), help="radice dell'output (i test usano una cartella temporanea)")
+    a = ap.parse_args(argv)
+    cfg = yaml.safe_load(Path(a.config).read_text(encoding="utf-8"))
+    if cfg.get("split", "testset") != "testset":
+        raise SystemExit("split supportato: testset (i 20 esercizi De Bari)")
+    candidates, queries = cl.load_all()
+    builder = PromptBuilder(candidates, queries)
+    root = Path(a.results_dir)
+    if a.dry_run:
+        out = root / "dry_run" / cfg["run_id"]
+        if out.exists():
+            raise SystemExit(f"{out} esiste gia': non si sovrascrive")
+        print(dry_run(cfg, builder, queries, out))
+        print(f"scritto in {out}")
+        return 0
+    counts = run(cfg, builder, queries, root / cfg["run_id"], a.resume)
+    print(f"run {cfg['run_id']}: {counts}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

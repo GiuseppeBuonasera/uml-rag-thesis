@@ -1,6 +1,7 @@
 # Stato del progetto — leggere a inizio sessione
 
-Aggiornato: 2026-10-05 (Passo 2 chiuso: retriever BM25 congelato e analizzato; prossimo: Passo 3a).
+Aggiornato: 2026-10-05 (Passo 3a chiuso: infrastruttura di generazione senza chiamate LLM; Passo 3b BLOCCATO in
+attesa dei relatori, domande 8, 9, 11, 14).
 
 ## Stato
 - **Corpus di retrieval** (`corpus/processed/corpus.jsonl`, 60 record): 45 esercizi originali
@@ -19,6 +20,12 @@ Aggiornato: 2026-10-05 (Passo 2 chiuso: retriever BM25 congelato e analizzato; p
   score_norm del top-1 per la tassonomia (cut-off 0.2893 / 0.3473, terzili LOO). Run versionate in
   `data/results/retrieval/`: `loo_2026-10-04_stop1` (LOO + sensibilità) e `testset_2026-10-04_stop2` (test set,
   guardato una volta sola, + hubness). Nessun LLM usato finora.
+- **Infrastruttura di generazione (Passo 3a, chiuso il 2026-10-05)**, pensata per modelli LOCALI via LM Studio (API
+  compatibile OpenAI, `http://localhost:1234/v1`): prompt builder (`generation/prompt_builder.py`, istruzioni
+  identiche al template v4, condizioni zero_shot / static / random / bm25 / oracle), client (`generation/llm_client.py`:
+  Mock, LM Studio, cache su disco), post-processing a livelli L0-L4 (`generation/postprocess.py`), runner con dry run
+  (`experiments/run_experiment.py`). Solo prove con client finto e un server HTTP finto: **nessuna chiamata a un LLM
+  reale**. Lo smoke test manuale `experiments/smoke_lmstudio.py` (prompt banali) è da eseguire con LM Studio aperto.
 
 ## Struttura del repository (2026-10-04)
 ```
@@ -28,13 +35,18 @@ corpus/                 script della pipeline + annotazioni + report (mappa file
   corrections/, description_exclusions/   annotazioni manuali per esercizio
 retrieval/              Passo 2: BM25 (keyword_retriever), random, loader in sola lettura, analisi, test,
                         config_bm25.yaml congelata; dense_retriever.py e hybrid_retriever.py ancora stub
-generation/, evaluation/  Passo 3 (stub); evaluation/uml-model-4.schema.json in uso
-data/results/           output sperimentali (ignorati), tranne data/results/retrieval/<run>/{config.json,summary.md,*.csv}
+generation/             Passo 3a: templates/ (blocchi del prompt v4), prompt_builder, llm_client, postprocess,
+                        sanity_check, test_generation
+experiments/            runner (run_experiment.py), configs/*.yaml, mock_responses/ (sintetiche), smoke_lmstudio.py
+evaluation/             metriche ancora stub; evaluation/uml-model-4.schema.json in uso
+data/results/           output sperimentali (ignorati), tranne data/results/retrieval/<run>/{config.json,summary.md,*.csv};
+                        generazione in data/results/generation/<run_id>/ e dry_run/<run_id>/ (ignorati)
 docs/                   STATUS.md, decisions.md (con indice), dati/ (debari/, studio2025_it/, apollon_format_reference/),
                         archivio/ (materiale concluso, con README)
 ```
 Nel riordino non è stato spostato nessun file dentro `corpus/`: le note in `raw/` citano i percorsi attuali. I test
-restano accanto al modulo (`corpus/test_apollon_convert.py`; Passo 2: `retrieval/test_retrieval.py`).
+restano accanto al modulo (`corpus/test_apollon_convert.py`; Passo 2: `retrieval/test_retrieval.py`; Passo 3a:
+`generation/test_generation.py`).
 
 ## Comandi (in ordine)
 ```
@@ -62,6 +74,15 @@ python retrieval/test_retrieval.py                   # test (determinismo, no te
 python retrieval/analyze_retrieval.py [--run-id ID]  # LOO sul corpus + sensibilita' (NON guarda il test set)
 python retrieval/run_testset.py [--run-id ID]        # test set con la config congelata; rifiuta run gia' esistenti
 python retrieval/hubness_report.py                   # hubness dai CSV delle due run (solo descrittivo)
+
+# --- generazione (Passo 3a): corpus/ e config_bm25.yaml in sola lettura; nessun LLM reale nei test ---
+python generation/test_generation.py                 # prompt, cache, client su server HTTP finto, estrazione, L0-L4, runner
+python generation/sanity_check.py                    # 20 GT + 59 corpus + 2 statici attraverso il post-processing
+python experiments/run_experiment.py experiments/configs/dryrun_testset.yaml --dry-run   # lunghezze, finestre di contesto
+python experiments/run_experiment.py experiments/configs/mock_e2e.yaml   # prova end-to-end con MockClient
+python experiments/run_experiment.py <config> --resume                   # riprende una run interrotta (cache)
+python experiments/smoke_lmstudio.py --list-models   # MANUALE, con LM Studio aperto; poi --model <id>
+# run reali (Passo 3b, BLOCCATO): copiare experiments/configs/lmstudio_template.yaml e sostituire tutti i TODO
 ```
 
 ## Contatori
@@ -110,6 +131,21 @@ python retrieval/hubness_report.py                   # hubness dai CSV delle due
 - AirTravel ha `used_as_static_example: true`: escluderlo dalle query quando si usa il prompt statico come baseline.
 - Il test set non entra mai nel corpus di retrieval (`check_split_separation`); un eventuale leave-one-out sui 20
   De Bari va prima deciso con i relatori.
+- **La lunghezza del prompt varia tra le condizioni** (dry run 2026-10-05, token stimati, mediana: zero_shot ~2k,
+  static ~7.8k, bm25 k=3 ~11.5k) **e va trattata come covariata nell'analisi**: ogni chiamata registra in
+  `manifest.jsonl` caratteri e token del prompt (stimati con tiktoken cl100k_base e, se il server li fornisce, reali).
+- La validazione dell'output è a livelli separati L0-L4 (estratto, JSON, schema, integrità, stile); le "istruzioni
+  non rispettate" (es. chiave `interactive` presente, testo attorno al JSON, nodi fuori dal canvas o sovrapposti) si
+  registrano a parte e non sono errori. L3 verifica id unici in tutto il diagramma e riferimenti coerenti, **non** il
+  formato UUID. Una risposta troncata (`finish_reason = length`) si conta separatamente da un JSON sbagliato.
+- **Diagnostici, non metriche**: le istruzioni non rispettate sono registrate in due categorie separate, "formato
+  della risposta" (`format_issues`: testo attorno al JSON, `interactive`, versione, tipo, ...) e "layout"
+  (`layout_issues`: nodi fuori dal canvas, sovrapposti, measured diverso). Non vanno combinate tra loro né con L0-L4
+  in un unico punteggio.
+- L4 applica style_check dopo SOLO le due riscritture ammesse (elenco chiuso `L4_REWRITES`: metodi nella forma v4
+  "nome(parametri): Tipo"; molteplicità "1..n" / "0..n" / "n" → "*"); `validation.csv` registra quante riscritture
+  per risposta e i messaggi originali di style_check. **Nella valutazione semantica "1..n" e "1..*" (e "0..n" /
+  "0..*", "n" / "*") vanno trattati come equivalenti.**
 
 ## Regole attive
 ### Generali (corpus e test set)
@@ -141,6 +177,16 @@ python retrieval/hubness_report.py                   # hubness dai CSV delle due
   esclusi, con warning in `apollon_conversion_warnings`.
 - `interface X` / `class X <<interface>>` → stereotype "interface"; ogni riga PlantUML non riconosciuta è un errore.
 - Traduzione: `glossary_shared.json` + `glossary.json` locale (stesso termine = stessa traduzione, conflitto = errore).
+### Generazione (Passo 3)
+- **Per uno stesso modello (model_id + quantizzazione), la lunghezza di contesto impostata in LM Studio e `max_tokens`
+  sono IDENTICI per tutte le condizioni e tutti i k.** Il runner rifiuta una run i cui valori differiscono da quelli
+  di una run già presente dello stesso modello.
+- Un client reale parte solo con tutti i metadati del modello in config (model_id, quantizzazione, contesto,
+  versione di LM Studio, hardware CPU / GPU / RAM / VRAM, parametri di generazione); nessuna chiave API.
+- Prompt: istruzioni identiche al template v4, un solo messaggio utente, esempi compatti senza `interactive`; le
+  condizioni differiscono solo nel blocco esempi. Output strutturato (`response_format`) DISATTIVATO.
+- Riscritture prima di style_check: solo l'elenco chiuso `L4_REWRITES`; qualunque altra va decisa.
+- Nessuna chiamata a un LLM reale nei test automatici; nessuna run sul test set finché il Passo 3b è bloccato.
 ### Solo test set De Bari
 - **Versionamento del ground truth**: il test set è congelato nel tag annotato `testset-v1` (commit `eb4d28b`,
   2026-10-04). Qualsiasi modifica successiva al ground truth (`corpus/raw/debari_test/`, correzioni `DB*`, regole che
@@ -234,12 +280,50 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
 7. **Analysis.xlsx**: 76 discrepanze classificate come imprecisioni dell'xlsx (es. righe 2/3 scambiate in "Attributes
    + Operations", operazioni omesse nell'es. 3, classi associative non elencate negli es. 10-13): segnalarle agli
    autori di De Bari et al.? Nei confronti con i loro punteggi si usano i conteggi del ground truth (`gt_counts`).
-8. **LLM e parametri di generazione**: quale LLM (o quali), temperatura, numero di ripetizioni per cella. Vincolo: con
-   k=3 esempi recuperati il prompt arriva a circa 20k token.
+8. **LLM e parametri di generazione**: quale LLM (o quali), temperatura, numero di ripetizioni per cella. Gli
+   esperimenti useranno modelli LOCALI via LM Studio: va scelta anche la lunghezza di contesto, identica per tutte le
+   condizioni e tutti i k dello stesso modello. **Con k=3 l'unica finestra sicura è 32k; con k=2 la finestra da 16k
+   ha un margine di circa 1.700 token nel caso peggiore (bm25: 11.192 di prompt + 3.509 di output = 14.701 su
+   16.384), insufficiente se il tokenizer locale è meno efficiente della stima o se il modello indenta il JSON.**
+   Dry run del 2026-10-05 (`data/results/generation/dry_run/dryrun_2026-10-05/summary.md`), token stimati con
+   tiktoken cl100k_base (approssimazione), 20 esercizi, min / mediana / max:
+
+   | condizione | k | token del prompt |
+   |---|---|---|
+   | zero_shot | 0 | 1794 / 1951 / 2054 |
+   | static | 2 | 7692 / 7849 / 7952 |
+   | random | 1 / 2 / 3 | 3450 / 4789 / 7436 — 6146 / 7330 / 10874 — 8218 / 10736 / 15834 |
+   | bm25 | 1 / 2 / 3 | 3261 / 4739 / 7188 — 5612 / 8042 / 11192 — 8376 / 11460 / 17256 |
+   | oracle (solo analisi) | 1 / 2 / 3 | 2895 / 4013 / 7181 — 4803 / 6606 / 10277 — 6266 / 10208 / 13336 |
+
+   Output stimato dai 20 ground truth: compatto 1387 / 2306 / 3509, indentato 2104 / 3384 / 5056 (esclusi eventuali
+   token di ragionamento). Esercizi su 20 per cui prompt + output compatto stanno nella finestra (tra parentesi il
+   caso peggiore, prompt massimo + 3509):
+
+   | condizione | k | 8k | 16k | 32k |
+   |---|---|---|---|---|
+   | zero_shot | 0 | 20 (sì) | 20 (sì) | 20 (sì) |
+   | static | 2 | 0 (no) | 20 (sì) | 20 (sì) |
+   | random | 1 | 15 (no) | 20 (sì) | 20 (sì) |
+   | random | 2 | 2 (no) | 20 (sì) | 20 (sì) |
+   | random | 3 | 0 (no) | 18 (no) | 20 (sì) |
+   | bm25 | 1 | 15 (no) | 20 (sì) | 20 (sì) |
+   | bm25 | 2 | 3 (no) | 20 (sì) | 20 (sì) |
+   | bm25 | 3 | 0 (no) | 18 (no) | 20 (sì) |
+   | oracle | 1 | 16 (no) | 20 (sì) | 20 (sì) |
+   | oracle | 2 | 8 (no) | 20 (sì) | 20 (sì) |
+   | oracle | 3 | 0 (no) | 20 (no) | 20 (sì) |
+
+   Con output indentato, a 16k: bm25 k=3 13/20, random k=3 17/20, oracle k=3 18/20.
 9. **Baseline few-shot statica**: la baseline few-shot statica deriva dal prompt v3 dello studio 2025 (Garaccione et
    al.), adattato ad Apollon v4 con l'esempio dell'orologio (diagramma a stati) sostituito da AirTravel. Va bene come
    baseline ufficiale, considerando che De Bari et al. usavano PlantUML e un prompt diverso? (Il prompt v3 originale e
-   i suoi esempi sono in `docs/dati/studio2025_it/`.)
+   i suoi esempi sono in `docs/dati/studio2025_it/`.) **Aggiunta 2026-10-05**: l'esempio 1 della baseline (bank
+   loans) viola le istruzioni del prompt stesso (nomi in italiano con traccia inglese, tipi non normalizzati String /
+   Double / DateTime, tipi di ritorno List<...>, molteplicità "N"); per ora resta invariato come eccezione
+   documentata. Il confronto pulito sulla pertinenza è **bm25 vs random** (stesso corpus normalizzato), mentre
+   **static vs bm25 mescola pertinenza e qualità degli esempi**: valutare se aggiungere una variante
+   `static_normalized` (stessi due esercizi, normalizzati come il corpus).
 10. **Quasi-duplicati nel leave-one-out** (es. GasStation_KUL / GasStation_TUW nel corpus): ammessi o esclusi come
     vicini recuperabili? **Esito dell'analisi (2026-10-04)**: nel corpus non c'è nessun quasi-duplicato di contenuto.
     GasStation_KUL/TUW è lo stesso caso con modellazioni diverse (Jaccard dei nomi di classe 0.09, TF-IDF 0.23); il
@@ -252,15 +336,19 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
     dimensione (`gt_counts`), punteggio normalizzato del top-1 del retrieval; il dominio solo come descrittivo.
 13. **Provenienza di `docs/dati/debari/Exercises_solo_testo.pdf`** (8 pagine, solo il testo delle 20 tracce, senza
     soluzioni; testo identico alle `description.md` del test set): è il testo dato agli LLM nello studio De Bari?
+14. **Generazione libera oppure vincolata allo schema Apollon?** Con il vincolo la validità sintattica è quasi
+    garantita per costruzione e smette di essere una metrica. LM Studio lo supporta su `/v1/chat/completions` con
+    `response_format: {"type": "json_schema", ...}` (grammatica di llama.cpp per i GGUF, Outlines per MLX; non tutti
+    i modelli, specie sotto i 7B). Nel codice è pronto (`structured_output`) ma DISATTIVATO.
 
 ## Prossimi passi
 1. ~~Trascrizione De Bari (20 esercizi, test set)~~ — FATTO il 2026-10-04.
 2. ~~Retriever BM25, analisi LOO, test set~~ — FATTO il 2026-10-05 (configurazione congelata). Il retriever dense e
    l'hybrid restano da fare (stub), con una misura di pertinenza non basata sui nomi esatti.
 3. **Pipeline di generazione**:
-   - **3a. Infrastruttura senza chiamate LLM**: prompt builder con le condizioni zero-shot / few-shot statico /
-     few-shot da retrieval; client LLM con cache su disco; post-processing con validazione dell'output riusando
-     `corpus/apollon_convert.py` in sola lettura.
-   - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM e
-     parametri), 9 (baseline statica) e 11 (metriche).
+   - ~~**3a. Infrastruttura senza chiamate LLM**~~ — FATTO il 2026-10-05 (prompt builder, client LM Studio e
+     mock con cache, post-processing L0-L4, runner con dry run). Resta lo smoke test manuale con LM Studio
+     (`experiments/smoke_lmstudio.py`: risposta attesa e verifica del seed), da eseguire dall'utente.
+   - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM, parametri,
+     finestra di contesto), 9 (baseline statica), 11 (metriche) e 14 (generazione libera o vincolata allo schema).
 4. Valutazione (sintattica / semantica / pragmatica), con i requisiti sopra.

@@ -1,0 +1,9 @@
+# Dry run (Passo 3a): nessuna chiamata a un LLM. 20 esercizi del test set x condizioni x k in {1, 2, 3}.
+run_id: dryrun_2026-10-05
+split: testset
+conditions: [zero_shot, static, random, bm25, oracle]  # oracle = solo analisi
+k: [1, 2, 3]
+repetitions: 1
+seed: 0  # seed della condizione random (retrieval/random_retriever.py)
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+client: {kind: mock}

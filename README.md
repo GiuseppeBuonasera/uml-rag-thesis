@@ -18,9 +18,12 @@ corpus/                 pipeline di costruzione del corpus e del test set (vedi 
   description_exclusions/
 retrieval/              Passo 2: BM25 congelato (config_bm25.yaml), baseline random, analisi e test;
                         dense / hybrid ancora da implementare
-generation/             costruzione del prompt e client LLM (Passo 3a, da implementare)
+generation/             Passo 3a: prompt (template v4 a blocchi), client LLM (LM Studio locale, mock, cache),
+                        post-processing con validazione L0-L4, controllo di sanità e test
+experiments/            runner degli esperimenti (dry run, ripresa), configs/, smoke test manuale di LM Studio
 evaluation/             metriche (da implementare) + schema Apollon v4 (uml-model-4.schema.json)
-data/results/           output sperimentali (ignorati da git, tranne config/summary/CSV delle run in retrieval/)
+data/results/           output sperimentali (ignorati da git, tranne config/summary/CSV delle run in retrieval/);
+                        generazione in data/results/generation/
 docs/
   STATUS.md, decisions.md
   dati/                 materiale di riferimento: debari/, studio2025_it/, apollon_format_reference/
@@ -35,3 +38,8 @@ pip install -r requirements.txt
 ```
 Il render dei PlantUML usa `.tools/plantuml-old.jar` (Java 8, non versionato). L'ordine dei comandi della pipeline
 è in [`corpus/README.md`](./corpus/README.md) e in `docs/STATUS.md`.
+
+Gli esperimenti di generazione usano modelli locali tramite [LM Studio](https://lmstudio.ai) (server con API
+compatibile OpenAI, default `http://localhost:1234/v1`, nessuna chiave API). Prima di una run reale:
+`python experiments/smoke_lmstudio.py --list-models`, poi `--model <id>`. Le run reali (Passo 3b) sono bloccate in
+attesa delle risposte dei relatori (domande in `docs/STATUS.md`).

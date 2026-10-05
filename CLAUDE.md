@@ -35,8 +35,10 @@ zero-shot, specialmente per certe tipologie di esercizio.
   tag `testset-v1`.
 - **Passo 2 chiuso** (BM25): configurazione congelata in `retrieval/config_bm25.yaml`, analizzata sul leave-one-out
   del corpus e applicata una volta al test set; dense e hybrid ancora da fare.
-- **Prossimo passo**: 3a, infrastruttura di generazione senza chiamate LLM; 3b (esperimenti) bloccata in attesa
-  delle risposte dei relatori (domande 8, 9, 11 in `docs/STATUS.md`).
+- **Passo 3a chiuso** (2026-10-05): infrastruttura di generazione per modelli locali via LM Studio (prompt builder,
+  client con cache, post-processing L0-L4, runner `experiments/run_experiment.py`), provata solo con client finti.
+- **Prossimo passo**: 3b (esperimenti) BLOCCATA in attesa delle risposte dei relatori (domande 8, 9, 11, 14 in
+  `docs/STATUS.md`); nel frattempo, smoke test manuale di LM Studio (lo esegue l'utente).
 
 ## Relatori e riferimento diretto
 

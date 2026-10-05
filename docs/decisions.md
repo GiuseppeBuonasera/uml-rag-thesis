@@ -71,6 +71,10 @@ non sono state modificate.
 60. 2026-10-04 — Passo 2 — FASE 3: BM25 congelato sul test set (STOP 2)
 61. 2026-10-05 — Passo 2 — hubness del retrieval (solo descrittivo)
 62. 2026-10-05 — Passo 2 chiuso; Passo 3 diviso in 3a (infrastruttura) e 3b (esperimenti, bloccata)
+63. 2026-10-05 — Passo 3a — FASE 1: template a blocchi e prompt builder (STOP 1, in attesa di approvazione)
+64. 2026-10-05 — Passo 3a — STOP 1 approvato: differenze dal template v4, formato dei prompt
+65. 2026-10-05 — Passo 3a — FASI 2 e 3: client LM Studio, post-processing L0-L4, runner (STOP 2, in attesa di approvazione)
+66. 2026-10-05 — Passo 3a — STOP 2 approvato e chiusura: riscritture L4, diagnostici separati, verifica del seed, contesto e max_tokens identici per modello
 
 ## Formato
 
@@ -2109,3 +2113,139 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   condizioni zero-shot / statico / retrieval, client con cache su disco, post-processing con validazione riusando
   `apollon_convert` in sola lettura); **3b** esecuzione degli esperimenti, BLOCCATA finché i relatori non rispondono
   alle domande 8 (LLM e parametri), 9 (baseline statica) e 11 (metriche). Dense e hybrid restano stub.
+
+### [2026-10-05] Passo 3a — FASE 1: template a blocchi e prompt builder (STOP 1, in attesa di approvazione)
+- Contesto: modelli LOCALI via LM Studio (API OpenAI-compatibile). Nessuna chiamata a LLM in questa fase.
+- `generation/templates/`: `v4_instructions.txt` (le prime 69 righe di `prompt_template_v4.txt`, fino a "no markdown
+  code fences.", identiche byte per byte; il v4 non è modificato), `v4_examples_block.txt` (intestazione "Examples to
+  follow:" + segnaposto), `v4_example_item.txt` ("Example N — text: / Example N — JSON:" con il JSON inline),
+  `v4_task.txt` ("Here is the textual description of the system to be modeled:" + traccia).
+- Diff rispetto al v4, solo nel blocco esempi: l'intestazione perde il rimando ai "file separati"; "JSON: see file …"
+  diventa il JSON inline; la nota sull'esempio 2 (storia v3 / orologio) è omessa (proposta).
+- `generation/prompt_builder.py`: condizioni zero_shot, static, random, bm25 (config congelata), oracle (solo analisi);
+  testo = istruzioni + blocco esempi + traccia; verificato su DB06 che istruzioni e traccia sono identiche in tutte le
+  condizioni e che il prompt è deterministico.
+- Verifiche: il JSON statico di AirTravel coincide con il record del corpus; la descrizione differisce solo per gli a
+  capo (stesse parole), quindi lo statico usa il record del corpus e AirTravel si serializza uguale in ogni condizione.
+- **Trovati**: (1) tutti i JSON (corpus, test set, esempi statici) hanno la chiave di primo livello `interactive`,
+  mentre le istruzioni v4 dicono "No other top-level fields are allowed"; (2) l'esempio statico 1 (bank loans) ha nomi
+  in italiano (Banca, Cliente, Prestito, CodiceFiscale…) con traccia in inglese, tipi non normalizzati (String, Double,
+  DateTime, List<Prestito>) e molteplicità "N": non passa lo style check (L4).
+- Costi in token (cl100k_base di tiktoken 0.14.0, approssimazione): istruzioni 1.708; JSON di un esempio del corpus in
+  media 4.189 (indentato) contro 2.818 (compatto, −33%); prompt DB06: zero_shot 1.914, static 10.354, bm25 k=3 18.818.
+
+### [2026-10-05] Passo 3a — STOP 1 approvato: differenze dal template v4, formato dei prompt
+- Contesto: gli esperimenti useranno modelli LOCALI tramite LM Studio (API compatibile OpenAI, default
+  `http://localhost:1234/v1`).
+- **Tutte le differenze tra il prompt generato e `prompt_template_v4.txt`** (che non è modificato; le istruzioni,
+  righe 1-69, restano identiche byte per byte, verificato dai test):
+  1. intestazione degli esempi: "Examples to follow (full descriptions and matching JSON are provided as separate
+     files alongside this prompt — example_1_bank_loans_v4.json and example_2_airtravel_v4.json):" diventa
+     "Examples to follow:" (niente più rimando ai file separati);
+  2. "Example N — JSON: see file …" diventa il JSON dell'esempio inserito nel testo, in serializzazione compatta e
+     senza la chiave `interactive`;
+  3. la nota sull'esempio 2 (storia v3 / esempio dell'orologio, convenzione della classe associativa) è **omessa**;
+  4. la descrizione dell'esempio 2 (AirTravel) è presa dal record del corpus: stesse parole del template, a capo
+     diversi; così AirTravel si serializza uguale in tutte le condizioni;
+  5. la traccia da risolvere è inserita nel testo dopo "Here is the textual description of the system to be
+     modeled:" (nel v4 la riga è l'ultima e la traccia veniva accodata);
+  6. nelle condizioni diverse da static cambia il contenuto del blocco esempi (zero_shot: blocco assente,
+     intestazione compresa; random / bm25 / oracle: k esempi dal corpus normalizzato, numerati da 1).
+- Formato: **un solo messaggio utente** (layout `user_only`, default; `system_user` resta disponibile ma non si usa
+  senza decisione), **serializzazione compatta**, `drop_interactive` per tutti gli esempi di tutte le condizioni.
+- Ordine degli esempi: bm25 e oracle il più simile per ultimo; static l'ordine del template; random l'ordine di
+  estrazione.
+- `interactive` in output: lo schema lo ammette come facoltativo, quindi presenza o assenza NON è un errore; si
+  registra a parte come "istruzione non rispettata", fuori dai livelli L0-L4.
+- Esempio bank loans: invariato (baseline studio 2025), eccezione documentata. Nel controllo di sanità non è escluso:
+  si verifica contro un elenco ESPLICITO delle violazioni attese; una violazione non elencata fa fallire il
+  controllo. Domanda 9 per i relatori estesa (bm25 vs random come confronto pulito sulla pertinenza; variante
+  `static_normalized` da valutare).
+- Lunghezza del prompt come covariata: caratteri e token (stimati e, se forniti dal server, reali) di ogni chiamata in
+  `manifest.jsonl`; annotato nei requisiti della valutazione di STATUS.md.
+- Id: il template v4 usa come esempio un UUID non valido ("a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8"); le istruzioni non
+  si toccano. `verify_apollon_json` NON impone il formato UUID (controlla id di nodo unici, id dei membri unici per
+  nodo, source/target esistenti, dimensioni positive, almeno 2 punti per edge); L3 aggiunge l'unicità degli id in
+  tutto il diagramma, chiesta dalle istruzioni, e la protezione da strutture malformate, senza modificare
+  `apollon_convert`.
+- `PromptSpec`: default `serialization="compact"`, `layout="user_only"` (il nome provvisorio `single_user` è
+  rinominato), `drop_interactive=True`.
+
+### [2026-10-05] Passo 3a — FASI 2 e 3: client LM Studio, post-processing L0-L4, runner (STOP 2, in attesa di approvazione)
+- **`generation/llm_client.py`**: `GenerationParams` (temperature, top_p, max_tokens, seed, structured_output),
+  `GenerationResult` (testo, finish_reason, modello, parametri, ripetizione, latenza, token del server, cached).
+  `MockClient` (risposte da dizionario o da `<id>.txt`); `LMStudioClient` (POST `{base_url}/chat/completions`, solo
+  urllib, nessuna chiave API; timeout; retry con backoff esponenziale su errori di rete, timeout, 5xx e 429; gli
+  altri 4xx falliscono subito); `CachedClient` (cache su disco, chiave = sha256 di messaggi, modello, parametri,
+  ripetizione). Il seed è tra i parametri che LM Studio dichiara supportati; se il server lo rispetta lo dirà lo
+  smoke test (due chiamate identiche con temperature 0.7).
+- **Output strutturato**: secondo la documentazione di LM Studio (pagine "Structured Output" e "Chat Completions"
+  della compatibilità OpenAI) si attiva con `response_format: {"type": "json_schema", "json_schema": {"name",
+  "strict", "schema"}}`; per i GGUF usa il campionamento a grammatica di llama.cpp, per MLX Outlines; non tutti i
+  modelli lo supportano (specie sotto i 7B). Implementato con `evaluation/uml-model-4.schema.json`, DISATTIVATO di
+  default; domanda 14 per i relatori. Non è stato provato contro un server reale.
+- **`generation/postprocess.py`**: rimozione dei blocchi di ragionamento (`<think>`, `<thinking>`, `<reasoning>`;
+  anche senza tag di apertura o non chiusi), estrazione (risposta intera, blocco ```, oggetto {...} bilanciato) e
+  livelli cumulativi L0 estratto / L1 JSON / L2 schema / L3 integrità / L4 stile. Esito `failure`: no_json,
+  truncated (finish_reason = length), incomplete_json (oggetto non chiuso senza troncamento dichiarato),
+  invalid_json, not_object, schema, integrity, style. Istruzioni non rispettate a parte: interactive_present,
+  extra_text, version_not_4_2_0, type_not_class_diagram, node_type_not_class, out_of_canvas, overlapping_nodes,
+  measured_mismatch, empty_method_name.
+- **Conflitti tra `style_check` e le istruzioni v4** (trovati leggendo il codice, `apollon_convert` non modificato):
+  (a) le istruzioni danno per i metodi la forma "methodName(parameters): ReturnType", senza "+ ", mentre
+  style_check vuole "+ "; (b) le istruzioni ammettono la molteplicità "1..n", style_check la segnala. **Proposta
+  (da approvare)**: L4 = style_check su una copia in cui queste due forme sono riscritte nella forma del corpus
+  ("+ " davanti al metodo, "..n" → "..*"); i messaggi grezzi di style_check si registrano comunque (`style_raw`).
+  style_check non controlla i tipi di ritorno dei metodi (es. List<...>) né i bounds / le sovrapposizioni.
+- **`generation/sanity_check.py`**: 20 ground truth, 59 JSON del corpus e AirTravel superano L0-L4 con style_check
+  grezzo vuoto; l'unica istruzione non rispettata è `interactive` (in tutti). Bank loans fallisce L4 con esattamente
+  le 10 violazioni attese (7 tipi String / Double / DateTime, 3 molteplicità "N"); inventario esatto di 3 classi e 9
+  attributi con nomi italiani e 2 tipi di ritorno List<Prestito>.
+- **`experiments/run_experiment.py`** + `experiments/configs/` (`dryrun_testset.yaml`, `mock_e2e.yaml`,
+  `lmstudio_template.yaml`): output in `data/results/generation/<run_id>/` (config.json con commit, tag testset-v1,
+  sha256 di config_bm25.yaml, versioni; prompts/, raw/, parsed/, validation.csv, manifest.jsonl, cache/); rifiuta
+  la sovrascrittura, `--resume` riprende saltando le chiamate registrate e usando la cache; con il client lmstudio
+  rifiuta di partire se mancano client.model, generation.{temperature, top_p, max_tokens, seed} o i metadati
+  (model_id, quantization, context_length, lmstudio_version, hardware cpu / gpu / ram_gb / vram_gb). Ripetizione r:
+  seed + r se il seed è impostato. `--dry-run` scrive `data/results/generation/dry_run/<run_id>/` (CSV + summary.md
+  con lunghezze dei prompt, token di output stimati dai 20 ground truth compatti e indentati, finestre 8k / 16k /
+  32k).
+- **`experiments/smoke_lmstudio.py`**: smoke test MANUALE (prompt `{"ok": true}`, nessun dato del corpus o del test
+  set); lo esegue l'utente con LM Studio aperto.
+- Run mock (`mock_e2e`, 3 esercizi × 5 condizioni × 2 ripetizioni = 30 chiamate, risposte sintetiche): DB01 L4,
+  DB06 fallisce L3 (id duplicato) con ragionamento e fence rimossi, DB13 troncata. Test:
+  `generation/test_generation.py` (prompt, cache, server HTTP finto, estrazione, livelli, runner; nessun LLM reale).
+- `requirements.txt`: `tiktoken==0.14.0` fissato (scarica la codifica cl100k_base al primo uso).
+
+### [2026-10-05] Passo 3a — STOP 2 approvato e chiusura: riscritture L4, diagnostici separati, verifica del seed, contesto e max_tokens identici per modello
+- **L4 approvato**, con un elenco CHIUSO di riscritture prima di style_check (`L4_REWRITES` in
+  `generation/postprocess.py`), applicate a una copia del diagramma:
+  1. `method_v4_form`: metodo nella forma del template v4 "nome(parametri): Tipo" (o "nome(parametri)"), senza
+     "+ " → forma del corpus "+ nome(parametri) : Tipo";
+  2. `multiplicity_n`: molteplicità esattamente "1..n" / "0..n" / "n" → "1..*" / "0..*" / "*" ("N" maiuscola, "1..N",
+     "2..n" ecc. NON sono riscritte e restano violazioni).
+  Qualunque altra riscrittura richiede una decisione esplicita. `validation.csv` registra per risposta il numero di
+  riscritture (`l4_rewrites_total`, `l4_rewrites` per tipo) e i messaggi originali di style_check (`style_raw`,
+  `style_raw_count`). In STATUS.md, per la valutazione semantica: "1..n" e "1..*" equivalenti.
+- **Istruzioni non rispettate** in due categorie separate: "formato della risposta" (`format_issues`: extra_text,
+  interactive_present, version_not_4_2_0, type_not_class_diagram, node_type_not_class, empty_method_name) e
+  "layout" (`layout_issues`: out_of_canvas, overlapping_nodes, measured_mismatch). Sono diagnostici, non metriche di
+  qualità: non si combinano tra loro né con L0-L4 in un unico punteggio. Se la struttura è troppo malformata per i
+  controlli, `format_issues` contiene `unchecked`.
+- **Smoke test**: `experiments/smoke_lmstudio.py` aggiunge la verifica del seed: un prompt banale con risposte
+  variabili (il nome di un gatto) inviato due volte con lo stesso seed e una volta con un seed diverso, a temperature
+  0.8 (caso significativo) e a temperature 0 (riportato, poco informativo). Esito "seed rispettato: si / no / non
+  determinabile" (non determinabile = risposta uguale anche con seed diverso). Provato solo contro il server finto
+  dei test, per verificare che lo script funzioni; l'esito reale lo darà l'esecuzione dell'utente.
+- **Regola metodologica**: per uno stesso modello (model_id + quantizzazione) la lunghezza di contesto impostata in
+  LM Studio e `max_tokens` sono identici per tutte le condizioni e tutti i k. Dentro una config sono unici per
+  costruzione; tra config diverse il runner confronta la nuova run con le `config.json` delle run presenti nella
+  cartella dei risultati e rifiuta di partire se differiscono (`inconsistent_runs`, testato). Domanda 8 per i
+  relatori estesa con le tabelle del dry run e la nota sulle finestre (k=3: solo 32k sicura; k=2 a 16k: margine di
+  circa 1.700 token nel caso peggiore, bm25 11.192 + 3.509 = 14.701 su 16.384).
+- **Verifica dello stato dopo l'interruzione della sessione** (git status): mancavano solo i nuovi default di
+  `PromptSpec` e la voce 64 di questo file, rifatti; il resto del Passo 3a FASE 1 (template, prompt builder, voce 63)
+  e tutto il Passo 2 (commit 8db2c2c) erano presenti. `data/results/generation/stop1_db06/` (ignorata da git)
+  contiene i prompt d'esempio della FASE 1 nel formato PRECEDENTE (indentato, con `interactive`): non più
+  rappresentativi.
+- **Passo 3a chiuso.** Passo 3b bloccato sulle domande 8, 9, 11 e 14.
