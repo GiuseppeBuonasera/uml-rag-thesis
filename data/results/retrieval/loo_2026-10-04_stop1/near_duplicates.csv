@@ -1,0 +1,7 @@
+a,b,jaccard,tfidf,motivo
+HospitalHouseMD,TreatmentPlans,0.25,0.2297,Jaccard >= 0.25
+TransportCompany,RepairShops,0.25,0.2206,Jaccard >= 0.25
+ClothingCompany,SellingGoods,0.25,0.2148,Jaccard >= 0.25
+ProjectManagement,ResearchCenter,0.1538,0.2826,TF-IDF descrizioni >= 0.25
+TransportCompany,TruckLogistics,0.1111,0.3012,TF-IDF descrizioni >= 0.25
+GasStation_KUL,GasStation_TUW,0.0909,0.2284,stesso caso (nome)

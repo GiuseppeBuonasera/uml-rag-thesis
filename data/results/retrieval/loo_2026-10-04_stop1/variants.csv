@@ -1,0 +1,5 @@
+variante,n_query,bm25_j1,bm25_j3,random_j1_mean,random_j1_sd,random_j3_mean,random_j3_sd,oracolo_j1,oracolo_j3,spearman_rho,spearman_p
+base,59,0.0961,0.0671,0.013,0.0042,0.013,0.0019,0.1321,0.099,0.4338,0.0006
+senza quasi-duplicati 'stesso caso' come vicini,59,0.0952,0.067,0.013,0.0042,0.0131,0.0021,0.1306,0.0984,0.4533,0.0003
+senza tutte le coppie candidate come vicini,59,0.0714,0.0588,0.012,0.0033,0.0122,0.0023,0.1156,0.091,0.3308,0.0105
+senza EatAtHome (query e candidato),58,0.0917,0.0625,0.0127,0.0036,0.012,0.0017,0.1275,0.095,0.4671,0.0002

@@ -1,6 +1,6 @@
 # Classificazione delle etichette — associazione, ruolo o vincolo
 
-Generata da `corpus/_generate_label_classification.py` da tutte le 203 etichette non vuote (`: testo`) trovate nelle relazioni binarie dei 45 esercizi convertibili (44 originali + CourseManagement).
+Generata da `corpus/generate_label_classification.py` da tutte le 203 etichette non vuote (`: testo`) trovate nelle relazioni binarie dei 45 esercizi convertibili (44 originali + CourseManagement).
 
 Categorie: **associazione** (verbo/descrizione del legame, resta in `label`), **ruolo** (nome di come si chiama una classe in quella relazione, va in `sourceRole`/`targetRole` sull'estremo indicato — colonna "Lettura" per verificare l'estremo), **vincolo** (testo di vincolo UML su una generalizzazione, es. `{disjoint,complete}` — non e' un'etichetta di relazione: dal 2026-09-25 estratto automaticamente nel campo `constraints` di corpus.jsonl, mai lasciato nell'edge, vedi `corpus/apollon_convert.py::extract_generalization_constraints`), **qualificatore** (verosimilmente un qualifier UML che Apollon non supporta — resta in `label` per mancanza di un posto migliore), **ruolo_doppio** (caso unico, TileOGame: un'etichetta con DUE nomi di ruolo distinti, uno per estremo — espansa in due righe qui sotto), **dubbio** (nessuna classificazione proposta, in attesa dell'utente).
 

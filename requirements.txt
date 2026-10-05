@@ -1,5 +1,6 @@
 # Retrieval
-rank-bm25
+rank-bm25==0.2.2  # BM25Okapi (retrieval/keyword_retriever.py): versione fissata, score dipende dall'implementazione
+snowballstemmer==3.1.1  # stemming Snowball inglese (retrieval/text_preprocessing.py), Python puro, nessun download
 sentence-transformers
 faiss-cpu
 

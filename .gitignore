@@ -20,6 +20,12 @@ corpus/processed/*
 !corpus/processed/apollon_debari/
 data/results/*
 !data/results/.gitkeep
+# run del retrieval (Passo 2, 2026-10-04): si versionano config, sommario e CSV piccoli di ogni run; il resto no
+!data/results/retrieval/
+data/results/retrieval/*/*
+!data/results/retrieval/*/config.json
+!data/results/retrieval/*/summary.md
+!data/results/retrieval/*/*.csv
 
 # Notebook checkpoints
 .ipynb_checkpoints/

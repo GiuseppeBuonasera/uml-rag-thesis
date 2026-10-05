@@ -37,6 +37,13 @@ tesi, vedi `CLAUDE.md`):
   "Part 2 - 3" cita "Document"/"numberofpages"/"User" (= esercizio 3, "Word
   Processor").
 
+- `Exercises_solo_testo.pdf` (aggiunto il 2026-10-04, prima ignorato in `data/results/Exercises.pdf`) — 8
+  pagine, **solo il testo** delle 20 tracce, senza immagini, "Source:" né "Reference Solution". Confrontato con
+  le 20 `description.md` del test set (`corpus/raw/debari_test/`): **nessuna differenza testuale** (a meno di
+  spazi, a capo e marcatori di elenco; il PDF perde gli spazi a fine riga, quindi differenze di sola
+  spaziatura non sono rilevabili). Provenienza da verificare con i relatori: è forse il testo dato agli LLM
+  nello studio di De Bari et al.
+
 **Ruolo previsto**: **test set** — query di valutazione con una baseline di
 riferimento già esistente (i punteggi in `Analysis.xlsx`), non corpus few-shot per il
 retrieval. **Punto aperto, da discutere con i relatori**: se e come riusare questi 20
@@ -56,10 +63,11 @@ e `docs/decisions.md`.
   [10.6084/m9.figshare.29492624](https://doi.org/10.6084/m9.figshare.29492624) ("A
   comparison of different Large Language Models for the generation of UML class
   diagrams - Appendix"), che contiene esattamente questo file più `prompt.docx` e i
-  due `diagram (N).json` sotto `apollon_format_reference/legacy_v3/`, e uno
-  `Exercises.zip` con gli output di 4 LLM sugli stessi 15 esercizi.
+  due `diagram (N).json` (qui sotto, rinominati il 2026-10-04) e uno `Exercises.zip`
+  con gli output di 4 LLM sugli stessi 15 esercizi.
 
-  **Non usati al momento in nessuno script della pipeline.** Gli screenshot degli
+  **Uso**: i 15 esercizi sono stati tradotti e fanno parte del corpus di retrieval
+  (`corpus/raw/translated_it/`, vedi `docs/STATUS.md`). Gli screenshot degli
   output LLM (`es1`…`es15` × ChatGPT/DeepSeek/Gemini/Qwen, 60 file, ~19 MB) sono
   stati rimossi da questo repository perché reperibili integralmente nello stesso
   item figshare sopra (`Exercises.zip`, 17.1 MB) — non riscaricati/riverificati
@@ -69,6 +77,17 @@ e `docs/decisions.md`.
   scope se il progetto resta sui class diagram. Se in futuro servono come query di
   valutazione aggiuntive, vanno filtrati e va evitata la leakage col corpus di
   retrieval.
+- **Prompt v3 originale dello studio 2025 e i suoi due esempi** (spostati il 2026-10-04 da
+  `apollon_format_reference/legacy_v3/`, nomi originali dell'item figshare tra parentesi). Sono la
+  **fonte della baseline few-shot statica** `apollon_format_reference/prompt_template_v4.txt`, che ne è
+  l'adattamento ad Apollon v4. **Non è il prompt di De Bari et al.**, che generavano PlantUML con un prompt
+  diverso.
+  - `prompt_v3_originale.docx` (`prompt.docx`) — prompt per il formato Apollon v3 (`elements` /
+    `relationships` con `owner` / `bounds`, ereditarietà come associazione "is-a").
+  - `prompt_v3_esempio1_bank_loans.json` (`diagram (1).json`) — esempio 1 v3, "prestiti bancari": fonte di
+    `example_1_bank_loans_v4.json`.
+  - `prompt_v3_esempio2_orologio.json` (`diagram (2).json`) — esempio 2 v3, orologio digitale (diagramma a
+    stati, fuori scope): nella baseline v4 è sostituito da AirTravel.
 
 ### `apollon_format_reference/`
 Materiale che definisce il formato di output scelto (Apollon **v4**, vedi
@@ -79,7 +98,7 @@ Materiale che definisce il formato di output scelto (Apollon **v4**, vedi
   tipi di relazione nativi `ClassInheritance`/`ClassRealization`/ecc.), con due
   esempi few-shot completi.
 - `example_1_bank_loans_v4.json` — l'esempio "prestiti bancari" (stesso testo
-  dell'esempio 1 originale in `legacy_v3/`), ricostruito in v4 tramite le stesse
+  dell'esempio 1 originale, `studio2025_it/prompt_v3_esempio1_bank_loans.json`), ricostruito in v4 tramite le stesse
   funzioni di `corpus/apollon_convert.py` (non trascritto a mano).
 - `example_2_airtravel_v4.json` — **sostituisce l'esempio dell'orologio digitale**
   (diagramma a stati, fuori scope). È l'esercizio `AirTravel` del corpus
@@ -88,14 +107,9 @@ Materiale che definisce il formato di output scelto (Apollon **v4**, vedi
   dalle query di valutazione quando si usa questo prompt come baseline a few-shot
   statico, per evitare leakage (vedi `docs/decisions.md`, voce sul Blocco 4).
 
-**Versione precedente (v3) e materiale del secondo studio 2025, come riferimento
-storico** — in `legacy_v3/`:
-- `prompt.docx` — prompt originale per il formato v3 (`elements`/`relationships` con
-  `owner`/`bounds`, ereditarietà come associazione chiamata "is-a"). Fa parte dello
-  stesso item figshare del secondo studio 2025 (sopra), **non è il prompt di De
-  Bari**.
-- `diagram_example_1.json`, `diagram_example_2.json` — i due esempi originali in v3
-  (il secondo è l'orologio digitale/diagramma a stati).
+**Versione precedente (v3)**: il prompt v3 originale e i suoi due esempi sono in `studio2025_it/` (vedi
+sopra; prima del 2026-10-04 erano in `apollon_format_reference/legacy_v3/`). La baseline statica v4 deriva da
+quel prompt dello studio 2025, **non** da De Bari et al.
 
 **Non ancora fatto**: aprire `example_1_bank_loans_v4.json` e
 `example_2_airtravel_v4.json` nell'editor Apollon online per una verifica visiva del
@@ -107,7 +121,9 @@ verificato nei sorgenti e cosa no.
 
 Il target di generazione è **Apollon JSON v4** (modello `"4.2.0"`, pacchetto
 `@tumaet/apollon@5.3.0`), non PlantUML e non Apollon v3 (vedi `docs/decisions.md`,
-voci 2026-09-22 e 2026-09-23). I 44 diagrammi di riferimento in
+voci 2026-09-22 e 2026-09-23). Conteggi aggiornati al 2026-10-04: corpus di retrieval 59/60 diagrammi
+convertiti (45 originali + 15 tradotti), test set De Bari 20/20 (`processed/apollon_debari/`); il testo che
+segue descrive la prima versione (44 diagrammi originali). I diagrammi di riferimento in
 `corpus/raw/models_original/` che usano costrutti supportati sono convertiti in
 Apollon v4 JSON da
 [`corpus/apollon_convert.py`](../../corpus/apollon_convert.py). Un modello (`Cruise`)

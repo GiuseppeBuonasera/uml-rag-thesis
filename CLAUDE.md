@@ -28,6 +28,16 @@ zero-shot, specialmente per certe tipologie di esercizio.
    sintattiche, semantiche e pragmatiche.
 5. **Analisi** — quali tipologie di esercizio beneficiano di più dal retrieval.
 
+## Stato (aggiornato al 2026-10-05; dettagli in `docs/STATUS.md`)
+
+- **Passo 1 chiuso**: corpus di retrieval con 60 esercizi (45 originali + 15 tradotti dall'italiano), 59 convertiti in
+  Apollon v4; test set De Bari con 20 esercizi trascritti dalle immagini, tenuto fuori dal retrieval e congelato nel
+  tag `testset-v1`.
+- **Passo 2 chiuso** (BM25): configurazione congelata in `retrieval/config_bm25.yaml`, analizzata sul leave-one-out
+  del corpus e applicata una volta al test set; dense e hybrid ancora da fare.
+- **Prossimo passo**: 3a, infrastruttura di generazione senza chiamate LLM; 3b (esperimenti) bloccata in attesa
+  delle risposte dei relatori (domande 8, 9, 11 in `docs/STATUS.md`).
+
 ## Relatori e riferimento diretto
 
 - Paper precursore diretto: "Evaluating Large Language Models in Exercises of UML Class
@@ -47,20 +57,20 @@ UML.
 - Formato diagrammi generati: Apollon JSON v4 (`@tumaet/apollon@5.3.0`, modello
   `"4.2.0"`; schema in `evaluation/uml-model-4.schema.json`)
 - Struttura cartelle:
-  - `corpus/raw/` — dati grezzi (esercizi + diagrammi originali)
-  - `corpus/processed/` — dati puliti/indicizzati pronti per il retrieval
+  - `corpus/raw/` — dati grezzi (esercizi + diagrammi originali; `debari_test/` = test set)
+  - `corpus/processed/` — dati puliti/indicizzati (`corpus.jsonl` per il retrieval, `testset_debari.jsonl`)
+  - `corpus/` — script della pipeline e annotazioni (mappa in `corpus/README.md`)
   - `retrieval/` — implementazioni keyword / dense / hybrid retriever
   - `generation/` — prompt building e client verso l'LLM
   - `evaluation/` — metriche sintattiche, semantiche, pragmatiche
-  - `notebooks/` — esplorazione, analisi risultati, grafici
   - `data/results/` — output sperimentali (metriche, log run)
-  - `docs/` — note, bibliografia, struttura capitoli tesi
+  - `docs/` — note, decisioni, materiale di riferimento (`dati/`), archivio (`archivio/`)
 
 ## Note per l'agente
 
 - Leggere `docs/STATUS.md` a inizio sessione (stato, comandi, regole attive, prossimi passi).
 - Quando implementi un componente nuovo, aggiungi anche un test minimo o un piccolo
-  script di verifica in `notebooks/` o accanto al modulo.
+  script di verifica accanto al modulo (es. `retrieval/test_retrieval.py`).
 - Tieni traccia delle scelte di design importanti in questo file o in
   `docs/decisions.md`, non solo nei commit.
 - Non inventare dati sperimentali: se manca un dataset o un corpus reale, segnalarlo

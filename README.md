@@ -1,48 +1,37 @@
 # UML RAG Thesis
 
-Sistema di generazione di esercizi di modellazione UML basato su LLM con
-retrieval-augmented example selection (RAG per selezione dinamica di esempi few-shot).
+Generazione di diagrammi delle classi UML (formato **Apollon JSON v4**) con un LLM, in cui gli esempi few-shot del
+prompt sono **recuperati dinamicamente** (RAG: keyword, dense, hybrid) da un corpus di coppie
+(descrizione dell'esercizio, diagramma di riferimento), invece di essere esempi statici. La valutazione usa i 20
+esercizi di De Bari et al. come test set.
 
-Vedi [`CLAUDE.md`](./CLAUDE.md) per il contesto completo del progetto (obiettivo,
-fasi, relatori, convenzioni tecniche).
+- Contesto completo (obiettivo, ipotesi, fasi, riferimenti, convenzioni): [`CLAUDE.md`](./CLAUDE.md)
+- Stato attuale, comandi, regole e domande aperte: [`docs/STATUS.md`](./docs/STATUS.md)
+- Cronologia delle decisioni: [`docs/decisions.md`](./docs/decisions.md)
 
 ## Struttura
-
 ```
-corpus/
-  raw/            dati grezzi (esercizi + diagrammi di riferimento)
-  processed/      dati puliti e indicizzati
-retrieval/        retriever keyword / dense / hybrid
-generation/       prompt building + client LLM
-evaluation/       metriche sintattiche/semantiche/pragmatiche
-notebooks/        esplorazione e analisi risultati
-data/results/     output sperimentali
-docs/             note e bibliografia
+corpus/                 pipeline di costruzione del corpus e del test set (vedi corpus/README.md)
+  raw/                  sorgenti: models_original/ (45), translated_it/ (15, non versionata), debari_test/ (20)
+  processed/            corpus.jsonl, testset_debari.jsonl, apollon/, apollon_debari/
+  corrections/          correzioni di contenuto per esercizio
+  description_exclusions/
+retrieval/              Passo 2: BM25 congelato (config_bm25.yaml), baseline random, analisi e test;
+                        dense / hybrid ancora da implementare
+generation/             costruzione del prompt e client LLM (Passo 3a, da implementare)
+evaluation/             metriche (da implementare) + schema Apollon v4 (uml-model-4.schema.json)
+data/results/           output sperimentali (ignorati da git, tranne config/summary/CSV delle run in retrieval/)
+docs/
+  STATUS.md, decisions.md
+  dati/                 materiale di riferimento: debari/, studio2025_it/, apollon_format_reference/
+  archivio/             script e documenti conclusi, conservati per tracciabilità
 ```
 
 ## Setup
-
 ```bash
 python -m venv .venv
-source .venv/bin/activate   # su Windows: .venv\Scripts\activate
+source .venv/bin/activate      # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
-
-## Stato del progetto
-
-- [x] Costruzione corpus — prima versione: 45 esercizi (`corpus/raw/models_original/`),
-      indicizzati in `corpus/processed/corpus.jsonl`, 44/45 diagrammi convertiti in
-      **Apollon v4 JSON** (`corpus/apollon_convert.py`; `Cruise` escluso, costrutto
-      non supportato). Revisionato il 2026-09-23: due bug reali corretti nella
-      conversione (parsing attributi, molteplicità invertite), poi passaggio da
-      Apollon v3 a v4 (tipi di relazione nativi come `ClassInheritance`). Ogni
-      diagramma è verificato a 3 livelli (schema JSON ufficiale, integrità
-      referenziale, round-trip semantico col PlantUML originale), tutti a 0 errori.
-      Restano approssimazioni note e la verifica visiva nell'editor Apollon non è
-      ancora stata fatta — vedi `docs/decisions.md`
-- [ ] Retrieval keyword (BM25)
-- [ ] Retrieval dense
-- [ ] Retrieval hybrid
-- [ ] Integrazione LLM + prompt few-shot dinamico
-- [ ] Pipeline di valutazione
-- [ ] Analisi per tipologia di esercizio
+Il render dei PlantUML usa `.tools/plantuml-old.jar` (Java 8, non versionato). L'ordine dei comandi della pipeline
+è in [`corpus/README.md`](./corpus/README.md) e in `docs/STATUS.md`.

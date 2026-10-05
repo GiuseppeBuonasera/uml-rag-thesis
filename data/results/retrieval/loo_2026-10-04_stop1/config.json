@@ -1,0 +1,59 @@
+{
+  "commit": "c161bab3cd2be92ab94ae1ec22187ddd5404d6a7",
+  "working_tree_dirty": true,
+  "testset_tag": "testset-v1",
+  "testset_tag_commit": "eb4d28bebd417d661db642bae06d859963177815",
+  "testset_unchanged_since_tag": true,
+  "created_utc": "2026-10-04T09:45:45Z",
+  "python": "3.12.10",
+  "versions": {
+    "rank_bm25": "0.2.2 (pin in requirements.txt)",
+    "snowballstemmer": "3.1.1 (pin)",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.16.3",
+    "numpy": "2.2.6"
+  },
+  "params": {
+    "top_k": 3,
+    "random_seeds": 20,
+    "default": {
+      "stopwords": true,
+      "stem": true,
+      "k1": 1.5,
+      "b": 0.75
+    },
+    "proposta": {
+      "stopwords": true,
+      "stem": true,
+      "k1": 1.5,
+      "b": 0.75
+    },
+    "griglia": {
+      "stopwords": [
+        true,
+        false
+      ],
+      "stem": [
+        true,
+        false
+      ],
+      "k1": [
+        0.9,
+        1.2,
+        1.5,
+        2.0
+      ],
+      "b": [
+        0.5,
+        0.75,
+        0.9
+      ]
+    },
+    "near_dup_soglie": {
+      "jaccard": 0.25,
+      "tfidf": 0.25
+    },
+    "loo": "indice rifittato senza la query; exclude_ids solo per le varianti",
+    "pertinenza": "Jaccard dei nomi di nodo Apollon normalizzati (minuscole, alfanumerici)"
+  }
+}

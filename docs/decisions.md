@@ -4,6 +4,74 @@ Registro delle scelte tecniche importanti nel tempo, con motivazione.
 Aggiornare ogni volta che si prende una decisione rilevante (es. cambio di
 formato diagrammi, scelta del modello di embedding, metrica di valutazione).
 
+## Indice delle voci
+
+Generato il 2026-10-04 dai titoli delle voci (data + titolo, in ordine cronologico). Le voci sottostanti
+non sono state modificate.
+
+1. 2026-09-22 — Formato di output dei diagrammi: Apollon JSON (non PlantUML)
+2. 2026-09-22 — Riorganizzazione di docs/dati/
+3. 2026-09-22 — Convertitore PlantUML -> Apollon JSON per i 45 diagrammi di riferimento
+4. 2026-09-23 — Revisione del convertitore PlantUML -> Apollon: due bug corretti, round-trip aggiunto, materiale mal etichettato corretto
+5. 2026-09-23 — Passaggio da Apollon v3 a v4 come formato di output
+6. 2026-09-24 — Riorganizzazione docs/dati/: identificato lo studio di provenienza corretto per ciascun file
+7. 2026-09-24 — Blocco 2 — docs/dati/README.md riscritto per la nuova struttura
+8. 2026-09-24 — Blocco 3 — corretto il lato del rombo in aggregazione/composizione
+9. 2026-09-24 — Blocco 4 — leakage: AirTravel è sia esempio statico nel prompt sia esercizio del corpus
+10. 2026-09-25 — Traduzione dei 15 esercizi italiani di studio2025_it: avviata, pilota su CourseManagement
+11. 2026-09-25 — Render inglese, controllo JSON compilato, normalizzazione tipo bool
+12. 2026-09-25 — corpus/raw/models -> corpus/raw/models_original (rinomina osservata, non fatta da me)
+13. 2026-09-25 — FASE 1 — Normalizzazioni automatiche applicate a tutto il corpus
+14. 2026-09-25 — FASE 2 — Classificazione delle etichette (associazione vs ruolo): STOP 1
+15. 2026-09-25 — Risposte STOP 1: vincoli, qualificatori, responsibleFor, colonna "lettura"
+16. 2026-09-27 — Risoluzione dei 4 dubbi residui di label_classification.md
+17. 2026-09-28 — Revisione di roles_to_review.md e applicazione della classificazione al convertitore
+18. 2026-09-28 — FASE 3 STOP 2/STOP 3 — correzioni di contenuto applicate, meccanismo corpus/corrections/, FASE 4 (stile + diff report) e FASE 5 (leakage)
+19. 2026-09-29 — Nuova categoria "chiarimento di modellazione" + 3 nuovi tipi di correzione (change_edge_type, remove_label, set_role) — caso Boeing
+20. 2026-09-29 — 3 ulteriori chiarimenti di modellazione su AirTravel
+21. 2026-09-29 — BuildingManagement — diagramma incompleto rispetto a description.md, 5 chiarimenti di modellazione + nuovo tipo `add_line` + esclusione paragrafo di consegna dal testo indicizzato
+22. 2026-09-29 — Annullamento delle correzioni di BuildingManagement — fedeltà all'originale
+23. 2026-09-29 — Riclassificazioni: fine della categoria "qualificatore", auto-relazione Louvre "coach", rimozione del marcatore di verso di lettura PlantUML ('>'/'<')
+24. 2026-09-30 — Traduzione Gruppo A (es. 2-5): Hospital, ResearchCenter, MilanLibrary, Bookmaker
+25. 2026-09-30 — Gruppo A — esito revisione parziale
+26. 2026-09-30 — Gruppo A — chiusura
+27. 2026-09-30 — Riconciliazione conteggi label_classification (nessuna modifica ai dati)
+28. 2026-09-30 — Traduzione Gruppo B (es. 6-9): UniversityExams, Restaurant, ElevatorControl, RealEstateAgency
+29. 2026-09-30 — Gruppo B — chiusura
+30. 2026-10-01 — Gruppo B — correzioni dopo verifica visiva dell'autore + controllo nomi di ruolo
+31. 2026-10-01 — Regola: verbi vicino agli estremi = nome di associazione, non ruoli
+32. 2026-10-01 — Traduzione Gruppo C (es. 10-12): OilWells, RepairShops; es. 12 Palestra ESCLUSO
+33. 2026-10-01 — Gruppo C — decisioni; regole "sostantivo = ruolo" e "classe associativa senza nome"
+34. 2026-10-01 — Gruppo C chiuso (Gym approvato)
+35. 2026-10-01 — Gruppo D (es. 13-15) — trascrizione, in attesa di revisione
+36. 2026-10-01 — Gruppo D chiuso — decisioni utente; traduzione dei 15 esercizi italiani completata
+37. 2026-10-01 — EatAtHome — due alternative: confermato "lasciamo cosi'"
+38. 2026-10-01 — Note dei diagrammi negli altri 14 esercizi tradotti — solo verifica, nessuna modifica
+39. 2026-10-02 — Test set De Bari — FASE 1: split corpus / debari_test (refactoring senza cambi di comportamento)
+40. 2026-10-02 — Test set De Bari — FASE 2: estrazione (STOP A, in attesa di approvazione)
+41. 2026-10-02 — Test set De Bari — STOP A approvato; nuove regole e costrutti
+42. 2026-10-02 — Test set De Bari — FASE 4: corpus/check_debari.py
+43. 2026-10-02 — Test set De Bari — Gruppo DB-A (es. 1-5): trascrizione, in attesa di revisione (STOP)
+44. 2026-10-03 — Test set De Bari — Gruppo DB-A chiuso: decisioni utente e pipeline ufficiale
+45. 2026-10-03 — Test set De Bari — Gruppo DB-B (es. 6-10): trascrizione, in attesa di revisione (STOP)
+46. 2026-10-03 — Test set De Bari — Gruppo DB-B chiuso; eccezione "maiuscolo tipografico"
+47. 2026-10-03 — Test set De Bari — Gruppo DB-C (es. 11-15): trascrizione, in attesa di revisione (STOP)
+48. 2026-10-03 — Test set De Bari — Gruppo DB-C chiuso: decisioni utente e pipeline ufficiale
+49. 2026-10-03 — Test set De Bari — Gruppo DB-D (es. 16-20): trascrizione, in attesa di revisione (STOP)
+50. 2026-10-03 — Test set De Bari — Gruppo DB-D chiuso; trascrizione dei 20 esercizi completata
+51. 2026-10-03 — Test set De Bari — FASE 5: leakage (STOP B, in attesa di decisione)
+52. 2026-10-04 — Test set De Bari — STOP B: es. 6 Flights resta nel test set e nel retrieval (opzione a)
+53. 2026-10-04 — Test set De Bari — FASE 6: chiusura
+54. 2026-10-04 — Tag `testset-v1`: test set De Bari congelato
+55. 2026-10-04 — Riordino del repository prima del Passo 2; provenienza della baseline statica
+56. 2026-10-04 — Il commit c161bab non è una versione testset-v2
+57. 2026-10-04 — Passo 2 — FASE 1: retriever BM25, baseline random, test
+58. 2026-10-04 — Passo 2 — FASE 2: analisi leave-one-out sul corpus (STOP 1, configurazione NON ancora congelata)
+59. 2026-10-04 — Passo 2 — STOP 1 approvato: configurazione BM25 congelata, fasce di score_norm, .gitignore
+60. 2026-10-04 — Passo 2 — FASE 3: BM25 congelato sul test set (STOP 2)
+61. 2026-10-05 — Passo 2 — hubness del retrieval (solo descrittivo)
+62. 2026-10-05 — Passo 2 chiuso; Passo 3 diviso in 3a (infrastruttura) e 3b (esperimenti, bloccata)
+
 ## Formato
 
 ### [Data] Titolo della decisione
@@ -1910,3 +1978,134 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - Da qui vale la regola di versionamento registrata in `docs/STATUS.md` (Regole attive, "Solo test set De Bari"):
   ogni modifica successiva al ground truth richiede un commit dedicato, una voce in questo file e un nuovo tag
   (`testset-v2`, …); ogni run sperimentale salva nel proprio config il commit e il tag del test set usato.
+
+### [2026-10-04] Riordino del repository prima del Passo 2; provenienza della baseline statica
+- **Mappa vecchio percorso → nuovo percorso** (spostamenti con `git mv`, la storia è conservata; le citazioni nelle
+  voci precedenti di questo file restano quelle storiche):
+  - `corpus/_generate_label_classification.py` → `corpus/generate_label_classification.py` (passo permanente della
+    pipeline: il prefisso `_` lo faceva sembrare uno script una tantum)
+  - `corpus/_generate_roles_to_review.py` → `docs/archivio/_generate_roles_to_review.py` (non più eseguibile da lì)
+  - `corpus/roles_to_review.md` → `docs/archivio/roles_to_review.md`
+  - `docs/dati/apollon_format_reference/legacy_v3/prompt.docx` → `docs/dati/studio2025_it/prompt_v3_originale.docx`
+  - `docs/dati/apollon_format_reference/legacy_v3/diagram_example_1.json` →
+    `docs/dati/studio2025_it/prompt_v3_esempio1_bank_loans.json`
+  - `docs/dati/apollon_format_reference/legacy_v3/diagram_example_2.json` →
+    `docs/dati/studio2025_it/prompt_v3_esempio2_orologio.json`
+  - `data/results/Exercises.pdf` (ignorato) → `docs/dati/debari/Exercises_solo_testo.pdf` (tracciato)
+- **Eliminati**: `_debari_descs_cache.json` (tracciato, 0 byte, nessun uso); `data/results/Analysis.xlsx` (ignorato,
+  copia identica, stesso sha256, di `docs/dati/debari/Analysis.xlsx`).
+- **Nessuno spostamento dentro `corpus/`** (decisione utente): 19 note di trascrizione in `corpus/raw/` (congelate; il
+  test set in `testset-v1`) citano i percorsi attuali di `corrections/`, `description_exclusions/`, `ambiguities.yaml`,
+  `check_debari_report.md`, `apollon_limitations.md` e `diff_report.md`. Al posto della riorganizzazione:
+  `corpus/README.md` con la tabella file → ruolo e l'ordine dei comandi. I test restano accanto al modulo; quelli del
+  Passo 2 andranno in `retrieval/test_retrieval.py`.
+- **Correzione importante**: la baseline few-shot statica (`prompt_template_v4.txt`) deriva dal **prompt v3 dello
+  studio 2025** (Garaccione et al., item figshare 10.6084/m9.figshare.29492624; autore nei metadati del .docx:
+  Giacomo Garaccione), adattato ad Apollon v4 con l'esempio dell'orologio (diagramma a stati) sostituito da
+  AirTravel. **Non deriva da De Bari et al.**, che generavano PlantUML con un prompt diverso. Nei documenti
+  correnti l'unica frase che la attribuiva a De Bari era la domanda 9 per i relatori in STATUS.md, ora
+  riformulata; le voci storiche di questo file non sono state riscritte.
+- **`Exercises_solo_testo.pdf`**: confrontato con le 20 `description.md` del test set senza modificarle: nessuna
+  differenza testuale (a meno di spazi, a capo e marcatori di elenco; le differenze di sola spaziatura non sono
+  rilevabili, perché il PDF perde gli spazi a fine riga). Quindi non serve `testset-v2`. Provenienza aggiunta alle
+  domande per i relatori.
+- **Verifica**: pipeline completa su entrambi gli split; gli 81 output (`corpus.jsonl`, `testset_debari.jsonl`, 59 +
+  20 JSON Apollon) sono byte-identici agli sha256 salvati prima del riordino. Test, check_translated, check_debari e
+  leakage invariati. Report rigenerati identici, tranne la riga di `label_classification.md` che cita il nome del
+  generatore.
+
+### [2026-10-04] Il commit c161bab non è una versione testset-v2
+- Il commit `c161bab` ("testset-v2 in formato .json") contiene solo documentazione e NON costituisce una versione
+  `testset-v2` del ground truth: il test set resta `testset-v1` (tag su `eb4d28b`, pubblicato).
+
+### [2026-10-04] Passo 2 — FASE 1: retriever BM25, baseline random, test
+- Nuovi moduli in `retrieval/` (gli stub `dense_retriever.py` e `hybrid_retriever.py` restano invariati):
+  `base.py` (interfaccia `Retriever.fit / retrieve(query_text, k, exclude_ids)` → `RetrievalResult(id, rank, score,
+  score_norm)`, ordinamento per punteggio decrescente con tie-break per id), `corpus_loader.py` (SOLA LETTURA: candidati =
+  i 59 record convertiti di corpus.jsonl, query = i 20 del test set; hard-fail se un record del test set è tra i
+  candidati; Jaccard dei nomi di classe normalizzati per l'analisi), `text_preprocessing.py` (minuscole, token
+  `[^\W_]+`, stopword da lista FISSA `retrieval/stopwords_en.txt` = le 318 di scikit-learn 1.8.0 copiate nel repo,
+  stemming Snowball inglese), `keyword_retriever.py` (riscritto: BM25Okapi di rank_bm25, k1 / b configurabili),
+  `random_retriever.py` (seed + sha256 della query, riproducibile), `test_retrieval.py` (script, accanto al modulo).
+- **score_norm** = score / punteggio BM25 della query contro sé stessa trattata come documento, con la stessa formula e
+  le statistiche del corpus (IDF, avgdl), quindi definito anche per query fuori indice; non limitato a 1; 0 se la
+  query non ha termini noti. Verificato a mano su un esempio (0.775).
+- **Indicizzato solo `description`**; il diagramma non entra mai nel ranking (solo in analisi).
+- Dipendenze fissate: `rank-bm25==0.2.2`, `snowballstemmer==3.1.1` (Python puro, nessun download; NLTK scartato perché
+  scarica risorse a runtime).
+- Test (tutti verdi): loader e hard-fail di disgiunzione, tokenizzazione, determinismo (anche invertendo l'ordine dei
+  record), exclude_ids, tie-break, ognuno dei 59 candidati recupera sé stesso al rank 1, nessun id del test set mai
+  restituito (BM25 e random, k = tutti), random riproducibile, score_norm a mano, nessuna scrittura in `corpus/` (sha256
+  di 715 file prima e dopo).
+
+### [2026-10-04] Passo 2 — FASE 2: analisi leave-one-out sul corpus (STOP 1, configurazione NON ancora congelata)
+- `retrieval/analyze_retrieval.py` → `data/results/retrieval/<run_id>/` (config.json con commit, stato del working tree,
+  tag del test set e verifica che il test set sia invariato dal tag; summary.md; sensitivity.csv; variants.csv;
+  near_duplicates.csv; loo_top3.csv). Run `loo_2026-10-04_stop1` (commit c161bab, working tree modificato).
+- **Metodo LOO**: per ogni candidato l'indice è rifittato sugli altri 58 (la query non entra in IDF / avgdl, come le query
+  del test set); `exclude_ids` serve solo alle varianti. Pertinenza proxy: Jaccard dei nomi dei nodi Apollon
+  normalizzati, solo in analisi. Il test set non viene letto (solo controllo di disgiunzione).
+- **Risultati** (default: stopword sì, stemming sì, k1 = 1.5, b = 0.75): J@1 0.096 e J@3 0.067 contro random 0.013 ± 0.004
+  e 0.013 ± 0.002 (20 seed) e oracolo 0.132 e 0.099; Spearman tra score_norm e Jaccard del top-1 ρ = 0.43 (p = 0.001).
+  I Jaccard assoluti sono bassi perché il corpus è eterogeneo: il massimo Jaccard tra due candidati qualsiasi è 0.25.
+- **Sensibilità** (48 configurazioni, differenze appaiate con il default, criterio ±2 errori standard): nessuna
+  configurazione è significativamente migliore del default (al massimo Δ J@1 +0.002); togliere le stopword e/o lo
+  stemming peggiora in modo significativo in 29 configurazioni su 36. Proposta: congelare il default.
+- **Quasi-duplicati** (solo elenco, la politica è la domanda 10): GasStation_KUL/TUW (stesso caso per nome; Jaccard
+  0.09, TF-IDF 0.23) più le coppie in cima alle due distribuzioni (Jaccard ≥ 0.25: HospitalHouseMD/TreatmentPlans,
+  TransportCompany/RepairShops, ClothingCompany/SellingGoods; TF-IDF ≥ 0.25: ProjectManagement/ResearchCenter,
+  TransportCompany/TruckLogistics). Escludendo GasStation come vicini: J@1 0.095; escludendo tutte le coppie: 0.071
+  (calo in parte circolare: le coppie sono scelte proprio per Jaccard alto). Senza EatAtHome (query e candidato): J@1
+  0.092, J@3 0.062.
+
+### [2026-10-04] Passo 2 — STOP 1 approvato: configurazione BM25 congelata, fasce di score_norm, .gitignore
+- **Configurazione congelata** in `retrieval/config_bm25.yaml`: stopword sì (lista fissa), stemming sì
+  (snowballstemmer, Porter2), k1 = 1.5, b = 0.75 (epsilon 0.25 di default), con commit `c161bab` (working tree
+  modificato), tag `testset-v1` (`eb4d28b`) e sha256 della lista di stopword. **Motivazione**: valori standard (default di
+  rank_bm25); nessuna delle 48 varianti è significativamente migliore (differenze appaiate entro 2 errori standard); il
+  preprocessing completo è significativamente migliore delle varianti ridotte (29 configurazioni su 36). Scelta solo sul
+  LOO del corpus.
+- **Fasce di score_norm del top-1 per la tassonomia** (domanda 12), fissate PRIMA di guardare il test set e scritte nella
+  stessa config: terzili della distribuzione LOO (59 valori, ricalcolati sui valori non arrotondati, numpy.percentile
+  lineare). Cut-off **0.28929044** (basso | medio) e **0.34729671** (medio | alto); intervalli basso < c1 ≤ medio < c2 ≤
+  alto; nel LOO 20 / 19 / 20. Non si cambiano dopo la FASE 3.
+- **.gitignore**: di `data/results/retrieval/<run>/` si versionano `config.json`, `summary.md` e `*.csv`; il resto no
+  (verificato con `git check-ignore`).
+- **Quasi-duplicati**: nessun quasi-duplicato di contenuto; proposta per i relatori di tenere tutti i candidati (domanda
+  10 aggiornata in STATUS.md).
+- **Requisito della valutazione** (STATUS.md): il Jaccard sui nomi di classe esatti è un proxy lessicale che favorisce
+  BM25; per il confronto con il dense servirà anche una misura non basata sui nomi esatti.
+
+### [2026-10-04] Passo 2 — FASE 3: BM25 congelato sul test set (STOP 2)
+- `retrieval/run_testset.py`: legge SOLO la configurazione congelata; hard-fail se la config non è `frozen`, se le
+  stopword non hanno lo sha256 congelato, se il test set è cambiato rispetto a `testset-v1`, o se la cartella di output
+  esiste già (il test set si guarda una volta sola). Run `testset_2026-10-04_stop2`, eseguita una volta, senza modifiche
+  alla configurazione dopo i risultati. Test `check_frozen_config_and_bands`.
+- **Risultati** (Jaccard con il ground truth solo descrittivo): 20 esercizi J@1 0.113 e J@3 0.077 contro random 0.015 ±
+  0.009 e 0.014 ± 0.005 (20 seed) e oracolo 0.148 e 0.105; Spearman tra score_norm e Jaccard del top-1 ρ = 0.49 (p =
+  0.027). Senza l'es. 6: J@1 0.107, J@3 0.076, ρ = 0.42 (p = 0.076).
+- **Distribuzioni simili al LOO**: score_norm del top-1 con mediana 0.319 contro 0.311, Jaccard del top-1 con mediana
+  0.077 contro 0.071. Fasce sul test set: basso 5 (es. 3, 8, 14, 15, 17: "senza analogo"), medio 8, alto 7; nel LOO 20 /
+  19 / 20.
+- Es. 6 Flights (known_issues): top-1 AirTravel con score_norm 0.643 (il più alto del test set) e Jaccard 0.235, pari
+  all'oracolo. Es. 2 Hollywood → FilmSet (score_norm 0.322, stesso dominio) ma Jaccard 0: esempio concreto del limite
+  lessicale del proxy.
+
+### [2026-10-05] Passo 2 — hubness del retrieval (solo descrittivo)
+- `retrieval/hubness_report.py` legge solo i CSV delle due run (`loo_2026-10-04_stop1/loo_top3.csv`,
+  `testset_2026-10-04_stop2/testset_top3.csv`), senza rifare il retrieval né toccare la configurazione congelata; scrive
+  `hubness.csv` e la sezione "Hubness" del `summary.md` della run del test set.
+- **Esito: nessun hub marcato.** Candidati distinti al rank 1: 39 su 59 nel LOO, 17 sulle 20 query del test set;
+  massimo al rank 1: 4 volte nel LOO (Facepage), 3 sul test set (ClothingCompany, per Furniture, Factory e Online
+  Shopping). Nei top-3 il massimo è 9 nel LOO (University; atteso uniforme 3.0) e 5 sul test set (SellingGoods; atteso
+  1.0). Candidati mai nei top-3: 5 nel LOO, 26 sul test set. ClothingCompany e SellingGoods, entrambi di vendita
+  generica, sono i vicini ricorrenti degli esercizi De Bari di tipo commerciale.
+
+### [2026-10-05] Passo 2 chiuso; Passo 3 diviso in 3a (infrastruttura) e 3b (esperimenti, bloccata)
+- STOP 2 approvato. In STATUS.md: stato, comandi del retrieval in ordine, contatori del retrieval (LOO, test set, test set
+  senza es. 6), requisiti della valutazione (fasce del test set piccole, 5 / 8 / 7, quindi analisi per fascia
+  principalmente descrittiva; correlazione senza l'es. 6 con n = 19 a bassa potenza statistica).
+- **Prossimo passo, 3. pipeline di generazione**: **3a** infrastruttura senza chiamate LLM (prompt builder con
+  condizioni zero-shot / statico / retrieval, client con cache su disco, post-processing con validazione riusando
+  `apollon_convert` in sola lettura); **3b** esecuzione degli esperimenti, BLOCCATA finché i relatori non rispondono
+  alle domande 8 (LLM e parametri), 9 (baseline statica) e 11 (metriche). Dense e hybrid restano stub.

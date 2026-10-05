@@ -1,9 +1,9 @@
 """
-Script una tantum per generare corpus/label_classification.md (FASE 2, 2026-09-25).
-Non fa parte della pipeline permanente (non e' referenziato da altri moduli): la
-classificazione va poi congelata in corpus/label_classification.json dopo la
-conferma dell'utente, e quel file, non questo script, sara' letto dal convertitore
-per instradare le etichette "ruolo".
+Genera corpus/label_classification.md e corpus/label_classification.json (nato come script
+una tantum nella FASE 2, 2026-09-25; dal test set De Bari e' un passo permanente della
+pipeline e legge entrambi gli split; rinominato da _generate_label_classification.py il
+2026-10-04). Le voci di CLASSIFICATION si aggiungono solo dopo la conferma dell'utente; il
+convertitore legge il json, non questo script.
 
 Ogni riga: (esercizio, relazione, testo_etichetta, classificazione, estremo
 proposto, lettura, motivazione). classificazione in {associazione, ruolo, vincolo,
@@ -585,7 +585,7 @@ def main() -> None:
     md_lines = [
         "# Classificazione delle etichette — associazione, ruolo o vincolo",
         "",
-        f"Generata da `corpus/_generate_label_classification.py` da tutte le "
+        f"Generata da `corpus/generate_label_classification.py` da tutte le "
         f"{len(rows)} etichette non vuote (`: testo`) trovate nelle relazioni binarie "
         "dei 45 esercizi convertibili (44 originali + CourseManagement).",
         "",

@@ -674,7 +674,7 @@ def load_label_classification() -> dict[tuple[str, str, str, str, str], dict]:
         if not LABEL_CLASSIFICATION_PATH.exists():
             raise SystemExit(
                 f"{LABEL_CLASSIFICATION_PATH} non trovato: esegui prima "
-                "corpus/_generate_label_classification.py"
+                "corpus/generate_label_classification.py"
             )
         entries = json.loads(LABEL_CLASSIFICATION_PATH.read_text(encoding="utf-8"))
         _LABEL_CLASSIFICATION_CACHE = {
@@ -705,7 +705,7 @@ def apply_label_classification(
     Ritorna la lista delle chiavi (esercizio, source, op, target, label) non
     presenti in classification: il chiamante decide come fallire (l'assenza di
     classificazione per un'etichetta reale non e' un warning recuperabile, e' un
-    errore di dati da correggere in corpus/_generate_label_classification.py)."""
+    errore di dati da correggere in corpus/generate_label_classification.py)."""
     missing: list[tuple[str, str, str, str, str]] = []
     for r in relationships:
         if r["kind"] != "binary" or not r["label"]:
