@@ -75,6 +75,8 @@ non sono state modificate.
 64. 2026-10-05 — Passo 3a — STOP 1 approvato: differenze dal template v4, formato dei prompt
 65. 2026-10-05 — Passo 3a — FASI 2 e 3: client LM Studio, post-processing L0-L4, runner (STOP 2, in attesa di approvazione)
 66. 2026-10-05 — Passo 3a — STOP 2 approvato e chiusura: riscritture L4, diagnostici separati, verifica del seed, contesto e max_tokens identici per modello
+67. 2026-10-06 — Vocabolario cl100k_base versionato: stima dei token senza download
+68. 2026-10-06 — Censimento degli sha256 su file e regole `-text` in .gitattributes
 
 ## Formato
 
@@ -2249,3 +2251,60 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   contiene i prompt d'esempio della FASE 1 nel formato PRECEDENTE (indentato, con `interactive`): non più
   rappresentativi.
 - **Passo 3a chiuso.** Passo 3b bloccato sulle domande 8, 9, 11 e 14.
+
+### [2026-10-06] Vocabolario cl100k_base versionato: stima dei token senza download
+- Contesto: su un clone pulito `tiktoken.get_encoding("cl100k_base")` scarica il vocabolario da
+  openaipublic.blob.core.windows.net al primo uso; offline o con il download bloccato `run_experiment.py` e
+  `test_generation.py` fallivano (HTTPError 403 nell'ambiente dell'utente). Stessa regola delle stopword: niente
+  download a runtime.
+- `generation/tokenizer/cl100k_base.tiktoken` (1.681.126 byte, copia del file ufficiale già in cache in questa
+  macchina) con `cl100k_base.tiktoken.sha256` = `223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7`,
+  uguale all'`expected_hash` di tiktoken 0.14.0 (`tiktoken_ext/openai_public.py`).
+- `generation/token_estimate.py` costruisce l'Encoding esplicitamente (`tiktoken.Encoding` con il vocabolario dal
+  file, `pat_str` e token speciali copiati da tiktoken 0.14.0) e verifica lo sha256 a ogni caricamento: se non
+  coincide, errore. Scelto al posto di `TIKTOKEN_CACHE_DIR` perché non dipende dal nome di cache interno di tiktoken
+  (sha1 dell'URL) né da variabili d'ambiente. `count_tokens` usa `disallowed_special=()`: un eventuale
+  "<|endoftext|>" nel testo si conta come testo invece di dare errore (nessun effetto sui prompt attuali).
+  `run_experiment.py` usa questo modulo e registra in `config.json` il percorso e lo sha256 del vocabolario.
+- `.gitattributes` (nuovo): `generation/tokenizer/* -text`. Con `core.autocrlf=true` un checkout Windows
+  convertirebbe gli a capo e lo sha256 non coinciderebbe; verificato su un clone usa e getta nello scratchpad (il file
+  resta LF e lo sha256 coincide).
+- Test (`check_tokenizer_offline` in `generation/test_generation.py`): connessioni di rete rifiutate e
+  `TIKTOKEN_CACHE_DIR` vuota; verifica gli id di "hello world" ([15339, 1917]), che le istruzioni v4 contino 1.708
+  token come riportato, che la cache resti vuota e che un vocabolario con a capo CRLF sia rifiutato.
+- Conteggi invariati: la dry run rifatta con la rete bloccata produce `dry_run.csv` (220 righe) e `summary.md`
+  identici byte per byte a quelli del 2026-10-05; le tabelle della domanda 8 restano valide.
+- Trovato nel verificare: lo stesso problema di a capo riguarda `retrieval/stopwords_en.txt` (sha256 nella config
+  congelata): su un clone Windows pulito non coincide. Risolto nella voce 68.
+- `generation/tokenizer/README.md`: fonte, versione di tiktoken, sha256, licenza, motivo della presenza nel repo.
+
+### [2026-10-06] Censimento degli sha256 su file e regole `-text` in .gitattributes
+- Contesto: su un clone Windows pulito (`core.autocrlf=true`) `retrieval/stopwords_en.txt` usciva con CRLF, lo sha256
+  diventava `eb190297…` invece di `5be3f507…` e `run_testset.py` rifiutava la configurazione congelata ("lista di
+  stopword diversa da quella congelata"). Approvato: `retrieval/stopwords_en.txt -text`, più un censimento di tutti
+  gli sha256 calcolati su file.
+- **Censimento** (ricerca di sha256 / hashlib in tutto il repository):
+
+  | file | dove è registrato lo sha256 | regola `-text` | verificato su clone CRLF |
+  |---|---|---|---|
+  | `retrieval/stopwords_en.txt` | `retrieval/config_bm25.yaml` (`stopwords_sha256`), riverificato da `run_testset.load_frozen_config` (anche in `test_retrieval.py`) | sì | sì |
+  | `generation/tokenizer/cl100k_base.tiktoken` | `generation/tokenizer/cl100k_base.tiktoken.sha256`, riverificato da `generation/token_estimate.py` | sì (cartella) | sì |
+  | `generation/tokenizer/cl100k_base.tiktoken.sha256` | è il file che contiene l'hash; letto con split, robusto agli a capo, ma `sha256sum -c` richiede LF | sì (cartella) | sì |
+  | `retrieval/config_bm25.yaml` | `config.json` delle run di generazione (`provenance.config_bm25_sha256`, `run_experiment.py`); registrato come provenienza, non riverificato | sì | sì (sha256 `d6dfa722…` uguale al checkout attuale) |
+
+  Hash che NON richiedono la regola:
+  - stesso checkout, prima/dopo: `snapshot_corpus()` in `retrieval/test_retrieval.py` e `generation/test_generation.py`
+    ("nessuna scrittura in corpus/"); la baseline degli 81 output del Passo 1 (`baseline_riordino.sha256`, solo
+    nello scratchpad di sessione, fuori dal repository) è anch'essa un confronto sullo stesso checkout;
+  - hash di contenuti in memoria, non di file: `prompt_sha256` nel manifest e chiave della cache
+    (`llm_client.cache_key`, sui messaggi), ordine di `retrieval/random_retriever.py` (seed + testo della query); i
+    template e le descrizioni si leggono con `read_text`, che normalizza gli a capo;
+  - controllo del test set contro il tag `testset-v1` in `run_testset.py`: usa `git diff`, che tiene conto della
+    conversione degli a capo (oggi `corpus.jsonl` è CRLF nel checkout e il controllo passa);
+  - `data/results/retrieval/*/config.json`: nessuno sha256 registrato.
+- Verifica: clone di appoggio con `core.autocrlf=false` (indice LF come il repository) in cui sono committate SOLO lì
+  le modifiche di lavoro, poi clone con `core.autocrlf=true`: i quattro file sopra escono LF, `sha256sum -c` OK,
+  `run_testset.load_frozen_config()` accetta la configurazione, `token_estimate` carica il vocabolario,
+  `test_retrieval.py` e `test_generation.py` passano. Il repository vero non è stato toccato (nessun commit).
+- Nota: `.gitattributes` vale per i checkout successivi; un clone esistente con i file già in CRLF va ricreato o
+  riallineato (STATUS.md, regole della generazione). Il checkout attuale dell'utente ha i quattro file già LF.

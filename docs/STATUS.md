@@ -187,6 +187,12 @@ python experiments/smoke_lmstudio.py --list-models   # MANUALE, con LM Studio ap
   condizioni differiscono solo nel blocco esempi. Output strutturato (`response_format`) DISATTIVATO.
 - Riscritture prima di style_check: solo l'elenco chiuso `L4_REWRITES`; qualunque altra va decisa.
 - Nessuna chiamata a un LLM reale nei test automatici; nessuna run sul test set finché il Passo 3b è bloccato.
+- **Niente download a runtime** (come per le stopword): la stima dei token usa il vocabolario cl100k_base versionato
+  in `generation/tokenizer/` (sha256 verificato al caricamento, `generation/token_estimate.py`), mai
+  `tiktoken.get_encoding`. Ogni file di testo il cui sha256 sui byte è registrato va protetto in `.gitattributes`
+  (`-text`); censimento in `docs/decisions.md`, voce 68. Un clone creato PRIMA di `.gitattributes` va ricreato (o
+  riallineato con `git rm --cached -r . && git reset --hard`, a lavoro committato) perché i file già in CRLF non si
+  correggono da soli.
 ### Solo test set De Bari
 - **Versionamento del ground truth**: il test set è congelato nel tag annotato `testset-v1` (commit `eb4d28b`,
   2026-10-04). Qualsiasi modifica successiva al ground truth (`corpus/raw/debari_test/`, correzioni `DB*`, regole che

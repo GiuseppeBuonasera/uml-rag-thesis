@@ -7,7 +7,8 @@ faiss-cpu
 # LLM / API
 anthropic
 openai
-tiktoken==0.14.0  # stima dei token dei prompt (cl100k_base, approssimazione); scarica la codifica al primo uso
+tiktoken==0.14.0  # stima dei token dei prompt (cl100k_base, approssimazione); vocabolario versionato in
+                  # generation/tokenizer/ e caricato da generation/token_estimate.py: nessun download a runtime
 
 # Data handling
 pandas

@@ -1,0 +1,6 @@
+# File il cui sha256 sui BYTE e' registrato e poi riverificato (o registrato come provenienza delle run): mai
+# convertire gli a capo (core.autocrlf), altrimenti su un clone Windows lo sha256 cambia. Censimento in
+# docs/decisions.md, voci 67-68.
+generation/tokenizer/* -text
+retrieval/stopwords_en.txt -text
+retrieval/config_bm25.yaml -text

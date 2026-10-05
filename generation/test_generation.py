@@ -10,7 +10,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import shutil
+import socket
 import sys
 import tempfile
 import threading
@@ -24,6 +26,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT / "experiments"))
 import postprocess as pp  # noqa: E402
 import run_experiment as rx  # noqa: E402
+import token_estimate  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient, cache_key  # noqa: E402
 from prompt_builder import V4_TEMPLATE, PromptBuilder, PromptSpec, cl  # noqa: E402
 
@@ -284,6 +287,48 @@ def check_levels() -> None:
 # --- runner ---------------------------------------------------------------------------------------------------------
 
 
+def check_tokenizer_offline(tmp: Path) -> None:
+    """Stima dei token con la rete DISATTIVATA (connessioni socket rifiutate) e la cache di tiktoken vuota: il
+    vocabolario si carica da generation/tokenizer/ senza download. Sha256 alterato -> errore."""
+    def no_network(*a, **k):
+        raise OSError("rete disattivata dal test")
+
+    saved = (socket.socket.connect, socket.create_connection, os.environ.get("TIKTOKEN_CACHE_DIR"))
+    empty_cache = tmp / "tiktoken_cache"
+    empty_cache.mkdir()
+    socket.socket.connect, socket.create_connection = no_network, no_network
+    os.environ["TIKTOKEN_CACHE_DIR"] = str(empty_cache)
+    try:
+        try:
+            socket.create_connection(("openaipublic.blob.core.windows.net", 443))
+            raise AssertionError("rete non disattivata")
+        except OSError:
+            pass
+        token_estimate.encoding.cache_clear()
+        enc = token_estimate.encoding()
+        assert enc.encode("hello world") == [15339, 1917]  # id cl100k_base noti
+        assert token_estimate.count_tokens("hello world") == 2
+        instructions = (HERE / "templates" / "v4_instructions.txt").read_text(encoding="utf-8")
+        assert rx.token_counter()(instructions) == 1708, "conteggio delle istruzioni v4 diverso da quello riportato"
+        assert token_estimate.count_tokens("<|endoftext|>") > 1  # testo normale, nessun errore
+        assert not any(empty_cache.iterdir()), "tiktoken ha scritto nella cache (download?)"
+    finally:
+        socket.socket.connect, socket.create_connection = saved[0], saved[1]
+        if saved[2] is None:
+            os.environ.pop("TIKTOKEN_CACHE_DIR", None)
+        else:
+            os.environ["TIKTOKEN_CACHE_DIR"] = saved[2]
+    bad = tmp / "cl100k_crlf.tiktoken"
+    bad.write_bytes(token_estimate.VOCAB_PATH.read_bytes().replace(b"\n", b"\r\n"))  # come dopo un checkout CRLF
+    try:
+        token_estimate.load_ranks(bad)
+        raise AssertionError("vocabolario alterato non rifiutato")
+    except ValueError as e:
+        assert "sha256" in str(e)
+    print("  OK  stima dei token senza rete e con cache tiktoken vuota (vocabolario versionato, sha256 verificato; "
+          "istruzioni v4 = 1708 token come riportato); vocabolario alterato rifiutato")
+
+
 def check_runner(tmp: Path, base_url: str) -> None:
     cfg_path = tmp / "cfg.yaml"
     cfg = {"run_id": "t1", "split": "testset", "query_ids": ["DB06_Flights"], "conditions": ["zero_shot", "bm25"],
@@ -352,6 +397,7 @@ def main() -> None:
         base = check_lmstudio_client()
         check_extraction()
         check_levels()
+        check_tokenizer_offline(tmp)
         check_runner(tmp, base)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

@@ -47,6 +47,7 @@ sys.path.insert(0, str(ROOT / "generation"))
 import postprocess as pp  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient  # noqa: E402
 from prompt_builder import BM25_CONFIG, CONDITIONS, PromptBuilder, PromptSpec, cl, serialize_diagram  # noqa: E402
+import token_estimate  # noqa: E402
 
 RESULTS = ROOT / "data" / "results" / "generation"
 TOKENIZER = "cl100k_base"
@@ -58,10 +59,10 @@ PLACEHOLDERS = {"", "TODO", "todo", "?", None}
 
 
 def token_counter():
-    """Stima dei token con tiktoken cl100k_base: APPROSSIMAZIONE (i modelli locali hanno tokenizer propri)."""
-    import tiktoken
-    enc = tiktoken.get_encoding(TOKENIZER)
-    return lambda s: len(enc.encode(s))
+    """Stima dei token con tiktoken cl100k_base dal vocabolario versionato in generation/tokenizer/ (nessun download):
+    APPROSSIMAZIONE, i modelli locali hanno tokenizer propri."""
+    token_estimate.encoding()  # verifica subito lo sha256 del vocabolario
+    return token_estimate.count_tokens
 
 
 def git(*args: str) -> str:
@@ -79,6 +80,8 @@ def provenance() -> dict:
             "config_bm25_sha256": hashlib.sha256(BM25_CONFIG.read_bytes()).hexdigest(),
             "python": platform.python_version(), "tiktoken": tiktoken.__version__,
             "token_estimate": f"tiktoken {TOKENIZER} (approssimazione)",
+            "token_vocab": str(token_estimate.VOCAB_PATH.relative_to(ROOT)).replace("\\", "/"),
+            "token_vocab_sha256": token_estimate.expected_sha256(),
             "started_at": time.strftime("%Y-%m-%dT%H:%M:%S")}
 
 
