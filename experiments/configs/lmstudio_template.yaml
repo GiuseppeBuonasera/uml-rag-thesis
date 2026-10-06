@@ -15,9 +15,11 @@ client:
   timeout_s: 600
   retries: 3
   backoff_s: 2.0
-generation:
+  unsupported_params: []   # parametri di campionamento NON supportati dall'endpoint: non inviati, registrati
+generation:                # inviati SEMPRE in modo esplicito: nessuno resta al default del modello
   temperature: 0.0
   top_p: 1.0
+  top_k: TODO              # da decidere (domanda 8)
   max_tokens: 8192
   seed: 42
   structured_output: false   # response_format json_schema: DISATTIVATO (domanda ai relatori)
@@ -27,6 +29,7 @@ model_metadata:              # obbligatori (con client.model e generation.*): il
   quantization: TODO         # es. Q4_K_M
   context_length: TODO       # lunghezza di contesto impostata al caricamento in LM Studio
   lmstudio_version: TODO
+  enable_thinking: TODO      # true / false, come impostato in LM Studio (impostazione del modello)
   hardware:
     cpu: TODO
     gpu: TODO

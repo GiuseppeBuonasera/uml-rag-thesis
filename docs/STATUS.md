@@ -38,6 +38,7 @@ retrieval/              Passo 2: BM25 (keyword_retriever), random, loader in sol
 generation/             Passo 3a: templates/ (blocchi del prompt v4), prompt_builder, llm_client, postprocess,
                         sanity_check, test_generation
 experiments/            runner (run_experiment.py), configs/*.yaml, mock_responses/ (sintetiche), smoke_lmstudio.py
+docs/smoke_tests/       prove degli smoke test di LM Studio (versionate): .txt (output) + .json (esiti strutturati)
 evaluation/             metriche ancora stub; evaluation/uml-model-4.schema.json in uso
 data/results/           output sperimentali (ignorati), tranne data/results/retrieval/<run>/{config.json,summary.md,*.csv};
                         generazione in data/results/generation/<run_id>/ e dry_run/<run_id>/ (ignorati)
@@ -81,8 +82,11 @@ python generation/sanity_check.py                    # 20 GT + 59 corpus + 2 sta
 python experiments/run_experiment.py experiments/configs/dryrun_testset.yaml --dry-run   # lunghezze, finestre di contesto
 python experiments/run_experiment.py experiments/configs/mock_e2e.yaml   # prova end-to-end con MockClient
 python experiments/run_experiment.py <config> --resume                   # riprende una run interrotta (cache)
-python experiments/smoke_lmstudio.py --list-models   # MANUALE, con LM Studio aperto; poi --model <id>
-# run reali (Passo 3b, BLOCCATO): copiare experiments/configs/lmstudio_template.yaml e sostituire tutti i TODO
+python experiments/smoke_lmstudio.py --list-models   # MANUALE, con LM Studio aperto: id esatto del modello
+python experiments/smoke_lmstudio.py --model <id> --save   # smoke test + prova versionata in docs/smoke_tests/
+#   (<data>_<id-modello>_smokeN.txt con l'output completo + .json con gli esiti strutturati; N progressivo, mai sovrascrive)
+# run reali (Passo 3b, BLOCCATO): copiare experiments/configs/lmstudio_template.yaml (o, per Gemma 4 12B QAT,
+#   gemma4_12b_qat_template.yaml) e sostituire tutti i TODO
 ```
 
 ## Contatori
@@ -182,11 +186,23 @@ python experiments/smoke_lmstudio.py --list-models   # MANUALE, con LM Studio ap
   sono IDENTICI per tutte le condizioni e tutti i k.** Il runner rifiuta una run i cui valori differiscono da quelli
   di una run già presente dello stesso modello.
 - Un client reale parte solo con tutti i metadati del modello in config (model_id, quantizzazione, contesto,
-  versione di LM Studio, hardware CPU / GPU / RAM / VRAM, parametri di generazione); nessuna chiave API.
+  versione di LM Studio, `enable_thinking` true / false come impostato in LM Studio, hardware CPU / GPU / RAM / VRAM,
+  parametri di generazione); nessuna chiave API.
+- **Parametri di campionamento sempre espliciti**: temperature, top_p, top_k, max_tokens e seed si inviano in ogni
+  richiesta, nessuno resta al default del modello (per Gemma 4: temperature 1, top_k 64, top_p 0.95). Un parametro
+  non supportato dall'endpoint si dichiara in `client.unsupported_params` e si registra nei metadati
+  (`params_not_sent` nel manifest).
+- **Ragionamento**: i blocchi nel testo (`<think>`, Gemma 4 `<|channel>thought ... <channel|>`, anche troncati) si
+  rimuovono prima dell'estrazione; un ragionamento in un campo separato (`reasoning_content`) si salva nel raw, se ne
+  registrano caratteri e token (dal server o stimati) e non si usa MAI per estrarre il JSON.
 - Prompt: istruzioni identiche al template v4, un solo messaggio utente, esempi compatti senza `interactive`; le
   condizioni differiscono solo nel blocco esempi. Output strutturato (`response_format`) DISATTIVATO.
 - Riscritture prima di style_check: solo l'elenco chiuso `L4_REWRITES`; qualunque altra va decisa.
 - Nessuna chiamata a un LLM reale nei test automatici; nessuna run sul test set finché il Passo 3b è bloccato.
+- **Il seed NON garantisce la riproducibilità con LM Studio** (secondo smoke test, Gemma 4 12B QAT: a temperature 0.8
+  lo stesso seed dà risposte diverse; a temperature 0 quasi deterministico, ma non del tutto). La riproducibilità è
+  garantita a livello di **ANALISI** (risposte grezze salvate in `raw/` e in cache, rianalizzabili senza rigenerare),
+  non di generazione. Il seed si invia e si registra comunque.
 - **Niente download a runtime** (come per le stopword): la stima dei token usa il vocabolario cl100k_base versionato
   in `generation/tokenizer/` (sha256 verificato al caricamento, `generation/token_estimate.py`), mai
   `tiktoken.get_encoding`. Ogni file di testo il cui sha256 sui byte è registrato va protetto in `.gitattributes`
@@ -247,6 +263,18 @@ python experiments/smoke_lmstudio.py --list-models   # MANUALE, con LM Studio ap
 | Sales | 8 | 2 | 10 |
 | Social Networks | 1 | 0 | 1 |
 | **Totale** | **60** | **20** | **80** |
+
+## Modelli (LM Studio)
+- **Gemma 4 12B QAT** (`lmstudio.ai/models/google/gemma-4-12b-qat`; GGUF `lmstudio-community/gemma-4-12B-it-QAT-GGUF`,
+  Q4_0): scelto il 2026-10-06 per lo smoke test e il pilota. Quantizzazione registrata come "QAT (q4_0)". Ragionamento
+  attivo di default ("Enable Thinking" = true), marcatori `<|channel>thought ... <channel|>`. Default del modello NON
+  usati (temperature 1, top_k 64, top_p 0.95). Config: `experiments/configs/gemma4_12b_qat_template.yaml`.
+- **Licenza: Apache 2.0** (confermata il 2026-10-06; primi modelli Gemma sotto una licenza approvata da OSI). Fonti:
+  blog ufficiale Google Open Source, "Gemma 4: Expanding the Gemmaverse with Apache 2.0", pubblicato giovedì 2 aprile
+  2026 (il /2026/03/ dell'URL è il percorso di Blogger, non la data) ("The release of Gemma 4
+  under the Apache 2.0 license", opensource.googleblog.com/2026/03/gemma-4-expanding-the-gemmaverse-with-apache-20.html);
+  scheda Hugging Face del GGUF usato (huggingface.co/lmstudio-community/gemma-4-12B-it-QAT-GGUF, licenza
+  `apache-2.0`). I Gemma Terms of Use valevano per Gemma 1-3, non per Gemma 4 (decisions.md, voci 69-70).
 
 ## Limiti noti
 - Visibilità di attributi e metodi non conservata (sempre `+`, `corpus/apollon_limitations.md` §9); EatAtHome con due
@@ -321,6 +349,15 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    | oracle | 3 | 0 (no) | 20 (no) | 20 (sì) |
 
    Con output indentato, a 16k: bm25 k=3 13/20, random k=3 17/20, oracle k=3 18/20.
+
+   **Temperatura e ripetizioni** (aggiunta 2026-10-06). Dati del secondo smoke test (Gemma 4 12B QAT in LM Studio,
+   ragionamento spento, contesto 32768, RTX 4070 12 GB): il seed NON è rispettato (a temperature 0.8 lo stesso seed
+   dà risposte diverse); a temperature 0 l'output è quasi deterministico ma non del tutto (stesso testo salvo uno
+   spazio). Opzioni:
+   - **(a) PROPOSTA PRINCIPALE**: temperature 0, 1 ripetizione per cella, più un controllo di riproducibilità su un
+     sottoinsieme ripetuto (stesse chiamate rieseguite, differenze misurate e riportate);
+   - (b) temperature bassa (es. 0.2-0.3) con 3 o più ripetizioni per cella: costo triplo (o più), variabilità
+     misurata in tutte le celle.
 9. **Baseline few-shot statica**: la baseline few-shot statica deriva dal prompt v3 dello studio 2025 (Garaccione et
    al.), adattato ad Apollon v4 con l'esempio dell'orologio (diagramma a stati) sostituito da AirTravel. Va bene come
    baseline ufficiale, considerando che De Bari et al. usavano PlantUML e un prompt diverso? (Il prompt v3 originale e
@@ -346,6 +383,12 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
     garantita per costruzione e smette di essere una metrica. LM Studio lo supporta su `/v1/chat/completions` con
     `response_format: {"type": "json_schema", ...}` (grammatica di llama.cpp per i GGUF, Outlines per MLX; non tutti
     i modelli, specie sotto i 7B). Nel codice è pronto (`structured_output`) ma DISATTIVATO.
+15. **Ragionamento ("thinking") negli esperimenti** (2026-10-06). Proposta: **spento negli esperimenti principali**,
+    perché (1) consuma token di output (nel primo smoke test con Gemma 4 12B QAT: 947-1021 token di ragionamento per
+    una risposta banale, che hanno esaurito max_tokens lasciando la risposta vuota), (2) allunga i tempi, (3) aggiunge
+    variabilità, (4) rende meno confrontabili modelli con e senza ragionamento. Opzione: un **esperimento aggiuntivo
+    con ragionamento acceso** (su un sottoinsieme o una condizione), con max_tokens adeguato e `enable_thinking: true`
+    nei metadati.
 
 ## Prossimi passi
 1. ~~Trascrizione De Bari (20 esercizi, test set)~~ — FATTO il 2026-10-04.
@@ -356,5 +399,6 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
      mock con cache, post-processing L0-L4, runner con dry run). Resta lo smoke test manuale con LM Studio
      (`experiments/smoke_lmstudio.py`: risposta attesa e verifica del seed), da eseguire dall'utente.
    - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM, parametri,
-     finestra di contesto), 9 (baseline statica), 11 (metriche) e 14 (generazione libera o vincolata allo schema).
+     finestra di contesto, temperatura e ripetizioni), 9 (baseline statica), 11 (metriche), 14 (generazione libera
+     o vincolata allo schema) e 15 (ragionamento acceso o spento).
 4. Valutazione (sintattica / semantica / pragmatica), con i requisiti sopra.

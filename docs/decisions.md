@@ -77,6 +77,11 @@ non sono state modificate.
 66. 2026-10-05 — Passo 3a — STOP 2 approvato e chiusura: riscritture L4, diagnostici separati, verifica del seed, contesto e max_tokens identici per modello
 67. 2026-10-06 — Vocabolario cl100k_base versionato: stima dei token senza download
 68. 2026-10-06 — Censimento degli sha256 su file e regole `-text` in .gitattributes
+69. 2026-10-06 — Gemma 4 12B QAT: ragionamento, parametri espliciti, metadati enable_thinking
+70. 2026-10-06 — Licenza di Gemma 4 confermata: Apache 2.0
+71. 2026-10-06 — Primo smoke test con Gemma 4 12B QAT: ragionamento attivo, smoke test corretto
+72. 2026-10-06 — Secondo smoke test con Gemma 4 12B QAT: seed non rispettato, riproducibilità a livello di analisi
+73. 2026-10-06 — smoke_lmstudio.py --save: prova versionata (.txt + .json) senza copia-incolla
 
 ## Formato
 
@@ -2308,3 +2313,121 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   `test_retrieval.py` e `test_generation.py` passano. Il repository vero non è stato toccato (nessun commit).
 - Nota: `.gitattributes` vale per i checkout successivi; un clone esistente con i file già in CRLF va ricreato o
   riallineato (STATUS.md, regole della generazione). Il checkout attuale dell'utente ha i quattro file già LF.
+
+### [2026-10-06] Gemma 4 12B QAT: ragionamento, parametri espliciti, metadati enable_thinking
+- Contesto: modello scelto dall'utente per lo smoke test e il pilota, Gemma 4 12B QAT in LM Studio
+  (lmstudio.ai/models/google/gemma-4-12b-qat). Secondo la pagina del modello: "Enable Thinking" attivo di default,
+  marcatori di ragionamento `<|channel>thought` … `<channel|>`, parametri consigliati temperature 1, top_k 64, top_p
+  0.95, repeat penalty 1. Il GGUF di riferimento (lmstudio-community/gemma-4-12B-it-QAT-GGUF) è Q4_0.
+- **Ragionamento nel testo** (`generation/postprocess.py`): `REASONING_MARKERS` (nome → apertura, chiusura) con
+  `<think>`, `<thinking>`, `<reasoning>` e `gemma4_channel_thought` (`<|channel>\s*thought` … `<channel|>`). Per ogni
+  marcatore: blocchi completi rimossi; chiusura senza apertura → si scarta ciò che precede; apertura mai chiusa → si
+  scarta ciò che segue (ragionamento troncato: con finish_reason = length l'esito è "truncated", altrimenti
+  "no_json"). `reasoning_markers(text)` elenca i marcatori presenti (manifest e smoke test).
+- **Ragionamento in un campo separato** (`generation/llm_client.py`): LM Studio può restituirlo in
+  `reasoning_content` (impostazione "separate reasoning_content and content in API responses" in App Settings >
+  Developer, attiva di default secondo le note di LM Studio); si legge anche `reasoning`. Va in
+  `GenerationResult.reasoning_text` (quindi nel raw della run) e mai in `text`: l'estrazione del JSON usa solo
+  `text` (test: un JSON valido presente SOLO nel ragionamento non viene estratto). Token del ragionamento da
+  `usage.completion_tokens_details.reasoning_tokens` se il server li fornisce (`reasoning_tokens_source = server`),
+  altrimenti stimati con cl100k_base (`stima_cl100k`). Manifest: `reasoning_field`, `reasoning_chars`,
+  `reasoning_tokens`, `reasoning_tokens_source`, `reasoning_markers_in_content`, `content_empty`.
+- **Metadati obbligatori**: `enable_thinking` (booleano, come impostato in LM Studio; "TODO" o un valore non
+  booleano fanno rifiutare la run). Per Gemma 4 la quantizzazione si registra come "QAT (q4_0)".
+- **Parametri sempre espliciti**: `GenerationParams.top_k` aggiunto; `LMStudioClient` invia sempre temperature,
+  top_p, top_k, max_tokens e seed (tutti elencati come supportati nella pagina "Chat Completions" della
+  compatibilità OpenAI di LM Studio) e rifiuta la richiesta se uno è None. Un parametro dichiarato non supportato
+  in `client.unsupported_params` non si invia e si registra (`params_not_sent`); i valori inviati sono in
+  `request_params` (raw e manifest). Il runner richiede generation.{temperature, top_p, top_k, max_tokens, seed}
+  senza segnaposto. Effetto collaterale: top_k entra nella chiave della cache (nessuna run reale esistente).
+- `experiments/smoke_lmstudio.py`: stampa i parametri inviati, i marcatori di ragionamento nel testo e l'eventuale
+  campo separato (caratteri, token); il confronto del seed usa il testo senza ragionamento; invia top_k = 40 e
+  top_p = 1.0 espliciti (solo per lo smoke test).
+- Config: `lmstudio_template.yaml` aggiornato (top_k, enable_thinking, unsupported_params);
+  `gemma4_12b_qat_template.yaml` nuovo, con i dati noti (model_id, quantizzazione) e TODO per il resto (il runner lo
+  rifiuta finché restano TODO).
+- **Licenza**: l'utente ha chiesto di annotare che Gemma 4 è soggetto ai Gemma Terms of Use; le fonti verificate
+  indicano invece Apache 2.0 (blog ufficiale Google Open Source, marzo 2026, "Gemma 4: Expanding the Gemmaverse with
+  Apache 2.0"; scheda Hugging Face del GGUF: `apache-2.0`). Annotato in STATUS.md ("Modelli") come Apache 2.0, da
+  confermare dall'utente.
+- Test: casi Gemma 4 nell'estrazione (blocco completo, senza apertura, con fence, troncato con e senza
+  finish_reason = length); server finto con `reasoning_content` (token dal server, stimati, solo ragionamento con
+  contenuto vuoto); parametri None rifiutati senza inviare la richiesta; `unsupported_params`; metadati
+  enable_thinking; run lmstudio completa sul server finto con ragionamento separato nel raw e nel manifest.
+
+### [2026-10-06] Licenza di Gemma 4 confermata: Apache 2.0
+- L'utente conferma: Gemma 4 è distribuito con licenza Apache 2.0 (blog ufficiale Google Open Source, "Gemma 4:
+  Expanding the Gemmaverse with Apache 2.0", pubblicato giovedì 2 aprile 2026, data verificata sulla pagina
+  dall'utente; il /2026/03/ dell'URL è il percorso di Blogger, non la data di pubblicazione; primi modelli
+  Gemma sotto una licenza approvata da OSI). Il riferimento ai Gemma Terms of Use della richiesta precedente era
+  errato: valevano per Gemma 1-3. Corregge la voce 69, dove la licenza era indicata come "da confermare".
+- STATUS.md, sezione "Modelli": Apache 2.0 con le fonti (blog Google Open Source, scheda Hugging Face del GGUF
+  `lmstudio-community/gemma-4-12B-it-QAT-GGUF`).
+
+### [2026-10-06] Primo smoke test con Gemma 4 12B QAT: ragionamento attivo, smoke test corretto
+- **Esito del primo smoke test** (eseguito dall'utente con LM Studio, Gemma 4 12B QAT, "Enable Thinking" attivo come
+  da default): il server restituisce il ragionamento nel campo separato `reasoning_content`, 947-1021 token per
+  risposta; nel test del seed le risposte erano VUOTE perché max_tokens si esauriva nel ragionamento. Lo script ha
+  concluso "seed rispettato: no", che è sbagliato: con risposte vuote il seed non è valutabile. Il rispetto del seed
+  resta quindi NON verificato.
+- **Correzioni a `experiments/smoke_lmstudio.py`**:
+  1. per ogni chiamata del test del seed stampa finish_reason e token di completamento;
+  2. `seed_verdict`: se una risposta (tolto il ragionamento) è vuota o ha finish_reason = length l'esito è "non
+     valutabile (risposte vuote o troncate)", mai "si" o "no";
+  3. se c'è ragionamento (campo separato o marcatori nel testo) stampa un avviso incorniciato: "RAGIONAMENTO ATTIVO:
+     disattiva Enable Thinking nelle impostazioni del modello in LM Studio (My Models), poi ricarica il modello",
+     dopo la chiamata interessata e di nuovo nel riepilogo;
+  4. il test del seed usa max_tokens = 512 (sufficiente per la frase richiesta senza ragionamento) e stampa i
+     parametri inviati.
+- Test (`check_smoke` in `generation/test_generation.py`, server finto): risposte vuote con ragionamento e
+  finish_reason = length → entrambi gli esiti "non valutabile" e avviso presente; testo che dipende dal seed → "si"
+  e nessun avviso; `seed_verdict` su casi costruiti (si, no, non determinabile, vuote, troncate, solo ragionamento).
+- Prossimo passo dell'utente: disattivare Enable Thinking, ricaricare il modello e rieseguire lo smoke test; nei
+  metadati delle run `enable_thinking` andrà registrato di conseguenza.
+
+### [2026-10-06] Secondo smoke test con Gemma 4 12B QAT: seed non rispettato, riproducibilità a livello di analisi
+- **Configurazione** (riferita dall'utente): Gemma 4 12B QAT in LM Studio, Enable Thinking SPENTO nelle impostazioni
+  del modello e modello ricaricato; contesto 32768; modello interamente in VRAM su NVIDIA RTX 4070 12 GB (9,9 / 12
+  GB dedicata, 0,2 GB condivisa).
+- **Esiti** (riferiti dall'utente):
+  - ragionamento assente: nessun `reasoning_content`, nessun marcatore nel testo;
+  - `{"ok": true}` corretto, 6 token di completamento, latenza 2,42 s;
+  - **seed NON rispettato**: a temperature 0.8 lo stesso seed dà risposte diverse;
+  - a temperature 0 quasi deterministico ma non del tutto: con il seed diverso stesso testo salvo uno spazio mancante.
+- **Prova**: `docs/smoke_tests/2026-10-06_gemma4-12b-qat_smoke2.txt` (versionato; `data/results/` è ignorata da git
+  tranne le run del retrieval). Contiene configurazione ed esiti; l'output integrale del terminale va INCOLLATO
+  dall'utente al posto del segnaposto: non è stato ricostruito, perché non disponibile in questa sessione.
+- **Conseguenze**:
+  - STATUS.md, regole della generazione: il seed non garantisce la riproducibilità con LM Studio; la riproducibilità è
+    garantita a livello di ANALISI (risposte grezze in `raw/` e in cache), non di generazione;
+  - `experiments/configs/gemma4_12b_qat_template.yaml`: contesto 32768, `enable_thinking: false`, GPU RTX 4070 12
+    GB, `vram_gb: 12`, `vram_used` (9,9 GB dedicata + 0,2 GB condivisa con 32k). Restano TODO: id del modello, versione
+    di LM Studio, CPU, RAM e parametri di generazione;
+  - domanda 8: opzioni (a) temperature 0, 1 ripetizione per cella e controllo di riproducibilità su un sottoinsieme
+    ripetuto (PROPOSTA PRINCIPALE), (b) temperature 0.2-0.3 con 3+ ripetizioni (costo triplo, variabilità misurata);
+  - domanda 15 (nuova): ragionamento spento negli esperimenti principali (token di output, tempi, variabilità,
+    confrontabilità tra modelli), con l'opzione di un esperimento aggiuntivo con ragionamento acceso. Il Passo 3b
+    resta bloccato anche su questa domanda.
+
+### [2026-10-06] smoke_lmstudio.py --save: prova versionata (.txt + .json) senza copia-incolla
+- Contesto: la prova del secondo smoke test dipendeva dal copia-incolla dell'output (file smoke2 con segnaposto, lo
+  completa l'utente con l'output originale). Approvata l'opzione `--save`.
+- `python experiments/smoke_lmstudio.py --model <id> --save` scrive in `docs/smoke_tests/`:
+  - `<data>_<id-modello>_smokeN.txt`: intestazione (data/ora con fuso, base_url, id del modello, versione dello
+    script `SCRIPT_VERSION` e sha256 del file dello script, nome del .json) + output completo del terminale (catturato
+    mentre viene stampato);
+  - `<stesso nome>.json`: esiti strutturati, confrontabili tra modelli: risposta attesa sì/no, presenza di
+    ragionamento (campo, caratteri, token e loro fonte, marcatori nel testo), esito del seed per ciascuna temperatura,
+    e per ogni chiamata seed, risposta senza ragionamento, finish_reason, token di prompt e di completamento, latenza,
+    parametri inviati e non inviati, modello riportato dal server.
+- Numerazione: N progressivo per data e id del modello (il primo numero libero dopo il massimo esistente, contando sia
+  i .txt sia i .json); scrittura in creazione esclusiva (`open(..., "x")`): un file esistente non si sovrascrive mai.
+  L'id del modello diventa un nome di file sostituendo i caratteri diversi da lettere, cifre, ".", "_" e "-" con
+  "-" (es. `google/gemma-4-12b-qat` → `google-gemma-4-12b-qat`): il file manuale `2026-10-06_gemma4-12b-qat_smoke2.txt`
+  ha un prefisso diverso e non entra nella numerazione automatica.
+- Se una chiamata fallisce (es. server irraggiungibile) la prova si salva comunque, con l'errore nel .json e il
+  traceback nel .txt; lo script esce con codice 1.
+- Test (`check_smoke` in `generation/test_generation.py`, cartella temporanea e server finto): .txt con intestazione
+  e output completo, .json con gli esiti attesi (non valutabile + ragionamento; seed rispettato → "si"), numerazione
+  che salta i numeri occupati anche dal solo .json, file di un altro modello ignorato, file esistente intatto, prova
+  salvata anche con il server irraggiungibile. I test non scrivono in `docs/smoke_tests/`.

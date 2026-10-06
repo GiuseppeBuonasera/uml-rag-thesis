@@ -52,9 +52,10 @@ import token_estimate  # noqa: E402
 RESULTS = ROOT / "data" / "results" / "generation"
 TOKENIZER = "cl100k_base"
 WINDOWS = (8192, 16384, 32768)
-MODEL_METADATA_REQUIRED = ("model_id", "quantization", "context_length", "lmstudio_version",
+MODEL_METADATA_REQUIRED = ("model_id", "quantization", "context_length", "lmstudio_version", "enable_thinking",
                            "hardware.cpu", "hardware.gpu", "hardware.ram_gb", "hardware.vram_gb")
-GENERATION_REQUIRED = ("temperature", "top_p", "max_tokens", "seed")  # parametri di generazione espliciti in config
+# parametri di campionamento espliciti in config, mai lasciati al default del modello (llm_client.SAMPLING_PARAMS)
+GENERATION_REQUIRED = ("temperature", "top_p", "top_k", "max_tokens", "seed")
 PLACEHOLDERS = {"", "TODO", "todo", "?", None}
 
 
@@ -93,6 +94,8 @@ def missing_metadata(meta: dict | None) -> list[str]:
             cur = cur.get(part) if isinstance(cur, dict) else None
         if cur in PLACEHOLDERS or cur == {}:
             out.append(key)
+        elif key == "enable_thinking" and not isinstance(cur, bool):
+            out.append(f"{key} (true/false, come impostato in LM Studio)")
     return out
 
 
@@ -129,14 +132,15 @@ def make_client(cfg: dict):
                           finish_reasons=c.get("finish_reasons"))
     if c["kind"] == "lmstudio":
         missing = missing_metadata(cfg.get("model_metadata"))
-        missing += [f"generation.{k}" for k in GENERATION_REQUIRED if k not in (cfg.get("generation") or {})]
+        gen = cfg.get("generation") or {}
+        missing += [f"generation.{k}" for k in GENERATION_REQUIRED if gen.get(k) in PLACEHOLDERS]
         if c.get("model") in PLACEHOLDERS:
             missing.append("client.model")
         if missing:
             raise SystemExit(f"client reale senza metadati obbligatori del modello: {missing} (vedi model_metadata)")
         return LMStudioClient(model=c["model"], base_url=c.get("base_url", "http://localhost:1234/v1"),
                               timeout_s=c.get("timeout_s", 600), retries=c.get("retries", 3),
-                              backoff_s=c.get("backoff_s", 2.0))
+                              backoff_s=c.get("backoff_s", 2.0), unsupported_params=c.get("unsupported_params", []))
     raise SystemExit(f"client sconosciuto: {c['kind']}")
 
 
@@ -313,6 +317,11 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
                  "latency_s": round(res.latency_s, 3), "cached": res.cached, "level": v.level, "failure": v.failure,
                  "l4_rewrites": v.l4_rewrites, "style_raw_count": len(v.style_raw),
                  "format_issues": sorted(v.format_issues), "layout_issues": sorted(v.layout_issues),
+                 "request_params": res.request_params, "params_not_sent": res.params_not_sent,
+                 "reasoning_field": res.reasoning_field, "reasoning_chars": len(res.reasoning_text),
+                 "reasoning_tokens": res.reasoning_tokens, "reasoning_tokens_source": res.reasoning_tokens_source,
+                 "reasoning_markers_in_content": pp.reasoning_markers(res.text),
+                 "content_empty": not res.text.strip(),
                  "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")}
         with manifest_path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")

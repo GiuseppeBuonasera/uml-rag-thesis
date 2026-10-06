@@ -1,0 +1,41 @@
+# MODELLO per Gemma 4 12B QAT in LM Studio (lmstudio.ai/models/google/gemma-4-12b-qat), modello scelto per lo smoke
+# test e il pilota (2026-10-06). Run reali BLOCCATE finche' il Passo 3b non e' sbloccato. I TODO fanno rifiutare la
+# partenza al runner. Licenza: vedi docs/STATUS.md, "Modelli".
+# Default del modello in LM Studio (NON usati: il runner invia tutti i parametri in modo esplicito): temperature 1,
+# top_k 64, top_p 0.95, repeat penalty 1. Ragionamento attivo di default ("Enable Thinking" = true), marcatori
+# <|channel>thought ... <channel|> (rimossi dal post-processing) o campo reasoning_content separato.
+run_id: TODO_gemma4-12b-qat_data
+split: testset
+conditions: [zero_shot, static, random, bm25]
+k: [3]
+repetitions: 1
+seed: 0
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+client:
+  kind: lmstudio
+  base_url: http://localhost:1234/v1
+  model: TODO              # id esatto esposto da LM Studio: python experiments/smoke_lmstudio.py --list-models
+  timeout_s: 1200
+  retries: 3
+  backoff_s: 2.0
+  unsupported_params: []
+generation:
+  temperature: TODO        # da decidere (domanda 8)
+  top_p: TODO
+  top_k: TODO
+  max_tokens: TODO         # identico per tutte le condizioni e tutti i k; con il ragionamento attivo va previsto
+                           # spazio anche per i token di ragionamento
+  seed: 42
+  structured_output: false
+model_metadata:
+  model_id: google/gemma-4-12b-qat   # pagina del modello in LM Studio
+  quantization: QAT (q4_0)           # file GGUF lmstudio-community/gemma-4-12B-it-QAT-GGUF, Q4_0
+  context_length: 32768              # usato nel secondo smoke test (k=3: solo 32k e' sicura, domanda 8)
+  lmstudio_version: TODO
+  enable_thinking: false             # spento nelle impostazioni del modello (default del modello: true); domanda 15
+  hardware:
+    cpu: TODO
+    gpu: NVIDIA GeForce RTX 4070 12 GB
+    ram_gb: TODO
+    vram_gb: 12
+    vram_used: "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"

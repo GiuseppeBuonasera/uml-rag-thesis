@@ -8,6 +8,16 @@ metadati). NESSUNA chiamata reale nei test automatici: si usa MockClient o un se
   seed tra i parametri supportati; che il server lo RISPETTI (stessa richiesta -> stessa risposta) si verifica con
   experiments/smoke_lmstudio.py. Timeout e retry con backoff esponenziale su errori di rete, timeout, 5xx e 429; gli
   altri 4xx (richiesta sbagliata) falliscono subito. Solo libreria standard (urllib).
+- Parametri di campionamento (2026-10-06): LMStudioClient invia SEMPRE in modo esplicito temperature, top_p, top_k,
+  max_tokens e seed (tutti elencati come supportati nella pagina "Chat Completions" della compatibilita' OpenAI di LM
+  Studio), cosi' nessuno resta al default del modello (per Gemma 4: temperature 1, top_k 64, top_p 0.95). Un parametro
+  dichiarato non supportato (`unsupported_params`, da config) non si invia e si registra nei metadati
+  (`GenerationResult.params_not_sent`); un parametro a None fa fallire la richiesta.
+- Ragionamento in un campo separato (2026-10-06): se il messaggio ha `reasoning_content` (impostazione di LM Studio
+  "separate reasoning_content and content in API responses") o `reasoning`, il testo va in
+  `GenerationResult.reasoning_text` e nel raw, MAI in `text`: il post-processing estrae il JSON solo da `text`. I
+  token del ragionamento: da usage.completion_tokens_details.reasoning_tokens se il server li fornisce, altrimenti
+  stimati con cl100k_base (`reasoning_tokens_source`).
 - CachedClient: cache su disco davanti a qualsiasi client. Chiave = sha256 di (messaggi, modello, parametri, indice di
   ripetizione): una chiamata gia' fatta non si ripete, una ripetizione diversa si'.
 
@@ -21,6 +31,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -29,6 +40,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # token_estimate (stima dei token del ragionamento)
 SCHEMA_PATH = ROOT / "evaluation" / "uml-model-4.schema.json"
 
 
@@ -38,6 +50,7 @@ class GenerationParams:
     top_p: float = 1.0
     max_tokens: int = 8192
     seed: int | None = None
+    top_k: int | None = None  # obbligatorio (non None) con LM Studio: vedi SAMPLING_PARAMS
     structured_output: bool = False  # response_format json_schema (schema Apollon v4): DISATTIVATO di default
 
 
@@ -53,6 +66,12 @@ class GenerationResult:
     completion_tokens: int | None = None
     cached: bool = False
     raw: dict = field(default_factory=dict)
+    reasoning_text: str = ""  # ragionamento restituito in un campo separato (mai usato per l'estrazione del JSON)
+    reasoning_field: str | None = None  # "reasoning_content" | "reasoning" | None
+    reasoning_tokens: int | None = None
+    reasoning_tokens_source: str | None = None  # "server" | "stima_cl100k" | None
+    request_params: dict = field(default_factory=dict)  # parametri di campionamento effettivamente inviati
+    params_not_sent: list = field(default_factory=list)  # parametri dichiarati non supportati dall'endpoint
 
 
 class LLMClient:
@@ -92,20 +111,38 @@ class MockClient(LLMClient):
                                 params=asdict(params), repetition=repetition, latency_s=0.0)
 
 
+SAMPLING_PARAMS = ("temperature", "top_p", "top_k", "max_tokens", "seed")  # inviati SEMPRE in modo esplicito
+REASONING_FIELDS = ("reasoning_content", "reasoning")
+
+
 class LMStudioClient(LLMClient):
     kind = "lmstudio"
 
     def __init__(self, model: str, base_url: str = "http://localhost:1234/v1", timeout_s: float = 600.0,
-                 retries: int = 3, backoff_s: float = 2.0):
+                 retries: int = 3, backoff_s: float = 2.0, unsupported_params: list[str] | tuple = ()):
         self.model, self.base_url = model, base_url.rstrip("/")
         self.timeout_s, self.retries, self.backoff_s = timeout_s, retries, backoff_s
+        unknown = set(unsupported_params) - set(SAMPLING_PARAMS)
+        if unknown:
+            raise ValueError(f"unsupported_params sconosciuti: {sorted(unknown)}")
+        self.unsupported = [p for p in SAMPLING_PARAMS if p in set(unsupported_params)]
         self.attempts = 0  # tentativi dell'ultima generate (per i test sul retry)
 
+    def sampling_params(self, params: GenerationParams) -> dict:
+        sent = {}
+        for name in SAMPLING_PARAMS:
+            if name in self.unsupported:
+                continue
+            value = getattr(params, name)
+            if value is None:
+                raise ValueError(f"parametro {name} non impostato: va inviato in modo esplicito (nessun default del "
+                                 "modello)")
+            sent[name] = value
+        return sent
+
     def request_body(self, messages: list[dict], params: GenerationParams) -> dict:
-        body: dict[str, Any] = {"model": self.model, "messages": messages, "temperature": params.temperature,
-                                "top_p": params.top_p, "max_tokens": params.max_tokens, "stream": False}
-        if params.seed is not None:
-            body["seed"] = params.seed
+        body: dict[str, Any] = {"model": self.model, "messages": messages, **self.sampling_params(params),
+                                "stream": False}
         if params.structured_output:
             body["response_format"] = {"type": "json_schema", "json_schema": {
                 "name": "apollon_v4_class_diagram", "strict": True,
@@ -127,11 +164,23 @@ class LMStudioClient(LLMClient):
                 latency = time.perf_counter() - t0
                 choice = raw["choices"][0]
                 usage = raw.get("usage") or {}
-                return GenerationResult(text=(choice.get("message") or {}).get("content") or "",
+                message = choice.get("message") or {}
+                rfield = next((f for f in REASONING_FIELDS if message.get(f)), None)
+                reasoning = message.get(rfield) if rfield else ""
+                r_tokens = ((usage.get("completion_tokens_details") or {}).get("reasoning_tokens"))
+                r_source = "server" if r_tokens is not None else None
+                if r_tokens is None and reasoning:
+                    from token_estimate import count_tokens  # stima, vocabolario versionato
+                    r_tokens, r_source = count_tokens(reasoning), "stima_cl100k"
+                return GenerationResult(text=message.get("content") or "",
                                         finish_reason=choice.get("finish_reason"), model=raw.get("model", self.model),
                                         params=asdict(params), repetition=repetition, latency_s=latency,
                                         prompt_tokens=usage.get("prompt_tokens"),
-                                        completion_tokens=usage.get("completion_tokens"), raw=raw)
+                                        completion_tokens=usage.get("completion_tokens"), raw=raw,
+                                        reasoning_text=reasoning, reasoning_field=rfield, reasoning_tokens=r_tokens,
+                                        reasoning_tokens_source=r_source,
+                                        request_params=self.sampling_params(params),
+                                        params_not_sent=list(self.unsupported))
             except urllib.error.HTTPError as e:
                 last_error = e
                 if e.code < 500 and e.code != 429:

@@ -5,7 +5,8 @@ lettura).
 
 Livelli (cumulativi: un livello si valuta solo se il precedente e' superato):
   L0 estratto   nella risposta c'e' un candidato JSON (risposta intera, blocco ``` o oggetto {...} bilanciato), tolti
-                i blocchi di ragionamento (<think>...</think> e simili);
+                i blocchi di ragionamento (REASONING_MARKERS: <think>...</think> e simili, Gemma 4
+                <|channel>thought ... <channel|>), anche troncati o senza apertura;
   L1 JSON       il candidato si decodifica in un oggetto JSON;
   L2 schema     conforme a evaluation/uml-model-4.schema.json (validate_against_schema);
   L3 integrita' id unici in TUTTO il diagramma (nodi, attributi, metodi, edge) e riferimenti coerenti
@@ -42,8 +43,14 @@ sys.path.insert(0, str(ROOT / "corpus"))
 from apollon_convert import style_check, validate_against_schema, verify_apollon_json  # noqa: E402
 
 CANVAS_W, CANVAS_H = 1600, 780
-REASONING_TAGS = ("think", "thinking", "reasoning")
-_REASONING_BLOCK = re.compile(r"<(%s)>.*?</\1>" % "|".join(REASONING_TAGS), re.S | re.I)
+# Marcatori di ragionamento nel testo della risposta: nome -> (apertura, chiusura), regex. Gemma 4 (2026-10-06): il
+# ragionamento e' tra "<|channel>thought" e "<channel|>" (configurazione del modello in LM Studio).
+REASONING_MARKERS = {
+    "think": (r"<think>", r"</think>"),
+    "thinking": (r"<thinking>", r"</thinking>"),
+    "reasoning": (r"<reasoning>", r"</reasoning>"),
+    "gemma4_channel_thought": (r"<\|channel>\s*thought", r"<channel\|>"),
+}
 _FENCE = re.compile(r"```[ \t]*(?:json|JSON)?[ \t]*\n(.*?)```", re.S)
 _V4_METHOD = re.compile(r"^([A-Za-z_]\w*)\s*\((.*)\)\s*(?::\s*(\S.*?))?\s*$")  # "methodName(parameters): ReturnType"
 
@@ -93,19 +100,27 @@ class Validation:
         return d
 
 
+def reasoning_markers(text: str) -> list[str]:
+    """Nomi dei marcatori di ragionamento (apertura o chiusura) presenti nel testo."""
+    return [name for name, (op, cl) in REASONING_MARKERS.items()
+            if re.search(op, text or "", re.I) or re.search(cl, text or "", re.I)]
+
+
 def strip_reasoning(text: str) -> tuple[str, bool]:
-    """Toglie i blocchi <think>...</think> (e <thinking>, <reasoning>). Casi dei modelli locali: tag di apertura
-    inserito dal chat template e quindi assente (resta solo "</think>": si scarta tutto cio' che precede);
-    blocco aperto e mai chiuso (risposta troncata nel ragionamento: non resta nulla)."""
-    out = _REASONING_BLOCK.sub("", text)
-    removed = out != text
-    for tag in REASONING_TAGS:
-        close = re.search(rf"</{tag}>", out, re.I)
+    """Toglie i blocchi di ragionamento di REASONING_MARKERS. Per ogni marcatore: blocchi completi; chiusura senza
+    apertura (apertura inserita dal chat template: si scarta tutto cio' che precede la chiusura); apertura mai chiusa
+    (risposta troncata nel ragionamento: si scarta tutto cio' che segue)."""
+    out, removed = text, False
+    for op, cl in REASONING_MARKERS.values():
+        new = re.sub(f"{op}.*?{cl}", "", out, flags=re.S | re.I)
+        close = re.search(cl, new, re.I)
         if close:
-            out, removed = out[close.end():], True
-        opened = re.search(rf"<{tag}>", out, re.I)
+            new = new[close.end():]
+        opened = re.search(op, new, re.I)
         if opened:
-            out, removed = out[:opened.start()], True
+            new = new[:opened.start()]
+        removed |= new != out
+        out = new
     return out, removed
 
 
