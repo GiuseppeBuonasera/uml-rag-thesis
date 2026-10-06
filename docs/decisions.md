@@ -2394,9 +2394,12 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   - `{"ok": true}` corretto, 6 token di completamento, latenza 2,42 s;
   - **seed NON rispettato**: a temperature 0.8 lo stesso seed dà risposte diverse;
   - a temperature 0 quasi deterministico ma non del tutto: con il seed diverso stesso testo salvo uno spazio mancante.
-- **Prova**: `docs/smoke_tests/2026-10-06_gemma4-12b-qat_smoke2.txt` (versionato; `data/results/` è ignorata da git
-  tranne le run del retrieval). Contiene configurazione ed esiti; l'output integrale del terminale va INCOLLATO
-  dall'utente al posto del segnaposto: non è stato ricostruito, perché non disponibile in questa sessione.
+- **Prova**: `docs/smoke_tests/2026-10-06_google-gemma-4-12b-qat_smoke2.txt` (versionato; `data/results/` è ignorata
+  da git tranne le run del retrieval; nome iniziale `2026-10-06_gemma4-12b-qat_smoke2.txt`, rinominato con `git mv`
+  per allinearlo alla convenzione di `--save`, voce 73). Prova MANUALE, senza .json: contiene configurazione ed esiti;
+  l'output integrale del terminale va INCOLLATO dall'utente al posto del segnaposto: non è stato ricostruito, perché
+  non disponibile in questa sessione. Il primo smoke test (voce 71) ha la sua prova manuale
+  `2026-10-06_google-gemma-4-12b-qat_smoke1.txt`, anch'essa con segnaposto per l'output.
 - **Conseguenze**:
   - STATUS.md, regole della generazione: il seed non garantisce la riproducibilità con LM Studio; la riproducibilità è
     garantita a livello di ANALISI (risposte grezze in `raw/` e in cache), non di generazione;
@@ -2423,8 +2426,14 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - Numerazione: N progressivo per data e id del modello (il primo numero libero dopo il massimo esistente, contando sia
   i .txt sia i .json); scrittura in creazione esclusiva (`open(..., "x")`): un file esistente non si sovrascrive mai.
   L'id del modello diventa un nome di file sostituendo i caratteri diversi da lettere, cifre, ".", "_" e "-" con
-  "-" (es. `google/gemma-4-12b-qat` → `google-gemma-4-12b-qat`): il file manuale `2026-10-06_gemma4-12b-qat_smoke2.txt`
-  ha un prefisso diverso e non entra nella numerazione automatica.
+  "-" (es. `google/gemma-4-12b-qat` → `google-gemma-4-12b-qat`).
+- **Prove manuali allineate alla convenzione** (2026-10-06): `2026-10-06_gemma4-12b-qat_smoke2.txt` rinominato con
+  `git mv` in `2026-10-06_google-gemma-4-12b-qat_smoke2.txt`; creato `2026-10-06_google-gemma-4-12b-qat_smoke1.txt`
+  per il primo smoke test (ragionamento attivo, voce 71). Entrambi iniziano con "PROVA MANUALE (output incollato
+  dall'utente), non generata da --save", dichiarano che non c'è il .json e riportano modello, data e impostazioni
+  (smoke1: Enable Thinking attivo; smoke2: spento, contesto 32768); l'output lo incolla l'utente al posto del
+  segnaposto. Verificato con `next_paths` sulla cartella reale: il prossimo salvataggio automatico di oggi per
+  `google/gemma-4-12b-qat` è `..._smoke3.txt` / `.json`.
 - Se una chiamata fallisce (es. server irraggiungibile) la prova si salva comunque, con l'errore nel .json e il
   traceback nel .txt; lo script esce con codice 1.
 - Test (`check_smoke` in `generation/test_generation.py`, cartella temporanea e server finto): .txt con intestazione

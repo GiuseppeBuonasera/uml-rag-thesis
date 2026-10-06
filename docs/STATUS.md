@@ -38,7 +38,8 @@ retrieval/              Passo 2: BM25 (keyword_retriever), random, loader in sol
 generation/             Passo 3a: templates/ (blocchi del prompt v4), prompt_builder, llm_client, postprocess,
                         sanity_check, test_generation
 experiments/            runner (run_experiment.py), configs/*.yaml, mock_responses/ (sintetiche), smoke_lmstudio.py
-docs/smoke_tests/       prove degli smoke test di LM Studio (versionate): .txt (output) + .json (esiti strutturati)
+docs/smoke_tests/       prove degli smoke test di LM Studio (versionate): .txt (output) + .json (esiti strutturati);
+                        smoke1 e smoke2 del 2026-10-06 (Gemma 4) sono prove MANUALI, senza .json, output da incollare
 evaluation/             metriche ancora stub; evaluation/uml-model-4.schema.json in uso
 data/results/           output sperimentali (ignorati), tranne data/results/retrieval/<run>/{config.json,summary.md,*.csv};
                         generazione in data/results/generation/<run_id>/ e dry_run/<run_id>/ (ignorati)

@@ -1,0 +1,22 @@
+PROVA MANUALE (output incollato dall'utente), non generata da --save
+Nessun .json di esiti strutturati: per le prove manuali non esiste (lo produce solo --save).
+================================================================================
+Primo smoke test di LM Studio — Gemma 4 12B QAT
+data:            2026-10-06
+id del modello:  google/gemma-4-12b-qat (lmstudio.ai/models/google/gemma-4-12b-qat), quantizzazione QAT (q4_0)
+impostazioni:    Enable Thinking ATTIVO (default del modello)
+comando:         python experiments/smoke_lmstudio.py --model <id del modello>   (senza --save; versione dello
+                 script precedente alla correzione della voce 71 di docs/decisions.md)
+eseguito da:     l'utente, sulla propria macchina (nessun dato del corpus o del test set)
+================================================================================
+
+Esiti riferiti dall'utente (dettagli in docs/decisions.md, voce 71):
+  - ragionamento restituito nel campo separato reasoning_content, 947-1021 token per risposta;
+  - risposte del test del seed VUOTE: max_tokens si esauriva nel ragionamento;
+  - lo script di allora concludeva "seed rispettato: no", esito SBAGLIATO: con risposte vuote il seed non e'
+    valutabile (corretto nella voce 71).
+
+Output integrale dello script
+-----------------------------
+<<< DA INCOLLARE A CURA DELL'UTENTE: l'output completo del terminale, senza modifiche. >>>
+<<< Finche' questo segnaposto e' presente, il file NON e' la prova dell'esito.       >>>
