@@ -15,8 +15,44 @@ Esiti riferiti dall'utente (dettagli in docs/decisions.md, voce 71):
   - risposte del test del seed VUOTE: max_tokens si esauriva nel ragionamento;
   - lo script di allora concludeva "seed rispettato: no", esito SBAGLIATO: con risposte vuote il seed non e'
     valutabile (corretto nella voce 71).
+Note di lettura (aggiunte nel trascrivere, fuori dall'output):
+  - lo script di allora non stampava finish_reason e token per le chiamate del seed, e usava max_tokens = 1024;
+  - a temperature 0.8 una sola risposta su tre non e' vuota; a temperature 0 tutte e tre sono vuote: con lo script
+    attuale entrambi gli esiti sarebbero "non valutabile (risposte vuote o troncate)";
+  - {"ok": true} e' corretto anche con il ragionamento attivo: 130 token di completamento, di cui 120 di ragionamento.
 
 Output integrale dello script
 -----------------------------
-<<< DA INCOLLARE A CURA DELL'UTENTE: l'output completo del terminale, senza modifiche. >>>
-<<< Finche' questo segnaposto e' presente, il file NON e' la prova dell'esito.       >>>
+--- 1. risposta attesa {"ok": true}
+risposta      : '{"ok": true}'
+modello       : google/gemma-4-12b-qat
+finish_reason : stop
+token (server): prompt=31 completion=130
+latenza       : 4.70 s
+parametri     : {'temperature': 0.0, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 1024, 'seed': 1234}
+marcatori di ragionamento nel testo: nessuno
+campo di ragionamento separato: reasoning_content, 487 caratteri, 120 token (server)
+blocchi di ragionamento rimossi dal testo prima del controllo: no
+risposta attesa {"ok": true}: SI
+
+--- 2. verifica del seed
+
+--- seed, temperature 0.8
+marcatori di ragionamento nel testo: nessuno
+campo di ragionamento separato: reasoning_content, 3362 caratteri, 947 token (server)
+seed 1234 (1): '**Subpoena**\n\nSubpoena demands treats with a legalistic intensity that is both terrifying and adorable.'
+seed 1234 (2): ''
+seed 98765  : ''
+stesso seed -> risposte DIVERSE; seed diverso -> risposta diversa
+seed rispettato: no
+
+--- seed, temperature 0.0
+marcatori di ragionamento nel testo: nessuno
+campo di ragionamento separato: reasoning_content, 2542 caratteri, 1021 token (server)
+seed 1234 (1): ''
+seed 1234 (2): ''
+seed 98765  : ''
+stesso seed -> risposte IDENTICHE; seed diverso -> risposta uguale
+seed rispettato: non determinabile (risposta uguale anche con seed diverso)   [temperature 0: poco informativo]
+
+RIEPILOGO: seed rispettato (temperature 0.8): no; (temperature 0, poco informativo): non determinabile (risposta uguale anche con seed diverso)

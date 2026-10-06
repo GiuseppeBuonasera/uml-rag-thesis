@@ -15,8 +15,44 @@ Esiti riferiti dall'utente (dettagli in docs/decisions.md, voce 72):
   - {"ok": true} con 6 token di completamento, latenza 2,42 s;
   - seed NON rispettato: a temperature 0.8 lo stesso seed da' risposte diverse;
   - a temperature 0 quasi deterministico ma non del tutto: con il seed diverso stesso testo salvo uno spazio mancante.
+Note di lettura (aggiunte nel trascrivere, fuori dall'output; vedi docs/decisions.md, voce 74):
+  - lo spazio mancante ("onlywhen") NON e' una differenza reale tra le risposte: a temperature 0 lo script ha
+    stampato "non determinabile (risposta uguale anche con seed diverso)", esito che il codice da' solo quando le tre
+    stringhe sono identiche; con una differenza di uno spazio avrebbe stampato "si". La parola unita e' quasi
+    certamente un artefatto del copia-incolla dal terminale (a capo automatico nel punto dello spazio); lo stesso vale
+    per la terza risposta a temperature 0.8. Quindi a temperature 0 le tre risposte sono identiche e il seed non ha
+    effetto;
+  - a temperature 0.8 lo stesso seed (1234) da' due risposte diverse: seed non rispettato (esito valido, risposte non
+    vuote e finish_reason = stop).
 
 Output integrale dello script
 -----------------------------
-<<< DA INCOLLARE A CURA DELL'UTENTE: l'output completo del terminale, senza modifiche. >>>
-<<< Finche' questo segnaposto e' presente, il file NON e' la prova dell'esito.       >>>
+--- 1. risposta attesa {"ok": true}
+risposta      : '{"ok": true}'
+modello       : google/gemma-4-12b-qat
+finish_reason : stop
+token (server): prompt=28 completion=6
+latenza       : 2.42 s
+parametri     : {'temperature': 0.0, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 1024, 'seed': 1234}
+marcatori di ragionamento nel testo: nessuno
+campo di ragionamento separato: assente
+blocchi di ragionamento rimossi dal testo prima del controllo: no
+risposta attesa {"ok": true}: SI
+
+--- 2. verifica del seed
+
+--- seed, temperature 0.8
+parametri: {'temperature': 0.8, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 512, 'seed': 1234}
+seed 1234 (1): '**Barnaby Q. Pumpernickel** is a tuxedo cat who insists on being addressed only in a hushed, conspiratorial whisper.'  [finish_reason=stop, token di completamento=29]
+seed 1234 (2): '**Barnaby Quicksilver** is a cat who insists on only sleeping on the highest shelf in the library.'  [finish_reason=stop, token di completamento=24]
+seed 98765    : '**Barnaby Q. Pumpernickel** is a distinguished feline who insists on being addressed onlywhen he is being served a premium snack.'  [finish_reason=stop, token di completamento=29]
+seed rispettato: no
+
+--- seed, temperature 0.0
+parametri: {'temperature': 0.0, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 512, 'seed': 1234}
+seed 1234 (1): '**Barnaby Q. Pumpernickel** is a distinguished feline who insists on being addressed only when he is being offered premium tuna.'  [finish_reason=stop, token di completamento=28]
+seed 1234 (2): '**Barnaby Q. Pumpernickel** is a distinguished feline who insists on being addressed only when he is being offered premium tuna.'  [finish_reason=stop, token di completamento=28]
+seed 98765    : '**Barnaby Q. Pumpernickel** is a distinguished feline who insists on being addressed onlywhen he is being offered premium tuna.'  [finish_reason=stop, token di completamento=28]
+seed rispettato: non determinabile (risposta uguale anche con seed diverso)   [temperature 0: poco informativo]
+
+RIEPILOGO: seed rispettato (temperature 0.8): no; (temperature 0, poco informativo): non determinabile (risposta uguale anche con seed diverso)

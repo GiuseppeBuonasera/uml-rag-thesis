@@ -14,7 +14,7 @@ prompt: {serialization: compact, layout: user_only, drop_interactive: true}
 client:
   kind: lmstudio
   base_url: http://localhost:1234/v1
-  model: TODO              # id esatto esposto da LM Studio: python experiments/smoke_lmstudio.py --list-models
+  model: google/gemma-4-12b-qat   # id esposto da LM Studio (usato negli smoke test del 2026-10-06)
   timeout_s: 1200
   retries: 3
   backoff_s: 2.0
@@ -31,11 +31,13 @@ model_metadata:
   model_id: google/gemma-4-12b-qat   # pagina del modello in LM Studio
   quantization: QAT (q4_0)           # file GGUF lmstudio-community/gemma-4-12B-it-QAT-GGUF, Q4_0
   context_length: 32768              # usato nel secondo smoke test (k=3: solo 32k e' sicura, domanda 8)
-  lmstudio_version: TODO
+  lmstudio_version: 0.4.25+1         # rilevata dall'installazione ("LM Studio.exe", ProductVersion 0.4.25.0);
+                                     # `lms version` riporta solo il commit della CLI (69d945a)
   enable_thinking: false             # spento nelle impostazioni del modello (default del modello: true); domanda 15
   hardware:
-    cpu: TODO
+    cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)   # rilevata dal sistema (Win32_Processor)
     gpu: NVIDIA GeForce RTX 4070 12 GB
-    ram_gb: TODO
+    ram_gb: 32                       # RILEVATA dal sistema: 32 GB di moduli (Win32_PhysicalMemory); l'utente
+                                     # aveva indicato 16 GB: da confermare (voce 74 di docs/decisions.md)
     vram_gb: 12
     vram_used: "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"

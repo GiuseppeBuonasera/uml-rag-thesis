@@ -201,7 +201,9 @@ python experiments/smoke_lmstudio.py --model <id> --save   # smoke test + prova 
 - Riscritture prima di style_check: solo l'elenco chiuso `L4_REWRITES`; qualunque altra va decisa.
 - Nessuna chiamata a un LLM reale nei test automatici; nessuna run sul test set finché il Passo 3b è bloccato.
 - **Il seed NON garantisce la riproducibilità con LM Studio** (secondo smoke test, Gemma 4 12B QAT: a temperature 0.8
-  lo stesso seed dà risposte diverse; a temperature 0 quasi deterministico, ma non del tutto). La riproducibilità è
+  lo stesso seed dà risposte diverse; a temperature 0 le tre risposte risultano identiche, quindi il seed non ha
+  effetto: la differenza di uno spazio visibile nell'output incollato è un artefatto del copia-incolla, voce 74 di
+  decisions.md). La riproducibilità è
   garantita a livello di **ANALISI** (risposte grezze salvate in `raw/` e in cache, rianalizzabili senza rigenerare),
   non di generazione. Il seed si invia e si registra comunque.
 - **Niente download a runtime** (come per le stopword): la stima dei token usa il vocabolario cl100k_base versionato
@@ -353,8 +355,11 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
 
    **Temperatura e ripetizioni** (aggiunta 2026-10-06). Dati del secondo smoke test (Gemma 4 12B QAT in LM Studio,
    ragionamento spento, contesto 32768, RTX 4070 12 GB): il seed NON è rispettato (a temperature 0.8 lo stesso seed
-   dà risposte diverse); a temperature 0 l'output è quasi deterministico ma non del tutto (stesso testo salvo uno
-   spazio). Opzioni:
+   dà risposte diverse); a temperature 0 le tre risposte (due con lo stesso seed, una con un seed diverso) sono
+   identiche secondo il confronto dello script (la parola unita "onlywhen" nell'output incollato è un artefatto del
+   copia-incolla dal terminale, decisions.md voce 74). Un solo smoke test con un prompt breve non basta a concludere
+   che temperature 0 sia deterministico sui prompt lunghi degli esperimenti: da qui il controllo di riproducibilità
+   dell'opzione (a). Opzioni:
    - **(a) PROPOSTA PRINCIPALE**: temperature 0, 1 ripetizione per cella, più un controllo di riproducibilità su un
      sottoinsieme ripetuto (stesse chiamate rieseguite, differenze misurate e riportate);
    - (b) temperature bassa (es. 0.2-0.3) con 3 o più ripetizioni per cella: costo triplo (o più), variabilità

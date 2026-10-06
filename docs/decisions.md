@@ -82,6 +82,7 @@ non sono state modificate.
 71. 2026-10-06 — Primo smoke test con Gemma 4 12B QAT: ragionamento attivo, smoke test corretto
 72. 2026-10-06 — Secondo smoke test con Gemma 4 12B QAT: seed non rispettato, riproducibilità a livello di analisi
 73. 2026-10-06 — smoke_lmstudio.py --save: prova versionata (.txt + .json) senza copia-incolla
+74. 2026-10-06 — Output degli smoke test 1 e 2 incollati; temperature 0 deterministico nello smoke 2; metadati del template Gemma
 
 ## Formato
 
@@ -2440,3 +2441,33 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   e output completo, .json con gli esiti attesi (non valutabile + ragionamento; seed rispettato → "si"), numerazione
   che salta i numeri occupati anche dal solo .json, file di un altro modello ignorato, file esistente intatto, prova
   salvata anche con il server irraggiungibile. I test non scrivono in `docs/smoke_tests/`.
+
+### [2026-10-06] Output degli smoke test 1 e 2 incollati; temperature 0 deterministico nello smoke 2; metadati del template Gemma
+- **Prove completate**: in `docs/smoke_tests/2026-10-06_google-gemma-4-12b-qat_smoke1.txt` e `..._smoke2.txt` il
+  segnaposto è sostituito con l'output fornito dall'utente, copiato alla lettera; le osservazioni sono in "Note di
+  lettura", nell'intestazione, fuori dal blocco dell'output.
+- **Smoke 1** (ragionamento attivo, script precedente alla voce 71): `{"ok": true}` corretto anche con il
+  ragionamento (130 token di completamento, 120 di ragionamento, latenza 4,70 s); nel test del seed 947 e 1021 token
+  di `reasoning_content`, una sola risposta non vuota su sei. Con lo script attuale entrambi gli esiti sarebbero
+  "non valutabile".
+- **Smoke 2 — correzione della voce 72**: la voce 72 (dal riassunto dell'utente) diceva "a temperature 0 quasi
+  deterministico ma non del tutto: con il seed diverso stesso testo salvo uno spazio mancante". L'output mostra invece
+  che lo script ha concluso "non determinabile (risposta uguale anche con seed diverso)", esito che `seed_verdict`
+  restituisce SOLO se le tre stringhe (tolto il ragionamento) sono identiche; con uno spazio di differenza avrebbe
+  restituito "si". La riga stampata è la `repr` della stessa stringa confrontata, quindi la parola unita "onlywhen"
+  non era nella risposta: è quasi certamente un artefatto del copia-incolla dal terminale (a capo automatico nel
+  punto dello spazio). Lo stesso artefatto compare nella terza risposta a temperature 0.8, dove non cambia l'esito
+  (le due risposte con lo stesso seed sono diverse comunque). **Conclusione corretta**: a temperature 0 le tre
+  risposte sono identiche e il seed non ha effetto; a temperature 0.8 il seed non è rispettato. Aggiornati STATUS.md
+  (regola sulla riproducibilità e domanda 8); la proposta (a) della domanda 8 resta, perché un prompt breve non
+  dimostra il determinismo sui prompt lunghi degli esperimenti.
+- **Template `experiments/configs/gemma4_12b_qat_template.yaml`** (completati i TODO che non sono parametri di
+  generazione):
+  - `client.model`: `google/gemma-4-12b-qat`;
+  - `lmstudio_version`: `0.4.25+1`, rilevata dall'installazione (`LM Studio.exe`, ProductVersion 0.4.25.0; voce di
+    disinstallazione "LM Studio 0.4.25+1"); `lms version` riporta solo il commit della CLI (69d945a);
+  - `hardware.cpu`: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread), rilevata dal sistema;
+  - `hardware.ram_gb`: **32**, rilevata dal sistema (32 GB di moduli installati; 33.463.476.224 byte visibili al
+    sistema). L'utente aveva indicato 16 GB: registrato il valore rilevato, **da confermare**;
+  - restano TODO `run_id` e i parametri di generazione (temperature, top_p, top_k, max_tokens), da decidere con il
+    pilota: il runner continua a rifiutare il template.
