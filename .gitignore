@@ -26,6 +26,19 @@ data/results/retrieval/*/*
 !data/results/retrieval/*/config.json
 !data/results/retrieval/*/summary.md
 !data/results/retrieval/*/*.csv
+# run di generazione (pilota 2026-10-06 e Passo 3b): il seed NON e' rispettato da LM Studio (decisions.md voci 72 e 74),
+# quindi le risposte grezze sono l'unica base per riprodurre l'analisi -> si versionano config.json, manifest.jsonl,
+# validation.csv, summary.md e raw/; NON prompts/ (rigenerabili in modo deterministico), parsed/ (derivati da raw/),
+# cache/ (duplicato di raw/). Esclusi le prove con MockClient (mock_*) e i dry run (dry_run/).
+!data/results/generation/
+data/results/generation/*/*
+!data/results/generation/*/config.json
+!data/results/generation/*/manifest.jsonl
+!data/results/generation/*/validation.csv
+!data/results/generation/*/summary.md
+!data/results/generation/*/raw/
+data/results/generation/mock_*
+data/results/generation/dry_run
 
 # Notebook checkpoints
 .ipynb_checkpoints/

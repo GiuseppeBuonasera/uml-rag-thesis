@@ -16,6 +16,11 @@ Condizioni:
   oracle     SOLO ANALISI: top-k per Jaccard dei nomi di classe con il ground truth, il piu' simile per ultimo. Usa il
              diagramma della query: non e' una condizione realizzabile in generazione, e' un limite superiore.
 
+Query dal CORPUS (pilota, 2026-10-06): se la query e' un esercizio del corpus, la selezione e' leave-one-out con lo
+stesso protocollo di retrieval/analyze_retrieval.py: bm25 su un indice RIFITTATO sugli altri 58 record (la query non
+entra nelle statistiche IDF / avgdl), random e oracle sugli altri 58; static con la query AirTravel e' rifiutata
+(l'esempio 2 coinciderebbe con la query). In ogni caso build() fallisce se la query compare tra i propri esempi.
+
 Ogni esempio = description + JSON Apollon, serializzati allo stesso modo in tutte le condizioni. corpus/ e
 config_bm25.yaml sono letti e mai scritti. Determinismo: stessa spec + stessa query -> stesso prompt byte per byte.
 """
@@ -115,11 +120,28 @@ class PromptBuilder:
         if not cfg.get("frozen"):
             raise SystemExit("retrieval/config_bm25.yaml non congelata")
         r, p = cfg["retriever"], cfg["preprocessing"]
-        self.bm25 = KeywordRetriever(k1=r["k1"], b=r["b"],
-                                     preprocess=PreprocessConfig(p["stopwords"], p["stemming"])).fit(candidates)
+        self._bm25_args = {"k1": r["k1"], "b": r["b"], "preprocess": PreprocessConfig(p["stopwords"], p["stemming"])}
+        self.bm25 = KeywordRetriever(**self._bm25_args).fit(candidates)
+        self._loo_bm25: dict[str, KeywordRetriever] = {}
         self.static = static_examples(self.by_id)
         self.instructions = _template("v4_instructions.txt")
         self.names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in candidates}
+
+    def is_corpus_query(self, query: dict) -> bool:
+        return query["id"] in self.by_id
+
+    def pool(self, query: dict) -> list[dict]:
+        """Candidati ammessi per la query: tutti per il test set, gli altri 58 per una query del corpus (LOO)."""
+        return [c for c in self.candidates if c["id"] != query["id"]]
+
+    def bm25_for(self, query: dict) -> KeywordRetriever:
+        """Indice congelato sui 59 candidati per il test set; indice RIFITTATO senza la query per il corpus (LOO,
+        come retrieval/analyze_retrieval.loo)."""
+        if not self.is_corpus_query(query):
+            return self.bm25
+        if query["id"] not in self._loo_bm25:
+            self._loo_bm25[query["id"]] = KeywordRetriever(**self._bm25_args).fit(self.pool(query))
+        return self._loo_bm25[query["id"]]
 
     def select(self, query: dict, spec: PromptSpec) -> list[dict]:
         """Esempi nell'ordine in cui compaiono nel prompt."""
@@ -127,16 +149,18 @@ class PromptBuilder:
         if c == "zero_shot":
             return []
         if c == "static":
+            if query["id"] in {e["id"] for e in self.static}:
+                raise ValueError(f"condizione static con la query {query['id']}: coincide con un esempio statico")
             return list(self.static)
         if c == "random":
-            hits = RandomRetriever(seed=spec.seed).fit(self.candidates).retrieve(query["description"], spec.k)
+            hits = RandomRetriever(seed=spec.seed).fit(self.pool(query)).retrieve(query["description"], spec.k)
             return [self.by_id[h.id] for h in hits]  # ordine di estrazione
         if c == "bm25":
-            hits = self.bm25.retrieve(query["description"], spec.k)
+            hits = self.bm25_for(query).retrieve(query["description"], spec.k)
             return [self.by_id[h.id] for h in reversed(hits)]  # il piu' simile per ultimo
         # oracle (solo analisi)
         qn = cl.class_names(query["diagram_apollon_json"])
-        ranked = sorted(self.candidates, key=lambda x: (-cl.jaccard(qn, self.names[x["id"]]), x["id"]))[:spec.k]
+        ranked = sorted(self.pool(query), key=lambda x: (-cl.jaccard(qn, self.names[x["id"]]), x["id"]))[:spec.k]
         return list(reversed(ranked))
 
     def build(self, query: dict, spec: PromptSpec) -> BuiltPrompt:
@@ -144,6 +168,8 @@ class PromptBuilder:
         leaked = [e["id"] for e in examples if e["id"] in self.test_ids or cl.DEBARI_ID_RE.match(e["id"])]
         if leaked:
             raise AssertionError(f"esercizi del test set tra gli esempi: {leaked}")
+        if query["id"] in {e["id"] for e in examples}:
+            raise AssertionError(f"la query {query['id']} compare tra i propri esempi")
         item = _template("v4_example_item.txt")
         items = [item.format(n=i, description=e["description"].strip(),
                              diagram_json=serialize_diagram(e["diagram_apollon_json"], spec.serialization,

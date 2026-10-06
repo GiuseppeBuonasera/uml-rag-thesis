@@ -28,6 +28,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT / "experiments"))
 import postprocess as pp  # noqa: E402
 import run_experiment as rx  # noqa: E402
+import select_pilot  # noqa: E402
 import smoke_lmstudio as sm  # noqa: E402
 import token_estimate  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient, cache_key  # noqa: E402
@@ -484,6 +485,99 @@ def check_smoke(tmp: Path) -> None:
           "prova salvata anche in caso di errore")
 
 
+def check_corpus_loo(builder: PromptBuilder) -> None:
+    """Query dal corpus (pilota): selezione leave-one-out. Per OGNI query del corpus e ogni condizione nessun esempio
+    ha lo stesso id della query e nessun id del test set compare; bm25 identico al LOO del Passo 2."""
+    import csv
+    loo_csv = ROOT / "data" / "results" / "retrieval" / "loo_2026-10-04_stop1" / "loo_top3.csv"
+    ref: dict[str, list[dict]] = {}
+    for row in csv.DictReader(loo_csv.open(encoding="utf-8")):
+        ref.setdefault(row["query"], []).append(row)
+    n = 0
+    for c in builder.candidates:
+        for cond, k in (("zero_shot", 0), ("random", 3), ("bm25", 1), ("bm25", 2), ("bm25", 3), ("oracle", 3)):
+            bp = builder.build(c, PromptSpec(cond, k=k))
+            assert c["id"] not in bp.example_ids, (c["id"], cond)
+            assert not any(e in builder.test_ids or cl.DEBARI_ID_RE.match(e) for e in bp.example_ids)
+            n += 1
+        hits = builder.bm25_for(c).retrieve(c["description"], 3)  # stesso protocollo di analyze_retrieval.loo
+        rows = sorted(ref[c["id"]], key=lambda r: int(r["rank"]))
+        assert [h.id for h in hits] == [r["neighbor"] for r in rows], c["id"]
+        assert all(abs(h.score_norm - float(r["score_norm"])) < 6e-5 for h, r in zip(hits, rows)), c["id"]
+        assert builder.bm25_for(c) is not builder.bm25 and c["id"] not in builder.bm25_for(c).ids
+    for q in [dict(x) for x in cl.load_queries()]:  # il test set usa l'indice congelato sui 59 candidati
+        assert builder.bm25_for(q) is builder.bm25
+    try:
+        builder.build(builder.by_id["AirTravel"], PromptSpec("static"))
+        raise AssertionError("static con la query AirTravel non rifiutata")
+    except ValueError:
+        pass
+    assert builder.build(builder.by_id["Louvre"], PromptSpec("static")).example_ids == [
+        "STATIC_example_1_bank_loans", "AirTravel"]
+    print(f"  OK  query dal corpus: {n} prompt senza la query tra i propri esempi e senza id del test set; bm25 LOO "
+          "identico a loo_top3.csv del Passo 2 per le 59 query (indice rifittato senza la query); static con "
+          "AirTravel rifiutata")
+
+
+def check_pilot(builder: PromptBuilder, tmp: Path) -> None:
+    """Selezione deterministica dei 6 esercizi, config del pilota valida, temperature multiple, stop_on_reasoning."""
+    import yaml
+    chosen = select_pilot.select(builder)
+    assert chosen == select_pilot.select(builder)  # deterministica
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "pilot_temperature.yaml").read_text(encoding="utf-8"))
+    assert cfg["query_ids"] == [r["id"] for r in chosen]
+    assert [(r["band"], r["role"]) for r in chosen] == [(b, role) for b in select_pilot.BANDS
+                                                         for role in ("piccolo", "grande")]
+    assert "EatAtHome" not in cfg["query_ids"] and not set(cfg["query_ids"]) & builder.test_ids
+    assert cfg["split"] == "corpus" and cfg["conditions"] == ["bm25"] and cfg["k"] == [2]
+    assert cfg["generation"]["temperature"] == [0.0, 0.3] and cfg["repetitions"] == 3
+    assert (cfg["generation"]["top_k"], cfg["generation"]["top_p"], cfg["generation"]["max_tokens"]) == (64, 0.95, 12288)
+    assert cfg["model_metadata"]["enable_thinking"] is False and cfg["model_metadata"]["context_length"] == 32768
+    assert cfg["stop_on_reasoning"] is True
+    assert isinstance(rx.make_client(cfg), LMStudioClient)  # nessun metadato mancante (nessuna chiamata)
+    planned = rx.plan(cfg, builder.candidates)
+    assert len(planned) == 36
+    ids = [rx.call_id(q["id"], spec, r, t) for q, spec, r, t in planned]
+    assert len(set(ids)) == 36 and "Louvre__bm25__k2__t0__r0" in ids and "Louvre__bm25__k2__t0.3__r2" in ids
+    params = {rx.params_for(cfg, r, t) for _, _, r, t in planned}
+    assert {(p.temperature, p.seed) for p in params} == {(t, 42 + r) for t in (0.0, 0.3) for r in range(3)}
+    assert {(p.top_k, p.top_p, p.max_tokens) for p in params} == {(64, 0.95, 12288)}  # identici tra temperature
+    limit = select_pilot.testset_max_gt_tokens()
+    assert limit == 3509 and all(r["gt_tokens"] <= limit for r in chosen)  # nessun esercizio fuori scala
+    assert not {"HotelBookingManagementSystem", "SmartHomeAutomationSystem"} & set(cfg["query_ids"])
+    tmpl = yaml.safe_load((ROOT / "experiments" / "configs" / "gemma4_12b_qat_template.yaml").read_text(encoding="utf-8"))
+    assert tmpl["generation"]["max_tokens"] == cfg["generation"]["max_tokens"]  # stesso tetto nel Passo 3b
+    assert rx.is_placeholder([0.0, "TODO"]) and rx.is_placeholder([]) and not rx.is_placeholder([0.0, 0.3])
+
+    # run con MockClient sullo split corpus: temperature multiple e arresto quando compare ragionamento
+    rdir = tmp / "pilot_mock_responses"
+    rdir.mkdir()
+    (rdir / "Louvre.txt").write_text(MINI_TXT, encoding="utf-8")
+    (rdir / "StudentAppointment.txt").write_text("<|channel>thought\nok<channel|>" + MINI_TXT, encoding="utf-8")
+    mock = {"run_id": "pilot_mock", "split": "corpus", "query_ids": ["Louvre", "StudentAppointment"],
+            "conditions": ["bm25"], "k": [2], "repetitions": 2, "seed": 0, "stop_on_reasoning": True,
+            "client": {"kind": "mock", "responses_dir": str(rdir)},
+            "generation": {"temperature": [0.0, 0.3], "top_p": 0.95, "top_k": 64, "max_tokens": 8192, "seed": 42}}
+    cfg_path = tmp / "pilot_mock.yaml"
+    cfg_path.write_text(yaml.safe_dump(mock), encoding="utf-8")
+    res = tmp / "pilot_results"
+    try:
+        rx.main([str(cfg_path), "--results-dir", str(res)])
+        raise AssertionError("ragionamento non fermato")
+    except SystemExit as e:
+        assert "FERMATA" in str(e) and "StudentAppointment__bm25__k2__t0__r0" in str(e)
+    man = [json.loads(x) for x in (res / "pilot_mock" / "manifest.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert [m["call_id"] for m in man] == ["Louvre__bm25__k2__t0__r0", "Louvre__bm25__k2__t0__r1",
+                                           "Louvre__bm25__k2__t0.3__r0", "Louvre__bm25__k2__t0.3__r1",
+                                           "StudentAppointment__bm25__k2__t0__r0"]
+    assert [m["temperature"] for m in man] == [0.0, 0.0, 0.3, 0.3, 0.0] and {m["split"] for m in man} == {"corpus"}
+    assert all(m["query_id"] not in m["example_ids"] for m in man)
+    assert man[-1]["reasoning_markers_in_content"] == ["gemma4_channel_thought"] and man[-1]["level"] == 4
+    print("  OK  pilota: selezione deterministica = query_ids del config (2 per fascia, piccolo e grande, senza "
+          "EatAtHome ne' esercizi oltre i 3509 token del test set), config valida (36 generazioni, top_k / top_p / max_tokens identici tra temperature), id con "
+          "__t<temperatura>, split corpus nel runner, stop_on_reasoning")
+
+
 def check_runner(tmp: Path, base_url: str) -> None:
     cfg_path = tmp / "cfg.yaml"
     cfg = {"run_id": "t1", "split": "testset", "query_ids": ["DB06_Flights"], "conditions": ["zero_shot", "bm25"],
@@ -590,6 +684,8 @@ def main() -> None:
         check_extraction()
         check_levels()
         check_tokenizer_offline(tmp)
+        check_corpus_loo(builder)
+        check_pilot(builder, tmp)
         check_smoke(tmp)
         check_runner(tmp, base)
     finally:

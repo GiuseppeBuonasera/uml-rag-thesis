@@ -23,8 +23,8 @@ generation:
   temperature: TODO        # da decidere (domanda 8)
   top_p: TODO
   top_k: TODO
-  max_tokens: TODO         # identico per tutte le condizioni e tutti i k; con il ragionamento attivo va previsto
-                           # spazio anche per i token di ragionamento
+  max_tokens: 12288        # deciso allo STOP 1 del pilota (voce 75): identico per tutte le condizioni, tutti i k e
+                           # tutte le run di questo modello; e' un tetto, non riserva contesto
   seed: 42
   structured_output: false
 model_metadata:
@@ -37,7 +37,7 @@ model_metadata:
   hardware:
     cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)   # rilevata dal sistema (Win32_Processor)
     gpu: NVIDIA GeForce RTX 4070 12 GB
-    ram_gb: 32                       # RILEVATA dal sistema: 32 GB di moduli (Win32_PhysicalMemory); l'utente
-                                     # aveva indicato 16 GB: da confermare (voce 74 di docs/decisions.md)
+    ram_gb: 32                       # rilevata dal sistema (32 GB di moduli, Win32_PhysicalMemory) e confermata
+                                     # dalla memoria GPU condivisa di Windows (15,6 GB, circa meta' della RAM)
     vram_gb: 12
     vram_used: "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"

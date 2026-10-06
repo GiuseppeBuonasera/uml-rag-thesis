@@ -83,6 +83,7 @@ non sono state modificate.
 72. 2026-10-06 — Secondo smoke test con Gemma 4 12B QAT: seed non rispettato, riproducibilità a livello di analisi
 73. 2026-10-06 — smoke_lmstudio.py --save: prova versionata (.txt + .json) senza copia-incolla
 74. 2026-10-06 — Output degli smoke test 1 e 2 incollati; temperature 0 deterministico nello smoke 2; metadati del template Gemma
+75. 2026-10-06 — Pilota sulla temperatura (solo corpus): selezione, config e regola di decisione registrate PRIMA della run (STOP 1)
 
 ## Formato
 
@@ -2471,3 +2472,98 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
     sistema). L'utente aveva indicato 16 GB: registrato il valore rilevato, **da confermare**;
   - restano TODO `run_id` e i parametri di generazione (temperature, top_p, top_k, max_tokens), da decidere con il
     pilota: il runner continua a rifiutare il template.
+
+### [2026-10-06] Pilota sulla temperatura (solo corpus): selezione, config e regola di decisione registrate PRIMA della run (STOP 1)
+- **Scopo**: scegliere tra le opzioni della domanda 8, (a) temperature 0 con 1 ripetizione per cella e (b) temperature
+  0.3 con 3 ripetizioni, con dati misurati su esercizi del CORPUS, MAI del test set; prima verifica che Gemma 4 12B
+  QAT regga il compito. **Esperimento preliminare**, da dichiarare come tale in tesi. I dati del pilota non entrano
+  nei risultati del Passo 3b.
+- **Query dal corpus** (`generation/prompt_builder.py`, `experiments/run_experiment.py` con `split: corpus`): per
+  una query del corpus la selezione è leave-one-out con lo stesso protocollo di `retrieval/analyze_retrieval.loo`:
+  bm25 su un indice RIFITTATO sugli altri 58 record con la config congelata (la query non entra nelle statistiche
+  IDF / avgdl); random e oracle sugli altri 58; static con la query AirTravel rifiutata. `build()` fallisce se la
+  query compare tra i propri esempi. Verificato: per le 59 query il top-3 bm25 e lo score_norm coincidono con
+  `data/results/retrieval/loo_2026-10-04_stop1/loo_top3.csv`.
+- **Regola di selezione** (deterministica, `experiments/select_pilot.py`): candidati = i 59 record convertiti senza
+  known_issues (escluso solo EatAtHome); fascia = score_norm del top-1 bm25 LOO con i cut-off congelati (basso <
+  0.2893 <= medio < 0.3473 <= alto; conteggi ricalcolati 20 / 19 / 20, uguali a quelli congelati); dimensione =
+  numero totale di elementi del diagramma di riferimento dai conteggi `apollon_counts` (classi + interfacce +
+  enumerazioni + attributi + operazioni + valori di enumerazione + relazioni); per fascia il più piccolo e il più
+  grande, a parità ordine per id (nessuna parità agli estremi). Esito:
+
+  | fascia | ruolo | esercizio | score_norm top-1 | dimensione | ground truth compatto (token stimati) |
+  |---|---|---|---|---|---|
+  | basso | piccolo | Louvre | 0.2356 | 20 | 1.724 |
+  | basso | grande | HotelBookingManagementSystem | 0.1982 | 73 | 6.525 |
+  | medio | piccolo | StudentAppointment | 0.3034 | 12 | 1.308 |
+  | medio | grande | TeamSportsScoutingSystem | 0.3215 | 57 | 4.318 |
+  | alto | piccolo | ApartmentBuilding | 0.4264 | 10 | 841 |
+  | alto | grande | SmartHomeAutomationSystem | 0.3536 | 71 | 7.145 |
+
+- **Config** `experiments/configs/pilot_temperature.yaml`: bm25, k = 2, temperature [0.0, 0.3], 3 ripetizioni per
+  entrambe (servono anche a misurare la variabilità a temperature 0), top_p 0.95 e top_k 64 IDENTICI per le due
+  temperature (valori raccomandati nella scheda del modello), max_tokens 8192, seed 42 + r, contesto 32768,
+  enable_thinking false, `stop_on_reasoning: true` (la run si ferma, dopo aver salvato la chiamata, se in una
+  risposta compare ragionamento). 6 × 2 × 3 = 36 generazioni. Prompt stimati (cl100k_base): 6.626 / 9.069 / 11.279
+  token (min / mediana / max), quindi prompt + max_tokens <= 19.471 < 32.768.
+- **REGOLA DI DECISIONE** (registrata prima della run; non si modifica dopo aver visto i dati). Per ciascuna
+  temperatura T in {0, 0.3}, sulle sue 18 risposte (6 esercizi × 3 ripetizioni):
+  - V(T) = numero di risposte che superano L0-L3 (livello >= 3);
+  - J(T) = media, sulle risposte che superano L1, del Jaccard dei nomi di classe (normalizzati come
+    `corpus_loader.class_names`, case-insensitive) tra la risposta e il diagramma di riferimento dell'esercizio;
+  - **controllo preliminare**: se una delle due temperature tronca PIÙ di 1 risposta su 18 (`failure = truncated`,
+    cioè finish_reason = length), oppure se la run è stata fermata per ragionamento, oppure se per una temperatura
+    nessuna risposta supera L1 (J non definito): si segnala e ci si ferma PRIMA di decidere;
+  - **opzione (a)** se V(0) >= V(0.3) **e** J(0) >= J(0.3) − 0.05;
+  - **altrimenti opzione (b)**.
+  La regola è descrittiva (n = 18 per temperatura, nessun test statistico). Variabilità tra ripetizioni, livelli
+  L4, diagnostici di formato e di layout, tempi e token si riportano ma non entrano nella regola.
+- **Rischio segnalato allo STOP 1**: i due esercizi grandi hanno un ground truth vicino o oltre max_tokens = 8192
+  (SmartHomeAutomationSystem 7.145 token compatto, 10.232 indentato; HotelBookingManagementSystem 6.525 / 9.186). Se
+  il modello indenta il JSON o lo produce più lungo del riferimento, fino a 6 risposte per temperatura possono essere
+  troncate e il controllo preliminare fermerebbe la decisione. Questi due esercizi sono più grandi di qualunque
+  ground truth del test set (massimo 3.509 compatto, 5.056 indentato). Proposta all'utente: max_tokens 12288
+  (prompt max del pilota 11.279 + 12.288 = 23.567; nel Passo 3b con k = 3, prompt max 17.256 + 12.288 = 29.544 <
+  32.768, compatibile con la regola "contesto e max_tokens identici per modello"). Il config resta a 8192 finché
+  l'utente non decide.
+- **Versionamento** (`.gitignore`): per le run di generazione si versionano `config.json`, `manifest.jsonl`,
+  `validation.csv`, `summary.md` e `raw/`; non `prompts/` (rigenerabili), `parsed/` (derivati da raw), `cache/`
+  (duplicato di raw); esclusi `mock_*` e `dry_run/`. Motivo: il seed non è rispettato (voci 72 e 74), quindi le
+  risposte grezze sono l'unica base per riprodurre l'analisi. Verificato con `git check-ignore --no-index`.
+- Template Gemma: RAM 32 GB confermata (anche dalla memoria GPU condivisa di Windows, 15,6 GB, circa metà della RAM).
+- Test (`generation/test_generation.py`): per tutte le 59 query del corpus e 6 condizioni / k nessun esempio con
+  l'id della query né del test set; bm25 LOO identico al Passo 2; static con AirTravel rifiutata; selezione
+  deterministica uguale ai `query_ids` del config; config valida (36 chiamate, parametri identici tra temperature);
+  run con MockClient sullo split corpus con temperature multiple e arresto quando compare ragionamento.
+- **MODIFICHE DELLO STOP 1, decise dall'utente PRIMA della run** (nessuna generazione eseguita, nessun dato visto;
+  la tabella e il config di sopra sono la versione iniziale, sostituita da questa):
+  1. **max_tokens = 12288** nel config del pilota, ed è il valore da usare anche nel **Passo 3b per Gemma 4 12B QAT**
+     (regola "contesto e max_tokens identici per modello"; annotato anche nel template
+     `gemma4_12b_qat_template.yaml`). max_tokens è un **TETTO** alla lunghezza della risposta, non riserva contesto:
+     la generazione si ferma prima se il modello conclude, e prompt + risposta devono comunque stare nei 32.768 token
+     di contesto (pilota: prompt max 11.842 + 12.288 = 24.130; Passo 3b con k = 3: prompt max 17.256 + 12.288 =
+     29.544, stime cl100k_base).
+  2. **Selezione ristretta agli esercizi in scala con il test set**: si escludono i candidati il cui ground truth
+     compatto (senza `interactive`, stima cl100k_base) supera il massimo del test set, **3.509 token**. Motivo: il
+     pilota deve essere rappresentativo del test set; HotelBookingManagementSystem (6.525) e
+     SmartHomeAutomationSystem (7.145) erano fuori scala. Del test set si legge solo la dimensione dei ground truth.
+     Esclusi 14 candidati (AirTravel 4.082, DestroyBlockGame 4.749, Gym 3.714, Hospital 4.064,
+     HotelBookingManagementSystem 6.525, Kinepolis 3.842, LabTracker 4.454, MilanLibrary 5.067, OnlineTutoringSystem
+     4.186, SmartHomeAutomationSystem 7.145, TeamSportsScoutingSystem 4.318, TileOGame 4.859, TransportCompany
+     3.596, TreatmentPlans 3.730); restano 15 / 16 / 13 candidati nelle fasce basso / medio / alto. Gli esclusi
+     restano utilizzabili come ESEMPI recuperati (il filtro riguarda solo le query del pilota). Stessa regola per il
+     resto (2 per fascia, piccolo e grande per dimensione, EatAtHome escluso, ordine per id; nessuna parità agli
+     estremi). **Nuova selezione**:
+
+     | fascia | ruolo | esercizio | score_norm top-1 | dimensione | GT compatto (token) | prompt (token stimati) |
+     |---|---|---|---|---|---|---|
+     | basso | piccolo | Louvre | 0.2356 | 20 | 1.724 | 11.279 |
+     | basso | grande | Sober | 0.2522 | 56 | 3.479 | 8.495 |
+     | medio | piccolo | StudentAppointment | 0.3034 | 12 | 1.308 | 6.626 |
+     | medio | grande | CardGameApp | 0.2894 | 47 | 3.450 | 11.842 |
+     | alto | piccolo | ApartmentBuilding | 0.4264 | 10 | 841 | 6.860 |
+     | alto | grande | FilmSet | 0.4095 | 47 | 3.401 | 11.357 |
+
+     Il rischio di troncamento segnalato sopra non vale più: il ground truth più lungo indentato è 5.187 token
+     (CardGameApp), sotto il tetto di 12.288.
+  La regola di decisione resta invariata.

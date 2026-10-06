@@ -18,6 +18,12 @@ Output in data/results/generation/<run_id>/ (la cartella esistente NON si sovras
 --dry-run scrive invece dry_run/<run_id>/: dry_run.csv (lunghezza dei prompt per esercizio, condizione e k),
     summary.md (tabelle: lunghezze, token di output stimati dai ground truth, finestre di contesto 8k/16k/32k).
 
+Split (2026-10-06): "testset" (i 20 esercizi De Bari) oppure "corpus" (i 59 record convertiti; selezione degli esempi
+in leave-one-out, vedi generation/prompt_builder.py: la query non compare mai tra i propri esempi). Temperature:
+generation.temperature puo' essere una LISTA (es. [0.0, 0.3], pilota): ogni temperatura e' una cella, l'id della
+chiamata riceve il suffisso __t<temperatura>. stop_on_reasoning: true ferma la run (dopo aver salvato la chiamata) se
+in una risposta compare ragionamento (campo separato o marcatori nel testo).
+
 Un client reale (lmstudio) parte solo se la config contiene TUTTI i metadati del modello (MODEL_METADATA_REQUIRED),
 senza segnaposto. Regola metodologica (STOP 2, decisions.md voce 66): per uno stesso modello (model_id +
 quantization) la lunghezza di contesto impostata in LM Studio e max_tokens sono IDENTICI per tutte le condizioni e
@@ -57,6 +63,13 @@ MODEL_METADATA_REQUIRED = ("model_id", "quantization", "context_length", "lmstud
 # parametri di campionamento espliciti in config, mai lasciati al default del modello (llm_client.SAMPLING_PARAMS)
 GENERATION_REQUIRED = ("temperature", "top_p", "top_k", "max_tokens", "seed")
 PLACEHOLDERS = {"", "TODO", "todo", "?", None}
+SPLITS = ("testset", "corpus")
+
+
+def is_placeholder(value) -> bool:
+    if isinstance(value, list):
+        return not value or any(is_placeholder(v) for v in value)
+    return value is None or (isinstance(value, str) and value.strip() in PLACEHOLDERS)
 
 
 def token_counter():
@@ -92,7 +105,7 @@ def missing_metadata(meta: dict | None) -> list[str]:
         cur = meta or {}
         for part in key.split("."):
             cur = cur.get(part) if isinstance(cur, dict) else None
-        if cur in PLACEHOLDERS or cur == {}:
+        if is_placeholder(cur) or cur == {}:
             out.append(key)
         elif key == "enable_thinking" and not isinstance(cur, bool):
             out.append(f"{key} (true/false, come impostato in LM Studio)")
@@ -133,8 +146,8 @@ def make_client(cfg: dict):
     if c["kind"] == "lmstudio":
         missing = missing_metadata(cfg.get("model_metadata"))
         gen = cfg.get("generation") or {}
-        missing += [f"generation.{k}" for k in GENERATION_REQUIRED if gen.get(k) in PLACEHOLDERS]
-        if c.get("model") in PLACEHOLDERS:
+        missing += [f"generation.{k}" for k in GENERATION_REQUIRED if is_placeholder(gen.get(k))]
+        if is_placeholder(c.get("model")):
             missing.append("client.model")
         if missing:
             raise SystemExit(f"client reale senza metadati obbligatori del modello: {missing} (vedi model_metadata)")
@@ -144,13 +157,22 @@ def make_client(cfg: dict):
     raise SystemExit(f"client sconosciuto: {c['kind']}")
 
 
-def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int]]:
-    """(query, spec, ripetizione) nell'ordine di esecuzione. zero_shot e static non dipendono da k: una sola volta."""
+def temperatures(cfg: dict) -> list:
+    """Temperature della run: lista se generation.temperature e' una lista, altrimenti [None] (una sola, senza
+    suffisso nell'id della chiamata)."""
+    t = (cfg.get("generation") or {}).get("temperature")
+    return list(t) if isinstance(t, list) else [None]
+
+
+def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, float | None]]:
+    """(query, spec, ripetizione, temperatura) nell'ordine di esecuzione. zero_shot e static non dipendono da k: una
+    sola volta. Con piu' temperature l'ordine e' query > condizione > k > temperatura > ripetizione."""
     p = cfg.get("prompt", {})
     ids = cfg.get("query_ids")
     sel = [q for q in queries if not ids or q["id"] in ids]
     if ids and len(sel) != len(ids):
-        raise SystemExit(f"query_ids non trovati nel test set: {sorted(set(ids) - {q['id'] for q in sel})}")
+        raise SystemExit(f"query_ids non trovati nello split {cfg.get('split', 'testset')}: "
+                         f"{sorted(set(ids) - {q['id'] for q in sel})}")
     out = []
     for q in sel:
         for cond in cfg["conditions"]:
@@ -161,17 +183,21 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int]]:
                 spec = PromptSpec(condition=cond, k=k, seed=cfg.get("seed", 0),
                                   serialization=p.get("serialization", "compact"),
                                   layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True))
-                for r in range(cfg.get("repetitions", 1)):
-                    out.append((q, spec, r))
+                for t in temperatures(cfg):
+                    for r in range(cfg.get("repetitions", 1)):
+                        out.append((q, spec, r, t))
     return out
 
 
-def call_id(qid: str, spec: PromptSpec, r: int) -> str:
-    return f"{qid}__{spec.condition}__k{spec.k}__r{r}"
+def call_id(qid: str, spec: PromptSpec, r: int, temperature: float | None = None) -> str:
+    t = "" if temperature is None else f"__t{temperature:g}"
+    return f"{qid}__{spec.condition}__k{spec.k}{t}__r{r}"
 
 
-def params_for(cfg: dict, r: int) -> GenerationParams:
+def params_for(cfg: dict, r: int, temperature: float | None = None) -> GenerationParams:
     g = dict(cfg.get("generation", {}))
+    if temperature is not None:
+        g["temperature"] = temperature
     params = GenerationParams(**g)
     return replace(params, seed=params.seed + r) if params.seed is not None else params
 
@@ -185,9 +211,12 @@ def stats(xs: list[int]) -> tuple[int, float, int]:
 
 def dry_run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path) -> str:
     ntok = token_counter()
-    cfg = {**cfg, "repetitions": 1}
+    gen = dict(cfg.get("generation") or {})
+    if isinstance(gen.get("temperature"), list):  # le lunghezze non dipendono dalla temperatura
+        gen["temperature"] = gen["temperature"][0]
+    cfg = {**cfg, "repetitions": 1, "generation": gen}
     rows = []
-    for q, spec, _ in plan(cfg, queries):
+    for q, spec, _, _ in plan(cfg, queries):
         bp = builder.build(q, spec)
         rows.append({"query_id": q["id"], "condition": spec.condition, "k": spec.k, "analysis_only": bp.analysis_only,
                      "example_ids": "|".join(bp.example_ids), "prompt_chars": len(bp.text),
@@ -207,25 +236,26 @@ def dry_run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Pat
     for r in rows:
         groups.setdefault((r["condition"], r["k"]), []).append(r)
     L = [f"# Dry run `{cfg['run_id']}`", "",
-         f"Nessuna chiamata a un LLM. {len({r['query_id'] for r in rows})} esercizi del test set, prompt costruiti con "
+         f"Nessuna chiamata a un LLM. {len({r['query_id'] for r in rows})} esercizi dello split "
+         f"`{cfg.get('split', 'testset')}`, prompt costruiti con "
          f"serializzazione `{cfg.get('prompt', {}).get('serialization', 'compact')}`, layout "
          f"`{cfg.get('prompt', {}).get('layout', 'user_only')}`. Token stimati con tiktoken `{TOKENIZER}`: "
          "**approssimazione**, i modelli locali usano tokenizer propri e i conteggi reali possono differire "
          "(il manifest delle run registra anche i token riportati dal server). Finestre: 8k = 8192, 16k = 16384, "
          "32k = 32768 token. oracle = solo analisi.", "",
-         "## Lunghezza dei prompt (min / mediana / max sui 20 esercizi)", "",
+         "## Lunghezza dei prompt (min / mediana / max sugli esercizi)", "",
          "| condizione | k | caratteri | token stimati |", "|---|---|---|---|"]
     for (c, k), g in groups.items():
         ch, tk = stats([r["prompt_chars"] for r in g]), stats([r["prompt_tokens_est"] for r in g])
         L.append(f"| {c} | {k} | {ch[0]} / {ch[1]:.0f} / {ch[2]} | {tk[0]} / {tk[1]:.0f} / {tk[2]} |")
     oc, oi = stats(list(gt_c.values())), stats(list(gt_i.values()))
-    L += ["", "## Token di output stimati dai 20 ground truth (senza `interactive`)", "",
+    L += ["", "## Token di output stimati dai ground truth (senza `interactive`)", "",
           "| serializzazione | min | mediana | max |", "|---|---|---|---|",
           f"| compatta (stima richiesta) | {oc[0]} | {oc[1]:.0f} | {oc[2]} |",
           f"| indentata a 2 spazi (se il modello indenta) | {oi[0]} | {oi[1]:.0f} | {oi[2]} |", "",
           "Non include eventuali token di ragionamento (`<think>`) dei modelli che li producono.", "",
           "## Finestre di contesto: input + output stimato", "",
-          "Per ogni esercizio: token del prompt + token del suo ground truth compatto. Celle = esercizi su 20 che "
+          "Per ogni esercizio: token del prompt + token del suo ground truth compatto. Celle = esercizi (sul totale) che "
           "stanno nella finestra; tra parentesi il caso peggiore (prompt piu' lungo + output massimo compatto, "
           f"{oc[2]} token): si / no.", "",
           "| condizione | k | " + " | ".join(f"{w // 1024}k" for w in WINDOWS) + " |",
@@ -281,8 +311,8 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
         done = {json.loads(line)["call_id"] for line in manifest_path.read_text(encoding="utf-8").splitlines() if line}
     val_path = out_dir / "validation.csv"
     counts = {"calls": 0, "skipped_done": 0, "from_cache": 0}
-    for q, spec, r in plan(cfg, queries):
-        cid = call_id(q["id"], spec, r)
+    for q, spec, r, temp in plan(cfg, queries):
+        cid = call_id(q["id"], spec, r, temp)
         if cid in done:
             counts["skipped_done"] += 1
             continue
@@ -290,7 +320,7 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
         (out_dir / "prompts" / f"{cid}.json").write_text(json.dumps(
             {"messages": bp.messages, "example_ids": bp.example_ids, "spec": asdict(spec)}, ensure_ascii=False,
             indent=1), encoding="utf-8")
-        params = params_for(cfg, r)
+        params = params_for(cfg, r, temp)
         res = cached.generate(bp.messages, params, r, key=q["id"])
         counts["calls"] += 1
         counts["from_cache"] += res.cached
@@ -301,6 +331,7 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
             (out_dir / "parsed" / f"{cid}.json").write_text(json.dumps(v.diagram, ensure_ascii=False, indent=1),
                                                             encoding="utf-8")
         row = {"call_id": cid, "query_id": q["id"], "condition": spec.condition, "k": spec.k, "repetition": r,
+               "temperature": params.temperature,
                **v.row()}
         new_file = not val_path.exists()
         with val_path.open("a", newline="", encoding="utf-8") as f:
@@ -308,7 +339,8 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
             if new_file:
                 w.writeheader()
             w.writerow(row)
-        entry = {"call_id": cid, "query_id": q["id"], "condition": spec.condition, "k": spec.k, "repetition": r,
+        entry = {"call_id": cid, "split": cfg.get("split", "testset"), "query_id": q["id"],
+                 "condition": spec.condition, "k": spec.k, "repetition": r, "temperature": params.temperature,
                  "analysis_only": bp.analysis_only, "example_ids": bp.example_ids,
                  "prompt_sha256": hashlib.sha256(json.dumps(bp.messages, ensure_ascii=False).encode()).hexdigest(),
                  "prompt_chars": len(bp.text), "prompt_tokens_est": ntok(bp.text),
@@ -325,6 +357,10 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
                  "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")}
         with manifest_path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        if cfg.get("stop_on_reasoning") and (res.reasoning_field or pp.reasoning_markers(res.text)):
+            raise SystemExit(f"ragionamento nella risposta {cid} (campo {res.reasoning_field}, marcatori "
+                             f"{pp.reasoning_markers(res.text)}): run FERMATA (stop_on_reasoning). Disattiva Enable "
+                             "Thinking in LM Studio; la chiamata e' salvata in raw/ e nel manifest")
     return counts
 
 
@@ -336,10 +372,13 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--results-dir", default=str(RESULTS), help="radice dell'output (i test usano una cartella temporanea)")
     a = ap.parse_args(argv)
     cfg = yaml.safe_load(Path(a.config).read_text(encoding="utf-8"))
-    if cfg.get("split", "testset") != "testset":
-        raise SystemExit("split supportato: testset (i 20 esercizi De Bari)")
-    candidates, queries = cl.load_all()
-    builder = PromptBuilder(candidates, queries)
+    split = cfg.get("split", "testset")
+    if split not in SPLITS:
+        raise SystemExit(f"split non supportato: {split} (ammessi: {SPLITS})")
+    candidates, test_queries = cl.load_all()
+    builder = PromptBuilder(candidates, test_queries)
+    # corpus: le query sono i 59 candidati (selezione LOO nel prompt builder); il test set non viene usato
+    queries = test_queries if split == "testset" else candidates
     root = Path(a.results_dir)
     if a.dry_run:
         out = root / "dry_run" / cfg["run_id"]

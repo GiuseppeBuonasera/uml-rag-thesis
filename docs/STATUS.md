@@ -88,6 +88,9 @@ python experiments/smoke_lmstudio.py --model <id> --save   # smoke test + prova 
 #   (<data>_<id-modello>_smokeN.txt con l'output completo + .json con gli esiti strutturati; N progressivo, mai sovrascrive)
 # run reali (Passo 3b, BLOCCATO): copiare experiments/configs/lmstudio_template.yaml (o, per Gemma 4 12B QAT,
 #   gemma4_12b_qat_template.yaml) e sostituire tutti i TODO
+# pilota sulla temperatura (SOLO corpus, esperimento preliminare; voce 75 di decisions.md):
+python experiments/select_pilot.py                   # selezione deterministica dei 6 esercizi (gia' nel config)
+python experiments/run_experiment.py experiments/configs/pilot_temperature.yaml   # con LM Studio aperto (36 generazioni)
 ```
 
 ## Contatori
@@ -206,6 +209,11 @@ python experiments/smoke_lmstudio.py --model <id> --save   # smoke test + prova 
   decisions.md). La riproducibilità è
   garantita a livello di **ANALISI** (risposte grezze salvate in `raw/` e in cache, rianalizzabili senza rigenerare),
   non di generazione. Il seed si invia e si registra comunque.
+- **Le run di generazione con un modello reale si versionano** (`.gitignore`): `config.json`, `manifest.jsonl`,
+  `validation.csv`, `summary.md` e `raw/` di `data/results/generation/<run_id>/`; NON `prompts/` (rigenerabili in
+  modo deterministico), `parsed/` (derivati da `raw/`), `cache/` (duplicato di `raw/`); esclusi `mock_*` e `dry_run/`.
+- Query dal CORPUS (split `corpus`, solo per il pilota): selezione degli esempi in leave-one-out, la query non
+  compare mai tra i propri esempi (bm25 su indice rifittato sugli altri 58, come nel LOO del Passo 2).
 - **Niente download a runtime** (come per le stopword): la stima dei token usa il vocabolario cl100k_base versionato
   in `generation/tokenizer/` (sha256 verificato al caricamento, `generation/token_estimate.py`), mai
   `tiktoken.get_encoding`. Ogni file di testo il cui sha256 sui byte è registrato va protetto in `.gitattributes`
@@ -272,6 +280,8 @@ python experiments/smoke_lmstudio.py --model <id> --save   # smoke test + prova 
   Q4_0): scelto il 2026-10-06 per lo smoke test e il pilota. Quantizzazione registrata come "QAT (q4_0)". Ragionamento
   attivo di default ("Enable Thinking" = true), marcatori `<|channel>thought ... <channel|>`. Default del modello NON
   usati (temperature 1, top_k 64, top_p 0.95). Config: `experiments/configs/gemma4_12b_qat_template.yaml`.
+  **max_tokens = 12288** per tutte le run di questo modello, Passo 3b compreso (deciso allo STOP 1 del pilota, voce
+  75): è un tetto, non riserva contesto.
 - **Licenza: Apache 2.0** (confermata il 2026-10-06; primi modelli Gemma sotto una licenza approvata da OSI). Fonti:
   blog ufficiale Google Open Source, "Gemma 4: Expanding the Gemmaverse with Apache 2.0", pubblicato giovedì 2 aprile
   2026 (il /2026/03/ dell'URL è il percorso di Blogger, non la data) ("The release of Gemma 4
@@ -404,6 +414,8 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    - ~~**3a. Infrastruttura senza chiamate LLM**~~ — FATTO il 2026-10-05 (prompt builder, client LM Studio e
      mock con cache, post-processing L0-L4, runner con dry run). Resta lo smoke test manuale con LM Studio
      (`experiments/smoke_lmstudio.py`: risposta attesa e verifica del seed), da eseguire dall'utente.
+   - **Pilota sulla temperatura** (esperimento PRELIMINARE, solo corpus, voce 75): preparato, STOP 1 in attesa di
+     approvazione; poi run lanciata dall'utente e analisi (`experiments/analyze_pilot.py`, STOP 2).
    - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM, parametri,
      finestra di contesto, temperatura e ripetizioni), 9 (baseline statica), 11 (metriche), 14 (generazione libera
      o vincolata allo schema) e 15 (ragionamento acceso o spento).

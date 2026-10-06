@@ -1,0 +1,50 @@
+# PILOTA sulla temperatura (2026-10-06): esperimento PRELIMINARE, da dichiarare come tale in tesi. Solo esercizi del
+# CORPUS (split corpus, selezione degli esempi leave-one-out), MAI il test set. Decide tra le opzioni della domanda 8:
+# (a) temperature 0 con 1 ripetizione, (b) temperature 0.3 con 3 ripetizioni. Regola di decisione registrata PRIMA
+# della run: docs/decisions.md, voce 75. Totale: 6 esercizi x 2 temperature x 3 ripetizioni = 36 generazioni.
+run_id: pilot_temperature_gemma4-12b-qat
+split: corpus
+# selezione deterministica (experiments/select_pilot.py, regola nella voce 75): per fascia di score_norm LOO del
+# top-1, il piu' piccolo e il piu' grande per numero di elementi del diagramma; esclusi EatAtHome (known_issues) e
+# gli esercizi con ground truth compatto oltre il massimo del test set (3.509 token stimati; modifica dello STOP 1)
+query_ids:
+  - Louvre              # basso, piccolo (score_norm 0.2356, 20 elementi, GT compatto 1.724 token)
+  - Sober               # basso, grande  (0.2522, 56, 3.479)
+  - StudentAppointment  # medio, piccolo (0.3034, 12, 1.308)
+  - CardGameApp         # medio, grande  (0.2894, 47, 3.450)
+  - ApartmentBuilding   # alto,  piccolo (0.4264, 10, 841)
+  - FilmSet             # alto,  grande  (0.4095, 47, 3.401)
+conditions: [bm25]
+k: [2]
+repetitions: 3            # anche a temperature 0, per misurarne la variabilita'
+seed: 0                   # seed della condizione random (non usata qui)
+stop_on_reasoning: true   # la run si ferma se in una risposta compare ragionamento
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+client:
+  kind: lmstudio
+  base_url: http://localhost:1234/v1
+  model: google/gemma-4-12b-qat
+  timeout_s: 1200
+  retries: 3
+  backoff_s: 2.0
+  unsupported_params: []
+generation:
+  temperature: [0.0, 0.3]   # le due celle del pilota
+  top_p: 0.95               # IDENTICI per le due temperature: valori raccomandati nella scheda del modello
+  top_k: 64                 #   (lmstudio.ai/models/google/gemma-4-12b-qat: top_k 64, top_p 0.95)
+  max_tokens: 12288         # TETTO di generazione (non riserva contesto); stesso valore per tutte le run di questo
+                            #   modello, Passo 3b compreso (regola: contesto e max_tokens identici per modello)
+  seed: 42                  # ripetizione r -> seed 42 + r (il seed non e' rispettato, voci 72 e 74: si registra)
+  structured_output: false
+model_metadata:
+  model_id: google/gemma-4-12b-qat
+  quantization: QAT (q4_0)
+  context_length: 32768
+  lmstudio_version: 0.4.25+1
+  enable_thinking: false
+  hardware:
+    cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+    gpu: NVIDIA GeForce RTX 4070 12 GB
+    ram_gb: 32
+    vram_gb: 12
+    vram_used: "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"
