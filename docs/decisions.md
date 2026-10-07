@@ -84,6 +84,9 @@ non sono state modificate.
 73. 2026-10-06 — smoke_lmstudio.py --save: prova versionata (.txt + .json) senza copia-incolla
 74. 2026-10-06 — Output degli smoke test 1 e 2 incollati; temperature 0 deterministico nello smoke 2; metadati del template Gemma
 75. 2026-10-06 — Pilota sulla temperatura (solo corpus): selezione, config e regola di decisione registrate PRIMA della run (STOP 1)
+76. 2026-10-06 — Pilota: primo tentativo fallito (contesto 8192), token reali di Gemma 4, controllo del contesto caricato nel runner
+77. 2026-10-06 — Pilota, FASE 3 (STOP 2): la regola della voce 75 non decide (troppi troncamenti)
+78. 2026-10-07 — Secondo pilota (solo corpus): PlantUML contro JSON vincolato, Qwen2.5-Coder 14B; regola di decisione PRIMA della run (STOP 1)
 
 ## Formato
 
@@ -2567,3 +2570,192 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
      Il rischio di troncamento segnalato sopra non vale più: il ground truth più lungo indentato è 5.187 token
      (CardGameApp), sotto il tetto di 12.288.
   La regola di decisione resta invariata.
+
+### [2026-10-06] Pilota: primo tentativo fallito (contesto 8192), token reali di Gemma 4, controllo del contesto caricato nel runner
+- **Primo tentativo fallito** (resta come traccia): alla prima chiamata del pilota LM Studio ha risposto HTTP 400
+  `exceed_context_size_error` (n_prompt_tokens 14672, n_ctx 8192): il modello era caricato con contesto 8192, non
+  32768 come nel config. Il runner si è fermato prima di scrivere la chiamata nel manifest; restano `config.json`
+  (provenance.started_at 2026-10-06T13:36:26, il primo tentativo) e il prompt della chiamata. L'utente ha impostato
+  in LM Studio Context Length 32768 (come default del modello) e ha ripreso con `--resume`: le 36 chiamate sono nel
+  manifest. Il `config.json` del pilota non contiene il contesto letto dal server (il controllo sotto non esisteva
+  ancora); la run non è stata toccata.
+- **Token reali vs stima**: il tokenizer di Gemma 4 conta più di cl100k_base. Sui 6 prompt distinti del pilota il
+  rapporto token del server / stima è 1,195-1,239 (media 1,219), quindi +20-24% (14.672 reali contro 11.842 stimati
+  per CardGameApp). `experiments/context_budget.py` (sola lettura del manifest) applica il fattore massimo ai prompt
+  del Passo 3b: con max_tokens 12288 e contesto 32768 **non ci sta bm25 k=3** (1 esercizio su 20, 900 token oltre) e
+  random k=3 ha solo 862 token di margine. Tabelle e opzioni (max_tokens più basso, motivato dai ground truth del
+  test set, oppure contesto più alto, con la VRAM da misurare) nella domanda 8 di STATUS.md. **Nessuna decisione
+  presa**: decide l'utente. Nota per l'opzione "max_tokens più basso": il pilota usa 12288 e la regola "identico per
+  modello" farebbe rifiutare le run del 3b con un altro valore, quindi servirebbe un'eccezione dichiarata per il
+  pilota. Il fattore è misurato sui prompt; applicarlo agli output (ground truth) è un'analogia.
+- **Controllo del contesto caricato** (`experiments/run_experiment.py`, `LMStudioClient.loaded_context`): secondo la
+  documentazione di LM Studio ("List your models", REST API nativa) `GET /api/v1/models` riporta per ogni modello
+  `loaded_instances[].config.context_length` (contesto con cui l'istanza è caricata, oltre a `parallel` e altri
+  parametri di caricamento) e `max_context_length` (massimo del modello, NON quello caricato). Prima della prima
+  chiamata il runner confronta il contesto dell'istanza caricata con `model_metadata.context_length`: se non coincide
+  o il modello non è caricato non parte e non crea la cartella della run; se l'endpoint non risponde stampa un avviso
+  ben visibile e chiede conferma ("si"; input non interattivo, EOF o altra risposta → non parte), oppure parte con
+  `--accept-unverified-context`. Esito in `config.json` (`provenance.server_context`: contesti, parallel,
+  max_context_length, verified) e, a ogni `--resume`, in `server_checks.jsonl` (versionato) perché `config.json`
+  non si riscrive. Non verificato contro LM Studio reale (solo server finto).
+- Test (`generation/test_generation.py`, server finto con `GET /api/v1/models`): contesto uguale → parte e lo
+  registra; 8192 o modello non caricato → non parte; endpoint assente → avviso, conferma "si" accettata, "no" ed EOF
+  rifiutati, `--accept-unverified-context` registrato; run lmstudio rifiutata senza creare la cartella con contesto
+  diverso, poi eseguita e ripresa con l'esito in `server_checks.jsonl`.
+- Aggiunta (2026-10-06, durante l'analisi esplorativa del pilota): un'esecuzione dei test è fallita una volta
+  perché `GET /api/v1/models` verso il server finto non ha risposto (non riprodotto in 12 esecuzioni successive).
+  `loaded_context()` ora riprova come `generate()`: retry con backoff su errori di rete, timeout e 5xx; nessun retry
+  su 404 e sugli altri 4xx (endpoint assente → avviso e conferma, come prima).
+
+### [2026-10-06] Pilota, FASE 3 (STOP 2): la regola della voce 75 non decide (troppi troncamenti)
+- `experiments/analyze_pilot.py` ricalcola tutto dalle risposte grezze (`raw/`) con `generation/postprocess.py` e
+  scrive `summary.md` nella cartella della run (versionato). Test delle funzioni di analisi su dati sintetici in
+  `generation/test_generation.py` (regola: a, b, STOP; confronto delle relazioni).
+- **Validità** (18 risposte per temperatura; livelli cumulativi L0 / L1 / L2 / L3 / L4; troncate):
+  temperature 0: 8 / 6 / 6 / 5 / 5, troncate 6; temperature 0.3: 14 / 13 / 12 / 8 / 8, troncate 3. Solo
+  ApartmentBuilding arriva a L4 in tutte e sei le risposte. I fallimenti non troncati sono errori di sintassi del
+  modello (parentesi sbagliate come `]]`, `]}]`, `"var}`, un `</pre>` finale): le risposte classificate
+  `incomplete_json` hanno le graffe sbilanciate per questi errori, non sono tagliate. A L3: relazioni che puntano a
+  nodi inesistenti e id duplicati; a L2 una chiave `isAbstract` fuori da `data`.
+- **Troncamenti**: le 9 risposte arrivate al tetto (12.288 token, 23-30 mila caratteri) hanno 9-14 nodi, come il
+  ground truth, ma 45-80 relazioni contro 7-13: il modello continua a produrre relazioni fino al tetto.
+- **Regola della voce 75, applicata così com'è**: V(0) = 5, V(0.3) = 8; J(0) = 0,786 (6 risposte L1), J(0.3) = 0,620
+  (13 risposte L1); troncate 6 e 3, entrambe oltre la soglia di 1 su 18. **Esito: STOP, nessuna decisione**
+  (controllo preliminare). La regola non è stata modificata.
+- **Variabilità**: a temperature 0 le ripetizioni r1 e r2 sono identiche byte per byte in 5 esercizi su 6 e r0
+  differisce sempre (ipotesi non verificata: cache del prompt di LM Studio dalla seconda chiamata in poi); a 0.3
+  nessuna coppia identica.
+- **Tempi**: latenza 36,7-289,6 s per generazione (mediana 81,8 s a temperature 0, 93,1 s a 0.3); 109.881 e 92.023
+  token di completamento; 76 minuti in tutto.
+- **ESPLORATIVO, non usato per decidere**:
+  - relazioni (risposte L1, accoppiamento 1:1 per coppia di classi): temperature 0, 15 coppie in comune su 27
+    relazioni del GT, 9 con lo stesso tipo, verso uguale 3/6 tra i tipi orientati (composizione / aggregazione 3/6),
+    molteplicità uguali 5/15; temperature 0.3, 32 su 110, 19, 10/13 (5/6), 10/25. Scambi di tipo più frequenti:
+    associazione bidirezionale → aggregazione o unidirezionale, unidirezionale → composizione. ApartmentBuilding a
+    temperature 0 conferma il caso segnalato dall'utente: Jaccard delle classi 1,0 ma 3 relazioni su 9 di tipo
+    diverso, 3 composizioni su 6 con il verso invertito, molteplicità uguali 5/9;
+  - calibrazione dei token di prompt (36 chiamate, 6 prompt distinti): server / stima cl100k_base min 1,195,
+    mediana 1,222, max 1,239. Le tabelle della domanda 8 (STATUS.md) usano già il massimo 1,239 (voce 76);
+  - id: 31 risposte su 36 riusano lo schema non valido del template v4 (frammento `-4890-81h2-`), 17/18 a
+    temperature 0 e 14/18 a 0.3; 1 usa la forma UUID con caratteri non esadecimali, 3 altri formati, 1 non
+    classificabile. Solo descrittivo (L3 non richiede UUID, voce 64).
+- **ESPLORATIVO (aggiunto dopo lo STOP 2, stessi dati, nessuna nuova generazione): i cicli sono legati al prompt o
+  agli esempi?** Sezione "Risposte troncate (cicli di relazioni)" del summary.md, con una tabella per risposta.
+  - Le 9 troncate stanno solo nei 4 esercizi con il prompt più lungo (token reali >= 10.150: CardGameApp 14.672,
+    FilmSet 14.067, Louvre 13.870, Sober 10.150); i 2 esercizi con il prompt più corto (ApartmentBuilding 8.233,
+    StudentAppointment 8.046) non troncano mai. Mediane, troncate contro non troncate: prompt 14.067 contro 10.150,
+    esempi 8.663 contro 5.543 token e 36 contro 22 relazioni.
+  - **Lunghezza del prompt e dimensione degli esempi non si possono separare** con questi dati: il prompt è fatto
+    quasi tutto dagli esempi e ci sono solo 6 configurazioni di prompt (una per esercizio). Gli esercizi che troncano
+    hanno esempi con 22-38 relazioni, quelli che non troncano 14-17. MilanLibrary (5.067 token, 23 relazioni, escluso
+    come query perché fuori scala) è tra gli esempi di FilmSet e Louvre.
+  - La dimensione del ground truth non spiega da sola i cicli: Louvre ha un GT piccolo (1.724 token, 7 relazioni) e
+    un prompt lungo, e tronca.
+  - Nelle troncate le relazioni ripetono le stesse coppie (sorgente, destinazione): coppie distinte / relazioni
+    scritte in mediana 0,24 (1,00 nelle non troncate). È un ciclo sulle relazioni, non un diagramma più grande.
+  - Classi copiate dagli esempi e assenti dal GT: solo "Vehicle" in Sober (da TruckLogistics), sia in 2 troncate sia
+    in 3 non troncate: nessun legame evidente con i cicli.
+  - A parità di prompt la troncatura dipende anche da temperatura e ripetizione (es. FilmSet 3/3 a temperature 0,
+    0/3 a 0.3; Sober 0/3 a 0, 2/3 a 0.3).
+  - Limiti: 6 configurazioni, nessun test statistico. Per separare i due fattori servirebbe un esperimento che vari
+    la lunghezza del prompt a parità di esempi, o gli esempi a parità di lunghezza.
+- In attesa di decisione dell'utente sul seguito: nessuna modifica a regola, config o prompt.
+
+### [2026-10-07] Secondo pilota (solo corpus): PlantUML contro JSON vincolato, Qwen2.5-Coder 14B; regola di decisione PRIMA della run (STOP 1)
+- **Decisione di fondo (dell'utente)**: Apollon v4 è il FORMATO DI CONSEGNA, non parte del compito; è legittimo che il
+  codice produca id, coordinate e riferimenti in modo deterministico. Due strade a confronto: **strada 1** PlantUML
+  (esempi e risposta in PlantUML, conversione in Apollon con il convertitore della tesi) e **strada 2** Apollon JSON
+  con generazione vincolata allo schema. Esperimento PRELIMINARE, solo corpus (stessi 6 esercizi del primo pilota,
+  selezione leave-one-out), mai il test set.
+- **Modelli**: Gemma 4 12B QAT e **Qwen2.5-Coder 14B Instruct** (GGUF Q4_K_M, fonte ufficiale). Perché il 14B: taglia
+  simile a Gemma 12B, quindi il confronto generalista / coding non è falsato dalla dimensione; sta nei 12 GB di VRAM
+  solo con la KV cache quantizzata Q4 (K e V) e Flash Attention, con contesto 32768 (massimo del GGUF: "Currently,
+  only vLLM supports YARN", scheda del modello). I dati di VRAM dello smoke test di Qwen NON sono ancora disponibili
+  (nessuno smoke test di Qwen in `docs/smoke_tests/`): da registrare dopo lo smoke test. Parametri raccomandati da
+  Qwen (generation_config.json): temperature 0.7, top_p 0.8, top_k 20, repetition_penalty 1.05; nel pilota NON si
+  usano: temperature 0.3, top_p 0.95, top_k 64 per entrambi i modelli.
+- **Metadati obbligatori nuovi** per tutti i template e i config: `kv_cache_quant` e `flash_attention` (booleano).
+  Per Gemma i valori del primo pilota non sono noti: chiesti all'utente (nei config restano TODO e il runner rifiuta
+  P-G / J-G finché mancano). Il config storico del primo pilota non è stato modificato (run conclusa). All'avvio il
+  runner confronta anche Flash Attention se `GET /api/v1/models` la riporta nella config dell'istanza caricata; la
+  quantizzazione della KV cache non è esposta dall'API e resta un metadato dichiarato.
+- **Strada 1, template** `generation/templates/v4_plantuml_instructions.txt`: dal template v4 cambiano solo le parti sul
+  formato di uscita (ruolo di esperto PlantUML; struttura @startuml / @enduml; dichiarazioni di classe, abstract,
+  interface, enum con "+ nome : tipo" e "+ metodo(parametri) : Tipo"; riga di relazione con molteplicità e ruolo tra
+  virgolette e nome di associazione dopo i due punti; operatori PlantUML al posto dei tipi Apollon con la stessa
+  semantica; vietati skinparam, note, package, title); tolte le parti solo Apollon (id, coordinate, dimensioni,
+  handle, punti, campi degli edge). Restano identiche le righe sulla scelta del tipo di relazione (riformulate con gli
+  operatori), sulle molteplicità e le linee guida di modellazione. Aggiunte due righe di sintassi richieste dal parser:
+  nomi di classe di una parola, ogni classe usata in una relazione va dichiarata.
+- **Strada 1, esempi — PROPOSTA (da approvare)**: il diagram_plantuml del corpus (versione corretta) ha una sintassi
+  disomogenea (attributi "String Title", visibilità "-", 107 ruoli + 1 doppio scritti dopo i due punti come i 74 nomi
+  di associazione, distinti solo da label_classification.json): non è coerente con le istruzioni né con una regola
+  automatica. Proposta: esempi in **PlantUML CANONICO** (`generation/plantuml_format.py`), ricavato in modo
+  deterministico dal JSON Apollon del Passo 1 (= diagram_plantuml corretto passato dalla pipeline con la
+  classificazione), nella sola sintassi del template.
+- **Strada 1, regola automatica delle etichette `auto_v1` — PROPOSTA (da approvare)**: (a) testo dopo i due punti =
+  nome di associazione; (b) testo tra virgolette a un estremo = "molteplicità ruolo" se la prima parola ha forma di
+  molteplicità (solo cifre, `*`, `.`, `,`, `n`/`N`), altrimenti è tutto ruolo senza molteplicità; (c) vincoli {…} sulle
+  generalizzazioni come nel Passo 1. Il runner rifiuta P-G / P-Q finché la regola non è approvata
+  (`APPROVED_LABEL_RULES` vuoto).
+- **Strada 1, post-processing** `generation/plantuml_postprocess.py` (corpus/ in sola lettura): livelli P0 blocco
+  trovato, P1b parsing tollerante riuscito (righe scartate contate e registrate), P1 senza righe scartate, poi
+  conversione con le funzioni del convertitore e gli STESSI L2-L4 della strada 2 (`postprocess.check_l2_l4`).
+- **Controllo di sanità** (`generation/plantuml_sanity_check.py`, 79 diagrammi = 59 corpus + 20 test set, come
+  risposte generate con la regola `auto_v1`): (A) diagram_plantuml così com'è: 79/79 a L4, 0 righe scartate, 28
+  diagrammi diversi dal Passo 1, tutte le differenze sono **106 ruoli rimasti nome di associazione** (testo dopo i
+  due punti); (B) PlantUML canonico: 79/79 a L4 e **contenuto identico al Passo 1 in 79 casi su 79**. Durante la
+  verifica la definizione di "forma di molteplicità" è stata allargata per la grafia "0..1*" di HomeForTheElderly.
+- **Strada 2, schema** `generation/schemas/apollon_v4_generation.schema.json` (da `generation/make_generation_schema.py`;
+  lo schema ufficiale non è modificato): $ref espansi in linea (llama.cpp: "Nested $refs are broken"; lo schema
+  ufficiale ha OrthogonalEdgeData → IPoint), stesso insieme di documenti accettati; **maxItems = 39** sugli edges = 3 ×
+  13, massimo di relazioni nei 44 ground truth selezionabili (HelpingHands). Tutti i 79 ground truth (anche il test
+  set, massimo 27) sono validi con lo schema di generazione.
+- **Il vincolo è applicato durante la generazione?** Documentazione di LM Studio (Structured Output): "For GGUF
+  models: utilize llama.cpp's grammar-based sampling APIs" (MLX: Outlines); "Not all models are capable of structured
+  output, particularly LLMs below 7B parameters". La conversione JSON Schema → grammatica di llama.cpp supporta
+  min/maxItems, $ref locali, additionalProperties, pattern (^…$), enum; NON supporta i $ref annidati (risolto
+  espandendoli). Quindi struttura di primo livello, tipi di nodo / edge, punti e tetto sugli edges sono imposti dal
+  campionamento. **Limite**: lo schema ufficiale lascia libero il contenuto di `data` dei nodi (attributi, metodi,
+  nome) e i campi di `data` degli edge diversi da `points`: lì il vincolo non agisce (proposta da valutare: uno
+  schema di generazione più stretto su `data`; non applicata).
+- **Calibrazione dei token**: Gemma, prompt JSON: 1,195-1,239 (voce 76). Per Qwen e per i prompt PlantUML non ci sono
+  ancora token reali: `experiments/calibrate_tokens.py` invia i 12 prompt del pilota (6 esercizi × 2 formati) con
+  max_tokens = 1 e salva l'esito in `docs/smoke_tests/`. Margine offline (stime cl100k_base): prompt massimo 11.842
+  (JSON) e 3.115 (PlantUML); con max_tokens 12288 e contesto 32768 si sta dentro finché il fattore resta sotto 1,729
+  (JSON) e 6,57 (PlantUML).
+- **Config** `experiments/configs/pilot2_formats.yaml`: bm25, k = 2, temperature 0.3 (valore di lavoro), top_p 0.95,
+  top_k 64, max_tokens 12288, contesto 32768, 2 ripetizioni; configurazioni P-G, P-Q, J-G, J-Q (48 generazioni); il
+  runner esegue una configurazione per volta (`--configuration`) e verifica all'avvio contesto e Flash Attention del
+  modello caricato. Stime cl100k_base: prompt PlantUML 2.108 / 2.958 / 3.115 (min / mediana / max) e ground truth
+  PlantUML canonico 81-414 token; prompt JSON 6.626 / 9.887 / 11.842 e ground truth 841-3.479.
+- **REGOLA DI DECISIONE (PROPOSTA allo STOP 1; diventa definitiva con l'approvazione, PRIMA della run; non si
+  modifica dopo aver visto i dati)**. Per ogni configurazione C (12 risposte):
+  - **S(C)** = risposte che arrivano a un Apollon valido fino a L3, su 12. Strada 1: P0 + P1b (parsing riuscito, anche
+    con righe scartate) + conversione + L2 + L3. Strada 2: L0-L3.
+  - **Controllo preliminare**: una configurazione che non si può eseguire (es. il server rifiuta response_format) o
+    fermata per ragionamento è esclusa e segnalata; se ne restano meno di 2, ci si ferma senza decidere.
+  - **Soglia minima**: se il massimo di S è sotto 6/12, nessuna configurazione passa al Passo 3b; si segnala e ci si
+    ferma.
+  - **Scelta**: la configurazione con S più alto; strada e modello si scelgono INSIEME (la configurazione), non
+    separatamente.
+  - **Pareggio** = configurazioni entro 1 risposta su 12 dal massimo di S. Tra queste, nell'ordine: (1) meno
+    troncamenti; (2) Jaccard medio dei nomi di classe con il GT più alto (risposte valide fino a L3); (3) accordo
+    sulle relazioni più alto (relazioni del GT con stessa coppia di classi e stesso tipo, sul totale delle relazioni
+    del GT delle risposte valide); (4) latenza mediana più bassa. Se ancora pari: strada 1 (PlantUML: prompt e output
+    circa 10 volte più corti) e, a parità di strada, Gemma (già verificato nel primo pilota).
+  - Riportate ma fuori dalla regola: P1 (senza righe scartate), L4, diagnostici, verso e molteplicità delle relazioni,
+    token. Riferimento esterno solo descrittivo: primo pilota, Gemma in Apollon libero a temperature 0.3, V = 8/18
+    (0,44) fino a L3.
+  - Nota di lettura: nella strada 1 L2 e L3 sono quasi garantiti dal convertitore una volta superato il parsing, nella
+    strada 2 lo schema garantisce la struttura ma non i riferimenti (L3): S misura cose diverse nelle due strade, ed è
+    proprio la grandezza che interessa (Apollon valido consegnabile).
+- **Durata stimata** (non misurata): P-G e P-Q circa 3-6 minuti ciascuna (prompt ~3k token, risposte ~200-500
+  token); J-G circa 20-30 minuti (mediana di 93 s per generazione a 0.3 nel primo pilota; il vincolo può rallentare
+  il campionamento); J-Q circa 15-30 minuti (14B, KV cache Q4). Totale circa 45-70 minuti più i cambi di modello.
+- **Correzione rifatta** (la versione di ieri sera non era più nel codice): con l'endpoint dei modelli assente,
+  `check_server_context` controllava che l'input fosse un terminale PRIMA di usare la funzione di conferma, anche
+  quando i test ne iniettavano una: con lo stdin rediretto i test fallivano. Ora il controllo vale solo per `input`.
+- Nota operativa: all'inizio della sessione del 2026-10-07 parte del lavoro su questo pilota non era più su disco
+  (file nuovi assenti, file modificati tornati alla versione precedente, script dello scratchpad spariti); è stato
+  rifatto con lo stesso contenuto e gli stessi controlli (stessi esiti, stesso sha256 dello schema di generazione).

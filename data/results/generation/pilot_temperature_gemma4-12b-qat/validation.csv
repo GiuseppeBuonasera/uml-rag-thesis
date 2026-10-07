@@ -1,0 +1,37 @@
+call_id,query_id,condition,k,repetition,temperature,L0_extracted,L1_json,L2_schema,L3_integrity,L4_style,level,failure,truncated,finish_reason,reasoning_removed,extraction,errors,style_raw,l4_rewrites,format_issues,layout_issues,style_raw_count,l4_rewrites_total
+CardGameApp__bm25__k2__t0__r0,CardGameApp,bm25,2,0,0.0,True,False,False,False,False,0,invalid_json,False,stop,False,raw,"{""L1"": [""Expecting ',' delimiter: line 1 column 4902 (char 4901)""]}",[],{},,,0,0
+CardGameApp__bm25__k2__t0__r1,CardGameApp,bm25,2,1,0.0,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+CardGameApp__bm25__k2__t0__r2,CardGameApp,bm25,2,2,0.0,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+CardGameApp__bm25__k2__t0.3__r0,CardGameApp,bm25,2,0,0.3,True,True,True,False,False,2,integrity,False,stop,False,raw,"{""L3"": [""output: id duplicati nel diagramma: ['b2c3d4e5-f6a7-4890-81h2-i3j4k5l6m7n9']""]}",[],{},,,0,0
+CardGameApp__bm25__k2__t0.3__r1,CardGameApp,bm25,2,1,0.3,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+CardGameApp__bm25__k2__t0.3__r2,CardGameApp,bm25,2,2,0.3,True,True,True,False,False,2,integrity,False,stop,False,raw,"{""L3"": [""output: edge e4 referenzia un nodo inesistente"", ""output: edge e5 referenzia un nodo inesistente"", ""output: edge e6 referenzia un nodo inesistente"", ""output: edge e8 referenzia un nodo inesistente"", ""output: edge e9 referenzia un nodo inesistente"", ""output: edge e10 referenzia un nodo inesistente"", ""output: edge e11 referenzia un nodo inesistente"", ""output: edge e12 referenzia un nodo inesistente"", ""output: edge e13 referenzia un nodo inesistente"", ""output: edge e14 referenzia un nodo inesistente"", ""output: id duplicati nel diagramma: ['12345678-1234-5678-1234-567890123456', '23456789-2345-6789-2345-678901234567']""]}",[],{},,out_of_canvas;overlapping_nodes,0,0
+FilmSet__bm25__k2__t0__r0,FilmSet,bm25,2,0,0.0,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+FilmSet__bm25__k2__t0__r1,FilmSet,bm25,2,1,0.0,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+FilmSet__bm25__k2__t0__r2,FilmSet,bm25,2,2,0.0,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+FilmSet__bm25__k2__t0.3__r0,FilmSet,bm25,2,0,0.3,True,True,True,False,False,2,integrity,False,stop,False,raw,"{""L3"": [""output: edge e4 referenzia un nodo inesistente"", ""output: edge e5 referenzia un nodo inesistente"", ""output: edge e6 referenzia un nodo inesistente"", ""output: edge e10 referenzia un nodo inesistente"", ""output: edge e11 referenzia un nodo inesistente""]}",[],{},,,0,0
+FilmSet__bm25__k2__t0.3__r1,FilmSet,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0
+FilmSet__bm25__k2__t0.3__r2,FilmSet,bm25,2,2,0.3,True,True,True,False,False,2,integrity,False,stop,False,raw,"{""L3"": [""output: edge ed10 referenzia un nodo inesistente""]}",[],{},,,0,0
+Louvre__bm25__k2__t0__r0,Louvre,bm25,2,0,0.0,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+Louvre__bm25__k2__t0__r1,Louvre,bm25,2,1,0.0,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,0,0
+Louvre__bm25__k2__t0__r2,Louvre,bm25,2,2,0.0,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,0,0
+Louvre__bm25__k2__t0.3__r0,Louvre,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},"[""output: metodo 'getLocations(): Location[]' non rispetta il formato '+ nome(...) : tipo' (classe Museum)""]","{""method_v4_form"": 1}",,,1,1
+Louvre__bm25__k2__t0.3__r1,Louvre,bm25,2,1,0.3,True,False,False,False,False,0,invalid_json,False,stop,False,braces,"{""L1"": [""Expecting ',' delimiter: line 1 column 5462 (char 5461)""]}",[],{},,,0,0
+Louvre__bm25__k2__t0.3__r2,Louvre,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0
+Sober__bm25__k2__t0__r0,Sober,bm25,2,0,0.0,True,False,False,False,False,0,invalid_json,False,stop,False,raw,"{""L1"": [""Expecting ',' delimiter: line 1 column 6446 (char 6445)""]}",[],{},,,0,0
+Sober__bm25__k2__t0__r1,Sober,bm25,2,1,0.0,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,0,0
+Sober__bm25__k2__t0__r2,Sober,bm25,2,2,0.0,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,0,0
+Sober__bm25__k2__t0.3__r0,Sober,bm25,2,0,0.3,True,True,False,False,False,1,schema,False,stop,False,raw,"{""L2"": [""output: schema — Additional properties are not allowed ('isAbstract' was unexpected) (percorso: ['nodes', 1])""]}",[],{},,,0,0
+Sober__bm25__k2__t0.3__r1,Sober,bm25,2,1,0.3,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+Sober__bm25__k2__t0.3__r2,Sober,bm25,2,2,0.3,False,False,False,False,False,-1,truncated,True,length,False,,{},[],{},,,0,0
+StudentAppointment__bm25__k2__t0__r0,StudentAppointment,bm25,2,0,0.0,True,True,True,True,True,4,,False,stop,False,raw,{},"[""output: metodo 'requestAppointment(): boolean' non rispetta il formato '+ nome(...) : tipo' (classe Student)""]","{""method_v4_form"": 1}",,,1,1
+StudentAppointment__bm25__k2__t0__r1,StudentAppointment,bm25,2,1,0.0,True,True,True,False,False,2,integrity,False,stop,False,raw,"{""L3"": [""output: edge e_reg_student referenzia un nodo inesistente"", ""output: edge e_app_student referenzia un nodo inesistente""]}",[],{},,,0,0
+StudentAppointment__bm25__k2__t0__r2,StudentAppointment,bm25,2,2,0.0,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0
+StudentAppointment__bm25__k2__t0.3__r0,StudentAppointment,bm25,2,0,0.3,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,0,0
+StudentAppointment__bm25__k2__t0.3__r1,StudentAppointment,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},"[""output: metodo 'requestAppointment(): boolean' non rispetta il formato '+ nome(...) : tipo' (classe Student)""]","{""method_v4_form"": 1}",,,1,1
+StudentAppointment__bm25__k2__t0.3__r2,StudentAppointment,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},"[""output: metodo 'requestAppointment(): boolean' non rispetta il formato '+ nome(...) : tipo' (classe Student)""]","{""method_v4_form"": 1}",,,1,1
+ApartmentBuilding__bm25__k2__t0__r0,ApartmentBuilding,bm25,2,0,0.0,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0
+ApartmentBuilding__bm25__k2__t0__r1,ApartmentBuilding,bm25,2,1,0.0,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0
+ApartmentBuilding__bm25__k2__t0__r2,ApartmentBuilding,bm25,2,2,0.0,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0
+ApartmentBuilding__bm25__k2__t0.3__r0,ApartmentBuilding,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0
+ApartmentBuilding__bm25__k2__t0.3__r1,ApartmentBuilding,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0
+ApartmentBuilding__bm25__k2__t0.3__r2,ApartmentBuilding,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,0,0

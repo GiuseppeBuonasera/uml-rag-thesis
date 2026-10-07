@@ -1,0 +1,43 @@
+# MODELLO per Qwen2.5-Coder 14B Instruct in LM Studio (secondo pilota, 2026-10-07). GGUF Q4_K_M dalla fonte ufficiale
+# (Qwen/Qwen2.5-Coder-14B-Instruct-GGUF o lmstudio-community). I TODO fanno rifiutare la partenza al runner.
+# Caricamento in LM Studio: Context Length 32768 (massimo del GGUF: YaRN solo con vLLM), Flash Attention attiva,
+# KV cache quantizzata Q4 (K e V), necessaria per stare nei 12 GB di VRAM.
+# Parametri raccomandati dal modello (generation_config.json): temperature 0.7, top_p 0.8, top_k 20,
+# repetition_penalty 1.05. Nei piloti NON si usano: i parametri sono identici per i due modelli (voce 78).
+run_id: TODO_qwen25coder14b_data
+split: testset
+conditions: [zero_shot, static, random, bm25]
+k: [3]
+repetitions: 1
+seed: 0
+stop_on_reasoning: true
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+client:
+  kind: lmstudio
+  base_url: http://localhost:1234/v1
+  model: TODO              # id esatto esposto da LM Studio (smoke test: python experiments/smoke_lmstudio.py --list-models)
+  timeout_s: 1200
+  retries: 3
+  backoff_s: 2.0
+  unsupported_params: []
+generation:
+  temperature: TODO        # da decidere (domanda 8)
+  top_p: TODO
+  top_k: TODO
+  max_tokens: 12288        # come Gemma 4 12B QAT
+  seed: 42
+  structured_output: false
+model_metadata:
+  model_id: TODO           # dallo smoke test (id LM Studio del Qwen2.5-Coder 14B Instruct)
+  quantization: Q4_K_M
+  context_length: 32768
+  lmstudio_version: 0.4.25+1   # rilevata il 2026-10-06; ricontrollare se LM Studio viene aggiornato
+  enable_thinking: false   # il modello NON ha una modalita' di ragionamento: l'impostazione non esiste
+  kv_cache_quant: Q4       # K e V quantizzate Q4 (necessario per i 12 GB di VRAM)
+  flash_attention: true
+  hardware:
+    cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+    gpu: NVIDIA GeForce RTX 4070 12 GB
+    ram_gb: 32
+    vram_gb: 12
+    vram_used: TODO        # dallo smoke test, con il modello caricato a 32768

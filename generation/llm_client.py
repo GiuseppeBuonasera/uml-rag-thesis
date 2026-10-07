@@ -18,6 +18,9 @@ metadati). NESSUNA chiamata reale nei test automatici: si usa MockClient o un se
   `GenerationResult.reasoning_text` e nel raw, MAI in `text`: il post-processing estrae il JSON solo da `text`. I
   token del ragionamento: da usage.completion_tokens_details.reasoning_tokens se il server li fornisce, altrimenti
   stimati con cl100k_base (`reasoning_tokens_source`).
+- Contesto del modello CARICATO (2026-10-06): `LMStudioClient.loaded_context()` legge GET {radice}/api/v1/models
+  (REST API nativa di LM Studio, pagina "List your models"): per il modello `loaded_instances[].config.context_length`
+  e' il contesto con cui l'istanza e' caricata; `max_context_length` e' il massimo del modello, NON quello caricato.
 - CachedClient: cache su disco davanti a qualsiasi client. Chiave = sha256 di (messaggi, modello, parametri, indice di
   ripetizione): una chiamata gia' fatta non si ripete, una ripetizione diversa si'.
 
@@ -119,8 +122,12 @@ class LMStudioClient(LLMClient):
     kind = "lmstudio"
 
     def __init__(self, model: str, base_url: str = "http://localhost:1234/v1", timeout_s: float = 600.0,
-                 retries: int = 3, backoff_s: float = 2.0, unsupported_params: list[str] | tuple = ()):
+                 retries: int = 3, backoff_s: float = 2.0, unsupported_params: list[str] | tuple = (),
+                 response_schema: Path | str | None = None):
         self.model, self.base_url = model, base_url.rstrip("/")
+        # schema per response_format (solo con structured_output): default lo schema ufficiale; il secondo pilota usa
+        # generation/schemas/apollon_v4_generation.schema.json (riferimenti espansi + maxItems sugli edges)
+        self.response_schema = Path(response_schema) if response_schema else SCHEMA_PATH
         self.timeout_s, self.retries, self.backoff_s = timeout_s, retries, backoff_s
         unknown = set(unsupported_params) - set(SAMPLING_PARAMS)
         if unknown:
@@ -140,13 +147,59 @@ class LMStudioClient(LLMClient):
             sent[name] = value
         return sent
 
+    def api_root(self) -> str:
+        """Radice del server: base_url senza il suffisso /v1 della compatibilita' OpenAI."""
+        return self.base_url[:-3] if self.base_url.endswith("/v1") else self.base_url
+
+    def loaded_context(self, timeout_s: float = 30.0) -> dict:
+        """Contesto effettivo del modello caricato, da GET {radice}/api/v1/models. Restituisce sempre un dizionario:
+        available (l'endpoint ha risposto), loaded (istanze caricate del modello), context_lengths (una per istanza),
+        parallel, max_context_length, endpoint, error."""
+        url = f"{self.api_root()}/api/v1/models"
+        info: dict[str, Any] = {"endpoint": url, "available": False, "loaded": False, "context_lengths": [],
+                                "parallel": [], "max_context_length": None, "instances": [], "error": None}
+        data = None
+        for attempt in range(self.retries + 1):  # retry come generate(): rete, timeout e 5xx; 404 e altri 4xx no
+            try:
+                with urllib.request.urlopen(urllib.request.Request(url, method="GET"), timeout=timeout_s) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                break
+            except urllib.error.HTTPError as e:
+                info["error"] = f"HTTPError: {e.code} {e.reason}"
+                if e.code < 500:
+                    return info
+            except (urllib.error.URLError, TimeoutError, ConnectionError, OSError, ValueError) as e:
+                info["error"] = f"{type(e).__name__}: {e}"
+            if attempt < self.retries:
+                time.sleep(self.backoff_s * (2 ** attempt))
+        if data is None:
+            return info
+        info["error"] = None
+        models = data.get("models") if isinstance(data, dict) else None
+        if not isinstance(models, list):
+            info["error"] = "risposta senza il campo 'models'"
+            return info
+        info["available"] = True
+        for m in models:
+            instances = m.get("loaded_instances") or []
+            if m.get("key") != self.model and not any(i.get("id") == self.model for i in instances):
+                continue
+            info["max_context_length"] = m.get("max_context_length")
+            for inst in instances:
+                cfg = inst.get("config") or {}
+                info["instances"].append({"id": inst.get("id"), "config": cfg})
+                info["context_lengths"].append(cfg.get("context_length"))
+                info["parallel"].append(cfg.get("parallel"))
+        info["loaded"] = bool(info["instances"])
+        return info
+
     def request_body(self, messages: list[dict], params: GenerationParams) -> dict:
         body: dict[str, Any] = {"model": self.model, "messages": messages, **self.sampling_params(params),
                                 "stream": False}
         if params.structured_output:
             body["response_format"] = {"type": "json_schema", "json_schema": {
                 "name": "apollon_v4_class_diagram", "strict": True,
-                "schema": json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))}}
+                "schema": json.loads(self.response_schema.read_text(encoding="utf-8"))}}
         return body
 
     def generate(self, messages, params, repetition=0, key="default") -> GenerationResult:

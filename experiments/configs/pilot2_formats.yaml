@@ -1,0 +1,81 @@
+# SECONDO PILOTA (2026-10-07): strada 1 PlantUML (convertito in Apollon dal convertitore della tesi) contro strada 2
+# Apollon JSON con generazione vincolata allo schema. Esperimento PRELIMINARE, solo CORPUS (split corpus, selezione
+# leave-one-out), MAI il test set. Regola di decisione registrata PRIMA della run: docs/decisions.md, voce 78.
+# Una configurazione per volta (un modello caricato alla volta in LM Studio):
+#   python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G
+# Totale: 4 configurazioni x 6 esercizi x 2 ripetizioni = 48 generazioni.
+run_id: pilot2_formats
+split: corpus
+query_ids:   # gli stessi 6 esercizi del primo pilota (selezione della voce 75)
+  - Louvre
+  - Sober
+  - StudentAppointment
+  - CardGameApp
+  - ApartmentBuilding
+  - FilmSet
+conditions: [bm25]
+k: [2]
+repetitions: 2
+seed: 0
+stop_on_reasoning: true
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+generation:
+  temperature: 0.3          # valore di lavoro, NON la decisione finale sulla temperatura
+  top_p: 0.95               # IDENTICI per i due modelli (valori raccomandati da Gemma 4); NON sono i valori
+  top_k: 64                 #   raccomandati da Qwen2.5-Coder (temperature 0.7, top_p 0.8, top_k 20, rep. penalty 1.05)
+  max_tokens: 12288
+  seed: 42
+plantuml_label_rule: TODO   # proposta "auto_v1" (generation/plantuml_postprocess.py, voce 78): da approvare
+models:
+  G:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-12b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-12b-qat
+      quantization: QAT (q4_0)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: false
+      kv_cache_quant: TODO           # come nel primo pilota: da chiedere all'utente
+      flash_attention: TODO          # come nel primo pilota: da chiedere all'utente
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"
+  Q:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: TODO                    # id LM Studio di Qwen2.5-Coder 14B Instruct (smoke test, --list-models)
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:                  # experiments/configs/qwen25coder14b_template.yaml
+      model_id: TODO                 # dallo smoke test
+      quantization: Q4_K_M
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: false         # il modello NON ha una modalita' di ragionamento
+      kv_cache_quant: Q4             # K e V: necessario per i 12 GB di VRAM
+      flash_attention: true
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+configurations:
+  P-G: {model: G, output_format: plantuml}
+  P-Q: {model: Q, output_format: plantuml}
+  J-G: {model: G, output_format: apollon, structured_output: true,
+        response_schema: generation/schemas/apollon_v4_generation.schema.json}
+  J-Q: {model: Q, output_format: apollon, structured_output: true,
+        response_schema: generation/schemas/apollon_v4_generation.schema.json}

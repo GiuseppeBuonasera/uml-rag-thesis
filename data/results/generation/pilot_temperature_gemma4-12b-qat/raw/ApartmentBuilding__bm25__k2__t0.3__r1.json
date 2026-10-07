@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"version\": \"4.2.0\",\n  \"id\": \"apartment-building-system\",\n  \"title\": \"Apartment Building System\",\n  \"type\": \"ClassDiagram\",\n  \"nodes\": [\n    {\n      \"id\": \"e2b8c9d1-7f1a-4b3e-8c5d-6a7b8c9d0e1f\",\n      \"type\": \"class\",\n      \"position\": {\n        \"x\": 400,\n        \"y\": 300\n      },\n      \"width\": 220,\n      \"height\": 100,\n      \"measured\": {\n        \"width\": 220,\n        \"height\": 100\n      },\n      \"data\": {\n        \"name\": \"Apartment\",\n        \"attributes\": [\n          {\n            \"id\": \"a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\n            \"name\": \"+ apartmentId : string\"\n          },\n          {\n            \"id\": \"b2c3d4e5-f6a7-4890-81h2-i3j4k5l6m7n9\",\n            \"name\": \"+ floorNumber : int\"\n          }\n        ],\n        \"methods\": []\n      }\n    },\n    {\n      \"id\": \"f1a2b3c4-d5e6-4789-a1b2-c3d4e5f6a7b8\",\n      \"type\": \"class\",\n      \"position\": {\n        \"x\": 100,\n        \"y\": 450\n      },\n      \"width\": 220,\n      \"height\": 100,\n      \"measured\": {\n        \"width\": 220,\n        \"height\": 100\n      },\n      \"data\": {\n        \"name\": \"Room\",\n        \"attributes\": [\n          {\n            \"id\": \"c3d4e5f6-a7b8-4890-81h2-i3j4k5l6m7n9\",\n            \"name\": \"+ length : float\"\n          },\n          {\n            \"id\": \"d4e5f6a7-b8c9-4890-81h2-i3j4k5l6m7n0\",\n            \"name\": \"+ width : float\"\n          }\n        ],\n        \"methods\": []\n      }\n    },\n    {\n      \"id\": \"g5h6i7j8-k9l0-4123-a1b2-c3d4e5f6a7b9\",\n      \"type\": \"class\",\n      \"position\": {\n        \"x\": 100,\n        \"y\": 100\n      },\n      \"width\": 220,\n      \"height\": 100,\n      \"measured\": {\n        \"width\": 220,\n        \"height\": 100\n      },\n      \"data\": {\n        \"name\": \"Person\",\n        \"attributes\": [\n          {\n            \"id\": \"e5f6a7b8-c9d0-4123-a1b2-c3d4e5f6a7b0\",\n            \"name\": \"+ name : string\"\n          },\n          {\n            \"id\": \"f6a7b8c9-d0e1-4123-a1b2-c3d4e5f6a7b1\",\n            \"name\": \"+ id : string\"\n          }\n        ],\n        \"methods\": []\n      }\n    },\n    {\n      \"id\": \"h9i0j1k2-l3m4-4567-a1b2-c3d4e5f6a7c0\",\n      \"type\": \"class\",\n      \"position\": {\n        \"x\": 400,\n        \"y\": 50\n      },\n      \"width\": 220,\n      \"height\": 120,\n      \"measured\": {\n        \"width\": 220,\n        \"height\": 120\n      },\n      \"data\": {\n        \"name\": \"Building\",\n        \"attributes\": [\n          {\n            \"id\": \"i0j1k2l3-m4n5-4567-a1b2-c3d4e5f6a7c1\",\n            \"name\": \"+ buildingName : string\"\n          },\n          {\n            \"id\": \"j1k2l3m4-n5o6-4567-a1b2-c3d4e5f6a7c2\",\n            \"name\": \"+ totalFloors : int\"\n          }\n        ],\n        \"methods\": []\n      }\n    }\n  ],\n  \"edges\": [\n    {\n      \"id\": \"e1e2e3e4-f5f6-4789-a1b2-c3d4e5f6a7d0\",\n      \"source\": \"f1a2b3c4-d5e6-4789-a1b2-c3d4e5f6a7b8\",\n      \"target\": \"e2b8c9d1-7f1a-4b3e-8c5d-6a7b8c9d0e1f\",\n      \"type\": \"ClassComposition\",\n      \"sourceHandle\": \"right\",\n      \"targetHandle\": \"left\",\n      \"data\": {\n        \"points\": [\n          {\n            \"x\": 320,\n            \"y\": 500\n          },\n          {\n            \"x\": 320,\n            \"y\": 400\n          }\n        ],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1\",\n        \"sourceRole\": \"room\",\n        \"targetRole\": \"apartment\"\n      }\n    },\n    {\n      \"id\": \"e2e3e4e5-f6f7-4890-a1b2-c3d4e5f6a7d1\",\n      \"source\": \"g5h6i7j8-k9l0-4123-a1b2-c3d4e5f6a7b9\",\n      \"target\": \"e2b8c9d1-7f1a-4b3e-8c5d-6a7b8c9d0e1f\",\n      \"type\": \"ClassAggregation\",\n      \"sourceHandle\": \"bottom\",\n      \"targetHandle\": \"top\",\n      \"data\": {\n        \"points\": [\n          {\n            \"x\": 210,\n            \"y\": 200\n          },\n          {\n            \"x\": 400,\n            \"y\": 200\n          }\n        ],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1..*\",\n        \"sourceRole\": \"owner\",\n        \"targetRole\": \"apartment\"\n      }\n    },\n    {\n      \"id\": \"e3e4e5e6-f7f8-4901-a1b2-c3d4e5f6a7d2\",\n      \"source\": \"e2b8c9d1-7f1a-4b3e-8c5d-6a7b8c9d0e1f\",\n      \"target\": \"h9i0j1k2-l3m4-4567-a1b2-c3d4e5f6a7c0\",\n      \"type\": \"ClassComposition\",\n      \"sourceHandle\": \"top\",\n      \"targetHandle\": \"bottom\",\n      \"data\": {\n        \"points\": [\n          {\n            \"x\": 510,\n            \"y\": 300\n          },\n          {\n            \"x\": 510,\n            \"y\": 170\n          }\n        ],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1\",\n        \"sourceRole\": \"apartment\",\n        \"targetRole\": \"building\"\n      }\n    }\n  ],\n  \"assessments\": {}\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 45.419820099999924,
+ "prompt_tokens": 8233,
+ "completion_tokens": 2036,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-jgz5rgxpzylqaq5wn319p",
+  "object": "chat.completion",
+  "created": 1791291244,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"version\": \"4.2.0\",\n  \"id\": \"apartment-building-system\",\n  \"title\": \"Apartment Building System\",\n  \"type\": \"ClassDiagram\",\n  \"nodes\": [\n    {\n      \"id\": \"e2b8c9d1-7f1a-4b3e-8c5d-6a7b8c9d0e1f\",\n      \"type\": \"class\",\n      \"position\": {\n        \"x\": 400,\n        \"y\": 300\n      },\n      \"width\": 220,\n      \"height\": 100,\n      \"measured\": {\n        \"width\": 220,\n        \"height\": 100\n      },\n      \"data\": {\n        \"name\": \"Apartment\",\n        \"attributes\": [\n          {\n            \"id\": \"a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\n            \"name\": \"+ apartmentId : string\"\n          },\n          {\n            \"id\": \"b2c3d4e5-f6a7-4890-81h2-i3j4k5l6m7n9\",\n            \"name\": \"+ floorNumber : int\"\n          }\n        ],\n        \"methods\": []\n      }\n    },\n    {\n      \"id\": \"f1a2b3c4-d5e6-4789-a1b2-c3d4e5f6a7b8\",\n      \"type\": \"class\",\n      \"position\": {\n        \"x\": 100,\n        \"y\": 450\n      },\n      \"width\": 220,\n      \"height\": 100,\n      \"measured\": {\n        \"width\": 220,\n        \"height\": 100\n      },\n      \"data\": {\n        \"name\": \"Room\",\n        \"attributes\": [\n          {\n            \"id\": \"c3d4e5f6-a7b8-4890-81h2-i3j4k5l6m7n9\",\n            \"name\": \"+ length : float\"\n          },\n          {\n            \"id\": \"d4e5f6a7-b8c9-4890-81h2-i3j4k5l6m7n0\",\n            \"name\": \"+ width : float\"\n          }\n        ],\n        \"methods\": []\n      }\n    },\n    {\n      \"id\": \"g5h6i7j8-k9l0-4123-a1b2-c3d4e5f6a7b9\",\n      \"type\": \"class\",\n      \"position\": {\n        \"x\": 100,\n        \"y\": 100\n      },\n      \"width\": 220,\n      \"height\": 100,\n      \"measured\": {\n        \"width\": 220,\n        \"height\": 100\n      },\n      \"data\": {\n        \"name\": \"Person\",\n        \"attributes\": [\n          {\n            \"id\": \"e5f6a7b8-c9d0-4123-a1b2-c3d4e5f6a7b0\",\n            \"name\": \"+ name : string\"\n          },\n          {\n            \"id\": \"f6a7b8c9-d0e1-4123-a1b2-c3d4e5f6a7b1\",\n            \"name\": \"+ id : string\"\n          }\n        ],\n        \"methods\": []\n      }\n    },\n    {\n      \"id\": \"h9i0j1k2-l3m4-4567-a1b2-c3d4e5f6a7c0\",\n      \"type\": \"class\",\n      \"position\": {\n        \"x\": 400,\n        \"y\": 50\n      },\n      \"width\": 220,\n      \"height\": 120,\n      \"measured\": {\n        \"width\": 220,\n        \"height\": 120\n      },\n      \"data\": {\n        \"name\": \"Building\",\n        \"attributes\": [\n          {\n            \"id\": \"i0j1k2l3-m4n5-4567-a1b2-c3d4e5f6a7c1\",\n            \"name\": \"+ buildingName : string\"\n          },\n          {\n            \"id\": \"j1k2l3m4-n5o6-4567-a1b2-c3d4e5f6a7c2\",\n            \"name\": \"+ totalFloors : int\"\n          }\n        ],\n        \"methods\": []\n      }\n    }\n  ],\n  \"edges\": [\n    {\n      \"id\": \"e1e2e3e4-f5f6-4789-a1b2-c3d4e5f6a7d0\",\n      \"source\": \"f1a2b3c4-d5e6-4789-a1b2-c3d4e5f6a7b8\",\n      \"target\": \"e2b8c9d1-7f1a-4b3e-8c5d-6a7b8c9d0e1f\",\n      \"type\": \"ClassComposition\",\n      \"sourceHandle\": \"right\",\n      \"targetHandle\": \"left\",\n      \"data\": {\n        \"points\": [\n          {\n            \"x\": 320,\n            \"y\": 500\n          },\n          {\n            \"x\": 320,\n            \"y\": 400\n          }\n        ],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1\",\n        \"sourceRole\": \"room\",\n        \"targetRole\": \"apartment\"\n      }\n    },\n    {\n      \"id\": \"e2e3e4e5-f6f7-4890-a1b2-c3d4e5f6a7d1\",\n      \"source\": \"g5h6i7j8-k9l0-4123-a1b2-c3d4e5f6a7b9\",\n      \"target\": \"e2b8c9d1-7f1a-4b3e-8c5d-6a7b8c9d0e1f\",\n      \"type\": \"ClassAggregation\",\n      \"sourceHandle\": \"bottom\",\n      \"targetHandle\": \"top\",\n      \"data\": {\n        \"points\": [\n          {\n            \"x\": 210,\n            \"y\": 200\n          },\n          {\n            \"x\": 400,\n            \"y\": 200\n          }\n        ],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1..*\",\n        \"sourceRole\": \"owner\",\n        \"targetRole\": \"apartment\"\n      }\n    },\n    {\n      \"id\": \"e3e4e5e6-f7f8-4901-a1b2-c3d4e5f6a7d2\",\n      \"source\": \"e2b8c9d1-7f1a-4b3e-8c5d-6a7b8c9d0e1f\",\n      \"target\": \"h9i0j1k2-l3m4-4567-a1b2-c3d4e5f6a7c0\",\n      \"type\": \"ClassComposition\",\n      \"sourceHandle\": \"top\",\n      \"targetHandle\": \"bottom\",\n      \"data\": {\n        \"points\": [\n          {\n            \"x\": 510,\n            \"y\": 300\n          },\n          {\n            \"x\": 510,\n            \"y\": 170\n          }\n        ],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1\",\n        \"sourceRole\": \"apartment\",\n        \"targetRole\": \"building\"\n      }\n    }\n  ],\n  \"assessments\": {}\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8233,
+   "completion_tokens": 2036,
+   "total_tokens": 10269,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

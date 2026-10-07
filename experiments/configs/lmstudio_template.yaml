@@ -30,6 +30,8 @@ model_metadata:              # obbligatori (con client.model e generation.*): il
   context_length: TODO       # lunghezza di contesto impostata al caricamento in LM Studio
   lmstudio_version: TODO
   enable_thinking: TODO      # true / false, come impostato in LM Studio (impostazione del modello)
+  kv_cache_quant: TODO       # quantizzazione della KV cache in LM Studio (es. F16, Q8, Q4)
+  flash_attention: TODO      # true / false, come impostato in LM Studio
   hardware:
     cpu: TODO
     gpu: TODO

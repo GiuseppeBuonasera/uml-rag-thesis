@@ -91,6 +91,13 @@ python experiments/smoke_lmstudio.py --model <id> --save   # smoke test + prova 
 # pilota sulla temperatura (SOLO corpus, esperimento preliminare; voce 75 di decisions.md):
 python experiments/select_pilot.py                   # selezione deterministica dei 6 esercizi (gia' nel config)
 python experiments/run_experiment.py experiments/configs/pilot_temperature.yaml   # con LM Studio aperto (36 generazioni)
+python experiments/analyze_pilot.py                  # analisi -> summary.md della run (regola della voce 75)
+python experiments/context_budget.py                 # fattore token reali / stima dal manifest; finestre del 3b
+# secondo pilota (voce 78): strada 1 PlantUML / strada 2 JSON vincolato; una configurazione per volta
+python generation/plantuml_sanity_check.py           # 79 diagrammi come risposte PlantUML (canonico = Passo 1)
+python generation/make_generation_schema.py          # schema per la generazione vincolata (rigenera e verifica)
+python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q   # max_tokens 1
+python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G      # P-G P-Q J-G J-Q
 ```
 
 ## Contatori
@@ -186,6 +193,12 @@ python experiments/run_experiment.py experiments/configs/pilot_temperature.yaml 
 - `interface X` / `class X <<interface>>` → stereotype "interface"; ogni riga PlantUML non riconosciuta è un errore.
 - Traduzione: `glossary_shared.json` + `glossary.json` locale (stesso termine = stessa traduzione, conflitto = errore).
 ### Generazione (Passo 3)
+- **Apollon v4 è il FORMATO DI CONSEGNA, non parte del compito** (decisione dell'utente, 2026-10-07, voce 78): è
+  legittimo che il codice produca id, coordinate e riferimenti in modo deterministico. Due strade a confronto nel
+  secondo pilota: **strada 1** PlantUML (esempi e risposta in PlantUML, conversione in Apollon con il convertitore della
+  tesi, poi gli stessi controlli L2-L4) e **strada 2** Apollon JSON con generazione vincolata allo schema.
+- Metadati obbligatori anche `kv_cache_quant` e `flash_attention` (impostazioni di caricamento in LM Studio); Flash
+  Attention è verificata all'avvio se LM Studio la riporta, la quantizzazione della KV cache no (non esposta).
 - **Per uno stesso modello (model_id + quantizzazione), la lunghezza di contesto impostata in LM Studio e `max_tokens`
   sono IDENTICI per tutte le condizioni e tutti i k.** Il runner rifiuta una run i cui valori differiscono da quelli
   di una run già presente dello stesso modello.
@@ -209,8 +222,13 @@ python experiments/run_experiment.py experiments/configs/pilot_temperature.yaml 
   decisions.md). La riproducibilità è
   garantita a livello di **ANALISI** (risposte grezze salvate in `raw/` e in cache, rianalizzabili senza rigenerare),
   non di generazione. Il seed si invia e si registra comunque.
+- **Contesto verificato prima di partire**: con LM Studio il runner legge da `GET /api/v1/models` il contesto
+  dell'istanza caricata (`loaded_instances[].config.context_length`) e non parte se non coincide con
+  `model_metadata.context_length` o se il modello non è caricato; se l'endpoint non risponde, avviso e conferma (o
+  `--accept-unverified-context`). Esito in `config.json` (`provenance.server_context`) e, alle riprese, in
+  `server_checks.jsonl`. Le stime cl100k_base sottostimano i token reali di Gemma 4 di circa il 20-24% (voce 76).
 - **Le run di generazione con un modello reale si versionano** (`.gitignore`): `config.json`, `manifest.jsonl`,
-  `validation.csv`, `summary.md` e `raw/` di `data/results/generation/<run_id>/`; NON `prompts/` (rigenerabili in
+  `validation.csv`, `summary.md`, `server_checks.jsonl` e `raw/` di `data/results/generation/<run_id>/`; NON `prompts/` (rigenerabili in
   modo deterministico), `parsed/` (derivati da `raw/`), `cache/` (duplicato di `raw/`); esclusi `mock_*` e `dry_run/`.
 - Query dal CORPUS (split `corpus`, solo per il pilota): selezione degli esempi in leave-one-out, la query non
   compare mai tra i propri esempi (bm25 su indice rifittato sugli altri 58, come nel LOO del Passo 2).
@@ -276,6 +294,11 @@ python experiments/run_experiment.py experiments/configs/pilot_temperature.yaml 
 | **Totale** | **60** | **20** | **80** |
 
 ## Modelli (LM Studio)
+- **Qwen2.5-Coder 14B Instruct** (secondo pilota, 2026-10-07): GGUF Q4_K_M dalla fonte ufficiale, contesto 32768
+  (massimo del GGUF), Flash Attention attiva, KV cache quantizzata Q4 (K e V) per stare nei 12 GB di VRAM; nessuna
+  modalità di ragionamento (`enable_thinking: false`). Template `experiments/configs/qwen25coder14b_template.yaml`
+  (id, VRAM: TODO dallo smoke test). Parametri raccomandati dal modello: temperature 0.7, top_p 0.8, top_k 20,
+  repetition penalty 1.05 (non usati nei piloti, dove i parametri sono identici per i due modelli).
 - **Gemma 4 12B QAT** (`lmstudio.ai/models/google/gemma-4-12b-qat`; GGUF `lmstudio-community/gemma-4-12B-it-QAT-GGUF`,
   Q4_0): scelto il 2026-10-06 per lo smoke test e il pilota. Quantizzazione registrata come "QAT (q4_0)". Ragionamento
   attivo di default ("Enable Thinking" = true), marcatori `<|channel>thought ... <channel|>`. Default del modello NON
@@ -363,6 +386,32 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
 
    Con output indentato, a 16k: bm25 k=3 13/20, random k=3 17/20, oracle k=3 18/20.
 
+   **Correzione con i token REALI** (aggiunta 2026-10-06, dopo il pilota): il tokenizer di Gemma 4 conta più di
+   cl100k_base. Fattore server / stima sui 6 prompt del pilota: min 1,195, media 1,219, **max 1,239** (usato qui).
+   Prompt del Passo 3b (20 esercizi del test set) × 1,239 + max_tokens 12288, contro contesto 32768
+   (`python experiments/context_budget.py`):
+
+   | condizione | k | prompt reale stimato (mediana / max) | esercizi che stanno | margine nel caso peggiore |
+   |---|---|---|---|---|
+   | zero_shot | 0 | 2.417 / 2.545 | 20/20 | 17.935 |
+   | static | 2 | 9.725 / 9.852 | 20/20 | 10.628 |
+   | random | 1 / 2 / 3 | 5.934 / 9.213 — 9.082 / 13.473 — 13.302 / 19.618 | 20/20 tutti | 11.267 — 7.007 — 862 |
+   | bm25 | 1 / 2 / 3 | 5.872 / 8.906 — 9.964 / 13.867 — 14.198 / 21.380 | 20 — 20 — **19/20** | 11.574 — 6.613 — **−900** |
+   | oracle | 1 / 2 / 3 | 4.972 / 8.897 — 8.184 / 12.733 — 12.648 / 16.523 | 20/20 tutti | 11.583 — 7.747 — 3.957 |
+
+   **Non ci sta: bm25 k=3** (1 esercizio su 20, 900 token oltre); random k=3 ha solo 862 token di margine. Opzioni
+   (nessuna decisa):
+   - **max_tokens più basso**: il ground truth più lungo del test set è ~4.350 token reali in forma compatta e
+     ~6.260 indentato (fattore applicato per analogia: è misurato sui prompt). Con 10240 tutto ci sta (bm25 k=3:
+     margine 1.148; il tetto resta 1,6 volte il ground truth indentato più lungo); con 8192 il margine è 3.196 (1,3
+     volte). Il massimo compatibile con bm25 k=3 è 11.388. Conseguenza: il pilota è stato eseguito con 12288 e la
+     regola "max_tokens identico per modello" farebbe rifiutare al runner le run del 3b con un valore diverso; servirebbe
+     un'eccezione dichiarata per il pilota (esperimento preliminare sul corpus).
+   - **contesto più alto**: serve almeno 33.668 (prompt peggiore 21.380 + 12.288); 36.864 dà 3.196 di margine,
+     40.960 ne dà 7.292. VRAM misurata solo a 32k: 9,9 / 12 GB dedicata + 0,2 GB condivisa; l'aumento con un contesto
+     più lungo NON è misurato e va verificato in LM Studio (il traboccare nella memoria condivisa rallenterebbe la
+     generazione).
+
    **Temperatura e ripetizioni** (aggiunta 2026-10-06). Dati del secondo smoke test (Gemma 4 12B QAT in LM Studio,
    ragionamento spento, contesto 32768, RTX 4070 12 GB): il seed NON è rispettato (a temperature 0.8 lo stesso seed
    dà risposte diverse); a temperature 0 le tre risposte (due con lo stesso seed, una con un seed diverso) sono
@@ -414,8 +463,14 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    - ~~**3a. Infrastruttura senza chiamate LLM**~~ — FATTO il 2026-10-05 (prompt builder, client LM Studio e
      mock con cache, post-processing L0-L4, runner con dry run). Resta lo smoke test manuale con LM Studio
      (`experiments/smoke_lmstudio.py`: risposta attesa e verifica del seed), da eseguire dall'utente.
-   - **Pilota sulla temperatura** (esperimento PRELIMINARE, solo corpus, voce 75): preparato, STOP 1 in attesa di
-     approvazione; poi run lanciata dall'utente e analisi (`experiments/analyze_pilot.py`, STOP 2).
+   - **Pilota sulla temperatura** (esperimento PRELIMINARE, solo corpus, voci 75-77): eseguito (36 generazioni, 76
+     minuti) e analizzato (`experiments/analyze_pilot.py`, summary.md della run). **STOP 2: la regola registrata NON
+     decide**: il controllo preliminare si ferma per troppi troncamenti (6 su 18 a temperature 0, 3 su 18 a 0.3, soglia
+     1). In attesa di decisione dell'utente sul seguito.
+   - **Secondo pilota, PlantUML contro JSON vincolato** (PRELIMINARE, solo corpus, voce 78): preparato, **STOP 1**
+     in attesa di approvazione (esempi PlantUML canonici, regola automatica delle etichette `auto_v1`, regola di
+     decisione) e dei dati mancanti (metadati di caricamento di Gemma nel primo pilota; id, VRAM e calibrazione dei
+     token di Qwen2.5-Coder 14B dallo smoke test).
    - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM, parametri,
      finestra di contesto, temperatura e ripetizioni), 9 (baseline statica), 11 (metriche), 14 (generazione libera
      o vincolata allo schema) e 15 (ragionamento acceso o spento).

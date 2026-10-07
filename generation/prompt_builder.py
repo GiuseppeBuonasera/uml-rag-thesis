@@ -21,6 +21,11 @@ stesso protocollo di retrieval/analyze_retrieval.py: bm25 su un indice RIFITTATO
 entra nelle statistiche IDF / avgdl), random e oracle sugli altri 58; static con la query AirTravel e' rifiutata
 (l'esempio 2 coinciderebbe con la query). In ogni caso build() fallisce se la query compare tra i propri esempi.
 
+Formato di uscita (secondo pilota, 2026-10-07): output_format "apollon" (istruzioni v4, esempi JSON) oppure
+"plantuml" (istruzioni templates/v4_plantuml_instructions.txt, che cambiano SOLO la parte sul formato; esempi in
+PlantUML CANONICO ricavato dal JSON Apollon del Passo 1, generation/plantuml_format.py). Il blocco esempi resta l'unica
+parte che cambia tra le condizioni dello stesso formato.
+
 Ogni esempio = description + JSON Apollon, serializzati allo stesso modo in tutte le condizioni. corpus/ e
 config_bm25.yaml sono letti e mai scritti. Determinismo: stessa spec + stessa query -> stesso prompt byte per byte.
 """
@@ -50,6 +55,9 @@ BM25_CONFIG = ROOT / "retrieval" / "config_bm25.yaml"
 CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle")
 ANALYSIS_ONLY = {"oracle"}
 SERIALIZATIONS = ("indent2", "compact")
+OUTPUT_FORMATS = ("apollon", "plantuml")
+INSTRUCTION_TEMPLATES = {"apollon": "v4_instructions.txt", "plantuml": "v4_plantuml_instructions.txt"}
+ITEM_TEMPLATES = {"apollon": "v4_example_item.txt", "plantuml": "v4_plantuml_example_item.txt"}
 LAYOUTS = ("user_only", "system_user")  # system_user disponibile, ma non si usa senza decisione (decisions.md, voce 64)
 
 
@@ -61,10 +69,13 @@ class PromptSpec:
     serialization: str = "compact"
     layout: str = "user_only"
     drop_interactive: bool = True  # toglie la chiave di primo livello "interactive" dagli esempi serializzati
+    output_format: str = "apollon"  # "apollon" (JSON) | "plantuml" (convertito in Apollon nel post-processing)
 
     def __post_init__(self):
         if self.condition not in CONDITIONS:
             raise ValueError(f"condizione sconosciuta: {self.condition}")
+        if self.output_format not in OUTPUT_FORMATS:
+            raise ValueError(f"formato di uscita sconosciuto: {self.output_format}")
         if self.serialization not in SERIALIZATIONS or self.layout not in LAYOUTS:
             raise ValueError(f"serializzazione o layout non validi: {self.serialization}, {self.layout}")
 
@@ -124,7 +135,8 @@ class PromptBuilder:
         self.bm25 = KeywordRetriever(**self._bm25_args).fit(candidates)
         self._loo_bm25: dict[str, KeywordRetriever] = {}
         self.static = static_examples(self.by_id)
-        self.instructions = _template("v4_instructions.txt")
+        self.instructions = _template("v4_instructions.txt")  # formato apollon (identiche al template v4)
+        self.instructions_by_format = {f: _template(t) for f, t in INSTRUCTION_TEMPLATES.items()}
         self.names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in candidates}
 
     def is_corpus_query(self, query: dict) -> bool:
@@ -163,6 +175,13 @@ class PromptBuilder:
         ranked = sorted(self.pool(query), key=lambda x: (-cl.jaccard(qn, self.names[x["id"]]), x["id"]))[:spec.k]
         return list(reversed(ranked))
 
+    @staticmethod
+    def render_example(example: dict, spec: PromptSpec) -> str:
+        if spec.output_format == "plantuml":
+            from plantuml_format import apollon_to_plantuml
+            return apollon_to_plantuml(example["diagram_apollon_json"])
+        return serialize_diagram(example["diagram_apollon_json"], spec.serialization, spec.drop_interactive)
+
     def build(self, query: dict, spec: PromptSpec) -> BuiltPrompt:
         examples = self.select(query, spec)
         leaked = [e["id"] for e in examples if e["id"] in self.test_ids or cl.DEBARI_ID_RE.match(e["id"])]
@@ -170,19 +189,18 @@ class PromptBuilder:
             raise AssertionError(f"esercizi del test set tra gli esempi: {leaked}")
         if query["id"] in {e["id"] for e in examples}:
             raise AssertionError(f"la query {query['id']} compare tra i propri esempi")
-        item = _template("v4_example_item.txt")
-        items = [item.format(n=i, description=e["description"].strip(),
-                             diagram_json=serialize_diagram(e["diagram_apollon_json"], spec.serialization,
-                                                            spec.drop_interactive))
+        item = _template(ITEM_TEMPLATES[spec.output_format])
+        items = [item.format(n=i, description=e["description"].strip(), diagram_json=self.render_example(e, spec))
                  for i, e in enumerate(examples, start=1)]
         examples_block = _template("v4_examples_block.txt").format(examples="\n".join(items)) if items else ""
         task = _template("v4_task.txt").format(description=query["description"].strip())
         user = (examples_block + "\n" if examples_block else "") + task
-        text = self.instructions + "\n" + user
+        instructions = self.instructions_by_format[spec.output_format]
+        text = instructions + "\n" + user
         if spec.layout == "user_only":
             messages = [{"role": "user", "content": text}]
         else:
-            messages = [{"role": "system", "content": self.instructions.rstrip("\n")}, {"role": "user", "content": user}]
+            messages = [{"role": "system", "content": instructions.rstrip("\n")}, {"role": "user", "content": user}]
         return BuiltPrompt(query_id=query["id"], spec=spec, example_ids=[e["id"] for e in examples],
-                           instructions=self.instructions, examples_block=examples_block, task=task, text=text,
+                           instructions=instructions, examples_block=examples_block, task=task, text=text,
                            messages=messages, analysis_only=spec.condition in ANALYSIS_ONLY)

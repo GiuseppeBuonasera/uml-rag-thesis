@@ -24,6 +24,18 @@ generation.temperature puo' essere una LISTA (es. [0.0, 0.3], pilota): ogni temp
 chiamata riceve il suffisso __t<temperatura>. stop_on_reasoning: true ferma la run (dopo aver salvato la chiamata) se
 in una risposta compare ragionamento (campo separato o marcatori nel testo).
 
+Contesto effettivo (2026-10-06, dopo il primo tentativo del pilota fallito con il modello caricato a 8192): con il
+client lmstudio, PRIMA della prima chiamata il runner legge da GET /api/v1/models il contesto dell'istanza caricata e
+lo confronta con model_metadata.context_length: se non coincide, o il modello non e' caricato, non parte. Se l'endpoint
+non risponde stampa un avviso e chiede conferma (o --accept-unverified-context). L'esito si registra in config.json
+(provenance.server_context) e, a ogni ripresa, in server_checks.jsonl.
+
+Configurazioni (secondo pilota, 2026-10-07): se la config ha "configurations", si esegue UNA configurazione per
+volta con --configuration NOME (un solo modello caricato alla volta in LM Studio). Ogni configurazione sceglie un
+modello da "models" (client + model_metadata), il formato di uscita (apollon | plantuml) e structured_output; la run si
+chiama <run_id>__<NOME>. Le risposte PlantUML passano da generation/plantuml_postprocess.py (conversione in Apollon,
+poi gli stessi L2-L4), solo se la regola automatica delle etichette e' approvata (plantuml_label_rule).
+
 Un client reale (lmstudio) parte solo se la config contiene TUTTI i metadati del modello (MODEL_METADATA_REQUIRED),
 senza segnaposto. Regola metodologica (STOP 2, decisions.md voce 66): per uno stesso modello (model_id +
 quantization) la lunghezza di contesto impostata in LM Studio e max_tokens sono IDENTICI per tutte le condizioni e
@@ -50,7 +62,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generation"))
+import plantuml_postprocess as ppu  # noqa: E402
 import postprocess as pp  # noqa: E402
+from plantuml_format import apollon_to_plantuml  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient  # noqa: E402
 from prompt_builder import BM25_CONFIG, CONDITIONS, PromptBuilder, PromptSpec, cl, serialize_diagram  # noqa: E402
 import token_estimate  # noqa: E402
@@ -59,7 +73,9 @@ RESULTS = ROOT / "data" / "results" / "generation"
 TOKENIZER = "cl100k_base"
 WINDOWS = (8192, 16384, 32768)
 MODEL_METADATA_REQUIRED = ("model_id", "quantization", "context_length", "lmstudio_version", "enable_thinking",
+                           "kv_cache_quant", "flash_attention",  # impostazioni di caricamento (2026-10-07)
                            "hardware.cpu", "hardware.gpu", "hardware.ram_gb", "hardware.vram_gb")
+BOOL_METADATA = ("enable_thinking", "flash_attention")
 # parametri di campionamento espliciti in config, mai lasciati al default del modello (llm_client.SAMPLING_PARAMS)
 GENERATION_REQUIRED = ("temperature", "top_p", "top_k", "max_tokens", "seed")
 PLACEHOLDERS = {"", "TODO", "todo", "?", None}
@@ -107,7 +123,7 @@ def missing_metadata(meta: dict | None) -> list[str]:
             cur = cur.get(part) if isinstance(cur, dict) else None
         if is_placeholder(cur) or cur == {}:
             out.append(key)
-        elif key == "enable_thinking" and not isinstance(cur, bool):
+        elif key in BOOL_METADATA and not isinstance(cur, bool):
             out.append(f"{key} (true/false, come impostato in LM Studio)")
     return out
 
@@ -151,9 +167,11 @@ def make_client(cfg: dict):
             missing.append("client.model")
         if missing:
             raise SystemExit(f"client reale senza metadati obbligatori del modello: {missing} (vedi model_metadata)")
+        schema = c.get("response_schema")
         return LMStudioClient(model=c["model"], base_url=c.get("base_url", "http://localhost:1234/v1"),
                               timeout_s=c.get("timeout_s", 600), retries=c.get("retries", 3),
-                              backoff_s=c.get("backoff_s", 2.0), unsupported_params=c.get("unsupported_params", []))
+                              backoff_s=c.get("backoff_s", 2.0), unsupported_params=c.get("unsupported_params", []),
+                              response_schema=ROOT / schema if schema else None)
     raise SystemExit(f"client sconosciuto: {c['kind']}")
 
 
@@ -182,11 +200,49 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
             for k in ks:
                 spec = PromptSpec(condition=cond, k=k, seed=cfg.get("seed", 0),
                                   serialization=p.get("serialization", "compact"),
-                                  layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True))
+                                  layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True),
+                                  output_format=p.get("output_format", "apollon"))
                 for t in temperatures(cfg):
                     for r in range(cfg.get("repetitions", 1)):
                         out.append((q, spec, r, t))
     return out
+
+
+APPROVED_LABEL_RULES = ()  # regola automatica delle etichette PlantUML: vuoto finche' l'utente non la approva
+
+
+def resolve_configuration(cfg: dict, name: str | None) -> dict:
+    """Config piatta per UNA configurazione (client, model_metadata, formato, structured_output); invariata se la
+    config non ha 'configurations'."""
+    confs = cfg.get("configurations")
+    if not confs:
+        if name:
+            raise SystemExit("--configuration indicata ma la config non ha 'configurations'")
+        return cfg
+    if not name:
+        raise SystemExit(f"scegli una configurazione con --configuration: {sorted(confs)}")
+    if name not in confs:
+        raise SystemExit(f"configurazione sconosciuta {name}: {sorted(confs)}")
+    conf = confs[name]
+    model = cfg["models"][conf["model"]]
+    out = {k: v for k, v in cfg.items() if k not in ("configurations", "models")}
+    out["run_id"] = f"{cfg['run_id']}__{name}"
+    out["configuration"] = name
+    out["client"] = dict(model["client"])
+    out["model_metadata"] = dict(model["model_metadata"])
+    out["prompt"] = {**cfg.get("prompt", {}), "output_format": conf["output_format"]}
+    out["generation"] = {**cfg.get("generation", {}), "structured_output": bool(conf.get("structured_output"))}
+    if conf.get("structured_output"):
+        out["client"]["response_schema"] = conf["response_schema"]
+    return out
+
+
+def check_label_rule(cfg: dict) -> None:
+    if (cfg.get("prompt") or {}).get("output_format") == "plantuml":
+        rule = cfg.get("plantuml_label_rule")
+        if rule not in APPROVED_LABEL_RULES:
+            raise SystemExit(f"plantuml_label_rule = {rule!r} non approvata (approvate: {list(APPROVED_LABEL_RULES)}): "
+                             "la regola automatica delle etichette va approvata prima delle run PlantUML (voce 78)")
 
 
 def call_id(qid: str, spec: PromptSpec, r: int, temperature: float | None = None) -> str:
@@ -221,8 +277,12 @@ def dry_run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Pat
         rows.append({"query_id": q["id"], "condition": spec.condition, "k": spec.k, "analysis_only": bp.analysis_only,
                      "example_ids": "|".join(bp.example_ids), "prompt_chars": len(bp.text),
                      "prompt_tokens_est": ntok(bp.text)})
-    gt_c = {q["id"]: ntok(serialize_diagram(q["diagram_apollon_json"], "compact", True)) for q in queries}
-    gt_i = {q["id"]: ntok(serialize_diagram(q["diagram_apollon_json"], "indent2", True)) for q in queries}
+    if (cfg.get("prompt") or {}).get("output_format") == "plantuml":  # output = PlantUML canonico del GT
+        gt_c = {q["id"]: ntok(apollon_to_plantuml(q["diagram_apollon_json"])) for q in queries}
+        gt_i = dict(gt_c)
+    else:
+        gt_c = {q["id"]: ntok(serialize_diagram(q["diagram_apollon_json"], "compact", True)) for q in queries}
+        gt_i = {q["id"]: ntok(serialize_diagram(q["diagram_apollon_json"], "indent2", True)) for q in queries}
 
     out_dir.mkdir(parents=True)
     with (out_dir / "dry_run.csv").open("w", newline="", encoding="utf-8") as f:
@@ -284,7 +344,53 @@ def dry_run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Pat
 # --- run ------------------------------------------------------------------------------------------------------------
 
 
-def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, resume: bool) -> dict:
+CONTEXT_WARNING = ("CONTESTO DEL MODELLO CARICATO NON VERIFICABILE: controlla in LM Studio (My Models / Developer) che "
+                   "il modello sia caricato con Context Length = {expected}")
+
+
+def check_server_context(client, cfg: dict, accept_unverified: bool = False, ask=input) -> dict:
+    """Confronta il contesto dell'istanza caricata in LM Studio con model_metadata.context_length. Restituisce
+    l'esito da registrare; SystemExit se non coincide, se il modello non e' caricato o se l'utente non conferma."""
+    expected = (cfg.get("model_metadata") or {}).get("context_length")
+    info = client.loaded_context()
+    info["expected_context_length"] = expected
+    info["checked_at"] = time.strftime("%Y-%m-%dT%H:%M:%S")
+    if info["available"]:
+        if not info["loaded"]:
+            raise SystemExit(f"il modello {client.model} non risulta caricato in LM Studio ({info['endpoint']}): "
+                             f"caricalo con Context Length = {expected} prima di lanciare la run")
+        if any(c != expected for c in info["context_lengths"]):
+            raise SystemExit(f"contesto del modello caricato {info['context_lengths']} diverso da quello del config "
+                             f"({expected}): ricarica il modello in LM Studio con Context Length = {expected}")
+        # Flash Attention: confrontata se LM Studio la riporta nella config dell'istanza (la quantizzazione della KV
+        # cache non e' esposta da /api/v1/models: resta un metadato dichiarato, non verificato)
+        fa_expected = (cfg.get("model_metadata") or {}).get("flash_attention")
+        fa_loaded = [i["config"].get("flash_attention") for i in info["instances"] if "flash_attention" in i["config"]]
+        if isinstance(fa_expected, bool) and any(fa != fa_expected for fa in fa_loaded):
+            raise SystemExit(f"Flash Attention del modello caricato {fa_loaded} diversa da quella del config "
+                             f"({fa_expected}): ricarica il modello in LM Studio con le impostazioni del config")
+        info["verified"] = True
+        return info
+    bar = "!" * 100
+    print(f"\n{bar}\n{CONTEXT_WARNING.format(expected=expected)}\n({info['endpoint']}: {info['error']})\n{bar}\n")
+    if accept_unverified:
+        info["verified"], info["accepted_by"] = False, "--accept-unverified-context"
+        return info
+    if ask is input and (not sys.stdin or not sys.stdin.isatty()):  # solo la conferma vera richiede un terminale
+        raise SystemExit("contesto non verificabile e nessuna conferma possibile (input non interattivo): usa "
+                         "--accept-unverified-context dopo aver controllato LM Studio")
+    try:
+        answer = ask(f"Confermi che il modello e' caricato con Context Length = {expected}? [si/no] ")
+    except EOFError:
+        answer = ""
+    if answer.strip().lower() != "si":
+        raise SystemExit("run annullata: contesto non confermato")
+    info["verified"], info["accepted_by"] = False, "conferma interattiva"
+    return info
+
+
+def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, resume: bool,
+        accept_unverified_context: bool = False) -> dict:
     client = make_client(cfg)
     clash = inconsistent_runs(cfg, out_dir.parent)
     if clash:
@@ -299,11 +405,24 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
         saved = json.loads((out_dir / "config.json").read_text(encoding="utf-8"))["config"]
         if saved != cfg:
             raise SystemExit("--resume con una configurazione diversa da quella della run salvata")
+    server_context = (check_server_context(client, cfg, accept_unverified_context)
+                      if isinstance(client, LMStudioClient) else None)
     for sub in ("prompts", "raw", "parsed"):
         (out_dir / sub).mkdir(parents=True, exist_ok=True)
     if not resume:
-        (out_dir / "config.json").write_text(json.dumps({"config": cfg, "provenance": provenance()}, indent=2,
+        prov = provenance()
+        if server_context is not None:
+            prov["server_context"] = server_context
+        if (cfg.get("generation") or {}).get("structured_output") and isinstance(client, LMStudioClient):
+            prov["response_schema"] = str(client.response_schema.relative_to(ROOT)).replace("\\", "/")
+            prov["response_schema_sha256"] = hashlib.sha256(client.response_schema.read_bytes()).hexdigest()
+        if (cfg.get("prompt") or {}).get("output_format") == "plantuml":
+            prov["plantuml_label_rule"] = cfg.get("plantuml_label_rule")
+        (out_dir / "config.json").write_text(json.dumps({"config": cfg, "provenance": prov}, indent=2,
                                                         ensure_ascii=False), encoding="utf-8")
+    elif server_context is not None:  # a ogni ripresa: config.json non si riscrive, l'esito va in un file a parte
+        with (out_dir / "server_checks.jsonl").open("a", encoding="utf-8") as f:
+            f.write(json.dumps(server_context, ensure_ascii=False) + "\n")
     cached = CachedClient(client, out_dir / "cache")
     manifest_path = out_dir / "manifest.jsonl"
     done = set()
@@ -326,7 +445,10 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
         counts["from_cache"] += res.cached
         (out_dir / "raw" / f"{cid}.json").write_text(json.dumps(asdict(res), ensure_ascii=False, indent=1),
                                                      encoding="utf-8")
-        v = pp.validate_response(res.text, res.finish_reason)
+        if spec.output_format == "plantuml":
+            v = ppu.validate_plantuml_response(res.text, res.finish_reason, cid)
+        else:
+            v = pp.validate_response(res.text, res.finish_reason)
         if v.diagram is not None:
             (out_dir / "parsed" / f"{cid}.json").write_text(json.dumps(v.diagram, ensure_ascii=False, indent=1),
                                                             encoding="utf-8")
@@ -339,7 +461,9 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
             if new_file:
                 w.writeheader()
             w.writerow(row)
-        entry = {"call_id": cid, "split": cfg.get("split", "testset"), "query_id": q["id"],
+        entry = {"call_id": cid, "split": cfg.get("split", "testset"), "configuration": cfg.get("configuration"),
+                 "output_format": spec.output_format, "structured_output": params.structured_output,
+                 "valid_L3": v.level >= 3, "query_id": q["id"],
                  "condition": spec.condition, "k": spec.k, "repetition": r, "temperature": params.temperature,
                  "analysis_only": bp.analysis_only, "example_ids": bp.example_ids,
                  "prompt_sha256": hashlib.sha256(json.dumps(bp.messages, ensure_ascii=False).encode()).hexdigest(),
@@ -369,9 +493,15 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("config")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--accept-unverified-context", action="store_true",
+                    help="parti anche se il contesto del modello caricato non e' verificabile via API (dopo averlo "
+                         "controllato a mano in LM Studio)")
     ap.add_argument("--results-dir", default=str(RESULTS), help="radice dell'output (i test usano una cartella temporanea)")
+    ap.add_argument("--configuration", help="configurazione da eseguire (config con 'configurations')")
     a = ap.parse_args(argv)
-    cfg = yaml.safe_load(Path(a.config).read_text(encoding="utf-8"))
+    cfg = resolve_configuration(yaml.safe_load(Path(a.config).read_text(encoding="utf-8")), a.configuration)
+    if not a.dry_run:
+        check_label_rule(cfg)
     split = cfg.get("split", "testset")
     if split not in SPLITS:
         raise SystemExit(f"split non supportato: {split} (ammessi: {SPLITS})")
@@ -387,7 +517,7 @@ def main(argv: list[str] | None = None) -> int:
         print(dry_run(cfg, builder, queries, out))
         print(f"scritto in {out}")
         return 0
-    counts = run(cfg, builder, queries, root / cfg["run_id"], a.resume)
+    counts = run(cfg, builder, queries, root / cfg["run_id"], a.resume, a.accept_unverified_context)
     print(f"run {cfg['run_id']}: {counts}")
     return 0
 

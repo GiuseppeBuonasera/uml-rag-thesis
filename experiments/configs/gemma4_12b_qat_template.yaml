@@ -34,6 +34,9 @@ model_metadata:
   lmstudio_version: 0.4.25+1         # rilevata dall'installazione ("LM Studio.exe", ProductVersion 0.4.25.0);
                                      # `lms version` riporta solo il commit della CLI (69d945a)
   enable_thinking: false             # spento nelle impostazioni del modello (default del modello: true); domanda 15
+  kv_cache_quant: TODO               # quantizzazione della KV cache con cui e' stato caricato nel primo pilota (da
+                                     # chiedere all'utente; es. F16 se non quantizzata)
+  flash_attention: TODO              # true / false come nel primo pilota (da chiedere all'utente)
   hardware:
     cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)   # rilevata dal sistema (Win32_Processor)
     gpu: NVIDIA GeForce RTX 4070 12 GB

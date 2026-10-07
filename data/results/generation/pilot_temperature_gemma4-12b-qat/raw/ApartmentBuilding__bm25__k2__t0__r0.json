@@ -1,0 +1,59 @@
+{
+ "text": "{\"version\":\"4.2.0\",\"id\":\"apartment-building-system\",\"title\":\"Apartment Building System\",\"type\":\"ClassDiagram\",\"nodes\":[{\"id\":\"b1e2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"type\":\"class\",\"position\":{\"x\":400,\"y\":300},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Apartment\",\"attributes\":[{\"id\":\"a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n9\",\"name\":\"+ apartmentId : string\"},{\"id\":\"b2c3d4e5-f6a7-4890-81h2-i3j4k5l6m7n0\",\"name\":\"+ floorNumber : int\"}],\"methods\":[]}},{\"id\":\"c3d4e5f6-a7b8-4890-81h2-i3j4k5l6m7n1\",\"type\":\"class\",\"position\":{\"x\":100,\"y\":100},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Room\",\"attributes\":[{\"id\":\"d4e5f6a7-b8c9-4890-81h2-i3j4k5l6m7n2\",\"name\":\"+ length : float\"},{\"id\":\"e5f6a7b8-c9d0-4890-81h2-i3j4k5l6m7n3\",\"name\":\"+ width : float\"}],\"methods\":[]}},{\"id\":\"f6a7b8c9-d0e1-4890-81h2-i3j4k5l6m7n4\",\"type\":\"class\",\"position\":{\"x\":100,\"y\":500},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Person\",\"attributes\":[{\"id\":\"g7b8c9d0-e1f2-4890-81h2-i3j4k5l6m7n5\",\"name\":\"+ name : string\"},{\"id\":\"h8c9d0e1-f2g3-4890-81h2-i3j4k5l6m7n6\",\"name\":\"+ personId : string\"}],\"methods\":[]}},{\"id\":\"i9d0e1f2-g3h4-4890-81h2-i3j4k5l6m7n7\",\"type\":\"class\",\"position\":{\"x\":600,\"y\":100},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Building\",\"attributes\":[{\"id\":\"j0e1f2g3-h4i5-4890-81h2-i3j4k5l6m7n8\",\"name\":\"+ buildingName : string\"},{\"id\":\"k1f2g3h4-i5j6-4890-81h2-i3j4k5l6m7n9\",\"name\":\"+ totalFloors : int\"}],\"methods\":[]}}],\"edges\":[{\"id\":\"e1e2e3e4-e5e6-4890-81h2-i3j4k5l6m7n0\",\"source\":\"b1e2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"target\":\"c3d4e5f6-a7b8-4890-81h2-i3j4k5l6m7n1\",\"type\":\"ClassComposition\",\"sourceHandle\":\"left\",\"targetHandle\":\"right\",\"data\":{\"points\":[{\"x\":390.0,\"y\":350.0},{\"x\":320.0,\"y\":150.0}],\"label\":\"\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"rooms\",\"targetRole\":\"\"}},{\"id\":\"e2e3e4e5-e6e7-4890-81h2-i3j4k5l6m7n1\",\"source\":\"b1e2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"target\":\"f6a7b8c9-d0e1-4890-81h2-i3j4k5l6m7n4\",\"type\":\"ClassAggregation\",\"sourceHandle\":\"bottom\",\"targetHandle\":\"top\",\"data\":{\"points\":[{\"x\":400.0,\"y\":400.0},{\"x\":210.0,\"y\":600.0}],\"label\":\"\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"owners\",\"targetRole\":\"\"}},{\"id\":\"e3e4e5e6-e7e8-4890-81h2-i3j4k5l6m7n2\",\"source\":\"b1e2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"target\":\"i9d0e1f2-g3h4-4890-81h2-i3j4k5l6m7n7\",\"type\":\"ClassComposition\",\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"data\":{\"points\":[{\"x\":620.0,\"y\":350.0},{\"x\":600.0,\"y\":150.0}],\"label\":\"\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"apartments\",\"targetRole\":\"\"}}],\"assessments\":{}}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.0,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 36.66126339999937,
+ "prompt_tokens": 8233,
+ "completion_tokens": 1397,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6owlb3fej1gnm2o7qyyr4i",
+  "object": "chat.completion",
+  "created": 1791291065,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"version\":\"4.2.0\",\"id\":\"apartment-building-system\",\"title\":\"Apartment Building System\",\"type\":\"ClassDiagram\",\"nodes\":[{\"id\":\"b1e2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"type\":\"class\",\"position\":{\"x\":400,\"y\":300},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Apartment\",\"attributes\":[{\"id\":\"a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n9\",\"name\":\"+ apartmentId : string\"},{\"id\":\"b2c3d4e5-f6a7-4890-81h2-i3j4k5l6m7n0\",\"name\":\"+ floorNumber : int\"}],\"methods\":[]}},{\"id\":\"c3d4e5f6-a7b8-4890-81h2-i3j4k5l6m7n1\",\"type\":\"class\",\"position\":{\"x\":100,\"y\":100},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Room\",\"attributes\":[{\"id\":\"d4e5f6a7-b8c9-4890-81h2-i3j4k5l6m7n2\",\"name\":\"+ length : float\"},{\"id\":\"e5f6a7b8-c9d0-4890-81h2-i3j4k5l6m7n3\",\"name\":\"+ width : float\"}],\"methods\":[]}},{\"id\":\"f6a7b8c9-d0e1-4890-81h2-i3j4k5l6m7n4\",\"type\":\"class\",\"position\":{\"x\":100,\"y\":500},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Person\",\"attributes\":[{\"id\":\"g7b8c9d0-e1f2-4890-81h2-i3j4k5l6m7n5\",\"name\":\"+ name : string\"},{\"id\":\"h8c9d0e1-f2g3-4890-81h2-i3j4k5l6m7n6\",\"name\":\"+ personId : string\"}],\"methods\":[]}},{\"id\":\"i9d0e1f2-g3h4-4890-81h2-i3j4k5l6m7n7\",\"type\":\"class\",\"position\":{\"x\":600,\"y\":100},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Building\",\"attributes\":[{\"id\":\"j0e1f2g3-h4i5-4890-81h2-i3j4k5l6m7n8\",\"name\":\"+ buildingName : string\"},{\"id\":\"k1f2g3h4-i5j6-4890-81h2-i3j4k5l6m7n9\",\"name\":\"+ totalFloors : int\"}],\"methods\":[]}}],\"edges\":[{\"id\":\"e1e2e3e4-e5e6-4890-81h2-i3j4k5l6m7n0\",\"source\":\"b1e2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"target\":\"c3d4e5f6-a7b8-4890-81h2-i3j4k5l6m7n1\",\"type\":\"ClassComposition\",\"sourceHandle\":\"left\",\"targetHandle\":\"right\",\"data\":{\"points\":[{\"x\":390.0,\"y\":350.0},{\"x\":320.0,\"y\":150.0}],\"label\":\"\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"rooms\",\"targetRole\":\"\"}},{\"id\":\"e2e3e4e5-e6e7-4890-81h2-i3j4k5l6m7n1\",\"source\":\"b1e2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"target\":\"f6a7b8c9-d0e1-4890-81h2-i3j4k5l6m7n4\",\"type\":\"ClassAggregation\",\"sourceHandle\":\"bottom\",\"targetHandle\":\"top\",\"data\":{\"points\":[{\"x\":400.0,\"y\":400.0},{\"x\":210.0,\"y\":600.0}],\"label\":\"\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"owners\",\"targetRole\":\"\"}},{\"id\":\"e3e4e5e6-e7e8-4890-81h2-i3j4k5l6m7n2\",\"source\":\"b1e2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"target\":\"i9d0e1f2-g3h4-4890-81h2-i3j4k5l6m7n7\",\"type\":\"ClassComposition\",\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"data\":{\"points\":[{\"x\":620.0,\"y\":350.0},{\"x\":600.0,\"y\":150.0}],\"label\":\"\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"apartments\",\"targetRole\":\"\"}}],\"assessments\":{}}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8233,
+   "completion_tokens": 1397,
+   "total_tokens": 9630,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.0,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

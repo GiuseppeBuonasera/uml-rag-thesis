@@ -1,0 +1,59 @@
+{
+ "text": "{\"version\":\"4.2.0\",\"id\":\"StudentAppointmentSystem\",\"title\":\"Student Appointment System\",\"type\":\"ClassDiagram\",\"nodes\":[{\"id\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"type\":\"class\",\"position\":{\"x\":40,\"y\":40},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Student\",\"attributes\":[{\"id\":\"a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"name\":\"+ studentId : string\"},{\"id\":\"b2c3d4e5-f6a7-4890-81h2-i3j4k5l6m7n9\",\"name\":\"+ name : string\"}],\"methods\":[]}},{\"id\":\"f1e2d3c4-b5a6-4789-81h2-i3j4k5l6m7n0\",\"type\":\"class\",\"position\":{\"x\":40,\"y\":250},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Course\",\"attributes\":[{\"id\":\"c3d4e5f6-a7b8-4890-81h2-i3j4k5l6m7n1\",\"name\":\"+ courseCode : string\"},{\"id\":\"d4e5f6a7-b8c9-4890-81h2-i3j4k5l6m7n2\",\"name\":\"+ title : string\"}],\"methods\":[]}},{\"id\":\"a9b8c7d6-e5f4-4321-81h2-i3j4k5l6m7n3\",\"type\":\"class\",\"position\":{\"x\":400,\"y\":40},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"TeachingAssistant\",\"attributes\":[{\"id\":\"e5f6a7b8-c9d0-4890-81h2-i3j4k5l6m7n4\",\"name\":\"+ assistantId : string\"},{\"id\":\"f6a7b8c9-d0e1-4890-81h2-i3j4k5l6m7n5\",\"name\":\"+ name : string\"}],\"methods\":[]}},{\"id\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"type\":\"class\",\"position\":{\"x\":400,\"y\":250},\"width\":220,\"height\":120,\"measured\":{\"width\":220,\"height\":120},\"data\":{\"name\":\"Appointment\",\"attributes\":[{\"id\":\"01234567-89ab-4cde-f012-34567890abcd\",\"name\":\"+ appointmentId : string\"},{\"id\":\"12345678-9abc-4def-0123-4567890abcde\",\"name\":\"+ dateTime : datetime\"},{\"id\":\"23456789-abcd-4ef0-1234-567890abcdef\",\"name\":\"+ status : string\"}],\"methods\":[]}}],\"edges\":[{\"id\":\"e1e1e1e1-e1e1-e1e1-e1e1-e1e1e1e1e1e1\",\"source\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"target\":\"f1e2d3c4-b5a6-4789-81h2-i3j4k5l6m7n0\",\"type\":\"ClassBidirectional\",\"sourceHandle\":\"bottom\",\"targetHandle\":\"top\",\"data\":{\"points\":[{\"x\":150,\"y\":140},{\"x\":150,\"y\":250}],\"label\":\"registeredFor\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2\",\"source\":\"f1e2d3c4-b5a6-4789-81h2-i3j4k5l6m7n0\",\"target\":\"a9b8c7d6-e5f4-4321-81h2-i3j4k5l6m7n3\",\"type\":\"ClassBidirectional\",\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"data\":{\"points\":[{\"x\":260,\"y\":300},{\"x\":400,\"y\":90}],\"label\":\"teaches\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e3e3e3e3-e3e3-e3e3-e3e3-e3e3e3e3e3e3\",\"source\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"target\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"type\":\"ClassUnidirectional\",\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"data\":{\"points\":[{\"x\":260,\"y\":90},{\"x\":400,\"y\":310}],\"label\":\"requests\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e4e4e4e4-e4e4-e4e4-e4e4-e4e4e4e4e4e4\",\"source\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"target\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"type\":\"ClassUnidirectional\",\"sourceHandle\":\"bottom\",\"targetHandle\":\"left\",\"data\":{\"points\":[{\"x\":520,\"y\":370},{\"x\":260,\"y\":140}],\"label\":\"serves\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e5e5e5e5-e5e5-e5e5-e5e5-e5e5e5e5e5e5\",\"source\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"target\":\"f1e2d3c4-b5a6-4789-81h2-i3j4k5l6m7n0\",\"type\":\"ClassComposition\",\"sourceHandle\":\"top\",\"targetHandle\":\"bottom\",\"data\":{\"points\":[{\"x\":520,\"y\":250},{\"x\":260,\"y\":250}],\"label\":\"\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e6e6e6e6-e6e6-e6e6-e6e6-e6e6e6e6e6e6\",\"source\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"target\":\"a9b8c7d6-e5f4-4321-81h2-i3j4k5l6m7n3\",\"type\":\"ClassComposition\",\"sourceHandle\":\"left\",\"targetHandle\":\"right\",\"data\":{\"points\":[{\"x\":400,\"y\":310},{\"x\":400,\"y\":90}],\"label\":\"\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e7e7e7e7-e7e7-e7e7-e7e7-e7e7e7e7e7e7\",\"source\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"target\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"type\":\"ClassComposition\",\"sourceHandle\":\"bottom\",\"targetHandle\":\"top\",\"data\":{\"points\":[{\"x\":150,\"y\":140},{\"x\":400,\"y\":310}],\"label\":\"\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"var}],\"assessments\":{}}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 44.693505400000504,
+ "prompt_tokens": 8046,
+ "completion_tokens": 2131,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kubw5gme0qo0lck1lb7sz6",
+  "object": "chat.completion",
+  "created": 1791290871,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"version\":\"4.2.0\",\"id\":\"StudentAppointmentSystem\",\"title\":\"Student Appointment System\",\"type\":\"ClassDiagram\",\"nodes\":[{\"id\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"type\":\"class\",\"position\":{\"x\":40,\"y\":40},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Student\",\"attributes\":[{\"id\":\"a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8\",\"name\":\"+ studentId : string\"},{\"id\":\"b2c3d4e5-f6a7-4890-81h2-i3j4k5l6m7n9\",\"name\":\"+ name : string\"}],\"methods\":[]}},{\"id\":\"f1e2d3c4-b5a6-4789-81h2-i3j4k5l6m7n0\",\"type\":\"class\",\"position\":{\"x\":40,\"y\":250},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"Course\",\"attributes\":[{\"id\":\"c3d4e5f6-a7b8-4890-81h2-i3j4k5l6m7n1\",\"name\":\"+ courseCode : string\"},{\"id\":\"d4e5f6a7-b8c9-4890-81h2-i3j4k5l6m7n2\",\"name\":\"+ title : string\"}],\"methods\":[]}},{\"id\":\"a9b8c7d6-e5f4-4321-81h2-i3j4k5l6m7n3\",\"type\":\"class\",\"position\":{\"x\":400,\"y\":40},\"width\":220,\"height\":100,\"measured\":{\"width\":220,\"height\":100},\"data\":{\"name\":\"TeachingAssistant\",\"attributes\":[{\"id\":\"e5f6a7b8-c9d0-4890-81h2-i3j4k5l6m7n4\",\"name\":\"+ assistantId : string\"},{\"id\":\"f6a7b8c9-d0e1-4890-81h2-i3j4k5l6m7n5\",\"name\":\"+ name : string\"}],\"methods\":[]}},{\"id\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"type\":\"class\",\"position\":{\"x\":400,\"y\":250},\"width\":220,\"height\":120,\"measured\":{\"width\":220,\"height\":120},\"data\":{\"name\":\"Appointment\",\"attributes\":[{\"id\":\"01234567-89ab-4cde-f012-34567890abcd\",\"name\":\"+ appointmentId : string\"},{\"id\":\"12345678-9abc-4def-0123-4567890abcde\",\"name\":\"+ dateTime : datetime\"},{\"id\":\"23456789-abcd-4ef0-1234-567890abcdef\",\"name\":\"+ status : string\"}],\"methods\":[]}}],\"edges\":[{\"id\":\"e1e1e1e1-e1e1-e1e1-e1e1-e1e1e1e1e1e1\",\"source\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"target\":\"f1e2d3c4-b5a6-4789-81h2-i3j4k5l6m7n0\",\"type\":\"ClassBidirectional\",\"sourceHandle\":\"bottom\",\"targetHandle\":\"top\",\"data\":{\"points\":[{\"x\":150,\"y\":140},{\"x\":150,\"y\":250}],\"label\":\"registeredFor\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e2e2e2e2-e2e2-e2e2-e2e2-e2e2e2e2e2e2\",\"source\":\"f1e2d3c4-b5a6-4789-81h2-i3j4k5l6m7n0\",\"target\":\"a9b8c7d6-e5f4-4321-81h2-i3j4k5l6m7n3\",\"type\":\"ClassBidirectional\",\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"data\":{\"points\":[{\"x\":260,\"y\":300},{\"x\":400,\"y\":90}],\"label\":\"teaches\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e3e3e3e3-e3e3-e3e3-e3e3-e3e3e3e3e3e3\",\"source\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"target\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"type\":\"ClassUnidirectional\",\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"data\":{\"points\":[{\"x\":260,\"y\":90},{\"x\":400,\"y\":310}],\"label\":\"requests\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e4e4e4e4-e4e4-e4e4-e4e4-e4e4e4e4e4e4\",\"source\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"target\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"type\":\"ClassUnidirectional\",\"sourceHandle\":\"bottom\",\"targetHandle\":\"left\",\"data\":{\"points\":[{\"x\":520,\"y\":370},{\"x\":260,\"y\":140}],\"label\":\"serves\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e5e5e5e5-e5e5-e5e5-e5e5-e5e5e5e5e5e5\",\"source\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"target\":\"f1e2d3c4-b5a6-4789-81h2-i3j4k5l6m7n0\",\"type\":\"ClassComposition\",\"sourceHandle\":\"top\",\"targetHandle\":\"bottom\",\"data\":{\"points\":[{\"x\":520,\"y\":250},{\"x\":260,\"y\":250}],\"label\":\"\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e6e6e6e6-e6e6-e6e6-e6e6-e6e6e6e6e6e6\",\"source\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"target\":\"a9b8c7d6-e5f4-4321-81h2-i3j4k5l6m7n3\",\"type\":\"ClassComposition\",\"sourceHandle\":\"left\",\"targetHandle\":\"right\",\"data\":{\"points\":[{\"x\":400,\"y\":310},{\"x\":400,\"y\":90}],\"label\":\"\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"}},{\"id\":\"e7e7e7e7-e7e7-e7e7-e7e7-e7e7e7e7e7e7\",\"source\":\"e12a3b4c-5d6e-4f7a-8b9c-0d1e2f3a4b5c\",\"target\":\"b7c8d9e0-f1a2-4321-81h2-i3j4k5l6m7n6\",\"type\":\"ClassComposition\",\"sourceHandle\":\"bottom\",\"targetHandle\":\"top\",\"data\":{\"points\":[{\"x\":150,\"y\":140},{\"x\":400,\"y\":310}],\"label\":\"\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"sourceRole\":\"\",\"targetRole\":\"\"var}],\"assessments\":{}}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8046,
+   "completion_tokens": 2131,
+   "total_tokens": 10177,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

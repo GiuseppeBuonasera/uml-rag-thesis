@@ -1,0 +1,76 @@
+{
+  "config": {
+    "run_id": "pilot_temperature_gemma4-12b-qat",
+    "split": "corpus",
+    "query_ids": [
+      "Louvre",
+      "Sober",
+      "StudentAppointment",
+      "CardGameApp",
+      "ApartmentBuilding",
+      "FilmSet"
+    ],
+    "conditions": [
+      "bm25"
+    ],
+    "k": [
+      2
+    ],
+    "repetitions": 3,
+    "seed": 0,
+    "stop_on_reasoning": true,
+    "prompt": {
+      "serialization": "compact",
+      "layout": "user_only",
+      "drop_interactive": true
+    },
+    "client": {
+      "kind": "lmstudio",
+      "base_url": "http://localhost:1234/v1",
+      "model": "google/gemma-4-12b-qat",
+      "timeout_s": 1200,
+      "retries": 3,
+      "backoff_s": 2.0,
+      "unsupported_params": []
+    },
+    "generation": {
+      "temperature": [
+        0.0,
+        0.3
+      ],
+      "top_p": 0.95,
+      "top_k": 64,
+      "max_tokens": 12288,
+      "seed": 42,
+      "structured_output": false
+    },
+    "model_metadata": {
+      "model_id": "google/gemma-4-12b-qat",
+      "quantization": "QAT (q4_0)",
+      "context_length": 32768,
+      "lmstudio_version": "0.4.25+1",
+      "enable_thinking": false,
+      "hardware": {
+        "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)",
+        "gpu": "NVIDIA GeForce RTX 4070 12 GB",
+        "ram_gb": 32,
+        "vram_gb": 12,
+        "vram_used": "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"
+      }
+    }
+  },
+  "provenance": {
+    "commit": "f171ace592509a8aefd02a6245d2c4f44c9f9669",
+    "worktree_dirty": false,
+    "testset_tag": "testset-v1",
+    "testset_tag_commit": "eb4d28bebd417d661db642bae06d859963177815",
+    "config_bm25": "retrieval/config_bm25.yaml",
+    "config_bm25_sha256": "d6dfa7228ee4eee2c07c913917e2b096d6727a88bb818f7d51ed37036f5f76ab",
+    "python": "3.12.10",
+    "tiktoken": "0.14.0",
+    "token_estimate": "tiktoken cl100k_base (approssimazione)",
+    "token_vocab": "generation/tokenizer/cl100k_base.tiktoken",
+    "token_vocab_sha256": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7",
+    "started_at": "2026-10-06T13:36:26"
+  }
+}

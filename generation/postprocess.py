@@ -305,6 +305,12 @@ def validate_response(text: str, finish_reason: str | None = "stop") -> Validati
         return v
     v.L1_json, v.level, v.diagram = True, 1, diagram
     v.format_issues, v.layout_issues = instruction_checks(diagram, extra)
+    return check_l2_l4(v, diagram)
+
+
+def check_l2_l4(v: Validation, diagram: dict) -> Validation:
+    """L2-L4 su un diagramma Apollon gia' decodificato (stessi controlli per la risposta JSON e per l'Apollon
+    prodotto dal convertitore a partire da una risposta PlantUML, generation/plantuml_postprocess.py)."""
     errs = validate_against_schema(diagram, "output")
     if errs:
         v.failure, v.errors["L2"] = "schema", errs

@@ -26,8 +26,10 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT / "experiments"))
+import plantuml_postprocess as ppu  # noqa: E402
 import postprocess as pp  # noqa: E402
 import run_experiment as rx  # noqa: E402
+import analyze_pilot as ap  # noqa: E402
 import select_pilot  # noqa: E402
 import smoke_lmstudio as sm  # noqa: E402
 import token_estimate  # noqa: E402
@@ -122,9 +124,22 @@ class FakeLMStudio(BaseHTTPRequestHandler):
     "reasoning_only" = contenuto vuoto, solo ragionamento, troncato; "echo_seed" = testo che dipende dal seed)."""
     script: list[str] = []
     requests: list[dict] = []
+    models_payload: dict | None = None  # risposta di GET /api/v1/models; None -> 404 (endpoint non disponibile)
 
     def log_message(self, *a):
         pass
+
+    def do_GET(self):
+        if self.path != "/api/v1/models" or FakeLMStudio.models_payload is None:
+            self.send_response(404)
+            self.end_headers()
+            return
+        data = json.dumps(FakeLMStudio.models_payload).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
 
     def do_POST(self):
         body = json.loads(self.rfile.read(int(self.headers["Content-Length"])).decode("utf-8"))
@@ -534,7 +549,10 @@ def check_pilot(builder: PromptBuilder, tmp: Path) -> None:
     assert (cfg["generation"]["top_k"], cfg["generation"]["top_p"], cfg["generation"]["max_tokens"]) == (64, 0.95, 12288)
     assert cfg["model_metadata"]["enable_thinking"] is False and cfg["model_metadata"]["context_length"] == 32768
     assert cfg["stop_on_reasoning"] is True
-    assert isinstance(rx.make_client(cfg), LMStudioClient)  # nessun metadato mancante (nessuna chiamata)
+    # config STORICA del primo pilota (run conclusa, non modificata): prima dei metadati di caricamento del 2026-10-07
+    assert rx.missing_metadata(cfg["model_metadata"]) == ["kv_cache_quant", "flash_attention"]
+    assert isinstance(rx.make_client({**cfg, "model_metadata": {**cfg["model_metadata"], "kv_cache_quant": "F16",
+                                                                "flash_attention": False}}), LMStudioClient)
     planned = rx.plan(cfg, builder.candidates)
     assert len(planned) == 36
     ids = [rx.call_id(q["id"], spec, r, t) for q, spec, r, t in planned]
@@ -578,6 +596,277 @@ def check_pilot(builder: PromptBuilder, tmp: Path) -> None:
           "__t<temperatura>, split corpus nel runner, stop_on_reasoning")
 
 
+def models_payload(model: str, context: int | None, parallel: int = 1, flash_attention: bool | None = None) -> dict:
+    """Risposta di GET /api/v1/models come nella documentazione di LM Studio; context None = modello non caricato."""
+    conf = {"context_length": context, "parallel": parallel}
+    if flash_attention is not None:
+        conf["flash_attention"] = flash_attention
+    inst = [] if context is None else [{"id": model, "config": conf}]
+    return {"models": [{"type": "llm", "key": "altro/modello", "loaded_instances": [], "max_context_length": 4096},
+                       {"type": "llm", "key": model, "loaded_instances": inst, "max_context_length": 131072}]}
+
+
+def check_server_context() -> None:
+    """Controllo del contesto del modello CARICATO prima della prima chiamata (GET /api/v1/models)."""
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), FakeLMStudio)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{srv.server_address[1]}/v1"
+    cli = LMStudioClient("google/gemma-4-12b-qat", base_url=base)
+    cfg = {"model_metadata": {"context_length": 32768}}
+    try:
+        assert cli.api_root() == f"http://127.0.0.1:{srv.server_address[1]}"
+        FakeLMStudio.models_payload = models_payload(cli.model, 32768)
+        probe = cli.loaded_context()
+        assert probe["available"], f"GET /api/v1/models sul server finto fallito: {probe['error']}"
+        info = rx.check_server_context(cli, cfg)
+        assert info["verified"] and info["context_lengths"] == [32768] and info["max_context_length"] == 131072
+        for ctx, msg in ((8192, "diverso da quello del config"), (None, "non risulta caricato")):
+            FakeLMStudio.models_payload = models_payload(cli.model, ctx)  # come nel primo tentativo del pilota
+            try:
+                rx.check_server_context(cli, cfg)
+                raise AssertionError(f"contesto {ctx} non rifiutato")
+            except SystemExit as e:
+                assert msg in str(e), e
+        FakeLMStudio.models_payload = None  # endpoint non disponibile: avviso + conferma
+        with contextlib.redirect_stdout(io.StringIO()) as out:
+            info = rx.check_server_context(cli, cfg, ask=lambda _: "si")
+        assert info["verified"] is False and info["accepted_by"] == "conferma interattiva"
+        assert "CONTESTO DEL MODELLO CARICATO NON VERIFICABILE" in out.getvalue()
+        for answer in (lambda _: "no", lambda _: (_ for _ in ()).throw(EOFError())):
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    rx.check_server_context(cli, cfg, ask=answer)
+                raise AssertionError("conferma mancante non rifiutata")
+            except SystemExit:
+                pass
+        with contextlib.redirect_stdout(io.StringIO()):
+            info = rx.check_server_context(cli, cfg, accept_unverified=True)
+        assert info["accepted_by"] == "--accept-unverified-context"
+        fa_cfg = {"model_metadata": {"context_length": 32768, "flash_attention": True}}
+        FakeLMStudio.models_payload = models_payload(cli.model, 32768, flash_attention=True)
+        assert rx.check_server_context(cli, fa_cfg)["verified"]
+        FakeLMStudio.models_payload = models_payload(cli.model, 32768, flash_attention=False)
+        try:
+            rx.check_server_context(cli, fa_cfg)
+            raise AssertionError("Flash Attention diversa non rifiutata")
+        except SystemExit as e:
+            assert "Flash Attention" in str(e)
+    finally:
+        FakeLMStudio.models_payload = None
+        srv.shutdown()
+        srv.server_close()
+    print("  OK  contesto del modello caricato (GET /api/v1/models): coincide -> parte e lo registra; diverso o modello "
+          "non caricato -> non parte; endpoint assente -> avviso e conferma (no / EOF -> non parte)")
+
+
+def check_analyze_pilot() -> None:
+    """Funzioni di experiments/analyze_pilot.py su dati sintetici: regola di decisione della voce 75 e confronto
+    esplorativo delle relazioni."""
+    from types import SimpleNamespace
+
+    def call(t, level, failure="", names=("a",), gt_names=("a",)):
+        v = SimpleNamespace(level=level, failure=failure, L1_json=level >= 1)
+        gt = {"nodes": [{"data": {"name": n}} for n in gt_names]}
+        return {"t": t, "v": v, "names": set(names) if level >= 1 else None, "gt": gt}
+
+    ok = [call(0.0, 4)] * 18 + [call(0.3, 4)] * 18
+    assert ap.decision(ok, False)["outcome"].startswith("opzione (a)")
+    worse_v = [call(0.0, 2)] * 18 + [call(0.3, 4)] * 18  # V(0) < V(0.3)
+    assert ap.decision(worse_v, False)["outcome"].startswith("opzione (b)")
+    worse_j = [call(0.0, 4, names=("a", "b"))] * 18 + [call(0.3, 4)] * 18  # J(0) = 0.5 < 1 - 0.05
+    assert ap.decision(worse_j, False)["outcome"].startswith("opzione (b)")
+    within = [call(0.0, 4, names=("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
+                                 "p", "q", "r", "s", "t"), gt_names=("a", "b", "c", "d", "e", "f", "g", "h", "i",
+                                                                     "j", "k", "l", "m", "n", "o", "p", "q", "r",
+                                                                     "s"))] * 18 + [call(0.3, 4, names=(
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s"), gt_names=(
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s"))] * 18
+    assert ap.decision(within, False)["outcome"].startswith("opzione (a)")  # J(0) = 0.95 = J(0.3) - 0.05
+    trunc = [call(0.0, -1, "truncated")] * 2 + [call(0.0, 4)] * 16 + [call(0.3, 4)] * 18
+    d = ap.decision(trunc, False)
+    assert d["outcome"].startswith("STOP") and "2 risposte troncate" in d["reasons"][0]
+    one = [call(0.0, -1, "truncated")] + [call(0.0, 4)] * 17 + [call(0.3, 4)] * 18  # 1 su 18: ammesso
+    assert not ap.decision(one, False)["reasons"]
+    assert ap.decision(ok, True)["outcome"].startswith("STOP")  # run fermata per ragionamento
+    assert ap.decision([call(0.0, 0)] * 18 + [call(0.3, 4)] * 18, False)["outcome"].startswith("STOP")  # J indefinito
+
+    assert [ap.norm_mult(m) for m in ("1..n", "0..*", "n", " 1 ", "", None, "0..1")] == [
+        "1..*", "*", "*", "1", "", "", "0..1"]
+
+    def diagram(edges):
+        nodes = [{"id": i, "data": {"name": n}} for i, n in (("b", "Building"), ("a", "Apartment"), ("o", "Owner"))]
+        return {"nodes": nodes, "edges": [{"id": f"e{k}", "source": s, "target": t, "type": ty,
+                                           "data": {"sourceMultiplicity": sm, "targetMultiplicity": tm}}
+                                          for k, (s, t, ty, sm, tm) in enumerate(edges)]}
+
+    gt = diagram([("a", "b", "ClassComposition", "1..*", "1"), ("o", "a", "ClassBidirectional", "1", "0..*")])
+    resp = diagram([("b", "a", "ClassComposition", "1", "1..n"),  # composizione invertita (la parte e' la sorgente)
+                    ("o", "a", "ClassAggregation", "*", "*"),  # aggregazione al posto dell'associazione
+                    ("o", "b", "ClassBidirectional", "1", "1")])  # coppia assente nel GT
+    c = ap.compare_relations(resp, gt)
+    assert (c["resp_edges"], c["gt_edges"], c["same_pair"], c["same_type"]) == (3, 2, 2, 1)
+    assert (c["part_whole_same_type"], c["part_whole_same_direction"]) == (1, 0)
+    assert c["type ClassBidirectional -> ClassAggregation"] == 1
+    assert (c["mult_compared"], c["same_mult"]) == (2, 1)  # composizione: stesse molteplicita' per estremo
+    c = ap.compare_relations(gt, gt)
+    assert (c["same_pair"], c["same_type"], c["same_direction"], c["same_mult"]) == (2, 2, 1, 2)
+    print("  OK  analisi del pilota: regola della voce 75 (a / b / STOP per troncamenti, ragionamento, J non "
+          "definito; soglia 0.05 inclusa) e confronto esplorativo delle relazioni (coppia, tipo, verso, "
+          "molteplicita')")
+
+
+PU_OK = """@startuml
+class Building {
+  + floors : int
+}
+class Apartment {
+  + number : int
+}
+class Person {}
+Building "1" *-- "1..*" Apartment
+Apartment "1..*" -- "1..* owner" Person : isOwnedBy
+Person "coach" -- "0..*" Person
+@enduml"""
+
+
+def check_plantuml(builder: PromptBuilder) -> None:
+    """Strada 1 del secondo pilota: post-processing PlantUML -> Apollon, regola automatica delle etichette, prompt."""
+    v = ppu.validate_plantuml_response(PU_OK, "stop", "t")
+    assert (v.P0_block, v.P1b_parsed, v.P1_clean, v.level) == (True, True, True, 4), (v.failure, v.errors)
+    names = {n["id"]: n["data"]["name"] for n in v.diagram["nodes"]}
+    edges = {(e["type"], names[e["source"]], names[e["target"]]): e["data"] for e in v.diagram["edges"]}
+    assert edges[("ClassComposition", "Apartment", "Building")]["targetMultiplicity"] == "1"  # Tutto = destinazione
+    own = edges[("ClassBidirectional", "Apartment", "Person")]
+    assert (own["label"], own["targetMultiplicity"], own["targetRole"]) == ("isOwnedBy", "1..*", "owner")
+    selfrel = edges[("ClassBidirectional", "Person", "Person")]
+    assert (selfrel["sourceMultiplicity"], selfrel["sourceRole"]) == ("", "coach")  # ruolo senza molteplicita'
+    wrapped = "<|channel>thought\nok<channel|>Here:\n```plantuml\n" + PU_OK + "\n```"
+    v = ppu.validate_plantuml_response(wrapped, "stop", "t")
+    assert v.level == 4 and v.reasoning_removed and "extra_text" in v.format_issues
+    dirty = PU_OK.replace("class Person {}", "class Person {}\nskinparam monochrome true\npackage X")
+    v = ppu.validate_plantuml_response(dirty, "stop", "t")
+    assert (v.P1b_parsed, v.P1_clean, len(v.discarded_lines), v.level) == (True, False, 2, 4)
+    v = ppu.validate_plantuml_response(PU_OK.split("@enduml")[0][:120], "length", "t")
+    assert (v.P0_block, v.failure) == (False, "truncated")
+    assert ppu.validate_plantuml_response("no diagram", "stop", "t").failure == "no_block"
+    v = ppu.validate_plantuml_response("@startuml\n<> D\nA -- D\n@enduml", "stop", "t")
+    assert (v.P0_block, v.P1b_parsed, v.failure) == (True, False, "unsupported")
+    assert ppu.validate_plantuml_response("@startuml\n@enduml", "stop", "t").failure == "no_classes"
+    rels = [{"kind": "binary", "source_mult": "0..1*", "source_role": "", "target_mult": "boss", "target_role": "x"}]
+    assert ppu.apply_auto_label_rule(rels) == 1 and rels[0]["target_role"] == "boss x" and rels[0]["source_mult"] == "0..1*"
+    q = builder.by_id["ApartmentBuilding"]
+    a = builder.build(q, PromptSpec("bm25", k=2, output_format="plantuml"))
+    z = builder.build(q, PromptSpec("zero_shot", output_format="plantuml"))
+    assert a.instructions == z.instructions == (HERE / "templates" / "v4_plantuml_instructions.txt").read_text(
+        encoding="utf-8") and a.task == z.task
+    assert a.examples_block.count("@startuml") == 2 and '"nodes"' not in a.examples_block
+    assert a.text == builder.build(q, PromptSpec("bm25", k=2, output_format="plantuml")).text
+    assert a.example_ids == builder.build(q, PromptSpec("bm25", k=2)).example_ids  # stessi esempi del formato JSON
+    try:
+        PromptSpec("bm25", output_format="xml")
+        raise AssertionError("formato sconosciuto accettato")
+    except ValueError:
+        pass
+    import plantuml_sanity_check
+    summ = plantuml_sanity_check.run()
+    assert all(summ[x]["levels"] == {4: 79} for x in "AB") and summ["B"]["n_diff"] == 0
+    assert summ["A"]["kinds"] == {"ruolo del Passo 1 rimasto come nome di associazione (testo dopo i due punti)": 106}
+    print("  OK  strada 1 (PlantUML): P0 / P1 / P1b / L2-L4, righe scartate contate, troncamento, diamante "
+          "n-ario, regola automatica delle etichette, prompt PlantUML con esempi canonici e stessi esempi del formato "
+          "JSON; 79 diagrammi a L4 (canonico identico al Passo 1, diagram_plantuml grezzo: 106 ruoli come etichette)")
+
+
+def check_pilot2(tmp: Path) -> None:
+    """Configurazioni del secondo pilota, schema per la generazione vincolata, calibrazione (server finto)."""
+    import yaml
+    import calibrate_tokens as ct
+    import make_generation_schema as mgs
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "pilot2_formats.yaml").read_text(encoding="utf-8"))
+    assert sorted(cfg["configurations"]) == ["J-G", "J-Q", "P-G", "P-Q"]
+    first = yaml.safe_load((ROOT / "experiments" / "configs" / "pilot_temperature.yaml").read_text(encoding="utf-8"))
+    assert cfg["query_ids"] == first["query_ids"]  # stessi 6 esercizi del primo pilota
+    total = 0
+    for name in cfg["configurations"]:
+        r = rx.resolve_configuration(cfg, name)
+        assert r["run_id"] == f"pilot2_formats__{name}" and r["configuration"] == name
+        fmt = "plantuml" if name.startswith("P") else "apollon"
+        assert r["prompt"]["output_format"] == fmt and r["generation"]["structured_output"] == (fmt == "apollon")
+        assert ("response_schema" in r["client"]) == (fmt == "apollon")
+        assert (r["model_metadata"]["context_length"], r["generation"]["max_tokens"]) == (32768, 12288)
+        assert r["model_metadata"]["enable_thinking"] is False
+        assert (r["generation"]["temperature"], r["generation"]["top_p"], r["generation"]["top_k"]) == (0.3, 0.95, 64)
+        planned = rx.plan(r, cl.load_candidates())
+        assert all(spec.output_format == fmt for _, spec, _, _ in planned)
+        total += len(planned)
+    assert total == 48
+    q = rx.resolve_configuration(cfg, "J-Q")["model_metadata"]
+    assert (q["quantization"], q["kv_cache_quant"], q["flash_attention"]) == ("Q4_K_M", "Q4", True)
+    for name in ("P-G", "P-Q"):  # regola delle etichette non ancora approvata
+        try:
+            rx.check_label_rule(rx.resolve_configuration(cfg, name))
+            raise AssertionError("regola delle etichette non approvata accettata")
+        except SystemExit as e:
+            assert "non approvata" in str(e)
+    for name, missing in (("J-Q", "client.model"), ("J-G", "kv_cache_quant")):  # TODO ancora aperti
+        try:
+            rx.make_client(rx.resolve_configuration(cfg, name))
+            raise AssertionError(f"{name} con metadati TODO accettato")
+        except SystemExit as e:
+            assert missing in str(e)
+    for bad in (None, "X"):
+        try:
+            rx.resolve_configuration(cfg, bad)
+            raise AssertionError("configurazione mancante o sconosciuta accettata")
+        except SystemExit:
+            pass
+    jg = rx.resolve_configuration(cfg, "J-G")
+    jg["model_metadata"].update(kv_cache_quant="F16", flash_attention=False)  # valori fittizi solo per il test
+    client = rx.make_client(jg)
+    body = client.request_body([{"role": "user", "content": "x"}],
+                               GenerationParams(top_k=64, seed=1, structured_output=True))
+    gen_schema = body["response_format"]["json_schema"]["schema"]
+    assert gen_schema == json.loads(mgs.TARGET.read_text(encoding="utf-8"))
+    built, info = mgs.build_schema()
+    assert built == gen_schema, "schema di generazione non aggiornato: rilancia generation/make_generation_schema.py"
+    assert '"$ref"' not in json.dumps(gen_schema) and "definitions" not in gen_schema
+    assert gen_schema["properties"]["edges"]["maxItems"] == 3 * info["max_edges_selectable"] == 39
+    import jsonschema
+    gv = jsonschema.Draft7Validator(gen_schema)
+    gts = [c["diagram_apollon_json"] for c in cl.load_candidates()] + [q["diagram_apollon_json"] for q in cl.load_queries()]
+    assert all(not list(gv.iter_errors(d)) for d in gts)  # nessun ground truth escluso dal vincolo
+    too_many = json.loads(MINI_TXT)
+    too_many["edges"] = too_many["edges"] * 40
+    assert list(gv.iter_errors(too_many)) and not list(jsonschema.Draft7Validator(json.loads(
+        (ROOT / "evaluation" / "uml-model-4.schema.json").read_text(encoding="utf-8"))).iter_errors(too_many))
+
+    # calibrazione sul server finto (prompt_tokens = 11 per ogni chiamata)
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), FakeLMStudio)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    try:
+        jq = rx.resolve_configuration(cfg, "J-Q")
+        jq["client"].update(model="fake-qwen", base_url=f"http://127.0.0.1:{srv.server_address[1]}/v1")
+        FakeLMStudio.models_payload = models_payload("fake-qwen", 32768, flash_attention=True)
+        FakeLMStudio.requests.clear()
+        out = ct.calibrate(jq, rx.make_client({**jq, "model_metadata": {**jq["model_metadata"], "model_id": "q"}}))
+    finally:
+        FakeLMStudio.models_payload = None
+        srv.shutdown()
+        srv.server_close()
+    assert len(out["rows"]) == 12 and all(r["real"] == 11 for r in out["rows"])
+    assert all(rq["body"]["max_tokens"] == 1 for rq in FakeLMStudio.requests)  # chiamate brevissime
+    assert out["summary"]["apollon"]["fits"] and out["summary"]["plantuml"]["fits"]
+    assert out["server_context"]["verified"]
+    d = tmp / "calib"
+    d.mkdir()
+    p1 = ct.next_path(d, "2026-10-07", "fake/qwen")
+    p1.write_text("{}", encoding="utf-8")
+    assert ct.next_path(d, "2026-10-07", "fake/qwen").name == "2026-10-07_fake-qwen_calibration2.json"
+    print("  OK  secondo pilota: 4 configurazioni (48 generazioni, stessi 6 esercizi, parametri identici), run_id "
+          "per configurazione, response_format solo per J-*, PlantUML bloccato finche' la regola non e' approvata, "
+          "Qwen 14B (Q4_K_M, KV Q4, Flash Attention) e Gemma bloccati dai TODO; schema di generazione con $ref "
+          "espansi e maxItems 39 (79 ground truth validi); calibrazione dei token con max_tokens = 1 sul server finto")
+
+
 def check_runner(tmp: Path, base_url: str) -> None:
     cfg_path = tmp / "cfg.yaml"
     cfg = {"run_id": "t1", "split": "testset", "query_ids": ["DB06_Flights"], "conditions": ["zero_shot", "bm25"],
@@ -612,7 +901,11 @@ def check_runner(tmp: Path, base_url: str) -> None:
     except SystemExit as e:
         assert "metadati obbligatori" in str(e) and not (res / "t2").exists()
     meta = {"model_id": "m", "quantization": "QAT (q4_0)", "context_length": 32768, "lmstudio_version": "0.0.0",
-            "enable_thinking": False, "hardware": {"cpu": "c", "gpu": "g", "ram_gb": 1, "vram_gb": 1}}
+            "enable_thinking": False, "kv_cache_quant": "Q4", "flash_attention": True,
+            "hardware": {"cpu": "c", "gpu": "g", "ram_gb": 1, "vram_gb": 1}}
+    assert rx.missing_metadata(dict(meta, flash_attention="si")) == [
+        "flash_attention (true/false, come impostato in LM Studio)"]
+    assert rx.missing_metadata(dict(meta, kv_cache_quant="TODO")) == ["kv_cache_quant"]
     assert rx.missing_metadata(meta) == []  # enable_thinking = false e' un valore valido
     assert rx.missing_metadata(dict(meta, enable_thinking="TODO")) == ["enable_thinking"]
     assert rx.missing_metadata(dict(meta, enable_thinking="yes")) == [
@@ -649,9 +942,24 @@ def check_runner(tmp: Path, base_url: str) -> None:
                    client=dict(prior["client"], base_url=f"http://127.0.0.1:{srv.server_address[1]}/v1"))
         cfg_path.write_text(yaml.safe_dump(e2e), encoding="utf-8")
         FakeLMStudio.script = ["reasoning"]
+        FakeLMStudio.models_payload = models_payload("fake-model", 16384)  # contesto diverso dal config: non parte
+        try:
+            rx.main([str(cfg_path), "--results-dir", str(res)])
+            raise AssertionError("contesto diverso non rifiutato")
+        except SystemExit as e:
+            assert "diverso da quello del config" in str(e) and not (res / "t5").exists()
+        FakeLMStudio.models_payload = models_payload("fake-model", 32768)
         assert rx.main([str(cfg_path), "--results-dir", str(res)]) == 0
+        lines = (res / "t5" / "manifest.jsonl").read_text(encoding="utf-8").splitlines()
+        (res / "t5" / "manifest.jsonl").write_text("", encoding="utf-8")  # ripresa: esito in server_checks.jsonl
+        FakeLMStudio.script = ["reasoning"]
+        assert rx.main([str(cfg_path), "--results-dir", str(res), "--resume"]) == 0
+        (res / "t5" / "manifest.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        checks = [json.loads(x) for x in (res / "t5" / "server_checks.jsonl").read_text(encoding="utf-8").splitlines()]
+        assert len(checks) == 1 and checks[0]["verified"] and checks[0]["context_lengths"] == [32768]
     finally:
         FakeLMStudio.script = []
+        FakeLMStudio.models_payload = None
         srv.shutdown()
         srv.server_close()
     m = json.loads((res / "t5" / "manifest.jsonl").read_text(encoding="utf-8"))
@@ -665,6 +973,8 @@ def check_runner(tmp: Path, base_url: str) -> None:
     assert raw["raw"]["choices"][0]["message"]["reasoning_content"] == REASONING_TXT
     saved = json.loads((res / "t5" / "config.json").read_text(encoding="utf-8"))["config"]["model_metadata"]
     assert saved["enable_thinking"] is True and saved["quantization"] == "QAT (q4_0)"
+    sc = json.loads((res / "t5" / "config.json").read_text(encoding="utf-8"))["provenance"]["server_context"]
+    assert sc["verified"] and sc["context_lengths"] == [32768] and sc["expected_context_length"] == 32768
     print("  OK  runner: output e manifest (caratteri, token stimati, seed per ripetizione), rifiuto della "
           "sovrascrittura, ripresa dalla cache, client reale rifiutato senza metadati (anche enable_thinking) o "
           "senza top_k o con contesto / max_tokens diversi da un'altra run dello stesso modello; run lmstudio sul "
@@ -686,7 +996,11 @@ def main() -> None:
         check_tokenizer_offline(tmp)
         check_corpus_loo(builder)
         check_pilot(builder, tmp)
+        check_analyze_pilot()
+        check_plantuml(builder)
+        check_pilot2(tmp)
         check_smoke(tmp)
+        check_server_context()
         check_runner(tmp, base)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
