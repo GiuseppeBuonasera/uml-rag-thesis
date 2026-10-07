@@ -87,6 +87,11 @@ non sono state modificate.
 76. 2026-10-06 — Pilota: primo tentativo fallito (contesto 8192), token reali di Gemma 4, controllo del contesto caricato nel runner
 77. 2026-10-06 — Pilota, FASE 3 (STOP 2): la regola della voce 75 non decide (troppi troncamenti)
 78. 2026-10-07 — Secondo pilota (solo corpus): PlantUML contro JSON vincolato, Qwen2.5-Coder 14B; regola di decisione PRIMA della run (STOP 1)
+79. 2026-10-07 — Secondo pilota — STOP 1 approvato: esempi PlantUML canonici, regola auto_v1, regola di decisione con classifica completa, schema di generazione
+80. 2026-10-07 — Smoke test di Qwen2.5-Coder 14B: risposta attesa, nessun ragionamento, seed come Gemma
+81. 2026-10-07 — Repository spostato fuori da OneDrive; remote superflui rimossi
+82. 2026-10-07 — Secondo pilota: script di analisi (analyze_pilot2.py) scritto PRIMA delle run
+83. 2026-10-07 — Secondo pilota: configurazione di RIFERIMENTO J0-Q (Qwen, Apollon JSON libero), registrata PRIMA della run
 
 ## Formato
 
@@ -2759,3 +2764,135 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - Nota operativa: all'inizio della sessione del 2026-10-07 parte del lavoro su questo pilota non era più su disco
   (file nuovi assenti, file modificati tornati alla versione precedente, script dello scratchpad spariti); è stato
   rifatto con lo stesso contenuto e gli stessi controlli (stessi esiti, stesso sha256 dello schema di generazione).
+
+### [2026-10-07] Secondo pilota — STOP 1 approvato: esempi PlantUML canonici, regola auto_v1, regola di decisione con classifica completa, schema di generazione
+- Approvazioni dell'utente sulle proposte della voce 78, date PRIMA di qualsiasi generazione del secondo pilota (nessun
+  dato visto):
+  1. **Esempi in PlantUML CANONICO** (`generation/plantuml_format.py`), ricavati in modo deterministico dal JSON
+     Apollon del Passo 1: approvati. Motivo: controllo di sanità B, contenuto identico al Passo 1 in 79 casi su 79.
+  2. **Regola automatica delle etichette `auto_v1`**: approvata così com'è. `experiments/run_experiment.py`:
+     `APPROVED_LABEL_RULES = ("auto_v1",)`; `experiments/configs/pilot2_formats.yaml`: `plantuml_label_rule: auto_v1`.
+     Qualunque altra regola resta rifiutata dal runner (test). Docstring di `generation/plantuml_postprocess.py`:
+     "PROPOSTA" → "APPROVATA".
+  3. **Regola di decisione della voce 78**: approvata e DEFINITIVA, con un'aggiunta: l'analisi riporta sempre la
+     **classifica completa delle quattro configurazioni** (S, troncamenti, criteri di spareggio), non solo la
+     vincitrice. Implementata in `experiments/analyze_pilot2.py` (voce 82).
+  4. **Schema di generazione** (`generation/schemas/apollon_v4_generation.schema.json`, `maxItems` 39 sugli edges,
+     `$ref` espansi): approvato. **Limite annotato**: il contenuto di `data` dei nodi (nome, attributi, metodi) e i
+     campi di `data` degli edge diversi da `points` restano liberi, quindi lì il vincolo non agisce; nessuno schema più
+     stretto su `data`.
+
+### [2026-10-07] Smoke test di Qwen2.5-Coder 14B: risposta attesa, nessun ragionamento, seed come Gemma
+- Smoke test eseguito dall'utente con `--save`: `docs/smoke_tests/2026-10-07_qwen-qwen2.5-coder-14b_smoke1.txt` e
+  `.json` (script 2026-10-06.3). Id del modello in LM Studio: **`qwen/qwen2.5-coder-14b`**.
+- Esiti (dal .json): risposta attesa `{"ok": true}` **SI** (6 token di completamento, latenza 2,68 s); **nessun
+  ragionamento** (né campo separato né marcatori); a temperature 0.8 il **seed NON è rispettato** (seed 1234 due volte
+  → due risposte diverse); a temperature 0 le tre risposte (due con seed 1234, una con 98765) sono **identiche**, quindi
+  il seed non ha effetto ("non determinabile").
+- **Stesso comportamento di Gemma 4 12B QAT** (voci 72 e 74): la regola sulla riproducibilità (riproducibilità
+  garantita a livello di ANALISI, con le risposte grezze versionate, non di generazione; seed inviato e registrato
+  comunque) vale per entrambi i modelli. Come per Gemma, un prompt breve non dimostra il determinismo a temperature 0
+  sui prompt lunghi degli esperimenti.
+- Config: `model_id` e `client.model` = `qwen/qwen2.5-coder-14b` in `experiments/configs/qwen25coder14b_template.yaml`
+  e nel modello Q di `experiments/configs/pilot2_formats.yaml`. J-Q non ha più TODO (il runner e
+  `calibrate_tokens.py` accettano il client); P-Q è sbloccato anche dalla regola `auto_v1` (voce 79).
+- Ancora da registrare: la **VRAM usata** da Qwen con contesto 32768 (`hardware.vram_used`, fornita dall'utente;
+  campo descrittivo, non obbligatorio per il runner).
+
+### [2026-10-07] Repository spostato fuori da OneDrive; remote superflui rimossi
+- **Spostamento**: da `C:\Users\peppe\OneDrive\Desktop\uml-rag-thesis` a `C:\Progetti\uml-rag-thesis`, fatto
+  dall'utente. **Motivo**: si sospetta che la sincronizzazione di OneDrive abbia causato le due perdite di lavoro
+  registrate di recente:
+  - **5 ottobre, STOP 2 del Passo 3a**: mancavano i nuovi default di `PromptSpec` e la voce 64 di questo file, poi
+    rifatti;
+  - **7 ottobre, FASE 1 del secondo pilota**: mancavano i moduli PlantUML, il template e lo script dello schema, e
+    alcuni file erano tornati alla versione del giorno prima (nota operativa della voce 78; rifatti con gli stessi
+    controlli e lo stesso sha256 dello schema).
+  La chat di lavoro precedente è andata persa con lo spostamento; il contesto è stato ricostruito da CLAUDE.md,
+  STATUS.md e da questo file.
+- **Verifiche nel nuovo percorso** (2026-10-07): `git status` pulito a parte i due file dello smoke test di Qwen;
+  dopo `git fetch` `main` = `origin/main` = `ff0449e` (anche `git ls-remote`); sha256 invariati rispetto ai valori
+  registrati per `retrieval/stopwords_en.txt` (`5be3f507…`), `generation/tokenizer/cl100k_base.tiktoken`
+  (`223921b7…`), `retrieval/config_bm25.yaml` (`d6dfa722…`) e lo schema di generazione (`e35a19c7…`); tag
+  `testset-v1` presente; `generation/test_generation.py` passa nel nuovo percorso.
+- **Remote**: rimossi su richiesta dell'utente `git@github.com-GiuseppeBuonasera/uml-rag-thesis.git` (remote il cui
+  nome era un URL SSH) e `rag-uml-thesis-start`, entrambi verso lo stesso repository GitHub. Resta solo `origin`
+  (`https://github.com/GiuseppeBuonasera/uml-rag-thesis.git`, fetch e push).
+
+### [2026-10-07] Secondo pilota: script di analisi (analyze_pilot2.py) scritto PRIMA delle run
+- `experiments/analyze_pilot2.py`, scritto e testato prima di qualsiasi generazione del secondo pilota. **Da qui in
+  poi la regola nel codice (funzioni `decide` / `pick`, `TIEBREAKS`, costanti `MIN_S` = 6, `TIE_WINDOW` = 1,
+  `MIN_INCLUDED` = 2) non si modifica senza una nuova voce in questo file.**
+- Legge in sola lettura `data/results/generation/pilot2_formats__<C>/` (C = P-G, P-Q, J-G, J-Q) e ricalcola tutto dalle
+  risposte grezze (`raw/`) con la stessa validazione del runner (strada 1 `plantuml_postprocess`, strada 2
+  `postprocess`); segnala se il livello ricalcolato differisce da quello del manifest e se le run non sono omogenee
+  (esercizi, k, ripetizioni, parametri di generazione). Scrive solo
+  `data/results/generation/pilot2_formats_analysis/summary.md` (versionato dalla regola di `.gitignore` sui
+  `summary.md`).
+- **Regola della voce 78, come implementata**:
+  - S = risposte con livello >= 3 (strada 1: P0 + P1b + conversione + L2 + L3; strada 2: L0-L3);
+  - troncamento = `finish_reason = length` (in entrambe le strade);
+  - J = media del Jaccard dei nomi di classe con il GT sulle risposte valide fino a L3 (stesse funzioni del primo
+    pilota, `analyze_pilot.class_names` e `corpus_loader.jaccard`); R = somma delle relazioni con stessa coppia e
+    stesso tipo / somma delle relazioni del GT, sulle risposte valide (accoppiamento 1:1 di
+    `analyze_pilot.compare_relations`); latenza mediana su tutte le 12 risposte;
+  - pareggio = S >= max(S) − 1; spareggi applicati in sequenza, ognuno tiene solo le migliori: meno troncamenti,
+    J più alto, R più alto, latenza mediana più bassa, strada 1, Gemma. Un valore non definito (J o R senza risposte
+    valide) perde. Uguaglianza tra valori reali con tolleranza 1e-9;
+  - soglia: miglior S < 6/12 → nessuna configurazione passa al Passo 3b; meno di 2 configurazioni eseguibili → STOP.
+- **Lettura operativa di "configurazione che non si può eseguire"** (la voce 78 non la dettaglia): run assente
+  (nessun `config.json`) oppure **incompleta** (meno risposte del previsto nel manifest: è il caso del server che
+  rifiuta `response_format` alla prima chiamata, ma anche di una run interrotta, che va ripresa con `--resume` prima
+  dell'analisi). Esclusa anche la run fermata per ragionamento. Le metriche delle escluse, se ci sono risposte, si
+  riportano comunque.
+- **Classifica completa** (aggiunta della voce 79): posizione k = vincitrice della stessa regola (pareggio entro 1 e
+  spareggi) applicata alle configurazioni non ancora classificate, con il criterio che l'ha decisa; le escluse in
+  fondo con il motivo. La soglia minima vale solo per la scelta: la classifica si riporta anche quando ci si ferma.
+  Conseguenza da tenere presente: per la finestra di pareggio una configurazione con S più basso di 1 può precedere
+  una con S più alto (es. meno troncamenti).
+- Metriche secondarie (fuori dalla regola): livelli cumulativi P0 / L0, P1b / L1, P1 (solo strada 1), L2, L3, L4,
+  troncate e righe scartate; esiti di fallimento; livello per esercizio e ripetizione; relazioni (stessa coppia,
+  stesso tipo, verso dei tipi orientati e di composizione / aggregazione, molteplicità, scambi di tipo); latenza,
+  token di completamento e di prompt, rapporto token reali / stima; diagnostici di formato e di layout. Nella strada 1
+  i diagnostici sul JSON (es. `interactive_present`, presente in tutte le risposte convertite) riguardano l'Apollon
+  prodotto dal convertitore, non la risposta del modello: annotato nel report.
+- Test (`check_analyze_pilot2` in `generation/test_generation.py`, dati finti): nessun pareggio; pareggio vinto da S −
+  1 per meno troncamenti; spareggi decisi da J, R, latenza, strada 1, Gemma; S − 2 fuori dal pareggio; J non definito
+  che perde; miglior S 5/12 (STOP, classifica riportata) e 6/12 (passa); due configurazioni mancanti (si decide) e
+  tre (STOP); end-to-end su run finte con risposte = ground truth (PlantUML canonico / JSON compatto): una assente, una
+  fermata per ragionamento, una con una risposta troncata (vince P-G per meno troncamenti con 12 contro 11), poi una
+  incompleta (11/12, STOP).
+
+### [2026-10-07] Secondo pilota: configurazione di RIFERIMENTO J0-Q (Qwen, Apollon JSON libero), registrata PRIMA della run
+- **Decisione dell'utente**, registrata prima di qualsiasi generazione del secondo pilota (nessun dato visto): si
+  aggiunge la configurazione **J0-Q** = Qwen2.5-Coder 14B, **Apollon JSON LIBERO** (senza `response_format`), stessi 6
+  esercizi, bm25 k = 2, temperature 0.3, top_p 0.95, top_k 64, max_tokens 12288, contesto 32768, 2 ripetizioni (12
+  generazioni). È l'equivalente per Qwen di Gemma in JSON libero a temperature 0.3 del primo pilota.
+- **Solo descrittiva**: NON entra nella regola della voce 78, che resta invariata (né in S, né nel pareggio, né nella
+  classifica; `CONFIGURATIONS` di `analyze_pilot2.py` resta P-G, P-Q, J-G, J-Q).
+- **Motivo**: completa il confronto 2x2 della strada JSON (Gemma / Qwen x libero / vincolato), così si separa l'effetto
+  del modello da quello del vincolo. Le celle: Gemma libero = primo pilota a 0.3; Gemma vincolato = J-G; Qwen libero
+  = J0-Q; Qwen vincolato = J-Q.
+- **Stesso prompt** (verificato prima della run): per i 6 esercizi i messaggi costruiti oggi per J0-Q, per J-Q e per
+  il primo pilota sono identici (sha256 dei messaggi uguale a `prompt_sha256` del manifest del primo pilota; test in
+  `check_pilot2`). J0-Q e J-Q differiscono SOLO per il vincolo.
+- **Differenze dichiarate rispetto a Gemma libero** (riferimento del primo pilota): altra run (2026-10-06), 3
+  ripetizioni per esercizio (18 risposte a 0.3, seed 42-44) invece di 2 (12 risposte, seed 42-43); le proporzioni di S
+  sono su totali diversi. Nessun test statistico.
+- **Config** (`experiments/configs/pilot2_formats.yaml`): `J0-Q: {model: Q, output_format: apollon}` (senza
+  `structured_output` né `response_schema`); run_id `pilot2_formats__J0-Q`. **Nessuna modifica al codice di
+  generazione**: `resolve_configuration` già produce `structured_output: false` e il client invia `response_format`
+  solo con `structured_output` attivo (test: corpo della richiesta di J0-Q senza `response_format`). Stesso modello,
+  contesto e max_tokens di J-Q: il controllo "contesto e max_tokens identici per modello" del runner è soddisfatto.
+- **Analisi** (`experiments/analyze_pilot2.py`; `decide`, `pick`, `TIEBREAKS` e le costanti della regola NON sono
+  cambiati): nuova sezione "Riferimenti", dopo le metriche secondarie e fuori dalla classifica, con J0-Q e Gemma libero
+  del primo pilota (`pilot_temperature_gemma4-12b-qat`, solo le risposte a temperature 0.3, validate con la stessa
+  funzione della strada 2) e le stesse metriche (S, L0-L4, troncate, J, R, latenza mediana, esiti di fallimento,
+  relazioni); controllo del prompt (sha256 dei messaggi di J-G, J-Q e J0-Q contro il primo pilota, esercizio per
+  esercizio, con avviso "PROMPT DIVERSI"); **tabella 2x2 di S** (righe Gemma / Qwen, colonne JSON libero / vincolato,
+  S/n con la proporzione). Sui dati reali il riferimento di Gemma dà S = 8/18, come V(0.3) nel summary del primo
+  pilota, nessun livello ricalcolato diverso dal manifest.
+- Test (`check_pilot2`, `check_analyze_pilot2`): 5 configurazioni (48 + 12 generazioni), J0-Q senza vincolo e con gli
+  stessi modello e metadati di J-Q; prompt identici tra primo pilota, J0-Q e J-Q; con riferimenti assenti e presenti la
+  decisione e la classifica non cambiano e J0-Q non compare tra le righe della classifica; primo pilota finto filtrato a
+  temperature 0.3 (18 risposte su 36); prompt diverso segnalato; celle della 2x2 (anche vuote).

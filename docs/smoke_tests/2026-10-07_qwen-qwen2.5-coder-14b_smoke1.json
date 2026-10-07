@@ -1,0 +1,201 @@
+{
+  "script_version": "2026-10-06.3",
+  "script_sha256": "d05052c8191c46e23d37eeb129d4cf38193083b5a11929c01d18e6d500a3dec8",
+  "timestamp": "2026-10-07T15:35:52+0200",
+  "date": "2026-10-07",
+  "base_url": "http://localhost:1234/v1",
+  "model_requested": "qwen/qwen2.5-coder-14b",
+  "ok_check": {
+    "expected_answer": true,
+    "answer": "{\"ok\": true}",
+    "finish_reason": "stop",
+    "prompt_tokens": 44,
+    "completion_tokens": 6,
+    "latency_s": 2.685,
+    "request_params": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 40,
+      "max_tokens": 1024,
+      "seed": 1234
+    },
+    "params_not_sent": [],
+    "model_reported": "qwen/qwen2.5-coder-14b",
+    "reasoning": {
+      "present": false,
+      "field": null,
+      "chars": 0,
+      "tokens": 0,
+      "tokens_source": "server",
+      "markers_in_text": []
+    }
+  },
+  "seed_checks": [
+    {
+      "temperature": 0.8,
+      "verdict": "no",
+      "reasoning_present": false,
+      "calls": [
+        {
+          "seed": 1234,
+          "answer": "Name: Whiskerpaws\n\nWhiskerpaws is known for its extraordinary ability to predict the weather based on changes in atmospheric pressure, much to the amazement of its human companions.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 40,
+          "latency_s": 3.188,
+          "request_params": {
+            "temperature": 0.8,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 1234
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen/qwen2.5-coder-14b",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        },
+        {
+          "seed": 1234,
+          "answer": "Name: Whiskerpaws\n\nWhiskerpaws is known for its extraordinary ability to solve puzzles with just its whiskers.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 27,
+          "latency_s": 2.886,
+          "request_params": {
+            "temperature": 0.8,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 1234
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen/qwen2.5-coder-14b",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        },
+        {
+          "seed": 98765,
+          "answer": "Name: Whiskertwirl\n\nShort sentence: Whiskertwirl is known for its playful antics that often leave owners in stitches.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 30,
+          "latency_s": 2.873,
+          "request_params": {
+            "temperature": 0.8,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 98765
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen/qwen2.5-coder-14b",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        }
+      ]
+    },
+    {
+      "temperature": 0.0,
+      "verdict": "non determinabile (risposta uguale anche con seed diverso)",
+      "reasoning_present": false,
+      "calls": [
+        {
+          "seed": 1234,
+          "answer": "Name: Whiskerfluff\n\nSentence: Whiskerfluff is known for its extraordinary ability to purr so loudly that it can lull anyone into a deep sleep within minutes.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 40,
+          "latency_s": 3.082,
+          "request_params": {
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 1234
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen/qwen2.5-coder-14b",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        },
+        {
+          "seed": 1234,
+          "answer": "Name: Whiskerfluff\n\nSentence: Whiskerfluff is known for its extraordinary ability to purr so loudly that it can lull anyone into a deep sleep within minutes.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 40,
+          "latency_s": 3.141,
+          "request_params": {
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 1234
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen/qwen2.5-coder-14b",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        },
+        {
+          "seed": 98765,
+          "answer": "Name: Whiskerfluff\n\nSentence: Whiskerfluff is known for its extraordinary ability to purr so loudly that it can lull anyone into a deep sleep within minutes.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 40,
+          "latency_s": 3.17,
+          "request_params": {
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 98765
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen/qwen2.5-coder-14b",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        }
+      ]
+    }
+  ],
+  "reasoning_present": false,
+  "error": null
+}

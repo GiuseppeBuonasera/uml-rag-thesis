@@ -208,7 +208,8 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
     return out
 
 
-APPROVED_LABEL_RULES = ()  # regola automatica delle etichette PlantUML: vuoto finche' l'utente non la approva
+# regole automatiche delle etichette PlantUML approvate dall'utente (auto_v1: STOP 1 del secondo pilota, voce 79)
+APPROVED_LABEL_RULES = ("auto_v1",)
 
 
 def resolve_configuration(cfg: dict, name: str | None) -> dict:

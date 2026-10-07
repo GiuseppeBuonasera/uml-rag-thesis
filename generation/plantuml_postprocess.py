@@ -15,7 +15,7 @@ Livelli propri della strada 1 (cumulativi):
   build_apollon_json) e L2 schema, L3 integrita', L4 stile sull'Apollon prodotto.
 Troncamento: finish_reason = length senza @enduml -> failure "truncated".
 
-REGOLA AUTOMATICA DELLE ETICHETTE "auto_v1" (PROPOSTA allo STOP 1 del secondo pilota, docs/decisions.md voce 78; per le
+REGOLA AUTOMATICA DELLE ETICHETTE "auto_v1" (APPROVATA allo STOP 1 del secondo pilota, docs/decisions.md voci 78-79; per le
 risposte generate non esiste corpus/label_classification.json). Uguale per tutte le condizioni, deterministica:
   (a) testo dopo i due punti = NOME DI ASSOCIAZIONE (label), tolti i marcatori di verso di lettura (gia' nel parser);
   (b) testo tra virgolette a un estremo = "molteplicita' ruolo" se la prima parola ha forma di molteplicita'

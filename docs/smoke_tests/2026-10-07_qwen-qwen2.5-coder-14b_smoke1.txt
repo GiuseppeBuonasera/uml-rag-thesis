@@ -1,0 +1,37 @@
+Smoke test di LM Studio (experiments/smoke_lmstudio.py --save)
+data/ora:          2026-10-07T15:35:52+0200
+base_url:          http://localhost:1234/v1
+id del modello:    qwen/qwen2.5-coder-14b
+versione script:   2026-10-06.3 (sha256 d05052c8191c46e23d37eeb129d4cf38193083b5a11929c01d18e6d500a3dec8)
+esiti strutturati: 2026-10-07_qwen-qwen2.5-coder-14b_smoke1.json
+================================================================================
+
+--- 1. risposta attesa {"ok": true}
+risposta      : '{"ok": true}'
+modello       : qwen/qwen2.5-coder-14b
+finish_reason : stop
+token (server): prompt=44 completion=6
+latenza       : 2.68 s
+parametri     : {'temperature': 0.0, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 1024, 'seed': 1234}
+marcatori di ragionamento nel testo: nessuno
+campo di ragionamento separato: assente
+blocchi di ragionamento rimossi dal testo prima del controllo: no
+risposta attesa {"ok": true}: SI
+
+--- 2. verifica del seed
+
+--- seed, temperature 0.8
+parametri: {'temperature': 0.8, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 512, 'seed': 1234}
+seed 1234 (1): 'Name: Whiskerpaws\n\nWhiskerpaws is known for its extraordinary ability to predict the weather based on changes in atmospheric pressure, much to the amazement of its human companions.'  [finish_reason=stop, token di completamento=40]
+seed 1234 (2): 'Name: Whiskerpaws\n\nWhiskerpaws is known for its extraordinary ability to solve puzzles with just its whiskers.'  [finish_reason=stop, token di completamento=27]
+seed 98765    : 'Name: Whiskertwirl\n\nShort sentence: Whiskertwirl is known for its playful antics that often leave owners in stitches.'  [finish_reason=stop, token di completamento=30]
+seed rispettato: no
+
+--- seed, temperature 0.0
+parametri: {'temperature': 0.0, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 512, 'seed': 1234}
+seed 1234 (1): 'Name: Whiskerfluff\n\nSentence: Whiskerfluff is known for its extraordinary ability to purr so loudly that it can lull anyone into a deep sleep within minutes.'  [finish_reason=stop, token di completamento=40]
+seed 1234 (2): 'Name: Whiskerfluff\n\nSentence: Whiskerfluff is known for its extraordinary ability to purr so loudly that it can lull anyone into a deep sleep within minutes.'  [finish_reason=stop, token di completamento=40]
+seed 98765    : 'Name: Whiskerfluff\n\nSentence: Whiskerfluff is known for its extraordinary ability to purr so loudly that it can lull anyone into a deep sleep within minutes.'  [finish_reason=stop, token di completamento=40]
+seed rispettato: non determinabile (risposta uguale anche con seed diverso)   [temperature 0: poco informativo]
+
+RIEPILOGO: seed rispettato (temperature 0.8): no; (temperature 0, poco informativo): non determinabile (risposta uguale anche con seed diverso)

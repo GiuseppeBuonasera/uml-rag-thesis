@@ -3,7 +3,8 @@
 # leave-one-out), MAI il test set. Regola di decisione registrata PRIMA della run: docs/decisions.md, voce 78.
 # Una configurazione per volta (un modello caricato alla volta in LM Studio):
 #   python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G
-# Totale: 4 configurazioni x 6 esercizi x 2 ripetizioni = 48 generazioni.
+# Totale: 4 configurazioni x 6 esercizi x 2 ripetizioni = 48 generazioni, piu' la configurazione di RIFERIMENTO J0-Q
+# (12 generazioni, solo descrittiva, FUORI dalla regola della voce 78: voce 83).
 run_id: pilot2_formats
 split: corpus
 query_ids:   # gli stessi 6 esercizi del primo pilota (selezione della voce 75)
@@ -25,7 +26,8 @@ generation:
   top_k: 64                 #   raccomandati da Qwen2.5-Coder (temperature 0.7, top_p 0.8, top_k 20, rep. penalty 1.05)
   max_tokens: 12288
   seed: 42
-plantuml_label_rule: TODO   # proposta "auto_v1" (generation/plantuml_postprocess.py, voce 78): da approvare
+plantuml_label_rule: auto_v1   # regola automatica delle etichette (generation/plantuml_postprocess.py), approvata
+                                #   allo STOP 1 del secondo pilota (voce 79)
 models:
   G:
     client:
@@ -54,13 +56,13 @@ models:
     client:
       kind: lmstudio
       base_url: http://localhost:1234/v1
-      model: TODO                    # id LM Studio di Qwen2.5-Coder 14B Instruct (smoke test, --list-models)
+      model: qwen/qwen2.5-coder-14b  # id LM Studio (smoke test del 2026-10-07, voce 80)
       timeout_s: 1200
       retries: 3
       backoff_s: 2.0
       unsupported_params: []
     model_metadata:                  # experiments/configs/qwen25coder14b_template.yaml
-      model_id: TODO                 # dallo smoke test
+      model_id: qwen/qwen2.5-coder-14b
       quantization: Q4_K_M
       context_length: 32768
       lmstudio_version: 0.4.25+1
@@ -79,3 +81,7 @@ configurations:
         response_schema: generation/schemas/apollon_v4_generation.schema.json}
   J-Q: {model: Q, output_format: apollon, structured_output: true,
         response_schema: generation/schemas/apollon_v4_generation.schema.json}
+  # RIFERIMENTO (voce 83): Qwen in Apollon JSON LIBERO (senza response_format), equivalente per Qwen di Gemma in JSON
+  # libero a temperature 0.3 del primo pilota (stesso prompt byte per byte). Solo descrittiva: NON entra nella regola
+  # della voce 78; completa il 2x2 della strada JSON (Gemma / Qwen x libero / vincolato).
+  J0-Q: {model: Q, output_format: apollon}

@@ -782,7 +782,7 @@ def check_pilot2(tmp: Path) -> None:
     import calibrate_tokens as ct
     import make_generation_schema as mgs
     cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "pilot2_formats.yaml").read_text(encoding="utf-8"))
-    assert sorted(cfg["configurations"]) == ["J-G", "J-Q", "P-G", "P-Q"]
+    assert sorted(cfg["configurations"]) == ["J-G", "J-Q", "J0-Q", "P-G", "P-Q"]  # J0-Q: riferimento (voce 83)
     first = yaml.safe_load((ROOT / "experiments" / "configs" / "pilot_temperature.yaml").read_text(encoding="utf-8"))
     assert cfg["query_ids"] == first["query_ids"]  # stessi 6 esercizi del primo pilota
     total = 0
@@ -790,29 +790,51 @@ def check_pilot2(tmp: Path) -> None:
         r = rx.resolve_configuration(cfg, name)
         assert r["run_id"] == f"pilot2_formats__{name}" and r["configuration"] == name
         fmt = "plantuml" if name.startswith("P") else "apollon"
-        assert r["prompt"]["output_format"] == fmt and r["generation"]["structured_output"] == (fmt == "apollon")
-        assert ("response_schema" in r["client"]) == (fmt == "apollon")
+        constrained = name in ("J-G", "J-Q")  # J0-Q: JSON LIBERO, senza response_format
+        assert r["prompt"]["output_format"] == fmt and r["generation"]["structured_output"] == constrained
+        assert ("response_schema" in r["client"]) == constrained
         assert (r["model_metadata"]["context_length"], r["generation"]["max_tokens"]) == (32768, 12288)
         assert r["model_metadata"]["enable_thinking"] is False
         assert (r["generation"]["temperature"], r["generation"]["top_p"], r["generation"]["top_k"]) == (0.3, 0.95, 64)
         planned = rx.plan(r, cl.load_candidates())
         assert all(spec.output_format == fmt for _, spec, _, _ in planned)
         total += len(planned)
-    assert total == 48
+    assert total == 48 + 12  # 4 configurazioni della regola + il riferimento J0-Q
+    j0, jq = rx.resolve_configuration(cfg, "J0-Q"), rx.resolve_configuration(cfg, "J-Q")
+    assert (j0["client"]["model"], j0["model_metadata"]) == (jq["client"]["model"], jq["model_metadata"])
+    j0_client = rx.make_client(j0)
+    assert "response_format" not in j0_client.request_body([{"role": "user", "content": "x"}], rx.params_for(j0, 0))
+    # stesso prompt JSON del primo pilota (Gemma libero a 0.3) e di J-Q: cambia solo il vincolo
+    builder2 = PromptBuilder(*cl.load_all())
+    cands = cl.load_candidates()
+
+    def messages(c: dict) -> dict:  # query -> messaggi del prompt (prima ripetizione / temperatura)
+        out = {}
+        for q_rec, spec, _, _ in rx.plan(c, cands):
+            out.setdefault(q_rec["id"], builder2.build(q_rec, spec).messages)
+        return out
+
+    m1, mj0, mjq = messages(first), messages(j0), messages(jq)
+    assert set(m1) == set(cfg["query_ids"]) and m1 == mj0 == mjq
     q = rx.resolve_configuration(cfg, "J-Q")["model_metadata"]
     assert (q["quantization"], q["kv_cache_quant"], q["flash_attention"]) == ("Q4_K_M", "Q4", True)
-    for name in ("P-G", "P-Q"):  # regola delle etichette non ancora approvata
-        try:
-            rx.check_label_rule(rx.resolve_configuration(cfg, name))
-            raise AssertionError("regola delle etichette non approvata accettata")
-        except SystemExit as e:
-            assert "non approvata" in str(e)
-    for name, missing in (("J-Q", "client.model"), ("J-G", "kv_cache_quant")):  # TODO ancora aperti
+    assert cfg["plantuml_label_rule"] == "auto_v1" and rx.APPROVED_LABEL_RULES == ("auto_v1",)  # voce 79
+    for name in ("P-G", "P-Q"):
+        rx.check_label_rule(rx.resolve_configuration(cfg, name))  # auto_v1 approvata
+        for bad in ("TODO", "auto_v2", None):  # qualunque altra regola resta rifiutata
+            try:
+                rx.check_label_rule(dict(rx.resolve_configuration(cfg, name), plantuml_label_rule=bad))
+                raise AssertionError("regola delle etichette non approvata accettata")
+            except SystemExit as e:
+                assert "non approvata" in str(e)
+    assert (q["model_id"], rx.resolve_configuration(cfg, "J-Q")["client"]["model"]) == ("qwen/qwen2.5-coder-14b",) * 2
+    assert rx.make_client(rx.resolve_configuration(cfg, "J-Q")).model == "qwen/qwen2.5-coder-14b"  # nessun TODO
+    for name in ("J-G", "P-G"):  # metadati di caricamento di Gemma ancora TODO
         try:
             rx.make_client(rx.resolve_configuration(cfg, name))
             raise AssertionError(f"{name} con metadati TODO accettato")
         except SystemExit as e:
-            assert missing in str(e)
+            assert "kv_cache_quant" in str(e) and "flash_attention" in str(e)
     for bad in (None, "X"):
         try:
             rx.resolve_configuration(cfg, bad)
@@ -862,9 +884,166 @@ def check_pilot2(tmp: Path) -> None:
     p1.write_text("{}", encoding="utf-8")
     assert ct.next_path(d, "2026-10-07", "fake/qwen").name == "2026-10-07_fake-qwen_calibration2.json"
     print("  OK  secondo pilota: 4 configurazioni (48 generazioni, stessi 6 esercizi, parametri identici), run_id "
-          "per configurazione, response_format solo per J-*, PlantUML bloccato finche' la regola non e' approvata, "
-          "Qwen 14B (Q4_K_M, KV Q4, Flash Attention) e Gemma bloccati dai TODO; schema di generazione con $ref "
+          "per configurazione, response_format solo per J-*, PlantUML solo con la regola approvata auto_v1, "
+          "Qwen 14B (qwen/qwen2.5-coder-14b, Q4_K_M, KV Q4, Flash Attention) pronto, Gemma bloccato dai TODO; "
+          "schema di generazione con $ref "
           "espansi e maxItems 39 (79 ground truth validi); calibrazione dei token con max_tokens = 1 sul server finto")
+
+
+def check_analyze_pilot2(tmp: Path) -> None:
+    """experiments/analyze_pilot2.py su dati finti: regola della voce 78 (pareggi e spareggi nell'ordine, soglia
+    minima, configurazioni escluse), classifica completa, end-to-end su run finte con risposte grezze."""
+    import yaml
+    import analyze_pilot2 as a2
+    from plantuml_format import apollon_to_plantuml
+    from prompt_builder import serialize_diagram
+
+    def M(name, S, tr=0, J=0.5, R=0.5, lat=10.0):
+        return {"name": name, "n": 12, "S": S, "truncated": tr, "J": J, "R": R, "latency_median": lat}
+
+    def dec(*ms, excluded=()):
+        confs = {m["name"]: {"excluded": None, "metrics": m} for m in ms}
+        confs.update({n: {"excluded": "motivo", "metrics": None} for n in excluded})
+        return a2.decide(confs)
+
+    d = dec(M("P-G", 10), M("P-Q", 7), M("J-G", 5), M("J-Q", 8))  # nessun pareggio
+    assert d["winner"] == "P-G" and len(d["steps"]) == 1
+    # classifica: la regola riapplicata alle restanti; P-Q (7) e J-Q (8) sono in pareggio, vince la strada 1
+    assert [r["name"] for r in d["ranking"]] == ["P-G", "P-Q", "J-Q", "J-G"]
+    assert d["ranking"][1]["decided_by"] == "strada 1 (PlantUML)"
+    d = dec(M("P-G", 4), M("P-Q", 10, tr=2), M("J-G", 4), M("J-Q", 9, tr=0))  # S - 1 vince per meno troncamenti
+    assert d["winner"] == "J-Q" and d["steps"][-1]["criterion"] == "meno troncamenti"
+    assert d["steps"][0]["kept"] == ["P-Q", "J-Q"] and d["steps"][1]["values"] == {"P-Q": 2, "J-Q": 0}
+    d = dec(M("P-G", 9, J=0.6), M("J-G", 10, J=0.7), M("P-Q", 3), M("J-Q", 3))
+    assert d["winner"] == "J-G" and d["steps"][-1]["criterion"].startswith("Jaccard")
+    d = dec(M("P-G", 9, R=0.4), M("J-G", 9, R=0.6), M("P-Q", 3), M("J-Q", 3))
+    assert d["winner"] == "J-G" and d["steps"][-1]["criterion"].startswith("accordo")
+    d = dec(M("P-G", 9, lat=50.0), M("J-G", 9, lat=20.0), M("P-Q", 3), M("J-Q", 3))
+    assert d["winner"] == "J-G" and d["steps"][-1]["criterion"].startswith("latenza")
+    d = dec(M("P-Q", 9), M("J-G", 9), M("P-G", 3), M("J-Q", 3))  # tutto pari: strada 1
+    assert d["winner"] == "P-Q" and d["steps"][-1]["criterion"] == "strada 1 (PlantUML)"
+    d = dec(M("J-G", 9), M("J-Q", 9), M("P-G", 3), M("P-Q", 3))  # tutto pari, stessa strada: Gemma
+    assert d["winner"] == "J-G" and d["steps"][-1]["criterion"] == "Gemma"
+    d = dec(M("P-G", 9), M("P-Q", 9), M("J-G", 9), M("J-Q", 9))
+    assert d["winner"] == "P-G" and [r["name"] for r in d["ranking"]] == ["P-G", "P-Q", "J-G", "J-Q"]
+    d = dec(M("P-G", 10, tr=3), M("J-Q", 8, tr=0), M("P-Q", 2), M("J-G", 2))  # S - 2: fuori dal pareggio
+    assert d["winner"] == "P-G" and d["steps"][0]["kept"] == ["P-G"]
+    d = dec(M("P-G", 9, J=None, tr=0), M("J-G", 9, J=0.1), M("P-Q", 0), M("J-Q", 0))  # J non definito perde
+    assert d["winner"] == "J-G"
+    d = dec(M("P-G", 5), M("P-Q", 4), M("J-G", 5), M("J-Q", 1))  # miglior S sotto 6/12
+    assert d["winner"] is None and "soglia minima" in d["outcome"] and "5/12" in d["reasons"][0]
+    assert len(d["ranking"]) == 4  # la classifica si riporta comunque
+    assert dec(M("P-G", 6), M("P-Q", 4), M("J-G", 5), M("J-Q", 1))["winner"] == "P-G"  # 6/12: passa
+    d = dec(M("J-G", 7), M("J-Q", 6), excluded=("P-G", "P-Q"))  # due configurazioni mancanti: si decide
+    assert d["winner"] == "J-G" and [r["name"] for r in d["ranking"]] == ["J-G", "J-Q", "P-G", "P-Q"]
+    assert d["ranking"][2]["excluded"] == "motivo"
+    d = dec(M("J-Q", 12), excluded=("P-G", "P-Q", "J-G"))  # una sola eseguibile: STOP
+    assert d["winner"] is None and d["outcome"].startswith("STOP") and "almeno 2" in d["reasons"][0]
+    assert (a2.MIN_S, a2.TIE_WINDOW, a2.MIN_INCLUDED) == (6, 1, 2)  # costanti della voce 78
+
+    # end-to-end su run finte: risposte = ground truth (PlantUML canonico / JSON compatto)
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "pilot2_formats.yaml").read_text(encoding="utf-8"))
+    gt = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates()}
+    res = tmp / "pilot2"
+
+    def fake_run(name, n=None, truncate=(), reasoning=(), other_prompt=()):
+        r = rx.resolve_configuration(cfg, name)
+        out = res / r["run_id"]
+        (out / "raw").mkdir(parents=True)
+        (out / "config.json").write_text(json.dumps({"config": r}), encoding="utf-8")
+        lines = []
+        for q in r["query_ids"]:
+            for rep in range(r["repetitions"]):
+                cid = f"{q}__bm25__k2__r{rep}"
+                fmt = r["prompt"]["output_format"]
+                text = (apollon_to_plantuml(gt[q]) if fmt == "plantuml"
+                        else serialize_diagram(gt[q], "compact", True))
+                fr = "stop"
+                if cid in truncate:
+                    text, fr = text[: len(text) // 2], "length"
+                v = a2.validate(fmt, text, fr, cid)
+                (out / "raw" / f"{cid}.json").write_text(json.dumps({"text": text, "finish_reason": fr}),
+                                                         encoding="utf-8")
+                lines.append(json.dumps({"call_id": cid, "query_id": q, "repetition": rep, "level": v.level,
+                                         "latency_s": 5.0 + rep, "completion_tokens_server": 100,
+                                         "prompt_tokens_server": 120, "prompt_tokens_est": 100,
+                                         "reasoning_field": "reasoning_content" if cid in reasoning else None,
+                                         "reasoning_markers_in_content": [],
+                                         "prompt_sha256": f"altro-{q}" if cid in other_prompt else f"sha-{q}"}))
+        (out / "manifest.jsonl").write_text("\n".join(lines[:n]) + "\n", encoding="utf-8")
+
+    def fake_first_pilot(invalid=()):
+        """Run finta del primo pilota: temperature 0 e 0.3, 3 ripetizioni, JSON libero (stesso prompt: sha-<q>)."""
+        first = yaml.safe_load((ROOT / "experiments" / "configs" / "pilot_temperature.yaml").read_text(encoding="utf-8"))
+        out = res / a2.FIRST_PILOT_RUN
+        (out / "raw").mkdir(parents=True)
+        (out / "config.json").write_text(json.dumps({"config": first}), encoding="utf-8")
+        lines = []
+        for q in first["query_ids"]:
+            for temp in (0.0, 0.3):
+                for rep in range(3):
+                    cid = f"{q}__bm25__k2__t{temp:g}__r{rep}"
+                    text = "{ rotto" if cid in invalid else serialize_diagram(gt[q], "compact", True)
+                    v = a2.validate("apollon", text, "stop", cid)
+                    (out / "raw" / f"{cid}.json").write_text(json.dumps({"text": text, "finish_reason": "stop"}),
+                                                             encoding="utf-8")
+                    lines.append(json.dumps({"call_id": cid, "query_id": q, "repetition": rep, "temperature": temp,
+                                             "level": v.level, "latency_s": 90.0, "prompt_sha256": f"sha-{q}"}))
+        (out / "manifest.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    fake_run("P-G")
+    fake_run("P-Q", truncate=("Louvre__bm25__k2__r0",))
+    fake_run("J-Q", reasoning=("Sober__bm25__k2__r1",))  # J-G assente
+    infos = {n: a2.load_configuration(res, n, gt) for n in a2.CONFIGURATIONS}
+    assert infos["P-G"]["metrics"]["S"] == 12 and infos["P-G"]["metrics"]["J"] == 1.0
+    assert infos["P-G"]["metrics"]["R"] == 1.0 and infos["P-G"]["metrics"]["latency_median"] == 5.5
+    assert (infos["P-Q"]["metrics"]["S"], infos["P-Q"]["metrics"]["truncated"]) == (11, 1)
+    assert "non eseguita" in infos["J-G"]["excluded"] and "ragionamento" in infos["J-Q"]["excluded"]
+    assert all(i["level_mismatch"] == 0 for i in infos.values())
+    assert infos["J-Q"]["metrics"]["S"] == 12  # le metriche di un'esclusa si riportano comunque
+    text, d = a2.report(infos)
+    assert d["winner"] == "P-G" and d["steps"][-1]["criterion"] == "meno troncamenti"  # 12 e 11: pareggio
+    assert "scelta la configurazione P-G" in text and "ESCLUSA: non eseguita" in text and "fermata per ragionamento" in text
+    assert text.count("| P-G (strada 1 (PlantUML), Gemma 4 12B QAT) |") == 1
+    assert "| 1 | P-G (strada 1 (PlantUML), Gemma 4 12B QAT) | 12/12 | 0 | 1.000 | 1.000 | 5.5 |" in text
+    assert "| 2 | P-Q (strada 1 (PlantUML), Qwen2.5-Coder 14B) | 11/12 | 1 |" in text
+    # RIFERIMENTI (voce 83): J0-Q e Gemma libero del primo pilota, fuori dalla regola e dalla classifica
+    refs = {a2.FIRST_PILOT_NAME: a2.load_first_pilot(res, gt), "J0-Q": a2.load_configuration(res, "J0-Q", gt)}
+    assert refs[a2.FIRST_PILOT_NAME]["excluded"].startswith("run del primo pilota assente")
+    text_r, d_r = a2.report(infos, refs)
+    assert text_r.startswith(text) and d_r == d  # i riferimenti non toccano regola e classifica
+    assert "| Gemma 4 12B QAT | — | — |" in text_r and "| Qwen2.5-Coder 14B | — | 12/12 (1.00) |" in text_r
+    fake_first_pilot(invalid=("Louvre__bm25__k2__t0.3__r2", "Sober__bm25__k2__t0__r0"))
+    fake_run("J0-Q", other_prompt=("FilmSet__bm25__k2__r1",))
+    refs = {a2.FIRST_PILOT_NAME: a2.load_first_pilot(res, gt), "J0-Q": a2.load_configuration(res, "J0-Q", gt)}
+    fp = refs[a2.FIRST_PILOT_NAME]
+    assert len(fp["calls"]) == 18 and {c["m"]["temperature"] for c in fp["calls"]} == {0.3}  # solo temperature 0.3
+    assert (fp["metrics"]["S"], fp["expected"], fp["level_mismatch"]) == (17, 18, 0)
+    assert refs["J0-Q"]["excluded"] is None and refs["J0-Q"]["metrics"]["S"] == 12
+    text_r, d_r = a2.report(infos, refs)
+    assert d_r == d and all(r["name"] != "J0-Q" for r in d_r["ranking"])  # fuori dalla classifica
+    body = text_r[len(text):]
+    assert body.startswith("\n## Riferimenti") and "| J0-Q" not in text  # J0-Q solo nella sezione dei riferimenti
+    assert "| G-libero (primo pilota) | Gemma 4 12B QAT |" in body
+    assert "| 17/18 (0.94) | 17 | 17 | 17 | 17 | 17 | 0 |" in body  # "{ rotto" non supera neppure L0
+    assert "| J0-Q | Qwen2.5-Coder 14B | `pilot2_formats__J0-Q` | 12/12 (1.00) |" in body
+    assert "- J-Q: 12/12 risposte\n" in body and "- J0-Q: 11/12 risposte — **PROMPT DIVERSI**" in body
+    assert "| Gemma 4 12B QAT | 17/18 (0.94) | — |" in body  # J-G assente
+    assert "| Qwen2.5-Coder 14B | 12/12 (1.00) | 12/12 (1.00) |" in body
+    shutil.rmtree(res / "pilot2_formats__P-Q")
+    fake_run("P-Q", n=11)  # run incompleta: esclusa, resta solo P-G -> STOP
+    infos = {n: a2.load_configuration(res, n, gt) for n in a2.CONFIGURATIONS}
+    assert infos["P-Q"]["excluded"].startswith("incompleta (11/12")
+    text, d = a2.report(infos)
+    assert d["winner"] is None and "STOP" in text
+    with contextlib.redirect_stdout(io.StringIO()):
+        assert a2.main(["--results-dir", str(res)]) == 0
+    refs = {a2.FIRST_PILOT_NAME: a2.load_first_pilot(res, gt), "J0-Q": a2.load_configuration(res, "J0-Q", gt)}
+    assert (res / a2.OUT_NAME / "summary.md").read_text(encoding="utf-8") == a2.report(infos, refs)[0]
+    print("  OK  analisi del secondo pilota: regola della voce 78 (pareggio entro 1, spareggi nell'ordine troncamenti "
+          "/ Jaccard / relazioni / latenza / strada 1 / Gemma, soglia 6/12, meno di 2 eseguibili), classifica "
+          "completa con le escluse; run finte: assente, fermata per ragionamento, incompleta, troncata; riferimenti "
+          "J0-Q e Gemma libero del primo pilota (solo t = 0.3) fuori dalla regola, controllo del prompt, tabella 2x2")
 
 
 def check_runner(tmp: Path, base_url: str) -> None:
@@ -999,6 +1178,7 @@ def main() -> None:
         check_analyze_pilot()
         check_plantuml(builder)
         check_pilot2(tmp)
+        check_analyze_pilot2(tmp)
         check_smoke(tmp)
         check_server_context()
         check_runner(tmp, base)

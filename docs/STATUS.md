@@ -1,7 +1,8 @@
 # Stato del progetto — leggere a inizio sessione
 
-Aggiornato: 2026-10-05 (Passo 3a chiuso: infrastruttura di generazione senza chiamate LLM; Passo 3b BLOCCATO in
-attesa dei relatori, domande 8, 9, 11, 14).
+Aggiornato: 2026-10-07 (secondo pilota: STOP 1 approvato, script di analisi pronto prima delle run, Qwen2.5-Coder 14B
+verificato con lo smoke test; repository spostato in `C:\Progetti\uml-rag-thesis`, fuori da OneDrive, voce 81. Passo
+3b BLOCCATO in attesa dei relatori, domande 8, 9, 11, 14, 15).
 
 ## Stato
 - **Corpus di retrieval** (`corpus/processed/corpus.jsonl`, 60 record): 45 esercizi originali
@@ -98,6 +99,8 @@ python generation/plantuml_sanity_check.py           # 79 diagrammi come rispost
 python generation/make_generation_schema.py          # schema per la generazione vincolata (rigenera e verifica)
 python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q   # max_tokens 1
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G      # P-G P-Q J-G J-Q
+python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration J0-Q     # riferimento, fuori dalla regola (voce 83)
+python experiments/analyze_pilot2.py                 # regola della voce 78 + classifica completa -> pilot2_formats_analysis/summary.md
 ```
 
 ## Contatori
@@ -219,7 +222,8 @@ python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --c
 - **Il seed NON garantisce la riproducibilità con LM Studio** (secondo smoke test, Gemma 4 12B QAT: a temperature 0.8
   lo stesso seed dà risposte diverse; a temperature 0 le tre risposte risultano identiche, quindi il seed non ha
   effetto: la differenza di uno spazio visibile nell'output incollato è un artefatto del copia-incolla, voce 74 di
-  decisions.md). La riproducibilità è
+  decisions.md). **Stesso comportamento per Qwen2.5-Coder 14B** (smoke test del 2026-10-07, voce 80): la regola vale
+  per entrambi i modelli. La riproducibilità è
   garantita a livello di **ANALISI** (risposte grezze salvate in `raw/` e in cache, rianalizzabili senza rigenerare),
   non di generazione. Il seed si invia e si registra comunque.
 - **Contesto verificato prima di partire**: con LM Studio il runner legge da `GET /api/v1/models` il contesto
@@ -296,8 +300,10 @@ python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --c
 ## Modelli (LM Studio)
 - **Qwen2.5-Coder 14B Instruct** (secondo pilota, 2026-10-07): GGUF Q4_K_M dalla fonte ufficiale, contesto 32768
   (massimo del GGUF), Flash Attention attiva, KV cache quantizzata Q4 (K e V) per stare nei 12 GB di VRAM; nessuna
-  modalità di ragionamento (`enable_thinking: false`). Template `experiments/configs/qwen25coder14b_template.yaml`
-  (id, VRAM: TODO dallo smoke test). Parametri raccomandati dal modello: temperature 0.7, top_p 0.8, top_k 20,
+  modalità di ragionamento (`enable_thinking: false`). Template `experiments/configs/qwen25coder14b_template.yaml`.
+  Id in LM Studio **`qwen/qwen2.5-coder-14b`**; smoke test del 2026-10-07 (`docs/smoke_tests/..._smoke1.*`, voce
+  80): risposta attesa sì, nessun ragionamento, seed non rispettato a 0.8, risposte identiche a 0. VRAM usata: TODO
+  (la fornisce l'utente). Parametri raccomandati dal modello: temperature 0.7, top_p 0.8, top_k 20,
   repetition penalty 1.05 (non usati nei piloti, dove i parametri sono identici per i due modelli).
 - **Gemma 4 12B QAT** (`lmstudio.ai/models/google/gemma-4-12b-qat`; GGUF `lmstudio-community/gemma-4-12B-it-QAT-GGUF`,
   Q4_0): scelto il 2026-10-06 per lo smoke test e il pilota. Quantizzazione registrata come "QAT (q4_0)". Ragionamento
@@ -467,10 +473,16 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
      minuti) e analizzato (`experiments/analyze_pilot.py`, summary.md della run). **STOP 2: la regola registrata NON
      decide**: il controllo preliminare si ferma per troppi troncamenti (6 su 18 a temperature 0, 3 su 18 a 0.3, soglia
      1). In attesa di decisione dell'utente sul seguito.
-   - **Secondo pilota, PlantUML contro JSON vincolato** (PRELIMINARE, solo corpus, voce 78): preparato, **STOP 1**
-     in attesa di approvazione (esempi PlantUML canonici, regola automatica delle etichette `auto_v1`, regola di
-     decisione) e dei dati mancanti (metadati di caricamento di Gemma nel primo pilota; id, VRAM e calibrazione dei
-     token di Qwen2.5-Coder 14B dallo smoke test).
+   - **Secondo pilota, PlantUML contro JSON vincolato** (PRELIMINARE, solo corpus, voce 78): **STOP 1 approvato**
+     (voce 79: esempi PlantUML canonici, regola `auto_v1`, regola di decisione definitiva con classifica completa,
+     schema di generazione); script di analisi `experiments/analyze_pilot2.py` scritto e testato PRIMA delle run
+     (voce 82: da qui la regola nel codice non cambia senza una nuova voce). Qwen pronto (id dallo smoke test, voce
+     80): si può lanciare la calibrazione J-Q e poi J-Q / P-Q. Mancano: **metadati di caricamento di Gemma nel primo
+     pilota** (`kv_cache_quant`, `flash_attention`; bloccano calibrazione e run di P-G / J-G) e la **VRAM usata da
+     Qwen** (descrittiva, non blocca).
+     **Riferimento J0-Q** (voce 83): Qwen in Apollon JSON libero, 12 generazioni, solo descrittivo e fuori dalla
+     regola; completa il 2x2 della strada JSON con Gemma libero del primo pilota (sezione "Riferimenti"
+     di `analyze_pilot2.py`).
    - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM, parametri,
      finestra di contesto, temperatura e ripetizioni), 9 (baseline statica), 11 (metriche), 14 (generazione libera
      o vincolata allo schema) e 15 (ragionamento acceso o spento).
