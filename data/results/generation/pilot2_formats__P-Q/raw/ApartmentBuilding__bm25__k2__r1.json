@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Apartment {\n  + id : int\n  + address : string\n  + ownerIds : int[]\n}\n\nclass Room {\n  + id : int\n  + apartmentId : int\n  + length : double\n  + width : double\n}\n\nclass Person {\n  + id : int\n  + name : string\n  + email : string\n}\n\nclass Building {\n  + id : int\n  + floorCount : int\n  + apartmentIds : int[]\n}\n\nApartment \"1\" *-- \"0..*\" Room\nPerson \"1\" *-- \"0..*\" Apartment\nBuilding \"1\" *-- \"0..*\" Apartment\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 4.338058199999978,
+ "prompt_tokens": 2483,
+ "completion_tokens": 142,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-x7twglfowle54xidt5s6mh",
+  "object": "chat.completion",
+  "created": 1791394356,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Apartment {\n  + id : int\n  + address : string\n  + ownerIds : int[]\n}\n\nclass Room {\n  + id : int\n  + apartmentId : int\n  + length : double\n  + width : double\n}\n\nclass Person {\n  + id : int\n  + name : string\n  + email : string\n}\n\nclass Building {\n  + id : int\n  + floorCount : int\n  + apartmentIds : int[]\n}\n\nApartment \"1\" *-- \"0..*\" Room\nPerson \"1\" *-- \"0..*\" Apartment\nBuilding \"1\" *-- \"0..*\" Apartment\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2483,
+   "completion_tokens": 142,
+   "total_tokens": 2625,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

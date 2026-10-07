@@ -1,0 +1,37 @@
+Smoke test di LM Studio (experiments/smoke_lmstudio.py --save)
+data/ora:          2026-10-07T18:57:47+0200
+base_url:          http://localhost:1234/v1
+id del modello:    qwen2.5-coder-7b-instruct
+versione script:   2026-10-06.3 (sha256 d05052c8191c46e23d37eeb129d4cf38193083b5a11929c01d18e6d500a3dec8)
+esiti strutturati: 2026-10-07_qwen2.5-coder-7b-instruct_smoke1.json
+================================================================================
+
+--- 1. risposta attesa {"ok": true}
+risposta      : '{"ok": true}'
+modello       : qwen2.5-coder-7b-instruct
+finish_reason : stop
+token (server): prompt=44 completion=6
+latenza       : 2.52 s
+parametri     : {'temperature': 0.0, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 1024, 'seed': 1234}
+marcatori di ragionamento nel testo: nessuno
+campo di ragionamento separato: assente
+blocchi di ragionamento rimossi dal testo prima del controllo: no
+risposta attesa {"ok": true}: SI
+
+--- 2. verifica del seed
+
+--- seed, temperature 0.8
+parametri: {'temperature': 0.8, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 512, 'seed': 1234}
+seed 1234 (1): 'Name: Whiskerpaws\n\nSentence: Whiskerpaws was known for their ability to land perfectly on their feet, much like the mythical creatures in ancient tales.'  [finish_reason=stop, token di completamento=35]
+seed 1234 (2): 'Name: Whiskerpaws\n\nSentence: Whiskerpaws was known for their ability to land perfectly on their feet, much like the mythical creatures of old.'  [finish_reason=stop, token di completamento=34]
+seed 98765    : '**Whiskerpaws**\n\nWhiskerpaws loves to chase the shadows in the moonlight, leaving a trail of mysterious whispers behind him.'  [finish_reason=stop, token di completamento=30]
+seed rispettato: no
+
+--- seed, temperature 0.0
+parametri: {'temperature': 0.0, 'top_p': 1.0, 'top_k': 40, 'max_tokens': 512, 'seed': 1234}
+seed 1234 (1): '**Name:** Whiskerpaws\n\n**Sentence:** Whiskerpaws loved to chase the shadows that danced across the moonlit floor of her cozy cardboard box.'  [finish_reason=stop, token di completamento=34]
+seed 1234 (2): '**Name:** Whiskerpaws\n\n**Sentence:** Whiskerpaws loved to chase the shadows that danced across the moonlit floor of her cozy cardboard box.'  [finish_reason=stop, token di completamento=34]
+seed 98765    : '**Name:** Whiskerpaws\n\n**Sentence:** Whiskerpaws loved to chase the shadows that danced across the moonlit floor of her cozy cardboard box.'  [finish_reason=stop, token di completamento=34]
+seed rispettato: non determinabile (risposta uguale anche con seed diverso)   [temperature 0: poco informativo]
+
+RIEPILOGO: seed rispettato (temperature 0.8): no; (temperature 0, poco informativo): non determinabile (risposta uguale anche con seed diverso)

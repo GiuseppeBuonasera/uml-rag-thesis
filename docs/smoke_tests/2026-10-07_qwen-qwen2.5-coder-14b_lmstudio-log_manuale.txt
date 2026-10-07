@@ -1,0 +1,26 @@
+PROVA MANUALE: estratto del registro di LM Studio incollato dall'utente, calibrazione J-Q interrotta, contesto 32768,
+Flash Attention attiva, KV cache Q4
+Non generata da script: nessun .json di esiti strutturati (la calibrazione salva il suo .json solo alla fine e non ci
+e' arrivata, docs/decisions.md voce 84).
+================================================================================
+Registro di LM Studio durante la calibrazione dei token — Qwen2.5-Coder 14B Instruct
+data:            2026-10-07
+id del modello:  qwen/qwen2.5-coder-14b, quantizzazione Q4_K_M
+impostazioni:    contesto 32768, Flash Attention attiva, KV cache quantizzata Q4 (K e V); nessun ragionamento
+hardware:        NVIDIA GeForce RTX 4070 12 GB
+comando:         python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q
+                 (interrotto prima della fine; max_tokens = 1, nessuna generazione di diagrammi)
+eseguito da:     l'utente, sulla propria macchina (solo prompt del corpus, mai il test set)
+================================================================================
+
+Esiti riferiti dall'utente (dettagli in docs/decisions.md, voce 84):
+  - lettura del prompt crollata a circa 90-110 token/s (es. 8111 token in 87 s), in calo man mano che il prompt
+    cresce: memoria del contesto fuori dalla VRAM (interpretazione dell'utente);
+  - prompt reali oltre 8192 token (9861 token misurati in calibrazione): il contesto 8192, che starebbe in VRAM, non
+    basta;
+  - esito: il 14B non si usa; il modello da coding diventa Qwen2.5-Coder 7B Q6_K (voce 85).
+
+Estratto del registro di LM Studio
+----------------------------------
+<<< DA INCOLLARE A CURA DELL'UTENTE: l'estratto del registro di LM Studio (Developer > Logs), senza modifiche. >>>
+<<< Finche' questo segnaposto e' presente, il file NON e' la prova dell'esito.                                >>>

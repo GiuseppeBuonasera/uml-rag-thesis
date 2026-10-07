@@ -802,7 +802,8 @@ def check_pilot2(tmp: Path) -> None:
     assert total == 48 + 12  # 4 configurazioni della regola + il riferimento J0-Q
     j0, jq = rx.resolve_configuration(cfg, "J0-Q"), rx.resolve_configuration(cfg, "J-Q")
     assert (j0["client"]["model"], j0["model_metadata"]) == (jq["client"]["model"], jq["model_metadata"])
-    j0_client = rx.make_client(j0)
+    j0_client = rx.make_client({**j0, "client": {**j0["client"], "model": "fake-7b"},  # id del 7B ancora TODO
+                                "model_metadata": {**j0["model_metadata"], "model_id": "fake-7b"}})
     assert "response_format" not in j0_client.request_body([{"role": "user", "content": "x"}], rx.params_for(j0, 0))
     # stesso prompt JSON del primo pilota (Gemma libero a 0.3) e di J-Q: cambia solo il vincolo
     builder2 = PromptBuilder(*cl.load_all())
@@ -817,7 +818,16 @@ def check_pilot2(tmp: Path) -> None:
     m1, mj0, mjq = messages(first), messages(j0), messages(jq)
     assert set(m1) == set(cfg["query_ids"]) and m1 == mj0 == mjq
     q = rx.resolve_configuration(cfg, "J-Q")["model_metadata"]
-    assert (q["quantization"], q["kv_cache_quant"], q["flash_attention"]) == ("Q4_K_M", "Q4", True)
+    # modello Q = Qwen2.5-Coder 7B Instruct Q6_K (voci 84-85), stessi metadati del suo template
+    assert (q["quantization"], q["kv_cache_quant"], q["flash_attention"]) == ("Q6_K", "F16", True)
+    t7 = yaml.safe_load((ROOT / "experiments" / "configs" / "qwen25coder7b_template.yaml").read_text(encoding="utf-8"))
+    assert {k: v for k, v in t7["model_metadata"].items() if k != "hardware"} == {
+        k: v for k, v in q.items() if k != "hardware"}
+    assert t7["model_metadata"]["source"] == "lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF"
+    assert (t7["model_metadata"]["context_length"], t7["generation"]["max_tokens"]) == (32768, 12288)
+    assert t7["model_metadata"]["enable_thinking"] is False
+    assert t7["client"]["model"] == t7["model_metadata"]["model_id"] == "qwen2.5-coder-7b-instruct"  # voce 86
+    assert "NON USATO" in (ROOT / "experiments" / "configs" / "qwen25coder14b_template.yaml").read_text(encoding="utf-8")
     assert cfg["plantuml_label_rule"] == "auto_v1" and rx.APPROVED_LABEL_RULES == ("auto_v1",)  # voce 79
     for name in ("P-G", "P-Q"):
         rx.check_label_rule(rx.resolve_configuration(cfg, name))  # auto_v1 approvata
@@ -827,8 +837,10 @@ def check_pilot2(tmp: Path) -> None:
                 raise AssertionError("regola delle etichette non approvata accettata")
             except SystemExit as e:
                 assert "non approvata" in str(e)
-    assert (q["model_id"], rx.resolve_configuration(cfg, "J-Q")["client"]["model"]) == ("qwen/qwen2.5-coder-14b",) * 2
-    assert rx.make_client(rx.resolve_configuration(cfg, "J-Q")).model == "qwen/qwen2.5-coder-14b"  # nessun TODO
+    for name in ("J-Q", "P-Q", "J0-Q"):  # id del 7B dallo smoke test (voce 86): nessun TODO
+        r_q = rx.resolve_configuration(cfg, name)
+        assert r_q["client"]["model"] == r_q["model_metadata"]["model_id"] == "qwen2.5-coder-7b-instruct"
+        assert rx.make_client(r_q).model == "qwen2.5-coder-7b-instruct"
     for name in ("J-G", "P-G"):  # metadati di caricamento di Gemma ancora TODO
         try:
             rx.make_client(rx.resolve_configuration(cfg, name))
@@ -885,7 +897,9 @@ def check_pilot2(tmp: Path) -> None:
     assert ct.next_path(d, "2026-10-07", "fake/qwen").name == "2026-10-07_fake-qwen_calibration2.json"
     print("  OK  secondo pilota: 4 configurazioni (48 generazioni, stessi 6 esercizi, parametri identici), run_id "
           "per configurazione, response_format solo per J-*, PlantUML solo con la regola approvata auto_v1, "
-          "Qwen 14B (qwen/qwen2.5-coder-14b, Q4_K_M, KV Q4, Flash Attention) pronto, Gemma bloccato dai TODO; "
+          "Qwen2.5-Coder 7B (qwen2.5-coder-7b-instruct, Q6_K, KV F16, Flash Attention, = template) pronto, Gemma "
+          "bloccato dai TODO, template del 14B "
+          "segnato come non usato; "
           "schema di generazione con $ref "
           "espansi e maxItems 39 (79 ground truth validi); calibrazione dei token con max_tokens = 1 sul server finto")
 
@@ -1003,16 +1017,17 @@ def check_analyze_pilot2(tmp: Path) -> None:
     assert infos["J-Q"]["metrics"]["S"] == 12  # le metriche di un'esclusa si riportano comunque
     text, d = a2.report(infos)
     assert d["winner"] == "P-G" and d["steps"][-1]["criterion"] == "meno troncamenti"  # 12 e 11: pareggio
+    assert a2.SIZE_NOTE in text and "taglia diversa" in a2.SIZE_NOTE
     assert "scelta la configurazione P-G" in text and "ESCLUSA: non eseguita" in text and "fermata per ragionamento" in text
     assert text.count("| P-G (strada 1 (PlantUML), Gemma 4 12B QAT) |") == 1
     assert "| 1 | P-G (strada 1 (PlantUML), Gemma 4 12B QAT) | 12/12 | 0 | 1.000 | 1.000 | 5.5 |" in text
-    assert "| 2 | P-Q (strada 1 (PlantUML), Qwen2.5-Coder 14B) | 11/12 | 1 |" in text
+    assert "| 2 | P-Q (strada 1 (PlantUML), Qwen2.5-Coder 7B) | 11/12 | 1 |" in text
     # RIFERIMENTI (voce 83): J0-Q e Gemma libero del primo pilota, fuori dalla regola e dalla classifica
     refs = {a2.FIRST_PILOT_NAME: a2.load_first_pilot(res, gt), "J0-Q": a2.load_configuration(res, "J0-Q", gt)}
     assert refs[a2.FIRST_PILOT_NAME]["excluded"].startswith("run del primo pilota assente")
     text_r, d_r = a2.report(infos, refs)
     assert text_r.startswith(text) and d_r == d  # i riferimenti non toccano regola e classifica
-    assert "| Gemma 4 12B QAT | — | — |" in text_r and "| Qwen2.5-Coder 14B | — | 12/12 (1.00) |" in text_r
+    assert "| Gemma 4 12B QAT | — | — |" in text_r and "| Qwen2.5-Coder 7B | — | 12/12 (1.00) |" in text_r
     fake_first_pilot(invalid=("Louvre__bm25__k2__t0.3__r2", "Sober__bm25__k2__t0__r0"))
     fake_run("J0-Q", other_prompt=("FilmSet__bm25__k2__r1",))
     refs = {a2.FIRST_PILOT_NAME: a2.load_first_pilot(res, gt), "J0-Q": a2.load_configuration(res, "J0-Q", gt)}
@@ -1026,14 +1041,21 @@ def check_analyze_pilot2(tmp: Path) -> None:
     assert body.startswith("\n## Riferimenti") and "| J0-Q" not in text  # J0-Q solo nella sezione dei riferimenti
     assert "| G-libero (primo pilota) | Gemma 4 12B QAT |" in body
     assert "| 17/18 (0.94) | 17 | 17 | 17 | 17 | 17 | 0 |" in body  # "{ rotto" non supera neppure L0
-    assert "| J0-Q | Qwen2.5-Coder 14B | `pilot2_formats__J0-Q` | 12/12 (1.00) |" in body
+    assert "| J0-Q | Qwen2.5-Coder 7B | `pilot2_formats__J0-Q` | 12/12 (1.00) |" in body
     assert "- J-Q: 12/12 risposte\n" in body and "- J0-Q: 11/12 risposte — **PROMPT DIVERSI**" in body
     assert "| Gemma 4 12B QAT | 17/18 (0.94) | — |" in body  # J-G assente
-    assert "| Qwen2.5-Coder 14B | 12/12 (1.00) | 12/12 (1.00) |" in body
+    assert "| Qwen2.5-Coder 7B | 12/12 (1.00) | 12/12 (1.00) |" in body
     shutil.rmtree(res / "pilot2_formats__P-Q")
     fake_run("P-Q", n=11)  # run incompleta: esclusa, resta solo P-G -> STOP
     infos = {n: a2.load_configuration(res, n, gt) for n in a2.CONFIGURATIONS}
     assert infos["P-Q"]["excluded"].startswith("incompleta (11/12")
+    # la run finta e' del 7B; se il config attuale indicasse un altro modello (es. il 14B) sarebbe una traccia
+    old = a2.load_configuration(res, "J0-Q", gt, expected_model_id="qwen/qwen2.5-coder-14b")
+    assert "traccia NON usata" in old["excluded"] and old["metrics"] is None and not old["calls"]
+    assert a2.load_configuration(res, "J0-Q", gt, expected_model_id="qwen2.5-coder-7b-instruct")["excluded"] is None
+    assert a2.expected_model_ids() == {"P-G": "google/gemma-4-12b-qat", "J-G": "google/gemma-4-12b-qat",
+                                       "P-Q": "qwen2.5-coder-7b-instruct", "J-Q": "qwen2.5-coder-7b-instruct",
+                                       "J0-Q": "qwen2.5-coder-7b-instruct"}
     text, d = a2.report(infos)
     assert d["winner"] is None and "STOP" in text
     with contextlib.redirect_stdout(io.StringIO()):

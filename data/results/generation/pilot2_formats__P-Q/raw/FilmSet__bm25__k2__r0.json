@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Employee {\n  + Ssn : int\n  + FirstName : string\n  + LastName : string\n}\n\nabstract class CreativeEmployee {\n  + OscarWinner : boolean\n}\n\nclass Director {}\nclass Actor {}\n\nclass Technician {\n  + FieldOfActivity : string\n}\n\nclass Screenwriter {\n  + Name : string\n  + MostSuccessfulFilm : string\n}\n\nclass FilmSet {\n  + Location : string\n}\n\nclass Film {\n  + Title : string\n  + YearOfRelease : int\n  + Genre : Genre\n}\n\nenum Genre {\n  Thriller\n  Action\n  Horror\n  Comedy\n}\n\nclass Screenplay {\n  + Title : string\n  + Version : string\n  + Date : date\n  + NumberOfScenes : int\n  + Plot : string\n  + BasedOnNovel : boolean\n  + BasedOnConcept : boolean\n}\n\nclass Novel {\n  + Title : string\n  + Author : string\n}\n\nclass ScreenplayVersion {\n  + VersionNumber : int\n  + Date : date\n}\n\nFilmSet \"1\" -- \"*\" Film : Located at\nFilm \"1\" -- \"*\" Screenplay : Based on\nScreenwriter \"1\" -- \"*\" Screenplay : Creates\nDirector --|> CreativeEmployee\nActor --|> CreativeEmployee\nTechnician --|> Employee\nCreativeEmployee \"0..1\" -- \"1\" Director : Assistant to\nCreativeEmployee \"0..*\" -- \"1\" Film : Works on\nFilm \"1\" -- \"*\" Actor : Has actor in role\nScreenplay \"1\" -- \"*\" ScreenplayVersion : Has version\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.3085369000000355,
+ "prompt_tokens": 3011,
+ "completion_tokens": 336,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ts7eirtyq3yry44sgh9eo",
+  "object": "chat.completion",
+  "created": 1791394302,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Employee {\n  + Ssn : int\n  + FirstName : string\n  + LastName : string\n}\n\nabstract class CreativeEmployee {\n  + OscarWinner : boolean\n}\n\nclass Director {}\nclass Actor {}\n\nclass Technician {\n  + FieldOfActivity : string\n}\n\nclass Screenwriter {\n  + Name : string\n  + MostSuccessfulFilm : string\n}\n\nclass FilmSet {\n  + Location : string\n}\n\nclass Film {\n  + Title : string\n  + YearOfRelease : int\n  + Genre : Genre\n}\n\nenum Genre {\n  Thriller\n  Action\n  Horror\n  Comedy\n}\n\nclass Screenplay {\n  + Title : string\n  + Version : string\n  + Date : date\n  + NumberOfScenes : int\n  + Plot : string\n  + BasedOnNovel : boolean\n  + BasedOnConcept : boolean\n}\n\nclass Novel {\n  + Title : string\n  + Author : string\n}\n\nclass ScreenplayVersion {\n  + VersionNumber : int\n  + Date : date\n}\n\nFilmSet \"1\" -- \"*\" Film : Located at\nFilm \"1\" -- \"*\" Screenplay : Based on\nScreenwriter \"1\" -- \"*\" Screenplay : Creates\nDirector --|> CreativeEmployee\nActor --|> CreativeEmployee\nTechnician --|> Employee\nCreativeEmployee \"0..1\" -- \"1\" Director : Assistant to\nCreativeEmployee \"0..*\" -- \"1\" Film : Works on\nFilm \"1\" -- \"*\" Actor : Has actor in role\nScreenplay \"1\" -- \"*\" ScreenplayVersion : Has version\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3011,
+   "completion_tokens": 336,
+   "total_tokens": 3347,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

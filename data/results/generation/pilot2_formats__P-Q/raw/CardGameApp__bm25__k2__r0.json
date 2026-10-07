@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nenum Suit {\n  Diamonds\n  Hearts\n  Spades\n  Clubs\n}\n\nenum SoloType {\n  Trump\n  Jack\n  Queen\n}\n\nenum RoundType {\n  JackRound\n  SoloRound\n  MandatorySoloRound\n}\n\nabstract class Card {\n  + id : int\n  + height : int\n  + suit : Suit\n\n  + compareTo(otherCard : Card) : string\n}\n\nclass Deck {\n  + id : int\n  + cards : Card[]\n\n  + draw() : Card\n}\n\nclass ScoringTable {\n  + id : int\n  + rounds : Round[]\n}\n\nabstract class Round {\n  + id : int\n  + winningPlayers : Player[]\n  + pointValue : int\n  + roundType : RoundType\n}\n\nclass JackRound extends Round {}\n\nclass SoloRound extends Round {\n  + soloType : SoloType\n  + soloPlayer : Player\n}\n\nclass MandatorySoloRound extends SoloRound {}\n\nabstract class Player {\n  + id : int\n  + name : string\n}\n\nclass Game {\n  + id : int\n  + players : Player[]\n  + deck : Deck\n  + scoringTable : ScoringTable\n}\n\nCard \"0..*\" -- \"1\" Deck : belongsTo\nScoringTable \"0..*\" -- \"1\" Round : contains\nRound \"0..*\" -- \"0..*\" Player : involves\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.944888500000161,
+ "prompt_tokens": 3028,
+ "completion_tokens": 292,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6zh2v6roltuejoto91smg4",
+  "object": "chat.completion",
+  "created": 1791394288,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum Suit {\n  Diamonds\n  Hearts\n  Spades\n  Clubs\n}\n\nenum SoloType {\n  Trump\n  Jack\n  Queen\n}\n\nenum RoundType {\n  JackRound\n  SoloRound\n  MandatorySoloRound\n}\n\nabstract class Card {\n  + id : int\n  + height : int\n  + suit : Suit\n\n  + compareTo(otherCard : Card) : string\n}\n\nclass Deck {\n  + id : int\n  + cards : Card[]\n\n  + draw() : Card\n}\n\nclass ScoringTable {\n  + id : int\n  + rounds : Round[]\n}\n\nabstract class Round {\n  + id : int\n  + winningPlayers : Player[]\n  + pointValue : int\n  + roundType : RoundType\n}\n\nclass JackRound extends Round {}\n\nclass SoloRound extends Round {\n  + soloType : SoloType\n  + soloPlayer : Player\n}\n\nclass MandatorySoloRound extends SoloRound {}\n\nabstract class Player {\n  + id : int\n  + name : string\n}\n\nclass Game {\n  + id : int\n  + players : Player[]\n  + deck : Deck\n  + scoringTable : ScoringTable\n}\n\nCard \"0..*\" -- \"1\" Deck : belongsTo\nScoringTable \"0..*\" -- \"1\" Round : contains\nRound \"0..*\" -- \"0..*\" Player : involves\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3028,
+   "completion_tokens": 292,
+   "total_tokens": 3320,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

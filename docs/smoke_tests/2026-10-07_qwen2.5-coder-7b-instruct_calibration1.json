@@ -1,0 +1,163 @@
+{
+  "timestamp": "2026-10-07T19:03:25+0200",
+  "model": "qwen2.5-coder-7b-instruct",
+  "model_metadata": {
+    "model_id": "qwen2.5-coder-7b-instruct",
+    "quantization": "Q6_K",
+    "source": "lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF",
+    "context_length": 32768,
+    "lmstudio_version": "0.4.25+1",
+    "enable_thinking": false,
+    "kv_cache_quant": "F16",
+    "flash_attention": true,
+    "hardware": {
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)",
+      "gpu": "NVIDIA GeForce RTX 4070 12 GB",
+      "ram_gb": 32,
+      "vram_gb": 12
+    }
+  },
+  "context_length": 32768,
+  "max_tokens": 12288,
+  "server_context": {
+    "endpoint": "http://localhost:1234/api/v1/models",
+    "available": true,
+    "loaded": true,
+    "context_lengths": [
+      32768
+    ],
+    "parallel": [
+      4
+    ],
+    "max_context_length": 32768,
+    "instances": [
+      {
+        "id": "qwen2.5-coder-7b-instruct",
+        "config": {
+          "context_length": 32768,
+          "eval_batch_size": 2048,
+          "physical_batch_size": 512,
+          "parallel": 4,
+          "flash_attention": true,
+          "context_checkpoints": 32,
+          "reasoning_budget_message": "",
+          "speculative_draft_mtp": false,
+          "speculative_draft_simple": false,
+          "speculative_draft_model": "",
+          "speculative_draft_max_tokens": 3,
+          "speculative_draft_min_tokens": 0,
+          "speculative_draft_min_continue_probability": 0,
+          "offload_kv_cache_to_gpu": true
+        }
+      }
+    ],
+    "error": null,
+    "expected_context_length": 32768,
+    "checked_at": "2026-10-07T19:02:36",
+    "verified": true
+  },
+  "rows": [
+    {
+      "format": "apollon",
+      "query_id": "Louvre",
+      "est": 11279,
+      "real": 13487,
+      "ratio": 1.1957620356414576
+    },
+    {
+      "format": "apollon",
+      "query_id": "Sober",
+      "est": 8495,
+      "real": 9861,
+      "ratio": 1.1608004708652149
+    },
+    {
+      "format": "apollon",
+      "query_id": "StudentAppointment",
+      "est": 6626,
+      "real": 7806,
+      "ratio": 1.1780863265922126
+    },
+    {
+      "format": "apollon",
+      "query_id": "CardGameApp",
+      "est": 11842,
+      "real": 14286,
+      "ratio": 1.206384056747171
+    },
+    {
+      "format": "apollon",
+      "query_id": "ApartmentBuilding",
+      "est": 6860,
+      "real": 7993,
+      "ratio": 1.1651603498542273
+    },
+    {
+      "format": "apollon",
+      "query_id": "FilmSet",
+      "est": 11357,
+      "real": 13674,
+      "ratio": 1.2040151448445893
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Louvre",
+      "est": 3115,
+      "real": 3149,
+      "ratio": 1.0109149277688603
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Sober",
+      "est": 2935,
+      "real": 2974,
+      "ratio": 1.0132879045996592
+    },
+    {
+      "format": "plantuml",
+      "query_id": "StudentAppointment",
+      "est": 2108,
+      "real": 2137,
+      "ratio": 1.0137571157495255
+    },
+    {
+      "format": "plantuml",
+      "query_id": "CardGameApp",
+      "est": 2993,
+      "real": 3028,
+      "ratio": 1.0116939525559638
+    },
+    {
+      "format": "plantuml",
+      "query_id": "ApartmentBuilding",
+      "est": 2450,
+      "real": 2483,
+      "ratio": 1.013469387755102
+    },
+    {
+      "format": "plantuml",
+      "query_id": "FilmSet",
+      "est": 2981,
+      "real": 3011,
+      "ratio": 1.0100637370010064
+    }
+  ],
+  "summary": {
+    "apollon": {
+      "ratio_min": 1.1608004708652149,
+      "ratio_median": 1.1869241811168352,
+      "ratio_max": 1.206384056747171,
+      "prompt_real_max": 14286,
+      "fits": true,
+      "margin": 6194
+    },
+    "plantuml": {
+      "ratio_min": 1.0100637370010064,
+      "ratio_median": 1.0124909285778116,
+      "ratio_max": 1.0137571157495255,
+      "prompt_real_max": 3149,
+      "fits": true,
+      "margin": 17331
+    }
+  }
+}

@@ -92,6 +92,9 @@ non sono state modificate.
 81. 2026-10-07 — Repository spostato fuori da OneDrive; remote superflui rimossi
 82. 2026-10-07 — Secondo pilota: script di analisi (analyze_pilot2.py) scritto PRIMA delle run
 83. 2026-10-07 — Secondo pilota: configurazione di RIFERIMENTO J0-Q (Qwen, Apollon JSON libero), registrata PRIMA della run
+84. 2026-10-07 — Qwen2.5-Coder 14B scartato: non regge 32768 di contesto sulla RTX 4070 12 GB
+85. 2026-10-07 — Qwen2.5-Coder 7B Instruct Q6_K come modello da coding; confronto tra modelli di taglia diversa
+86. 2026-10-07 — Smoke test di Qwen2.5-Coder 7B Instruct: risposta attesa, nessun ragionamento, seed come Gemma e il 14B
 
 ## Formato
 
@@ -2896,3 +2899,76 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   stessi modello e metadati di J-Q; prompt identici tra primo pilota, J0-Q e J-Q; con riferimenti assenti e presenti la
   decisione e la classifica non cambiano e J0-Q non compare tra le righe della classifica; primo pilota finto filtrato a
   temperature 0.3 (18 risposte su 36); prompt diverso segnalato; celle della 2x2 (anche vuote).
+
+### [2026-10-07] Qwen2.5-Coder 14B scartato: non regge 32768 di contesto sulla RTX 4070 12 GB
+- **Esito** (misurato dall'utente in LM Studio, durante la calibrazione dei token): con il 14B (Q4_K_M, KV cache Q4,
+  Flash Attention) caricato a contesto 32768 la **lettura del prompt crolla a circa 90-110 token/s** (es. 8.111 token
+  in 87 s) e cala ancora man mano che il prompt cresce. Interpretazione dell'utente: la memoria del contesto non sta
+  più in VRAM. A 8192 il modello starebbe in VRAM, ma i prompt reali superano 8192 token (**9.861 token** misurati in
+  calibrazione), e la regola "contesto identico per modello" con le finestre della domanda 8 richiede 32768.
+- **Decisione**: il 14B non si usa. Il template `experiments/configs/qwen25coder14b_template.yaml` resta nel
+  repository come traccia, con l'intestazione "NON USATO: non entra in VRAM a 32768". Restano validi come traccia anche
+  lo smoke test del 14B (voce 80, `docs/smoke_tests/2026-10-07_qwen-qwen2.5-coder-14b_smoke1.*`) e la configurazione
+  di riferimento J0-Q (voce 83), che ora usa il 7B.
+- **File lasciati dal 14B**: nessuno. Verificato il 2026-10-07: in `docs/smoke_tests/` non c'è nessun file
+  `..._calibrationN.json` (la calibrazione non è arrivata al salvataggio, che avviene alla fine), e in
+  `data/results/generation/` non c'è nessuna cartella `pilot2_formats__*`. I numeri sopra (8.111 token in 87 s, 9.861
+  token) sono quindi riferiti dall'utente.
+- **Prova**: `docs/smoke_tests/2026-10-07_qwen-qwen2.5-coder-14b_lmstudio-log_manuale.txt`, PROVA MANUALE con
+  l'estratto del registro di LM Studio (calibrazione J-Q interrotta, contesto 32768, Flash Attention attiva, KV cache
+  Q4), versionata insieme agli altri smoke test. L'estratto lo incolla l'utente al posto del segnaposto: finché il
+  segnaposto è presente, il file non è la prova dell'esito e i numeri restano solo riferiti.
+- **Protezione nell'analisi** (`experiments/analyze_pilot2.py`, `load_configuration` con `expected_model_id` ed
+  `expected_model_ids()`): `main` legge il `model_id` di ogni configurazione dal config attuale
+  (`pilot2_formats.yaml`). Una run il cui `config.json` riporta un altro `model_id`, ad esempio una run del 14B
+  rimasta su disco, NON si usa: la configurazione risulta non eseguita, con il motivo "traccia NON usata". La regola
+  della voce 78 (`decide`, `pick`, `TIEBREAKS`, costanti) non è cambiata. Nota: run del 14B e del 7B avrebbero lo
+  stesso `run_id` (`pilot2_formats__J-Q`, ...), e il runner non sovrascrive una cartella esistente; se in futuro
+  comparisse una cartella del 14B, andrebbe spostata a mano (es. in `pilot2_formats__J-Q__14b/`) prima della run del 7B.
+
+### [2026-10-07] Qwen2.5-Coder 7B Instruct Q6_K come modello da coding; confronto tra modelli di taglia diversa
+- **Nuovo modello da coding** (decisione dell'utente): **Qwen2.5-Coder 7B Instruct**, file **Q6_K** da
+  lmstudio-community (huggingface.co/lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF), modello originale non
+  modificato.
+- **Template** `experiments/configs/qwen25coder7b_template.yaml`: quantizzazione Q6_K, `source`
+  `lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF` (campo nuovo, descrittivo, non obbligatorio per il runner),
+  contesto 32768, max_tokens 12288, `flash_attention: true`, **`kv_cache_quant: F16`** (nessuna quantizzazione della
+  cache), `enable_thinking: false` (il modello non ha ragionamento), hardware come gli altri. **`client.model`,
+  `model_id` e `vram_used` restano TODO fino allo smoke test** dell'utente; con i TODO il runner rifiuta P-Q, J-Q e
+  J0-Q e `calibrate_tokens.py` rifiuta J-Q.
+- **Secondo pilota** (`experiments/configs/pilot2_formats.yaml`): il modello Q diventa il 7B, con gli stessi metadati del
+  template (verificato da un test). Le configurazioni P-Q, J-Q e J0-Q restano con gli stessi parametri (bm25 k = 2,
+  temperature 0.3, top_p 0.95, top_k 64, max_tokens 12288, contesto 32768, 2 ripetizioni); regola della voce 78
+  invariata.
+- **Il confronto generalista / coding è ora tra modelli di TAGLIA DIVERSA** (Gemma 4 12B QAT contro Qwen2.5-Coder 7B),
+  mentre la scelta del 14B (voce 78) serviva proprio a confrontare taglie simili. Va dichiarato nell'analisi e in
+  tesi: le differenze tra i due modelli non si possono attribuire alla sola specializzazione sul codice. Anche le
+  quantizzazioni sono diverse (QAT q4_0 contro Q6_K) e così la KV cache (da confermare per Gemma, TODO). In
+  `analyze_pilot2.py` la nota `SIZE_NOTE` compare in testa al report e sotto la tabella 2x2; il nome del modello Q nel
+  report è "Qwen2.5-Coder 7B".
+- **Da rifare per il 7B**: smoke test (id, risposta attesa, ragionamento, comportamento del seed, VRAM con contesto
+  32768) e calibrazione dei token. Fino allo smoke test la regola sulla riproducibilità (voci 72, 74 e 80) si dà per
+  valida anche per il 7B, ma non è verificata.
+- Test (`check_pilot2`, `check_analyze_pilot2`): metadati del modello Q uguali al template del 7B (Q6_K, KV F16,
+  Flash Attention, contesto 32768, max_tokens 12288); P-Q, J-Q e J0-Q rifiutati finché l'id è TODO; template del 14B
+  segnato come non usato; run di un altro modello scartata dall'analisi; nota sulle taglie nel report.
+
+### [2026-10-07] Smoke test di Qwen2.5-Coder 7B Instruct: risposta attesa, nessun ragionamento, seed come Gemma e il 14B
+- Smoke test eseguito dall'utente con `--save`: `docs/smoke_tests/2026-10-07_qwen2.5-coder-7b-instruct_smoke1.txt` e
+  `.json` (script 2026-10-06.3). Id del modello in LM Studio: **`qwen2.5-coder-7b-instruct`**, uguale a quello riportato
+  dal server nelle risposte.
+- **L'id esposto da LM Studio non contiene l'editore** (a differenza di `google/gemma-4-12b-qat` e
+  `qwen/qwen2.5-coder-14b`): da solo non dice quale GGUF è caricato. La fonte è nel campo `source` dei metadati
+  (`lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF`, file Q6_K), **confermata dall'utente in My Models**.
+- Esiti (dal .json): risposta attesa `{"ok": true}` **SI** (6 token di completamento, latenza 2,52 s); **nessun
+  ragionamento** (né campo separato né marcatori); a temperature 0.8 il **seed NON è rispettato** (seed 1234 due volte
+  → due risposte con lo stesso inizio ma diverse, 35 e 34 token); a temperature 0 le tre risposte (due con seed 1234,
+  una con 98765) sono **identiche**, quindi il seed non ha effetto ("non determinabile").
+- **Stesso comportamento di Gemma 4 12B QAT e del 14B** (voci 72, 74 e 80): la regola sulla riproducibilità
+  (riproducibilità garantita a livello di ANALISI, con le risposte grezze versionate; seed inviato e registrato
+  comunque) vale ora verificata anche per il 7B. Come per gli altri, un prompt breve non dimostra il determinismo a
+  temperature 0 sui prompt lunghi degli esperimenti.
+- Config: `model_id` e `client.model` = `qwen2.5-coder-7b-instruct` in
+  `experiments/configs/qwen25coder7b_template.yaml` e nel modello Q di `experiments/configs/pilot2_formats.yaml`, con
+  l'annotazione sull'editore. P-Q, J-Q e J0-Q non hanno più TODO: il runner e `calibrate_tokens.py` accettano il
+  client (test). Resta da registrare `hardware.vram_used` (dopo la calibrazione; campo descrittivo, non obbligatorio).

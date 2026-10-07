@@ -1,7 +1,7 @@
 # Stato del progetto — leggere a inizio sessione
 
-Aggiornato: 2026-10-07 (secondo pilota: STOP 1 approvato, script di analisi pronto prima delle run, Qwen2.5-Coder 14B
-verificato con lo smoke test; repository spostato in `C:\Progetti\uml-rag-thesis`, fuori da OneDrive, voce 81. Passo
+Aggiornato: 2026-10-07 (secondo pilota: STOP 1 approvato, script di analisi pronto prima delle run; modello da
+coding passato da Qwen2.5-Coder 14B, che non entra in VRAM a 32768, a Qwen2.5-Coder 7B Q6_K, voci 84-85; repository spostato in `C:\Progetti\uml-rag-thesis`, fuori da OneDrive, voce 81. Passo
 3b BLOCCATO in attesa dei relatori, domande 8, 9, 11, 14, 15).
 
 ## Stato
@@ -97,7 +97,7 @@ python experiments/context_budget.py                 # fattore token reali / sti
 # secondo pilota (voce 78): strada 1 PlantUML / strada 2 JSON vincolato; una configurazione per volta
 python generation/plantuml_sanity_check.py           # 79 diagrammi come risposte PlantUML (canonico = Passo 1)
 python generation/make_generation_schema.py          # schema per la generazione vincolata (rigenera e verifica)
-python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q   # max_tokens 1
+python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q   # max_tokens 1 (Q = 7B)
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G      # P-G P-Q J-G J-Q
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration J0-Q     # riferimento, fuori dalla regola (voce 83)
 python experiments/analyze_pilot2.py                 # regola della voce 78 + classifica completa -> pilot2_formats_analysis/summary.md
@@ -223,7 +223,7 @@ python experiments/analyze_pilot2.py                 # regola della voce 78 + cl
   lo stesso seed dà risposte diverse; a temperature 0 le tre risposte risultano identiche, quindi il seed non ha
   effetto: la differenza di uno spazio visibile nell'output incollato è un artefatto del copia-incolla, voce 74 di
   decisions.md). **Stesso comportamento per Qwen2.5-Coder 14B** (smoke test del 2026-10-07, voce 80): la regola vale
-  per entrambi i modelli. La riproducibilità è
+  per entrambi i modelli, e anche per **Qwen2.5-Coder 7B** (smoke test del 2026-10-07, voce 86). La riproducibilità è
   garantita a livello di **ANALISI** (risposte grezze salvate in `raw/` e in cache, rianalizzabili senza rigenerare),
   non di generazione. Il seed si invia e si registra comunque.
 - **Contesto verificato prima di partire**: con LM Studio il runner legge da `GET /api/v1/models` il contesto
@@ -298,7 +298,16 @@ python experiments/analyze_pilot2.py                 # regola della voce 78 + cl
 | **Totale** | **60** | **20** | **80** |
 
 ## Modelli (LM Studio)
-- **Qwen2.5-Coder 14B Instruct** (secondo pilota, 2026-10-07): GGUF Q4_K_M dalla fonte ufficiale, contesto 32768
+- **Qwen2.5-Coder 7B Instruct** (modello da coding del secondo pilota dal 2026-10-07, voce 85): GGUF **Q6_K** da
+  lmstudio-community (`lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF`), modello originale non modificato; contesto
+  32768, max_tokens 12288, Flash Attention attiva, KV cache F16 (non quantizzata), nessun ragionamento. Template
+  `experiments/configs/qwen25coder7b_template.yaml`. Id in LM Studio **`qwen2.5-coder-7b-instruct`** (senza editore:
+  la fonte è nel campo `source`, confermata in My Models); smoke test del 2026-10-07 (voce 86): risposta attesa sì,
+  nessun ragionamento, seed non rispettato a 0.8, risposte identiche a 0. VRAM e calibrazione: TODO. **Confronto
+  generalista / coding tra taglie diverse** (Gemma 12B contro Qwen Coder 7B): da dichiarare nell'analisi.
+- **Qwen2.5-Coder 14B Instruct — NON USATO** (voce 84): a 32768 di contesto la lettura del prompt crolla a ~90-110
+  token/s (memoria del contesto fuori dalla VRAM); a 8192 starebbe in VRAM ma i prompt reali arrivano a 9.861 token.
+  Resta come traccia. Dati del 14B (secondo pilota, 2026-10-07): GGUF Q4_K_M dalla fonte ufficiale, contesto 32768
   (massimo del GGUF), Flash Attention attiva, KV cache quantizzata Q4 (K e V) per stare nei 12 GB di VRAM; nessuna
   modalità di ragionamento (`enable_thinking: false`). Template `experiments/configs/qwen25coder14b_template.yaml`.
   Id in LM Studio **`qwen/qwen2.5-coder-14b`**; smoke test del 2026-10-07 (`docs/smoke_tests/..._smoke1.*`, voce
@@ -476,10 +485,11 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    - **Secondo pilota, PlantUML contro JSON vincolato** (PRELIMINARE, solo corpus, voce 78): **STOP 1 approvato**
      (voce 79: esempi PlantUML canonici, regola `auto_v1`, regola di decisione definitiva con classifica completa,
      schema di generazione); script di analisi `experiments/analyze_pilot2.py` scritto e testato PRIMA delle run
-     (voce 82: da qui la regola nel codice non cambia senza una nuova voce). Qwen pronto (id dallo smoke test, voce
-     80): si può lanciare la calibrazione J-Q e poi J-Q / P-Q. Mancano: **metadati di caricamento di Gemma nel primo
-     pilota** (`kv_cache_quant`, `flash_attention`; bloccano calibrazione e run di P-G / J-G) e la **VRAM usata da
-     Qwen** (descrittiva, non blocca).
+     (voce 82: da qui la regola nel codice non cambia senza una nuova voce). **Modello Q = Qwen2.5-Coder 7B Q6_K**
+     (voci 84-85; il 14B non entra in VRAM a 32768), smoke test fatto (voce 86): si può lanciare la **calibrazione
+     J-Q**, poi P-Q / J-Q / J0-Q; la VRAM del 7B si registra dopo la calibrazione. Mancano i **metadati di
+     caricamento di Gemma nel primo pilota** (`kv_cache_quant`,
+     `flash_attention`; bloccano calibrazione e run di P-G / J-G).
      **Riferimento J0-Q** (voce 83): Qwen in Apollon JSON libero, 12 generazioni, solo descrittivo e fuori dalla
      regola; completa il 2x2 della strada JSON con Gemma libero del primo pilota (sezione "Riferimenti"
      di `analyze_pilot2.py`).

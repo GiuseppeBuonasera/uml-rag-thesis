@@ -1,0 +1,201 @@
+{
+  "script_version": "2026-10-06.3",
+  "script_sha256": "d05052c8191c46e23d37eeb129d4cf38193083b5a11929c01d18e6d500a3dec8",
+  "timestamp": "2026-10-07T18:57:47+0200",
+  "date": "2026-10-07",
+  "base_url": "http://localhost:1234/v1",
+  "model_requested": "qwen2.5-coder-7b-instruct",
+  "ok_check": {
+    "expected_answer": true,
+    "answer": "{\"ok\": true}",
+    "finish_reason": "stop",
+    "prompt_tokens": 44,
+    "completion_tokens": 6,
+    "latency_s": 2.524,
+    "request_params": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 40,
+      "max_tokens": 1024,
+      "seed": 1234
+    },
+    "params_not_sent": [],
+    "model_reported": "qwen2.5-coder-7b-instruct",
+    "reasoning": {
+      "present": false,
+      "field": null,
+      "chars": 0,
+      "tokens": 0,
+      "tokens_source": "server",
+      "markers_in_text": []
+    }
+  },
+  "seed_checks": [
+    {
+      "temperature": 0.8,
+      "verdict": "no",
+      "reasoning_present": false,
+      "calls": [
+        {
+          "seed": 1234,
+          "answer": "Name: Whiskerpaws\n\nSentence: Whiskerpaws was known for their ability to land perfectly on their feet, much like the mythical creatures in ancient tales.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 35,
+          "latency_s": 2.704,
+          "request_params": {
+            "temperature": 0.8,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 1234
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen2.5-coder-7b-instruct",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        },
+        {
+          "seed": 1234,
+          "answer": "Name: Whiskerpaws\n\nSentence: Whiskerpaws was known for their ability to land perfectly on their feet, much like the mythical creatures of old.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 34,
+          "latency_s": 2.672,
+          "request_params": {
+            "temperature": 0.8,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 1234
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen2.5-coder-7b-instruct",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        },
+        {
+          "seed": 98765,
+          "answer": "**Whiskerpaws**\n\nWhiskerpaws loves to chase the shadows in the moonlight, leaving a trail of mysterious whispers behind him.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 30,
+          "latency_s": 2.621,
+          "request_params": {
+            "temperature": 0.8,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 98765
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen2.5-coder-7b-instruct",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        }
+      ]
+    },
+    {
+      "temperature": 0.0,
+      "verdict": "non determinabile (risposta uguale anche con seed diverso)",
+      "reasoning_present": false,
+      "calls": [
+        {
+          "seed": 1234,
+          "answer": "**Name:** Whiskerpaws\n\n**Sentence:** Whiskerpaws loved to chase the shadows that danced across the moonlit floor of her cozy cardboard box.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 34,
+          "latency_s": 2.656,
+          "request_params": {
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 1234
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen2.5-coder-7b-instruct",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        },
+        {
+          "seed": 1234,
+          "answer": "**Name:** Whiskerpaws\n\n**Sentence:** Whiskerpaws loved to chase the shadows that danced across the moonlit floor of her cozy cardboard box.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 34,
+          "latency_s": 2.635,
+          "request_params": {
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 1234
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen2.5-coder-7b-instruct",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        },
+        {
+          "seed": 98765,
+          "answer": "**Name:** Whiskerpaws\n\n**Sentence:** Whiskerpaws loved to chase the shadows that danced across the moonlit floor of her cozy cardboard box.",
+          "finish_reason": "stop",
+          "prompt_tokens": 45,
+          "completion_tokens": 34,
+          "latency_s": 2.709,
+          "request_params": {
+            "temperature": 0.0,
+            "top_p": 1.0,
+            "top_k": 40,
+            "max_tokens": 512,
+            "seed": 98765
+          },
+          "params_not_sent": [],
+          "model_reported": "qwen2.5-coder-7b-instruct",
+          "reasoning": {
+            "present": false,
+            "field": null,
+            "chars": 0,
+            "tokens": 0,
+            "tokens_source": "server",
+            "markers_in_text": []
+          }
+        }
+      ]
+    }
+  ],
+  "reasoning_present": false,
+  "error": null
+}

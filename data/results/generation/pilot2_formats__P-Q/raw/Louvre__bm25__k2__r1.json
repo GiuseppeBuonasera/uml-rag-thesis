@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Museum {\n  + name : string\n}\n\nabstract class Location {}\n\nclass ExhibitionRoom {\n  + locationId : int\n  + exhibitionStatus : string\n  + coordinator : Employee\n}\n\nclass ExhibitionItem {\n  + itemId : int\n  + description : string\n  + requiredPieces : int\n  + availablePieces : int\n}\n\nclass Collector {\n  + collectorId : int\n  + pieceCount : int\n}\n\nclass PieceRequest {\n  + requestId : int\n  + itemId : int\n  + collectorId : int\n  + status : string\n}\n\nclass Employee {\n  + employeeId : int\n  + name : string\n  + coach : Employee\n}\n\nLocation *-- ExhibitionRoom\nExhibitionRoom \"1\" -- \"0..*\" ExhibitionItem\nExhibitionItem \"0..*\" -- \"0..*\" PieceRequest\nPieceRequest \"1\" -- \"1\" Collector\nEmployee \"0..1\" -- \"1\" Employee : Coach\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 5.333331800000451,
+ "prompt_tokens": 3149,
+ "completion_tokens": 208,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cjck8jbduigvl6g8qqoo8",
+  "object": "chat.completion",
+  "created": 1791394321,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Museum {\n  + name : string\n}\n\nabstract class Location {}\n\nclass ExhibitionRoom {\n  + locationId : int\n  + exhibitionStatus : string\n  + coordinator : Employee\n}\n\nclass ExhibitionItem {\n  + itemId : int\n  + description : string\n  + requiredPieces : int\n  + availablePieces : int\n}\n\nclass Collector {\n  + collectorId : int\n  + pieceCount : int\n}\n\nclass PieceRequest {\n  + requestId : int\n  + itemId : int\n  + collectorId : int\n  + status : string\n}\n\nclass Employee {\n  + employeeId : int\n  + name : string\n  + coach : Employee\n}\n\nLocation *-- ExhibitionRoom\nExhibitionRoom \"1\" -- \"0..*\" ExhibitionItem\nExhibitionItem \"0..*\" -- \"0..*\" PieceRequest\nPieceRequest \"1\" -- \"1\" Collector\nEmployee \"0..1\" -- \"1\" Employee : Coach\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3149,
+   "completion_tokens": 208,
+   "total_tokens": 3357,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

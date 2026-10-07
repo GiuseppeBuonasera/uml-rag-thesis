@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + phoneNumber : string\n  + email : string\n}\n\nclass Driver {\n  + driverId : int\n  + firstName : string\n  + lastName : string\n  + vehicleNumber : int\n}\n\nclass Car {\n  + carId : int\n  + ownerName : string\n  + isSoberCar : boolean\n}\n\nclass RideHailRequest {\n  + requestId : int\n  + pickupTime : datetime\n  + dropOffTime : datetime\n  + pickupLocation : string\n  + dropOffLocation : string\n  + rideDuration : time\n  + distance : float\n  + numberOfPassengers : int\n  + fee : double\n  + requestType : string\n  + leadCustomerName : string\n}\n\nclass RideShareRequest {\n  + requestId : int\n  + pickupTime : datetime\n  + dropOffTime : datetime\n  + pickupLocation : string\n  + dropOffLocation : string\n  + rideDuration : time\n  + distance : float\n  + customerNames : string[]\n  + upfrontFee : double\n}\n\nclass Accident {\n  + accidentId : int\n  + date : datetime\n  + location : string\n  + damageAmount : double\n}\n\nCustomer \"1\" -- \"0..*\" RideHailRequest\nCustomer \"1\" -- \"0..*\" RideShareRequest\nDriver \"1\" -- \"0..*\" RideHailRequest\nDriver \"1\" -- \"0..*\" RideShareRequest\nCar \"1\" -- \"0..*\" RideHailRequest\nCar \"1\" -- \"0..*\" RideShareRequest\nCar \"1\" -- \"0..*\" Accident\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.6590211000002455,
+ "prompt_tokens": 2974,
+ "completion_tokens": 362,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qep529x211sah77komh9p",
+  "object": "chat.completion",
+  "created": 1791394335,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + phoneNumber : string\n  + email : string\n}\n\nclass Driver {\n  + driverId : int\n  + firstName : string\n  + lastName : string\n  + vehicleNumber : int\n}\n\nclass Car {\n  + carId : int\n  + ownerName : string\n  + isSoberCar : boolean\n}\n\nclass RideHailRequest {\n  + requestId : int\n  + pickupTime : datetime\n  + dropOffTime : datetime\n  + pickupLocation : string\n  + dropOffLocation : string\n  + rideDuration : time\n  + distance : float\n  + numberOfPassengers : int\n  + fee : double\n  + requestType : string\n  + leadCustomerName : string\n}\n\nclass RideShareRequest {\n  + requestId : int\n  + pickupTime : datetime\n  + dropOffTime : datetime\n  + pickupLocation : string\n  + dropOffLocation : string\n  + rideDuration : time\n  + distance : float\n  + customerNames : string[]\n  + upfrontFee : double\n}\n\nclass Accident {\n  + accidentId : int\n  + date : datetime\n  + location : string\n  + damageAmount : double\n}\n\nCustomer \"1\" -- \"0..*\" RideHailRequest\nCustomer \"1\" -- \"0..*\" RideShareRequest\nDriver \"1\" -- \"0..*\" RideHailRequest\nDriver \"1\" -- \"0..*\" RideShareRequest\nCar \"1\" -- \"0..*\" RideHailRequest\nCar \"1\" -- \"0..*\" RideShareRequest\nCar \"1\" -- \"0..*\" Accident\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2974,
+   "completion_tokens": 362,
+   "total_tokens": 3336,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

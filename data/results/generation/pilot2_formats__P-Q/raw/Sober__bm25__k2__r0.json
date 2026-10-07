@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + phoneNumber : string\n  + email : string\n}\n\nclass CarOwner {\n  + name : string\n  + phoneNumber : string\n  + email : string\n}\n\nabstract class TaxiService {}\n\nclass RideHailing extends TaxiService {\n  + pickupTime : datetime\n  + dropOffTime : datetime\n  + pickupLocation : string\n  + dropOffLocation : string\n  + rideDuration : int\n  + distance : float\n  + numberOfPassengers : int\n  + fee : double\n  + requestType : string\n  + leadCustomerName : string\n}\n\nclass RideSharing extends TaxiService {\n  + pickupTime : datetime\n  + dropOffTime : datetime\n  + pickupLocation : string\n  + dropOffLocation : string\n  + rideDuration : int\n  + distance : float\n  + customerNames : string[]\n  + upfrontFee : double\n}\n\nclass Accident {\n  + date : date\n  + location : string\n  + damageAmount : double\n}\n\nclass Car {\n  + carNumber : string\n  + tonnage : double\n  + seats : int\n}\n\nabstract class Vehicle {}\n\nclass SelfDrivingCar extends Vehicle {\n  + isAvailable : boolean\n}\n\nclass RegisteredCar extends Vehicle {\n  + owner : CarOwner\n}\n\nCustomer \"1\" -- \"0..*\" RideHailing\nCustomer \"1\" -- \"0..*\" RideSharing\nCarOwner \"1\" *-- \"0..*\" RegisteredCar\nSelfDrivingCar --|> Vehicle\nRegisteredCar --|> Vehicle\nRideHailing --|> TaxiService\nRideSharing --|> TaxiService\nAccident \"*--\" Car\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.720330499999363,
+ "prompt_tokens": 2974,
+ "completion_tokens": 363,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-l0ho7w944hp6hpv3rnvkwe",
+  "object": "chat.completion",
+  "created": 1791394327,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + phoneNumber : string\n  + email : string\n}\n\nclass CarOwner {\n  + name : string\n  + phoneNumber : string\n  + email : string\n}\n\nabstract class TaxiService {}\n\nclass RideHailing extends TaxiService {\n  + pickupTime : datetime\n  + dropOffTime : datetime\n  + pickupLocation : string\n  + dropOffLocation : string\n  + rideDuration : int\n  + distance : float\n  + numberOfPassengers : int\n  + fee : double\n  + requestType : string\n  + leadCustomerName : string\n}\n\nclass RideSharing extends TaxiService {\n  + pickupTime : datetime\n  + dropOffTime : datetime\n  + pickupLocation : string\n  + dropOffLocation : string\n  + rideDuration : int\n  + distance : float\n  + customerNames : string[]\n  + upfrontFee : double\n}\n\nclass Accident {\n  + date : date\n  + location : string\n  + damageAmount : double\n}\n\nclass Car {\n  + carNumber : string\n  + tonnage : double\n  + seats : int\n}\n\nabstract class Vehicle {}\n\nclass SelfDrivingCar extends Vehicle {\n  + isAvailable : boolean\n}\n\nclass RegisteredCar extends Vehicle {\n  + owner : CarOwner\n}\n\nCustomer \"1\" -- \"0..*\" RideHailing\nCustomer \"1\" -- \"0..*\" RideSharing\nCarOwner \"1\" *-- \"0..*\" RegisteredCar\nSelfDrivingCar --|> Vehicle\nRegisteredCar --|> Vehicle\nRideHailing --|> TaxiService\nRideSharing --|> TaxiService\nAccident \"*--\" Car\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2974,
+   "completion_tokens": 363,
+   "total_tokens": 3337,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

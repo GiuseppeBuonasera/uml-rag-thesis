@@ -1,0 +1,51 @@
+# MODELLO per Qwen2.5-Coder 7B Instruct in LM Studio (secondo pilota, 2026-10-07; sostituisce il 14B, voci 84-85).
+# GGUF Q6_K da lmstudio-community (huggingface.co/lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF), modello originale
+# Qwen/Qwen2.5-Coder-7B-Instruct NON modificato. I TODO fanno rifiutare la partenza al runner.
+# Caricamento in LM Studio: Context Length 32768, Flash Attention attiva, KV cache NON quantizzata (F16).
+# Il modello non ha una modalita' di ragionamento. Nei piloti i parametri di campionamento sono identici per i due
+# modelli (voce 78), non quelli raccomandati da Qwen.
+# Confronto generalista / coding tra modelli di TAGLIA DIVERSA (Gemma 4 12B contro Qwen2.5-Coder 7B): da dichiarare
+# nell'analisi (voce 85).
+# Smoke test del 2026-10-07 (docs/smoke_tests/2026-10-07_qwen2.5-coder-7b-instruct_smoke1.*, voce 86): risposta
+# attesa si', nessun ragionamento, seed non rispettato a temperature 0.8, risposte identiche a temperature 0.
+# Id del modello: l'id esposto da LM Studio non contiene l'editore; la fonte (lmstudio-community, Q6_K) e' nel campo
+# source, confermata dall'utente in My Models (voce 86).
+run_id: TODO_qwen25coder7b_data
+split: testset
+conditions: [zero_shot, static, random, bm25]
+k: [3]
+repetitions: 1
+seed: 0
+stop_on_reasoning: true
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+client:
+  kind: lmstudio
+  base_url: http://localhost:1234/v1
+  model: qwen2.5-coder-7b-instruct   # id esposto da LM Studio (smoke test del 2026-10-07, voce 86); senza editore
+  timeout_s: 1200
+  retries: 3
+  backoff_s: 2.0
+  unsupported_params: []
+generation:
+  temperature: TODO        # da decidere (domanda 8)
+  top_p: TODO
+  top_k: TODO
+  max_tokens: 12288        # come Gemma 4 12B QAT
+  seed: 42
+  structured_output: false
+model_metadata:
+  model_id: qwen2.5-coder-7b-instruct   # id LM Studio, senza editore: la fonte e' in source (voce 86)
+  quantization: Q6_K
+  source: lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF   # repository del GGUF (modello originale non modificato);
+                                                            # confermata dall'utente in My Models (voce 86)
+  context_length: 32768
+  lmstudio_version: 0.4.25+1   # rilevata il 2026-10-06; ricontrollare se LM Studio viene aggiornato
+  enable_thinking: false   # il modello NON ha una modalita' di ragionamento
+  kv_cache_quant: F16      # nessuna quantizzazione della KV cache
+  flash_attention: true
+  hardware:
+    cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+    gpu: NVIDIA GeForce RTX 4070 12 GB
+    ram_gb: 32
+    vram_gb: 12
+    vram_used: TODO        # dallo smoke test, con il modello caricato a 32768

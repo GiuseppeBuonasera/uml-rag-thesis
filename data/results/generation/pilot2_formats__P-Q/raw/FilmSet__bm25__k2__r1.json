@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Employee {\n  + Ssn : int\n  + FirstName : string\n  + LastName : string\n}\n\nabstract class CreativeEmployee {\n  + OscarWinner : boolean\n}\n\nclass Director {}\nclass Actor {}\n\nclass Technician {\n  + FieldOfActivity : string\n}\n\nclass FilmSet {\n  + Location : string\n  + Films : Film[]\n}\n\nclass Film {\n  + Title : string\n  + ReleaseYear : int\n  + Genre : Genre\n}\n\nenum Genre {\n  Thriller\n  Action\n  Horror\n  Comedy\n}\n\nclass Screenwriter {\n  + Name : string\n  + MostSuccessfulFilm : Film\n}\n\nclass Screenplay {\n  + Title : string\n  + Version : string\n  + Date : date\n  + NumberOfScenes : int\n  + Plot : string\n  + BasedOnNovel : Novel\n  + BasedOnConcept : Concept\n}\n\nclass Novel {\n  + Title : string\n  + Author : Person\n}\n\nclass Concept {}\n\nEmployee \"1\" -- \"*\" FilmSet\nFilmSet \"1..*\" Film\nFilm \"1\" -- \"0..*\" Actor\nFilm \"1\" -- \"1\" Screenplay\nScreenwriter \"1\" -- \"*\" Screenplay\nScreenplay \"1\" -- \"1\" Film\nActor \"1\" -- \"*\" Screenplay\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.409656799999539,
+ "prompt_tokens": 3011,
+ "completion_tokens": 279,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5ocnbdrihvqazw3ssey8kq",
+  "object": "chat.completion",
+  "created": 1791394309,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Employee {\n  + Ssn : int\n  + FirstName : string\n  + LastName : string\n}\n\nabstract class CreativeEmployee {\n  + OscarWinner : boolean\n}\n\nclass Director {}\nclass Actor {}\n\nclass Technician {\n  + FieldOfActivity : string\n}\n\nclass FilmSet {\n  + Location : string\n  + Films : Film[]\n}\n\nclass Film {\n  + Title : string\n  + ReleaseYear : int\n  + Genre : Genre\n}\n\nenum Genre {\n  Thriller\n  Action\n  Horror\n  Comedy\n}\n\nclass Screenwriter {\n  + Name : string\n  + MostSuccessfulFilm : Film\n}\n\nclass Screenplay {\n  + Title : string\n  + Version : string\n  + Date : date\n  + NumberOfScenes : int\n  + Plot : string\n  + BasedOnNovel : Novel\n  + BasedOnConcept : Concept\n}\n\nclass Novel {\n  + Title : string\n  + Author : Person\n}\n\nclass Concept {}\n\nEmployee \"1\" -- \"*\" FilmSet\nFilmSet \"1..*\" Film\nFilm \"1\" -- \"0..*\" Actor\nFilm \"1\" -- \"1\" Screenplay\nScreenwriter \"1\" -- \"*\" Screenplay\nScreenplay \"1\" -- \"1\" Film\nActor \"1\" -- \"*\" Screenplay\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3011,
+   "completion_tokens": 279,
+   "total_tokens": 3290,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -60,7 +60,11 @@ RUN_PREFIX = "pilot2_formats"
 OUT_NAME = "pilot2_formats_analysis"
 CONFIGURATIONS = ("P-G", "P-Q", "J-G", "J-Q")  # ordine di presentazione (strada-modello)
 PATH_NAME = {"P": "strada 1 (PlantUML)", "J": "strada 2 (JSON vincolato)"}
-MODEL_NAME = {"G": "Gemma 4 12B QAT", "Q": "Qwen2.5-Coder 14B"}
+MODEL_NAME = {"G": "Gemma 4 12B QAT", "Q": "Qwen2.5-Coder 7B"}
+PILOT2_CONFIG = ROOT / "experiments" / "configs" / "pilot2_formats.yaml"
+SIZE_NOTE = ("Il confronto generalista / coding e' tra modelli di **taglia diversa**: Gemma 4 12B QAT (generalista) "
+             "contro Qwen2.5-Coder 7B Instruct Q6_K (coding), perche' il 14B non entra in VRAM a 32768 (voci 84-85). Le "
+             "differenze tra i due modelli non si possono attribuire alla sola specializzazione sul codice.")
 # --- costanti della regola (voce 78): non si modificano senza una nuova voce in docs/decisions.md ---
 MIN_INCLUDED = 2  # meno di 2 configurazioni eseguibili -> nessuna decisione
 MIN_S = 6  # massimo di S sotto 6/12 -> nessuna configurazione passa al Passo 3b
@@ -178,7 +182,17 @@ def decide(configs: dict[str, dict]) -> dict:
 # --- caricamento ----------------------------------------------------------------------------------------------------
 
 
-def load_configuration(results: Path, name: str, gt: dict[str, dict]) -> dict:
+def expected_model_ids(config_path: Path = PILOT2_CONFIG) -> dict[str, str]:
+    """Configurazione -> model_id del config ATTUALE del secondo pilota (per scartare run di modelli sostituiti)."""
+    import yaml
+    import run_experiment as rx
+    cfg = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    return {n: rx.resolve_configuration(cfg, n)["model_metadata"]["model_id"] for n in cfg["configurations"]}
+
+
+def load_configuration(results: Path, name: str, gt: dict[str, dict], expected_model_id: str | None = None) -> dict:
+    """expected_model_id: se indicato, una run con un altro model_id (es. del Qwen 14B sostituito, voce 84) NON si usa:
+    resta come traccia e la configurazione risulta non eseguita."""
     run_dir = results / f"{RUN_PREFIX}__{name}"
     info = {"name": name, "run_dir": run_dir, "cfg": None, "calls": [], "expected": None, "excluded": None,
             "metrics": None, "level_mismatch": 0}
@@ -188,6 +202,11 @@ def load_configuration(results: Path, name: str, gt: dict[str, dict]) -> dict:
     cfg = json.loads((run_dir / "config.json").read_text(encoding="utf-8"))["config"]
     if cfg.get("configuration") != name:
         raise SystemExit(f"{run_dir}: config.json riporta la configurazione {cfg.get('configuration')!r}, non {name}")
+    run_model = (cfg.get("model_metadata") or {}).get("model_id")
+    if expected_model_id is not None and run_model != expected_model_id:
+        info["excluded"] = (f"non eseguita con il modello del config attuale ({expected_model_id}): la run in "
+                            f"{run_dir.name}/ e' di {run_model}, traccia NON usata")
+        return info
     info["cfg"] = cfg
     info["expected"] = len(cfg["query_ids"]) * cfg.get("repetitions", 1) * len(cfg["conditions"]) * len(cfg["k"])
     mpath = run_dir / "manifest.jsonl"
@@ -262,7 +281,7 @@ def references_section(refs: dict[str, dict], infos: dict[str, dict]) -> list[st
     """Riferimenti (voce 83): stesse metriche delle configurazioni, fuori dalla classifica, e tabella 2x2 di S per la
     strada JSON (Gemma / Qwen x libero / vincolato)."""
     desc = {FIRST_PILOT_NAME: ("Gemma 4 12B QAT", f"`{FIRST_PILOT_RUN}`, solo temperature {FIRST_PILOT_TEMPERATURE:g}"),
-            "J0-Q": ("Qwen2.5-Coder 14B", f"`{RUN_PREFIX}__J0-Q`")}
+            "J0-Q": (MODEL_NAME["Q"], f"`{RUN_PREFIX}__J0-Q`")}
     L = ["", "## Riferimenti (solo descrittivi, fuori dalla regola e dalla classifica)", "",
          "Configurazioni in Apollon JSON LIBERO (senza response_format), voce 83: completano il confronto 2x2 della "
          "strada JSON, per separare l'effetto del modello da quello del vincolo. Stesse metriche delle configurazioni "
@@ -314,7 +333,7 @@ def references_section(refs: dict[str, dict], infos: dict[str, dict]) -> list[st
         L.append(f"| {MODEL_NAME[mk]} | " + " | ".join(
             ratio((cell[(mk, k)] or {}).get("metrics")) for k in ("libero", "vincolato")) + " |")
     L += ["", "Gemma libero: primo pilota (18 risposte a temperature 0.3); le altre celle: secondo pilota (12 risposte). "
-          "Solo descrittivo: nessun test statistico, n piccoli; una cella vuota (—) e' una run assente. Le celle "
+          f"{SIZE_NOTE} Solo descrittivo: nessun test statistico, n piccoli; una cella vuota (—) e' una run assente. Le celle "
           "riportano S anche per le run escluse dalla regola (stato nella tabella sopra o nella classifica)."]
     return L
 
@@ -341,6 +360,7 @@ def report(infos: dict[str, dict], refs: dict[str, dict] | None = None) -> tuple
                  if i["cfg"]["generation"].get(k) != g.get(k)]
         if diff:
             L.append(f"**ATTENZIONE, run non omogenee**: {'; '.join(diff)}.")
+    L += ["", SIZE_NOTE]
     mism = {n: i["level_mismatch"] for n, i in infos.items() if i["level_mismatch"]}
     if mism:
         L.append(f"**ATTENZIONE**: livello ricalcolato diverso da quello del manifest in {mism} risposte (codice di "
@@ -477,9 +497,10 @@ def main(argv=None) -> int:
     args = a.parse_args(argv)
     results = Path(args.results_dir)
     gt = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates()}
-    infos = {n: load_configuration(results, n, gt) for n in CONFIGURATIONS}
+    models = expected_model_ids()
+    infos = {n: load_configuration(results, n, gt, models[n]) for n in CONFIGURATIONS}
     refs = {FIRST_PILOT_NAME: load_first_pilot(results, gt),
-            **{n: load_configuration(results, n, gt) for n in REFERENCE_CONFIGURATIONS}}
+            **{n: load_configuration(results, n, gt, models[n]) for n in REFERENCE_CONFIGURATIONS}}
     text, _ = report(infos, refs)
     out = results / OUT_NAME
     out.mkdir(parents=True, exist_ok=True)

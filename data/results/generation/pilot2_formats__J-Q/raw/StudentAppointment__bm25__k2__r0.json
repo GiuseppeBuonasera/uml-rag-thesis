@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"version\": \"4.2.0\",\n  \"id\": \"AppointmentSystem\",\n  \"title\": \"Appointment System\",\n  \"type\": \"ClassDiagram\",\n  \"nodes\": [\n    {\n      \"id\": \"studentId\",\n      \"width\": 150,\n      \"height\": 70,\n      \"type\": \"class\",\n      \"position\": { \"x\": 40, \"y\": 40 },\n      \"data\": {\n        \"name\": \"Student\",\n        \"attributes\": [\n          { \"id\": \"studentId\", \"name\": \"+ studentId : string\" },\n          { \"id\": \"name\", \"name\": \"+ name : string\" },\n          { \"id\": \"email\", \"name\": \"+ email : string\" }\n        ],\n        \"methods\": []\n      },\n      \"measured\": { \"width\": 150, \"height\": 70 }\n    },\n    {\n      \"id\": \"courseId\",\n      \"width\": 150,\n      \"height\": 70,\n      \"type\": \"class\",\n      \"position\": { \"x\": 320, \"y\": 40 },\n      \"data\": {\n        \"name\": \"Course\",\n        \"attributes\": [\n          { \"id\": \"courseId\", \"name\": \"+ courseId : string\" },\n          { \"id\": \"title\", \"name\": \"+ title : string\" },\n          { \"id\": \"hours\", \"name\": \"+ hours : int\" }\n        ],\n        \"methods\": []\n      },\n      \"measured\": { \"width\": 150, \"height\": 70 }\n    },\n    {\n      \"id\": \"assistantId\",\n      \"width\": 200,\n      \"height\": 90,\n      \"type\": \"class\",\n      \"position\": { \"x\": 600, \"y\": 40 },\n      \"data\": {\n        \"name\": \"Assistant\",\n        \"attributes\": [\n          { \"id\": \"assistantId\", \"name\": \"+ assistantId : string\" },\n          { \"id\": \"name\", \"name\": \"+ name : string\" },\n          { \"id\": \"email\", \"name\": \"+ email : string\" }\n        ],\n        \"methods\": []\n      },\n      \"measured\": { \"width\": 200, \"height\": 90 }\n    },\n    {\n      \"id\": \"appointmentId\",\n      \"width\": 150,\n      \"height\": 70,\n      \"type\": \"class\",\n      \"position\": { \"x\": 40, \"y\": 260 },\n      \"data\": {\n        \"name\": \"Appointment\",\n        \"attributes\": [\n          { \"id\": \"appointmentId\", \"name\": \"+ appointmentId : string\" },\n          { \"id\": \"date\", \"name\": \"+ date : date\" },\n          { \"id\": \"time\", \"name\": \"+ time : time\" }\n        ],\n        \"methods\": []\n      },\n      \"measured\": { \"width\": 150, \"height\": 70 }\n    }\n  ],\n  \"edges\": [\n    {\n      \"id\": \"studentCourse\",\n      \"source\": \"studentId\",\n      \"target\": \"courseId\",\n      \"type\": \"ClassAggregation\",\n      \"sourceHandle\": \"bottom\",\n      \"targetHandle\": \"top\",\n      \"data\": {\n        \"points\": [{ \"x\": 150, \"y\": 90 }, { \"x\": 150, \"y\": 230 }],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1..*\",\n        \"sourceRole\": \"\",\n        \"targetRole\": \"\"\n      }\n    },\n    {\n      \"id\": \"assistantCourse\",\n      \"source\": \"assistantId\",\n      \"target\": \"courseId\",\n      \"type\": \"ClassAggregation\",\n      \"sourceHandle\": \"bottom\",\n      \"targetHandle\": \"top\",\n      \"data\": {\n        \"points\": [{ \"x\": 450, \"y\": 90 }, { \"x\": 450, \"y\": 230 }],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1..*\",\n        \"sourceRole\": \"\",\n        \"targetRole\": \"\"\n      }\n    },\n    {\n      \"id\": \"appointmentAssistant\",\n      \"source\": \"appointmentId\",\n      \"target\": \"assistantId\",\n      \"type\": \"ClassUnidirectional\",\n      \"sourceHandle\": \"right\",\n      \"targetHandle\": \"left\",\n      \"data\": {\n        \"points\": [{ \"x\": 260, \"y\": 310 }, { \"x\": 450, \"y\": 310 }],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1\",\n        \"targetMultiplicity\": \"1\",\n        \"sourceRole\": \"\",\n        \"targetRole\": \"\"\n      }\n    },\n    {\n      \"id\": \"appointmentStudent\",\n      \"source\": \"appointmentId\",\n      \"target\": \"studentId\",\n      \"type\": \"ClassUnidirectional\",\n      \"sourceHandle\": \"right\",\n      \"targetHandle\": \"left\",\n      \"data\": {\n        \"points\": [{ \"x\": 260, \"y\": 310 }, { \"x\": 150, \"y\": 310 }],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1\",\n        \"targetMultiplicity\": \"1\",\n        \"sourceRole\": \"\",\n        \"targetRole\": \"\"\n      }\n    }\n  ],\n  \"assessments\": {}\n}",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": true
+ },
+ "repetition": 0,
+ "latency_s": 22.248170399999708,
+ "prompt_tokens": 7806,
+ "completion_tokens": 1217,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tery6g9dqkknymawesvpcb",
+  "object": "chat.completion",
+  "created": 1791393279,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"version\": \"4.2.0\",\n  \"id\": \"AppointmentSystem\",\n  \"title\": \"Appointment System\",\n  \"type\": \"ClassDiagram\",\n  \"nodes\": [\n    {\n      \"id\": \"studentId\",\n      \"width\": 150,\n      \"height\": 70,\n      \"type\": \"class\",\n      \"position\": { \"x\": 40, \"y\": 40 },\n      \"data\": {\n        \"name\": \"Student\",\n        \"attributes\": [\n          { \"id\": \"studentId\", \"name\": \"+ studentId : string\" },\n          { \"id\": \"name\", \"name\": \"+ name : string\" },\n          { \"id\": \"email\", \"name\": \"+ email : string\" }\n        ],\n        \"methods\": []\n      },\n      \"measured\": { \"width\": 150, \"height\": 70 }\n    },\n    {\n      \"id\": \"courseId\",\n      \"width\": 150,\n      \"height\": 70,\n      \"type\": \"class\",\n      \"position\": { \"x\": 320, \"y\": 40 },\n      \"data\": {\n        \"name\": \"Course\",\n        \"attributes\": [\n          { \"id\": \"courseId\", \"name\": \"+ courseId : string\" },\n          { \"id\": \"title\", \"name\": \"+ title : string\" },\n          { \"id\": \"hours\", \"name\": \"+ hours : int\" }\n        ],\n        \"methods\": []\n      },\n      \"measured\": { \"width\": 150, \"height\": 70 }\n    },\n    {\n      \"id\": \"assistantId\",\n      \"width\": 200,\n      \"height\": 90,\n      \"type\": \"class\",\n      \"position\": { \"x\": 600, \"y\": 40 },\n      \"data\": {\n        \"name\": \"Assistant\",\n        \"attributes\": [\n          { \"id\": \"assistantId\", \"name\": \"+ assistantId : string\" },\n          { \"id\": \"name\", \"name\": \"+ name : string\" },\n          { \"id\": \"email\", \"name\": \"+ email : string\" }\n        ],\n        \"methods\": []\n      },\n      \"measured\": { \"width\": 200, \"height\": 90 }\n    },\n    {\n      \"id\": \"appointmentId\",\n      \"width\": 150,\n      \"height\": 70,\n      \"type\": \"class\",\n      \"position\": { \"x\": 40, \"y\": 260 },\n      \"data\": {\n        \"name\": \"Appointment\",\n        \"attributes\": [\n          { \"id\": \"appointmentId\", \"name\": \"+ appointmentId : string\" },\n          { \"id\": \"date\", \"name\": \"+ date : date\" },\n          { \"id\": \"time\", \"name\": \"+ time : time\" }\n        ],\n        \"methods\": []\n      },\n      \"measured\": { \"width\": 150, \"height\": 70 }\n    }\n  ],\n  \"edges\": [\n    {\n      \"id\": \"studentCourse\",\n      \"source\": \"studentId\",\n      \"target\": \"courseId\",\n      \"type\": \"ClassAggregation\",\n      \"sourceHandle\": \"bottom\",\n      \"targetHandle\": \"top\",\n      \"data\": {\n        \"points\": [{ \"x\": 150, \"y\": 90 }, { \"x\": 150, \"y\": 230 }],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1..*\",\n        \"sourceRole\": \"\",\n        \"targetRole\": \"\"\n      }\n    },\n    {\n      \"id\": \"assistantCourse\",\n      \"source\": \"assistantId\",\n      \"target\": \"courseId\",\n      \"type\": \"ClassAggregation\",\n      \"sourceHandle\": \"bottom\",\n      \"targetHandle\": \"top\",\n      \"data\": {\n        \"points\": [{ \"x\": 450, \"y\": 90 }, { \"x\": 450, \"y\": 230 }],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1..*\",\n        \"targetMultiplicity\": \"1..*\",\n        \"sourceRole\": \"\",\n        \"targetRole\": \"\"\n      }\n    },\n    {\n      \"id\": \"appointmentAssistant\",\n      \"source\": \"appointmentId\",\n      \"target\": \"assistantId\",\n      \"type\": \"ClassUnidirectional\",\n      \"sourceHandle\": \"right\",\n      \"targetHandle\": \"left\",\n      \"data\": {\n        \"points\": [{ \"x\": 260, \"y\": 310 }, { \"x\": 450, \"y\": 310 }],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1\",\n        \"targetMultiplicity\": \"1\",\n        \"sourceRole\": \"\",\n        \"targetRole\": \"\"\n      }\n    },\n    {\n      \"id\": \"appointmentStudent\",\n      \"source\": \"appointmentId\",\n      \"target\": \"studentId\",\n      \"type\": \"ClassUnidirectional\",\n      \"sourceHandle\": \"right\",\n      \"targetHandle\": \"left\",\n      \"data\": {\n        \"points\": [{ \"x\": 260, \"y\": 310 }, { \"x\": 150, \"y\": 310 }],\n        \"label\": \"\",\n        \"sourceMultiplicity\": \"1\",\n        \"targetMultiplicity\": \"1\",\n        \"sourceRole\": \"\",\n        \"targetRole\": \"\"\n      }\n    }\n  ],\n  \"assessments\": {}\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7806,
+   "completion_tokens": 1217,
+   "total_tokens": 9023,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

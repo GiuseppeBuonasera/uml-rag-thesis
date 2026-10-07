@@ -1,3 +1,5 @@
+# NON USATO: non entra in VRAM a 32768 sulla RTX 4070 12 GB (lettura del prompt ~90-110 token/s, voce 84). Resta
+# nel repository come traccia; il modello da coding e' Qwen2.5-Coder 7B (qwen25coder7b_template.yaml, voce 85).
 # MODELLO per Qwen2.5-Coder 14B Instruct in LM Studio (secondo pilota, 2026-10-07). GGUF Q4_K_M dalla fonte ufficiale
 # (Qwen/Qwen2.5-Coder-14B-Instruct-GGUF o lmstudio-community). I TODO fanno rifiutare la partenza al runner.
 # Smoke test del 2026-10-07 (docs/smoke_tests/2026-10-07_qwen-qwen2.5-coder-14b_smoke1.*): seed non rispettato a
