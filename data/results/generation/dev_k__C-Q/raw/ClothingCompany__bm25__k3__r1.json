@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Description : string\",\n        \"+ NetPrice : double\"\n      ],\n      \"methods\": [\n        \"+ getGrossPrice(countryCode : string) : double\"\n      ]\n    },\n    {\n      \"name\": \"Country\",\n      \"attributes\": [\n        \"+ Code : string\",\n        \"+ VATRate : double\",\n        \"+ Currency : string\",\n        \"+ EuroConversionRate : double\"\n      ]\n    },\n    {\n      \"name\": \"Manufacturer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Country : string\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ Ssn : int\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\"\n      ],\n      \"methods\": [\n        \"+ getCountry() : Country\"\n      ]\n    },\n    {\n      \"name\": \"DomesticRepresentative\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Representative\"\n    },\n    {\n      \"name\": \"InternationalRepresentative\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Representative\"\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ TelephoneNumber : string\",\n        \"+ Email : string\",\n        \"+ CountriesReselling : Country[]\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderId : int\",\n        \"+ Product : Product\",\n        \"+ Quantity : int\",\n        \"+ OrderDate : date\",\n        \"+ DesiredDeliveryDate : date\"\n      ],\n      \"methods\": [\n        \"+ getTotalPrice() : double\"\n      ]\n    },\n    {\n      \"name\": \"OrderLine\",\n      \"attributes\": [\n        \"+ LineNumber : int\",\n        \"+ Product : Product\",\n        \"+ Quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Product\",\n      \"part\": \"Manufacturer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Country\",\n      \"label\": \"responsibleFor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"label\": \"places\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Product\",\n      \"label\": \"refersTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"OrderLine\",\n      \"label\": \"contains\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 14.990019500000926,
+ "prompt_tokens": 4443,
+ "completion_tokens": 599,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-20ntyh7ddobje9z4wb3am",
+  "object": "chat.completion",
+  "created": 1791491957,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Description : string\",\n        \"+ NetPrice : double\"\n      ],\n      \"methods\": [\n        \"+ getGrossPrice(countryCode : string) : double\"\n      ]\n    },\n    {\n      \"name\": \"Country\",\n      \"attributes\": [\n        \"+ Code : string\",\n        \"+ VATRate : double\",\n        \"+ Currency : string\",\n        \"+ EuroConversionRate : double\"\n      ]\n    },\n    {\n      \"name\": \"Manufacturer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Country : string\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ Ssn : int\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\"\n      ],\n      \"methods\": [\n        \"+ getCountry() : Country\"\n      ]\n    },\n    {\n      \"name\": \"DomesticRepresentative\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Representative\"\n    },\n    {\n      \"name\": \"InternationalRepresentative\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Representative\"\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ TelephoneNumber : string\",\n        \"+ Email : string\",\n        \"+ CountriesReselling : Country[]\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderId : int\",\n        \"+ Product : Product\",\n        \"+ Quantity : int\",\n        \"+ OrderDate : date\",\n        \"+ DesiredDeliveryDate : date\"\n      ],\n      \"methods\": [\n        \"+ getTotalPrice() : double\"\n      ]\n    },\n    {\n      \"name\": \"OrderLine\",\n      \"attributes\": [\n        \"+ LineNumber : int\",\n        \"+ Product : Product\",\n        \"+ Quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Product\",\n      \"part\": \"Manufacturer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Country\",\n      \"label\": \"responsibleFor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"label\": \"places\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Product\",\n      \"label\": \"refersTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"OrderLine\",\n      \"label\": \"contains\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4443,
+   "completion_tokens": 599,
+   "total_tokens": 5042,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

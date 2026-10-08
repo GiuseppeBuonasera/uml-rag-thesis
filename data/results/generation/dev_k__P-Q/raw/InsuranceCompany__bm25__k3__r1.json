@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass InsurancePolicy {\n  + PolicyId : int\n  + Type : string\n}\n\nclass Customer {\n  + CustId : int\n  + Name : string\n}\n\nclass Contract {\n  + ContractId : int\n  + PolicyId : int\n  + CustId : int\n  + EffectiveDate : date\n  + ExpiryDate : date\n}\n\nInsurancePolicy \"1\" -- \"*\" Contract\nCustomer \"0..*\" -- \"*\" Contract\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 4.362699400000565,
+ "prompt_tokens": 3358,
+ "completion_tokens": 100,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2l0i81ymo0f8813gs7j10j",
+  "object": "chat.completion",
+  "created": 1791491398,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass InsurancePolicy {\n  + PolicyId : int\n  + Type : string\n}\n\nclass Customer {\n  + CustId : int\n  + Name : string\n}\n\nclass Contract {\n  + ContractId : int\n  + PolicyId : int\n  + CustId : int\n  + EffectiveDate : date\n  + ExpiryDate : date\n}\n\nInsurancePolicy \"1\" -- \"*\" Contract\nCustomer \"0..*\" -- \"*\" Contract\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3358,
+   "completion_tokens": 100,
+   "total_tokens": 3458,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

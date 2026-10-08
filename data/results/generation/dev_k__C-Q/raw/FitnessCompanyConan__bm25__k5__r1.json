@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ familyName : string\",\n        \"+ birthDate : date\"\n      ],\n      \"methods\": [\n        \"+ getDetails() : string\"\n      ]\n    },\n    {\n      \"name\": \"Trainer\",\n      \"parent\": \"Person\",\n      \"attributes\": [\n        \"+ diploma : string\"\n      ],\n      \"methods\": [\n        \"+ superviseSession(session : Session) : void\"\n      ]\n    },\n    {\n      \"name\": \"Member\",\n      \"parent\": \"Person\",\n      \"methods\": [\n        \"+ participateInSession(session : Session) : void\"\n      ]\n    },\n    {\n      \"name\": \"Prospect\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"name\": \"Intern\",\n      \"parent\": \"Trainer\"\n    },\n    {\n      \"name\": \"FitnessCenter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ addRoom(room : Room) : void\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ number : int\",\n        \"+ capacity : int\"\n      ],\n      \"methods\": [\n        \"+ isAvailable(date : date, startHour : time) : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Session\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ startHour : time\"\n      ],\n      \"methods\": [\n        \"+ setTrainer(trainer : Trainer) : void\",\n        \"+ addMember(member : Member) : void\",\n        \"+ getType() : string\"\n      ]\n    },\n    {\n      \"name\": \"GroupSession\",\n      \"parent\": \"Session\",\n      \"attributes\": [\n        \"+ type : string\"\n      ],\n      \"methods\": [\n        \"+ setTrainer(trainer : Trainer) : void\",\n        \"+ addMember(member : Member) : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trainer\",\n      \"target\": \"Session\",\n      \"label\": \"supervises\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Member\",\n      \"target\": \"Session\",\n      \"label\": \"participatesIn\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Room\",\n      \"target\": \"Session\",\n      \"label\": \"hosts\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 14.207020699999703,
+ "prompt_tokens": 5557,
+ "completion_tokens": 633,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8mt4x8szuol36xw2d662ve",
+  "object": "chat.completion",
+  "created": 1791492671,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ familyName : string\",\n        \"+ birthDate : date\"\n      ],\n      \"methods\": [\n        \"+ getDetails() : string\"\n      ]\n    },\n    {\n      \"name\": \"Trainer\",\n      \"parent\": \"Person\",\n      \"attributes\": [\n        \"+ diploma : string\"\n      ],\n      \"methods\": [\n        \"+ superviseSession(session : Session) : void\"\n      ]\n    },\n    {\n      \"name\": \"Member\",\n      \"parent\": \"Person\",\n      \"methods\": [\n        \"+ participateInSession(session : Session) : void\"\n      ]\n    },\n    {\n      \"name\": \"Prospect\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"name\": \"Intern\",\n      \"parent\": \"Trainer\"\n    },\n    {\n      \"name\": \"FitnessCenter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ addRoom(room : Room) : void\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ number : int\",\n        \"+ capacity : int\"\n      ],\n      \"methods\": [\n        \"+ isAvailable(date : date, startHour : time) : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Session\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ startHour : time\"\n      ],\n      \"methods\": [\n        \"+ setTrainer(trainer : Trainer) : void\",\n        \"+ addMember(member : Member) : void\",\n        \"+ getType() : string\"\n      ]\n    },\n    {\n      \"name\": \"GroupSession\",\n      \"parent\": \"Session\",\n      \"attributes\": [\n        \"+ type : string\"\n      ],\n      \"methods\": [\n        \"+ setTrainer(trainer : Trainer) : void\",\n        \"+ addMember(member : Member) : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trainer\",\n      \"target\": \"Session\",\n      \"label\": \"supervises\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Member\",\n      \"target\": \"Session\",\n      \"label\": \"participatesIn\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Room\",\n      \"target\": \"Session\",\n      \"label\": \"hosts\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5557,
+   "completion_tokens": 633,
+   "total_tokens": 6190,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

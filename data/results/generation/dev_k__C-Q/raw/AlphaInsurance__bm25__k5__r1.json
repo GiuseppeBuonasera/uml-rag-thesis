@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ taxCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ brokerId : int\",\n        \"+ assignedDate : date\"\n      ]\n    },\n    {\n      \"name\": \"PolicyType\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ text : string\"\n      ]\n    },\n    {\n      \"name\": \"CarLiability\",\n      \"parent\": \"PolicyType\"\n    },\n    {\n      \"name\": \"LifeInsurance\",\n      \"parent\": \"PolicyType\"\n    },\n    {\n      \"name\": \"HealthInsurance\",\n      \"parent\": \"PolicyType\"\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ contractNumber : int\",\n        \"+ signingDate : date\",\n        \"+ insuredAmount : double\",\n        \"+ policyType : PolicyType\",\n        \"+ customer : Customer\",\n        \"+ broker : Broker\",\n        \"+ isApproved : boolean\",\n        \"+ compensationDecision : CompensationDecision\"\n      ]\n    },\n    {\n      \"name\": \"Claim\",\n      \"attributes\": [\n        \"+ claimNumber : int\",\n        \"+ dateOfIncident : date\",\n        \"+ description : string\",\n        \"+ customer : Customer\",\n        \"+ status : ClaimStatus\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ estimatorId : int\",\n        \"+ areaOfExpertise : string\"\n      ]\n    },\n    {\n      \"name\": \"EstimatorReport\",\n      \"attributes\": [\n        \"+ reportNumber : int\",\n        \"+ date : date\",\n        \"+ findings : string\",\n        \"+ estimator : Estimator\"\n      ]\n    },\n    {\n      \"name\": \"CompensationDecision\",\n      \"attributes\": [\n        \"+ decisionNumber : int\",\n        \"+ date : date\",\n        \"+ eligibleCosts : double\",\n        \"+ customer : Customer\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Broker\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Customer\",\n      \"label\": \"forCustomer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Broker\",\n      \"label\": \"byBroker\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"PolicyType\",\n      \"label\": \"ofType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"Customer\",\n      \"label\": \"forCustomer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"EstimatorReport\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EstimatorReport\",\n      \"target\": \"Estimator\",\n      \"label\": \"byEstimator\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"CompensationDecision\",\n      \"part\": \"EstimatorReport\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 20.437863899998774,
+ "prompt_tokens": 5196,
+ "completion_tokens": 838,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-57tijdjzrje0gav93ms9pgn",
+  "object": "chat.completion",
+  "created": 1791491625,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ taxCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ brokerId : int\",\n        \"+ assignedDate : date\"\n      ]\n    },\n    {\n      \"name\": \"PolicyType\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ text : string\"\n      ]\n    },\n    {\n      \"name\": \"CarLiability\",\n      \"parent\": \"PolicyType\"\n    },\n    {\n      \"name\": \"LifeInsurance\",\n      \"parent\": \"PolicyType\"\n    },\n    {\n      \"name\": \"HealthInsurance\",\n      \"parent\": \"PolicyType\"\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ contractNumber : int\",\n        \"+ signingDate : date\",\n        \"+ insuredAmount : double\",\n        \"+ policyType : PolicyType\",\n        \"+ customer : Customer\",\n        \"+ broker : Broker\",\n        \"+ isApproved : boolean\",\n        \"+ compensationDecision : CompensationDecision\"\n      ]\n    },\n    {\n      \"name\": \"Claim\",\n      \"attributes\": [\n        \"+ claimNumber : int\",\n        \"+ dateOfIncident : date\",\n        \"+ description : string\",\n        \"+ customer : Customer\",\n        \"+ status : ClaimStatus\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ estimatorId : int\",\n        \"+ areaOfExpertise : string\"\n      ]\n    },\n    {\n      \"name\": \"EstimatorReport\",\n      \"attributes\": [\n        \"+ reportNumber : int\",\n        \"+ date : date\",\n        \"+ findings : string\",\n        \"+ estimator : Estimator\"\n      ]\n    },\n    {\n      \"name\": \"CompensationDecision\",\n      \"attributes\": [\n        \"+ decisionNumber : int\",\n        \"+ date : date\",\n        \"+ eligibleCosts : double\",\n        \"+ customer : Customer\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Broker\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Customer\",\n      \"label\": \"forCustomer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Broker\",\n      \"label\": \"byBroker\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"PolicyType\",\n      \"label\": \"ofType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"Customer\",\n      \"label\": \"forCustomer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"EstimatorReport\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EstimatorReport\",\n      \"target\": \"Estimator\",\n      \"label\": \"byEstimator\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"CompensationDecision\",\n      \"part\": \"EstimatorReport\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5196,
+   "completion_tokens": 838,
+   "total_tokens": 6034,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Song\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ year : int\",\n        \"+ length : time\",\n        \"+ genre : string\"\n      ],\n      \"methods\": [\n        \"+ getTitle() : string\",\n        \"+ getYear() : int\",\n        \"+ getLength() : time\",\n        \"+ getGenre() : string\"\n      ]\n    },\n    {\n      \"name\": \"Artist\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ birthDate : date\",\n        \"+ website : string\"\n      ],\n      \"methods\": [\n        \"+ getName() : string\",\n        \"+ getBirthDate() : date\",\n        \"+ getWebsite() : string\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ userID : int\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ getUserID() : int\",\n        \"+ getName() : string\",\n        \"+ getAddress() : string\"\n      ]\n    },\n    {\n      \"name\": \"BusinessUser\",\n      \"attributes\": [\n        \"+ userID : int\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ VATNumber : string\"\n      ],\n      \"methods\": [\n        \"+ getUserID() : int\",\n        \"+ getName() : string\",\n        \"+ getAddress() : string\",\n        \"+ getVATNumber() : string\"\n      ]\n    },\n    {\n      \"name\": \"RegularUser\",\n      \"attributes\": [\n        \"+ userID : int\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ getUserID() : int\",\n        \"+ getName() : string\",\n        \"+ getAddress() : string\"\n      ]\n    },\n    {\n      \"name\": \"SongType\",\n      \"kind\": \"enum\",\n      \"values\": [\"single\", \"hit\"]\n    },\n    {\n      \"name\": \"Album\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ artistName : string\"\n      ],\n      \"methods\": [\n        \"+ getTitle() : string\",\n        \"+ getArtistName() : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Song\",\n      \"part\": \"Artist\",\n      \"label\": \"has artist\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"buys\",\n      \"targetRole\": \"available for purchase\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusinessUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"uploads\",\n      \"targetRole\": \"uploaded songs\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Album\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"suggests\",\n      \"targetRole\": \"album suggestion\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessUser\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"RegularUser\",\n      \"parent\": \"User\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.618586799995683,
+ "prompt_tokens": 4788,
+ "completion_tokens": 744,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-z97emrspnxbqbmympsg8b",
+  "object": "chat.completion",
+  "created": 1791493187,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Song\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ year : int\",\n        \"+ length : time\",\n        \"+ genre : string\"\n      ],\n      \"methods\": [\n        \"+ getTitle() : string\",\n        \"+ getYear() : int\",\n        \"+ getLength() : time\",\n        \"+ getGenre() : string\"\n      ]\n    },\n    {\n      \"name\": \"Artist\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ birthDate : date\",\n        \"+ website : string\"\n      ],\n      \"methods\": [\n        \"+ getName() : string\",\n        \"+ getBirthDate() : date\",\n        \"+ getWebsite() : string\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ userID : int\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ getUserID() : int\",\n        \"+ getName() : string\",\n        \"+ getAddress() : string\"\n      ]\n    },\n    {\n      \"name\": \"BusinessUser\",\n      \"attributes\": [\n        \"+ userID : int\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ VATNumber : string\"\n      ],\n      \"methods\": [\n        \"+ getUserID() : int\",\n        \"+ getName() : string\",\n        \"+ getAddress() : string\",\n        \"+ getVATNumber() : string\"\n      ]\n    },\n    {\n      \"name\": \"RegularUser\",\n      \"attributes\": [\n        \"+ userID : int\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ getUserID() : int\",\n        \"+ getName() : string\",\n        \"+ getAddress() : string\"\n      ]\n    },\n    {\n      \"name\": \"SongType\",\n      \"kind\": \"enum\",\n      \"values\": [\"single\", \"hit\"]\n    },\n    {\n      \"name\": \"Album\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ artistName : string\"\n      ],\n      \"methods\": [\n        \"+ getTitle() : string\",\n        \"+ getArtistName() : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Song\",\n      \"part\": \"Artist\",\n      \"label\": \"has artist\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"buys\",\n      \"targetRole\": \"available for purchase\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusinessUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"uploads\",\n      \"targetRole\": \"uploaded songs\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Album\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"suggests\",\n      \"targetRole\": \"album suggestion\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessUser\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"RegularUser\",\n      \"parent\": \"User\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4788,
+   "completion_tokens": 744,
+   "total_tokens": 5532,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

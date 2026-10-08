@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ approveDiagnosis(Diagnosis diagnosis) : void\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ Specialization : string\"\n      ],\n      \"methods\": [\n        \"+ makeDiagnosis(Patient patient, Illness illness) : Diagnosis\",\n        \"+ signConsentForm(Patient patient, Treatment treatment) : void\",\n        \"+ downgradeTreatment(Patient patient, Treatment treatment) : void\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ Symptoms : string[]\"\n      ],\n      \"methods\": [\n        \"+ getDiagnosis() : Diagnosis\",\n        \"+ signConsentForm(Treatment treatment) : void\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ PriorityScore : string\"\n      ],\n      \"methods\": [\n        \"+ updatePriorityScore(string newScore) : void\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ PatientID : int\",\n        \"+ DoctorID : int\",\n        \"+ IllnessID : int\",\n        \"+ TreatmentStage : string\"\n      ],\n      \"methods\": [\n        \"+ setTreatmentStage(string stage) : void\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ DiagnosisID : int\",\n        \"+ Stage : string\",\n        \"+ ConsentRequired : boolean\"\n      ],\n      \"methods\": [\n        \"+ execute() : void\",\n        \"+ upgradeStage() : void\",\n        \"+ downgradeStage() : void\"\n      ]\n    },\n    {\n      \"name\": \"PriorityStageUpgrade\",\n      \"attributes\": [],\n      \"methods\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Hospital\",\n      \"part\": \"Doctor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"assignedDoctors\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"diagnosis\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"treatments\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"diagnoses\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"PriorityStageUpgrade\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"priorityUpgrades\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 17.976337400003104,
+ "prompt_tokens": 6378,
+ "completion_tokens": 763,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5tv3bn6af0ky0d9q1i11vm",
+  "object": "chat.completion",
+  "created": 1791493094,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ approveDiagnosis(Diagnosis diagnosis) : void\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ Specialization : string\"\n      ],\n      \"methods\": [\n        \"+ makeDiagnosis(Patient patient, Illness illness) : Diagnosis\",\n        \"+ signConsentForm(Patient patient, Treatment treatment) : void\",\n        \"+ downgradeTreatment(Patient patient, Treatment treatment) : void\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ Symptoms : string[]\"\n      ],\n      \"methods\": [\n        \"+ getDiagnosis() : Diagnosis\",\n        \"+ signConsentForm(Treatment treatment) : void\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ PriorityScore : string\"\n      ],\n      \"methods\": [\n        \"+ updatePriorityScore(string newScore) : void\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ PatientID : int\",\n        \"+ DoctorID : int\",\n        \"+ IllnessID : int\",\n        \"+ TreatmentStage : string\"\n      ],\n      \"methods\": [\n        \"+ setTreatmentStage(string stage) : void\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ DiagnosisID : int\",\n        \"+ Stage : string\",\n        \"+ ConsentRequired : boolean\"\n      ],\n      \"methods\": [\n        \"+ execute() : void\",\n        \"+ upgradeStage() : void\",\n        \"+ downgradeStage() : void\"\n      ]\n    },\n    {\n      \"name\": \"PriorityStageUpgrade\",\n      \"attributes\": [],\n      \"methods\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Hospital\",\n      \"part\": \"Doctor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"assignedDoctors\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"diagnosis\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"treatments\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"diagnoses\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"PriorityStageUpgrade\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"priorityUpgrades\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6378,
+   "completion_tokens": 763,
+   "total_tokens": 7141,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

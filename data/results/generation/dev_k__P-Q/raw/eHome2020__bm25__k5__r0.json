@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass SensorController {\n  + username : string\n  + password : string\n}\n\nclass Apartment {\n  + address : string\n  + rooms : Room[]\n}\n\nclass Room {\n  + description : string\n}\n\nabstract class Sensor {\n  + vendorId : int\n  + description : string\n  + unit : string\n  + room : Room\n}\n\nclass TemperatureSensor {\n  + minValue : float\n  + maxValue : float\n}\n\nclass PowerSensor {\n  + counterReading : float\n}\n\nclass Value {\n  + timestamp : datetime\n  + value : float\n}\n\nclass SensorThreshold {\n  + sensor : Sensor\n  + thresholdValue : float\n  + emailAddress : string\n}\n\nabstract class System {\n  + sendAlert(message: string) : void\n}\n\nclass EMonitor extends System {}\n\nSensorController \"1\" -- \"*\" Apartment\nApartment \"1\" *-- \"* Room\"\nRoom \"0..*\" -- \"1 Sensor\"\nTemperatureSensor --|> Sensor\nPowerSensor --|> Sensor\nSensorController \"1\" -- \"*\" Value\nValue \"1\" -- \"1 Sensor\"\nSensorThreshold \"1\" -- \"1 Sensor\"\n\nEMonitor ..> System\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.04854680000426,
+ "prompt_tokens": 5137,
+ "completion_tokens": 248,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-a67i2ddg75vmowscbug4w",
+  "object": "chat.completion",
+  "created": 1791490728,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass SensorController {\n  + username : string\n  + password : string\n}\n\nclass Apartment {\n  + address : string\n  + rooms : Room[]\n}\n\nclass Room {\n  + description : string\n}\n\nabstract class Sensor {\n  + vendorId : int\n  + description : string\n  + unit : string\n  + room : Room\n}\n\nclass TemperatureSensor {\n  + minValue : float\n  + maxValue : float\n}\n\nclass PowerSensor {\n  + counterReading : float\n}\n\nclass Value {\n  + timestamp : datetime\n  + value : float\n}\n\nclass SensorThreshold {\n  + sensor : Sensor\n  + thresholdValue : float\n  + emailAddress : string\n}\n\nabstract class System {\n  + sendAlert(message: string) : void\n}\n\nclass EMonitor extends System {}\n\nSensorController \"1\" -- \"*\" Apartment\nApartment \"1\" *-- \"* Room\"\nRoom \"0..*\" -- \"1 Sensor\"\nTemperatureSensor --|> Sensor\nPowerSensor --|> Sensor\nSensorController \"1\" -- \"*\" Value\nValue \"1\" -- \"1 Sensor\"\nSensorThreshold \"1\" -- \"1 Sensor\"\n\nEMonitor ..> System\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5137,
+   "completion_tokens": 248,
+   "total_tokens": 5385,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

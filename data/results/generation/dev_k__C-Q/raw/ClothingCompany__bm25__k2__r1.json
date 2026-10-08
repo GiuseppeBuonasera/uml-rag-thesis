@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Description : string\",\n        \"+ NetPrice : double\",\n        \"+ Manufacturer : string\",\n        \"+ CountryOfManufacture : string\"\n      ]\n    },\n    {\n      \"name\": \"Country\",\n      \"attributes\": [\n        \"+ Code : string\",\n        \"+ VATRate : double\",\n        \"+ Currency : string\",\n        \"+ ConversionRateToEuro : double\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ SSN : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\",\n        \"+ CountryResponsible : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ TelephoneNumber : string\",\n        \"+ Email : string\",\n        \"+ CountriesReselling : [string]\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderID : string\",\n        \"+ ProductName : string\",\n        \"+ Quantity : int\",\n        \"+ OrderDate : date\",\n        \"+ DesiredDeliveryDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 12.328134900002624,
+ "prompt_tokens": 3526,
+ "completion_tokens": 451,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4055jwkkgmc4n5yu1i2rms",
+  "object": "chat.completion",
+  "created": 1791491932,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Description : string\",\n        \"+ NetPrice : double\",\n        \"+ Manufacturer : string\",\n        \"+ CountryOfManufacture : string\"\n      ]\n    },\n    {\n      \"name\": \"Country\",\n      \"attributes\": [\n        \"+ Code : string\",\n        \"+ VATRate : double\",\n        \"+ Currency : string\",\n        \"+ ConversionRateToEuro : double\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ SSN : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\",\n        \"+ CountryResponsible : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ TelephoneNumber : string\",\n        \"+ Email : string\",\n        \"+ CountriesReselling : [string]\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderID : string\",\n        \"+ ProductName : string\",\n        \"+ Quantity : int\",\n        \"+ OrderDate : date\",\n        \"+ DesiredDeliveryDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3526,
+   "completion_tokens": 451,
+   "total_tokens": 3977,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

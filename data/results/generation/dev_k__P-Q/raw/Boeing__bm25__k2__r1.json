@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Aircraft {\n  + Model : string\n  + Price : double\n}\n\nclass Contract {\n  + GlobalContractId : string\n  + DeliveryConditions : string\n  + LegalAspects : string\n}\n\nclass Acquisition {\n  + ContractId : string\n  + AircraftModel : string\n  + NegotiatedPrice : double\n  + Options : string\n  + Customizations : string\n  + DeliveryDate : date\n}\n\nclass Salesperson {\n  + Name : string\n}\n\nclass Airline {\n  + Name : string\n  + ParentAirline : Airline\n}\n\nContract \"1\" -- \"0..*\" Acquisition\nSalesperson \"0..1\" -- \"0..*\" Contract\nAircraft \"0..1\" -- \"0..*\" Acquisition\nAirline \"0..1\" *-- \"0..1\" Airline\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 4.9215872999993735,
+ "prompt_tokens": 2909,
+ "completion_tokens": 183,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-c15t3x3eewhhzzioa7kn",
+  "object": "chat.completion",
+  "created": 1791490527,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Aircraft {\n  + Model : string\n  + Price : double\n}\n\nclass Contract {\n  + GlobalContractId : string\n  + DeliveryConditions : string\n  + LegalAspects : string\n}\n\nclass Acquisition {\n  + ContractId : string\n  + AircraftModel : string\n  + NegotiatedPrice : double\n  + Options : string\n  + Customizations : string\n  + DeliveryDate : date\n}\n\nclass Salesperson {\n  + Name : string\n}\n\nclass Airline {\n  + Name : string\n  + ParentAirline : Airline\n}\n\nContract \"1\" -- \"0..*\" Acquisition\nSalesperson \"0..1\" -- \"0..*\" Contract\nAircraft \"0..1\" -- \"0..*\" Acquisition\nAirline \"0..1\" *-- \"0..1\" Airline\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2909,
+   "completion_tokens": 183,
+   "total_tokens": 3092,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

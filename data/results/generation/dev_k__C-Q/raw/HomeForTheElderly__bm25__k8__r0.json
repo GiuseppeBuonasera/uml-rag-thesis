@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\n        \"+ DepartmentID : int\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ RoomID : int\",\n        \"+ Category : string\"\n      ]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\n        \"+ BedID : int\",\n        \"+ Category : string\",\n        \"+ Price : double\"\n      ]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ InhabitantID : int\",\n        \"+ Name : string\",\n        \"+ RegistrationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"StayType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RestHome\",\n        \"RestAndNursingHome\",\n        \"ServiceFlat\"\n      ]\n    },\n    {\n      \"name\": \"AssessmentResult\",\n      \"attributes\": [\n        \"+ StayType : StayType\",\n        \"+ NeedsHelpForEating : boolean\",\n        \"+ NeedsHelpForDressing : boolean\",\n        \"+ NeedsPersonalCare : boolean\"\n      ]\n    },\n    {\n      \"name\": \"WaitingListEntry\",\n      \"attributes\": [\n        \"+ InhabitantID : int\",\n        \"+ RegistrationDate : date\",\n        \"+ StayType : StayType\",\n        \"+ Accepted : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceID : int\",\n        \"+ Date : date\",\n        \"+ TotalAmount : double\",\n        \"+ OutstandingAmount : double\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"PaymentEvent\",\n      \"attributes\": [\n        \"+ PaymentDate : date\",\n        \"+ Amount : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"rooms\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Bed\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"beds\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Department\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"targetRole\": \"department\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"StayType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"stayType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AssessmentResult\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"inhabitant\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WaitingListEntry\",\n      \"target\": \"AssessmentResult\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"assessmentResult\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WaitingListEntry\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"inhabitant\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Invoice\",\n      \"part\": \"PaymentEvent\",\n      \"wholeMultiplicity\": \"0..*\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"paymentEvents\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 21.854424100005417,
+ "prompt_tokens": 10304,
+ "completion_tokens": 809,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-45t54j9y7yvig9qjgwk7h",
+  "object": "chat.completion",
+  "created": 1791492970,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\n        \"+ DepartmentID : int\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ RoomID : int\",\n        \"+ Category : string\"\n      ]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\n        \"+ BedID : int\",\n        \"+ Category : string\",\n        \"+ Price : double\"\n      ]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ InhabitantID : int\",\n        \"+ Name : string\",\n        \"+ RegistrationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"StayType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RestHome\",\n        \"RestAndNursingHome\",\n        \"ServiceFlat\"\n      ]\n    },\n    {\n      \"name\": \"AssessmentResult\",\n      \"attributes\": [\n        \"+ StayType : StayType\",\n        \"+ NeedsHelpForEating : boolean\",\n        \"+ NeedsHelpForDressing : boolean\",\n        \"+ NeedsPersonalCare : boolean\"\n      ]\n    },\n    {\n      \"name\": \"WaitingListEntry\",\n      \"attributes\": [\n        \"+ InhabitantID : int\",\n        \"+ RegistrationDate : date\",\n        \"+ StayType : StayType\",\n        \"+ Accepted : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceID : int\",\n        \"+ Date : date\",\n        \"+ TotalAmount : double\",\n        \"+ OutstandingAmount : double\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"PaymentEvent\",\n      \"attributes\": [\n        \"+ PaymentDate : date\",\n        \"+ Amount : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"rooms\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Bed\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"beds\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Department\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"targetRole\": \"department\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"StayType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"stayType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AssessmentResult\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"inhabitant\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WaitingListEntry\",\n      \"target\": \"AssessmentResult\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"assessmentResult\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WaitingListEntry\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"inhabitant\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Invoice\",\n      \"part\": \"PaymentEvent\",\n      \"wholeMultiplicity\": \"0..*\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"paymentEvents\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 10304,
+   "completion_tokens": 809,
+   "total_tokens": 11113,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

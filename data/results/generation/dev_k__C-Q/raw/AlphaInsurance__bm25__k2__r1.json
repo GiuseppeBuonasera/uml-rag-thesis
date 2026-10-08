@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ taxCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ contactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ policyType : string\",\n        \"+ coverageDetails : string\",\n        \"+ premium : double\"\n      ]\n    },\n    {\n      \"name\": \"LifeInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"CarLiabilityInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"TheftInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ contractNumber : int\",\n        \"+ signingDate : date\",\n        \"+ policy : Policy\",\n        \"+ customer : Customer\",\n        \"+ broker : Broker\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Claim\",\n      \"attributes\": [\n        \"+ claimNumber : int\",\n        \"+ claimDate : date\",\n        \"+ customer : Customer\",\n        \"+ contract : Contract\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ expertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ caseNumber : int\",\n        \"+ claimDate : date\",\n        \"+ customer : Customer\",\n        \"+ contract : Contract\",\n        \"+ status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Broker\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"has broker\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Policy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"contains policy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"has contracts\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"belongs to customer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"relates to contract\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Estimator\",\n      \"target\": \"ClaimCase\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"assesses claim cases\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ClaimCase\",\n      \"part\": \"Estimator\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\",\n      \"label\": \"has estimators\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 18.574042100000952,
+ "prompt_tokens": 3054,
+ "completion_tokens": 765,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cseuu1wdy5lh1opbbjvz3a",
+  "object": "chat.completion",
+  "created": 1791491542,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ taxCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ contactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ policyType : string\",\n        \"+ coverageDetails : string\",\n        \"+ premium : double\"\n      ]\n    },\n    {\n      \"name\": \"LifeInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"CarLiabilityInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"TheftInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ contractNumber : int\",\n        \"+ signingDate : date\",\n        \"+ policy : Policy\",\n        \"+ customer : Customer\",\n        \"+ broker : Broker\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Claim\",\n      \"attributes\": [\n        \"+ claimNumber : int\",\n        \"+ claimDate : date\",\n        \"+ customer : Customer\",\n        \"+ contract : Contract\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ expertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ caseNumber : int\",\n        \"+ claimDate : date\",\n        \"+ customer : Customer\",\n        \"+ contract : Contract\",\n        \"+ status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Broker\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"has broker\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Policy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"contains policy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"has contracts\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"belongs to customer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"relates to contract\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Estimator\",\n      \"target\": \"ClaimCase\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"assesses claim cases\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ClaimCase\",\n      \"part\": \"Estimator\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\",\n      \"label\": \"has estimators\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3054,
+   "completion_tokens": 765,
+   "total_tokens": 3819,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

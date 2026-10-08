@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string?\",\n        \"+ ItemDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ StorageSpace : int\",\n        \"+ AvailableDays : date[]\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ContactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ Date : date\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"FoodBank\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"H2SEmployee\",\n      kind: \"abstract\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ContactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      attributes: [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : ArticleCategory[]\"\n      ]\n    },\n    {\n      \"name\": \"ArticleCategory\",\n      kind: \"enum\",\n      values: [\n        \"BabyClothing\",\n        \"Women'sWinterBoots\",\n        \"Fridge\",\n        \"Microwave\",\n        // ... (other 134 categories)\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      attributes: [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : ArticleCategory[]\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"PickupVehicle\",\n      \"label\": \"usesForPickup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupVehicle\",\n      \"target\": \"VolunteerDriver\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRoute\",\n      \"target\": \"PickupVehicle\",\n      \"label\": \"uses\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DistributionCenter\",\n      \"target\": \"Article\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FoodBank\",\n      \"target\": \"Article\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Article\",\n      \"label\": \"examinesAndTags\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"DistributionCenter\",\n      \"label\": \"visits\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Client\",\n      \"label\": \"callsToNotify\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"Article\",\n      \"label\": \"delivers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 17.83070919999591,
+ "prompt_tokens": 4240,
+ "completion_tokens": 862,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1248qdbxqxkhqrsii80pop",
+  "object": "chat.completion",
+  "created": 1791492762,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string?\",\n        \"+ ItemDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ StorageSpace : int\",\n        \"+ AvailableDays : date[]\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ContactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ Date : date\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"FoodBank\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"H2SEmployee\",\n      kind: \"abstract\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ContactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      attributes: [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : ArticleCategory[]\"\n      ]\n    },\n    {\n      \"name\": \"ArticleCategory\",\n      kind: \"enum\",\n      values: [\n        \"BabyClothing\",\n        \"Women'sWinterBoots\",\n        \"Fridge\",\n        \"Microwave\",\n        // ... (other 134 categories)\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      attributes: [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : ArticleCategory[]\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"PickupVehicle\",\n      \"label\": \"usesForPickup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupVehicle\",\n      \"target\": \"VolunteerDriver\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRoute\",\n      \"target\": \"PickupVehicle\",\n      \"label\": \"uses\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DistributionCenter\",\n      \"target\": \"Article\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FoodBank\",\n      \"target\": \"Article\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Article\",\n      \"label\": \"examinesAndTags\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"DistributionCenter\",\n      \"label\": \"visits\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Client\",\n      \"label\": \"callsToNotify\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"Article\",\n      \"label\": \"delivers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4240,
+   "completion_tokens": 862,
+   "total_tokens": 5102,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

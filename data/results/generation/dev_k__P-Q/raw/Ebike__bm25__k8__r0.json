@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass EBike {\n  + frame : Frame\n  + wheels : Wheel[]\n  + driveSystem : DriveSystem\n  + controller : Controller\n}\n\nclass Frame {\n  - material : string\n}\n\nclass Wheel {}\n\nclass DriveSystem {\n  + motor : Motor\n}\n\nclass Motor {}\n\nclass Battery {\n  + storedEnergy : double\n}\n\nclass Controller {\n  + state : String\n  + controlBattery(battery : Battery) : void\n  + commandDriveSystem(driveSystem : DriveSystem) : void\n}\n\nclass BasicController extends Controller {}\n\nclass AdvancedController extends Controller {\n  + estimateNextInspectionDate() : Date\n}\n\nEBike \"1\" *-- \"1 frame\" Frame\nEBike \"2\" -- \"*\" Wheel\nEBike \"1\" *-- \"1 driveSystem\" DriveSystem\nDriveSystem \"1\" *-- \"1 motor\" Motor\nEBike \"0..1\" *-- \"1 battery\" Battery\nController \"1\" -- \"1 basicController\" BasicController\nController \"1\" -- \"1 advancedController\" AdvancedController\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.582320299996354,
+ "prompt_tokens": 6340,
+ "completion_tokens": 228,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hsjbo4k74wctng95tt7r0q",
+  "object": "chat.completion",
+  "created": 1791490692,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass EBike {\n  + frame : Frame\n  + wheels : Wheel[]\n  + driveSystem : DriveSystem\n  + controller : Controller\n}\n\nclass Frame {\n  - material : string\n}\n\nclass Wheel {}\n\nclass DriveSystem {\n  + motor : Motor\n}\n\nclass Motor {}\n\nclass Battery {\n  + storedEnergy : double\n}\n\nclass Controller {\n  + state : String\n  + controlBattery(battery : Battery) : void\n  + commandDriveSystem(driveSystem : DriveSystem) : void\n}\n\nclass BasicController extends Controller {}\n\nclass AdvancedController extends Controller {\n  + estimateNextInspectionDate() : Date\n}\n\nEBike \"1\" *-- \"1 frame\" Frame\nEBike \"2\" -- \"*\" Wheel\nEBike \"1\" *-- \"1 driveSystem\" DriveSystem\nDriveSystem \"1\" *-- \"1 motor\" Motor\nEBike \"0..1\" *-- \"1 battery\" Battery\nController \"1\" -- \"1 basicController\" BasicController\nController \"1\" -- \"1 advancedController\" AdvancedController\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6340,
+   "completion_tokens": 228,
+   "total_tokens": 6568,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

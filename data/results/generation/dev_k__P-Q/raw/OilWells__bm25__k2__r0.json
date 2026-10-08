@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Well {\n  + code : string\n}\n\nabstract class Company {\n  + taxCode : string\n  + numberOfEmployees() : int\n}\n\ninterface OilCompany extends Company {}\n\ninterface OffshoreOilCompany extends Company {}\n\nclass OnshoreWell {\n  + surfaceExtension : float\n}\n\nclass OffshoreWell {\n  + yearOfInstallation : int\n  + geographicalAreaCode : string\n  + environmentalImportance : int\n}\n\nclass PollutionRate {\n  + calculate() : double\n}\n\nOnshoreWell \"1\" -- \"*\" Company : extractsCrudeOilFrom\nOffshoreWell \"1\" -- \"*\" Company : extractsCrudeOilFrom\n\nCompany \"0..*\" -- \"*\" Well : extractsCrudeOilFrom\n\nPollutionRate \"1\" -- \"1\" OnshoreWell : calculatesFor\nPollutionRate \"1\" -- \"1\" OffshoreWell : calculatesFor\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.4896608000053675,
+ "prompt_tokens": 2665,
+ "completion_tokens": 187,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-d3okjflx7ppb2l6dqg1apq",
+  "object": "chat.completion",
+  "created": 1791491424,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Well {\n  + code : string\n}\n\nabstract class Company {\n  + taxCode : string\n  + numberOfEmployees() : int\n}\n\ninterface OilCompany extends Company {}\n\ninterface OffshoreOilCompany extends Company {}\n\nclass OnshoreWell {\n  + surfaceExtension : float\n}\n\nclass OffshoreWell {\n  + yearOfInstallation : int\n  + geographicalAreaCode : string\n  + environmentalImportance : int\n}\n\nclass PollutionRate {\n  + calculate() : double\n}\n\nOnshoreWell \"1\" -- \"*\" Company : extractsCrudeOilFrom\nOffshoreWell \"1\" -- \"*\" Company : extractsCrudeOilFrom\n\nCompany \"0..*\" -- \"*\" Well : extractsCrudeOilFrom\n\nPollutionRate \"1\" -- \"1\" OnshoreWell : calculatesFor\nPollutionRate \"1\" -- \"1\" OffshoreWell : calculatesFor\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2665,
+   "completion_tokens": 187,
+   "total_tokens": 2852,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Well {\n  + code : string\n}\n\nclass Company {\n  + taxCode : string\n  + numberOfEmployees : int\n}\n\nclass PollutionRate {}\n\nclass OnshoreWell {\n  + surfaceExtension : double\n}\n\nclass OffshoreWell {\n  + yearOfInstallation : int\n  + geographicalAreaCode : string\n  + environmentalImportance : int\n}\n\nclass ExtractsCrudeOil {\n  + quantity : double\n}\n\nclass BelongsTo {\n  + category : string\n}\n\nWell \"1\" -- \"*\" Company : extractsCrudeOil\nCompany \"0..*\" -- \"1\" Well : belongsTo\nWell \"1\" -- \"1\" PollutionRate : hasPollutionRate\nOnshoreWell \"1\" -- \"1\" Well : is\nOffshoreWell \"1\" -- \"1\" Well : is\nPollutionRate \"1\" -- \"1\" OnshoreWell : for\nPollutionRate \"1\" -- \"1\" OffshoreWell : for\nExtractsCrudeOil \"0..*\" -- \"1\" Company : by\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.979656700001215,
+ "prompt_tokens": 4699,
+ "completion_tokens": 227,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-dodlxodfl0jv757vma6ed",
+  "object": "chat.completion",
+  "created": 1791491453,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Well {\n  + code : string\n}\n\nclass Company {\n  + taxCode : string\n  + numberOfEmployees : int\n}\n\nclass PollutionRate {}\n\nclass OnshoreWell {\n  + surfaceExtension : double\n}\n\nclass OffshoreWell {\n  + yearOfInstallation : int\n  + geographicalAreaCode : string\n  + environmentalImportance : int\n}\n\nclass ExtractsCrudeOil {\n  + quantity : double\n}\n\nclass BelongsTo {\n  + category : string\n}\n\nWell \"1\" -- \"*\" Company : extractsCrudeOil\nCompany \"0..*\" -- \"1\" Well : belongsTo\nWell \"1\" -- \"1\" PollutionRate : hasPollutionRate\nOnshoreWell \"1\" -- \"1\" Well : is\nOffshoreWell \"1\" -- \"1\" Well : is\nPollutionRate \"1\" -- \"1\" OnshoreWell : for\nPollutionRate \"1\" -- \"1\" OffshoreWell : for\nExtractsCrudeOil \"0..*\" -- \"1\" Company : by\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4699,
+   "completion_tokens": 227,
+   "total_tokens": 4926,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

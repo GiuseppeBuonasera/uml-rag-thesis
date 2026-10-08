@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Horse\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ horseId : int\",\n        \"+ jockeyId : int\"\n      ],\n      \"methods\": [\n        \"+ getHorse() : Horse\",\n        \"+ getJockey() : Jockey\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ numberOfRunners : int\",\n        \"+ winnerId : int\"\n      ],\n      \"methods\": [\n        \"+ setWinner(runnerId : int) : void\",\n        \"+ getWinningRunner() : Runner\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ bettorId : int\",\n        \"+ raceId : int\",\n        \"+ runnerId : int\",\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ],\n      \"methods\": [\n        \"+ getBettor() : Bettor\",\n        \"+ getRace() : Race\",\n        \"+ getRunner() : Runner\",\n        \"+ calculateWinnings(winningOdds : double) : double\"\n      ]\n    },\n    {\n      \"name\": \"Bookmaker\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ],\n      \"methods\": [\n        \"+ acceptBet(bet : Bet) : void\",\n        \"+ calculateTotalWinnings() : double\",\n        \"+ calculateTotalLosses() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Bookmaker\",\n      \"part\": \"Bettor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"bettors\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Race\",\n      \"part\": \"Runner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"runners\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"bettor\",\n      \"targetRole\": \"bets\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bookmaker\",\n      \"target\": \"Bet\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"bookmaker\",\n      \"targetRole\": \"acceptedBets\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Bet\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"race\",\n      \"targetRole\": \"bets\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.81185209999967,
+ "prompt_tokens": 8442,
+ "completion_tokens": 701,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-v6ox37tm4mrbyod7h5go",
+  "object": "chat.completion",
+  "created": 1791493735,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Horse\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ horseId : int\",\n        \"+ jockeyId : int\"\n      ],\n      \"methods\": [\n        \"+ getHorse() : Horse\",\n        \"+ getJockey() : Jockey\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ numberOfRunners : int\",\n        \"+ winnerId : int\"\n      ],\n      \"methods\": [\n        \"+ setWinner(runnerId : int) : void\",\n        \"+ getWinningRunner() : Runner\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ bettorId : int\",\n        \"+ raceId : int\",\n        \"+ runnerId : int\",\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ],\n      \"methods\": [\n        \"+ getBettor() : Bettor\",\n        \"+ getRace() : Race\",\n        \"+ getRunner() : Runner\",\n        \"+ calculateWinnings(winningOdds : double) : double\"\n      ]\n    },\n    {\n      \"name\": \"Bookmaker\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ],\n      \"methods\": [\n        \"+ acceptBet(bet : Bet) : void\",\n        \"+ calculateTotalWinnings() : double\",\n        \"+ calculateTotalLosses() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Bookmaker\",\n      \"part\": \"Bettor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"bettors\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Race\",\n      \"part\": \"Runner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"runners\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"bettor\",\n      \"targetRole\": \"bets\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bookmaker\",\n      \"target\": \"Bet\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"bookmaker\",\n      \"targetRole\": \"acceptedBets\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Bet\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"race\",\n      \"targetRole\": \"bets\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8442,
+   "completion_tokens": 701,
+   "total_tokens": 9143,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

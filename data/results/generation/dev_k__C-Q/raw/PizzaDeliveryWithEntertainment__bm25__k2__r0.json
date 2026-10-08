@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ birthday : date\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"BusinessOwner\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ linkedInAccount : string\"\n      ],\n      \"methods\": [\n        \"+ addRestaurant(Restaurant restaurant)\"\n      ]\n    },\n    {\n      \"name\": \"PizzaRestaurant\",\n      \"attributes\": [\n        \"+ zipCode : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\",\n        \"+ website : string\",\n        \"+ openingHours : time\"\n      ],\n      \"methods\": [\n        \"+ addPizza(Pizza pizza)\"\n      ]\n    },\n    {\n      \"name\": \"Pizza\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ crustStructure : string\",\n        \"+ price : double\"\n      ]\n    },\n    {\n      \"name\": \"HungryCustomer\",\n      \"kind\": \"abstract\",\n      \"methods\": [\n        \"+ makeOrder(Order order)\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ placedAt : datetime\",\n        \"+ latestDeliveryTime : time\",\n        \"+ numberOfPeople : int\"\n      ],\n      \"methods\": [\n        \"+ addPizza(Pizza pizza)\",\n        \"+ isEntertainmentOrder() : boolean\"\n      ]\n    },\n    {\n      \"name\": \"EntertainmentOrder\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ entertainmentType : string\",\n        \"+ duration : time\"\n      ],\n      \"methods\": [\n        \"+ getEntertainer() : Entertainer\"\n      ]\n    },\n    {\n      \"name\": \"Entertainer\",\n      \"attributes\": [\n        \"+ stageName : string\",\n        \"+ bio : string\",\n        \"+ pricePer30Minutes : double\"\n      ],\n      \"methods\": [\n        \"+ setAvailability(Day day, boolean available)\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessOwner\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HungryCustomer\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"BusinessOwner\",\n      \"part\": \"PizzaRestaurant\",\n      \"label\": \"owns\",\n      \"wholeMultiplicity\": \"1..*\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PizzaRestaurant\",\n      \"target\": \"Pizza\",\n      \"label\": \"offers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"HungryCustomer\",\n      \"part\": \"Order\",\n      \"label\": \"makes\",\n      \"wholeMultiplicity\": \"1..*\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EntertainmentOrder\",\n      \"parent\": \"Order\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EntertainmentOrder\",\n      \"target\": \"Entertainer\",\n      \"label\": \"fulfilledBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.10611649999919,
+ "prompt_tokens": 3642,
+ "completion_tokens": 737,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-jspnn18ekyjs1kuvwyq8ig",
+  "object": "chat.completion",
+  "created": 1791493285,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ birthday : date\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"BusinessOwner\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ linkedInAccount : string\"\n      ],\n      \"methods\": [\n        \"+ addRestaurant(Restaurant restaurant)\"\n      ]\n    },\n    {\n      \"name\": \"PizzaRestaurant\",\n      \"attributes\": [\n        \"+ zipCode : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\",\n        \"+ website : string\",\n        \"+ openingHours : time\"\n      ],\n      \"methods\": [\n        \"+ addPizza(Pizza pizza)\"\n      ]\n    },\n    {\n      \"name\": \"Pizza\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ crustStructure : string\",\n        \"+ price : double\"\n      ]\n    },\n    {\n      \"name\": \"HungryCustomer\",\n      \"kind\": \"abstract\",\n      \"methods\": [\n        \"+ makeOrder(Order order)\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ placedAt : datetime\",\n        \"+ latestDeliveryTime : time\",\n        \"+ numberOfPeople : int\"\n      ],\n      \"methods\": [\n        \"+ addPizza(Pizza pizza)\",\n        \"+ isEntertainmentOrder() : boolean\"\n      ]\n    },\n    {\n      \"name\": \"EntertainmentOrder\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ entertainmentType : string\",\n        \"+ duration : time\"\n      ],\n      \"methods\": [\n        \"+ getEntertainer() : Entertainer\"\n      ]\n    },\n    {\n      \"name\": \"Entertainer\",\n      \"attributes\": [\n        \"+ stageName : string\",\n        \"+ bio : string\",\n        \"+ pricePer30Minutes : double\"\n      ],\n      \"methods\": [\n        \"+ setAvailability(Day day, boolean available)\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessOwner\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HungryCustomer\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"BusinessOwner\",\n      \"part\": \"PizzaRestaurant\",\n      \"label\": \"owns\",\n      \"wholeMultiplicity\": \"1..*\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PizzaRestaurant\",\n      \"target\": \"Pizza\",\n      \"label\": \"offers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"HungryCustomer\",\n      \"part\": \"Order\",\n      \"label\": \"makes\",\n      \"wholeMultiplicity\": \"1..*\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EntertainmentOrder\",\n      \"parent\": \"Order\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EntertainmentOrder\",\n      \"target\": \"Entertainer\",\n      \"label\": \"fulfilledBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3642,
+   "completion_tokens": 737,
+   "total_tokens": 4379,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

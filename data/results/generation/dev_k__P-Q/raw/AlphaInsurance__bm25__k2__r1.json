@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + dateOfBirth : date\n  + address : string\n  + taxCode : string\n}\n\nclass Broker {\n  + brokerId : int\n  + name : string\n  + contactInfo : string\n}\n\nclass Contract {\n  + contractNumber : int\n  + signingDate : date\n  + insuredAmount : double\n  + policyType : string\n}\n\nclass Policy {\n  + policyId : int\n  + policyName : string\n  + description : string\n}\n\nclass Claim {\n  + claimId : int\n  + claimDate : date\n  + status : string\n}\n\nclass Estimator {\n  + estimatorId : int\n  + name : string\n  + expertiseArea : string\n}\n\nclass CompensationDecision {\n  + decisionId : int\n  + compensationAmount : double\n  + paymentStatus : string\n}\n\nCustomer \"1\" -- \"1..*\" Broker\nBroker \"1\" -- \"0..*\" Contract\nCustomer \"1\" -- \"0..*\" Contract\nContract \"1\" -- \"1\" Policy\nClaim \"1\" -- \"1\" Contract\nEstimator \"1\" -- \"0..*\" Claim\nClaim \"1\" -- \"0..*\" Estimator\nCompensationDecision \"1\" -- \"1\" Claim\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.37396119999903,
+ "prompt_tokens": 2681,
+ "completion_tokens": 281,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-70ljuebm9mxijmj0muqmda",
+  "object": "chat.completion",
+  "created": 1791490469,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + dateOfBirth : date\n  + address : string\n  + taxCode : string\n}\n\nclass Broker {\n  + brokerId : int\n  + name : string\n  + contactInfo : string\n}\n\nclass Contract {\n  + contractNumber : int\n  + signingDate : date\n  + insuredAmount : double\n  + policyType : string\n}\n\nclass Policy {\n  + policyId : int\n  + policyName : string\n  + description : string\n}\n\nclass Claim {\n  + claimId : int\n  + claimDate : date\n  + status : string\n}\n\nclass Estimator {\n  + estimatorId : int\n  + name : string\n  + expertiseArea : string\n}\n\nclass CompensationDecision {\n  + decisionId : int\n  + compensationAmount : double\n  + paymentStatus : string\n}\n\nCustomer \"1\" -- \"1..*\" Broker\nBroker \"1\" -- \"0..*\" Contract\nCustomer \"1\" -- \"0..*\" Contract\nContract \"1\" -- \"1\" Policy\nClaim \"1\" -- \"1\" Contract\nEstimator \"1\" -- \"0..*\" Claim\nClaim \"1\" -- \"0..*\" Estimator\nCompensationDecision \"1\" -- \"1\" Claim\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2681,
+   "completion_tokens": 281,
+   "total_tokens": 2962,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

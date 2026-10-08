@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bettor {\n  + name : string\n  + balance : double\n}\n\nclass Race {\n  + id : int\n  + winner : Runner\n}\n\nclass Runner {\n  + horseName : string\n  + jockey : Jockey\n}\n\nclass Jockey {\n  + name : string\n}\n\nclass Bet {\n  + amount : double\n  + odds : double\n  + race : Race\n  + runner : Runner\n}\n\nBettor \"1\" -- \"0..*\" Bet\nRace \"1\" -- \"0..*\" Bet\nRunner \"1\" -- \"0..*\" Bet\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 4.913231099999393,
+ "prompt_tokens": 3402,
+ "completion_tokens": 133,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-v3ekc0mea8q2qwu8vptrrh",
+  "object": "chat.completion",
+  "created": 1791491350,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bettor {\n  + name : string\n  + balance : double\n}\n\nclass Race {\n  + id : int\n  + winner : Runner\n}\n\nclass Runner {\n  + horseName : string\n  + jockey : Jockey\n}\n\nclass Jockey {\n  + name : string\n}\n\nclass Bet {\n  + amount : double\n  + odds : double\n  + race : Race\n  + runner : Runner\n}\n\nBettor \"1\" -- \"0..*\" Bet\nRace \"1\" -- \"0..*\" Bet\nRunner \"1\" -- \"0..*\" Bet\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3402,
+   "completion_tokens": 133,
+   "total_tokens": 3535,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

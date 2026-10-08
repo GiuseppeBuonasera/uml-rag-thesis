@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Patient {\n  + PatientID : int\n  + Name : string\n  + Symptoms : string[]\n}\n\nabstract class Doctor {\n  + DoctorID : int\n  + Name : string\n  + Specialization : string\n}\n\nclass HeadDoctor {}\n\nclass Diagnosis {\n  + DiagnosisID : int\n  + Description : string\n  + PriorityScore : string\n}\n\nclass TreatmentPlan {\n  + PlanID : int\n  + Description : string\n}\n\nabstract class Treatment {\n  + TreatmentID : int\n  + Stage : int\n  + ConsentRequired : boolean\n}\n\nclass Stage1Treatment {}\n\nclass Stage2Treatment {}\n\nclass Stage3Treatment {}\n\nclass PatientDiagnosis {\n  + ID : int\n  + Patient : Patient\n  + Diagnosis : Diagnosis\n}\n\nclass DoctorDiagnosis {\n  + ID : int\n  + Doctor : Doctor\n  + Diagnosis : Diagnosis\n}\n\nclass TreatmentApplication {\n  + ID : int\n  + PatientDiagnosis : PatientDiagnosis\n  + Treatment : Treatment\n}\n\nclass ConsentForm {\n  + FormID : int\n  + Patient : Patient\n  + DateSigned : datetime\n}\n\nPatient \"1\" -- \"*\" PatientDiagnosis\nHeadDoctor \"1\" -- \"*\" DoctorDiagnosis\nDoctorDiagnosis \"1\" -- \"*\" Diagnosis\nDiagnosis \"1\" -- \"*\" TreatmentPlan\nTreatmentPlan \"1\" -- \"*\" Treatment\nStage1Treatment --|> Treatment\nStage2Treatment --|> Treatment\nStage3Treatment --|> Treatment\nPatientDiagnosis \"1\" -- \"*\" TreatmentApplication\nConsentForm \"0..*\" -- \"1\" TreatmentApplication\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 10.745098899998993,
+ "prompt_tokens": 5336,
+ "completion_tokens": 340,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ihvdfz5eigq4r5tmmplatx",
+  "object": "chat.completion",
+  "created": 1791491068,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Patient {\n  + PatientID : int\n  + Name : string\n  + Symptoms : string[]\n}\n\nabstract class Doctor {\n  + DoctorID : int\n  + Name : string\n  + Specialization : string\n}\n\nclass HeadDoctor {}\n\nclass Diagnosis {\n  + DiagnosisID : int\n  + Description : string\n  + PriorityScore : string\n}\n\nclass TreatmentPlan {\n  + PlanID : int\n  + Description : string\n}\n\nabstract class Treatment {\n  + TreatmentID : int\n  + Stage : int\n  + ConsentRequired : boolean\n}\n\nclass Stage1Treatment {}\n\nclass Stage2Treatment {}\n\nclass Stage3Treatment {}\n\nclass PatientDiagnosis {\n  + ID : int\n  + Patient : Patient\n  + Diagnosis : Diagnosis\n}\n\nclass DoctorDiagnosis {\n  + ID : int\n  + Doctor : Doctor\n  + Diagnosis : Diagnosis\n}\n\nclass TreatmentApplication {\n  + ID : int\n  + PatientDiagnosis : PatientDiagnosis\n  + Treatment : Treatment\n}\n\nclass ConsentForm {\n  + FormID : int\n  + Patient : Patient\n  + DateSigned : datetime\n}\n\nPatient \"1\" -- \"*\" PatientDiagnosis\nHeadDoctor \"1\" -- \"*\" DoctorDiagnosis\nDoctorDiagnosis \"1\" -- \"*\" Diagnosis\nDiagnosis \"1\" -- \"*\" TreatmentPlan\nTreatmentPlan \"1\" -- \"*\" Treatment\nStage1Treatment --|> Treatment\nStage2Treatment --|> Treatment\nStage3Treatment --|> Treatment\nPatientDiagnosis \"1\" -- \"*\" TreatmentApplication\nConsentForm \"0..*\" -- \"1\" TreatmentApplication\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5336,
+   "completion_tokens": 340,
+   "total_tokens": 5676,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

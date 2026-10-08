@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ symptoms : string\",\n        \"+ priorityScore : PriorityScore\"\n      ],\n      \"methods\": [\n        \"+ signConsent(form : ConsentForm) : void\",\n        \"+ retractConsent() : void\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ],\n      \"methods\": [\n        \"+ makeDiagnosis(patient : Patient, diagnosis : Diagnosis) : void\",\n        \"+ approveTreatment(diagnosis : Diagnosis, treatment : Treatment) : void\",\n        \"+ downgradeTreatment(patient : Patient, treatment : Treatment) : void\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ priorityScore : PriorityScore\"\n      ],\n      \"methods\": [\n        \"+ updatePriorityScore(newScore : PriorityScore) : void\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ type : TreatmentType\",\n        \"+ stage : TreatmentStage\"\n      ],\n      \"methods\": [\n        \"+ moveToNextStage() : void\"\n      ]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ patientId : int\",\n        \"+ doctorId : int\",\n        \"+ dateSigned : datetime\"\n      ]\n    },\n    {\n      \"name\": \"PriorityScore\",\n      \"kind\": \"enum\",\n      \"values\": [\"High\", \"Low\"]\n    },\n    {\n      \"name\": \"TreatmentType\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentStage\",\n      \"kind\": \"enum\",\n      \"values\": [\"Stage1\", \"Stage2\", \"Stage3\"]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Patient\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Illness\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"ConsentForm\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 19.858273700003338,
+ "prompt_tokens": 9591,
+ "completion_tokens": 748,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-yi21l2wa2v28p35yyvumx",
+  "object": "chat.completion",
+  "created": 1791493112,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ symptoms : string\",\n        \"+ priorityScore : PriorityScore\"\n      ],\n      \"methods\": [\n        \"+ signConsent(form : ConsentForm) : void\",\n        \"+ retractConsent() : void\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ],\n      \"methods\": [\n        \"+ makeDiagnosis(patient : Patient, diagnosis : Diagnosis) : void\",\n        \"+ approveTreatment(diagnosis : Diagnosis, treatment : Treatment) : void\",\n        \"+ downgradeTreatment(patient : Patient, treatment : Treatment) : void\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ priorityScore : PriorityScore\"\n      ],\n      \"methods\": [\n        \"+ updatePriorityScore(newScore : PriorityScore) : void\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ type : TreatmentType\",\n        \"+ stage : TreatmentStage\"\n      ],\n      \"methods\": [\n        \"+ moveToNextStage() : void\"\n      ]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ patientId : int\",\n        \"+ doctorId : int\",\n        \"+ dateSigned : datetime\"\n      ]\n    },\n    {\n      \"name\": \"PriorityScore\",\n      \"kind\": \"enum\",\n      \"values\": [\"High\", \"Low\"]\n    },\n    {\n      \"name\": \"TreatmentType\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentStage\",\n      \"kind\": \"enum\",\n      \"values\": [\"Stage1\", \"Stage2\", \"Stage3\"]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Patient\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Illness\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"ConsentForm\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 9591,
+   "completion_tokens": 748,
+   "total_tokens": 10339,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

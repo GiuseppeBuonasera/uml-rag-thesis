@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Patient {\n  + name : string\n  + symptoms : string[]\n}\n\nclass Doctor {\n  + name : string\n  + speciality : string\n}\n\nclass Diagnosis {\n  + id : int\n  + description : string\n  + priorityScore : PriorityScore\n  + stage : TreatmentStage\n}\n\nenum PriorityScore {\n  High\n  Low\n}\n\nenum TreatmentStage {\n  Stage1\n  Stage2\n  Stage3\n}\n\nclass TreatmentPlan {\n  + id : int\n  + treatments : Treatment[]\n}\n\nclass Treatment {\n  + id : int\n  + description : string\n  + stage : TreatmentStage\n  + consentRequired : boolean\n}\n\nclass Nurse {\n  + name : string\n}\n\nclass Hospital {\n  + name : string\n  + doctors : Doctor[]\n  + patients : Patient[]\n  + treatments : Treatment[]\n}\n\nDoctor \"1\" -- \"*\" Diagnosis\nPatient \"1\" -- \"*\" Diagnosis\nDiagnosis \"1\" -- \"0..1\" TreatmentPlan\nTreatmentPlan \"1\" -- \"*\" Treatment\nNurse \"1\" -- \"*\" Patient\nHospital \"1\" -- \"*\" Doctor\nHospital \"1\" -- \"*\" Patient\nHospital \"1\" -- \"*\" Treatment\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.83705000000191,
+ "prompt_tokens": 7977,
+ "completion_tokens": 256,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6chu2hgwwk835ci10zozrf",
+  "object": "chat.completion",
+  "created": 1791491087,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Patient {\n  + name : string\n  + symptoms : string[]\n}\n\nclass Doctor {\n  + name : string\n  + speciality : string\n}\n\nclass Diagnosis {\n  + id : int\n  + description : string\n  + priorityScore : PriorityScore\n  + stage : TreatmentStage\n}\n\nenum PriorityScore {\n  High\n  Low\n}\n\nenum TreatmentStage {\n  Stage1\n  Stage2\n  Stage3\n}\n\nclass TreatmentPlan {\n  + id : int\n  + treatments : Treatment[]\n}\n\nclass Treatment {\n  + id : int\n  + description : string\n  + stage : TreatmentStage\n  + consentRequired : boolean\n}\n\nclass Nurse {\n  + name : string\n}\n\nclass Hospital {\n  + name : string\n  + doctors : Doctor[]\n  + patients : Patient[]\n  + treatments : Treatment[]\n}\n\nDoctor \"1\" -- \"*\" Diagnosis\nPatient \"1\" -- \"*\" Diagnosis\nDiagnosis \"1\" -- \"0..1\" TreatmentPlan\nTreatmentPlan \"1\" -- \"*\" Treatment\nNurse \"1\" -- \"*\" Patient\nHospital \"1\" -- \"*\" Doctor\nHospital \"1\" -- \"*\" Patient\nHospital \"1\" -- \"*\" Treatment\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7977,
+   "completion_tokens": 256,
+   "total_tokens": 8233,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

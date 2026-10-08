@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Song\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ Year : int\",\n        \"+ Length : int\",\n        \"+ Genre : string\"\n      ],\n      \"methods\": [\n        \"+ getTitle() : string\",\n        \"+ getYear() : int\",\n        \"+ getLength() : int\",\n        \"+ getGenre() : string\"\n      ]\n    },\n    {\n      \"name\": \"Artist\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ BirthDate : date\",\n        \"+ WebsiteURL : string\"\n      ],\n      \"methods\": [\n        \"+ getName() : string\",\n        \"+ getBirthDate() : date\",\n        \"+ getWebsiteURL() : string\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ UserID : int\",\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ getUserID() : int\",\n        \"+ getName() : string\",\n        \"+ getAddress() : string\"\n      ]\n    },\n    {\n      \"name\": \"BusinessUser\",\n      \"attributes\": [\n        \"+ VATNumber : string\"\n      ],\n      \"methods\": [\n        \"+ getVATNumber() : string\"\n      ]\n    },\n    {\n      \"name\": \"RegularUser\",\n      \"kind\": \"abstract\",\n      \"methods\": [\n        \"+ buySingle(Song) : boolean\",\n        \"+ suggestAlbum(Album) : boolean\"\n      ]\n    },\n    {\n      \"name\": \"BusinessRegularUser\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ uploadSong(Song, Classification) : boolean\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"BusinessRegularUser\",\n          \"parent\": \"RegularUser\"\n        },\n        {\n          \"type\": \"association\",\n          \"source\": \"BusinessRegularUser\",\n          \"target\": \"Song\",\n          \"sourceMultiplicity\": \"1..*\",\n          \"targetMultiplicity\": \"1\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Album\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ TrackNumber : int\"\n      ],\n      \"methods\": [\n        \"+ getTitle() : string\",\n        \"+ getTrackNumber() : int\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"RegularUser\",\n          \"target\": \"Album\",\n          \"sourceMultiplicity\": \"1..*\",\n          \"targetMultiplicity\": \"1\"\n        },\n        {\n          \"type\": \"composition\",\n          \"whole\": \"Album\",\n          \"part\": \"Song\",\n          \"wholeRole\": \"album\",\n          \"partRole\": \"track\",\n          \"wholeMultiplicity\": \"1\",\n          \"partMultiplicity\": \"*\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Classification\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Single\",\n        \"Hit\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessUser\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessRegularUser\",\n      \"parent\": \"RegularUser\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusinessRegularUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 18.1234553999966,
+ "prompt_tokens": 3794,
+ "completion_tokens": 782,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-fusi2dkt2agbr3j5anc9j",
+  "object": "chat.completion",
+  "created": 1791493169,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Song\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ Year : int\",\n        \"+ Length : int\",\n        \"+ Genre : string\"\n      ],\n      \"methods\": [\n        \"+ getTitle() : string\",\n        \"+ getYear() : int\",\n        \"+ getLength() : int\",\n        \"+ getGenre() : string\"\n      ]\n    },\n    {\n      \"name\": \"Artist\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ BirthDate : date\",\n        \"+ WebsiteURL : string\"\n      ],\n      \"methods\": [\n        \"+ getName() : string\",\n        \"+ getBirthDate() : date\",\n        \"+ getWebsiteURL() : string\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ UserID : int\",\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ getUserID() : int\",\n        \"+ getName() : string\",\n        \"+ getAddress() : string\"\n      ]\n    },\n    {\n      \"name\": \"BusinessUser\",\n      \"attributes\": [\n        \"+ VATNumber : string\"\n      ],\n      \"methods\": [\n        \"+ getVATNumber() : string\"\n      ]\n    },\n    {\n      \"name\": \"RegularUser\",\n      \"kind\": \"abstract\",\n      \"methods\": [\n        \"+ buySingle(Song) : boolean\",\n        \"+ suggestAlbum(Album) : boolean\"\n      ]\n    },\n    {\n      \"name\": \"BusinessRegularUser\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ uploadSong(Song, Classification) : boolean\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"BusinessRegularUser\",\n          \"parent\": \"RegularUser\"\n        },\n        {\n          \"type\": \"association\",\n          \"source\": \"BusinessRegularUser\",\n          \"target\": \"Song\",\n          \"sourceMultiplicity\": \"1..*\",\n          \"targetMultiplicity\": \"1\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Album\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ TrackNumber : int\"\n      ],\n      \"methods\": [\n        \"+ getTitle() : string\",\n        \"+ getTrackNumber() : int\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"RegularUser\",\n          \"target\": \"Album\",\n          \"sourceMultiplicity\": \"1..*\",\n          \"targetMultiplicity\": \"1\"\n        },\n        {\n          \"type\": \"composition\",\n          \"whole\": \"Album\",\n          \"part\": \"Song\",\n          \"wholeRole\": \"album\",\n          \"partRole\": \"track\",\n          \"wholeMultiplicity\": \"1\",\n          \"partMultiplicity\": \"*\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Classification\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Single\",\n        \"Hit\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessUser\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessRegularUser\",\n      \"parent\": \"RegularUser\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusinessRegularUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3794,
+   "completion_tokens": 782,
+   "total_tokens": 4576,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

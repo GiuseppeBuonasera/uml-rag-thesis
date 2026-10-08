@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Patient {\n  + name : string\n  + symptoms : string[]\n}\n\nclass Doctor {\n  + name : string\n  + speciality : string\n}\n\nclass Diagnosis {\n  + id : int\n  + description : string\n  + priorityScore : string\n  + stage : int\n}\n\nclass TreatmentPlan {\n  + id : int\n  + treatmentDescription : string\n  + stages : int\n}\n\nclass Treatment {\n  + id : int\n  + diagnosisId : int\n  + doctorId : int\n  + stage : int\n  + consentGiven : boolean\n}\n\nclass PriorityStageUpgrade {\n  + id : int\n  + illnessId : int\n  + newStage : int\n}\n\nPatient \"1\" -- \"*\" Diagnosis\nDoctor \"1\" -- \"*\" Diagnosis\nDiagnosis \"1\" -- \"*\" TreatmentPlan\nTreatmentPlan \"1\" -- \"*\" Treatment\nDiagnosis \"0..*\" -- \"* PriorityStageUpgrade\"\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.38367040000594,
+ "prompt_tokens": 7977,
+ "completion_tokens": 203,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7ftv3trddqdeye78rh2ie",
+  "object": "chat.completion",
+  "created": 1791491097,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Patient {\n  + name : string\n  + symptoms : string[]\n}\n\nclass Doctor {\n  + name : string\n  + speciality : string\n}\n\nclass Diagnosis {\n  + id : int\n  + description : string\n  + priorityScore : string\n  + stage : int\n}\n\nclass TreatmentPlan {\n  + id : int\n  + treatmentDescription : string\n  + stages : int\n}\n\nclass Treatment {\n  + id : int\n  + diagnosisId : int\n  + doctorId : int\n  + stage : int\n  + consentGiven : boolean\n}\n\nclass PriorityStageUpgrade {\n  + id : int\n  + illnessId : int\n  + newStage : int\n}\n\nPatient \"1\" -- \"*\" Diagnosis\nDoctor \"1\" -- \"*\" Diagnosis\nDiagnosis \"1\" -- \"*\" TreatmentPlan\nTreatmentPlan \"1\" -- \"*\" Treatment\nDiagnosis \"0..*\" -- \"* PriorityStageUpgrade\"\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7977,
+   "completion_tokens": 203,
+   "total_tokens": 8180,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

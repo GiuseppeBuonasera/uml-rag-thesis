@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + id : int\n  + name : string\n  + address : string\n  + birthday : date\n}\n\nabstract class Role {}\ninterface BusinessOwner extends Role {}\ninterface HungryCustomer extends Role {}\ninterface Entertainer extends Role {}\n\nclass PizzaRestaurant {\n  + zipCode : string\n  + address : string\n  + phoneNumber : string\n  + website : string\n  + openingHours : string\n}\n\nclass Pizza {\n  + name : string\n  + crustStructure : string\n  + price : double\n}\n\nclass Order {\n  + id : int\n  + orderDateAndTime : datetime\n  + latestDeliveryTime : datetime\n  + numberOfPeople : int\n}\n\nclass EntertainmentOrder extends Order {\n  + entertainmentType : string\n  + duration : time\n}\n\nclass EntertainerProfile {\n  + stageName : string\n  + bio : string\n  + pricePer30Minutes : double\n}\n\nclass Availability {\n  + day : string\n  + available : boolean\n}\n\nUser \"1\" --|> BusinessOwner : is\nUser \"1\" --|> HungryCustomer : is\nUser \"1\" --|> Entertainer : is\n\nBusinessOwner \"1\" *-- PizzaRestaurant : owns\nPizzaRestaurant \"*\" -- \"0..*\" Pizza : offers\nHungryCustomer \"1\" *-- Order : makes\nOrder \"1\" *-- Pizza : contains\nOrder \"1\" ..|> EntertainmentOrder : can be\nEntertainer \"1\" -- \"1..*\" EntertainerProfile : has\nEntertainer \"*\" -- Availability : worksOn\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 12.083913200003735,
+ "prompt_tokens": 3313,
+ "completion_tokens": 344,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-bj0obf4im792iubbeq80k",
+  "object": "chat.completion",
+  "created": 1791491174,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + id : int\n  + name : string\n  + address : string\n  + birthday : date\n}\n\nabstract class Role {}\ninterface BusinessOwner extends Role {}\ninterface HungryCustomer extends Role {}\ninterface Entertainer extends Role {}\n\nclass PizzaRestaurant {\n  + zipCode : string\n  + address : string\n  + phoneNumber : string\n  + website : string\n  + openingHours : string\n}\n\nclass Pizza {\n  + name : string\n  + crustStructure : string\n  + price : double\n}\n\nclass Order {\n  + id : int\n  + orderDateAndTime : datetime\n  + latestDeliveryTime : datetime\n  + numberOfPeople : int\n}\n\nclass EntertainmentOrder extends Order {\n  + entertainmentType : string\n  + duration : time\n}\n\nclass EntertainerProfile {\n  + stageName : string\n  + bio : string\n  + pricePer30Minutes : double\n}\n\nclass Availability {\n  + day : string\n  + available : boolean\n}\n\nUser \"1\" --|> BusinessOwner : is\nUser \"1\" --|> HungryCustomer : is\nUser \"1\" --|> Entertainer : is\n\nBusinessOwner \"1\" *-- PizzaRestaurant : owns\nPizzaRestaurant \"*\" -- \"0..*\" Pizza : offers\nHungryCustomer \"1\" *-- Order : makes\nOrder \"1\" *-- Pizza : contains\nOrder \"1\" ..|> EntertainmentOrder : can be\nEntertainer \"1\" -- \"1..*\" EntertainerProfile : has\nEntertainer \"*\" -- Availability : worksOn\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3313,
+   "completion_tokens": 344,
+   "total_tokens": 3657,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

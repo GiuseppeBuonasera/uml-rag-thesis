@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ personID : int\",\n        \"+ phoneNumber : string\",\n        \"+ keywords : string[]\"\n      ],\n      \"methods\": [\n        \"+ getPersonID() : int\",\n        \"+ setPhoneNumber(string)\",\n        \"+ addKeyword(string)\"\n      ]\n    },\n    {\n      \"name\": \"Institution\",\n      \"attributes\": [\n        \"+ institutionCode : int\",\n        \"+ name : string\"\n      ],\n      \"methods\": [\n        \"+ getInstitutionCode() : int\",\n        \"+ setName(string)\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ DOI : string\",\n        \"+ title : string\",\n        \"+ authors : Person[]\"\n      ],\n      \"methods\": [\n        \"+ getDOI() : string\",\n        \"+ getTitle() : string\",\n        \"+ addAuthor(Person)\"\n      ]\n    },\n    {\n      \"name\": \"PeerReviewedPaper\",\n      \"attributes\": [\n        \"+ citationCount : int\",\n        \"+ reviewers : Person[]\"\n      ],\n      \"methods\": [\n        \"+ getCitationCount() : int\",\n        \"+ setReviewers(Person[])\",\n        \"+ addReviewer(Person)\"\n      ],\n      \"kind\": \"abstract\",\n      \"parent\": \"Article\"\n    },\n    {\n      \"name\": \"TechnicalReport\",\n      \"attributes\": [\n        \"+ publisherCode : int\"\n      ],\n      \"methods\": [\n        \"+ getPublisherCode() : int\",\n        \"+ setPublisherCode(int)\"\n      ],\n      \"kind\": \"abstract\",\n      \"parent\": \"Article\"\n    },\n    {\n      \"name\": \"ScientificStaff\",\n      \"attributes\": [\n        \"+ institution : Institution\"\n      ],\n      \"methods\": [\n        \"+ getInstitution() : Institution\",\n        \"+ setInstitution(Institution)\"\n      ],\n      \"kind\": \"abstract\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"name\": \"Author\",\n      \"kind\": \"abstract\",\n      \"parent\": \"ScientificStaff\"\n    },\n    {\n      \"name\": \"Reviewer\",\n      \"kind\": \"abstract\",\n      \"parent\": \"ScientificStaff\"\n    },\n    {\n      \"name\": \"Publisher\",\n      \"attributes\": [\n        \"+ name : string\"\n      ],\n      \"methods\": [\n        \"+ getName() : string\",\n        \"+ setName(string)\"\n      ]\n    },\n    {\n      \"name\": \"Journal\",\n      \"attributes\": [\n        \"+ publisher : Publisher\",\n        \"+ name : string\",\n        \"+ impactFactor : float\"\n      ],\n      \"methods\": [\n        \"+ getPublisher() : Publisher\",\n        \"+ getName() : string\",\n        \"+ setImpactFactor(float)\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PeerReviewedPaper\",\n      \"parent\": \"Article\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TechnicalReport\",\n      \"parent\": \"Article\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Publisher\",\n      \"part\": \"Journal\",\n      \"label\": \"publishes\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Article\",\n      \"target\": \"ScientificStaff\",\n      \"label\": \"written by\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PeerReviewedPaper\",\n      \"target\": \"Person\",\n      \"label\": \"reviewed by\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TechnicalReport\",\n      \"target\": \"Institution\",\n      \"label\": \"published by\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScientificStaff\",\n      \"target\": \"Institution\",\n      \"label\": \"works at\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 21.43418489999749,
+ "prompt_tokens": 4351,
+ "completion_tokens": 899,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cbiuc25udzmm5plcxbop7",
+  "object": "chat.completion",
+  "created": 1791492395,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ personID : int\",\n        \"+ phoneNumber : string\",\n        \"+ keywords : string[]\"\n      ],\n      \"methods\": [\n        \"+ getPersonID() : int\",\n        \"+ setPhoneNumber(string)\",\n        \"+ addKeyword(string)\"\n      ]\n    },\n    {\n      \"name\": \"Institution\",\n      \"attributes\": [\n        \"+ institutionCode : int\",\n        \"+ name : string\"\n      ],\n      \"methods\": [\n        \"+ getInstitutionCode() : int\",\n        \"+ setName(string)\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ DOI : string\",\n        \"+ title : string\",\n        \"+ authors : Person[]\"\n      ],\n      \"methods\": [\n        \"+ getDOI() : string\",\n        \"+ getTitle() : string\",\n        \"+ addAuthor(Person)\"\n      ]\n    },\n    {\n      \"name\": \"PeerReviewedPaper\",\n      \"attributes\": [\n        \"+ citationCount : int\",\n        \"+ reviewers : Person[]\"\n      ],\n      \"methods\": [\n        \"+ getCitationCount() : int\",\n        \"+ setReviewers(Person[])\",\n        \"+ addReviewer(Person)\"\n      ],\n      \"kind\": \"abstract\",\n      \"parent\": \"Article\"\n    },\n    {\n      \"name\": \"TechnicalReport\",\n      \"attributes\": [\n        \"+ publisherCode : int\"\n      ],\n      \"methods\": [\n        \"+ getPublisherCode() : int\",\n        \"+ setPublisherCode(int)\"\n      ],\n      \"kind\": \"abstract\",\n      \"parent\": \"Article\"\n    },\n    {\n      \"name\": \"ScientificStaff\",\n      \"attributes\": [\n        \"+ institution : Institution\"\n      ],\n      \"methods\": [\n        \"+ getInstitution() : Institution\",\n        \"+ setInstitution(Institution)\"\n      ],\n      \"kind\": \"abstract\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"name\": \"Author\",\n      \"kind\": \"abstract\",\n      \"parent\": \"ScientificStaff\"\n    },\n    {\n      \"name\": \"Reviewer\",\n      \"kind\": \"abstract\",\n      \"parent\": \"ScientificStaff\"\n    },\n    {\n      \"name\": \"Publisher\",\n      \"attributes\": [\n        \"+ name : string\"\n      ],\n      \"methods\": [\n        \"+ getName() : string\",\n        \"+ setName(string)\"\n      ]\n    },\n    {\n      \"name\": \"Journal\",\n      \"attributes\": [\n        \"+ publisher : Publisher\",\n        \"+ name : string\",\n        \"+ impactFactor : float\"\n      ],\n      \"methods\": [\n        \"+ getPublisher() : Publisher\",\n        \"+ getName() : string\",\n        \"+ setImpactFactor(float)\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PeerReviewedPaper\",\n      \"parent\": \"Article\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TechnicalReport\",\n      \"parent\": \"Article\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Publisher\",\n      \"part\": \"Journal\",\n      \"label\": \"publishes\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Article\",\n      \"target\": \"ScientificStaff\",\n      \"label\": \"written by\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PeerReviewedPaper\",\n      \"target\": \"Person\",\n      \"label\": \"reviewed by\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TechnicalReport\",\n      \"target\": \"Institution\",\n      \"label\": \"published by\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScientificStaff\",\n      \"target\": \"Institution\",\n      \"label\": \"works at\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4351,
+   "completion_tokens": 899,
+   "total_tokens": 5250,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string?\",\n        \"+ ItemsDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ AvailableStorageSpace : int\",\n        \"+ CurrentLocation : string\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ AvailableDays : DayOfWeek[]\"\n      ],\n      \"methods\": [\n        \"+ isAvailableOn(day : DayOfWeek) : boolean\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteNumber : int\",\n        \"+ PickupTimes : TimeRange[]\"\n      ],\n      \"methods\": [\n        \"+ assignVehicle(vehicle : PickupVehicle)\",\n        \"+ addPickup(pickup : Pickup)\"\n      ]\n    },\n    {\n      \"name\": \"Pickup\",\n      \"attributes\": [\n        \"+ Resident : Resident\",\n        \"+ ScheduledTime : datetime\",\n        \"+ Status : string\"\n      ],\n      \"methods\": [\n        \"+ complete()\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ receiveItems(items : Item[])\",\n        \"+ assignCategories(items : Item[])\"\n      ]\n    },\n    {\n      \"name\": \"Item\",\n      \"attributes\": [\n        \"+ Description : string\",\n        \"+ Category : string\",\n        \"+ RFIDTagged : boolean\"\n      ],\n      \"methods\": [\n        \"+ checkQuality() : boolean\",\n        \"+ updateDescription(newDescription : string)\",\n        \"+ assignCategory(category : string)\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : Category[]\"\n      ],\n      \"methods\": [\n        \"+ receiveArticle(article : Item)\",\n        \"+ requestDelivery(article : Item)\"\n      ]\n    },\n    {\n      \"name\": \"DayOfWeek\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Monday\",\n        \"Tuesday\",\n        \"Wednesday\",\n        \"Thursday\",\n        \"Friday\"\n      ]\n    },\n    {\n      \"name\": \"TimeRange\",\n      \"attributes\": [\n        \"+ Start : time\",\n        \"+ End : time\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"Pickup\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"drives\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupVehicle\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DistributionCenter\",\n      \"target\": \"Item\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"Item\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 19.352391099993838,
+ "prompt_tokens": 9040,
+ "completion_tokens": 799,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kekokn7my1xy4mo7cbkta",
+  "object": "chat.completion",
+  "created": 1791492810,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string?\",\n        \"+ ItemsDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ AvailableStorageSpace : int\",\n        \"+ CurrentLocation : string\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ AvailableDays : DayOfWeek[]\"\n      ],\n      \"methods\": [\n        \"+ isAvailableOn(day : DayOfWeek) : boolean\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteNumber : int\",\n        \"+ PickupTimes : TimeRange[]\"\n      ],\n      \"methods\": [\n        \"+ assignVehicle(vehicle : PickupVehicle)\",\n        \"+ addPickup(pickup : Pickup)\"\n      ]\n    },\n    {\n      \"name\": \"Pickup\",\n      \"attributes\": [\n        \"+ Resident : Resident\",\n        \"+ ScheduledTime : datetime\",\n        \"+ Status : string\"\n      ],\n      \"methods\": [\n        \"+ complete()\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ receiveItems(items : Item[])\",\n        \"+ assignCategories(items : Item[])\"\n      ]\n    },\n    {\n      \"name\": \"Item\",\n      \"attributes\": [\n        \"+ Description : string\",\n        \"+ Category : string\",\n        \"+ RFIDTagged : boolean\"\n      ],\n      \"methods\": [\n        \"+ checkQuality() : boolean\",\n        \"+ updateDescription(newDescription : string)\",\n        \"+ assignCategory(category : string)\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : Category[]\"\n      ],\n      \"methods\": [\n        \"+ receiveArticle(article : Item)\",\n        \"+ requestDelivery(article : Item)\"\n      ]\n    },\n    {\n      \"name\": \"DayOfWeek\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Monday\",\n        \"Tuesday\",\n        \"Wednesday\",\n        \"Thursday\",\n        \"Friday\"\n      ]\n    },\n    {\n      \"name\": \"TimeRange\",\n      \"attributes\": [\n        \"+ Start : time\",\n        \"+ End : time\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"Pickup\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"drives\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupVehicle\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DistributionCenter\",\n      \"target\": \"Item\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"Item\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 9040,
+   "completion_tokens": 799,
+   "total_tokens": 9839,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

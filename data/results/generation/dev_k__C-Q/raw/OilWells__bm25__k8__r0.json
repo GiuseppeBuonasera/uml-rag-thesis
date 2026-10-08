@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Well\",\n      \"attributes\": [\n        \"+ code : string\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"Company\",\n      \"attributes\": [\n        \"+ taxCode : string\",\n        \"+ numberOfEmployees : int\"\n      ],\n      \"methods\": [\n        \"+ extractCrudeOil(well: Well, quantity: double) : void\"\n      ]\n    },\n    {\n      \"name\": \"OnshoreWell\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ surfaceExtension : double\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"OffshoreWell\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ yearOfInstallation : int\",\n        \"+ geographicalAreaCode : string\",\n        \"+ environmentalImportance : int\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"GeographicalArea\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ environmentalImportance : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Well\",\n      \"target\": \"Company\",\n      \"label\": \"extractedBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OnshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OffshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OffshoreWell\",\n      \"target\": \"GeographicalArea\",\n      \"label\": \"locatedIn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 14.036411800007045,
+ "prompt_tokens": 7254,
+ "completion_tokens": 426,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7eikeqvo3ppj8c84dinm8d",
+  "object": "chat.completion",
+  "created": 1791493920,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Well\",\n      \"attributes\": [\n        \"+ code : string\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"Company\",\n      \"attributes\": [\n        \"+ taxCode : string\",\n        \"+ numberOfEmployees : int\"\n      ],\n      \"methods\": [\n        \"+ extractCrudeOil(well: Well, quantity: double) : void\"\n      ]\n    },\n    {\n      \"name\": \"OnshoreWell\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ surfaceExtension : double\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"OffshoreWell\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ yearOfInstallation : int\",\n        \"+ geographicalAreaCode : string\",\n        \"+ environmentalImportance : int\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"GeographicalArea\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ environmentalImportance : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Well\",\n      \"target\": \"Company\",\n      \"label\": \"extractedBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OnshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OffshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OffshoreWell\",\n      \"target\": \"GeographicalArea\",\n      \"label\": \"locatedIn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7254,
+   "completion_tokens": 426,
+   "total_tokens": 7680,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

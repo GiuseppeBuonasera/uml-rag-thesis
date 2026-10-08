@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ taxCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ brokerId : int\",\n        \"+ name : string\",\n        \"+ contactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ policyNumber : int\",\n        \"+ startDate : date\",\n        \"+ endDate : date\",\n        \"+ coverageAmount : float\"\n      ]\n    },\n    {\n      \"name\": \"LifeInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"CarLiability\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Theft\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ contractId : int\",\n        \"+ signingDate : date\",\n        \"+ policyType : string\",\n        \"+ customerName : string\",\n        \"+ brokerId : int\"\n      ]\n    },\n    {\n      \"name\": \"Claim\",\n      \"attributes\": [\n        \"+ claimId : int\",\n        \"+ claimDate : date\",\n        \"+ status : string\",\n        \"+ customerId : int\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ estimatorId : int\",\n        \"+ name : string\",\n        \"+ expertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ caseId : int\",\n        \"+ claimDate : date\",\n        \"+ status : string\",\n        \"+ customerId : int\"\n      ]\n    },\n    {\n      \"name\": \"EstimatorReport\",\n      \"attributes\": [\n        \"+ reportId : int\",\n        \"+ estimatorId : int\",\n        \"+ caseId : int\",\n        \"+ reportDate : date\",\n        \"+ approvalStatus : boolean\",\n        \"+ compensationAmount : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Broker\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\",\n      \"label\": \"assignedTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"hasContracts\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"LifeInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CarLiability\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Theft\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Policy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"coversPolicy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Claim\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"hasClaims\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"EstimatorReport\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"hasReports\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Estimator\",\n      \"target\": \"EstimatorReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"makesReports\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 22.30009070000233,
+ "prompt_tokens": 3598,
+ "completion_tokens": 846,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-fpng36fawhkcibrx0p4767",
+  "object": "chat.completion",
+  "created": 1791491561,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ taxCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ brokerId : int\",\n        \"+ name : string\",\n        \"+ contactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ policyNumber : int\",\n        \"+ startDate : date\",\n        \"+ endDate : date\",\n        \"+ coverageAmount : float\"\n      ]\n    },\n    {\n      \"name\": \"LifeInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"CarLiability\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Theft\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ contractId : int\",\n        \"+ signingDate : date\",\n        \"+ policyType : string\",\n        \"+ customerName : string\",\n        \"+ brokerId : int\"\n      ]\n    },\n    {\n      \"name\": \"Claim\",\n      \"attributes\": [\n        \"+ claimId : int\",\n        \"+ claimDate : date\",\n        \"+ status : string\",\n        \"+ customerId : int\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ estimatorId : int\",\n        \"+ name : string\",\n        \"+ expertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ caseId : int\",\n        \"+ claimDate : date\",\n        \"+ status : string\",\n        \"+ customerId : int\"\n      ]\n    },\n    {\n      \"name\": \"EstimatorReport\",\n      \"attributes\": [\n        \"+ reportId : int\",\n        \"+ estimatorId : int\",\n        \"+ caseId : int\",\n        \"+ reportDate : date\",\n        \"+ approvalStatus : boolean\",\n        \"+ compensationAmount : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Broker\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\",\n      \"label\": \"assignedTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"hasContracts\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"LifeInsurance\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CarLiability\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Theft\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Policy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"coversPolicy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Claim\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"hasClaims\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"EstimatorReport\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"hasReports\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Estimator\",\n      \"target\": \"EstimatorReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"makesReports\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3598,
+   "completion_tokens": 846,
+   "total_tokens": 4444,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

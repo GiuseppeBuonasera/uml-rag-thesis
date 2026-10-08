@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Song {\n  + title : string\n  + year : int\n  + length : time\n  + genre : string\n}\n\nclass Artist {\n  + name : string\n  + birthDate : date\n  + website : string\n}\n\nclass User {\n  + ID : int\n  + name : string\n  + address : string\n}\n\nclass BusinessUser {\n  + VATNumber : string\n}\n\nclass RegularUser {}\n\nclass Album {\n  + title : string\n  + trackNumber : int\n}\n\nenum SongType {\n  single\n  hit\n}\n\nclass Content {\n  + type : SongType\n}\n\nclass Single {}\nclass Hit {}\n\nSingle --|> Content\nHit --|> Content\n\nSong \"1\" -- \"1\" Artist\nUser \"1\" -- \"*\" Content\nBusinessUser \"0..*\" -- \"1..*\" Song\nRegularUser \"0..*\" -- \"0..*\" Album\nAlbum \"1\" -- \"*\" Hit\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.141263999998046,
+ "prompt_tokens": 8038,
+ "completion_tokens": 205,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9akx9iiudhv3h3h5uujg",
+  "object": "chat.completion",
+  "created": 1791491145,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Song {\n  + title : string\n  + year : int\n  + length : time\n  + genre : string\n}\n\nclass Artist {\n  + name : string\n  + birthDate : date\n  + website : string\n}\n\nclass User {\n  + ID : int\n  + name : string\n  + address : string\n}\n\nclass BusinessUser {\n  + VATNumber : string\n}\n\nclass RegularUser {}\n\nclass Album {\n  + title : string\n  + trackNumber : int\n}\n\nenum SongType {\n  single\n  hit\n}\n\nclass Content {\n  + type : SongType\n}\n\nclass Single {}\nclass Hit {}\n\nSingle --|> Content\nHit --|> Content\n\nSong \"1\" -- \"1\" Artist\nUser \"1\" -- \"*\" Content\nBusinessUser \"0..*\" -- \"1..*\" Song\nRegularUser \"0..*\" -- \"0..*\" Album\nAlbum \"1\" -- \"*\" Hit\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8038,
+   "completion_tokens": 205,
+   "total_tokens": 8243,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

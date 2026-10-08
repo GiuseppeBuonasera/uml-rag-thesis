@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ BirthDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Member\",\n      \"attributes\": [\n        \"+ MembershipID : int\"\n      ],\n      \"methods\": [\n        \"+ registerForSession(session: Session) : void\"\n      ]\n    },\n    {\n      \"name\": \"Trainer\",\n      \"attributes\": [\n        \"+ Diploma : string\"\n      ],\n      \"methods\": [\n        \"+ superviseSession(session: GroupSession) : void\"\n      ]\n    },\n    {\n      \"name\": \"Prospect\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"Intern\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"FitnessCenter\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ addRoom(room: Room) : void\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      attributes\": [\n        \"+ Number : int\",\n        \"+ MaxCapacity : int\"\n      ]\n    },\n    {\n      \"name\": \"Session\",\n      kind: \"abstract\",\n      attributes: [\n        \"+ Date : date\",\n        \"+ StartHour : time\"\n      ],\n      methods: [\n        \"+ getParticipants() : List<Person>\",\n        \"+ setTrainer(trainer: Trainer) : void\"\n      ]\n    },\n    {\n      \"name\": \"IndividualSession\",\n      kind: \"abstract\",\n      parent: \"Session\"\n    },\n    {\n      \"name\": \"GroupSession\",\n      kind: \"abstract\",\n      parent: \"Session\",\n      attributes: [\n        \"+ Type : string\"\n      ],\n      methods: [\n        \"+ getTrainer() : Trainer\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Member\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Trainer\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Prospect\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Intern\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Member\",\n      \"target\": \"Session\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trainer\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Room\",\n      \"target\": \"IndividualSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"individualSessions\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Room\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"groupSessions\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"FitnessCenter\",\n      \"target\": \"IndividualSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"individualSessions\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"FitnessCenter\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"groupSessions\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.699203799995303,
+ "prompt_tokens": 4104,
+ "completion_tokens": 853,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tbo2cczxi582735v5cav6",
+  "object": "chat.completion",
+  "created": 1791492624,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ BirthDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Member\",\n      \"attributes\": [\n        \"+ MembershipID : int\"\n      ],\n      \"methods\": [\n        \"+ registerForSession(session: Session) : void\"\n      ]\n    },\n    {\n      \"name\": \"Trainer\",\n      \"attributes\": [\n        \"+ Diploma : string\"\n      ],\n      \"methods\": [\n        \"+ superviseSession(session: GroupSession) : void\"\n      ]\n    },\n    {\n      \"name\": \"Prospect\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"Intern\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"FitnessCenter\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ addRoom(room: Room) : void\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      attributes\": [\n        \"+ Number : int\",\n        \"+ MaxCapacity : int\"\n      ]\n    },\n    {\n      \"name\": \"Session\",\n      kind: \"abstract\",\n      attributes: [\n        \"+ Date : date\",\n        \"+ StartHour : time\"\n      ],\n      methods: [\n        \"+ getParticipants() : List<Person>\",\n        \"+ setTrainer(trainer: Trainer) : void\"\n      ]\n    },\n    {\n      \"name\": \"IndividualSession\",\n      kind: \"abstract\",\n      parent: \"Session\"\n    },\n    {\n      \"name\": \"GroupSession\",\n      kind: \"abstract\",\n      parent: \"Session\",\n      attributes: [\n        \"+ Type : string\"\n      ],\n      methods: [\n        \"+ getTrainer() : Trainer\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Member\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Trainer\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Prospect\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Intern\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Member\",\n      \"target\": \"Session\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trainer\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Room\",\n      \"target\": \"IndividualSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"individualSessions\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Room\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"groupSessions\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"FitnessCenter\",\n      \"target\": \"IndividualSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"individualSessions\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"FitnessCenter\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"groupSessions\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4104,
+   "completion_tokens": 853,
+   "total_tokens": 4957,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

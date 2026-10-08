@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Person {\n  + FirstName : string\n  + LastName : string\n  + BirthDate : date\n}\n\nclass Trainer {\n  + Diploma : string\n}\n\nclass Center {\n  + Name : string\n  + Address : string\n}\n\nabstract class Room {\n  + MaxCapacity : int\n}\n\nclass IndividualSession {\n  + Date : date\n  + StartHour : time\n}\n\nclass GroupSession {\n  + Date : date\n  + StartHour : time\n  + Type : string\n}\n\nclass Participant {}\n\nclass TrainerSupervision {}\n\nPerson \"1\" -- \"*\" Participant\nTrainer \"1\" -- \"*\" TrainerSupervision\nCenter \"1\" *-- \"*\" Room\nRoom \"1\" *-- \"*\" IndividualSession\nRoom \"1\" *-- \"*\" GroupSession\nGroupSession \"0..1\" -- \"1\" TrainerSupervision\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.185948099999223,
+ "prompt_tokens": 3412,
+ "completion_tokens": 184,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9igtqm5t45gdnfmbu27bcv",
+  "object": "chat.completion",
+  "created": 1791490865,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {\n  + FirstName : string\n  + LastName : string\n  + BirthDate : date\n}\n\nclass Trainer {\n  + Diploma : string\n}\n\nclass Center {\n  + Name : string\n  + Address : string\n}\n\nabstract class Room {\n  + MaxCapacity : int\n}\n\nclass IndividualSession {\n  + Date : date\n  + StartHour : time\n}\n\nclass GroupSession {\n  + Date : date\n  + StartHour : time\n  + Type : string\n}\n\nclass Participant {}\n\nclass TrainerSupervision {}\n\nPerson \"1\" -- \"*\" Participant\nTrainer \"1\" -- \"*\" TrainerSupervision\nCenter \"1\" *-- \"*\" Room\nRoom \"1\" *-- \"*\" IndividualSession\nRoom \"1\" *-- \"*\" GroupSession\nGroupSession \"0..1\" -- \"1\" TrainerSupervision\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3412,
+   "completion_tokens": 184,
+   "total_tokens": 3596,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ],\n      \"methods\": [\n        \"+ placeBet(bet : Bet) : void\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ winner : Runner\"\n      ],\n      \"methods\": [\n        \"+ setWinner(winner : Runner) : void\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ horseName : string\",\n        \"+ jockey : Jockey\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ bettor : Bettor\",\n        \"+ race : Race\",\n        \"+ runner : Runner\",\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ],\n      \"methods\": [\n        \"+ calculatePayout() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Runner\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Runner\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 11.754955199998221,
+ "prompt_tokens": 3325,
+ "completion_tokens": 469,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4e601u87vke89a0im3ew5w",
+  "object": "chat.completion",
+  "created": 1791493664,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ],\n      \"methods\": [\n        \"+ placeBet(bet : Bet) : void\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ winner : Runner\"\n      ],\n      \"methods\": [\n        \"+ setWinner(winner : Runner) : void\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ horseName : string\",\n        \"+ jockey : Jockey\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ bettor : Bettor\",\n        \"+ race : Race\",\n        \"+ runner : Runner\",\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ],\n      \"methods\": [\n        \"+ calculatePayout() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Runner\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Runner\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3325,
+   "completion_tokens": 469,
+   "total_tokens": 3794,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

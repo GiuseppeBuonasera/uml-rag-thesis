@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass SensorController {\n  + username : string\n  + password : string\n}\n\nclass Apartment {\n  + address : string\n  + inhabitants : List<User>\n}\n\nclass User {\n  + username : string\n  + password : string\n  + isAdmin : boolean\n}\n\nclass Room {\n  + description : string\n  + sensors : List<Sensor>\n}\n\nabstract class Sensor {\n  + vendorId : int\n  + description : string\n  + unit : string\n  + room : Room\n}\n\nclass TemperatureSensor {\n  + minValue : float\n  + maxValue : float\n}\n\nclass PowerSensor {\n  + counterReading : long\n}\n\nclass Threshold {\n  + value : float\n  + sensor : Sensor\n}\n\nclass EMonitor {\n  + checkThresholds() : void\n}\n\nclass AlertMessage {\n  + message : string\n  + emailAddress : string\n}\n\nclass Value {\n  + timestamp : datetime\n  + floatValue : float\n}\n\nSensorController \"1\" -- \"*\" Apartment\nApartment \"1\" -- \"*\" User\nUser \"0..*\" -- \"1\" SensorController\nRoom \"1\" -- \"* sensors\" Sensor\nSensor \"1\" -- \"1 room\" Room\nTemperatureSensor --|> Sensor\nPowerSensor --|> Sensor\nSensor \"1\" -- \"0..1 threshold\" Threshold\nEMonitor ..> SensorController : checks thresholds\nAlertMessage ..> EMonitor : sent by E-Monitor\nValue \"0..*\" -- \"1 sensor\" Sensor\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.2954342999946675,
+ "prompt_tokens": 5137,
+ "completion_tokens": 316,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9pza5li7ouv6o37ltz8p0q",
+  "object": "chat.completion",
+  "created": 1791490735,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass SensorController {\n  + username : string\n  + password : string\n}\n\nclass Apartment {\n  + address : string\n  + inhabitants : List<User>\n}\n\nclass User {\n  + username : string\n  + password : string\n  + isAdmin : boolean\n}\n\nclass Room {\n  + description : string\n  + sensors : List<Sensor>\n}\n\nabstract class Sensor {\n  + vendorId : int\n  + description : string\n  + unit : string\n  + room : Room\n}\n\nclass TemperatureSensor {\n  + minValue : float\n  + maxValue : float\n}\n\nclass PowerSensor {\n  + counterReading : long\n}\n\nclass Threshold {\n  + value : float\n  + sensor : Sensor\n}\n\nclass EMonitor {\n  + checkThresholds() : void\n}\n\nclass AlertMessage {\n  + message : string\n  + emailAddress : string\n}\n\nclass Value {\n  + timestamp : datetime\n  + floatValue : float\n}\n\nSensorController \"1\" -- \"*\" Apartment\nApartment \"1\" -- \"*\" User\nUser \"0..*\" -- \"1\" SensorController\nRoom \"1\" -- \"* sensors\" Sensor\nSensor \"1\" -- \"1 room\" Room\nTemperatureSensor --|> Sensor\nPowerSensor --|> Sensor\nSensor \"1\" -- \"0..1 threshold\" Threshold\nEMonitor ..> SensorController : checks thresholds\nAlertMessage ..> EMonitor : sent by E-Monitor\nValue \"0..*\" -- \"1 sensor\" Sensor\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5137,
+   "completion_tokens": 316,
+   "total_tokens": 5453,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

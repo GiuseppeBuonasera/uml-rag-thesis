@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + Number : int\n}\n\nclass Bed {\n  + Category : string\n  + Price : double\n}\n\nclass Inhabitant {\n  + Name : string\n  + RegistrationDate : date\n}\n\nclass StayCategory {\n  + Type : string\n  + Price : double\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + Status : string\n  + Date : date\n}\n\nclass Invoice {\n  + Amount : double\n  + OutstandingAmount : double\n  + PaymentDate : date\n}\n\nclass CreditNote {}\n\nHome \"1\" -- \"0..*\" Department\nDepartment \"1\" -- \"0..*\" Room\nRoom \"1\" -- \"0..*\" Bed\nInhabitant \"1\" -- \"0..*\" StayCategory\nStayCategory \"1\" -- \"0..*\" Proposal\nProposal \"1\" -- \"0..*\" Inhabitant\nInhabitant \"1\" -- \"0..*\" WaitingList\nWaitingList \"1\" -- \"0..*\" Proposal\nInhabitant \"1\" -- \"0..*\" Invoice\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.877364200001466,
+ "prompt_tokens": 4397,
+ "completion_tokens": 255,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-uhmf8lb0m2bej6yvogalf",
+  "object": "chat.completion",
+  "created": 1791490989,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + Number : int\n}\n\nclass Bed {\n  + Category : string\n  + Price : double\n}\n\nclass Inhabitant {\n  + Name : string\n  + RegistrationDate : date\n}\n\nclass StayCategory {\n  + Type : string\n  + Price : double\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + Status : string\n  + Date : date\n}\n\nclass Invoice {\n  + Amount : double\n  + OutstandingAmount : double\n  + PaymentDate : date\n}\n\nclass CreditNote {}\n\nHome \"1\" -- \"0..*\" Department\nDepartment \"1\" -- \"0..*\" Room\nRoom \"1\" -- \"0..*\" Bed\nInhabitant \"1\" -- \"0..*\" StayCategory\nStayCategory \"1\" -- \"0..*\" Proposal\nProposal \"1\" -- \"0..*\" Inhabitant\nInhabitant \"1\" -- \"0..*\" WaitingList\nWaitingList \"1\" -- \"0..*\" Proposal\nInhabitant \"1\" -- \"0..*\" Invoice\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4397,
+   "completion_tokens": 255,
+   "total_tokens": 4652,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

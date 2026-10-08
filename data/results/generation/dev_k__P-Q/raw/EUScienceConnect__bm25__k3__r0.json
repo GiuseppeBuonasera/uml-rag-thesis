@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Person {\n  + personID : int\n  + phoneNumber : string\n  + researchKeywords : string[]\n  + institutionCode : int\n}\n\nabstract class ScientificArticle {\n  + DOI : string\n  + title : string\n  + authors : Person[]\n  + authorPositions : int[]\n}\n\nclass PeerReviewedPaper extends ScientificArticle {\n  + citationCount : int\n  + reviewers : Person[]\n}\n\nclass TechnicalReport extends ScientificArticle {\n  + publisherCode : int\n}\n\nclass Publisher {\n  + name : string\n}\n\nclass Journal {\n  + name : string\n  + publisherCode : int\n  + impactFactor : float\n}\n\nPerson \"1\" -- \"0..*\" PeerReviewedPaper : author\nPerson \"1\" -- \"0..*\" TechnicalReport : author\nPeerReviewedPaper \"1\" -- \"0..*\" Person : reviewer\nTechnicalReport \"1\" -- \"1\" Publisher : publishedBy\nPublisher \"1\" *-- \"0..*\" Journal : publishes\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.435237199999392,
+ "prompt_tokens": 3627,
+ "completion_tokens": 212,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5v1gqubrjo5zna0xx1pheb",
+  "object": "chat.completion",
+  "created": 1791490770,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {\n  + personID : int\n  + phoneNumber : string\n  + researchKeywords : string[]\n  + institutionCode : int\n}\n\nabstract class ScientificArticle {\n  + DOI : string\n  + title : string\n  + authors : Person[]\n  + authorPositions : int[]\n}\n\nclass PeerReviewedPaper extends ScientificArticle {\n  + citationCount : int\n  + reviewers : Person[]\n}\n\nclass TechnicalReport extends ScientificArticle {\n  + publisherCode : int\n}\n\nclass Publisher {\n  + name : string\n}\n\nclass Journal {\n  + name : string\n  + publisherCode : int\n  + impactFactor : float\n}\n\nPerson \"1\" -- \"0..*\" PeerReviewedPaper : author\nPerson \"1\" -- \"0..*\" TechnicalReport : author\nPeerReviewedPaper \"1\" -- \"0..*\" Person : reviewer\nTechnicalReport \"1\" -- \"1\" Publisher : publishedBy\nPublisher \"1\" *-- \"0..*\" Journal : publishes\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3627,
+   "completion_tokens": 212,
+   "total_tokens": 3839,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

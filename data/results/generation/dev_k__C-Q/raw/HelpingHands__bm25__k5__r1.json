@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string?\",\n        \"+ ItemsDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ StorageSpace : int\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteId : int\",\n        \"+ PickupTime : time\",\n        \"+ Items : Item[]\"\n      ]\n    },\n    {\n      \"name\": \"Item\",\n      \"attributes\": [\n        \"+ Description : string\",\n        \"+ Category : string\",\n        \"+ Dimensions : string\",\n        \"+ Weight : double\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"FoodBank\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : string[]\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"schedules\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupVehicle\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"drives\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DistributionCenter\",\n      \"target\": \"Item\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FoodBank\",\n      \"target\": \"Item\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DistributionCenter\",\n      \"target\": \"Client\",\n      \"label\": \"contacts\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 13.372385000002396,
+ "prompt_tokens": 6106,
+ "completion_tokens": 607,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kqsuu5si8k4v07lnqekk",
+  "object": "chat.completion",
+  "created": 1791492797,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string?\",\n        \"+ ItemsDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ StorageSpace : int\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteId : int\",\n        \"+ PickupTime : time\",\n        \"+ Items : Item[]\"\n      ]\n    },\n    {\n      \"name\": \"Item\",\n      \"attributes\": [\n        \"+ Description : string\",\n        \"+ Category : string\",\n        \"+ Dimensions : string\",\n        \"+ Weight : double\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"FoodBank\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : string[]\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"schedules\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupVehicle\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"drives\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DistributionCenter\",\n      \"target\": \"Item\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FoodBank\",\n      \"target\": \"Item\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DistributionCenter\",\n      \"target\": \"Client\",\n      \"label\": \"contacts\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6106,
+   "completion_tokens": 607,
+   "total_tokens": 6713,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

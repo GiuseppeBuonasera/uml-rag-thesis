@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + dateOfBirth : date\n  + address : string\n  + taxCode : string\n}\n\nclass Broker {\n  + name : string\n  + phoneNumber : string\n  + email : string\n}\n\nclass Contract {\n  + number : int\n  + signingDate : date\n  + insuredAmount : double\n  + policyType : PolicyType\n}\n\nclass Company {}\n\nabstract class Policy {\n  + text : string\n}\n\nclass Life {}\nclass CarLiability {}\nclass Theft {}\n\nclass ClaimCase {\n  + caseNumber : int\n  + startDate : date\n  + status : ClaimStatus\n}\n\nenum PolicyType {\n  life\n  car_liability\n  theft\n}\n\nenum ClaimStatus {\n  open\n  under_review\n  approved\n  paid\n}\n\nCustomer \"1\" -- \"1..*\" Contract\nCompany -- Contract\nCompany \"1\" o-- \"1..*\" Policy\nContract \"0..*\" -- \"1\" Policy\nLife --|> Policy\nCarLiability --|> Policy\nTheft --|> Policy\n\nBroker \"1\" -- \"1..*\" Customer\nCustomer \"1\" -- \"1\" Broker\n\nCustomer \"1\" -- \"0..*\" ClaimCase\nClaimCase \"1\" -- \"*\" EstimatorReport\n\nEstimatorReport \"1\" -- \"1\" ClaimCase\n\nCompany \"1\" -- \"0..*\" ClaimCase\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.953245299999253,
+ "prompt_tokens": 4559,
+ "completion_tokens": 303,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2wrvbvmr2jam76ia7ggqf8",
+  "object": "chat.completion",
+  "created": 1791490499,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + dateOfBirth : date\n  + address : string\n  + taxCode : string\n}\n\nclass Broker {\n  + name : string\n  + phoneNumber : string\n  + email : string\n}\n\nclass Contract {\n  + number : int\n  + signingDate : date\n  + insuredAmount : double\n  + policyType : PolicyType\n}\n\nclass Company {}\n\nabstract class Policy {\n  + text : string\n}\n\nclass Life {}\nclass CarLiability {}\nclass Theft {}\n\nclass ClaimCase {\n  + caseNumber : int\n  + startDate : date\n  + status : ClaimStatus\n}\n\nenum PolicyType {\n  life\n  car_liability\n  theft\n}\n\nenum ClaimStatus {\n  open\n  under_review\n  approved\n  paid\n}\n\nCustomer \"1\" -- \"1..*\" Contract\nCompany -- Contract\nCompany \"1\" o-- \"1..*\" Policy\nContract \"0..*\" -- \"1\" Policy\nLife --|> Policy\nCarLiability --|> Policy\nTheft --|> Policy\n\nBroker \"1\" -- \"1..*\" Customer\nCustomer \"1\" -- \"1\" Broker\n\nCustomer \"1\" -- \"0..*\" ClaimCase\nClaimCase \"1\" -- \"*\" EstimatorReport\n\nEstimatorReport \"1\" -- \"1\" ClaimCase\n\nCompany \"1\" -- \"0..*\" ClaimCase\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4559,
+   "completion_tokens": 303,
+   "total_tokens": 4862,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

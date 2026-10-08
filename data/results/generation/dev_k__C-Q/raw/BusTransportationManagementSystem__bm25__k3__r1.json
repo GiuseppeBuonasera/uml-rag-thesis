@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : int\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ RouteNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Route\",\n      \"attributes\": [\n        \"+ Number : int\"\n      ]\n    },\n    {\n      \"name\": \"Shift\",\n      \"attributes\": [\n        \"+ Type : ShiftType\"\n      ]\n    },\n    {\n      \"name\": \"BusAssignment\",\n      \"attributes\": [\n        \"+ Date : date\",\n        \"+ DriverID : int\",\n        \"+ BusLicensePlateNumber : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"BusAssignment\",\n          \"target\": \"Driver\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"1\",\n          \"sourceRole\": \"driver\",\n          \"targetRole\": \"assignedTo\"\n        },\n        {\n          \"type\": \"association\",\n          \"source\": \"BusAssignment\",\n          \"target\": \"Bus\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"1\",\n          \"sourceRole\": \"bus\",\n          \"targetRole\": \"assignedTo\"\n        }\n      ]\n    },\n    {\n      \"name\": \"ShiftType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Morning\",\n        \"Afternoon\",\n        \"Night\"\n      ]\n    },\n    {\n      \"name\": \"Overview\",\n      \"attributes\": [\n        \"+ Date : date\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"Overview\",\n          \"target\": \"Route\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"0..*\",\n          \"sourceRole\": \"route\",\n          \"targetRole\": \"hasAssignments\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Status\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Active\",\n        \"OnSickLeave\",\n        \"InRepairShop\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Overview\",\n      \"parent\": \"BusAssignment\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Status\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"driver\",\n      \"targetRole\": \"status\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Status\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"bus\",\n      \"targetRole\": \"status\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 18.753718100000697,
+ "prompt_tokens": 4827,
+ "completion_tokens": 613,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-jxkbx2vibth3j3oemzk1sa",
+  "object": "chat.completion",
+  "created": 1791491846,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : int\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ RouteNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Route\",\n      \"attributes\": [\n        \"+ Number : int\"\n      ]\n    },\n    {\n      \"name\": \"Shift\",\n      \"attributes\": [\n        \"+ Type : ShiftType\"\n      ]\n    },\n    {\n      \"name\": \"BusAssignment\",\n      \"attributes\": [\n        \"+ Date : date\",\n        \"+ DriverID : int\",\n        \"+ BusLicensePlateNumber : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"BusAssignment\",\n          \"target\": \"Driver\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"1\",\n          \"sourceRole\": \"driver\",\n          \"targetRole\": \"assignedTo\"\n        },\n        {\n          \"type\": \"association\",\n          \"source\": \"BusAssignment\",\n          \"target\": \"Bus\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"1\",\n          \"sourceRole\": \"bus\",\n          \"targetRole\": \"assignedTo\"\n        }\n      ]\n    },\n    {\n      \"name\": \"ShiftType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Morning\",\n        \"Afternoon\",\n        \"Night\"\n      ]\n    },\n    {\n      \"name\": \"Overview\",\n      \"attributes\": [\n        \"+ Date : date\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"Overview\",\n          \"target\": \"Route\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"0..*\",\n          \"sourceRole\": \"route\",\n          \"targetRole\": \"hasAssignments\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Status\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Active\",\n        \"OnSickLeave\",\n        \"InRepairShop\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Overview\",\n      \"parent\": \"BusAssignment\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Status\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"driver\",\n      \"targetRole\": \"status\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Status\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"bus\",\n      \"targetRole\": \"status\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4827,
+   "completion_tokens": 613,
+   "total_tokens": 5440,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

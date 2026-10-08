@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"EBike\",\n      \"attributes\": [\n        \"+ frameMaterial : string\",\n        \"+ batteryEnergy : int\",\n        \"+ controllerState : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ connectBattery(battery : Battery)\",\n        \"+ disconnectBattery()\",\n        \"+ getBatteryEnergy() : int\",\n        \"+ setControllerState(state : ControllerState)\"\n      ]\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ],\n      \"methods\": [\n        \"+ installWheels(wheel1 : Wheel, wheel2 : Wheel)\"\n      ]\n    },\n    {\n      \"name\": \"Wheel\",\n      \"attributes\": [],\n      \"methods\": []\n    },\n    {\n      \"name\": \"DriveSystem\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ commandMotor()\"\n      ]\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ energy : int\"\n      ],\n      \"methods\": [\n        \"+ charge(energy : int)\",\n        \"+ discharge(amount : int)\"\n      ]\n    },\n    {\n      \"name\": \"Controller\",\n      \"kind\": \"abstract\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ controlBattery(battery : Battery)\",\n        \"+ commandDriveSystem()\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"parent\": \"Controller\",\n      \"attributes\": [\n        \"+ nextInspectionDate : date\"\n      ],\n      \"methods\": [\n        \"+ estimateNextInspection()\"\n      ]\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\",\n      \"partRole\": \"frame\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\",\n      \"partRole\": \"driveSystem\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EBike\",\n      \"target\": \"Battery\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"battery\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Frame\",\n      \"part\": \"Wheel\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2\",\n      \"partRole\": \"wheels\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvancedController\",\n      \"parent\": \"Controller\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 17.437821300001815,
+ "prompt_tokens": 4327,
+ "completion_tokens": 663,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-n12o6ovi077s0wg4n6l8j",
+  "object": "chat.completion",
+  "created": 1791492076,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"EBike\",\n      \"attributes\": [\n        \"+ frameMaterial : string\",\n        \"+ batteryEnergy : int\",\n        \"+ controllerState : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ connectBattery(battery : Battery)\",\n        \"+ disconnectBattery()\",\n        \"+ getBatteryEnergy() : int\",\n        \"+ setControllerState(state : ControllerState)\"\n      ]\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ],\n      \"methods\": [\n        \"+ installWheels(wheel1 : Wheel, wheel2 : Wheel)\"\n      ]\n    },\n    {\n      \"name\": \"Wheel\",\n      \"attributes\": [],\n      \"methods\": []\n    },\n    {\n      \"name\": \"DriveSystem\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ commandMotor()\"\n      ]\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ energy : int\"\n      ],\n      \"methods\": [\n        \"+ charge(energy : int)\",\n        \"+ discharge(amount : int)\"\n      ]\n    },\n    {\n      \"name\": \"Controller\",\n      \"kind\": \"abstract\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ controlBattery(battery : Battery)\",\n        \"+ commandDriveSystem()\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"parent\": \"Controller\",\n      \"attributes\": [\n        \"+ nextInspectionDate : date\"\n      ],\n      \"methods\": [\n        \"+ estimateNextInspection()\"\n      ]\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\",\n      \"partRole\": \"frame\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\",\n      \"partRole\": \"driveSystem\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EBike\",\n      \"target\": \"Battery\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"battery\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Frame\",\n      \"part\": \"Wheel\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2\",\n      \"partRole\": \"wheels\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvancedController\",\n      \"parent\": \"Controller\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4327,
+   "completion_tokens": 663,
+   "total_tokens": 4990,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

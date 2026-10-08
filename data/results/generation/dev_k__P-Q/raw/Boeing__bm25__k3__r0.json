@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Airline {\n  + Name : string\n}\n\nclass Employee {\n  + Name : string\n  + StartDate : date\n}\n\nclass BoeingSalesperson {\n  + SalesId : int\n}\n\nclass AircraftModel {\n  + ModelName : string\n  + Description : string\n}\n\nclass Contract {\n  + ContractNumber : int\n  + DeliveryConditions : string\n  + LegalAspects : string\n}\n\nclass Acquisition {\n  + AcquisitionId : int\n  + Model : AircraftModel\n  + Price : double\n  + Options : string[]\n  + Customizations : string[]\n  + DeliveryDate : date\n}\n\nclass SalesAgreement {\n  + AgreementNumber : int\n  + Contract : Contract\n  + Acquisitions : Acquisition[]\n}\n\nAirline \"0..1\" -- \"0..*\" Employee\nAirline \"0..1\" o-- \"0..*\" BoeingSalesperson\nBoeingSalesperson \"0..*\" -- \"0..*\" SalesAgreement\nSalesAgreement \"1\" -- \"1\" Contract\nContract \"1\" -- \"*\" Acquisition\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.152894300001208,
+ "prompt_tokens": 3103,
+ "completion_tokens": 230,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-92gxw6whiv613dy6b3kyy",
+  "object": "chat.completion",
+  "created": 1791490532,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Airline {\n  + Name : string\n}\n\nclass Employee {\n  + Name : string\n  + StartDate : date\n}\n\nclass BoeingSalesperson {\n  + SalesId : int\n}\n\nclass AircraftModel {\n  + ModelName : string\n  + Description : string\n}\n\nclass Contract {\n  + ContractNumber : int\n  + DeliveryConditions : string\n  + LegalAspects : string\n}\n\nclass Acquisition {\n  + AcquisitionId : int\n  + Model : AircraftModel\n  + Price : double\n  + Options : string[]\n  + Customizations : string[]\n  + DeliveryDate : date\n}\n\nclass SalesAgreement {\n  + AgreementNumber : int\n  + Contract : Contract\n  + Acquisitions : Acquisition[]\n}\n\nAirline \"0..1\" -- \"0..*\" Employee\nAirline \"0..1\" o-- \"0..*\" BoeingSalesperson\nBoeingSalesperson \"0..*\" -- \"0..*\" SalesAgreement\nSalesAgreement \"1\" -- \"1\" Contract\nContract \"1\" -- \"*\" Acquisition\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3103,
+   "completion_tokens": 230,
+   "total_tokens": 3333,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

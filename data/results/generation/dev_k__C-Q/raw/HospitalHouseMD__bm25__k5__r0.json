@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ PatientID : int\",\n        \"+ Symptoms : string[]\",\n        \"+ PriorityScore : string\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ DoctorID : int\",\n        \"+ Name : string\",\n        \"+ Specialization : string\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ DiagnosisID : int\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentPlan\",\n      \"attributes\": [\n        \"+ TreatmentPlanID : int\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"AdvisedTreatment\",\n      \"attributes\": [\n        \"+ TreatmentID : int\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ ConsentID : int\",\n        \"+ PatientID : int\",\n        \"+ DoctorID : int\",\n        \"+ Stage : string\",\n        \"+ DateSigned : datetime\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentStage\",\n      \"kind\": \"enum\",\n      \"values\": [\"Stage1\", \"Stage2\", \"Stage3\"]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Hospital\",\n      \"part\": \"Patient\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Hospital\",\n      \"part\": \"Doctor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"PrescribingDoctor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"AdvisedTreatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"ConsentForm\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ConsentForm\",\n      \"target\": \"TreatmentStage\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 17.962415300004068,
+ "prompt_tokens": 6378,
+ "completion_tokens": 673,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3g3nc8un90xznndpvgt4pp",
+  "object": "chat.completion",
+  "created": 1791493076,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ PatientID : int\",\n        \"+ Symptoms : string[]\",\n        \"+ PriorityScore : string\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ DoctorID : int\",\n        \"+ Name : string\",\n        \"+ Specialization : string\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ DiagnosisID : int\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentPlan\",\n      \"attributes\": [\n        \"+ TreatmentPlanID : int\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"AdvisedTreatment\",\n      \"attributes\": [\n        \"+ TreatmentID : int\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ ConsentID : int\",\n        \"+ PatientID : int\",\n        \"+ DoctorID : int\",\n        \"+ Stage : string\",\n        \"+ DateSigned : datetime\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentStage\",\n      \"kind\": \"enum\",\n      \"values\": [\"Stage1\", \"Stage2\", \"Stage3\"]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Hospital\",\n      \"part\": \"Patient\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Hospital\",\n      \"part\": \"Doctor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"PrescribingDoctor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"AdvisedTreatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"ConsentForm\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ConsentForm\",\n      \"target\": \"TreatmentStage\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6378,
+   "completion_tokens": 673,
+   "total_tokens": 7051,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

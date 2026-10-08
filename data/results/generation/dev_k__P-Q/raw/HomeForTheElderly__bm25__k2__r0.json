@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + Number : int\n}\n\nclass Bed {\n  + Category : string\n  + Price : double\n}\n\nclass Inhabitant {\n  + Name : string\n  + RegistrationDate : date\n}\n\nclass StayCategory {\n  + Type : string\n  + Price : double\n}\n\nclass RegistrationProcess {\n  + Questions : list[string]\n}\n\nclass Assessment {\n  + Needs : map[string, int]\n  + RecommendedStay : StayCategory\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + Date : date\n  + Accepted : boolean\n}\n\nclass Invoice {\n  + Number : int\n  + Total : double\n  + OutstandingAmount : double\n  + Status : string\n}\n\nclass PaymentEvent {}\n\nHome \"1\" -- \"0..*\" Department\nDepartment \"1\" -- \"0..*\" Room\nRoom \"1\" -- \"0..*\" Bed\nInhabitant \"1\" -- \"0..*\" StayCategory\nInhabitant \"1\" -- \"0..*\" RegistrationProcess\nRegistrationProcess \"1\" -- \"0..*\" Assessment\nAssessment \"1\" -- \"0..*\" WaitingList\nWaitingList \"1\" -- \"0..*\" Proposal\nProposal \"1\" -- \"0..*\" Inhabitant\nInhabitant \"1\" -- \"0..*\" Invoice\nInvoice \"1\" -- \"0..*\" PaymentEvent\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.394829500000924,
+ "prompt_tokens": 3721,
+ "completion_tokens": 318,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5pi3hvz4p9oivm8b8ffi58",
+  "object": "chat.completion",
+  "created": 1791490974,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + Number : int\n}\n\nclass Bed {\n  + Category : string\n  + Price : double\n}\n\nclass Inhabitant {\n  + Name : string\n  + RegistrationDate : date\n}\n\nclass StayCategory {\n  + Type : string\n  + Price : double\n}\n\nclass RegistrationProcess {\n  + Questions : list[string]\n}\n\nclass Assessment {\n  + Needs : map[string, int]\n  + RecommendedStay : StayCategory\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + Date : date\n  + Accepted : boolean\n}\n\nclass Invoice {\n  + Number : int\n  + Total : double\n  + OutstandingAmount : double\n  + Status : string\n}\n\nclass PaymentEvent {}\n\nHome \"1\" -- \"0..*\" Department\nDepartment \"1\" -- \"0..*\" Room\nRoom \"1\" -- \"0..*\" Bed\nInhabitant \"1\" -- \"0..*\" StayCategory\nInhabitant \"1\" -- \"0..*\" RegistrationProcess\nRegistrationProcess \"1\" -- \"0..*\" Assessment\nAssessment \"1\" -- \"0..*\" WaitingList\nWaitingList \"1\" -- \"0..*\" Proposal\nProposal \"1\" -- \"0..*\" Inhabitant\nInhabitant \"1\" -- \"0..*\" Invoice\nInvoice \"1\" -- \"0..*\" PaymentEvent\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3721,
+   "completion_tokens": 318,
+   "total_tokens": 4039,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

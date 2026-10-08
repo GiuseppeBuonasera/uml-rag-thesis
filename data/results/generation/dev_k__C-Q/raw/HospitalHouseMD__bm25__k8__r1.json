@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ symptoms : string[]\",\n        \"+ priorityScore : PriorityScore\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ isHeadDoctor : boolean\"\n      ],\n      \"methods\": [\n        \"+ approveDiagnosis(diagnosis : Diagnosis) : void\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ description : string\",\n        \"+ priorityScore : PriorityScore\"\n      ],\n      \"methods\": [\n        \"+ updatePriorityScore(newScore : PriorityScore) : void\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentPlan\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ treatmentName : string\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ illness : Illness\",\n        \"+ doctor : Doctor\"\n      ],\n      \"methods\": [\n        \"+ applyTreatmentPlan(plan : TreatmentPlan) : void\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ patient : Patient\",\n        \"+ diagnosis : Diagnosis\",\n        \"+ stage : TreatmentStage\",\n        \"+ consentGiven : boolean\"\n      ],\n      \"methods\": [\n        \"+ upgradeToNextStage() : void\",\n        \"+ downgradeToPreviousStage() : void\"\n      ]\n    },\n    {\n      \"name\": \"PriorityScore\",\n      \"kind\": \"enum\",\n      \"values\": [\"High\", \"Low\"]\n    },\n    {\n      \"name\": \"TreatmentStage\",\n      \"kind\": \"enum\",\n      \"values\": [\"Stage1\", \"Stage2\", \"Stage3\"]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Hospital\",\n      \"part\": \"Patient\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Doctor\",\n      \"part\": \"Diagnosis\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Doctor\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Patient\",\n      \"parent\": \"Person\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 15.5918176999985,
+ "prompt_tokens": 9591,
+ "completion_tokens": 654,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-61c895m082u6xir5bh6ajj",
+  "object": "chat.completion",
+  "created": 1791493132,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ symptoms : string[]\",\n        \"+ priorityScore : PriorityScore\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ isHeadDoctor : boolean\"\n      ],\n      \"methods\": [\n        \"+ approveDiagnosis(diagnosis : Diagnosis) : void\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ description : string\",\n        \"+ priorityScore : PriorityScore\"\n      ],\n      \"methods\": [\n        \"+ updatePriorityScore(newScore : PriorityScore) : void\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentPlan\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ treatmentName : string\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ illness : Illness\",\n        \"+ doctor : Doctor\"\n      ],\n      \"methods\": [\n        \"+ applyTreatmentPlan(plan : TreatmentPlan) : void\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ patient : Patient\",\n        \"+ diagnosis : Diagnosis\",\n        \"+ stage : TreatmentStage\",\n        \"+ consentGiven : boolean\"\n      ],\n      \"methods\": [\n        \"+ upgradeToNextStage() : void\",\n        \"+ downgradeToPreviousStage() : void\"\n      ]\n    },\n    {\n      \"name\": \"PriorityScore\",\n      \"kind\": \"enum\",\n      \"values\": [\"High\", \"Low\"]\n    },\n    {\n      \"name\": \"TreatmentStage\",\n      \"kind\": \"enum\",\n      \"values\": [\"Stage1\", \"Stage2\", \"Stage3\"]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Hospital\",\n      \"part\": \"Patient\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Doctor\",\n      \"part\": \"Diagnosis\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Doctor\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Patient\",\n      \"parent\": \"Person\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 9591,
+   "completion_tokens": 654,
+   "total_tokens": 10245,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

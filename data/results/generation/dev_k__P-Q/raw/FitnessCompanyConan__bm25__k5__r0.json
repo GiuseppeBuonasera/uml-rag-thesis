@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Person {\n  + firstName : string\n  + familyName : string\n  + birthDate : date\n}\n\nabstract class Role {}\n\nclass Member {}\nclass Trainer {}\n\nclass FitnessCenter {\n  + name : string\n  + address : string\n}\n\nclass Room {\n  + roomNumber : int\n  + maxCapacity : int\n}\n\nclass Session {\n  + sessionDate : date\n  + startHour : time\n}\n\nclass GroupSession extends Session {\n  + type : string\n}\n\nabstract class Participation {}\n\nclass IndividualParticipation extends Participation {}\nclass GroupParticipation extends Participation {}\n\nPerson \"1\" -- \"*\" Role\nMember --|> Role\nTrainer --|> Role\n\nFitnessCenter \"0..*\" -- \"*\" Room\nRoom \"1\" *-- \"*\" Session\n\nGroupSession \"1\" -- \"1\" Trainer\nIndividualParticipation \"1\" -- \"1\" Person\nGroupParticipation \"1\" -- \"1\" GroupSession\nGroupParticipation \"1\" -- \"1\" Member\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.302787400003581,
+ "prompt_tokens": 4635,
+ "completion_tokens": 213,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gkrg9di89lm2yx9kdgemp",
+  "object": "chat.completion",
+  "created": 1791490877,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {\n  + firstName : string\n  + familyName : string\n  + birthDate : date\n}\n\nabstract class Role {}\n\nclass Member {}\nclass Trainer {}\n\nclass FitnessCenter {\n  + name : string\n  + address : string\n}\n\nclass Room {\n  + roomNumber : int\n  + maxCapacity : int\n}\n\nclass Session {\n  + sessionDate : date\n  + startHour : time\n}\n\nclass GroupSession extends Session {\n  + type : string\n}\n\nabstract class Participation {}\n\nclass IndividualParticipation extends Participation {}\nclass GroupParticipation extends Participation {}\n\nPerson \"1\" -- \"*\" Role\nMember --|> Role\nTrainer --|> Role\n\nFitnessCenter \"0..*\" -- \"*\" Room\nRoom \"1\" *-- \"*\" Session\n\nGroupSession \"1\" -- \"1\" Trainer\nIndividualParticipation \"1\" -- \"1\" Person\nGroupParticipation \"1\" -- \"1\" GroupSession\nGroupParticipation \"1\" -- \"1\" Member\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4635,
+   "completion_tokens": 213,
+   "total_tokens": 4848,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

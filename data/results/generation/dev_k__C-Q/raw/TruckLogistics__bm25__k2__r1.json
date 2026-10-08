@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\"\n      ]\n    },\n    {\n      \"name\": \"VehicleType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Truck\",\n        \"Car\",\n        \"Van\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      attributes\": [\n        \"+ VehicleNumber : string\",\n        \"+ Weight : int\",\n        \"+ Seats : int\",\n        \"+ Type : VehicleType\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      attributes\": [\n        \"+ OriginLocation : Location\",\n        \"+ DestinationLocation : Location\",\n        \"+ AssignedDriver : Driver\",\n        \"+ DateOfExecution : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Location\",\n      \"part\": \"Vehicle\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"vehicles\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Location\",\n      \"part\": \"Driver\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"drivers\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Driver\",\n      \"label\": \"drivenBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Driver\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 9.840988700001617,
+ "prompt_tokens": 3514,
+ "completion_tokens": 392,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-vds26ayad1iegqybak6ql",
+  "object": "chat.completion",
+  "created": 1791493564,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\"\n      ]\n    },\n    {\n      \"name\": \"VehicleType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Truck\",\n        \"Car\",\n        \"Van\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      attributes\": [\n        \"+ VehicleNumber : string\",\n        \"+ Weight : int\",\n        \"+ Seats : int\",\n        \"+ Type : VehicleType\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      attributes\": [\n        \"+ OriginLocation : Location\",\n        \"+ DestinationLocation : Location\",\n        \"+ AssignedDriver : Driver\",\n        \"+ DateOfExecution : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Location\",\n      \"part\": \"Vehicle\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"vehicles\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Location\",\n      \"part\": \"Driver\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"drivers\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Driver\",\n      \"label\": \"drivenBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Driver\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3514,
+   "completion_tokens": 392,
+   "total_tokens": 3906,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

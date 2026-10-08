@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bettor {\n  + name : string\n  + id : int\n}\n\nclass Jockey {\n  + name : string\n  + id : int\n}\n\nclass Horse {\n  + name : string\n  + id : int\n}\n\nclass Race {\n  + id : int\n  + winner : Runner\n}\n\nclass Runner {\n  + horse : Horse\n  + jockey : Jockey\n}\n\nclass Bet {\n  + amount : double\n  + odds : double\n  + race : Race\n  + runner : Runner\n}\n\nBettor \"1\" -- \"*\" Bet : places\nJockey \"0..*\" -- \"1\" Horse : rides\nHorse \"1\" -- \"1\" Jockey : riddenBy\nRace \"1\" *-- \"1..*\" Runner : includes\nRunner \"1\" -- \"1\" Race : participatesIn\nBet \"1\" -- \"1\" Race : forRace\nBet \"1\" -- \"1\" Runner : onRunner\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.51415960000304,
+ "prompt_tokens": 2889,
+ "completion_tokens": 213,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-637f0ix6sg8z9l31hv94a",
+  "object": "chat.completion",
+  "created": 1791491338,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bettor {\n  + name : string\n  + id : int\n}\n\nclass Jockey {\n  + name : string\n  + id : int\n}\n\nclass Horse {\n  + name : string\n  + id : int\n}\n\nclass Race {\n  + id : int\n  + winner : Runner\n}\n\nclass Runner {\n  + horse : Horse\n  + jockey : Jockey\n}\n\nclass Bet {\n  + amount : double\n  + odds : double\n  + race : Race\n  + runner : Runner\n}\n\nBettor \"1\" -- \"*\" Bet : places\nJockey \"0..*\" -- \"1\" Horse : rides\nHorse \"1\" -- \"1\" Jockey : riddenBy\nRace \"1\" *-- \"1..*\" Runner : includes\nRunner \"1\" -- \"1\" Race : participatesIn\nBet \"1\" -- \"1\" Race : forRace\nBet \"1\" -- \"1\" Runner : onRunner\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2889,
+   "completion_tokens": 213,
+   "total_tokens": 3102,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + UserID : int\n  + Name : string\n  + Email : string\n  + DateOfBirth : date\n}\n\nclass Account {\n  + AccountNumber : int\n  + AccountType : string\n  + MonthlyFee : double\n  + CompanyName : string\n}\n\nclass Page {\n  + PageID : int\n  + PageName : string\n  + NumberOfVisits : int\n  + BounceRate : float\n  + ClickThroughRate : float\n  + ConversionRate : float\n}\n\nUser \"1\" -- \"*\" Account\nAccount \"0..1\" -- \"1\" User\nAccount \"1\" -- \"*\" Page\nPage \"1\" -- \"1\" Account\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 5.064740300003905,
+ "prompt_tokens": 7478,
+ "completion_tokens": 155,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hwswiw8x62u3vm05rhtugj",
+  "object": "chat.completion",
+  "created": 1791490849,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + UserID : int\n  + Name : string\n  + Email : string\n  + DateOfBirth : date\n}\n\nclass Account {\n  + AccountNumber : int\n  + AccountType : string\n  + MonthlyFee : double\n  + CompanyName : string\n}\n\nclass Page {\n  + PageID : int\n  + PageName : string\n  + NumberOfVisits : int\n  + BounceRate : float\n  + ClickThroughRate : float\n  + ConversionRate : float\n}\n\nUser \"1\" -- \"*\" Account\nAccount \"0..1\" -- \"1\" User\nAccount \"1\" -- \"*\" Page\nPage \"1\" -- \"1\" Account\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7478,
+   "completion_tokens": 155,
+   "total_tokens": 7633,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

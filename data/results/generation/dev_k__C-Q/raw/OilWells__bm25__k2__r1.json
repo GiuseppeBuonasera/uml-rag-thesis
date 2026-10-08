@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Well\",\n      \"attributes\": [\n        \"+ code : string\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"Company\",\n      \"attributes\": [\n        \"+ taxCode : string\",\n        \"+ numberOfEmployees : int\"\n      ]\n    },\n    {\n      \"name\": \"OnshoreWell\",\n      \"parent\": \"Well\",\n      \"attributes\": [\n        \"+ surfaceExtension : double\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"OffshoreWell\",\n      \"parent\": \"Well\",\n      \"attributes\": [\n        \"+ yearOfInstallation : int\",\n        \"+ geographicalAreaCode : string\",\n        \"+ environmentalImportance : int\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Onshore\",\n        \"Offshore\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Well\",\n      \"target\": \"Company\",\n      \"label\": \"extractedBy\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OnshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OffshoreWell\",\n      \"parent\": \"Well\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 9.264082699999562,
+ "prompt_tokens": 3076,
+ "completion_tokens": 352,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7yhak6rzodsvrn58s5hwm",
+  "object": "chat.completion",
+  "created": 1791493866,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Well\",\n      \"attributes\": [\n        \"+ code : string\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"Company\",\n      \"attributes\": [\n        \"+ taxCode : string\",\n        \"+ numberOfEmployees : int\"\n      ]\n    },\n    {\n      \"name\": \"OnshoreWell\",\n      \"parent\": \"Well\",\n      \"attributes\": [\n        \"+ surfaceExtension : double\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"OffshoreWell\",\n      \"parent\": \"Well\",\n      \"attributes\": [\n        \"+ yearOfInstallation : int\",\n        \"+ geographicalAreaCode : string\",\n        \"+ environmentalImportance : int\"\n      ],\n      \"methods\": [\n        \"+ pollutionRate() : double\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Onshore\",\n        \"Offshore\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Well\",\n      \"target\": \"Company\",\n      \"label\": \"extractedBy\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OnshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OffshoreWell\",\n      \"parent\": \"Well\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3076,
+   "completion_tokens": 352,
+   "total_tokens": 3428,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

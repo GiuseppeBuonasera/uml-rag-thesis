@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass EBike {\n  + frame : Frame\n  + wheels : Wheel[]\n  + driveSystem : DriveSystem\n  + controller : Controller\n}\n\nclass Frame {\n  - material : string\n}\n\nclass Wheel {\n  - diameter : double\n}\n\nclass DriveSystem {\n  + motor : Motor\n}\n\nclass Motor {\n  - power : double\n}\n\nclass Battery {\n  - energy : double\n}\n\nclass Controller {\n  + state : String\n  + connectBattery(battery : Battery) : void\n  + disconnectBattery() : void\n  + commandDriveSystem() : void\n}\n\nabstract class AdvancedController extends Controller {\n  + estimateNextInspectionDate() : Date\n}\n\nenum State {\n  On\n  Off\n  Charging\n}\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 4.76960539999709,
+ "prompt_tokens": 4884,
+ "completion_tokens": 160,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0ziw0htr17kflycre59y1cd",
+  "object": "chat.completion",
+  "created": 1791490687,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass EBike {\n  + frame : Frame\n  + wheels : Wheel[]\n  + driveSystem : DriveSystem\n  + controller : Controller\n}\n\nclass Frame {\n  - material : string\n}\n\nclass Wheel {\n  - diameter : double\n}\n\nclass DriveSystem {\n  + motor : Motor\n}\n\nclass Motor {\n  - power : double\n}\n\nclass Battery {\n  - energy : double\n}\n\nclass Controller {\n  + state : String\n  + connectBattery(battery : Battery) : void\n  + disconnectBattery() : void\n  + commandDriveSystem() : void\n}\n\nabstract class AdvancedController extends Controller {\n  + estimateNextInspectionDate() : Date\n}\n\nenum State {\n  On\n  Off\n  Charging\n}\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4884,
+   "completion_tokens": 160,
+   "total_tokens": 5044,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

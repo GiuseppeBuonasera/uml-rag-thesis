@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : int\"\n      ],\n      \"methods\": [\n        \"+ isOnSickLeave() : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ LicensePlate : string\",\n        \"+ IsInRepairShop : boolean\"\n      ],\n      \"methods\": [\n        \"+ canBeAssignedToRoute() : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Route\",\n      \"attributes\": [\n        \"+ Number : int\",\n        \"+ MorningShifts : Shift[]\",\n        \"+ AfternoonShifts : Shift[]\",\n        \"+ NightShifts : Shift[]\"\n      ],\n      \"methods\": [\n        \"+ getAssignedBuses() : Bus[]\",\n        \"+ getAssignedDrivers() : Driver[]\"\n      ]\n    },\n    {\n      \"name\": \"Shift\",\n      \"attributes\": [\n        \"+ Date : date\",\n        \"+ BusDriver : Driver\"\n      ],\n      \"methods\": [\n        \"+ canBeScheduled() : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Route\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"MorningShifts\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Route\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"AfternoonShifts\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Route\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"NightShifts\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Route\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"assignedTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Shift\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"scheduledFor\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 14.372727599999052,
+ "prompt_tokens": 3910,
+ "completion_tokens": 490,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6u5o46tlevnubqe67d12xb",
+  "object": "chat.completion",
+  "created": 1791491805,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : int\"\n      ],\n      \"methods\": [\n        \"+ isOnSickLeave() : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ LicensePlate : string\",\n        \"+ IsInRepairShop : boolean\"\n      ],\n      \"methods\": [\n        \"+ canBeAssignedToRoute() : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Route\",\n      \"attributes\": [\n        \"+ Number : int\",\n        \"+ MorningShifts : Shift[]\",\n        \"+ AfternoonShifts : Shift[]\",\n        \"+ NightShifts : Shift[]\"\n      ],\n      \"methods\": [\n        \"+ getAssignedBuses() : Bus[]\",\n        \"+ getAssignedDrivers() : Driver[]\"\n      ]\n    },\n    {\n      \"name\": \"Shift\",\n      \"attributes\": [\n        \"+ Date : date\",\n        \"+ BusDriver : Driver\"\n      ],\n      \"methods\": [\n        \"+ canBeScheduled() : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Route\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"MorningShifts\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Route\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"AfternoonShifts\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Route\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"0..*\",\n      \"partRole\": \"NightShifts\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Route\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"assignedTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Shift\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"scheduledFor\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3910,
+   "completion_tokens": 490,
+   "total_tokens": 4400,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

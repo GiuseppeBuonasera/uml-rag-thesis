@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Email : string\"\n      ],\n      \"methods\": [\n        \"+ getCustomerID() : int\"\n      ]\n    },\n    {\n      \"name\": \"PolicyType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"CarLiability\",\n        \"Life\",\n        \"VariousRisks\"\n      ]\n    },\n    {\n      \"name\": \"InsurancePolicy\",\n      \"attributes\": [\n        \"+ PolicyID : int\",\n        \"+ Type : PolicyType\",\n        \"+ CoverageDetails : string\"\n      ],\n      \"methods\": [\n        \"+ getPolicyPrice() : double\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractID : int\",\n        \"+ CustomerID : int\",\n        \"+ PolicyID : int\",\n        \"+ EffectiveDate : datetime\",\n        \"+ ExpiryDate : datetime\",\n        \"+ Status : string\"\n      ],\n      \"methods\": [\n        \"+ isContractActive() : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceID : int\",\n        \"+ ContractID : int\",\n        \"+ Amount : double\",\n        \"+ DueDate : datetime\"\n      ],\n      \"methods\": [\n        \"+ generateInvoice() : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"InsurancePolicy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 12.491477899995516,
+ "prompt_tokens": 5535,
+ "completion_tokens": 429,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-bldf12ze9c50rqxwz1ufdh",
+  "object": "chat.completion",
+  "created": 1791493812,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Email : string\"\n      ],\n      \"methods\": [\n        \"+ getCustomerID() : int\"\n      ]\n    },\n    {\n      \"name\": \"PolicyType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"CarLiability\",\n        \"Life\",\n        \"VariousRisks\"\n      ]\n    },\n    {\n      \"name\": \"InsurancePolicy\",\n      \"attributes\": [\n        \"+ PolicyID : int\",\n        \"+ Type : PolicyType\",\n        \"+ CoverageDetails : string\"\n      ],\n      \"methods\": [\n        \"+ getPolicyPrice() : double\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractID : int\",\n        \"+ CustomerID : int\",\n        \"+ PolicyID : int\",\n        \"+ EffectiveDate : datetime\",\n        \"+ ExpiryDate : datetime\",\n        \"+ Status : string\"\n      ],\n      \"methods\": [\n        \"+ isContractActive() : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceID : int\",\n        \"+ ContractID : int\",\n        \"+ Amount : double\",\n        \"+ DueDate : datetime\"\n      ],\n      \"methods\": [\n        \"+ generateInvoice() : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"InsurancePolicy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5535,
+   "completion_tokens": 429,
+   "total_tokens": 5964,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

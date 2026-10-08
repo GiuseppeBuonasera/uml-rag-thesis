@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Home\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ RoomNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\n        \"+ BedNumber : int\",\n        \"+ Category : StayCategory\"\n      ]\n    },\n    {\n      \"name\": \"StayCategory\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RH\",\n        \"RNH\",\n        \"SF\"\n      ]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ RegistrationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"RegistrationProcess\",\n      \"methods\": [\n        \"+ registerPerson() : void\",\n        \"+ assessAbilities() : StayCategory\",\n        \"+ proposeStay(Inhabitant, StayCategory) : void\",\n        \"+ validateStay(Inhabitant, StayCategory) : void\"\n      ]\n    },\n    {\n      \"name\": \"WaitingList\",\n      \"methods\": [\n        \"+ addPerson(Inhabitant) : void\",\n        \"+ getHighestPriorityPerson(StayCategory) : Inhabitant\",\n        \"+ removePerson(Inhabitant) : void\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceNumber : int\",\n        \"+ TotalAmount : double\",\n        \"+ OutstandingAmount : double\",\n        \"+ Status : string\"\n      ],\n      \"methods\": [\n        \"+ updateOutstandingAmount(double) : void\",\n        \"+ markAsPaid() : void\",\n        \"+ createCreditNote() : void\"\n      ]\n    },\n    {\n      \"name\": \"PaymentEvent\",\n      \"attributes\": [\n        \"+ Amount : double\"\n      ],\n      \"methods\": [\n        \"+ registerPayment() : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Home\",\n      \"part\": \"Department\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"Room\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Bed\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Bed\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"StayCategory\",\n      \"target\": \"Invoice\",\n      \"label\": \"invoicedFor\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"WaitingList\",\n      \"label\": \"onWaitingList\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"RegistrationProcess\",\n      \"target\": \"Inhabitant\",\n      \"label\": \"registers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WaitingList\",\n      \"target\": \"RegistrationProcess\",\n      \"label\": \"uses\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Invoice\",\n      \"target\": \"PaymentEvent\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 19.916096800006926,
+ "prompt_tokens": 4148,
+ "completion_tokens": 857,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5cdzo2ot1qpxnmcq27yhpf",
+  "object": "chat.completion",
+  "created": 1791492874,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Home\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ RoomNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\n        \"+ BedNumber : int\",\n        \"+ Category : StayCategory\"\n      ]\n    },\n    {\n      \"name\": \"StayCategory\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RH\",\n        \"RNH\",\n        \"SF\"\n      ]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ RegistrationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"RegistrationProcess\",\n      \"methods\": [\n        \"+ registerPerson() : void\",\n        \"+ assessAbilities() : StayCategory\",\n        \"+ proposeStay(Inhabitant, StayCategory) : void\",\n        \"+ validateStay(Inhabitant, StayCategory) : void\"\n      ]\n    },\n    {\n      \"name\": \"WaitingList\",\n      \"methods\": [\n        \"+ addPerson(Inhabitant) : void\",\n        \"+ getHighestPriorityPerson(StayCategory) : Inhabitant\",\n        \"+ removePerson(Inhabitant) : void\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceNumber : int\",\n        \"+ TotalAmount : double\",\n        \"+ OutstandingAmount : double\",\n        \"+ Status : string\"\n      ],\n      \"methods\": [\n        \"+ updateOutstandingAmount(double) : void\",\n        \"+ markAsPaid() : void\",\n        \"+ createCreditNote() : void\"\n      ]\n    },\n    {\n      \"name\": \"PaymentEvent\",\n      \"attributes\": [\n        \"+ Amount : double\"\n      ],\n      \"methods\": [\n        \"+ registerPayment() : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Home\",\n      \"part\": \"Department\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"Room\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Bed\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Bed\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"StayCategory\",\n      \"target\": \"Invoice\",\n      \"label\": \"invoicedFor\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"WaitingList\",\n      \"label\": \"onWaitingList\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"RegistrationProcess\",\n      \"target\": \"Inhabitant\",\n      \"label\": \"registers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WaitingList\",\n      \"target\": \"RegistrationProcess\",\n      \"label\": \"uses\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Invoice\",\n      \"target\": \"PaymentEvent\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4148,
+   "completion_tokens": 857,
+   "total_tokens": 5005,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

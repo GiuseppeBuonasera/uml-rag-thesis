@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + UserID : int\n  + Name : string\n  + Address : string\n  + Birthday : date\n}\n\nabstract class Role {\n  + RoleID : int\n}\n\nclass BusinessOwner {}\nclass HungryCustomer {}\nclass Entertainer {}\n\nUser \"1\" -- \"0..*\" Role\n\nBusinessOwner --|> Role\nBusinessOwner \"0..*\" -- \"*\" PizzaRestaurant\n\nPizzaRestaurant {\n  + ZipCode : string\n  + Address : string\n  + PhoneNumber : string\n  + Website : string\n  + OpeningHours : time[]\n}\n\nPizzaRestaurant \"1\" -- \"*\" Pizza\n\nclass Pizza {\n  + Name : string\n  + CrustStructure : string\n  + Price : double\n}\n\nHungryCustomer --|> Role\nHungryCustomer \"0..*\" -- \"*\" Order\n\nOrder {\n  + OrderID : int\n  + OrderDate : datetime\n  + LatestDeliveryTime : time\n  + NumberOfPeople : int\n}\n\nEntertainmentOrder {\n  + EntertainmentType : string\n  + Duration : time\n}\n\nOrder \"1\" -- \"0..1\" EntertainmentOrder\n\nEntertainer --|> Role\nEntertainer \"0..*\" -- \"*\" Availability\n\nAvailability {\n  + Day : day\n  + PizzaRestaurantID : int\n}\n\nPizzaRestaurant \"1\" -- \"*\" Entertainer\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 8.55120899999747,
+ "prompt_tokens": 7412,
+ "completion_tokens": 288,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-m4r9j5r3s7fwe2zjjne2do",
+  "object": "chat.completion",
+  "created": 1791491233,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + UserID : int\n  + Name : string\n  + Address : string\n  + Birthday : date\n}\n\nabstract class Role {\n  + RoleID : int\n}\n\nclass BusinessOwner {}\nclass HungryCustomer {}\nclass Entertainer {}\n\nUser \"1\" -- \"0..*\" Role\n\nBusinessOwner --|> Role\nBusinessOwner \"0..*\" -- \"*\" PizzaRestaurant\n\nPizzaRestaurant {\n  + ZipCode : string\n  + Address : string\n  + PhoneNumber : string\n  + Website : string\n  + OpeningHours : time[]\n}\n\nPizzaRestaurant \"1\" -- \"*\" Pizza\n\nclass Pizza {\n  + Name : string\n  + CrustStructure : string\n  + Price : double\n}\n\nHungryCustomer --|> Role\nHungryCustomer \"0..*\" -- \"*\" Order\n\nOrder {\n  + OrderID : int\n  + OrderDate : datetime\n  + LatestDeliveryTime : time\n  + NumberOfPeople : int\n}\n\nEntertainmentOrder {\n  + EntertainmentType : string\n  + Duration : time\n}\n\nOrder \"1\" -- \"0..1\" EntertainmentOrder\n\nEntertainer --|> Role\nEntertainer \"0..*\" -- \"*\" Availability\n\nAvailability {\n  + Day : day\n  + PizzaRestaurantID : int\n}\n\nPizzaRestaurant \"1\" -- \"*\" Entertainer\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7412,
+   "completion_tokens": 288,
+   "total_tokens": 7700,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

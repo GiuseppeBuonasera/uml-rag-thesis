@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ taxCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ brokerId : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ contractNumber : int\",\n        \"+ signingDate : date\",\n        \"+ insuredAmount : double\",\n        \"+ policyType : string\",\n        \"+ coverageStartDate : date\",\n        \"+ coverageEndDate : date\",\n        \"+ paymentFrequency : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ text : string\"\n      ]\n    },\n    {\n      \"name\": \"CarLiability\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Life\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Theft\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Claim\",\n      \"attributes\": [\n        \"+ claimNumber : int\",\n        \"+ claimDate : date\",\n        \"+ description : string\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ estimatorId : int\",\n        \"+ name : string\",\n        \"+ expertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ caseNumber : int\",\n        \"+ claimDate : date\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"EstimatorReport\",\n      \"attributes\": [\n        \"+ reportId : int\",\n        \"+ estimatorId : int\",\n        \"+ claimCaseId : int\",\n        \"+ assessmentDate : date\",\n        \"+ approvalStatus : boolean\",\n        \"+ compensationDecision : string\",\n        \"+ eligibleCosts : double\"\n      ]\n    },\n    {\n      \"name\": \"Payment\",\n      \"attributes\": [\n        \"+ paymentId : int\",\n        \"+ claimNumber : int\",\n        \"+ paymentDate : date\",\n        \"+ amount : double\",\n        \"+ status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Broker\",\n      \"label\": \"hasAssignedBroker\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"label\": \"signedContracts\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Broker\",\n      \"target\": \"Customer\",\n      \"label\": \"assignedToCustomers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Policy\",\n      \"label\": \"coversPolicy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Claim\",\n      \"label\": \"filedClaims\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"ClaimCase\",\n      \"label\": \"hasCases\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Estimator\",\n      \"target\": \"EstimatorReport\",\n      \"label\": \"issuedReports\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"EstimatorReport\",\n      \"label\": \"hasReports\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"Payment\",\n      \"label\": \"receivedPayments\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 25.89937700000155,
+ "prompt_tokens": 8352,
+ "completion_tokens": 960,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-x3hnlgbeeuhfqg3ccu5uk",
+  "object": "chat.completion",
+  "created": 1791491645,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ taxCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ brokerId : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ contractNumber : int\",\n        \"+ signingDate : date\",\n        \"+ insuredAmount : double\",\n        \"+ policyType : string\",\n        \"+ coverageStartDate : date\",\n        \"+ coverageEndDate : date\",\n        \"+ paymentFrequency : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ text : string\"\n      ]\n    },\n    {\n      \"name\": \"CarLiability\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Life\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Theft\",\n      \"parent\": \"Policy\"\n    },\n    {\n      \"name\": \"Claim\",\n      \"attributes\": [\n        \"+ claimNumber : int\",\n        \"+ claimDate : date\",\n        \"+ description : string\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ estimatorId : int\",\n        \"+ name : string\",\n        \"+ expertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ caseNumber : int\",\n        \"+ claimDate : date\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"EstimatorReport\",\n      \"attributes\": [\n        \"+ reportId : int\",\n        \"+ estimatorId : int\",\n        \"+ claimCaseId : int\",\n        \"+ assessmentDate : date\",\n        \"+ approvalStatus : boolean\",\n        \"+ compensationDecision : string\",\n        \"+ eligibleCosts : double\"\n      ]\n    },\n    {\n      \"name\": \"Payment\",\n      \"attributes\": [\n        \"+ paymentId : int\",\n        \"+ claimNumber : int\",\n        \"+ paymentDate : date\",\n        \"+ amount : double\",\n        \"+ status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Broker\",\n      \"label\": \"hasAssignedBroker\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"label\": \"signedContracts\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Broker\",\n      \"target\": \"Customer\",\n      \"label\": \"assignedToCustomers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Policy\",\n      \"label\": \"coversPolicy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Claim\",\n      \"label\": \"filedClaims\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"ClaimCase\",\n      \"label\": \"hasCases\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Estimator\",\n      \"target\": \"EstimatorReport\",\n      \"label\": \"issuedReports\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"EstimatorReport\",\n      \"label\": \"hasReports\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Claim\",\n      \"target\": \"Payment\",\n      \"label\": \"receivedPayments\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8352,
+   "completion_tokens": 960,
+   "total_tokens": 9312,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

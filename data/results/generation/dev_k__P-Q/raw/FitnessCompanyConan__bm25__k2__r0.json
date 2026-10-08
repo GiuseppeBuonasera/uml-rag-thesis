@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Center {\n  + name : string\n  + address : string\n}\n\nclass Room {\n  + number : int\n  + capacity : int\n}\n\nclass Person {\n  + firstName : string\n  + familyName : string\n  + birthDate : date\n}\n\nclass Trainer {\n  + diploma : string\n}\n\nclass Prospect {}\n\nclass Intern {}\n\nabstract class Participant {}\n\nclass IndividualSession {\n  + startDate : date\n  + startHour : time\n}\n\nclass GroupSession {\n  + startDate : date\n  + startHour : time\n  + sessionType : string\n}\n\nCenter \"1\" *-- \"*\" Room\nRoom \"1\" -- \"*\" Participant\nPerson \"1\" *-- \"*\" Participant\nTrainer \"0..*\" -- \"*\" GroupSession\nProspect \"0..*\" -- \"*\"\nIntern \"0..*\" -- \"*\"\n\nIndividualSession \"0..*\" -- \"*\" Participant\nGroupSession \"0..*\" -- \"*\" Participant\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.2835450999991735,
+ "prompt_tokens": 2997,
+ "completion_tokens": 200,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7x2xs8ajnnlz242my1q0zs",
+  "object": "chat.completion",
+  "created": 1791490854,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Center {\n  + name : string\n  + address : string\n}\n\nclass Room {\n  + number : int\n  + capacity : int\n}\n\nclass Person {\n  + firstName : string\n  + familyName : string\n  + birthDate : date\n}\n\nclass Trainer {\n  + diploma : string\n}\n\nclass Prospect {}\n\nclass Intern {}\n\nabstract class Participant {}\n\nclass IndividualSession {\n  + startDate : date\n  + startHour : time\n}\n\nclass GroupSession {\n  + startDate : date\n  + startHour : time\n  + sessionType : string\n}\n\nCenter \"1\" *-- \"*\" Room\nRoom \"1\" -- \"*\" Participant\nPerson \"1\" *-- \"*\" Participant\nTrainer \"0..*\" -- \"*\" GroupSession\nProspect \"0..*\" -- \"*\"\nIntern \"0..*\" -- \"*\"\n\nIndividualSession \"0..*\" -- \"*\" Participant\nGroupSession \"0..*\" -- \"*\" Participant\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2997,
+   "completion_tokens": 200,
+   "total_tokens": 3197,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

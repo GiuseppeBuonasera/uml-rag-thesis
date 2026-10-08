@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"EBike\",\n      \"attributes\": [\n        \"+ frameMaterial : string\",\n        \"+ batteryEnergy : double\",\n        \"+ controllerState : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ connectBattery(battery : Battery)\",\n        \"+ disconnectBattery()\",\n        \"+ getRemainingRange() : double\",\n        \"+ commandDriveSystem(command : DriveCommand)\"\n      ]\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Wheel\",\n      \"attributes\": [],\n      \"methods\": []\n    },\n    {\n      \"name\": \"DriveSystem\",\n      \"attributes\": [\n        \"+ motor : Motor\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Motor\",\n      \"attributes\": [],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ energy : double\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Controller\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ state : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ controlBattery(battery : Battery)\",\n        \"+ commandDriveSystem(command : DriveCommand)\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\",\n      \"parent\": \"Controller\",\n      \"methods\": []\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"parent\": \"Controller\",\n      \"attributes\": [\n        \"+ nextInspectionDate : date\"\n      ],\n      \"methods\": [\n        \"+ estimateNextInspection()\"\n      ]\n    },\n    {\n      \"name\": \"DriveCommand\",\n      \"kind\": \"abstract\",\n      \"methods\": []\n    },\n    {\n      \"name\": \"AccelerateCommand\",\n      \"parent\": \"DriveCommand\",\n      \"attributes\": [\n        \"+ speed : int\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"BrakeCommand\",\n      \"parent\": \"DriveCommand\",\n      \"attributes\": [\n        \"+ deceleration : int\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\",\n      \"partRole\": \"frame\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"EBike\",\n      \"part\": \"Battery\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\",\n      \"partRole\": \"battery\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Frame\",\n      \"part\": \"Wheel\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2\",\n      \"partRole\": \"wheels\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\",\n      \"partRole\": \"driveSystem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvancedController\",\n      \"parent\": \"Controller\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 18.403106999998272,
+ "prompt_tokens": 4327,
+ "completion_tokens": 739,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3zj4wspuaz47gjr62ptpon",
+  "object": "chat.completion",
+  "created": 1791492094,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"EBike\",\n      \"attributes\": [\n        \"+ frameMaterial : string\",\n        \"+ batteryEnergy : double\",\n        \"+ controllerState : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ connectBattery(battery : Battery)\",\n        \"+ disconnectBattery()\",\n        \"+ getRemainingRange() : double\",\n        \"+ commandDriveSystem(command : DriveCommand)\"\n      ]\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Wheel\",\n      \"attributes\": [],\n      \"methods\": []\n    },\n    {\n      \"name\": \"DriveSystem\",\n      \"attributes\": [\n        \"+ motor : Motor\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Motor\",\n      \"attributes\": [],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ energy : double\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Controller\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ state : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ controlBattery(battery : Battery)\",\n        \"+ commandDriveSystem(command : DriveCommand)\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\",\n      \"parent\": \"Controller\",\n      \"methods\": []\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"parent\": \"Controller\",\n      \"attributes\": [\n        \"+ nextInspectionDate : date\"\n      ],\n      \"methods\": [\n        \"+ estimateNextInspection()\"\n      ]\n    },\n    {\n      \"name\": \"DriveCommand\",\n      \"kind\": \"abstract\",\n      \"methods\": []\n    },\n    {\n      \"name\": \"AccelerateCommand\",\n      \"parent\": \"DriveCommand\",\n      \"attributes\": [\n        \"+ speed : int\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"BrakeCommand\",\n      \"parent\": \"DriveCommand\",\n      \"attributes\": [\n        \"+ deceleration : int\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\",\n      \"partRole\": \"frame\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"EBike\",\n      \"part\": \"Battery\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\",\n      \"partRole\": \"battery\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Frame\",\n      \"part\": \"Wheel\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2\",\n      \"partRole\": \"wheels\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\",\n      \"partRole\": \"driveSystem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvancedController\",\n      \"parent\": \"Controller\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4327,
+   "completion_tokens": 739,
+   "total_tokens": 5066,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

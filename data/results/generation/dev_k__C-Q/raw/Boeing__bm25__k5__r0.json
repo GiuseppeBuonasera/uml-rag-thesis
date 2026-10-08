@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Aircraft\",\n      \"attributes\": [\n        \"+ Model : string\",\n        \"+ Price : double\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractNumber : int\",\n        \"+ DeliveryConditions : string\",\n        \"+ LegalAspects : string\"\n      ]\n    },\n    {\n      \"name\": \"Acquisition\",\n      \"attributes\": [\n        \"+ AcquisitionNumber : int\",\n        \"+ Model : string\",\n        \"+ Price : double\",\n        \"+ Options : string\",\n        \"+ Customizations : string\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Salesperson\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StartDate : date\"\n      ]\n    },\n    {\n      \"name\": \"BoeingSalesperson\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Salesperson\"\n    },\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"MotherAirline\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Airline\"\n    },\n    {\n      \"name\": \"DaughterAirline\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Airline\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"Acquisition\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BoeingSalesperson\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"MotherAirline\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"hasParent\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"MotherAirline\",\n      \"part\": \"DaughterAirline\",\n      \"wholeMultiplicity\": \"0..1\",\n      \"partMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 15.481233500002418,
+ "prompt_tokens": 5615,
+ "completion_tokens": 510,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-b29c1lekqm6osiukslnpq",
+  "object": "chat.completion",
+  "created": 1791491749,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Aircraft\",\n      \"attributes\": [\n        \"+ Model : string\",\n        \"+ Price : double\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractNumber : int\",\n        \"+ DeliveryConditions : string\",\n        \"+ LegalAspects : string\"\n      ]\n    },\n    {\n      \"name\": \"Acquisition\",\n      \"attributes\": [\n        \"+ AcquisitionNumber : int\",\n        \"+ Model : string\",\n        \"+ Price : double\",\n        \"+ Options : string\",\n        \"+ Customizations : string\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Salesperson\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StartDate : date\"\n      ]\n    },\n    {\n      \"name\": \"BoeingSalesperson\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Salesperson\"\n    },\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"MotherAirline\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Airline\"\n    },\n    {\n      \"name\": \"DaughterAirline\",\n      \"kind\": \"abstract\",\n      \"parent\": \"Airline\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"Acquisition\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BoeingSalesperson\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"MotherAirline\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"hasParent\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"MotherAirline\",\n      \"part\": \"DaughterAirline\",\n      \"wholeMultiplicity\": \"0..1\",\n      \"partMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5615,
+   "completion_tokens": 510,
+   "total_tokens": 6125,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

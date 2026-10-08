@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + RoomNumber : int\n}\n\nclass Bed {\n  + BedNumber : int\n  + Category : string\n}\n\nclass StayCategory {\n  + Type : string\n  + Price : double\n}\n\nclass Inhabitant {\n  + Name : string\n  + RegistrationDate : date\n}\n\nclass AssessmentResult {\n  + NeedsHelpForEating : boolean\n  + NeedsHelpForDressing : boolean\n  + NeedsPersonalCare : boolean\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + Date : date\n  + Accepted : boolean\n}\n\nclass Invoice {\n  + InvoiceNumber : int\n  + OutstandingAmount : double\n  + Paid : boolean\n}\n\nclass PaymentEvent {}\n\nHome \"1\" -- \"*\" Department\nDepartment \"1\" -- \"*\" Room\nRoom \"1\" -- \"*\" Bed\nStayCategory \"1\" -- \"*\" Inhabitant\nInhabitant \"1\" -- \"*\" AssessmentResult\nAssessmentResult \"1\" -- \"*\" StayCategory\nInhabitant \"0..*\" -- \"*\" WaitingList\nWaitingList \"0..*\" -- \"*\" Proposal\nProposal \"1\" -- \"1\" Inhabitant\nInvoice \"1\" -- \"1\" Inhabitant\nInhabitant \"0..*\" -- \"0..*\" Invoice\nInvoice \"1\" -- \"0..*\" PaymentEvent\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.688368199997058,
+ "prompt_tokens": 8925,
+ "completion_tokens": 308,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6qwa2sw3i8op7elzesf2oo",
+  "object": "chat.completion",
+  "created": 1791491020,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + RoomNumber : int\n}\n\nclass Bed {\n  + BedNumber : int\n  + Category : string\n}\n\nclass StayCategory {\n  + Type : string\n  + Price : double\n}\n\nclass Inhabitant {\n  + Name : string\n  + RegistrationDate : date\n}\n\nclass AssessmentResult {\n  + NeedsHelpForEating : boolean\n  + NeedsHelpForDressing : boolean\n  + NeedsPersonalCare : boolean\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + Date : date\n  + Accepted : boolean\n}\n\nclass Invoice {\n  + InvoiceNumber : int\n  + OutstandingAmount : double\n  + Paid : boolean\n}\n\nclass PaymentEvent {}\n\nHome \"1\" -- \"*\" Department\nDepartment \"1\" -- \"*\" Room\nRoom \"1\" -- \"*\" Bed\nStayCategory \"1\" -- \"*\" Inhabitant\nInhabitant \"1\" -- \"*\" AssessmentResult\nAssessmentResult \"1\" -- \"*\" StayCategory\nInhabitant \"0..*\" -- \"*\" WaitingList\nWaitingList \"0..*\" -- \"*\" Proposal\nProposal \"1\" -- \"1\" Inhabitant\nInvoice \"1\" -- \"1\" Inhabitant\nInhabitant \"0..*\" -- \"0..*\" Invoice\nInvoice \"1\" -- \"0..*\" PaymentEvent\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8925,
+   "completion_tokens": 308,
+   "total_tokens": 9233,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

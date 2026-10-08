@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bus {\n  + licensePlate : string\n}\n\nclass Driver {\n  + name : string\n  + id : int\n  + onSickLeave : boolean\n}\n\nclass Route {\n  + routeNumber : int\n}\n\nclass Shift {\n  + shiftType : string\n}\n\nclass Assignment {\n  + date : date\n  + bus : Bus\n  + driver : Driver\n  + shift : Shift\n}\n\nclass Overview {\n  + routeNumber : int\n  + assignedBuses : Bus[]\n  + enteredShifts : Shift[]\n  + assignedDrivers : Driver[]\n}\n\nBus \"1\" -- \"*\" Assignment\nDriver \"1\" -- \"*\" Assignment\nRoute \"1\" -- \"*\" Assignment\nAssignment \"0..1\" -- \"1\" Overview\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 5.776945899997372,
+ "prompt_tokens": 5080,
+ "completion_tokens": 163,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-g2kwq1573v7hnc8x2dh6lg",
+  "object": "chat.completion",
+  "created": 1791490586,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bus {\n  + licensePlate : string\n}\n\nclass Driver {\n  + name : string\n  + id : int\n  + onSickLeave : boolean\n}\n\nclass Route {\n  + routeNumber : int\n}\n\nclass Shift {\n  + shiftType : string\n}\n\nclass Assignment {\n  + date : date\n  + bus : Bus\n  + driver : Driver\n  + shift : Shift\n}\n\nclass Overview {\n  + routeNumber : int\n  + assignedBuses : Bus[]\n  + enteredShifts : Shift[]\n  + assignedDrivers : Driver[]\n}\n\nBus \"1\" -- \"*\" Assignment\nDriver \"1\" -- \"*\" Assignment\nRoute \"1\" -- \"*\" Assignment\nAssignment \"0..1\" -- \"1\" Overview\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5080,
+   "completion_tokens": 163,
+   "total_tokens": 5243,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

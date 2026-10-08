@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bookmaker {\n  + name : string\n  + AcceptBets(bet: Bet) : void\n  + CalculateWinnings() : double\n}\n\nclass Bettor {\n  + id : int\n  + name : string\n  + PlaceBet(bet: Bet) : void\n}\n\nclass Race {\n  + id : int\n  + runners : Runner[]\n  + winner : Runner\n}\n\nclass Runner {\n  + id : int\n  + horseName : string\n  + jockey : Jockey\n}\n\nclass Jockey {\n  + id : int\n  + name : string\n}\n\nclass Bet {\n  + id : int\n  + bettor : Bettor\n  + race : Race\n  + runner : Runner\n  + amount : double\n  + odds : double\n}\n\nBookmaker \"1\" -- \"*\" Bettor : manages\nBettor \"0..*\" -- \"1..*\" Bet : places\nRace \"1\" -- \"*\" Runner : has\nRunner \"0..1\" -- \"1\" Jockey : riddenBy\nBet \"1\" -- \"1\" Race : refersTo\nBet \"1\" -- \"1\" Runner : on\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.155257599995821,
+ "prompt_tokens": 4710,
+ "completion_tokens": 255,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qswkvoig04lo7rjio3o61k",
+  "object": "chat.completion",
+  "created": 1791491363,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bookmaker {\n  + name : string\n  + AcceptBets(bet: Bet) : void\n  + CalculateWinnings() : double\n}\n\nclass Bettor {\n  + id : int\n  + name : string\n  + PlaceBet(bet: Bet) : void\n}\n\nclass Race {\n  + id : int\n  + runners : Runner[]\n  + winner : Runner\n}\n\nclass Runner {\n  + id : int\n  + horseName : string\n  + jockey : Jockey\n}\n\nclass Jockey {\n  + id : int\n  + name : string\n}\n\nclass Bet {\n  + id : int\n  + bettor : Bettor\n  + race : Race\n  + runner : Runner\n  + amount : double\n  + odds : double\n}\n\nBookmaker \"1\" -- \"*\" Bettor : manages\nBettor \"0..*\" -- \"1..*\" Bet : places\nRace \"1\" -- \"*\" Runner : has\nRunner \"0..1\" -- \"1\" Jockey : riddenBy\nBet \"1\" -- \"1\" Race : refersTo\nBet \"1\" -- \"1\" Runner : on\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4710,
+   "completion_tokens": 255,
+   "total_tokens": 4965,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

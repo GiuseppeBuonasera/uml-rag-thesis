@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ getDrivers() : Driver[]\",\n        \"+ getVehicles() : Vehicle[]\"\n      ]\n    },\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\"\n      ],\n      \"methods\": [\n        \"+ getOrders() : Order[]\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ VehicleNumber : string\"\n      ],\n      \"methods\": [\n        \"+ getDriver() : Driver\"\n      ]\n    },\n    {\n      \"name\": \"Truck\",\n      \"parent\": \"Vehicle\",\n      \"attributes\": [\n        \"+ Weight : int\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"parent\": \"Vehicle\",\n      \"attributes\": [\n        \"+ Seats : int\"\n      ]\n    },\n    {\n      \"name\": \"Van\",\n      \"parent\": \"Vehicle\"\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OriginLocation : Location\",\n        \"+ DestinationLocation : Location\",\n        \"+ AssignedDriver : Driver\",\n        \"+ ExecutionDate : date\"\n      ],\n      \"methods\": [\n        \"+ getVehicle() : Vehicle\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Location\",\n      \"part\": \"Driver\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"drivers\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Location\",\n      \"part\": \"Vehicle\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"vehicles\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Order\",\n      \"label\": \"carriesOut\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"assignedOrder\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Driver\",\n      \"label\": \"drivenBy\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"driver\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 15.423398399994767,
+ "prompt_tokens": 5859,
+ "completion_tokens": 504,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-44tdxzqjdnz1jym5qb9f02",
+  "object": "chat.completion",
+  "created": 1791493598,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ],\n      \"methods\": [\n        \"+ getDrivers() : Driver[]\",\n        \"+ getVehicles() : Vehicle[]\"\n      ]\n    },\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\"\n      ],\n      \"methods\": [\n        \"+ getOrders() : Order[]\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ VehicleNumber : string\"\n      ],\n      \"methods\": [\n        \"+ getDriver() : Driver\"\n      ]\n    },\n    {\n      \"name\": \"Truck\",\n      \"parent\": \"Vehicle\",\n      \"attributes\": [\n        \"+ Weight : int\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"parent\": \"Vehicle\",\n      \"attributes\": [\n        \"+ Seats : int\"\n      ]\n    },\n    {\n      \"name\": \"Van\",\n      \"parent\": \"Vehicle\"\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OriginLocation : Location\",\n        \"+ DestinationLocation : Location\",\n        \"+ AssignedDriver : Driver\",\n        \"+ ExecutionDate : date\"\n      ],\n      \"methods\": [\n        \"+ getVehicle() : Vehicle\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Location\",\n      \"part\": \"Driver\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"drivers\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Location\",\n      \"part\": \"Vehicle\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"vehicles\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Order\",\n      \"label\": \"carriesOut\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"assignedOrder\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Driver\",\n      \"label\": \"drivenBy\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"driver\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5859,
+   "completion_tokens": 504,
+   "total_tokens": 6363,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

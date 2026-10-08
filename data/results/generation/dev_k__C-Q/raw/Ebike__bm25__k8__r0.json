@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"EBike\",\n      \"attributes\": [\n        \"+ frame : Frame\",\n        \"+ driveSystem : DriveSystem\",\n        \"+ controller : Controller\"\n      ]\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ]\n    },\n    {\n      \"name\": \"DriveSystem\",\n      \"attributes\": [\n        \"+ motor : Motor\"\n      ]\n    },\n    {\n      \"name\": \"Motor\",\n      // No attributes or methods specified\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ energy : double\"\n      ]\n    },\n    {\n      \"name\": \"Controller\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ state : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ controlDriveSystem() : void\",\n        \"+ manageBattery(battery : Battery) : void\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"parent\": \"Controller\",\n      \"methods\": [\n        \"+ estimateInspectionDate() : Date\"\n      ]\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Controller\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EBike\",\n      \"target\": \"Battery\",\n      \"label\": \"connectedTo\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 17.146586899994873,
+ "prompt_tokens": 7656,
+ "completion_tokens": 485,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-p7f2eki044g7khivahvfi8",
+  "object": "chat.completion",
+  "created": 1791492145,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"EBike\",\n      \"attributes\": [\n        \"+ frame : Frame\",\n        \"+ driveSystem : DriveSystem\",\n        \"+ controller : Controller\"\n      ]\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ]\n    },\n    {\n      \"name\": \"DriveSystem\",\n      \"attributes\": [\n        \"+ motor : Motor\"\n      ]\n    },\n    {\n      \"name\": \"Motor\",\n      // No attributes or methods specified\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ energy : double\"\n      ]\n    },\n    {\n      \"name\": \"Controller\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ state : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ controlDriveSystem() : void\",\n        \"+ manageBattery(battery : Battery) : void\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"parent\": \"Controller\",\n      \"methods\": [\n        \"+ estimateInspectionDate() : Date\"\n      ]\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Controller\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EBike\",\n      \"target\": \"Battery\",\n      \"label\": \"connectedTo\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7656,
+   "completion_tokens": 485,
+   "total_tokens": 8141,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

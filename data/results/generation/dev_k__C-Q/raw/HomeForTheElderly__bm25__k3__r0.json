@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\"+ Name : string\"]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\"+ RoomNumber : int\"]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\"+ BedNumber : int\", \"+ Category : string\"]\n    },\n    {\n      \"name\": \"Category\",\n      \"attributes\": [\"+ Price : double\"]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ RegistrationDate : date\",\n        \"+ NeedsAssessmentDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Stay\",\n      \"attributes\": [\n        \"+ Type : string\",\n        \"+ StartDate : date\",\n        \"+ EndDate : date\"\n      ],\n      \"methods\": [\"+ calculateDiscount() : double\"]\n    },\n    {\n      \"name\": \"RegistrationProcess\",\n      \"methods\": [\"+ registerPerson() : void\", \"+ assessNeeds() : Stay\"]\n    },\n    {\n      \"name\": \"WaitingList\",\n      \"attributes\": [\"+ Position : int\"]\n    },\n    {\n      \"name\": \"Proposal\",\n      \"attributes\": [\n        \"+ Status : string\",\n        \"+ AcceptanceDate : date\"\n      ],\n      \"methods\": [\"+ validateStay() : void\"]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceNumber : int\",\n        \"+ TotalAmount : double\",\n        \"+ OutstandingAmount : double\"\n      ],\n      \"methods\": [\n        \"+ registerPayment(double payment) : void\",\n        \"+ sendInvoice() : void\",\n        \"+ createCreditNote(double refund) : void\"\n      ]\n    },\n    {\n      \"name\": \"DeathEvent\",\n      \"attributes\": [\"+ DateOfDeath : date\"]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"Room\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Bed\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Stay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Stay\",\n      \"target\": \"Category\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"ofType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"RegistrationProcess\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"participatesIn\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegistrationProcess\",\n      \"target\": \"WaitingList\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"creates\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Proposal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"receives\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Proposal\",\n      \"target\": \"Stay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"forType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeathEvent\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"occursFor\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 21.358346200002416,
+ "prompt_tokens": 4963,
+ "completion_tokens": 878,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8hb52k0yv9bf2hhwsv4ebs",
+  "object": "chat.completion",
+  "created": 1791492894,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\"+ Name : string\"]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\"+ RoomNumber : int\"]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\"+ BedNumber : int\", \"+ Category : string\"]\n    },\n    {\n      \"name\": \"Category\",\n      \"attributes\": [\"+ Price : double\"]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ RegistrationDate : date\",\n        \"+ NeedsAssessmentDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Stay\",\n      \"attributes\": [\n        \"+ Type : string\",\n        \"+ StartDate : date\",\n        \"+ EndDate : date\"\n      ],\n      \"methods\": [\"+ calculateDiscount() : double\"]\n    },\n    {\n      \"name\": \"RegistrationProcess\",\n      \"methods\": [\"+ registerPerson() : void\", \"+ assessNeeds() : Stay\"]\n    },\n    {\n      \"name\": \"WaitingList\",\n      \"attributes\": [\"+ Position : int\"]\n    },\n    {\n      \"name\": \"Proposal\",\n      \"attributes\": [\n        \"+ Status : string\",\n        \"+ AcceptanceDate : date\"\n      ],\n      \"methods\": [\"+ validateStay() : void\"]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceNumber : int\",\n        \"+ TotalAmount : double\",\n        \"+ OutstandingAmount : double\"\n      ],\n      \"methods\": [\n        \"+ registerPayment(double payment) : void\",\n        \"+ sendInvoice() : void\",\n        \"+ createCreditNote(double refund) : void\"\n      ]\n    },\n    {\n      \"name\": \"DeathEvent\",\n      \"attributes\": [\"+ DateOfDeath : date\"]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"Room\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Bed\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Stay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Stay\",\n      \"target\": \"Category\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"ofType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"RegistrationProcess\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"participatesIn\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegistrationProcess\",\n      \"target\": \"WaitingList\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"creates\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Proposal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"receives\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Proposal\",\n      \"target\": \"Stay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"forType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeathEvent\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"occursFor\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4963,
+   "completion_tokens": 878,
+   "total_tokens": 5841,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

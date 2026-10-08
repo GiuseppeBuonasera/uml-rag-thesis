@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bus {\n  + LicensePlateNumber : string[10]\n}\n\nclass Driver {\n  + Name : string\n  + ID : int\n  + OnSickLeave : boolean\n}\n\nclass Route {\n  + RouteNumber : int[4]\n}\n\nclass Schedule {\n  + ShiftType : string\n  + Date : date\n}\n\nclass BusOnRoute {\n  + Bus : Bus\n  + Route : Route\n  + Schedule : Schedule\n}\n\nclass RepairShop {\n  + Name : string\n  + Address : string\n}\n\nBus \"1\" -- \"*\" BusOnRoute\nDriver \"1\" -- \"*\" BusOnRoute\nRoute \"1\" -- \"*\" BusOnRoute\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 5.146352499999921,
+ "prompt_tokens": 4178,
+ "completion_tokens": 148,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-rh8nuhipfbh0vbk3i1is30n",
+  "object": "chat.completion",
+  "created": 1791490577,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bus {\n  + LicensePlateNumber : string[10]\n}\n\nclass Driver {\n  + Name : string\n  + ID : int\n  + OnSickLeave : boolean\n}\n\nclass Route {\n  + RouteNumber : int[4]\n}\n\nclass Schedule {\n  + ShiftType : string\n  + Date : date\n}\n\nclass BusOnRoute {\n  + Bus : Bus\n  + Route : Route\n  + Schedule : Schedule\n}\n\nclass RepairShop {\n  + Name : string\n  + Address : string\n}\n\nBus \"1\" -- \"*\" BusOnRoute\nDriver \"1\" -- \"*\" BusOnRoute\nRoute \"1\" -- \"*\" BusOnRoute\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4178,
+   "completion_tokens": 148,
+   "total_tokens": 4326,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

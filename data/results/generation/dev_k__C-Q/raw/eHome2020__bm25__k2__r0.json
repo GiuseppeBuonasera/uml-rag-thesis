@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ login(username: string, password: string) : boolean\",\n        \"+ querySensorValues(sensorId: int) : SensorValue[]\",\n        \"+ setThreshold(sensorId: int, threshold: double) : void\",\n        \"+ assignSensorToRoom(sensorId: int, roomId: int) : void\",\n        \"+ changeSensorDescription(sensorId: int, description: string) : void\"\n      ]\n    },\n    {\n      \"name\": \"E_Monitor\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ checkThresholds() : void\",\n        \"+ sendAlertMessages() : void\"\n      ]\n    },\n    {\n      \"name\": \"SensorValue\",\n      \"attributes\": [\n        \"+ timestamp : datetime\",\n        \"+ value : double\",\n        \"+ unit : string\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"TemperatureSensor\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ min : float\",\n        \"+ max : float\",\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : string\",\n        \"+ room : Room\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"PowerSensor\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ counterReading : long\",\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : string\",\n        \"+ room : Room\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ description : string\",\n        \"+ sensors : Sensor[]\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Apartment\",\n      \"attributes\": [\n        \"+ address : string\",\n        \"+ rooms : Room[]\",\n        \"+ inhabitants : User[]\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ username : string\",\n        \"+ password : string\",\n        \"+ isAdmin : boolean\"\n      ],\n      \"methods\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"E_Monitor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\",\n      \"partRole\": \"monitor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Apartment\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"inhabitants\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"rooms\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"sensors\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PowerSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"User\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"inhabitants\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 20.027906299997994,
+ "prompt_tokens": 4052,
+ "completion_tokens": 783,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8bt16t8x87wircklssxrg",
+  "object": "chat.completion",
+  "created": 1791492178,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ login(username: string, password: string) : boolean\",\n        \"+ querySensorValues(sensorId: int) : SensorValue[]\",\n        \"+ setThreshold(sensorId: int, threshold: double) : void\",\n        \"+ assignSensorToRoom(sensorId: int, roomId: int) : void\",\n        \"+ changeSensorDescription(sensorId: int, description: string) : void\"\n      ]\n    },\n    {\n      \"name\": \"E_Monitor\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ checkThresholds() : void\",\n        \"+ sendAlertMessages() : void\"\n      ]\n    },\n    {\n      \"name\": \"SensorValue\",\n      \"attributes\": [\n        \"+ timestamp : datetime\",\n        \"+ value : double\",\n        \"+ unit : string\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"TemperatureSensor\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ min : float\",\n        \"+ max : float\",\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : string\",\n        \"+ room : Room\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"PowerSensor\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ counterReading : long\",\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : string\",\n        \"+ room : Room\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ description : string\",\n        \"+ sensors : Sensor[]\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Apartment\",\n      \"attributes\": [\n        \"+ address : string\",\n        \"+ rooms : Room[]\",\n        \"+ inhabitants : User[]\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ username : string\",\n        \"+ password : string\",\n        \"+ isAdmin : boolean\"\n      ],\n      \"methods\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"E_Monitor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\",\n      \"partRole\": \"monitor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Apartment\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"inhabitants\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"rooms\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"sensors\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PowerSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"User\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"inhabitants\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4052,
+   "completion_tokens": 783,
+   "total_tokens": 4835,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

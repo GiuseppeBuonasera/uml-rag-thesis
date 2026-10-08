@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"PickupRequest\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string?\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ AvailableStorageSpace : int\",\n        \"+ CurrentLocation : string\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ContactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      attributes: [\n        \"+ Vehicle : PickupVehicle\",\n        \"+ Driver : VolunteerDriver?\",\n        \"+ ScheduleTime : datetime\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      attributes: [\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      attributes: [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : ArticleCategory\",\n        \"+ QualityStatus : string\"\n      ]\n    },\n    {\n      \"name\": \"ArticleCategory\",\n      kind: \"enum\",\n      values: [\n        \"BabyClothing\",\n        \"Women'sWinterBoots\",\n        \"Refrigerator\",\n        \"Microwave\",\n        // ... (other categories)\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      attributes: [\n        \"+ Name : string\",\n        \"+ ContactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryRequest\",\n      attributes: [\n        \"+ Client : Client\",\n        \"+ NeededCategories : ArticleCategory[]\",\n        \"+ PickupDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRequest\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"schedules\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupVehicle\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"drives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRoute\",\n      \"target\": \"DistributionCenter\",\n      \"label\": \"deliversTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Article\",\n      \"target\": \"DistributionCenter\",\n      \"label\": \"receivedAt\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ArticleCategory\",\n      \"target\": \"Article\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"DeliveryRequest\",\n      \"label\": \"requests\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 15.76976580000337,
+ "prompt_tokens": 3501,
+ "completion_tokens": 757,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3lf8xc5x83i9wi55qtr1uv",
+  "object": "chat.completion",
+  "created": 1791492727,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"PickupRequest\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string?\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ AvailableStorageSpace : int\",\n        \"+ CurrentLocation : string\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ContactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      attributes: [\n        \"+ Vehicle : PickupVehicle\",\n        \"+ Driver : VolunteerDriver?\",\n        \"+ ScheduleTime : datetime\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      attributes: [\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      attributes: [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : ArticleCategory\",\n        \"+ QualityStatus : string\"\n      ]\n    },\n    {\n      \"name\": \"ArticleCategory\",\n      kind: \"enum\",\n      values: [\n        \"BabyClothing\",\n        \"Women'sWinterBoots\",\n        \"Refrigerator\",\n        \"Microwave\",\n        // ... (other categories)\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      attributes: [\n        \"+ Name : string\",\n        \"+ ContactInfo : string\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryRequest\",\n      attributes: [\n        \"+ Client : Client\",\n        \"+ NeededCategories : ArticleCategory[]\",\n        \"+ PickupDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRequest\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"schedules\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupVehicle\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"drives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRoute\",\n      \"target\": \"DistributionCenter\",\n      \"label\": \"deliversTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Article\",\n      \"target\": \"DistributionCenter\",\n      \"label\": \"receivedAt\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ArticleCategory\",\n      \"target\": \"Article\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"DeliveryRequest\",\n      \"label\": \"requests\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3501,
+   "completion_tokens": 757,
+   "total_tokens": 4258,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

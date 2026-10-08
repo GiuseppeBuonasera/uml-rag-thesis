@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Person {\n  + firstName : string\n  + lastName : string\n  + birthDate : date\n}\n\nabstract class Role {}\n\nclass Trainer {\n  + diploma : string\n}\n\nclass Member {}\n\nclass ProspectiveMember {}\n\nclass Intern {}\n\nclass FitnessCenter {\n  + name : string\n  + address : string\n}\n\nclass Room {\n  + center : FitnessCenter\n  + roomNumber : int\n  + capacity : int\n}\n\nabstract class Session {\n  + startDate : date\n  + startHour : time\n}\n\nclass IndividualSession extends Session {}\n\nclass GroupSession extends Session {\n  + type : string\n}\n\nclass Participation {\n  + person : Person\n  + session : Session\n}\n\nTrainer --|> Role\nMember --|> Role\nProspectiveMember --|> Role\nIntern --|> Role\nPerson \"1\" *-- \"*\" Role\nFitnessCenter \"1\" *-- \"*\" Room\nRoom \"0..*\" -- \"*\" GroupSession\nRoom \"0..*\" -- \"*\" IndividualSession\nGroupSession \"1\" -- \"1\" Trainer\nParticipation \"*\" -- \"1\" Person\nParticipation \"*\" -- \"1\" Session\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.959150700000464,
+ "prompt_tokens": 6514,
+ "completion_tokens": 244,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qz72wqv54rwa4wsao5l7",
+  "object": "chat.completion",
+  "created": 1791490900,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {\n  + firstName : string\n  + lastName : string\n  + birthDate : date\n}\n\nabstract class Role {}\n\nclass Trainer {\n  + diploma : string\n}\n\nclass Member {}\n\nclass ProspectiveMember {}\n\nclass Intern {}\n\nclass FitnessCenter {\n  + name : string\n  + address : string\n}\n\nclass Room {\n  + center : FitnessCenter\n  + roomNumber : int\n  + capacity : int\n}\n\nabstract class Session {\n  + startDate : date\n  + startHour : time\n}\n\nclass IndividualSession extends Session {}\n\nclass GroupSession extends Session {\n  + type : string\n}\n\nclass Participation {\n  + person : Person\n  + session : Session\n}\n\nTrainer --|> Role\nMember --|> Role\nProspectiveMember --|> Role\nIntern --|> Role\nPerson \"1\" *-- \"*\" Role\nFitnessCenter \"1\" *-- \"*\" Room\nRoom \"0..*\" -- \"*\" GroupSession\nRoom \"0..*\" -- \"*\" IndividualSession\nGroupSession \"1\" -- \"1\" Trainer\nParticipation \"*\" -- \"1\" Person\nParticipation \"*\" -- \"1\" Session\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6514,
+   "completion_tokens": 244,
+   "total_tokens": 6758,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

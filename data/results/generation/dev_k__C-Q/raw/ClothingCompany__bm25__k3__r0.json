@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Description : string\",\n        \"+ NetPrice : double\",\n        \"+ Manufacturer : string\",\n        \"+ CountryOfManufacture : string\"\n      ]\n    },\n    {\n      \"name\": \"VATRate\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ Rate : double\",\n        \"+ Currency : string\",\n        \"+ ConversionToEuro : double\"\n      ]\n    },\n    {\n      \"name\": \"CountryVATRate\",\n      \"kind\": \"inheritance\",\n      \"parent\": \"VATRate\",\n      \"attributes\": [\n        \"+ CountryCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ Ssn : int\",\n        \"+ TelephoneNumber : string\",\n        \"+ EmailAddress : string\",\n        \"+ CountryReselling : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ TelephoneNumber : string\",\n        \"+ EmailAddress : string\",\n        \"+ CountriesReselling : [string]\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderId : int\",\n        \"+ Product : Product\",\n        \"+ Quantity : int\",\n        \"+ OrderDate : date\",\n        \"+ DesiredDeliveryDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"CountryVATRate\",\n      \"part\": \"Product\",\n      \"label\": \"hasProducts\",\n      \"wholeMultiplicity\": \"*\",\n      \"partMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 13.036572899996827,
+ "prompt_tokens": 4443,
+ "completion_tokens": 461,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1ia6sgm43g5qtm8zk3a8ga",
+  "object": "chat.completion",
+  "created": 1791491944,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Description : string\",\n        \"+ NetPrice : double\",\n        \"+ Manufacturer : string\",\n        \"+ CountryOfManufacture : string\"\n      ]\n    },\n    {\n      \"name\": \"VATRate\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ Rate : double\",\n        \"+ Currency : string\",\n        \"+ ConversionToEuro : double\"\n      ]\n    },\n    {\n      \"name\": \"CountryVATRate\",\n      \"kind\": \"inheritance\",\n      \"parent\": \"VATRate\",\n      \"attributes\": [\n        \"+ CountryCode : string\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ Ssn : int\",\n        \"+ TelephoneNumber : string\",\n        \"+ EmailAddress : string\",\n        \"+ CountryReselling : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ TelephoneNumber : string\",\n        \"+ EmailAddress : string\",\n        \"+ CountriesReselling : [string]\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderId : int\",\n        \"+ Product : Product\",\n        \"+ Quantity : int\",\n        \"+ OrderDate : date\",\n        \"+ DesiredDeliveryDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"CountryVATRate\",\n      \"part\": \"Product\",\n      \"label\": \"hasProducts\",\n      \"wholeMultiplicity\": \"*\",\n      \"partMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4443,
+   "completion_tokens": 461,
+   "total_tokens": 4904,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ UserID : int\",\n        \"+ Name : string\",\n        \"+ Email : string\",\n        \"+ Birthdate : date\"\n      ]\n    },\n    {\n      \"name\": \"Account\",\n      \"attributes\": [\n        \"+ AccountNumber : string\",\n        \"+ Type : string\",\n        \"+ MonthlyFee : double\"\n      ]\n    },\n    {\n      \"name\": \"BusinessAccount\",\n      \"attributes\": [\n        \"+ CompanyName : string\"\n      ],\n      \"parent\": \"Account\"\n    },\n    {\n      \"name\": \"PersonalAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"name\": \"Page\",\n      \"attributes\": [\n        \"+ PageName : string\",\n        \"+ Visits : int\"\n      ]\n    },\n    {\n      \"name\": \"AdvertisementPage\",\n      \"attributes\": [\n        \"+ BounceRate : double\",\n        \"+ ClickThroughRate : double\",\n        \"+ ConversionRate : double\"\n      ],\n      \"parent\": \"Page\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PersonalAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Account\",\n      \"part\": \"Page\",\n      \"wholeRole\": \"creates\",\n      \"partRole\": \"administratedBy\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PersonalAccount\",\n      \"target\": \"Page\",\n      \"label\": \"grantsPrivilegesTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvertisementPage\",\n      \"parent\": \"Page\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 10.978903399998671,
+ "prompt_tokens": 3759,
+ "completion_tokens": 477,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4ati05y0xanpts9xsxhb4",
+  "object": "chat.completion",
+  "created": 1791492512,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ UserID : int\",\n        \"+ Name : string\",\n        \"+ Email : string\",\n        \"+ Birthdate : date\"\n      ]\n    },\n    {\n      \"name\": \"Account\",\n      \"attributes\": [\n        \"+ AccountNumber : string\",\n        \"+ Type : string\",\n        \"+ MonthlyFee : double\"\n      ]\n    },\n    {\n      \"name\": \"BusinessAccount\",\n      \"attributes\": [\n        \"+ CompanyName : string\"\n      ],\n      \"parent\": \"Account\"\n    },\n    {\n      \"name\": \"PersonalAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"name\": \"Page\",\n      \"attributes\": [\n        \"+ PageName : string\",\n        \"+ Visits : int\"\n      ]\n    },\n    {\n      \"name\": \"AdvertisementPage\",\n      \"attributes\": [\n        \"+ BounceRate : double\",\n        \"+ ClickThroughRate : double\",\n        \"+ ConversionRate : double\"\n      ],\n      \"parent\": \"Page\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PersonalAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Account\",\n      \"part\": \"Page\",\n      \"wholeRole\": \"creates\",\n      \"partRole\": \"administratedBy\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PersonalAccount\",\n      \"target\": \"Page\",\n      \"label\": \"grantsPrivilegesTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvertisementPage\",\n      \"parent\": \"Page\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3759,
+   "completion_tokens": 477,
+   "total_tokens": 4236,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

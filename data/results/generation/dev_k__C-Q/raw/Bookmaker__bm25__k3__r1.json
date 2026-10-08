@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ],\n      \"methods\": [\n        \"+ placeBet(race: Race, runner: Runner, amount: double, odds: double) : Bet\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ winner : Runner\"\n      ],\n      \"methods\": [\n        \"+ addRunner(runner: Runner) : void\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ jockey : Jockey\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ amount : double\",\n        \"+ odds : double\",\n        \"+ result : boolean\"\n      ],\n      \"methods\": [\n        \"+ calculateWinnings() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Race\",\n      \"label\": \"places bets on\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"label\": \"has placed\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Runner\",\n      \"label\": \"includes runner\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Race\",\n      \"label\": \"refers to race\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Runner\",\n      \"label\": \"refers to runner\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 12.9553287000017,
+ "prompt_tokens": 3905,
+ "completion_tokens": 515,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-77y2bi527bf2my8agjsiu3",
+  "object": "chat.completion",
+  "created": 1791493690,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ],\n      \"methods\": [\n        \"+ placeBet(race: Race, runner: Runner, amount: double, odds: double) : Bet\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ winner : Runner\"\n      ],\n      \"methods\": [\n        \"+ addRunner(runner: Runner) : void\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ jockey : Jockey\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ amount : double\",\n        \"+ odds : double\",\n        \"+ result : boolean\"\n      ],\n      \"methods\": [\n        \"+ calculateWinnings() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Race\",\n      \"label\": \"places bets on\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"label\": \"has placed\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Runner\",\n      \"label\": \"includes runner\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Race\",\n      \"label\": \"refers to race\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Runner\",\n      \"label\": \"refers to runner\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3905,
+   "completion_tokens": 515,
+   "total_tokens": 4420,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

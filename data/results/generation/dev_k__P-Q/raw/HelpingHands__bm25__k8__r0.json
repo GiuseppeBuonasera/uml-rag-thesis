@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n}\n\nclass PickupItem {\n  + Description : string\n  + Category : string\n  + RFIDTagged : boolean\n}\n\nclass VolunteerDriver {\n  + DriverID : int\n  + AvailableDays : date[]\n}\n\nclass PickupVehicle {\n  + LicensePlateNumber : string\n  + StorageSpace : double\n}\n\nclass DistributionCenter {}\n\nclass FoodBank {}\n\nclass Client {\n  + Name : string\n  + Address : string\n  + CategoriesNeeded : string[]\n}\n\nclass DeliveryDriver {}\n\nclass PickupRoute {\n  + RouteID : int\n  + Days : date[]\n}\n\nPickupItem \"1\" -- \"*\" Resident\nVolunteerDriver \"1\" -- \"*\" PickupRoute\nPickupVehicle \"1\" -- \"*\" PickupRoute\nDistributionCenter \"1\" -- \"*\" PickupVehicle\nFoodBank \"1\" -- \"*\" PickupVehicle\nClient \"0..*\" DistributionCenter\nDeliveryDriver --|> VolunteerDriver\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.242120700000669,
+ "prompt_tokens": 7848,
+ "completion_tokens": 221,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ss259llr2q9gca8z0lzf6",
+  "object": "chat.completion",
+  "created": 1791490956,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n}\n\nclass PickupItem {\n  + Description : string\n  + Category : string\n  + RFIDTagged : boolean\n}\n\nclass VolunteerDriver {\n  + DriverID : int\n  + AvailableDays : date[]\n}\n\nclass PickupVehicle {\n  + LicensePlateNumber : string\n  + StorageSpace : double\n}\n\nclass DistributionCenter {}\n\nclass FoodBank {}\n\nclass Client {\n  + Name : string\n  + Address : string\n  + CategoriesNeeded : string[]\n}\n\nclass DeliveryDriver {}\n\nclass PickupRoute {\n  + RouteID : int\n  + Days : date[]\n}\n\nPickupItem \"1\" -- \"*\" Resident\nVolunteerDriver \"1\" -- \"*\" PickupRoute\nPickupVehicle \"1\" -- \"*\" PickupRoute\nDistributionCenter \"1\" -- \"*\" PickupVehicle\nFoodBank \"1\" -- \"*\" PickupVehicle\nClient \"0..*\" DistributionCenter\nDeliveryDriver --|> VolunteerDriver\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7848,
+   "completion_tokens": 221,
+   "total_tokens": 8069,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

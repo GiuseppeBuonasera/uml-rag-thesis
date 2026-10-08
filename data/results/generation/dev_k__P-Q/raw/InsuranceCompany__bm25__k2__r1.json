@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + Name : string\n  + Email : string\n}\n\nclass InsurancePolicy {\n  + PolicyId : int\n  + Type : string\n}\n\nclass Contract {\n  + ContractId : int\n  + Status : string\n  + EffectiveDate : date\n}\n\nCustomer \"1\" -- \"0..*\" Contract\nContract \"1\" -- \"1\" InsurancePolicy\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 3.879886800001259,
+ "prompt_tokens": 2406,
+ "completion_tokens": 87,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-imnwrrhtwxuo9jw5j8a1s",
+  "object": "chat.completion",
+  "created": 1791491389,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + Name : string\n  + Email : string\n}\n\nclass InsurancePolicy {\n  + PolicyId : int\n  + Type : string\n}\n\nclass Contract {\n  + ContractId : int\n  + Status : string\n  + EffectiveDate : date\n}\n\nCustomer \"1\" -- \"0..*\" Contract\nContract \"1\" -- \"1\" InsurancePolicy\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2406,
+   "completion_tokens": 87,
+   "total_tokens": 2493,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

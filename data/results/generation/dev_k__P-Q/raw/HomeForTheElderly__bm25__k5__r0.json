@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + RoomNumber : int\n}\n\nclass Bed {\n  + BedNumber : int\n  + Category : string\n}\n\nclass Category {\n  + Price : double\n}\n\nclass Inhabitant {\n  + Name : string\n  + RegistrationDate : date\n}\n\nclass Stay {\n  + Type : string\n  + StartDate : date\n  + EndDate : date\n}\n\nclass Invoice {\n  + InvoiceNumber : int\n  + TotalAmount : double\n  + OutstandingAmount : double\n}\n\nclass Payment {}\n\nDepartment \"1\" -- \"*\" Room\nRoom \"1\" -- \"*\" Bed\nBed \"1\" -- \"*\" Category\nInhabitant \"0..*\" -- \"*\" Stay\nStay \"1\" -- \"*\" Category\nInvoice \"1\" -- \"*\" Stay\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.680673499999102,
+ "prompt_tokens": 6344,
+ "completion_tokens": 177,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-c90hmh6tfxjg9s071uyu1",
+  "object": "chat.completion",
+  "created": 1791491005,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + RoomNumber : int\n}\n\nclass Bed {\n  + BedNumber : int\n  + Category : string\n}\n\nclass Category {\n  + Price : double\n}\n\nclass Inhabitant {\n  + Name : string\n  + RegistrationDate : date\n}\n\nclass Stay {\n  + Type : string\n  + StartDate : date\n  + EndDate : date\n}\n\nclass Invoice {\n  + InvoiceNumber : int\n  + TotalAmount : double\n  + OutstandingAmount : double\n}\n\nclass Payment {}\n\nDepartment \"1\" -- \"*\" Room\nRoom \"1\" -- \"*\" Bed\nBed \"1\" -- \"*\" Category\nInhabitant \"0..*\" -- \"*\" Stay\nStay \"1\" -- \"*\" Category\nInvoice \"1\" -- \"*\" Stay\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6344,
+   "completion_tokens": 177,
+   "total_tokens": 6521,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ personID : int\",\n        \"+ phoneNumber : string\",\n        \"+ keywords : string[]\"\n      ]\n    },\n    {\n      \"name\": \"Institution\",\n      \"attributes\": [\n        \"+ institutionCode : int\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"ScientificStaff\",\n      \"attributes\": [\n        \"+ affiliation : Institution\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"ScientificStaff\",\n          \"parent\": \"Person\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"attributes\": [\n        \"+ DOI : string\",\n        \"+ title : string\",\n        \"+ authors : Person[]\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"Article\",\n          \"parent\": \"ScientificStaff\"\n        }\n      ]\n    },\n    {\n      \"name\": \"PeerReviewedPaper\",\n      \"attributes\": [\n        \"+ citationCount : int\",\n        \"+ reviewers : Person[]\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"PeerReviewedPaper\",\n          \"parent\": \"Article\"\n        }\n      ]\n    },\n    {\n      \"name\": \"TechnicalReport\",\n      \"attributes\": [\n        \"+ publisher : Institution\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"TechnicalReport\",\n          \"parent\": \"Article\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Publisher\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Journal\",\n      \"attributes\": [\n        \"+ publisher : Publisher\",\n        \"+ name : string\",\n        \"+ impactFactor : float\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"Publisher\",\n          \"part\": \"Journal\",\n          \"wholeMultiplicity\": \"1\",\n          \"partMultiplicity\": \"0..*\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Subscription\",\n      \"attributes\": [\n        \"+ institution : Institution\",\n        \"+ journal : Journal\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"Institution\",\n          \"part\": \"Subscription\",\n          \"wholeMultiplicity\": \"1\",\n          \"partMultiplicity\": \"0..*\"\n        }\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"ScientificStaff\",\n      \"target\": \"Article\",\n      \"label\": \"writes\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"PeerReviewedPaper\",\n      \"label\": \"reviews\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Article\",\n      \"target\": \"Journal\",\n      \"label\": \"publishedIn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PeerReviewedPaper\",\n      \"target\": \"Person\",\n      \"label\": \"reviewedBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 20.559354799996072,
+ "prompt_tokens": 5555,
+ "completion_tokens": 752,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-suit1k4ap166py1xdw5p",
+  "object": "chat.completion",
+  "created": 1791492416,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ personID : int\",\n        \"+ phoneNumber : string\",\n        \"+ keywords : string[]\"\n      ]\n    },\n    {\n      \"name\": \"Institution\",\n      \"attributes\": [\n        \"+ institutionCode : int\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"ScientificStaff\",\n      \"attributes\": [\n        \"+ affiliation : Institution\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"ScientificStaff\",\n          \"parent\": \"Person\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"attributes\": [\n        \"+ DOI : string\",\n        \"+ title : string\",\n        \"+ authors : Person[]\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"Article\",\n          \"parent\": \"ScientificStaff\"\n        }\n      ]\n    },\n    {\n      \"name\": \"PeerReviewedPaper\",\n      \"attributes\": [\n        \"+ citationCount : int\",\n        \"+ reviewers : Person[]\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"PeerReviewedPaper\",\n          \"parent\": \"Article\"\n        }\n      ]\n    },\n    {\n      \"name\": \"TechnicalReport\",\n      \"attributes\": [\n        \"+ publisher : Institution\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"TechnicalReport\",\n          \"parent\": \"Article\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Publisher\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Journal\",\n      \"attributes\": [\n        \"+ publisher : Publisher\",\n        \"+ name : string\",\n        \"+ impactFactor : float\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"Publisher\",\n          \"part\": \"Journal\",\n          \"wholeMultiplicity\": \"1\",\n          \"partMultiplicity\": \"0..*\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Subscription\",\n      \"attributes\": [\n        \"+ institution : Institution\",\n        \"+ journal : Journal\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"Institution\",\n          \"part\": \"Subscription\",\n          \"wholeMultiplicity\": \"1\",\n          \"partMultiplicity\": \"0..*\"\n        }\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"ScientificStaff\",\n      \"target\": \"Article\",\n      \"label\": \"writes\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"PeerReviewedPaper\",\n      \"label\": \"reviews\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Article\",\n      \"target\": \"Journal\",\n      \"label\": \"publishedIn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PeerReviewedPaper\",\n      \"target\": \"Person\",\n      \"label\": \"reviewedBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5555,
+   "completion_tokens": 752,
+   "total_tokens": 6307,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

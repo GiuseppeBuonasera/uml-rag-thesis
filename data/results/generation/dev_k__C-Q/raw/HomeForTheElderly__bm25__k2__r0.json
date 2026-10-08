@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Home\",\n      \"attributes\": [\"+ Name : string\"]\n    },\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\"+ Name : string\"]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\"+ Number : int\"]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\"+ Category : StayCategory\", \"+ AssignedTo : Inhabitant\"]\n    },\n    {\n      \"name\": \"StayCategory\",\n      \"kind\": \"enum\",\n      \"values\": [\"RH\", \"RNH\", \"SF\"]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ RegistrationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"WaitingListEntry\",\n      \"attributes\": [\n        \"+ Inhabitant : Inhabitant\",\n        \"+ StayCategory : StayCategory\",\n        \"+ Position : int\"\n      ]\n    },\n    {\n      \"name\": \"Proposal\",\n      \"attributes\": [\n        \"+ Inhabitant : Inhabitant\",\n        \"+ Bed : Bed\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"Assessment\",\n      \"attributes\": [\n        \"+ Inhabitant : Inhabitant\",\n        \"+ Needs : [string]\",\n        \"+ RecommendedStayCategory : StayCategory\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ Number : int\",\n        \"+ Total : double\",\n        \"+ OutstandingAmount : double\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"PaymentEvent\",\n      \"attributes\": [\n        \"+ Invoice : Invoice\",\n        \"+ Amount : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Home\",\n      \"part\": \"Department\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Department\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Bed\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Bed\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Home\",\n      \"target\": \"WaitingListEntry\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WaitingListEntry\",\n      \"target\": \"Proposal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Assessment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Home\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"PaymentEvent\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.39539220000006,
+ "prompt_tokens": 4148,
+ "completion_tokens": 758,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-i8yz3m0yznrlmbobb0vlj",
+  "object": "chat.completion",
+  "created": 1791492855,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Home\",\n      \"attributes\": [\"+ Name : string\"]\n    },\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\"+ Name : string\"]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\"+ Number : int\"]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\"+ Category : StayCategory\", \"+ AssignedTo : Inhabitant\"]\n    },\n    {\n      \"name\": \"StayCategory\",\n      \"kind\": \"enum\",\n      \"values\": [\"RH\", \"RNH\", \"SF\"]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ RegistrationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"WaitingListEntry\",\n      \"attributes\": [\n        \"+ Inhabitant : Inhabitant\",\n        \"+ StayCategory : StayCategory\",\n        \"+ Position : int\"\n      ]\n    },\n    {\n      \"name\": \"Proposal\",\n      \"attributes\": [\n        \"+ Inhabitant : Inhabitant\",\n        \"+ Bed : Bed\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"Assessment\",\n      \"attributes\": [\n        \"+ Inhabitant : Inhabitant\",\n        \"+ Needs : [string]\",\n        \"+ RecommendedStayCategory : StayCategory\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ Number : int\",\n        \"+ Total : double\",\n        \"+ OutstandingAmount : double\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"PaymentEvent\",\n      \"attributes\": [\n        \"+ Invoice : Invoice\",\n        \"+ Amount : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Home\",\n      \"part\": \"Department\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Department\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Bed\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Bed\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Home\",\n      \"target\": \"WaitingListEntry\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WaitingListEntry\",\n      \"target\": \"Proposal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Assessment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Home\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"PaymentEvent\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4148,
+   "completion_tokens": 758,
+   "total_tokens": 4906,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

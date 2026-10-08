@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Horse\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ jockey : Jockey\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ runners : Horse[]\",\n        \"+ winner : Horse\"\n      ],\n      \"methods\": [\n        \"+ determineWinner() : void\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ bettor : Bettor\",\n        \"+ race : Race\",\n        \"+ runner : Horse\",\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ],\n      \"methods\": [\n        \"+ calculateWinnings() : double\"\n      ]\n    },\n    {\n      \"name\": \"Bookmaker\",\n      \"attributes\": [\n        \"+ bets : Bet[]\"\n      ],\n      \"methods\": [\n        \"+ acceptBets() : void\",\n        \"+ calculateTotalWinningsAndLosses() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Horse\",\n      \"target\": \"Jockey\",\n      \"label\": \"riddenBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Horse\",\n      \"label\": \"runners\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Bettor\",\n      \"label\": \"bettor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Race\",\n      \"label\": \"race\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Horse\",\n      \"label\": \"runner\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bookmaker\",\n      \"target\": \"Bet\",\n      \"label\": \"bets\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 14.545744200004265,
+ "prompt_tokens": 8442,
+ "completion_tokens": 585,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3b96q3mbi1xd269z2of41q",
+  "object": "chat.completion",
+  "created": 1791493753,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Horse\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ jockey : Jockey\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ runners : Horse[]\",\n        \"+ winner : Horse\"\n      ],\n      \"methods\": [\n        \"+ determineWinner() : void\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ bettor : Bettor\",\n        \"+ race : Race\",\n        \"+ runner : Horse\",\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ],\n      \"methods\": [\n        \"+ calculateWinnings() : double\"\n      ]\n    },\n    {\n      \"name\": \"Bookmaker\",\n      \"attributes\": [\n        \"+ bets : Bet[]\"\n      ],\n      \"methods\": [\n        \"+ acceptBets() : void\",\n        \"+ calculateTotalWinningsAndLosses() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Horse\",\n      \"target\": \"Jockey\",\n      \"label\": \"riddenBy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Horse\",\n      \"label\": \"runners\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Bettor\",\n      \"label\": \"bettor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Race\",\n      \"label\": \"race\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Horse\",\n      \"label\": \"runner\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bookmaker\",\n      \"target\": \"Bet\",\n      \"label\": \"bets\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8442,
+   "completion_tokens": 585,
+   "total_tokens": 9027,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

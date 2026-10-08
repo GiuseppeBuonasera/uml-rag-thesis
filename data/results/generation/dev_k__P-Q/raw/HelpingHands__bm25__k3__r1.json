@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n  + ItemsDescription : string\n}\n\nclass PickupVehicle {\n  + LicensePlateNumber : string\n  + AvailableStorageSpace : int\n}\n\nclass VolunteerDriver {\n  + Name : string\n  + DaysAvailable : string[]\n}\n\nclass DistributionCenter {\n  + Address : string\n}\n\nclass FoodBank {\n  + Address : string\n}\n\nclass SecondHandArticle {\n  + RFIDTag : string\n  + Description : string\n  + Category : ItemCategory\n}\n\nclass Client {\n  + Name : string\n  + StreetAddress : string\n  + NeededCategories : ItemCategory[]\n}\n\nclass PickupRoute {\n  + Date : date\n}\n\nclass DeliveryService {}\n\nabstract class Employee {\n  + FirstName : string\n  + LastName : string\n}\n\nclass H2SEmployee {}\n\nclass VolunteerDriver {}\n\nEmployee \"1\" -- \"*\" PickupVehicle : operates\nPickupVehicle \"0..*\" PickupRoute : follows\nVolunteerDriver \"1\" -- \"*\" PickupRoute : participatesIn\nDistributionCenter \"1\" -- \"*\" SecondHandArticle : receives\nFoodBank \"1\" -- \"*\" SecondHandArticle : receives\nH2SEmployee \"1\" -- \"*\" SecondHandArticle : examines\nH2SEmployee \"1\" -- \"*\" Client : communicatesWith\nClient \"0..*\" DeliveryService : uses\n\nenum ItemCategory {\n  BabyClothing\n  WomenWinterBoots\n  Fridge\n  Microwave\n  // ... other categories\n}\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.969000600001891,
+ "prompt_tokens": 3692,
+ "completion_tokens": 328,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-faf3qivi1aezsqdrnue5",
+  "object": "chat.completion",
+  "created": 1791490932,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n  + ItemsDescription : string\n}\n\nclass PickupVehicle {\n  + LicensePlateNumber : string\n  + AvailableStorageSpace : int\n}\n\nclass VolunteerDriver {\n  + Name : string\n  + DaysAvailable : string[]\n}\n\nclass DistributionCenter {\n  + Address : string\n}\n\nclass FoodBank {\n  + Address : string\n}\n\nclass SecondHandArticle {\n  + RFIDTag : string\n  + Description : string\n  + Category : ItemCategory\n}\n\nclass Client {\n  + Name : string\n  + StreetAddress : string\n  + NeededCategories : ItemCategory[]\n}\n\nclass PickupRoute {\n  + Date : date\n}\n\nclass DeliveryService {}\n\nabstract class Employee {\n  + FirstName : string\n  + LastName : string\n}\n\nclass H2SEmployee {}\n\nclass VolunteerDriver {}\n\nEmployee \"1\" -- \"*\" PickupVehicle : operates\nPickupVehicle \"0..*\" PickupRoute : follows\nVolunteerDriver \"1\" -- \"*\" PickupRoute : participatesIn\nDistributionCenter \"1\" -- \"*\" SecondHandArticle : receives\nFoodBank \"1\" -- \"*\" SecondHandArticle : receives\nH2SEmployee \"1\" -- \"*\" SecondHandArticle : examines\nH2SEmployee \"1\" -- \"*\" Client : communicatesWith\nClient \"0..*\" DeliveryService : uses\n\nenum ItemCategory {\n  BabyClothing\n  WomenWinterBoots\n  Fridge\n  Microwave\n  // ... other categories\n}\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3692,
+   "completion_tokens": 328,
+   "total_tokens": 4020,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

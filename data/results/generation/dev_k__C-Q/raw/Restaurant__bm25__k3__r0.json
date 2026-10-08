@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Table\",\n      \"attributes\": [\n        \"+ number : int\",\n        \"+ isSmoking : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ date : datetime\",\n        \"+ time : time\",\n        \"+ numberOfPeople : int\"\n      ],\n      \"methods\": [\n        \"+ assignTables(tables : Table[]) : void\"\n      ]\n    },\n    {\n      \"name\": \"Waiter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ yearsOfService : int\"\n      ]\n    },\n    {\n      \"name\": \"Bill\",\n      \"attributes\": [\n        \"+ totalAmount : double\"\n      ],\n      \"methods\": [\n        \"+ addDish(dish : Dish) : void\",\n        \"+ calculateTotal() : void\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ unitPrice : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Reservation\",\n      \"label\": \"makes\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Table\",\n      \"label\": \"uses\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Waiter\",\n      \"target\": \"Reservation\",\n      \"label\": \"serves\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bill\",\n      \"target\": \"Dish\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 12.138355199997022,
+ "prompt_tokens": 3929,
+ "completion_tokens": 454,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zlhmv3dcbk6u6d70mgl7",
+  "object": "chat.completion",
+  "created": 1791493968,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Table\",\n      \"attributes\": [\n        \"+ number : int\",\n        \"+ isSmoking : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ date : datetime\",\n        \"+ time : time\",\n        \"+ numberOfPeople : int\"\n      ],\n      \"methods\": [\n        \"+ assignTables(tables : Table[]) : void\"\n      ]\n    },\n    {\n      \"name\": \"Waiter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ yearsOfService : int\"\n      ]\n    },\n    {\n      \"name\": \"Bill\",\n      \"attributes\": [\n        \"+ totalAmount : double\"\n      ],\n      \"methods\": [\n        \"+ addDish(dish : Dish) : void\",\n        \"+ calculateTotal() : void\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ unitPrice : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Reservation\",\n      \"label\": \"makes\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Table\",\n      \"label\": \"uses\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Waiter\",\n      \"target\": \"Reservation\",\n      \"label\": \"serves\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bill\",\n      \"target\": \"Dish\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3929,
+   "completion_tokens": 454,
+   "total_tokens": 4383,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

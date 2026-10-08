@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Researcher {\n  + name : string\n  + surname : string\n  + RGID : int\n  + currentWP : WorkPackage\n}\n\nclass ResearchGroup {\n  + RGID : int\n  + leader : Researcher\n}\n\nclass Department {\n  + deptID : int\n}\n\nclass WorkPackage {\n  + WPID : int\n  + RGID : int\n  + leader : Researcher\n}\n\nResearcher \"1\" -- \"0..*\" WorkPackage : worksOn\n\nWorkPackage \"1\" -- \"1\" ResearchGroup : ledBy\n\nResearcher \"1\" -- \"1\" ResearchGroup : belongsTo\n\nDepartment \"1\" *-- \"1..*\" ResearchGroup : contains\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 5.739238599999226,
+ "prompt_tokens": 2807,
+ "completion_tokens": 156,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-nybn3duxzuca96m3og5r",
+  "object": "chat.completion",
+  "created": 1791491254,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Researcher {\n  + name : string\n  + surname : string\n  + RGID : int\n  + currentWP : WorkPackage\n}\n\nclass ResearchGroup {\n  + RGID : int\n  + leader : Researcher\n}\n\nclass Department {\n  + deptID : int\n}\n\nclass WorkPackage {\n  + WPID : int\n  + RGID : int\n  + leader : Researcher\n}\n\nResearcher \"1\" -- \"0..*\" WorkPackage : worksOn\n\nWorkPackage \"1\" -- \"1\" ResearchGroup : ledBy\n\nResearcher \"1\" -- \"1\" ResearchGroup : belongsTo\n\nDepartment \"1\" *-- \"1..*\" ResearchGroup : contains\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2807,
+   "completion_tokens": 156,
+   "total_tokens": 2963,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

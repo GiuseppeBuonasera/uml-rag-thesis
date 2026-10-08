@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Product {\n  + Name : string\n  + Description : string\n  + NetPrice : double\n  + Manufacturer : string\n  + CountryOfOrigin : string\n}\n\nclass VATRate {\n  + CountryCode : string\n  + Rate : double\n  + Currency : string\n  + EuroConversionRate : double\n}\n\nclass Representative {\n  + FirstName : string\n  + LastName : string\n  + Ssn : int\n  + TelephoneNumber : string\n  + EmailAddress : string\n  + ResponsibleCountry : string\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n  + TelephoneNumber : string\n  + EmailAddress : string\n  + ResellingCountries : List[string]\n}\n\nclass Order {\n  + OrderId : int\n  + Product : Product\n  + Quantity : int\n  + OrderDate : date\n  + DesiredDeliveryDate : date\n  + Representative : Representative\n}\n\nProduct \"1\" -- \"*\" VATRate\nRepresentative \"1\" -- \"*\" Customer\nCustomer \"0..*\" -- \"1\" Order\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.0994425999961095,
+ "prompt_tokens": 3893,
+ "completion_tokens": 232,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tyeac3z6zxl04kka99y72w4",
+  "object": "chat.completion",
+  "created": 1791490626,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Product {\n  + Name : string\n  + Description : string\n  + NetPrice : double\n  + Manufacturer : string\n  + CountryOfOrigin : string\n}\n\nclass VATRate {\n  + CountryCode : string\n  + Rate : double\n  + Currency : string\n  + EuroConversionRate : double\n}\n\nclass Representative {\n  + FirstName : string\n  + LastName : string\n  + Ssn : int\n  + TelephoneNumber : string\n  + EmailAddress : string\n  + ResponsibleCountry : string\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n  + TelephoneNumber : string\n  + EmailAddress : string\n  + ResellingCountries : List[string]\n}\n\nclass Order {\n  + OrderId : int\n  + Product : Product\n  + Quantity : int\n  + OrderDate : date\n  + DesiredDeliveryDate : date\n  + Representative : Representative\n}\n\nProduct \"1\" -- \"*\" VATRate\nRepresentative \"1\" -- \"*\" Customer\nCustomer \"0..*\" -- \"1\" Order\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3893,
+   "completion_tokens": 232,
+   "total_tokens": 4125,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

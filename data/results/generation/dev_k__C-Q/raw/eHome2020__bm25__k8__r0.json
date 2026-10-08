@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ login(username: string, password: string) : boolean\",\n        \"+ querySensorValues(sensorId: int) : SensorValue[]\",\n        \"+ setThreshold(sensorId: int, threshold: float) : void\",\n        \"+ assignSensorToRoom(sensorId: int, roomId: int) : void\",\n        \"+ changeSensorDescription(sensorId: int, description: string) : void\"\n      ]\n    },\n    {\n      \"name\": \"TemperatureSensor\",\n      \"attributes\": [\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : string\",\n        \"+ minValue : float\",\n        \"+ maxValue : float\"\n      ],\n      \"methods\": [\n        \"+ getMeasuredValue() : float\"\n      ]\n    },\n    {\n      \"name\": \"PowerSensor\",\n      \"attributes\": [\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : string\"\n      ],\n      \"methods\": [\n        \"+ getTotalConsumption() : float\"\n      ]\n    },\n    {\n      \"name\": \"SensorValue\",\n      \"attributes\": [\n        \"+ timestamp : datetime\",\n        \"+ value : float\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ description : string\"\n      ],\n      \"methods\": [\n        \"+ getSensorValues() : SensorValue[]\"\n      ]\n    },\n    {\n      \"name\": \"Apartment\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ getRoom(roomId: int) : Room\",\n        \"+ getInhabitants() : User[]\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ username : string\",\n        \"+ password : string\",\n        \"+ isAdmin : boolean\"\n      ],\n      \"methods\": [\n        \"+ configureSensor(sensorId: int, description: string) : void\",\n        \"+ getRoomSensors(roomId: int) : Sensor[]\"\n      ]\n    },\n    {\n      \"name\": \"E_Monitor\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ checkThresholds() : AlertMessage[]\"\n      ]\n    },\n    {\n      \"name\": \"AlertMessage\",\n      \"attributes\": [\n        \"+ sensorId : int\",\n        \"+ thresholdExceeded : boolean\",\n        \"+ emailAddress : string\"\n      ],\n      \"methods\": [\n        \"+ sendEmail() : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"TemperatureSensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"temperatureSensors\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"PowerSensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"powerSensors\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"rooms\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"SensorController\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"controller\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"sensors\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Apartment\",\n      \"target\": \"User\",\n      \"label\": \"inhabitant\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"E_Monitor\",\n      \"target\": \"SensorController\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"controller\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 23.881762199998775,
+ "prompt_tokens": 7941,
+ "completion_tokens": 913,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-604tnnei9maeoo1ukty1pc",
+  "object": "chat.completion",
+  "created": 1791492297,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ login(username: string, password: string) : boolean\",\n        \"+ querySensorValues(sensorId: int) : SensorValue[]\",\n        \"+ setThreshold(sensorId: int, threshold: float) : void\",\n        \"+ assignSensorToRoom(sensorId: int, roomId: int) : void\",\n        \"+ changeSensorDescription(sensorId: int, description: string) : void\"\n      ]\n    },\n    {\n      \"name\": \"TemperatureSensor\",\n      \"attributes\": [\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : string\",\n        \"+ minValue : float\",\n        \"+ maxValue : float\"\n      ],\n      \"methods\": [\n        \"+ getMeasuredValue() : float\"\n      ]\n    },\n    {\n      \"name\": \"PowerSensor\",\n      \"attributes\": [\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : string\"\n      ],\n      \"methods\": [\n        \"+ getTotalConsumption() : float\"\n      ]\n    },\n    {\n      \"name\": \"SensorValue\",\n      \"attributes\": [\n        \"+ timestamp : datetime\",\n        \"+ value : float\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ description : string\"\n      ],\n      \"methods\": [\n        \"+ getSensorValues() : SensorValue[]\"\n      ]\n    },\n    {\n      \"name\": \"Apartment\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ getRoom(roomId: int) : Room\",\n        \"+ getInhabitants() : User[]\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ username : string\",\n        \"+ password : string\",\n        \"+ isAdmin : boolean\"\n      ],\n      \"methods\": [\n        \"+ configureSensor(sensorId: int, description: string) : void\",\n        \"+ getRoomSensors(roomId: int) : Sensor[]\"\n      ]\n    },\n    {\n      \"name\": \"E_Monitor\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ checkThresholds() : AlertMessage[]\"\n      ]\n    },\n    {\n      \"name\": \"AlertMessage\",\n      \"attributes\": [\n        \"+ sensorId : int\",\n        \"+ thresholdExceeded : boolean\",\n        \"+ emailAddress : string\"\n      ],\n      \"methods\": [\n        \"+ sendEmail() : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"TemperatureSensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"temperatureSensors\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"PowerSensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"powerSensors\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"rooms\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"SensorController\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"controller\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"sensors\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Apartment\",\n      \"target\": \"User\",\n      \"label\": \"inhabitant\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"E_Monitor\",\n      \"target\": \"SensorController\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"controller\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7941,
+   "completion_tokens": 913,
+   "total_tokens": 8854,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

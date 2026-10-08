@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass SensorController {\n  + username : string\n  + password : string\n}\n\nclass Apartment {\n  + address : string\n  + inhabitants : User[]\n}\n\nabstract class Sensor {\n  + vendorId : int\n  + description : string\n  + unit : string\n  + room : Room\n}\n\nclass TemperatureSensor {\n  + minValue : double\n  + maxValue : double\n}\n\nclass PowerSensor {}\n\nclass Room {\n  + description : string\n}\n\nclass Value {\n  + timestamp : datetime\n  + value : float\n}\n\nclass User {\n  + username : string\n  + password : string\n  + isAdmin : boolean\n}\n\nclass EMonitor {\n  // External system to check thresholds and send alerts\n}\n\nSensorController \"1\" -- \"*\" Apartment\nApartment \"0..*\" -- \"* inhabitants\" User\nUser \"1\" -- \"*\" Sensor\nRoom \"1\" -- \"*\" Sensor\nTemperatureSensor --|> Sensor\nPowerSensor --|> Sensor\nSensor \"0..*\" -- \"*\" Value\nEMonitor ..|> SensorController\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.184525900003791,
+ "prompt_tokens": 3281,
+ "completion_tokens": 223,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hx9hab064dww1ztq2zzqgm",
+  "object": "chat.completion",
+  "created": 1791490703,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass SensorController {\n  + username : string\n  + password : string\n}\n\nclass Apartment {\n  + address : string\n  + inhabitants : User[]\n}\n\nabstract class Sensor {\n  + vendorId : int\n  + description : string\n  + unit : string\n  + room : Room\n}\n\nclass TemperatureSensor {\n  + minValue : double\n  + maxValue : double\n}\n\nclass PowerSensor {}\n\nclass Room {\n  + description : string\n}\n\nclass Value {\n  + timestamp : datetime\n  + value : float\n}\n\nclass User {\n  + username : string\n  + password : string\n  + isAdmin : boolean\n}\n\nclass EMonitor {\n  // External system to check thresholds and send alerts\n}\n\nSensorController \"1\" -- \"*\" Apartment\nApartment \"0..*\" -- \"* inhabitants\" User\nUser \"1\" -- \"*\" Sensor\nRoom \"1\" -- \"*\" Sensor\nTemperatureSensor --|> Sensor\nPowerSensor --|> Sensor\nSensor \"0..*\" -- \"*\" Value\nEMonitor ..|> SensorController\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3281,
+   "completion_tokens": 223,
+   "total_tokens": 3504,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

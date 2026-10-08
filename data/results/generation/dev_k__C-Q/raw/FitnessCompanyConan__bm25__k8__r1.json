@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"FitnessCenter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      attributes: [\n        \"+ number : int\",\n        \"+ capacity : int\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      kind: \"abstract\",\n      attributes: [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ birthDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Member\",\n      attributes: [],\n      methods: [\n        \"+ participateInSession(session : Session) : void\"\n      ]\n    },\n    {\n      \"name\": \"Trainer\",\n      attributes: [\n        \"+ diploma : string\"\n      ],\n      methods: [\n        \"+ superviseSession(session : GroupSession) : void\"\n      ]\n    },\n    {\n      \"name\": \"Prospect\",\n      kind: \"abstract\",\n      attributes: []\n    },\n    {\n      \"name\": \"Intern\",\n      kind: \"abstract\",\n      attributes: []\n    },\n    {\n      \"name\": \"Session\",\n      attributes: [\n        \"+ date : date\",\n        \"+ startHour : time\"\n      ]\n    },\n    {\n      \"name\": \"IndividualSession\",\n      kind: \"abstract\",\n      parent: \"Session\",\n      methods: [\n        \"+ register(member : Member) : void\"\n      ]\n    },\n    {\n      \"name\": \"GroupSession\",\n      kind: \"abstract\",\n      parent: \"Session\",\n      attributes: [\n        \"+ type : string\"\n      ],\n      methods: [\n        \"+ register(member : Member) : void\",\n        \"+ assignTrainer(trainer : Trainer) : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"Session\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trainer\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Member\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Prospect\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Intern\",\n      \"parent\": \"Trainer\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"IndividualSession\",\n      \"parent\": \"Session\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"GroupSession\",\n      \"parent\": \"Session\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 13.653275600001507,
+ "prompt_tokens": 7965,
+ "completion_tokens": 638,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-rz6ppa5x9mljvc5b11go0p",
+  "object": "chat.completion",
+  "created": 1791492698,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"FitnessCenter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      attributes: [\n        \"+ number : int\",\n        \"+ capacity : int\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      kind: \"abstract\",\n      attributes: [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ birthDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Member\",\n      attributes: [],\n      methods: [\n        \"+ participateInSession(session : Session) : void\"\n      ]\n    },\n    {\n      \"name\": \"Trainer\",\n      attributes: [\n        \"+ diploma : string\"\n      ],\n      methods: [\n        \"+ superviseSession(session : GroupSession) : void\"\n      ]\n    },\n    {\n      \"name\": \"Prospect\",\n      kind: \"abstract\",\n      attributes: []\n    },\n    {\n      \"name\": \"Intern\",\n      kind: \"abstract\",\n      attributes: []\n    },\n    {\n      \"name\": \"Session\",\n      attributes: [\n        \"+ date : date\",\n        \"+ startHour : time\"\n      ]\n    },\n    {\n      \"name\": \"IndividualSession\",\n      kind: \"abstract\",\n      parent: \"Session\",\n      methods: [\n        \"+ register(member : Member) : void\"\n      ]\n    },\n    {\n      \"name\": \"GroupSession\",\n      kind: \"abstract\",\n      parent: \"Session\",\n      attributes: [\n        \"+ type : string\"\n      ],\n      methods: [\n        \"+ register(member : Member) : void\",\n        \"+ assignTrainer(trainer : Trainer) : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"Session\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trainer\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Member\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Prospect\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Intern\",\n      \"parent\": \"Trainer\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"IndividualSession\",\n      \"parent\": \"Session\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"GroupSession\",\n      \"parent\": \"Session\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7965,
+   "completion_tokens": 638,
+   "total_tokens": 8603,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}
