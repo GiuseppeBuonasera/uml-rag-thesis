@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + id : int\n  + name : string\n  + address : string\n  + birthday : date\n}\n\nclass BusinessOwner {\n  + linkedInAccount : string\n}\n\nclass PizzaRestaurant {\n  + zipCode : string\n  + address : string\n  + phoneNumber : string\n  + website : string\n  + openingHours : string\n}\n\nclass Pizza {\n  + name : string\n  + crustStructure : string\n  + price : double\n}\n\nclass Order {\n  + id : int\n  + orderDateAndTime : datetime\n  + latestDeliveryTime : time\n  + numberOfPeople : int\n}\n\nclass EntertainmentOrder extends Order {\n  + entertainmentType : string\n  + duration : time\n}\n\nclass Entertainer {\n  + stageName : string\n  + bio : string\n  + pricePer30Minutes : double\n}\n\nclass RestaurantEntertainmentAvailability {\n  + day : string\n}\n\nBusinessOwner \"1\" -- \"*\" PizzaRestaurant : owns\nPizzaRestaurant \"1\" -- \"*\" Pizza : offers\nUser \"1\" -- \"1\" BusinessOwner : is\nUser \"1\" -- \"1\" Entertainer : is\nOrder \"0..*\" EntertainmentOrder : includes\nEntertainer \"1\" -- \"1\" Order : fulfills\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.486430599999949,
+ "prompt_tokens": 3313,
+ "completion_tokens": 279,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-d3d3px4eobr5ws5kqdwxb",
+  "object": "chat.completion",
+  "created": 1791464638,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + id : int\n  + name : string\n  + address : string\n  + birthday : date\n}\n\nclass BusinessOwner {\n  + linkedInAccount : string\n}\n\nclass PizzaRestaurant {\n  + zipCode : string\n  + address : string\n  + phoneNumber : string\n  + website : string\n  + openingHours : string\n}\n\nclass Pizza {\n  + name : string\n  + crustStructure : string\n  + price : double\n}\n\nclass Order {\n  + id : int\n  + orderDateAndTime : datetime\n  + latestDeliveryTime : time\n  + numberOfPeople : int\n}\n\nclass EntertainmentOrder extends Order {\n  + entertainmentType : string\n  + duration : time\n}\n\nclass Entertainer {\n  + stageName : string\n  + bio : string\n  + pricePer30Minutes : double\n}\n\nclass RestaurantEntertainmentAvailability {\n  + day : string\n}\n\nBusinessOwner \"1\" -- \"*\" PizzaRestaurant : owns\nPizzaRestaurant \"1\" -- \"*\" Pizza : offers\nUser \"1\" -- \"1\" BusinessOwner : is\nUser \"1\" -- \"1\" Entertainer : is\nOrder \"0..*\" EntertainmentOrder : includes\nEntertainer \"1\" -- \"1\" Order : fulfills\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3313,
+   "completion_tokens": 279,
+   "total_tokens": 3592,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

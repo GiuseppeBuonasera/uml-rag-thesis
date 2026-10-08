@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + dateOfBirth : date\n  + address : string\n  + taxCode : string\n}\n\nclass Broker {\n  + id : int\n  + name : string\n  + contactInfo : string\n}\n\nclass Contract {\n  + number : int\n  + signingDate : date\n  + insuredAmount : double\n  + policyType : string\n}\n\nclass Policy {\n  + text : string\n}\n\nabstract class InsurancePolicy {\n  + coverageDetails : string\n}\n\nclass LifeInsurancePolicy {}\nclass CarLiabilityPolicy {}\nclass TheftPolicy {}\n\nclass Claim {\n  + claimNumber : int\n  + dateOfIncident : date\n  + description : string\n}\n\nclass ClaimCase {\n  + caseNumber : int\n  + status : string\n}\n\nclass Estimator {\n  + id : int\n  + name : string\n  + expertise : string\n}\n\nclass CompensationDecision {\n  + decisionNumber : int\n  + eligibleCosts : double\n  + paymentDate : date\n}\n\nCustomer \"1\" -- \"0..*\" Broker\nBroker \"1\" -- \"0..*\" Contract\nCustomer \"1\" -- \"0..*\" Contract\nContract \"1\" -- \"1\" InsurancePolicy\nInsurancePolicy \"1\" ..|> Policy\nLifeInsurancePolicy --|> InsurancePolicy\nCarLiabilityPolicy --|> InsurancePolicy\nTheftPolicy --|> InsurancePolicy\nCustomer \"1\" -- \"0..*\" Claim\nClaim \"1\" -- \"0..*\" ClaimCase\nEstimator \"1\" -- \"0..*\" ClaimCase\nClaimCase \"1\" -- \"0..*\" CompensationDecision\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.429213299999901,
+ "prompt_tokens": 2681,
+ "completion_tokens": 354,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-nj1mxpv708n2cfs5kb2vhf",
+  "object": "chat.completion",
+  "created": 1791464475,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + dateOfBirth : date\n  + address : string\n  + taxCode : string\n}\n\nclass Broker {\n  + id : int\n  + name : string\n  + contactInfo : string\n}\n\nclass Contract {\n  + number : int\n  + signingDate : date\n  + insuredAmount : double\n  + policyType : string\n}\n\nclass Policy {\n  + text : string\n}\n\nabstract class InsurancePolicy {\n  + coverageDetails : string\n}\n\nclass LifeInsurancePolicy {}\nclass CarLiabilityPolicy {}\nclass TheftPolicy {}\n\nclass Claim {\n  + claimNumber : int\n  + dateOfIncident : date\n  + description : string\n}\n\nclass ClaimCase {\n  + caseNumber : int\n  + status : string\n}\n\nclass Estimator {\n  + id : int\n  + name : string\n  + expertise : string\n}\n\nclass CompensationDecision {\n  + decisionNumber : int\n  + eligibleCosts : double\n  + paymentDate : date\n}\n\nCustomer \"1\" -- \"0..*\" Broker\nBroker \"1\" -- \"0..*\" Contract\nCustomer \"1\" -- \"0..*\" Contract\nContract \"1\" -- \"1\" InsurancePolicy\nInsurancePolicy \"1\" ..|> Policy\nLifeInsurancePolicy --|> InsurancePolicy\nCarLiabilityPolicy --|> InsurancePolicy\nTheftPolicy --|> InsurancePolicy\nCustomer \"1\" -- \"0..*\" Claim\nClaim \"1\" -- \"0..*\" ClaimCase\nEstimator \"1\" -- \"0..*\" ClaimCase\nClaimCase \"1\" -- \"0..*\" CompensationDecision\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2681,
+   "completion_tokens": 354,
+   "total_tokens": 3035,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

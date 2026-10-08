@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bettor {\n  + bettorId : int\n  + name : string\n  + contactInfo : string\n}\n\nclass Race {\n  + raceId : int\n  + raceName : string\n  + startTime : datetime\n}\n\nclass Runner {\n  + runnerId : int\n  + horseName : string\n}\n\nclass Jockey {\n  + jockeyId : int\n  + name : string\n}\n\nclass Bet {\n  + betId : int\n  + amount : double\n  + odds : double\n}\n\nclass Bookmaker {\n  + bookmakerId : int\n  + name : string\n}\n\nBettor \"1\" -- \"0..*\" Bet : places\nBookmaker \"1\" -- \"0..*\" Bet : accepts\nRace \"1\" *-- \"1..*\" Runner\nRunner \"1\" *-- \"1\" Jockey\nRace \"1\" -- \"0..1\" Runner : winner\nBet \"0..*\" -- \"1\" Race\nBet \"0..*\" -- \"1\" Runner\nBookmaker \"1\" -- \"0..*\" Bettor : manages\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.100044800001342,
+ "prompt_tokens": 2954,
+ "completion_tokens": 250,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-p66b7ue8pkhax5brrshiwr",
+  "object": "chat.completion",
+  "created": 1791460314,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bettor {\n  + bettorId : int\n  + name : string\n  + contactInfo : string\n}\n\nclass Race {\n  + raceId : int\n  + raceName : string\n  + startTime : datetime\n}\n\nclass Runner {\n  + runnerId : int\n  + horseName : string\n}\n\nclass Jockey {\n  + jockeyId : int\n  + name : string\n}\n\nclass Bet {\n  + betId : int\n  + amount : double\n  + odds : double\n}\n\nclass Bookmaker {\n  + bookmakerId : int\n  + name : string\n}\n\nBettor \"1\" -- \"0..*\" Bet : places\nBookmaker \"1\" -- \"0..*\" Bet : accepts\nRace \"1\" *-- \"1..*\" Runner\nRunner \"1\" *-- \"1\" Jockey\nRace \"1\" -- \"0..1\" Runner : winner\nBet \"0..*\" -- \"1\" Race\nBet \"0..*\" -- \"1\" Runner\nBookmaker \"1\" -- \"0..*\" Bettor : manages\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2954,
+   "completion_tokens": 250,
+   "total_tokens": 3204,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

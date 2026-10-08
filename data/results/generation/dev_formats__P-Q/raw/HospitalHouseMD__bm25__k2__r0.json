@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nenum PriorityScore {\n  High\n  Low\n}\n\nclass Patient {\n  + FirstName : string\n  + LastName : string\n  + PhoneNumber : string\n  + ConsentSigned : boolean\n}\n\nabstract class Doctor {\n  + IdNumber : int\n  + Signature : string\n}\n\nclass HeadDoctor extends Doctor {}\n\nclass Treatment {\n  + Stage : int\n  + AppliedDate : date\n}\n\nclass Diagnosis {\n  + PriorityScore : PriorityScore\n}\n\nclass TreatmentPlan {\n  + Description : string\n}\n\nclass Illness {\n  + Name : string\n  + PriorityScore : PriorityScore\n}\n\nPatient \"1\" -- \"*\" Doctor\nDoctor \"0..*\" -- \"*\" Diagnosis\nDiagnosis \"1\" -- \"1\" Treatment\nTreatment \"1\" -- \"0..1\" TreatmentPlan\nIllness \"1\" -- \"*\" Diagnosis\n\nHeadDoctor \"1\" -- \"*\" Diagnosis\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.194736800000101,
+ "prompt_tokens": 3368,
+ "completion_tokens": 189,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-28x6ryhnxgxxq2dhtfj2nd",
+  "object": "chat.completion",
+  "created": 1791464616,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum PriorityScore {\n  High\n  Low\n}\n\nclass Patient {\n  + FirstName : string\n  + LastName : string\n  + PhoneNumber : string\n  + ConsentSigned : boolean\n}\n\nabstract class Doctor {\n  + IdNumber : int\n  + Signature : string\n}\n\nclass HeadDoctor extends Doctor {}\n\nclass Treatment {\n  + Stage : int\n  + AppliedDate : date\n}\n\nclass Diagnosis {\n  + PriorityScore : PriorityScore\n}\n\nclass TreatmentPlan {\n  + Description : string\n}\n\nclass Illness {\n  + Name : string\n  + PriorityScore : PriorityScore\n}\n\nPatient \"1\" -- \"*\" Doctor\nDoctor \"0..*\" -- \"*\" Diagnosis\nDiagnosis \"1\" -- \"1\" Treatment\nTreatment \"1\" -- \"0..1\" TreatmentPlan\nIllness \"1\" -- \"*\" Diagnosis\n\nHeadDoctor \"1\" -- \"*\" Diagnosis\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3368,
+   "completion_tokens": 189,
+   "total_tokens": 3557,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

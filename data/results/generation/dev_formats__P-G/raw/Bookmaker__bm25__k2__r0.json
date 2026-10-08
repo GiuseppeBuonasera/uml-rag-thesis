@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bettor {\n  + name : string\n  + id : int\n  + balance : double\n}\n\nclass Race {\n  + raceId : int\n  + startTime : datetime\n}\n\nclass Runner {\n  + horseName : string\n  + runnerId : int\n}\n\nclass Jockey {\n  + name : string\n  + licenseNumber : string\n}\n\nclass Bet {\n  + amount : double\n  + odds : double\n  + status : string\n}\n\nclass Winner {\n  + winningAmount : double\n}\n\nBettor \"1\" -- \"0..*\" Bet : places\nRace \"1\" *-- \"1..*\" Runner\nRunner \"1\" -- \"1\" Jockey : riddenBy\nBet \"*\" -- \"1\" Race : refersTo\nBet \"*\" -- \"1\" Runner : refersTo\nRace \"1\" -- \"1\" Runner : hasWinner\nRunner \"1\" -- \"0..*\" Bet : subjectOf\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.373744700000316,
+ "prompt_tokens": 2954,
+ "completion_tokens": 217,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3qve6jo3vymity8q1ao96",
+  "object": "chat.completion",
+  "created": 1791460306,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bettor {\n  + name : string\n  + id : int\n  + balance : double\n}\n\nclass Race {\n  + raceId : int\n  + startTime : datetime\n}\n\nclass Runner {\n  + horseName : string\n  + runnerId : int\n}\n\nclass Jockey {\n  + name : string\n  + licenseNumber : string\n}\n\nclass Bet {\n  + amount : double\n  + odds : double\n  + status : string\n}\n\nclass Winner {\n  + winningAmount : double\n}\n\nBettor \"1\" -- \"0..*\" Bet : places\nRace \"1\" *-- \"1..*\" Runner\nRunner \"1\" -- \"1\" Jockey : riddenBy\nBet \"*\" -- \"1\" Race : refersTo\nBet \"*\" -- \"1\" Runner : refersTo\nRace \"1\" -- \"1\" Runner : hasWinner\nRunner \"1\" -- \"0..*\" Bet : subjectOf\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2954,
+   "completion_tokens": 217,
+   "total_tokens": 3171,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

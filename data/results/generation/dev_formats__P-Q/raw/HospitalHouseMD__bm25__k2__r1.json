@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nenum PriorityScore {\n  High\n  Low\n}\n\nclass Patient {\n  + FirstName : string\n  + LastName : string\n  + DateOfBirth : string\n  + Doctors : Doctor[]\n}\n\nclass Doctor {\n  + IdNumber : int\n  + Signature : string\n}\n\nclass Treatment {\n  + Stage : int\n  + ConsentRequired : boolean\n}\n\nclass Diagnosis {\n  + PriorityScore : PriorityScore\n  + TreatmentPlan : Treatment[]\n}\n\nclass Hospital {\n  + Name : string\n  + Doctors : Doctor[]\n  + Patients : Patient[]\n}\n\nPatient \"1\" -- \"*\" Doctor\nDoctor \"0..*\" -- \"1\" Patient\nDiagnosis \"1\" -- \"*\" Treatment\nHospital \"1\" -- \"*\" Diagnosis\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 5.021348600001147,
+ "prompt_tokens": 3368,
+ "completion_tokens": 158,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-acogadr7ald2xb5h1z7ehm",
+  "object": "chat.completion",
+  "created": 1791464622,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum PriorityScore {\n  High\n  Low\n}\n\nclass Patient {\n  + FirstName : string\n  + LastName : string\n  + DateOfBirth : string\n  + Doctors : Doctor[]\n}\n\nclass Doctor {\n  + IdNumber : int\n  + Signature : string\n}\n\nclass Treatment {\n  + Stage : int\n  + ConsentRequired : boolean\n}\n\nclass Diagnosis {\n  + PriorityScore : PriorityScore\n  + TreatmentPlan : Treatment[]\n}\n\nclass Hospital {\n  + Name : string\n  + Doctors : Doctor[]\n  + Patients : Patient[]\n}\n\nPatient \"1\" -- \"*\" Doctor\nDoctor \"0..*\" -- \"1\" Patient\nDiagnosis \"1\" -- \"*\" Treatment\nHospital \"1\" -- \"*\" Diagnosis\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3368,
+   "completion_tokens": 158,
+   "total_tokens": 3526,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"City\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"H2SLocation\",\"attributes\":[\"+ LocationID : string\"]},{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\"]},{\"name\":\"PickupRequest\",\"attributes\":[\"+ RequestID : string\",\"+ Description : string\",\"+ RequestedDate : date\",\"+ RequestedTime : time\"]},{\"name\":\"Item\",\"attributes\":[\"+ Dimensions : float\",\"+ Weight : float\",\"+ Description : string\",\"+ IsFood : boolean\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ LicensePlate : string\",\"+ StorageCapacity : float\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ RouteID : string\",\"+ Date : date\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ Name : string\",\"+ Phone : string\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ Address : string\"]},{\"name\":\"Employee\",\"attributes\":[\"+ EmployeeID : string\",\"+ Name : string\"]},{\"name\":\"Article\",\"attributes\":[\"+ RFIDTag : string\",\"+ Category : Category\"]},{\"name\":\"Client\",\"attributes\":[\"+ Name : string\",\"+ HomeAddress : string\"]},{\"name\":\"Category\",\"kind\":\"enum\",\"values\":[\"BabyClothing\",\"WomensWinterBoots\",\"Fridge\",\"Microwave\",\"...\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"City\",\"label\":\"operatesIn\"},{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"DistributionCenter\",\"label\":\"contains\"},{\"type\":\"unidirectional\",\"source\":\"Resident\",\"target\":\"PickupRequest\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"PickupRequest\",\"part\":\"Item\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Vehicle\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"Vehicle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Article\",\"label\":\"processes\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"Article\",\"label\":\"receives\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Client\",\"target\":\"Category\",\"label\":\"requests\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"]}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 13.19366810000065,
+ "prompt_tokens": 3573,
+ "completion_tokens": 545,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-yql72bir69ctw3gpr5uk1o",
+  "object": "chat.completion",
+  "created": 1791460626,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"City\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"H2SLocation\",\"attributes\":[\"+ LocationID : string\"]},{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\"]},{\"name\":\"PickupRequest\",\"attributes\":[\"+ RequestID : string\",\"+ Description : string\",\"+ RequestedDate : date\",\"+ RequestedTime : time\"]},{\"name\":\"Item\",\"attributes\":[\"+ Dimensions : float\",\"+ Weight : float\",\"+ Description : string\",\"+ IsFood : boolean\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ LicensePlate : string\",\"+ StorageCapacity : float\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ RouteID : string\",\"+ Date : date\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ Name : string\",\"+ Phone : string\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ Address : string\"]},{\"name\":\"Employee\",\"attributes\":[\"+ EmployeeID : string\",\"+ Name : string\"]},{\"name\":\"Article\",\"attributes\":[\"+ RFIDTag : string\",\"+ Category : Category\"]},{\"name\":\"Client\",\"attributes\":[\"+ Name : string\",\"+ HomeAddress : string\"]},{\"name\":\"Category\",\"kind\":\"enum\",\"values\":[\"BabyClothing\",\"WomensWinterBoots\",\"Fridge\",\"Microwave\",\"...\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"City\",\"label\":\"operatesIn\"},{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"DistributionCenter\",\"label\":\"contains\"},{\"type\":\"unidirectional\",\"source\":\"Resident\",\"target\":\"PickupRequest\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"PickupRequest\",\"part\":\"Item\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Vehicle\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"Vehicle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Article\",\"label\":\"processes\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"Article\",\"label\":\"receives\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Client\",\"target\":\"Category\",\"label\":\"requests\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"]}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3573,
+   "completion_tokens": 545,
+   "total_tokens": 4118,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

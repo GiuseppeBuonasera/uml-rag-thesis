@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ birthday : date\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"BusinessOwner\",\n      \"attributes\": [\n        \"+ linkedInAccount : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"User\",\n          \"part\": \"BusinessOwner\"\n        }\n      ]\n    },\n    {\n      \"name\": \"PizzaRestaurant\",\n      \"attributes\": [\n        \"+ zipCode : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\",\n        \"+ website : string\",\n        \"+ openingHours : string[]\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"BusinessOwner\",\n          \"part\": \"PizzaRestaurant\"\n        },\n        {\n          \"type\": \"aggregation\",\n          \"whole\": \"PizzaRestaurant\",\n          \"part\": \"Pizza\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Pizza\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ crustStructure : string\",\n        \"+ price : double\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"PizzaRestaurant\",\n          \"part\": \"Pizza\"\n        }\n      ]\n    },\n    {\n      \"name\": \"HungryCustomer\",\n      \"attributes\": [],\n      \"relations\": [\n        {\n          \"type\": \"unidirectional\",\n          \"source\": \"User\",\n          \"target\": \"HungryCustomer\"\n        },\n        {\n          \"type\": \"aggregation\",\n          \"whole\": \"HungryCustomer\",\n          \"part\": \"Order\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ orderId : int\",\n        \"+ orderDateAndTime : datetime\",\n        \"+ latestDeliveryTime : datetime\",\n        \"+ numberOfPeople : int\",\n        \"+ isEntertainmentOrder : boolean\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"HungryCustomer\",\n          \"part\": \"Order\"\n        },\n        {\n          \"type\": \"aggregation\",\n          \"whole\": \"Order\",\n          \"part\": \"Pizza\"\n        }\n      ]\n    },\n    {\n      \"name\": \"EntertainmentOrder\",\n      \"attributes\": [\n        \"+ entertainmentType : string\",\n        \"+ duration : int\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"Order\",\n          \"parent\": \"EntertainmentOrder\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Entertainer\",\n      \"attributes\": [\n        \"+ stageName : string\",\n        \"+ bio : string\",\n        \"+ pricePer30Minutes : double\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"aggregation\",\n          \"whole\": \"PizzaRestaurant\",\n          \"part\": \"Entertainer\"\n        },\n        {\n          \"type\": \"association\",\n          \"source\": \"Entertainer\",\n          \"target\": \"Order\",\n          \"label\": \"fulfills\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"0..*\"\n        }\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"User\",\n      \"part\": \"BusinessOwner\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"BusinessOwner\",\n      \"part\": \"PizzaRestaurant\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"PizzaRestaurant\",\n      \"part\": \"Pizza\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"User\",\n      \"target\": \"HungryCustomer\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"HungryCustomer\",\n      \"part\": \"Order\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"HungryCustomer\",\n      \"part\": \"Order\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Order\",\n      \"part\": \"Pizza\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Order\",\n      \"parent\": \"EntertainmentOrder\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Entertainer\",\n      \"target\": \"Order\",\n      \"label\": \"fulfills\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 21.755403700000898,
+ "prompt_tokens": 3642,
+ "completion_tokens": 976,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-czxilq4fxqmogmpadz0tje",
+  "object": "chat.completion",
+  "created": 1791465115,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ birthday : date\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"BusinessOwner\",\n      \"attributes\": [\n        \"+ linkedInAccount : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"User\",\n          \"part\": \"BusinessOwner\"\n        }\n      ]\n    },\n    {\n      \"name\": \"PizzaRestaurant\",\n      \"attributes\": [\n        \"+ zipCode : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\",\n        \"+ website : string\",\n        \"+ openingHours : string[]\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"BusinessOwner\",\n          \"part\": \"PizzaRestaurant\"\n        },\n        {\n          \"type\": \"aggregation\",\n          \"whole\": \"PizzaRestaurant\",\n          \"part\": \"Pizza\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Pizza\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ crustStructure : string\",\n        \"+ price : double\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"PizzaRestaurant\",\n          \"part\": \"Pizza\"\n        }\n      ]\n    },\n    {\n      \"name\": \"HungryCustomer\",\n      \"attributes\": [],\n      \"relations\": [\n        {\n          \"type\": \"unidirectional\",\n          \"source\": \"User\",\n          \"target\": \"HungryCustomer\"\n        },\n        {\n          \"type\": \"aggregation\",\n          \"whole\": \"HungryCustomer\",\n          \"part\": \"Order\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ orderId : int\",\n        \"+ orderDateAndTime : datetime\",\n        \"+ latestDeliveryTime : datetime\",\n        \"+ numberOfPeople : int\",\n        \"+ isEntertainmentOrder : boolean\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"composition\",\n          \"whole\": \"HungryCustomer\",\n          \"part\": \"Order\"\n        },\n        {\n          \"type\": \"aggregation\",\n          \"whole\": \"Order\",\n          \"part\": \"Pizza\"\n        }\n      ]\n    },\n    {\n      \"name\": \"EntertainmentOrder\",\n      \"attributes\": [\n        \"+ entertainmentType : string\",\n        \"+ duration : int\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"Order\",\n          \"parent\": \"EntertainmentOrder\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Entertainer\",\n      \"attributes\": [\n        \"+ stageName : string\",\n        \"+ bio : string\",\n        \"+ pricePer30Minutes : double\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"aggregation\",\n          \"whole\": \"PizzaRestaurant\",\n          \"part\": \"Entertainer\"\n        },\n        {\n          \"type\": \"association\",\n          \"source\": \"Entertainer\",\n          \"target\": \"Order\",\n          \"label\": \"fulfills\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"0..*\"\n        }\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"User\",\n      \"part\": \"BusinessOwner\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"BusinessOwner\",\n      \"part\": \"PizzaRestaurant\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"PizzaRestaurant\",\n      \"part\": \"Pizza\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"User\",\n      \"target\": \"HungryCustomer\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"HungryCustomer\",\n      \"part\": \"Order\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"HungryCustomer\",\n      \"part\": \"Order\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Order\",\n      \"part\": \"Pizza\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Order\",\n      \"parent\": \"EntertainmentOrder\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Entertainer\",\n      \"target\": \"Order\",\n      \"label\": \"fulfills\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3642,
+   "completion_tokens": 976,
+   "total_tokens": 4618,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Policy\",\n      \"attributes\": [\n        \"+ PolicyId : int\",\n        \"+ Type : string\"\n      ],\n      \"methods\": [\n        \"+ getDetails() : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ CustomerId : int\",\n        \"+ Name : string\",\n        \"+ Email : string\"\n      ],\n      \"methods\": [\n        \"+ getContracts() : Contract[]\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractId : int\",\n        \"+ Policy : Policy\",\n        \"+ Customer : Customer\",\n        \"+ StartDate : datetime\",\n        \"+ EndDate : datetime\"\n      ],\n      \"methods\": [\n        \"+ getDetails() : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Customer\",\n      \"part\": \"Contract\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Policy\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.032912399998168,
+ "prompt_tokens": 2819,
+ "completion_tokens": 272,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4lrhsgtofyrquljv1kw6a",
+  "object": "chat.completion",
+  "created": 1791465235,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Policy\",\n      \"attributes\": [\n        \"+ PolicyId : int\",\n        \"+ Type : string\"\n      ],\n      \"methods\": [\n        \"+ getDetails() : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ CustomerId : int\",\n        \"+ Name : string\",\n        \"+ Email : string\"\n      ],\n      \"methods\": [\n        \"+ getContracts() : Contract[]\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractId : int\",\n        \"+ Policy : Policy\",\n        \"+ Customer : Customer\",\n        \"+ StartDate : datetime\",\n        \"+ EndDate : datetime\"\n      ],\n      \"methods\": [\n        \"+ getDetails() : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Customer\",\n      \"part\": \"Contract\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Policy\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2819,
+   "completion_tokens": 272,
+   "total_tokens": 3091,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

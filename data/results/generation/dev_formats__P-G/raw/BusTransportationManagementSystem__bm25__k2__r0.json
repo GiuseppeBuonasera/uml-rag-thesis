@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\nclass Driver {\n  + driverID : long\n  + name : string\n  + isOnSickLeave : boolean\n}\n\nclass Bus {\n  + licencePlate : string\n  + isInRepairShop : boolean\n}\n\nclass BusRoute {\n  + routeNumber : int\n}\n\nclass Shift {\n  + shiftType : string\n}\n\nclass Schedule {\n  + scheduleDate : date\n}\n\nclass Assignment {\n  + assignmentDate : date\n}\n\nBusRoute \"1\" -- \"0..*\" Assignment\nBus \"1\" -- \"0..*\" Assignment\nDriver \"1\" -- \"0..*\" Assignment\nAssignment \"1\" -- \"1\" Shift\n\nclass RouteAssignment {\n  + assignmentDate : date\n}\n\nBus \"1\" -- \"0..*\" RouteAssignment\nBusRoute \"1\" -- \"0..*\" RouteAssignment\n\nclass DriverShift {\n  + scheduleDate : date\n}\n\nDriver \"1\" -- \"0..*\" DriverShift\nBus \"1\" -- \"0..*\" DriverShift\nShift \"1\" -- \"0..*\" DriverShift\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.044749699998647,
+ "prompt_tokens": 3490,
+ "completion_tokens": 242,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-n2fijerf2raodnuw8ni6i",
+  "object": "chat.completion",
+  "created": 1791460063,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Driver {\n  + driverID : long\n  + name : string\n  + isOnSickLeave : boolean\n}\n\nclass Bus {\n  + licencePlate : string\n  + isInRepairShop : boolean\n}\n\nclass BusRoute {\n  + routeNumber : int\n}\n\nclass Shift {\n  + shiftType : string\n}\n\nclass Schedule {\n  + scheduleDate : date\n}\n\nclass Assignment {\n  + assignmentDate : date\n}\n\nBusRoute \"1\" -- \"0..*\" Assignment\nBus \"1\" -- \"0..*\" Assignment\nDriver \"1\" -- \"0..*\" Assignment\nAssignment \"1\" -- \"1\" Shift\n\nclass RouteAssignment {\n  + assignmentDate : date\n}\n\nBus \"1\" -- \"0..*\" RouteAssignment\nBusRoute \"1\" -- \"0..*\" RouteAssignment\n\nclass DriverShift {\n  + scheduleDate : date\n}\n\nDriver \"1\" -- \"0..*\" DriverShift\nBus \"1\" -- \"0..*\" DriverShift\nShift \"1\" -- \"0..*\" DriverShift\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3490,
+   "completion_tokens": 242,
+   "total_tokens": 3732,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

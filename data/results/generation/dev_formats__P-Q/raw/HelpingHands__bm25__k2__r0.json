@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nenum ItemCategory {\n  BabyClothing\n  WomenWinterBoots\n  Fridge\n  Microwave\n  // ... (other categories)\n}\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + EmailAddress : string\n  + ItemsDescription : string\n}\n\nclass PickupVehicle {\n  + LicensePlateNumber : string\n  + StorageSpace : int\n  + AvailableDays : date[]\n}\n\nclass VolunteerDriver {\n  + Name : string\n  + AvailableDays : date[]\n}\n\nclass DistributionCenter {\n  + Address : string\n}\n\nclass FoodBank {\n  + Address : string\n}\n\nclass H2SEmployee {\n  + FirstName : string\n  + LastName : string\n  + RFIDDevice : bool\n}\n\nclass PickupRoute {\n  + Date : date\n}\n\nclass ScheduledPickup {\n  + Time : time\n  + Resident : Resident\n  + PickupVehicle : PickupVehicle\n  + VolunteerDriver : VolunteerDriver\n  + ItemsDescription : string\n  + Category : ItemCategory[]\n}\n\nclass Client {\n  + Name : string\n  + Address : string\n  + NeededCategories : ItemCategory[]\n}\n\nclass DeliveredArticle {\n  + ArticleId : int\n  + Category : ItemCategory\n  + Client : Client\n}\n\nPickupVehicle \"1\" -- \"*\" PickupRoute\nVolunteerDriver \"1\" -- \"*\" PickupRoute\nResident --|> ScheduledPickup\nPickupVehicle --|> ScheduledPickup\nVolunteerDriver --|> ScheduledPickup\nDistributionCenter \"1\" -- \"*\" ScheduledPickup : receives second hand articles\nFoodBank \"1\" -- \"*\" ScheduledPickup : receives non-perishable foods\nH2SEmployee \"1\" -- \"*\" ScheduledPickup : examines quality and assigns categories\nClient \"0..*\" -- \"*\" DeliveredArticle : needs articles\nH2SEmployee \"1\" -- \"*\" DeliveredArticle : calls clients to arrange delivery\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.71291889999884,
+ "prompt_tokens": 3101,
+ "completion_tokens": 413,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zxm232iueflpjd0084sz6n",
+  "object": "chat.completion",
+  "created": 1791464582,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum ItemCategory {\n  BabyClothing\n  WomenWinterBoots\n  Fridge\n  Microwave\n  // ... (other categories)\n}\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + EmailAddress : string\n  + ItemsDescription : string\n}\n\nclass PickupVehicle {\n  + LicensePlateNumber : string\n  + StorageSpace : int\n  + AvailableDays : date[]\n}\n\nclass VolunteerDriver {\n  + Name : string\n  + AvailableDays : date[]\n}\n\nclass DistributionCenter {\n  + Address : string\n}\n\nclass FoodBank {\n  + Address : string\n}\n\nclass H2SEmployee {\n  + FirstName : string\n  + LastName : string\n  + RFIDDevice : bool\n}\n\nclass PickupRoute {\n  + Date : date\n}\n\nclass ScheduledPickup {\n  + Time : time\n  + Resident : Resident\n  + PickupVehicle : PickupVehicle\n  + VolunteerDriver : VolunteerDriver\n  + ItemsDescription : string\n  + Category : ItemCategory[]\n}\n\nclass Client {\n  + Name : string\n  + Address : string\n  + NeededCategories : ItemCategory[]\n}\n\nclass DeliveredArticle {\n  + ArticleId : int\n  + Category : ItemCategory\n  + Client : Client\n}\n\nPickupVehicle \"1\" -- \"*\" PickupRoute\nVolunteerDriver \"1\" -- \"*\" PickupRoute\nResident --|> ScheduledPickup\nPickupVehicle --|> ScheduledPickup\nVolunteerDriver --|> ScheduledPickup\nDistributionCenter \"1\" -- \"*\" ScheduledPickup : receives second hand articles\nFoodBank \"1\" -- \"*\" ScheduledPickup : receives non-perishable foods\nH2SEmployee \"1\" -- \"*\" ScheduledPickup : examines quality and assigns categories\nClient \"0..*\" -- \"*\" DeliveredArticle : needs articles\nH2SEmployee \"1\" -- \"*\" DeliveredArticle : calls clients to arrange delivery\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3101,
+   "completion_tokens": 413,
+   "total_tokens": 3514,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

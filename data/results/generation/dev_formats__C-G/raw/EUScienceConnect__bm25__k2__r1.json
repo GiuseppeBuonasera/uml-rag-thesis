@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"ScienceConnect\",\"methods\":[\"+ manageDatabase() : boolean\"]},{\"name\":\"Person\",\"attributes\":[\"+ personId : int\",\"+ phoneNumber : string\",\"+ keywords : string[]\"]},{\"name\":\"ResearchInstitution\",\"attributes\":[\"+ institutionCode : int\"]},{\"name\":\"ScientificArticle\",\"attributes\":[\"+ doi : string\",\"+ title : string\"]},{\"name\":\"PeerReviewedPaper\",\"attributes\":[\"+ citationCount : int\"]},{\"name\":\"TechnicalReport\",\"attributes\":[\"+ publicationDate : date\"]},{\"name\":\"Publisher\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Journal\",\"attributes\":[\"+ name : string\",\"+ impactFactor : float\"]},{\"name\":\"AuthorRole\",\"attributes\":[\"+ position : int\"]},{\"name\":\"ReviewerRole\",\"attributes\":[\"+ reviewStatus : string\"]],\"relations\":[{\"type\":\"composition\",\"whole\":\"ScienceConnect\",\"part\":\"ScientificArticle\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"unidirectional\",\"source\":\"Person\",\"target\":\"ResearchInstitution\",\"label\":\"worksFor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Person\",\"target\":\"ScientificArticle\",\"label\":\"author\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Person\",\"target\":\"ScientificArticle\",\"label\":\"reviewer\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"inheritance\",\"child\":\"PeerReviewedPaper\",\"parent\":\"ScientificArticle\"},{\"type\":\"inheritance\",\"child\":\"TechnicalReport\",\"parent\":\"ScientificArticle\"},{\"type\":\"unidirectional\",\"source\":\"TechnicalReport\",\"target\":\"ResearchInstitution\",\"label\":\"publishedBy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Publisher\",\"target\":\"Journal\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"ResearchInstitution\",\"target\":\"Journal\",\"label\":\"subscribesTo\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"PeerReviewedPaper\",\"target\":\"Journal\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"ScientificArticle\",\"part\":\"AuthorRole\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"ScientificArticle\",\"part\":\"ReviewerRole\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"AuthorRole\",\"target\":\"Person\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 12.451842899999974,
+ "prompt_tokens": 3377,
+ "completion_tokens": 514,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ezuw5bqxl2ckvlfuv0752",
+  "object": "chat.completion",
+  "created": 1791460541,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"ScienceConnect\",\"methods\":[\"+ manageDatabase() : boolean\"]},{\"name\":\"Person\",\"attributes\":[\"+ personId : int\",\"+ phoneNumber : string\",\"+ keywords : string[]\"]},{\"name\":\"ResearchInstitution\",\"attributes\":[\"+ institutionCode : int\"]},{\"name\":\"ScientificArticle\",\"attributes\":[\"+ doi : string\",\"+ title : string\"]},{\"name\":\"PeerReviewedPaper\",\"attributes\":[\"+ citationCount : int\"]},{\"name\":\"TechnicalReport\",\"attributes\":[\"+ publicationDate : date\"]},{\"name\":\"Publisher\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Journal\",\"attributes\":[\"+ name : string\",\"+ impactFactor : float\"]},{\"name\":\"AuthorRole\",\"attributes\":[\"+ position : int\"]},{\"name\":\"ReviewerRole\",\"attributes\":[\"+ reviewStatus : string\"]],\"relations\":[{\"type\":\"composition\",\"whole\":\"ScienceConnect\",\"part\":\"ScientificArticle\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"unidirectional\",\"source\":\"Person\",\"target\":\"ResearchInstitution\",\"label\":\"worksFor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Person\",\"target\":\"ScientificArticle\",\"label\":\"author\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Person\",\"target\":\"ScientificArticle\",\"label\":\"reviewer\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"inheritance\",\"child\":\"PeerReviewedPaper\",\"parent\":\"ScientificArticle\"},{\"type\":\"inheritance\",\"child\":\"TechnicalReport\",\"parent\":\"ScientificArticle\"},{\"type\":\"unidirectional\",\"source\":\"TechnicalReport\",\"target\":\"ResearchInstitution\",\"label\":\"publishedBy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Publisher\",\"target\":\"Journal\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"ResearchInstitution\",\"target\":\"Journal\",\"label\":\"subscribesTo\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"PeerReviewedPaper\",\"target\":\"Journal\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"ScientificArticle\",\"part\":\"AuthorRole\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"ScientificArticle\",\"part\":\"ReviewerRole\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"AuthorRole\",\"target\":\"Person\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3377,
+   "completion_tokens": 514,
+   "total_tokens": 3891,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

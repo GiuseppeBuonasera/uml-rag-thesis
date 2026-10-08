@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bettor {\n  + name : string\n}\n\nclass Race {\n  + id : int\n  + winner : Runner\n}\n\nclass Runner {\n  + horseName : string\n  + jockey : Jockey\n}\n\nclass Jockey {\n  + name : string\n}\n\nclass Bet {\n  + amount : double\n  + odds : float\n  + race : Race\n  + runner : Runner\n}\n\nBettor \"1\" -- \"*\" Bet : places\nRace \"1\" -- \"*\" Bet : has\nRunner \"0..*\" -- \"1\" Bet : participates\nJockey \"0..*\" -- \"1\" Runner : rides\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 5.1679574999998295,
+ "prompt_tokens": 2889,
+ "completion_tokens": 141,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ipsnftrgh3o2cjqrvrx41o",
+  "object": "chat.completion",
+  "created": 1791464674,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bettor {\n  + name : string\n}\n\nclass Race {\n  + id : int\n  + winner : Runner\n}\n\nclass Runner {\n  + horseName : string\n  + jockey : Jockey\n}\n\nclass Jockey {\n  + name : string\n}\n\nclass Bet {\n  + amount : double\n  + odds : float\n  + race : Race\n  + runner : Runner\n}\n\nBettor \"1\" -- \"*\" Bet : places\nRace \"1\" -- \"*\" Bet : has\nRunner \"0..*\" -- \"1\" Bet : participates\nJockey \"0..*\" -- \"1\" Runner : rides\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2889,
+   "completion_tokens": 141,
+   "total_tokens": 3030,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

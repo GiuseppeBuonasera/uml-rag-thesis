@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Song\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ Year : int\",\n        \"+ Length : float\",\n        \"+ Genre : string\"\n      ]\n    },\n    {\n      \"name\": \"Artist\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ BirthDate : date\",\n        \"+ Website : string\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ UserID : int\",\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"BusinessUser\",\n      \"attributes\": [\n        \"+ VATNumber : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"BusinessUser\",\n          \"parent\": \"User\"\n        }\n      ]\n    },\n    {\n      \"name\": \"RegularUser\",\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"RegularUser\",\n          \"parent\": \"User\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Album\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ Position : int\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"RegularUser\",\n          \"target\": \"Album\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"owns\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Track\",\n      \"attributes\": [\n        \"+ TrackNumber : int\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"Album\",\n          \"target\": \"Track\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"contains\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Suggestion\",\n      \"attributes\": [\n        \"+ Title : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"RegularUser\",\n          \"target\": \"Suggestion\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"suggests\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Upload\",\n      \"attributes\": [\n        \"+ SongType : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"BusinessUser\",\n          \"target\": \"Upload\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"uploads\"\n        }\n      ]\n    },\n    {\n      \"name\": \"SongCategory\",\n      \"attributes\": [\n        \"+ Category : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"Upload\",\n          \"target\": \"SongCategory\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"classifiedAs\"\n        }\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Song\",\n      \"part\": \"Artist\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"buys\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusinessUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"uploads\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Album\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"owns\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Album\",\n      \"part\": \"Track\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Suggestion\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"suggests\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 20.54492610000125,
+ "prompt_tokens": 3794,
+ "completion_tokens": 908,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-c6hi5tzofp2e23w57hk9c",
+  "object": "chat.completion",
+  "created": 1791465077,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Song\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ Year : int\",\n        \"+ Length : float\",\n        \"+ Genre : string\"\n      ]\n    },\n    {\n      \"name\": \"Artist\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ BirthDate : date\",\n        \"+ Website : string\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ UserID : int\",\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"BusinessUser\",\n      \"attributes\": [\n        \"+ VATNumber : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"BusinessUser\",\n          \"parent\": \"User\"\n        }\n      ]\n    },\n    {\n      \"name\": \"RegularUser\",\n      \"relations\": [\n        {\n          \"type\": \"inheritance\",\n          \"child\": \"RegularUser\",\n          \"parent\": \"User\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Album\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ Position : int\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"RegularUser\",\n          \"target\": \"Album\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"owns\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Track\",\n      \"attributes\": [\n        \"+ TrackNumber : int\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"Album\",\n          \"target\": \"Track\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"contains\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Suggestion\",\n      \"attributes\": [\n        \"+ Title : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"RegularUser\",\n          \"target\": \"Suggestion\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"suggests\"\n        }\n      ]\n    },\n    {\n      \"name\": \"Upload\",\n      \"attributes\": [\n        \"+ SongType : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"BusinessUser\",\n          \"target\": \"Upload\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"uploads\"\n        }\n      ]\n    },\n    {\n      \"name\": \"SongCategory\",\n      \"attributes\": [\n        \"+ Category : string\"\n      ],\n      \"relations\": [\n        {\n          \"type\": \"association\",\n          \"source\": \"Upload\",\n          \"target\": \"SongCategory\",\n          \"sourceMultiplicity\": \"1\",\n          \"targetMultiplicity\": \"*\",\n          \"label\": \"classifiedAs\"\n        }\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Song\",\n      \"part\": \"Artist\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"buys\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusinessUser\",\n      \"target\": \"Song\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"uploads\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Album\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"owns\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Album\",\n      \"part\": \"Track\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RegularUser\",\n      \"target\": \"Suggestion\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"suggests\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3794,
+   "completion_tokens": 908,
+   "total_tokens": 4702,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

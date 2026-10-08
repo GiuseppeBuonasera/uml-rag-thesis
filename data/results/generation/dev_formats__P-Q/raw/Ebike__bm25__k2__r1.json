@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass EBike {\n  + frameMaterial : string\n  + batteryEnergy : double\n  + controllerState : ControllerState\n  + connectBattery()\n  + disconnectBattery()\n  + commandDriveSystem()\n}\n\nclass Frame {\n  + material : string\n  + wheels : Wheel[]\n}\n\nclass DriveSystem {\n  + motor : Motor\n}\n\nclass Battery {\n  + energy : double\n}\n\nabstract class Controller {\n  + state : ControllerState\n  + controlBattery(battery : Battery)\n  + commandDriveSystem()\n}\n\nclass BasicController extends Controller {}\n\nclass AdvancedController extends Controller {\n  + nextInspectionDate : date\n}\n\nclass Wheel {}\n\nclass Motor {}\n\nenum ControllerState {\n  On\n  Off\n  Charging\n}\n\nEBike \"1\" *-- \"1 frame\" Frame\nFrame \"2\" *-- \"0..*\" Wheel\nEBike \"0..1\" -- \"0..1 battery\" Battery\nEBike \"1\" --|> Controller\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 5.713082600001144,
+ "prompt_tokens": 2595,
+ "completion_tokens": 207,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-10lmkmcmznyo47sx1kd8v",
+  "object": "chat.completion",
+  "created": 1791464529,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass EBike {\n  + frameMaterial : string\n  + batteryEnergy : double\n  + controllerState : ControllerState\n  + connectBattery()\n  + disconnectBattery()\n  + commandDriveSystem()\n}\n\nclass Frame {\n  + material : string\n  + wheels : Wheel[]\n}\n\nclass DriveSystem {\n  + motor : Motor\n}\n\nclass Battery {\n  + energy : double\n}\n\nabstract class Controller {\n  + state : ControllerState\n  + controlBattery(battery : Battery)\n  + commandDriveSystem()\n}\n\nclass BasicController extends Controller {}\n\nclass AdvancedController extends Controller {\n  + nextInspectionDate : date\n}\n\nclass Wheel {}\n\nclass Motor {}\n\nenum ControllerState {\n  On\n  Off\n  Charging\n}\n\nEBike \"1\" *-- \"1 frame\" Frame\nFrame \"2\" *-- \"0..*\" Wheel\nEBike \"0..1\" -- \"0..1 battery\" Battery\nEBike \"1\" --|> Controller\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2595,
+   "completion_tokens": 207,
+   "total_tokens": 2802,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

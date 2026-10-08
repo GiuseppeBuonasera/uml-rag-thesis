@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Driver {\n  + Name : string\n  + ID : int\n  + IsOnSickLeave : boolean\n}\n\nclass Bus {\n  + LicensePlate : string\n  + InRepairShop : boolean\n}\n\nclass Route {\n  + Number : int\n  + MaxNumber : int = 9999\n}\n\nclass Shift {\n  + Type : string\n  + TimeSlot : string\n}\n\nclass Schedule {\n  + RouteNumber : int\n  + DriverID : int\n  + BusLicensePlate : string\n  + ShiftType : string\n  + Date : date\n}\n\nDriver \"0..*\" -- \"1\" Schedule\nBus \"0..*\" -- \"1\" Schedule\nRoute \"0..*\" -- \"1\" Schedule\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 5.017856200000097,
+ "prompt_tokens": 3417,
+ "completion_tokens": 164,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7jzbc9bjliyxhjb8zxkknh",
+  "object": "chat.completion",
+  "created": 1791464506,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Driver {\n  + Name : string\n  + ID : int\n  + IsOnSickLeave : boolean\n}\n\nclass Bus {\n  + LicensePlate : string\n  + InRepairShop : boolean\n}\n\nclass Route {\n  + Number : int\n  + MaxNumber : int = 9999\n}\n\nclass Shift {\n  + Type : string\n  + TimeSlot : string\n}\n\nclass Schedule {\n  + RouteNumber : int\n  + DriverID : int\n  + BusLicensePlate : string\n  + ShiftType : string\n  + Date : date\n}\n\nDriver \"0..*\" -- \"1\" Schedule\nBus \"0..*\" -- \"1\" Schedule\nRoute \"0..*\" -- \"1\" Schedule\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3417,
+   "completion_tokens": 164,
+   "total_tokens": 3581,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

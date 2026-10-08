@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Location {\n  + Address : string\n}\n\nclass Driver {\n  + FirstName : string\n  + LastName : string\n}\n\nabstract class Vehicle {\n  + VehicleNumber : string\n}\n\nclass Truck extends Vehicle {\n  + Weight : int\n}\n\nclass Car extends Vehicle {\n  + Seats : int\n}\n\nclass Van extends Vehicle {\n  + Capacity : int\n}\n\nclass Order {\n  + OriginLocation : Location\n  + DestinationLocation : Location\n  + AssignedDriver : Driver\n  + ExecutionDate : date\n}\n\nDriver \"1\" -- \"0..1\" Order\n\nVehicle \"0..*\" -- \"1\" Driver\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 5.168658200000209,
+ "prompt_tokens": 3014,
+ "completion_tokens": 136,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3ar2lmqcaozqqgbnkp4dq",
+  "object": "chat.completion",
+  "created": 1791464664,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Location {\n  + Address : string\n}\n\nclass Driver {\n  + FirstName : string\n  + LastName : string\n}\n\nabstract class Vehicle {\n  + VehicleNumber : string\n}\n\nclass Truck extends Vehicle {\n  + Weight : int\n}\n\nclass Car extends Vehicle {\n  + Seats : int\n}\n\nclass Van extends Vehicle {\n  + Capacity : int\n}\n\nclass Order {\n  + OriginLocation : Location\n  + DestinationLocation : Location\n  + AssignedDriver : Driver\n  + ExecutionDate : date\n}\n\nDriver \"1\" -- \"0..1\" Order\n\nVehicle \"0..*\" -- \"1\" Driver\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3014,
+   "completion_tokens": 136,
+   "total_tokens": 3150,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Song {\n  + Title : string\n  + Year : int\n  + Length : double\n  + Genre : string\n}\n\nclass Artist {\n  + Name : string\n  + BirthDate : date\n  + Website : string\n}\n\nclass User {\n  + UserID : int\n  + Name : string\n  + Address : string\n}\n\nabstract class UserType {}\n\nclass RegularUser {\n  + VATNumber : string\n}\n\nclass BusinessUser {}\n\nclass Album {\n  + Title : string\n  + Position : int\n}\n\nclass Single {}\n\nclass Hit {}\n\nRegularUser --|> UserType\nBusinessUser --|> UserType\n\nSong \"1\" -- \"1\" Artist\nUser \"*\" -- \"0..*\" Song\nUser \"*\" -- \"0..*\" Album\nUser \"*\" -- \"0..*\" Single\nUser \"*\" -- \"0..*\" Hit\nAlbum \"1\" -- \"*\" Hit\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 5.787942599999951,
+ "prompt_tokens": 3336,
+ "completion_tokens": 190,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-jbcql10lk1n2i2ccz17ivc",
+  "object": "chat.completion",
+  "created": 1791464627,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Song {\n  + Title : string\n  + Year : int\n  + Length : double\n  + Genre : string\n}\n\nclass Artist {\n  + Name : string\n  + BirthDate : date\n  + Website : string\n}\n\nclass User {\n  + UserID : int\n  + Name : string\n  + Address : string\n}\n\nabstract class UserType {}\n\nclass RegularUser {\n  + VATNumber : string\n}\n\nclass BusinessUser {}\n\nclass Album {\n  + Title : string\n  + Position : int\n}\n\nclass Single {}\n\nclass Hit {}\n\nRegularUser --|> UserType\nBusinessUser --|> UserType\n\nSong \"1\" -- \"1\" Artist\nUser \"*\" -- \"0..*\" Song\nUser \"*\" -- \"0..*\" Album\nUser \"*\" -- \"0..*\" Single\nUser \"*\" -- \"0..*\" Hit\nAlbum \"1\" -- \"*\" Hit\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3336,
+   "completion_tokens": 190,
+   "total_tokens": 3526,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

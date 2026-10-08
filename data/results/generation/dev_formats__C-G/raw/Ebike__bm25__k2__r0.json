@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"EBike\",\"attributes\":[\"+ modelName : string\",\"+ weight : float\"],\"methods\":[\"+ start()\",\"+ stop()\"]},{\"name\":\"Frame\",\"attributes\":[\"+ material : string\",\"+ size : string\"]},{\"name\":\"DriveSystem\",\"attributes\":[\"+ maxTorque : float\",\"+ maxPower : float\"]},{\"name\":\"Controller\",\"kind\":\"abstract\",\"attributes\":[\"+ currentStatus : ControllerStatus\"],\"methods\":[\"+ sendCommand()\",\"+ monitorBattery()\"]},{\"name\":\"BasicController\",\"attributes\":[\"+ firmwareVersion : string\"]},{\"name\":\"AdvancedController\",\"attributes\":[\"+ estimationAccuracy : float\"],\"methods\":[\"+ estimateNextMaintenanceDate() : date\"]},{\"name\":\"Battery\",\"attributes\":[\"+ capacityWh : int\",\"+ isRemovable : boolean\"]},{\"name\":\"Wheel\",\"attributes\":[\"+ diameter : float\",\"+ tirePressure : float\"]},{\"name\":\"Motor\",\"attributes\":[\"+ wattage : int\",\"+ type : string\"]},{\"name\":\"ControllerStatus\",\"kind\":\"enum\",\"values\":[\"On\",\"Off\",\"Charging\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"Frame\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"frame\"},{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"DriveSystem\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"driveSystem\"},{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"Controller\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"controller\"},{\"type\":\"composition\",\"whole\":\"Frame\",\"part\":\"Wheel\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2\",\"partRole\":\"wheels\"},{\"type\":\"composition\",\"whole\":\"DriveSystem\",\"part\":\"Motor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"motor\"},{\"type\":\"aggregation\",\"whole\":\"EBike\",\"part\":\"Battery\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..1\",\"partRole\":\"removableBattery\"},{\"type\":\"inheritance\",\"child\":\"BasicController\",\"parent\":\"Controller\"},{\"type\":\"inheritance\",\"child\":\"AdvancedController\",\"parent\":\"Controller\"},{\"type\":\"unidirectional\",\"source\":\"Controller\",\"target\":\"Battery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\",\"targetRole\":\"managedBattery\"},{\"type\":\"unidirectional\",\"source\":\"Controller\",\"target\":\"DriveSystem\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"targetRole\":\"controlledDrive\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 12.79484550000052,
+ "prompt_tokens": 3320,
+ "completion_tokens": 483,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4l2c0rv0l0uafakwu6uwv",
+  "object": "chat.completion",
+  "created": 1791460474,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"EBike\",\"attributes\":[\"+ modelName : string\",\"+ weight : float\"],\"methods\":[\"+ start()\",\"+ stop()\"]},{\"name\":\"Frame\",\"attributes\":[\"+ material : string\",\"+ size : string\"]},{\"name\":\"DriveSystem\",\"attributes\":[\"+ maxTorque : float\",\"+ maxPower : float\"]},{\"name\":\"Controller\",\"kind\":\"abstract\",\"attributes\":[\"+ currentStatus : ControllerStatus\"],\"methods\":[\"+ sendCommand()\",\"+ monitorBattery()\"]},{\"name\":\"BasicController\",\"attributes\":[\"+ firmwareVersion : string\"]},{\"name\":\"AdvancedController\",\"attributes\":[\"+ estimationAccuracy : float\"],\"methods\":[\"+ estimateNextMaintenanceDate() : date\"]},{\"name\":\"Battery\",\"attributes\":[\"+ capacityWh : int\",\"+ isRemovable : boolean\"]},{\"name\":\"Wheel\",\"attributes\":[\"+ diameter : float\",\"+ tirePressure : float\"]},{\"name\":\"Motor\",\"attributes\":[\"+ wattage : int\",\"+ type : string\"]},{\"name\":\"ControllerStatus\",\"kind\":\"enum\",\"values\":[\"On\",\"Off\",\"Charging\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"Frame\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"frame\"},{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"DriveSystem\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"driveSystem\"},{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"Controller\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"controller\"},{\"type\":\"composition\",\"whole\":\"Frame\",\"part\":\"Wheel\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2\",\"partRole\":\"wheels\"},{\"type\":\"composition\",\"whole\":\"DriveSystem\",\"part\":\"Motor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"motor\"},{\"type\":\"aggregation\",\"whole\":\"EBike\",\"part\":\"Battery\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..1\",\"partRole\":\"removableBattery\"},{\"type\":\"inheritance\",\"child\":\"BasicController\",\"parent\":\"Controller\"},{\"type\":\"inheritance\",\"child\":\"AdvancedController\",\"parent\":\"Controller\"},{\"type\":\"unidirectional\",\"source\":\"Controller\",\"target\":\"Battery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\",\"targetRole\":\"managedBattery\"},{\"type\":\"unidirectional\",\"source\":\"Controller\",\"target\":\"DriveSystem\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"targetRole\":\"controlledDrive\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3320,
+   "completion_tokens": 483,
+   "total_tokens": 3803,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

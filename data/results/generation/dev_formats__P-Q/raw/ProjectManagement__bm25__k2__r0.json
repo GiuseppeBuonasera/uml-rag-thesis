@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Researcher {\n  + name : string\n  + surname : string\n  + group : ResearchGroup\n  + wpAssignments : WorkPackage[]\n}\n\nclass ResearchGroup {\n  + name : string\n  + department : Department\n  + wps : WorkPackage[]\n}\n\nclass Department {\n  + name : string\n}\n\nclass WorkPackage {\n  + id : int\n  + title : string\n  + leader : ResearchGroup\n  + members : Researcher[]\n}\n\nResearcher \"1\" -- \"0..*\" WorkPackage : assignedTo\nResearcher \"1\" -- \"1\" ResearchGroup : belongsTo\nResearchGroup \"1\" *-- \"1..*\" WorkPackage : leads\nDepartment \"1\" *-- \"1..*\" ResearchGroup : contains\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 5.596932800001014,
+ "prompt_tokens": 2216,
+ "completion_tokens": 168,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-u4l670whxjnfn2dw142sgi",
+  "object": "chat.completion",
+  "created": 1791464653,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Researcher {\n  + name : string\n  + surname : string\n  + group : ResearchGroup\n  + wpAssignments : WorkPackage[]\n}\n\nclass ResearchGroup {\n  + name : string\n  + department : Department\n  + wps : WorkPackage[]\n}\n\nclass Department {\n  + name : string\n}\n\nclass WorkPackage {\n  + id : int\n  + title : string\n  + leader : ResearchGroup\n  + members : Researcher[]\n}\n\nResearcher \"1\" -- \"0..*\" WorkPackage : assignedTo\nResearcher \"1\" -- \"1\" ResearchGroup : belongsTo\nResearchGroup \"1\" *-- \"1..*\" WorkPackage : leads\nDepartment \"1\" *-- \"1..*\" ResearchGroup : contains\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2216,
+   "completion_tokens": 168,
+   "total_tokens": 2384,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Aircraft\",\n      \"attributes\": [\n        \"+ Model : string\",\n        \"+ Price : double\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ID : string\",\n        \"+ DeliveryConditions : string\",\n        \"+ LegalAspects : string\"\n      ],\n      \"methods\": [\n        \"+ addAcquisition(Acquisition) : void\",\n        \"+ getAcquisitions() : Acquisition[]\"\n      ]\n    },\n    {\n      \"name\": \"Acquisition\",\n      \"attributes\": [\n        \"+ AircraftModel : string\",\n        \"+ NegotiatedPrice : double\",\n        \"+ Options : string\",\n        \"+ Customizations : string\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Salesperson\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ],\n      \"methods\": [\n        \"+ manageContract(Contract) : void\",\n        \"+ getManagedContracts() : Contract[]\"\n      ]\n    },\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ IsSubsidiary : boolean\"\n      ],\n      \"methods\": [\n        \"+ addSalesperson(Salesperson) : void\",\n        \"+ getSalespersons() : Salesperson[]\",\n        \"+ addChild(Airline) : void\",\n        \"+ getChildren() : Airline[]\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"Acquisition\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Salesperson\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Airline\",\n      \"parent\": \"Company\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.447339300000749,
+ "prompt_tokens": 3463,
+ "completion_tokens": 479,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1pypelzqz1rtrz2qqjkrqp",
+  "object": "chat.completion",
+  "created": 1791464755,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Aircraft\",\n      \"attributes\": [\n        \"+ Model : string\",\n        \"+ Price : double\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ID : string\",\n        \"+ DeliveryConditions : string\",\n        \"+ LegalAspects : string\"\n      ],\n      \"methods\": [\n        \"+ addAcquisition(Acquisition) : void\",\n        \"+ getAcquisitions() : Acquisition[]\"\n      ]\n    },\n    {\n      \"name\": \"Acquisition\",\n      \"attributes\": [\n        \"+ AircraftModel : string\",\n        \"+ NegotiatedPrice : double\",\n        \"+ Options : string\",\n        \"+ Customizations : string\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Salesperson\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ],\n      \"methods\": [\n        \"+ manageContract(Contract) : void\",\n        \"+ getManagedContracts() : Contract[]\"\n      ]\n    },\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ IsSubsidiary : boolean\"\n      ],\n      \"methods\": [\n        \"+ addSalesperson(Salesperson) : void\",\n        \"+ getSalespersons() : Salesperson[]\",\n        \"+ addChild(Airline) : void\",\n        \"+ getChildren() : Airline[]\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"Acquisition\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Salesperson\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Airline\",\n      \"parent\": \"Company\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3463,
+   "completion_tokens": 479,
+   "total_tokens": 3942,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

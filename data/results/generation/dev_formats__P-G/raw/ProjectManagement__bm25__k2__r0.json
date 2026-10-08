@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass University {}\n\nclass Department {\n  + name : string\n}\n\nclass ResearchGroup {\n  + groupName : string\n  + groupCode : string\n}\n\nclass Researcher {\n  + researcherId : int\n  + name : string\n  + email : string\n}\n\nclass Project {\n  + title : string\n  + budget : float\n  + startDate : date\n}\n\nclass WorkPackage {\n  + wpId : int\n  + description : string\n}\n\nUniversity \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" ResearchGroup\nResearchGroup \"1\" *-- \"1..*\" Researcher\nResearchGroup \"1\" *-- \"1..*\" Project\nProject \"1\" *-- \"1..*\" WorkPackage\nWorkPackage \"1\" *-- \"1\" ResearchGroup : ledBy\nWorkPackage \"1\" o-- \"1..*\" Researcher : teamMember\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 7.405742999999347,
+ "prompt_tokens": 2261,
+ "completion_tokens": 210,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-msro24kfhlhyw0ywcssx",
+  "object": "chat.completion",
+  "created": 1791460280,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass University {}\n\nclass Department {\n  + name : string\n}\n\nclass ResearchGroup {\n  + groupName : string\n  + groupCode : string\n}\n\nclass Researcher {\n  + researcherId : int\n  + name : string\n  + email : string\n}\n\nclass Project {\n  + title : string\n  + budget : float\n  + startDate : date\n}\n\nclass WorkPackage {\n  + wpId : int\n  + description : string\n}\n\nUniversity \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" ResearchGroup\nResearchGroup \"1\" *-- \"1..*\" Researcher\nResearchGroup \"1\" *-- \"1..*\" Project\nProject \"1\" *-- \"1..*\" WorkPackage\nWorkPackage \"1\" *-- \"1\" ResearchGroup : ledBy\nWorkPackage \"1\" o-- \"1..*\" Researcher : teamMember\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2261,
+   "completion_tokens": 210,
+   "total_tokens": 2471,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

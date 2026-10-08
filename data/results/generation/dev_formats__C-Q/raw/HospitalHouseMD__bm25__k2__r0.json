@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ DateOfBirth : date\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ IdNumber : int\",\n        \"+ Signature : string\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ PriorityScore : string\" // \"High\" or \"Low\"\n      ],\n      \"methods\": [\n        \"+ updatePriorityScore(newScore : string) : void\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentPlan\",\n      \"attributes\": [\n        \"+ IdNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ],\n      \"methods\": [\n        \"+ approveByHeadDoctor() : void\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentStage\",\n      \"kind\": \"enum\",\n      \"values\": [\"Stage1\", \"Stage2\", \"Stage3\"]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ PatientId : int\",\n        \"+ DoctorId : int\",\n        \"+ DateSigned : date\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ IdNumber : int\",\n        \"+ Stage : TreatmentStage\",\n        \"+ AppliedDate : date\"\n      ],\n      \"methods\": [\n        \"+ upgradeToNextStage() : void\",\n        \"+ downgradeToPreviousStage() : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Doctor\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Patient\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Patient\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"ConsentForm\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"ConsentForm\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.663208400001167,
+ "prompt_tokens": 3949,
+ "completion_tokens": 796,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cr898ib7ejrlsf4u00zkd",
+  "object": "chat.completion",
+  "created": 1791465039,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ DateOfBirth : date\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ IdNumber : int\",\n        \"+ Signature : string\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ PriorityScore : string\" // \"High\" or \"Low\"\n      ],\n      \"methods\": [\n        \"+ updatePriorityScore(newScore : string) : void\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentPlan\",\n      \"attributes\": [\n        \"+ IdNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ],\n      \"methods\": [\n        \"+ approveByHeadDoctor() : void\"\n      ]\n    },\n    {\n      \"name\": \"TreatmentStage\",\n      \"kind\": \"enum\",\n      \"values\": [\"Stage1\", \"Stage2\", \"Stage3\"]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ PatientId : int\",\n        \"+ DoctorId : int\",\n        \"+ DateSigned : date\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ IdNumber : int\",\n        \"+ Stage : TreatmentStage\",\n        \"+ AppliedDate : date\"\n      ],\n      \"methods\": [\n        \"+ upgradeToNextStage() : void\",\n        \"+ downgradeToPreviousStage() : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Doctor\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Patient\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Patient\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"TreatmentPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"ConsentForm\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"ConsentForm\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3949,
+   "completion_tokens": 796,
+   "total_tokens": 4745,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"EBike\",\"attributes\":[\"+ modelName : string\",\"+ weight : float\"]},{\"name\":\"Frame\",\"attributes\":[\"+ material : string\",\"+ size : string\"]},{\"name\":\"DriveSystem\",\"attributes\":[\"+ maxTorque : float\",\"+ maxSpeed : float\"]},{\"name\":\"Motor\",\"attributes\":[\"+ powerRating : float\",\"+ type : string\"]},{\"name\":\"Controller\",\"kind\":\"abstract\",\"attributes\":[\"+ currentState : ControllerState\"]},{\"name\":\"BasicController\",\"attributes\":[\"+ maxPowerLimit : float\"]},{\"name\":\"AdvancedController\",\"attributes\":[\"+ maintenanceInterval : int\"]},{\"name\":\"Battery\",\"attributes\":[\"+ capacityWh : float\",\"+ isRemovable : boolean\"]},{\"name\":\"Wheel\",\"attributes\":[\"+ diameter : float\",\"+ tirePressure : float\"]},{\"name\":\"ControllerState\",\"kind\":\"enum\",\"values\":[\"On\",\"Off\",\"Charging\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"Frame\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"frame\"},{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"DriveSystem\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"driveSystem\"},{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"Controller\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"controller\"},{\"type\":\"composition\",\"whole\":\"Frame\",\"part\":\"Wheel\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2\",\"partRole\":\"wheels\"},{\"type\":\"composition\",\"whole\":\"DriveSystem\",\"part\":\"Motor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"motor\"},{\"type\":\"aggregation\",\"whole\":\"EBike\",\"part\":\"Battery\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..1\",\"partRole\":\"battery\"},{\"type\":\"inheritance\",\"child\":\"BasicController\",\"parent\":\"Controller\"},{\"type\":\"inheritance\",\"child\":\"AdvancedController\",\"parent\":\"Controller\"},{\"type\":\"unidirectional\",\"source\":\"Controller\",\"target\":\"Battery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\",\"targetRole\":\"managedBattery\"},{\"type\":\"unidirectional\",\"source\":\"Controller\",\"target\":\"DriveSystem\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"targetRole\":\"commands\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 11.109110999999757,
+ "prompt_tokens": 3320,
+ "completion_tokens": 449,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-sfvv86edb88v2k6jpdgpkn",
+  "object": "chat.completion",
+  "created": 1791460486,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"EBike\",\"attributes\":[\"+ modelName : string\",\"+ weight : float\"]},{\"name\":\"Frame\",\"attributes\":[\"+ material : string\",\"+ size : string\"]},{\"name\":\"DriveSystem\",\"attributes\":[\"+ maxTorque : float\",\"+ maxSpeed : float\"]},{\"name\":\"Motor\",\"attributes\":[\"+ powerRating : float\",\"+ type : string\"]},{\"name\":\"Controller\",\"kind\":\"abstract\",\"attributes\":[\"+ currentState : ControllerState\"]},{\"name\":\"BasicController\",\"attributes\":[\"+ maxPowerLimit : float\"]},{\"name\":\"AdvancedController\",\"attributes\":[\"+ maintenanceInterval : int\"]},{\"name\":\"Battery\",\"attributes\":[\"+ capacityWh : float\",\"+ isRemovable : boolean\"]},{\"name\":\"Wheel\",\"attributes\":[\"+ diameter : float\",\"+ tirePressure : float\"]},{\"name\":\"ControllerState\",\"kind\":\"enum\",\"values\":[\"On\",\"Off\",\"Charging\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"Frame\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"frame\"},{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"DriveSystem\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"driveSystem\"},{\"type\":\"composition\",\"whole\":\"EBike\",\"part\":\"Controller\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"controller\"},{\"type\":\"composition\",\"whole\":\"Frame\",\"part\":\"Wheel\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2\",\"partRole\":\"wheels\"},{\"type\":\"composition\",\"whole\":\"DriveSystem\",\"part\":\"Motor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"motor\"},{\"type\":\"aggregation\",\"whole\":\"EBike\",\"part\":\"Battery\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..1\",\"partRole\":\"battery\"},{\"type\":\"inheritance\",\"child\":\"BasicController\",\"parent\":\"Controller\"},{\"type\":\"inheritance\",\"child\":\"AdvancedController\",\"parent\":\"Controller\"},{\"type\":\"unidirectional\",\"source\":\"Controller\",\"target\":\"Battery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\",\"targetRole\":\"managedBattery\"},{\"type\":\"unidirectional\",\"source\":\"Controller\",\"target\":\"DriveSystem\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"targetRole\":\"commands\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3320,
+   "completion_tokens": 449,
+   "total_tokens": 3769,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

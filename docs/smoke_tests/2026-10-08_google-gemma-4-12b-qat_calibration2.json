@@ -1,0 +1,359 @@
+{
+  "timestamp": "2026-10-08T13:46:59+0200",
+  "model": "google/gemma-4-12b-qat",
+  "model_metadata": {
+    "model_id": "google/gemma-4-12b-qat",
+    "quantization": "QAT (q4_0)",
+    "context_length": 32768,
+    "lmstudio_version": "0.4.25+1",
+    "enable_thinking": false,
+    "kv_cache_quant": "F16",
+    "flash_attention": true,
+    "hardware": {
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)",
+      "gpu": "NVIDIA GeForce RTX 4070 12 GB",
+      "ram_gb": 32,
+      "vram_gb": 12,
+      "vram_used": "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"
+    }
+  },
+  "context_length": 32768,
+  "max_tokens": 12288,
+  "server_context": {
+    "endpoint": "http://localhost:1234/api/v1/models",
+    "available": true,
+    "loaded": true,
+    "context_lengths": [
+      32768
+    ],
+    "parallel": [
+      4
+    ],
+    "max_context_length": 262144,
+    "instances": [
+      {
+        "id": "google/gemma-4-12b-qat",
+        "config": {
+          "context_length": 32768,
+          "eval_batch_size": 2048,
+          "physical_batch_size": 512,
+          "parallel": 4,
+          "flash_attention": true,
+          "context_checkpoints": 32,
+          "reasoning_budget_message": "",
+          "speculative_draft_mtp": false,
+          "speculative_draft_simple": false,
+          "speculative_draft_model": "",
+          "speculative_draft_max_tokens": 3,
+          "speculative_draft_min_tokens": 0,
+          "speculative_draft_min_continue_probability": 0,
+          "offload_kv_cache_to_gpu": true
+        }
+      }
+    ],
+    "error": null,
+    "expected_context_length": 32768,
+    "checked_at": "2026-10-08T13:44:42",
+    "verified": true
+  },
+  "rows": [
+    {
+      "format": "plantuml",
+      "query_id": "Boeing",
+      "est": 2880,
+      "real": 2969,
+      "ratio": 1.0309027777777777
+    },
+    {
+      "format": "plantuml",
+      "query_id": "OilWells",
+      "est": 2635,
+      "real": 2720,
+      "ratio": 1.032258064516129
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Restaurant",
+      "est": 2895,
+      "real": 2981,
+      "ratio": 1.029706390328152
+    },
+    {
+      "format": "plantuml",
+      "query_id": "EUScienceConnect",
+      "est": 2728,
+      "real": 2827,
+      "ratio": 1.0362903225806452
+    },
+    {
+      "format": "plantuml",
+      "query_id": "HomeForTheElderly",
+      "est": 3689,
+      "real": 3791,
+      "ratio": 1.0276497695852536
+    },
+    {
+      "format": "plantuml",
+      "query_id": "HelpingHands",
+      "est": 3063,
+      "real": 3175,
+      "ratio": 1.0365654587006203
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Bookmaker",
+      "est": 2860,
+      "real": 2954,
+      "ratio": 1.0328671328671328
+    },
+    {
+      "format": "plantuml",
+      "query_id": "BusTransportationManagementSystem",
+      "est": 3379,
+      "real": 3490,
+      "ratio": 1.032849955608168
+    },
+    {
+      "format": "plantuml",
+      "query_id": "FitnessCompanyConan",
+      "est": 2960,
+      "real": 3075,
+      "ratio": 1.0388513513513513
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Facepage",
+      "est": 3273,
+      "real": 3372,
+      "ratio": 1.0302474793767187
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Musicmatic",
+      "est": 3304,
+      "real": 3400,
+      "ratio": 1.0290556900726393
+    },
+    {
+      "format": "plantuml",
+      "query_id": "AlphaInsurance",
+      "est": 2652,
+      "real": 2760,
+      "ratio": 1.0407239819004526
+    },
+    {
+      "format": "plantuml",
+      "query_id": "ClothingCompany",
+      "est": 3101,
+      "real": 3213,
+      "ratio": 1.036117381489842
+    },
+    {
+      "format": "plantuml",
+      "query_id": "PizzaDeliveryWithEntertainment",
+      "est": 3281,
+      "real": 3389,
+      "ratio": 1.0329167936604693
+    },
+    {
+      "format": "plantuml",
+      "query_id": "ProjectManagement",
+      "est": 2187,
+      "real": 2261,
+      "ratio": 1.0338363054412436
+    },
+    {
+      "format": "plantuml",
+      "query_id": "HospitalHouseMD",
+      "est": 3338,
+      "real": 3442,
+      "ratio": 1.031156381066507
+    },
+    {
+      "format": "plantuml",
+      "query_id": "InsuranceCompany",
+      "est": 2377,
+      "real": 2460,
+      "ratio": 1.034917963819941
+    },
+    {
+      "format": "plantuml",
+      "query_id": "TruckLogistics",
+      "est": 2979,
+      "real": 3082,
+      "ratio": 1.0345753608593489
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Ebike",
+      "est": 2563,
+      "real": 2663,
+      "ratio": 1.039016777214202
+    },
+    {
+      "format": "plantuml",
+      "query_id": "eHome2020",
+      "est": 3245,
+      "real": 3377,
+      "ratio": 1.040677966101695
+    },
+    {
+      "format": "compact",
+      "query_id": "Boeing",
+      "est": 3434,
+      "real": 3524,
+      "ratio": 1.0262085032032615
+    },
+    {
+      "format": "compact",
+      "query_id": "OilWells",
+      "est": 3046,
+      "real": 3152,
+      "ratio": 1.0347997373604727
+    },
+    {
+      "format": "compact",
+      "query_id": "Restaurant",
+      "est": 3241,
+      "real": 3338,
+      "ratio": 1.0299290342486886
+    },
+    {
+      "format": "compact",
+      "query_id": "EUScienceConnect",
+      "est": 3294,
+      "real": 3377,
+      "ratio": 1.025197328476017
+    },
+    {
+      "format": "compact",
+      "query_id": "HomeForTheElderly",
+      "est": 4116,
+      "real": 4224,
+      "ratio": 1.0262390670553936
+    },
+    {
+      "format": "compact",
+      "query_id": "HelpingHands",
+      "est": 3463,
+      "real": 3573,
+      "ratio": 1.0317643661565117
+    },
+    {
+      "format": "compact",
+      "query_id": "Bookmaker",
+      "est": 3296,
+      "real": 3398,
+      "ratio": 1.0309466019417475
+    },
+    {
+      "format": "compact",
+      "query_id": "BusTransportationManagementSystem",
+      "est": 3872,
+      "real": 3984,
+      "ratio": 1.0289256198347108
+    },
+    {
+      "format": "compact",
+      "query_id": "FitnessCompanyConan",
+      "est": 3526,
+      "real": 3620,
+      "ratio": 1.0266591038003403
+    },
+    {
+      "format": "compact",
+      "query_id": "Facepage",
+      "est": 3727,
+      "real": 3836,
+      "ratio": 1.0292460423933458
+    },
+    {
+      "format": "compact",
+      "query_id": "Musicmatic",
+      "est": 3762,
+      "real": 3869,
+      "ratio": 1.028442317916002
+    },
+    {
+      "format": "compact",
+      "query_id": "AlphaInsurance",
+      "est": 3025,
+      "real": 3142,
+      "ratio": 1.0386776859504132
+    },
+    {
+      "format": "compact",
+      "query_id": "ClothingCompany",
+      "est": 3495,
+      "real": 3618,
+      "ratio": 1.0351931330472104
+    },
+    {
+      "format": "compact",
+      "query_id": "PizzaDeliveryWithEntertainment",
+      "est": 3610,
+      "real": 3732,
+      "ratio": 1.0337950138504155
+    },
+    {
+      "format": "compact",
+      "query_id": "ProjectManagement",
+      "est": 2556,
+      "real": 2623,
+      "ratio": 1.0262128325508608
+    },
+    {
+      "format": "compact",
+      "query_id": "HospitalHouseMD",
+      "est": 3919,
+      "real": 4039,
+      "ratio": 1.0306200561367695
+    },
+    {
+      "format": "compact",
+      "query_id": "InsuranceCompany",
+      "est": 2790,
+      "real": 2876,
+      "ratio": 1.0308243727598567
+    },
+    {
+      "format": "compact",
+      "query_id": "TruckLogistics",
+      "est": 3479,
+      "real": 3581,
+      "ratio": 1.0293187697614257
+    },
+    {
+      "format": "compact",
+      "query_id": "Ebike",
+      "est": 3222,
+      "real": 3320,
+      "ratio": 1.0304158907510863
+    },
+    {
+      "format": "compact",
+      "query_id": "eHome2020",
+      "est": 4016,
+      "real": 4137,
+      "ratio": 1.030129482071713
+    }
+  ],
+  "summary": {
+    "plantuml": {
+      "ratio_min": 1.0276497695852536,
+      "ratio_median": 1.0333765495508564,
+      "ratio_max": 1.0407239819004526,
+      "prompt_real_max": 3791,
+      "fits": true,
+      "margin": 16689
+    },
+    "compact": {
+      "ratio_min": 1.025197328476017,
+      "ratio_median": 1.0300292581602009,
+      "ratio_max": 1.0386776859504132,
+      "prompt_real_max": 4224,
+      "fits": true,
+      "margin": 16256
+    }
+  }
+}

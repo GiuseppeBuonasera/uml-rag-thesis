@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Location\",\"attributes\":[\"+ Address : string\"]},{\"name\":\"Driver\",\"attributes\":[\"+ FirstName : string\",\"+ LastName : string\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ VehicleNumber : string\"]},{\"name\":\"Truck\",\"attributes\":[\"+ Weight : float\"]},{\"name\":\"Car\",\"attributes\":[\"+ NumberOfSeats : int\"]},{\"name\":\"Van\",\"attributes\":[\"+ VehicleType : string\"]},{\"name\":\"Order\",\"attributes\":[\"+ Origin : string\",\"+ Destination : string\",\"+ ExecutionDate : date\"]},{\"name\":\"VehicleType\",\"kind\":\"enum\",\"values\":[\"Truck\",\"Car\",\"Van\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Location\",\"part\":\"Driver\",\"partMultiplicity\":\"1..*\",\"partRole\":\"staff\"},{\"type\":\"composition\",\"whole\":\"Location\",\"part\":\"Vehicle\",\"partMultiplicity\":\"1..*\",\"partRole\":\"fleet\"},{\"type\":\"inheritance\",\"child\":\"Truck\",\"parent\":\"Vehicle\"},{\"type\":\"inheritance\",\"child\":\"Car\",\"parent\":\"Vehicle\"},{\"type\":\"inheritance\",\"child\":\"Van\",\"parent\":\"Vehicle\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Order\",\"label\":\"carries\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Driver\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Location\",\"label\":\"origin\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Location\",\"label\":\"destination\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Vehicle\",\"label\":\"drives\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"0..1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 9.409856500000387,
+ "prompt_tokens": 3581,
+ "completion_tokens": 359,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wex44a87hs4olbhw5zk",
+  "object": "chat.completion",
+  "created": 1791460801,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Location\",\"attributes\":[\"+ Address : string\"]},{\"name\":\"Driver\",\"attributes\":[\"+ FirstName : string\",\"+ LastName : string\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ VehicleNumber : string\"]},{\"name\":\"Truck\",\"attributes\":[\"+ Weight : float\"]},{\"name\":\"Car\",\"attributes\":[\"+ NumberOfSeats : int\"]},{\"name\":\"Van\",\"attributes\":[\"+ VehicleType : string\"]},{\"name\":\"Order\",\"attributes\":[\"+ Origin : string\",\"+ Destination : string\",\"+ ExecutionDate : date\"]},{\"name\":\"VehicleType\",\"kind\":\"enum\",\"values\":[\"Truck\",\"Car\",\"Van\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Location\",\"part\":\"Driver\",\"partMultiplicity\":\"1..*\",\"partRole\":\"staff\"},{\"type\":\"composition\",\"whole\":\"Location\",\"part\":\"Vehicle\",\"partMultiplicity\":\"1..*\",\"partRole\":\"fleet\"},{\"type\":\"inheritance\",\"child\":\"Truck\",\"parent\":\"Vehicle\"},{\"type\":\"inheritance\",\"child\":\"Car\",\"parent\":\"Vehicle\"},{\"type\":\"inheritance\",\"child\":\"Van\",\"parent\":\"Vehicle\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Order\",\"label\":\"carries\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Driver\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Location\",\"label\":\"origin\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Location\",\"label\":\"destination\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Vehicle\",\"label\":\"drives\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"0..1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3581,
+   "completion_tokens": 359,
+   "total_tokens": 3940,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

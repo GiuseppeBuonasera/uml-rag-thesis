@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Person {\n  + personId : int\n  + phoneNumber : string\n  + keywords : string[]\n}\n\nclass ResearchInstitution {\n  + institutionCode : int\n}\n\nclass ScientificArticle {\n  + doi : string\n  + title : string\n}\n\nabstract class PeerReviewedPaper {\n  + citationCount : int\n}\n\nclass TechnicalReport {}\n\nclass Publisher {\n  + name : string\n}\n\nclass Journal {\n  + name : string\n  + impactFactor : float\n}\n\nclass AuthorRole {\n  + position : int\n}\n\nclass ReviewerRole {}\n\nclass Subscription {\n}\n\nPerson \"1\" -- \"1\" ResearchInstitution : worksFor\nPerson \"1\" -- \"0..*\" AuthorRole : authoredBy\nAuthorRole \"1\" -- \"1\" ScientificArticle : forArticle\nPerson \"1\" -- \"0..*\" ReviewerRole : reviewedBy\nReviewerRole \"1\" -- \"1\" PeerReviewedPaper : reviewedPaper\n\nScientificArticle --|> PeerReviewedPaper\nScientificArticle --|> TechnicalReport\n\nPeerReviewedPaper \"1\" -- \"1..*\" Journal : publishedIn\nTechnicalReport \"1\" -- \"1\" ResearchInstitution : publishedBy\n\nPublisher \"1\" -- \"1..*\" Journal : publishes\nResearchInstitution \"1\" -- \"0..*\" Subscription : has\nSubscription \"1\" -- \"1\" Journal : forJournal\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.569179000000076,
+ "prompt_tokens": 2827,
+ "completion_tokens": 307,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kntl10wq7o7rtfnag7bbc",
+  "object": "chat.completion",
+  "created": 1791460130,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {\n  + personId : int\n  + phoneNumber : string\n  + keywords : string[]\n}\n\nclass ResearchInstitution {\n  + institutionCode : int\n}\n\nclass ScientificArticle {\n  + doi : string\n  + title : string\n}\n\nabstract class PeerReviewedPaper {\n  + citationCount : int\n}\n\nclass TechnicalReport {}\n\nclass Publisher {\n  + name : string\n}\n\nclass Journal {\n  + name : string\n  + impactFactor : float\n}\n\nclass AuthorRole {\n  + position : int\n}\n\nclass ReviewerRole {}\n\nclass Subscription {\n}\n\nPerson \"1\" -- \"1\" ResearchInstitution : worksFor\nPerson \"1\" -- \"0..*\" AuthorRole : authoredBy\nAuthorRole \"1\" -- \"1\" ScientificArticle : forArticle\nPerson \"1\" -- \"0..*\" ReviewerRole : reviewedBy\nReviewerRole \"1\" -- \"1\" PeerReviewedPaper : reviewedPaper\n\nScientificArticle --|> PeerReviewedPaper\nScientificArticle --|> TechnicalReport\n\nPeerReviewedPaper \"1\" -- \"1..*\" Journal : publishedIn\nTechnicalReport \"1\" -- \"1\" ResearchInstitution : publishedBy\n\nPublisher \"1\" -- \"1..*\" Journal : publishes\nResearchInstitution \"1\" -- \"0..*\" Subscription : has\nSubscription \"1\" -- \"1\" Journal : forJournal\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2827,
+   "completion_tokens": 307,
+   "total_tokens": 3134,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

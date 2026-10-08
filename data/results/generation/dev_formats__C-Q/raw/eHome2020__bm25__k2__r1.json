@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ login(username: string, password: string) : boolean\",\n        \"+ querySensorValues(sensorId: int) : SensorValue[]\",\n        \"+ setThreshold(sensorId: int, threshold: double) : void\",\n        \"+ assignSensorToRoom(sensorId: int, roomId: int) : void\",\n        \"+ changeSensorDescription(sensorId: int, description: string) : void\"\n      ]\n    },\n    {\n      \"name\": \"EMonitor\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ checkThresholds() : void\"\n      ]\n    },\n    {\n      \"name\": \"Apartment\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ description : string\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Sensor\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : Unit\"\n      ],\n      \"methods\": [\n        \"+ getLatestValue() : SensorValue\"\n      ]\n    },\n    {\n      \"name\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\",\n      \"attributes\": [\n        \"+ minValue : double\",\n        \"+ maxValue : double\"\n      ]\n    },\n    {\n      \"name\": \"PowerSensor\",\n      \"parent\": \"Sensor\",\n      \"methods\": [\n        \"+ getCounterReading() : double\"\n      ]\n    },\n    {\n      \"name\": \"Unit\",\n      \"kind\": \"enum\",\n      \"values\": [\"CELSIUS\", \"WATT\"]\n    },\n    {\n      \"name\": \"SensorValue\",\n      \"attributes\": [\n        \"+ timestamp : datetime\",\n        \"+ value : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"rooms\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"sensors\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"SensorController\",\n      \"target\": \"Apartment\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"apartment\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"SensorController\",\n      \"target\": \"EMonitor\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"monitor\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Sensor\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"room\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "qwen2.5-coder-7b-instruct",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 15.568231799999921,
+ "prompt_tokens": 4052,
+ "completion_tokens": 682,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cg5ku1adqooa5a8dam4rii",
+  "object": "chat.completion",
+  "created": 1791464873,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": [\n        \"+ login(username: string, password: string) : boolean\",\n        \"+ querySensorValues(sensorId: int) : SensorValue[]\",\n        \"+ setThreshold(sensorId: int, threshold: double) : void\",\n        \"+ assignSensorToRoom(sensorId: int, roomId: int) : void\",\n        \"+ changeSensorDescription(sensorId: int, description: string) : void\"\n      ]\n    },\n    {\n      \"name\": \"EMonitor\",\n      \"attributes\": [],\n      \"methods\": [\n        \"+ checkThresholds() : void\"\n      ]\n    },\n    {\n      \"name\": \"Apartment\",\n      \"attributes\": [\n        \"+ address : string\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ description : string\"\n      ],\n      \"methods\": []\n    },\n    {\n      \"name\": \"Sensor\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ vendorId : int\",\n        \"+ description : string\",\n        \"+ unit : Unit\"\n      ],\n      \"methods\": [\n        \"+ getLatestValue() : SensorValue\"\n      ]\n    },\n    {\n      \"name\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\",\n      \"attributes\": [\n        \"+ minValue : double\",\n        \"+ maxValue : double\"\n      ]\n    },\n    {\n      \"name\": \"PowerSensor\",\n      \"parent\": \"Sensor\",\n      \"methods\": [\n        \"+ getCounterReading() : double\"\n      ]\n    },\n    {\n      \"name\": \"Unit\",\n      \"kind\": \"enum\",\n      \"values\": [\"CELSIUS\", \"WATT\"]\n    },\n    {\n      \"name\": \"SensorValue\",\n      \"attributes\": [\n        \"+ timestamp : datetime\",\n        \"+ value : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"rooms\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"sensors\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"SensorController\",\n      \"target\": \"Apartment\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"apartment\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"SensorController\",\n      \"target\": \"EMonitor\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"monitor\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Sensor\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"room\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4052,
+   "completion_tokens": 682,
+   "total_tokens": 4734,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

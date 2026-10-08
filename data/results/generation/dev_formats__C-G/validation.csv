@@ -1,0 +1,41 @@
+call_id,query_id,condition,k,repetition,temperature,L0_extracted,L1_json,L2_schema,L3_integrity,L4_style,level,failure,truncated,finish_reason,reasoning_removed,extraction,errors,style_raw,l4_rewrites,format_issues,layout_issues,C0_found,C1_valid_json,C2b_converted,C2_clean,compact_issues,normalizations,style_raw_count,l4_rewrites_total,compact_issues_count
+AlphaInsurance__bm25__k2__r0,AlphaInsurance,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__bm25__k2__r1,AlphaInsurance,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k2__r0,Boeing,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,fence,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k2__r1,Boeing,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,fence,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__bm25__k2__r0,BusTransportationManagementSystem,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__bm25__k2__r1,BusTransportationManagementSystem,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__bm25__k2__r0,ClothingCompany,bm25,2,0,0.3,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,False,False,False,False,{},{},0,0,0
+ClothingCompany__bm25__k2__r1,ClothingCompany,bm25,2,1,0.3,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,False,False,False,False,{},{},0,0,0
+Ebike__bm25__k2__r0,Ebike,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__bm25__k2__r1,Ebike,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__bm25__k2__r0,eHome2020,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__bm25__k2__r1,eHome2020,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k2__r0,EUScienceConnect,bm25,2,0,0.3,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,False,False,False,False,{},{},0,0,0
+EUScienceConnect__bm25__k2__r1,EUScienceConnect,bm25,2,1,0.3,False,False,False,False,False,-1,incomplete_json,False,stop,False,,{},[],{},,,False,False,False,False,{},{},0,0,0
+Facepage__bm25__k2__r0,Facepage,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,fence,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k2__r1,Facepage,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,fence,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__bm25__k2__r0,FitnessCompanyConan,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__bm25__k2__r1,FitnessCompanyConan,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__bm25__k2__r0,HelpingHands,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiave di relazione non prevista (ignorata): composition DistributionCenter-Article: sourceMultiplicity"", ""chiave di relazione non prevista (ignorata): composition DistributionCenter-Article: targetMultiplicity""]}",[],{},,,True,True,True,False,"{""chiave di relazione non prevista (ignorata)"": 2}",{},0,0,2
+HelpingHands__bm25__k2__r1,HelpingHands,bm25,2,1,0.3,True,False,False,False,False,0,invalid_json,False,stop,False,raw,"{""C1"": [""Expecting ',' delimiter: line 1 column 2461 (char 2460)""]}",[],{},,,True,False,False,False,{},{},0,0,0
+HomeForTheElderly__bm25__k2__r0,HomeForTheElderly,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,fence,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__bm25__k2__r1,HomeForTheElderly,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__bm25__k2__r0,HospitalHouseMD,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['source', 'sourceMultiplicity', 'target', 'targetMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+HospitalHouseMD__bm25__k2__r1,HospitalHouseMD,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+Musicmatic__bm25__k2__r0,Musicmatic,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,fence,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+Musicmatic__bm25__k2__r1,Musicmatic,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__bm25__k2__r0,PizzaDeliveryWithEntertainment,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__bm25__k2__r1,PizzaDeliveryWithEntertainment,bm25,2,1,0.3,True,False,False,False,False,0,invalid_json,False,stop,False,raw,"{""C1"": [""Expecting ',' delimiter: line 1 column 1300 (char 1299)""]}",[],{},,,True,False,False,False,{},{},0,0,0
+ProjectManagement__bm25__k2__r0,ProjectManagement,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k2__r1,ProjectManagement,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__bm25__k2__r0,TruckLogistics,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,fence,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+TruckLogistics__bm25__k2__r1,TruckLogistics,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__bm25__k2__r0,Bookmaker,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__bm25__k2__r1,Bookmaker,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k2__r0,InsuranceCompany,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k2__r1,InsuranceCompany,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__bm25__k2__r0,OilWells,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__bm25__k2__r1,OilWells,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__bm25__k2__r0,Restaurant,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['label', 'partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+Restaurant__bm25__k2__r1,Restaurant,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['part', 'source', 'sourceMultiplicity', 'targetMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
