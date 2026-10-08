@@ -47,6 +47,7 @@ sys.path.insert(0, str(ROOT / "corpus"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import apollon_convert as ac  # noqa: E402  (sola lettura)
 import postprocess as pp  # noqa: E402
+import uml_structure as us  # noqa: E402
 
 LABEL_RULE = "auto_v1"
 VERSIONS = ("pilot2_v1", "v2")
@@ -127,9 +128,9 @@ def apply_auto_label_rule(relationships: list[dict]) -> int:
     return changed
 
 
-def plantuml_to_apollon(text: str, model_id: str) -> tuple[dict | None, dict]:
-    """PlantUML (blocco gia' estratto) -> (Apollon o None, dettagli). Usata sia per le risposte sia per il controllo
-    di sanita' sui diagrammi del corpus e del test set."""
+def _read_plantuml(text: str) -> tuple[tuple | None, dict]:
+    """Lettura con il parser del convertitore, regola delle etichette auto_v1, vincoli di generalizzazione, classi
+    associative. Ritorna ((classi, relazioni, vincoli) o None, dettagli)."""
     info = {"discarded_lines": [], "unsupported": [], "warnings": [], "error": None, "label_rule_rewrites": 0}
     try:
         classes, relationships, warnings, unsupported = ac.parse_plantuml(text)
@@ -143,13 +144,48 @@ def plantuml_to_apollon(text: str, model_id: str) -> tuple[dict | None, dict]:
         return None, info
     try:
         info["label_rule_rewrites"] = apply_auto_label_rule(relationships)
-        ac.extract_generalization_constraints(relationships)
+        constraints = ac.extract_generalization_constraints(relationships)
         relationships, _ = ac.reify_association_classes(relationships)
-        diagram, build_warnings = ac.build_apollon_json(model_id, classes, relationships)
     except Exception as e:
         info["error"] = f"build: {type(e).__name__}: {e}"
         return None, info
-    info["warnings"] += build_warnings
+    return (classes, relationships, constraints), info
+
+
+def plantuml_to_structure(text: str, model_id: str) -> tuple[us.UMLStructure | None, dict]:
+    """PlantUML (blocco gia' estratto) -> (struttura comune o None, dettagli) (generation/uml_structure.py)."""
+    read, info = _read_plantuml(text)
+    if read is None:
+        return None, info
+    try:
+        st = us.structure_from_parsed(*read[:2], model_id, read[2])
+    except Exception as e:
+        info["error"] = f"build: {type(e).__name__}: {e}"
+        return None, info
+    info["warnings"] += st.warnings
+    return st, info
+
+
+def plantuml_to_apollon(text: str, model_id: str, version: str = DEFAULT_VERSION) -> tuple[dict | None, dict]:
+    """PlantUML (blocco gia' estratto) -> (Apollon o None, dettagli). v2: lettura -> struttura -> espansore unico
+    (uml_structure.expand), lo stesso di tutte le strade. pilot2_v1: costruzione diretta con build_apollon_json, come
+    nell'analisi originale del secondo pilota (unica differenza visibile: gli id dei metodi, che nel percorso diretto
+    nascono dalla firma grezza della risposta e nella struttura dalla firma resa)."""
+    if version == PILOT2_VERSION:
+        read, info = _read_plantuml(text)
+        if read is None:
+            return None, info
+        try:
+            diagram, build_warnings = ac.build_apollon_json(model_id, *read[:2])
+        except Exception as e:
+            info["error"] = f"build: {type(e).__name__}: {e}"
+            return None, info
+        info["warnings"] += build_warnings
+        return diagram, info
+    st, info = plantuml_to_structure(text, model_id)
+    if st is None:
+        return None, info
+    diagram, _ = us.expand(st, model_id)
     return diagram, info
 
 
@@ -173,7 +209,7 @@ def validate_plantuml_response(text: str, finish_reason: str | None, model_id: s
     v.P0_block, v.L0_extracted, v.extraction = True, True, "plantuml_block"
     if version == "v2":
         block, v.syntax_rewrites = rewrite_java_headers(block)
-    diagram, info = plantuml_to_apollon(block, model_id)
+    diagram, info = plantuml_to_apollon(block, model_id, version)
     v.discarded_lines, v.parse_warnings = info["discarded_lines"], len(info["warnings"])
     if diagram is None:
         v.failure = "unsupported" if info["unsupported"] else "parse_error" if info["error"] else "no_classes"

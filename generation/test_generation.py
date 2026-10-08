@@ -816,6 +816,77 @@ Person "1" -- "0..*" Employee
           "JSON; 79 diagrammi a L4 (canonico identico al Passo 1, diagram_plantuml grezzo: 106 ruoli come etichette)")
 
 
+def check_uml_structure() -> None:
+    """Struttura comune, espansore unico e formato JSON compatto (generation/uml_structure.py, voce 90)."""
+    import re
+    import uml_structure as us
+    import compact_sanity_check as cs
+    st = us.structure_from_apollon(MINI)
+    assert [c.name for c in st.classes] == ["Alpha", "Beta"] and st.relations[0].target_multiplicity == "1..n"
+    compact = us.to_compact(st)
+    assert compact == {"classes": [{"name": "Alpha", "attributes": ["+ code : string"], "methods": ["describe(): string"]},
+                                   {"name": "Beta"}],
+                       "relations": [{"type": "association", "source": "Alpha", "target": "Beta",
+                                      "sourceMultiplicity": "1", "targetMultiplicity": "1..n"}]}
+    d, _ = us.compact_to_apollon(compact, "m")
+    assert d["edges"][0]["data"]["targetMultiplicity"] == "1..*"  # stessa normalizzazione del convertitore
+    assert d["nodes"][0]["data"]["methods"][0]["name"] == "+ describe() : string"
+    assert us.expand(us.from_compact(compact), "m")[0] == d  # deterministico
+    with_empty = {"classes": [{"name": "A", "kind": "class", "attributes": [], "methods": []}, {"name": "B"}],
+                  "relations": [{"type": "inheritance", "source": "A", "target": "B", "label": ""}]}
+    assert us.to_compact(us.from_compact(with_empty)) == {"classes": [{"name": "A"}, {"name": "B"}], "relations": [
+        {"type": "inheritance", "source": "A", "target": "B"}]}  # chiavi vuote accettate, poi omesse
+    bad = [{"classes": [{"name": "A"}], "version": "4.2.0"},  # metadati non ammessi
+           {"classes": [{"name": "A"}, {"name": "A"}]},  # nomi ripetuti
+           {"classes": [{"name": "A", "kind": "record"}]},
+           {"classes": [{"name": "E", "kind": "enum", "attributes": ["X"]}]},
+           {"classes": [{"name": "A", "id": "x"}]},
+           {"classes": [{"name": "A"}], "relations": [{"type": "ClassBidirectional", "source": "A", "target": "A"}]}]
+    for b in bad:
+        try:
+            us.from_compact(b)
+            raise AssertionError(f"compatto non valido accettato: {b}")
+        except us.StructureError:
+            pass
+    try:  # relazione verso una classe non dichiarata: rifiutata dall'espansore
+        us.compact_to_apollon({"classes": [{"name": "A"}], "relations": [
+            {"type": "association", "source": "A", "target": "Z"}]}, "m")
+        raise AssertionError("relazione verso classe inesistente accettata")
+    except us.StructureError:
+        pass
+    broken = json.loads(MINI_TXT)
+    broken["edges"][0]["target"] = "nessuno"
+    try:
+        us.structure_from_apollon(broken)
+        raise AssertionError("Apollon con riferimento rotto accettato")
+    except us.StructureError:
+        pass
+    # PlantUML -> struttura (vincoli di generalizzazione conservati) -> espansore
+    st, _ = ppu.plantuml_to_structure("@startuml\nclass A {}\nclass B {}\nclass C {}\nB --|> A : {disjoint}\n"
+                                      "C --|> A : {disjoint}\n@enduml", "m")
+    assert len(st.constraints) == 2 and [r.type for r in st.relations] == ["ClassInheritance"] * 2
+    # esempi della specifica: coincidono con il corpus e arrivano a L4
+    doc = (ROOT / "docs" / "compact_format.md").read_text(encoding="utf-8")
+    blocks = [json.loads(b) for b in re.findall(r"```json\n(.*?)```", doc, re.S)]
+    truck = builder_free_record("TruckLogistics")
+    assert blocks[0] == us.apollon_to_compact(truck)
+    for b in blocks:
+        v = pp.check_l2_l4(pp.Validation(L0_extracted=True, L1_json=True, level=1), us.compact_to_apollon(b, "doc")[0])
+        assert v.level == 4, (v.failure, v.errors)
+    s = cs.run()  # 79 diagrammi: identici salvo gli id dei metodi (firma grezza del Passo 1)
+    for k in "ab":
+        assert s[f"{k}_identical"] == 57 and s[f"{k}_method_ids_only"] == 22 and not s[f"{k}_other"]
+        assert s[f"{k}_method_ids"] == 148
+    assert sorted(s["tokens_compact"])[len(s["tokens_compact"]) // 2] == 338 and max(s["tokens_compact"]) == 960
+    print("  OK  struttura comune ed espansore unico: Apollon <-> struttura <-> JSON compatto, chiavi vuote omesse, "
+          "compatto non valido rifiutato, vincoli da PlantUML conservati, esempi della specifica a L4; 79 diagrammi "
+          "identici al Passo 1 nei percorsi PlantUML e compatto (57) o salvo gli id dei metodi (22, 148 id)")
+
+
+def builder_free_record(rid: str) -> dict:
+    return next(c["diagram_apollon_json"] for c in cl.load_candidates() if c["id"] == rid)
+
+
 def check_pilot2(tmp: Path) -> None:
     """Configurazioni del secondo pilota, schema per la generazione vincolata, calibrazione (server finto)."""
     import yaml
@@ -1264,6 +1335,7 @@ def main() -> None:
         check_pilot(builder, tmp)
         check_analyze_pilot()
         check_plantuml(builder)
+        check_uml_structure()
         check_pilot2(tmp)
         check_analyze_pilot2(tmp)
         check_smoke(tmp)

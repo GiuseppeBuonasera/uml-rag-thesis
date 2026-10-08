@@ -98,6 +98,7 @@ non sono state modificate.
 87. 2026-10-08 — Gemma 4 12B QAT: impostazioni di caricamento (Flash Attention, KV cache) del primo pilota
 88. 2026-10-08 — Secondo pilota, STOP 2: la regola della voce 78 sceglie P-Q (Qwen2.5-Coder 7B, PlantUML)
 89. 2026-10-08 — Secondo pilota, decisioni dello STOP 2: strada PlantUML adottata, entrambi i modelli, post-processing PlantUML v2, analisi v2 descrittiva
+90. 2026-10-08 — Struttura comune, espansore unico e formato JSON compatto (FASE 1, STOP 1)
 
 ## Formato
 
@@ -3061,7 +3062,9 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   - versioni: `pilot2_v1` (analisi originale del secondo pilota) e **`v2`, default per le run nuove**; il runner
     registra `plantuml_postprocess_version` nella provenienza. Verificato: con `pilot2_v1` i livelli ricalcolati
     coincidono con il manifest in 24/24 risposte PlantUML. Resta scartata la riga di P-G `class MandatorySoloRound
-    --|> SoloRound` (dichiarazione e relazione sulla stessa riga: fuori da queste correzioni).
+    --|> SoloRound` (dichiarazione e relazione sulla stessa riga). **Decisione dell'utente (punto 0 approvato)**: resta
+    scartata, perché non è sintassi PlantUML standard ed è un caso isolato; **nessun'altra correzione basata sulle
+    risposte del pilota**: le prossime eventuali si valutano sull'insieme di sviluppo.
 - **Report del secondo pilota** (`experiments/analyze_pilot2.py`, solo presentazione; regola, numeri e criteri invariati,
   verificato con un diff del summary): `interactive_present` riportato come "n/a (aggiunto dal convertitore)" per P-*;
   colonna **P1** (valide fino a L3 e senza righe scartate) nella classifica: P-Q 8/12, P-G 9/12.
@@ -3078,3 +3081,54 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   riga), conteggi, `pilot2_v1` che scarta le stesse righe di prima, blocco senza `@enduml` (stop → L4 con diagnostico;
   length → troncata), versione sconosciuta rifiutata; colonna P1 e `interactive_present` n/a nel report; analisi v2 in
   una cartella a parte senza modificare il summary originale.
+
+### [2026-10-08] Struttura comune, espansore unico e formato JSON compatto (FASE 1, STOP 1)
+- **Motivazione (misura dell'utente sui 79 diagrammi)**: nell'Apollon completo circa il 49% dei token sono UUID e il 24%
+  layout; con id per nome e senza layout la mediana scende da 2.445 a 669 token (−72%). Gli UUID sono anche la causa
+  degli errori principali della strada JSON del secondo pilota (id copiati dagli esempi, duplicati, relazioni verso
+  nodi inesistenti, voce 88). Apollon resta il formato di consegna. Di qui un terzo formato di uscita, il JSON
+  compatto, con id per nome e senza layout, espanso dal codice.
+- **Struttura comune** (`generation/uml_structure.py`): classi in ordine (nome, tipo class / abstract / interface /
+  enum, attributi e metodi nella forma del corpus, valori per gli enum), relazioni in ordine (tipo Apollon, estremi per
+  nome con la convenzione di Apollon, molteplicità, ruoli, etichetta), vincoli di generalizzazione (solo da PlantUML:
+  Apollon non li rappresenta). **Nessuna logica duplicata** (`corpus/apollon_convert.py` in sola lettura): la resa di
+  attributi, metodi, tipi e molteplicità esiste solo in `build_apollon_json`; perciò dal PlantUML la struttura si
+  ricava dall'Apollon costruito dal convertitore (`structure_from_parsed`), e l'**espansore unico** (`expand`)
+  ricostruisce gli input del convertitore (ParsedClass e relazioni con un operatore canonico per tipo, verificato
+  contro `relationship_kind` all'import) e richiama `build_apollon_json`: stessi id deterministici, layout, punti e
+  adattamento al canvas del Passo 1.
+- **Percorso PlantUML** (`generation/plantuml_postprocess.py`): con il post-processing **v2** passa da lettura →
+  struttura → espansore (`plantuml_to_structure`, `plantuml_to_apollon`); con **pilot2_v1** resta la costruzione
+  diretta di prima, per l'analisi originale del secondo pilota. Verificato contro la versione committata (`b1fecc5`)
+  sulle 24 risposte PlantUML del pilota, in entrambe le versioni: diagramma, livello e riga di validazione identici
+  (48/48).
+- **Formato JSON compatto**: specifica in `docs/compact_format.md` (PROPOSTA, con un esempio completo dal corpus,
+  TruckLogistics, e un frammento per i costrutti mancanti; entrambi espansi fino a L4, verificato dai test). Chiavi:
+  `classes` / `relations`; classe `name`, `kind` (omesso per class), `attributes`, `methods` (stringhe "+ nome : tipo",
+  "+ nome(parametri) : Tipo"), `values` per gli enum; relazione `type` (nomi brevi: association, unidirectional,
+  inheritance, realization, aggregation, composition, dependency), `source`, `target`, `label`,
+  `sourceMultiplicity`, `targetMultiplicity`, `sourceRole`, `targetRole`; chiavi vuote omesse; nessun id né
+  metadato. Convertitori: `apollon_to_compact` (esempi del prompt) e `compact_to_apollon` (risposta → struttura →
+  Apollon); `from_compact` è stretto (chiavi o tipi non previsti, nomi ripetuti → errore); la validazione a livelli
+  delle risposte (C0-C2, scarti contati) è della FASE 2.
+- **Controllo di sanità** (`generation/compact_sanity_check.py`, 79 diagrammi, nessun LLM):
+  - a. PlantUML canonico → post-processing v2 (struttura → espansore): **identico al Passo 1 in 57/79, identico salvo
+    gli id dei metodi in 22/79** (148 id di metodo su 155), nessun'altra differenza;
+  - b. Apollon del Passo 1 → compatto → (testo) → struttura → espansore: **stesso esito** (57 + 22, 148 id), nessun'altra
+    differenza;
+  - **unica differenza, spiegata**: nel Passo 1 l'id di un metodo nasce dalla firma GREZZA del PlantUML trascritto
+    (`stable_id("<modello>:method:<classe>:<firma grezza>:<i>")`, es. `getRideNr()`), mentre struttura, compatto e
+    Apollon conservano la firma RESA (`+ getRideNr()`): la firma grezza non è ricostruibile. Verificato su tutti i 155
+    metodi: l'id del Passo 1 si ottiene dalla firma grezza in 155/155; firma grezza uguale a quella resa in 7 casi (gli
+    unici id che coincidono). Gli id restano deterministici e uguali per tutte le strade nuove (stesso espansore);
+    contenuto, layout, punti e tutti gli altri id coincidono;
+  - c. token (cl100k_base, serializzazione su una riga, senza `interactive`): Apollon completo mediana **2.445**, massimo
+    7.145; JSON compatto mediana **338**, massimo 960; rapporto mediano 0,143 (min 0,100, max 0,174), cioè −86%.
+    Rispetto alla misura dell'utente (669, solo id per nome e senza layout) il compatto toglie anche gli id di
+    attributi, metodi e relazioni, i metadati e le chiavi vuote.
+- Test (`check_uml_structure` in `generation/test_generation.py`): Apollon ↔ struttura ↔ compatto, normalizzazioni del
+  convertitore, determinismo, chiavi vuote, compatti non validi rifiutati, riferimento rotto rifiutato, vincoli da
+  PlantUML conservati, esempi della specifica uguali al corpus e a L4, esito del controllo di sanità (57 + 22, 148 id,
+  mediana 338, massimo 960).
+- **STOP 1**: in attesa di approvazione della struttura, dei nomi delle chiavi e del formato di attributi e metodi
+  (`docs/compact_format.md`, "Punti da approvare"), e dell'eccezione sugli id dei metodi. Nessuna chiamata a un LLM.

@@ -97,6 +97,7 @@ python experiments/context_budget.py                 # fattore token reali / sti
 # secondo pilota (voce 78): strada 1 PlantUML / strada 2 JSON vincolato; una configurazione per volta
 python generation/plantuml_sanity_check.py           # 79 diagrammi come risposte PlantUML (canonico = Passo 1)
 python generation/make_generation_schema.py          # schema per la generazione vincolata (rigenera e verifica)
+python generation/compact_sanity_check.py            # struttura comune + JSON compatto sui 79 diagrammi (voce 90)
 python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q   # max_tokens 1 (Q = 7B)
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G      # P-G P-Q J-G J-Q
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration J0-Q     # riferimento, fuori dalla regola (voce 83)
