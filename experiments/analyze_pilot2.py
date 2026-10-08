@@ -33,8 +33,14 @@ della strada JSON (Gemma / Qwen x libero / vincolato).
 Riportato ma fuori dalla regola: livelli P0 / P1b / P1 e L0-L4, esiti di fallimento, righe scartate, verso e
 molteplicita' delle relazioni, scambi di tipo, latenze e token, rapporto token reali / stima, diagnostici.
 
+ANALISI v2 (voce 89), SOLO DESCRITTIVA: `--postprocess v2` rilegge le STESSE risposte salvate con il post-processing
+PlantUML v2 (intestazioni extends / implements riscritte, blocco senza @enduml letto fino alla fine) e scrive
+data/results/generation/pilot2_formats_analysis_v2/summary.md, accanto all'analisi originale (post-processing
+pilot2_v1, invariata). La regola vi e' riapplicata solo per descrivere l'effetto delle correzioni: l'esito valido del
+secondo pilota resta quello dell'analisi originale (voce 88). La strada 2 (JSON) non cambia tra le due versioni.
+
 Uso:
-    python experiments/analyze_pilot2.py [--results-dir data/results/generation]
+    python experiments/analyze_pilot2.py [--results-dir data/results/generation] [--postprocess pilot2_v1|v2]
 """
 
 from __future__ import annotations
@@ -105,10 +111,12 @@ def key(m: dict, field: str, sign: int) -> float:
 # --- metriche -------------------------------------------------------------------------------------------------------
 
 
-def validate(output_format: str, text: str, finish_reason: str | None, call_id: str):
-    """Stessa validazione del runner (experiments/run_experiment.run)."""
+def validate(output_format: str, text: str, finish_reason: str | None, call_id: str,
+             version: str = ppu.PILOT2_VERSION):
+    """Stessa validazione del runner (experiments/run_experiment.run). Strada 1: post-processing nella versione con
+    cui e' stata fatta l'analisi originale (pilot2_v1), salvo richiesta esplicita della v2 (analisi descrittiva)."""
     if output_format == "plantuml":
-        return ppu.validate_plantuml_response(text, finish_reason, call_id)
+        return ppu.validate_plantuml_response(text, finish_reason, call_id, version)
     return pp.validate_response(text, finish_reason)
 
 
@@ -190,7 +198,8 @@ def expected_model_ids(config_path: Path = PILOT2_CONFIG) -> dict[str, str]:
     return {n: rx.resolve_configuration(cfg, n)["model_metadata"]["model_id"] for n in cfg["configurations"]}
 
 
-def load_configuration(results: Path, name: str, gt: dict[str, dict], expected_model_id: str | None = None) -> dict:
+def load_configuration(results: Path, name: str, gt: dict[str, dict], expected_model_id: str | None = None,
+                       postprocess_version: str = ppu.PILOT2_VERSION) -> dict:
     """expected_model_id: se indicato, una run con un altro model_id (es. del Qwen 14B sostituito, voce 84) NON si usa:
     resta come traccia e la configurazione risulta non eseguita."""
     run_dir = results / f"{RUN_PREFIX}__{name}"
@@ -214,7 +223,7 @@ def load_configuration(results: Path, name: str, gt: dict[str, dict], expected_m
     fmt = cfg["prompt"]["output_format"]
     for m in manifest:
         raw = json.loads((run_dir / "raw" / f"{m['call_id']}.json").read_text(encoding="utf-8"))
-        v = validate(fmt, raw["text"], raw["finish_reason"], m["call_id"])
+        v = validate(fmt, raw["text"], raw["finish_reason"], m["call_id"], postprocess_version)
         info["level_mismatch"] += v.level != m.get("level")
         info["calls"].append({"m": m, "raw": raw, "v": v, "gt": gt[m["query_id"]], "q": m["query_id"],
                               "latency_s": m.get("latency_s")})
@@ -338,11 +347,45 @@ def references_section(refs: dict[str, dict], infos: dict[str, dict]) -> list[st
     return L
 
 
-def report(infos: dict[str, dict], refs: dict[str, dict] | None = None) -> tuple[str, dict]:
+def changes_section(infos: dict[str, dict]) -> list[str]:
+    """Analisi v2: risposte della strada 1 il cui livello o le cui righe scartate cambiano rispetto al manifest
+    (post-processing pilot2_v1), con le riscritture e i diagnostici della v2."""
+    L = ["", "## Risposte cambiate rispetto all'analisi originale (post-processing v2)", "",
+         "Livello del manifest (post-processing pilot2_v1, analisi originale) contro livello con la v2. Riscritture: "
+         "intestazioni `extends` / `implements` trasformate in relazioni; `enduml_mancante`: blocco letto fino alla "
+         "fine del testo (finish_reason diverso da length).", "",
+         "| chiamata | livello originale | livello v2 | righe scartate v2 | riscritture | enduml_mancante |",
+         "|---|---|---|---|---|---|"]
+    rows = 0
+    for n, i in infos.items():
+        for c in i["calls"]:
+            v = c["v"]
+            rw = {k: x for k, x in (getattr(v, "syntax_rewrites", None) or {}).items() if x}
+            miss = "enduml_mancante" in v.format_issues
+            if v.level != c["m"].get("level") or rw or miss:
+                rows += 1
+                L.append(f"| {n} {c['m']['call_id']} | {c['m'].get('level')} | {v.level} | "
+                         f"{len(getattr(v, 'discarded_lines', []))} | "
+                         f"{', '.join(f'{k} {x}' for k, x in sorted(rw.items())) or '—'} | {'si' if miss else '—'} |")
+    if not rows:
+        L.append("| nessuna | — | — | — | — | — |")
+    return L
+
+
+def report(infos: dict[str, dict], refs: dict[str, dict] | None = None,
+           postprocess_version: str = ppu.PILOT2_VERSION) -> tuple[str, dict]:
+    v2 = postprocess_version != ppu.PILOT2_VERSION
     dec = decide({n: {"excluded": i["excluded"], "metrics": i["metrics"]} for n, i in infos.items()})
     cfgs = [i["cfg"] for i in infos.values() if i["cfg"]]
     ref = cfgs[0] if cfgs else None
-    L = ["# Secondo pilota — PlantUML contro JSON vincolato (`pilot2_formats`)", "",
+    L = (["# Secondo pilota — ANALISI v2 (SOLO DESCRITTIVA, post-processing PlantUML v2)", "",
+          "**Analisi descrittiva** (voce 89): le STESSE risposte salvate, rilette con il post-processing PlantUML v2 "
+          "(intestazioni `extends` / `implements`, blocco senza `@enduml`). La regola della voce 78 e' riapplicata solo "
+          "per mostrare l'effetto delle correzioni: **l'esito valido del secondo pilota resta quello dell'analisi "
+          "originale** (`pilot2_formats_analysis/summary.md`, voce 88). La strada 2 (JSON) non cambia.", ""]
+         if v2 else [])
+    L += ["# Secondo pilota — PlantUML contro JSON vincolato (`pilot2_formats`)" if not v2 else
+          "Post-processing: v2 (strada 1); strada 2 invariata.", "",
          "**Esperimento PRELIMINARE** sul corpus (split `corpus`, selezione leave-one-out), mai sul test set: da "
          "dichiarare come tale in tesi. Regola di decisione registrata PRIMA delle run (docs/decisions.md, voce 78, "
          "approvata nella voce 79) e applicata cosi' com'e' da `experiments/analyze_pilot2.py` (voce 82), ricalcolando "
@@ -362,13 +405,14 @@ def report(infos: dict[str, dict], refs: dict[str, dict] | None = None) -> tuple
             L.append(f"**ATTENZIONE, run non omogenee**: {'; '.join(diff)}.")
     L += ["", SIZE_NOTE]
     mism = {n: i["level_mismatch"] for n, i in infos.items() if i["level_mismatch"]}
-    if mism:
+    if mism and not v2:
         L.append(f"**ATTENZIONE**: livello ricalcolato diverso da quello del manifest in {mism} risposte (codice di "
                  "validazione cambiato dopo la run?).")
 
     # regola
-    L += ["", "## Regola di decisione (voce 78), applicata cosi' com'e'", "",
-          f"**Esito: {dec['outcome']}**"]
+    L += ["", "## Regola di decisione (voce 78), applicata cosi' com'e'" if not v2 else
+          "## Regola della voce 78 riapplicata (SOLO DESCRITTIVA: l'esito valido e' quello dell'analisi originale)", "",
+          f"**Esito: {dec['outcome']}**" if not v2 else f"Esito che la regola darebbe con la v2: {dec['outcome']}"]
     L += [f"- {r}" for r in dec["reasons"]]
     for n, why in dec["excluded"].items():
         L.append(f"- esclusa {n}: {why}")
@@ -383,18 +427,26 @@ def report(infos: dict[str, dict], refs: dict[str, dict] | None = None) -> tuple
           "Posizione k = vincitrice della stessa regola (pareggio entro 1 risposta dal massimo di S, poi gli spareggi "
           "nell'ordine) applicata alle configurazioni non ancora classificate; la soglia minima vale solo per la "
           "scelta. J = Jaccard medio dei nomi di classe (risposte valide fino a L3); R = relazioni del GT con stessa "
-          "coppia e stesso tipo / relazioni del GT (risposte valide); latenza mediana su tutte le risposte.", "",
-          "| posizione | configurazione | S (su 12) | troncate | J | R | latenza mediana (s) | decisa da | nota |",
-          "|---|---|---|---|---|---|---|---|---|"]
+          "coppia e stesso tipo / relazioni del GT (risposte valide); latenza mediana su tutte le risposte. P1 (fuori "
+          "dalla regola, voce 89) = risposte della strada 1 valide fino a L3 e senza righe scartate.", "",
+          "| posizione | configurazione | S (su 12) | P1 senza righe scartate | troncate | J | R | latenza mediana (s) | "
+          "decisa da | nota |", "|---|---|---|---|---|---|---|---|---|---|"]
+    def p1(name: str) -> str:
+        if not name.startswith("P") or not infos[name]["calls"]:
+            return "—"
+        cs = infos[name]["calls"]
+        return f"{sum(c['v'].level >= 3 and c['v'].P1_clean for c in cs)}/{len(cs)}"
+
     for k, r in enumerate(dec["ranking"], 1):
         m = infos[r["name"]]["metrics"]
         if r.get("excluded"):
-            cells = ([f"{m['S']}/{m['n']}", str(m["truncated"]), fmt(m["J"]), fmt(m["R"]), fmt(m["latency_median"], 1)]
-                     if m else ["—"] * 5)
+            cells = ([f"{m['S']}/{m['n']}", p1(r["name"]), str(m["truncated"]), fmt(m["J"]), fmt(m["R"]),
+                      fmt(m["latency_median"], 1)] if m else ["—"] * 6)
             L.append(f"| — | {label(r['name'])} | " + " | ".join(cells) + f" | — | ESCLUSA: {r['excluded']} |")
             continue
         note = "scelta" if r["name"] == dec["winner"] else ""
-        L.append(f"| {k} | {label(r['name'])} | {m['S']}/{m['n']} | {m['truncated']} | {fmt(m['J'])} | {fmt(m['R'])} | "
+        L.append(f"| {k} | {label(r['name'])} | {m['S']}/{m['n']} | {p1(r['name'])} | {m['truncated']} | "
+                 f"{fmt(m['J'])} | {fmt(m['R'])} | "
                  f"{fmt(m['latency_median'], 1)} | {r['decided_by']} | {note} |")
     L += ["", "Riferimenti in JSON libero (Gemma del primo pilota, J0-Q): sezione \"Riferimenti\", fuori dalla "
           "classifica."]
@@ -482,10 +534,17 @@ def report(infos: dict[str, dict], refs: dict[str, dict] | None = None) -> tuple
           "| configurazione | formato della risposta | layout |", "|---|---|---|"]
     for n, i in infos.items():
         l1 = [c for c in i["calls"] if c["v"].L1_json]
-        f = Counter(k for c in l1 for k in c["v"].format_issues)
+        # strada 1: "interactive" lo aggiunge il convertitore, non il modello (voce 89) -> n/a, non contato
+        f = Counter(k for c in l1 for k in c["v"].format_issues
+                    if not (n.startswith("P") and k == "interactive_present"))
         la = Counter(k for c in l1 for k in c["v"].layout_issues)
-        L.append(f"| {n} | " + (", ".join(f"{k} {v}" for k, v in sorted(f.items())) or "nessuno") + " | " +
-                 (", ".join(f"{k} {v}" for k, v in sorted(la.items())) or "nessuno") + " |")
+        cells = [f"{k} {x}" for k, x in sorted(f.items())]
+        if n.startswith("P") and l1:
+            cells.append("interactive_present n/a (aggiunto dal convertitore)")
+        L.append(f"| {n} | " + (", ".join(cells) or "nessuno") + " | " +
+                 (", ".join(f"{k} {x}" for k, x in sorted(la.items())) or "nessuno") + " |")
+    if v2:
+        L += changes_section(infos)
     if refs is not None:
         L += references_section(refs, infos)
     return "\n".join(L) + "\n", dec
@@ -494,15 +553,18 @@ def report(infos: dict[str, dict], refs: dict[str, dict] | None = None) -> tuple
 def main(argv=None) -> int:
     a = argparse.ArgumentParser()
     a.add_argument("--results-dir", default=str(RESULTS))
+    a.add_argument("--postprocess", default=ppu.PILOT2_VERSION, choices=ppu.VERSIONS,
+                   help="pilot2_v1 = analisi originale (default); v2 = analisi descrittiva con le correzioni (voce 89)")
     args = a.parse_args(argv)
     results = Path(args.results_dir)
+    ver = args.postprocess
     gt = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates()}
     models = expected_model_ids()
-    infos = {n: load_configuration(results, n, gt, models[n]) for n in CONFIGURATIONS}
+    infos = {n: load_configuration(results, n, gt, models[n], ver) for n in CONFIGURATIONS}
     refs = {FIRST_PILOT_NAME: load_first_pilot(results, gt),
-            **{n: load_configuration(results, n, gt, models[n]) for n in REFERENCE_CONFIGURATIONS}}
-    text, _ = report(infos, refs)
-    out = results / OUT_NAME
+            **{n: load_configuration(results, n, gt, models[n], ver) for n in REFERENCE_CONFIGURATIONS}}
+    text, _ = report(infos, refs, ver)
+    out = results / (OUT_NAME if ver == ppu.PILOT2_VERSION else f"{OUT_NAME}_v2")
     out.mkdir(parents=True, exist_ok=True)
     (out / "summary.md").write_text(text, encoding="utf-8")
     if hasattr(sys.stdout, "reconfigure"):

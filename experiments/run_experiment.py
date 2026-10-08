@@ -419,6 +419,7 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
             prov["response_schema_sha256"] = hashlib.sha256(client.response_schema.read_bytes()).hexdigest()
         if (cfg.get("prompt") or {}).get("output_format") == "plantuml":
             prov["plantuml_label_rule"] = cfg.get("plantuml_label_rule")
+            prov["plantuml_postprocess_version"] = ppu.DEFAULT_VERSION  # v2 dal 2026-10-08 (voce 89)
         (out_dir / "config.json").write_text(json.dumps({"config": cfg, "provenance": prov}, indent=2,
                                                         ensure_ascii=False), encoding="utf-8")
     elif server_context is not None:  # a ogni ripresa: config.json non si riscrive, l'esito va in un file a parte

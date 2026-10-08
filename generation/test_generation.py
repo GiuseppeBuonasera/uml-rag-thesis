@@ -752,6 +752,45 @@ def check_plantuml(builder: PromptBuilder) -> None:
     v = ppu.validate_plantuml_response("@startuml\n<> D\nA -- D\n@enduml", "stop", "t")
     assert (v.P0_block, v.P1b_parsed, v.failure) == (True, False, "unsupported")
     assert ppu.validate_plantuml_response("@startuml\n@enduml", "stop", "t").failure == "no_classes"
+    # post-processing v2 (voce 89): extends / implements, blocco senza @enduml; pilot2_v1 invariata
+    java = """@startuml
+interface Payable {}
+abstract class Person {
+  + name : string
+}
+class Employee extends Person implements Payable, Comparable {
+  + salary : double
+}
+class Manager extends Employee { + level : int }
+class Intern extends Person {}
+interface Comparable
+Person "1" -- "0..*" Employee
+@enduml"""
+    v1 = ppu.validate_plantuml_response(java, "stop", "t", "pilot2_v1")
+    v = ppu.validate_plantuml_response(java, "stop", "t", "v2")
+    assert v1.postprocess_version == "pilot2_v1" and len(v1.discarded_lines) >= 4  # intestazioni e corpi scartati
+    assert v.level == 4 and not v.discarded_lines, (v.failure, v.errors, v.discarded_lines)
+    assert v.syntax_rewrites == {"headers": 3, "extends": 3, "implements": 2}
+    names = {n["id"]: n["data"]["name"] for n in v.diagram["nodes"]}
+    rels = {(e["type"], names[e["source"]], names[e["target"]]) for e in v.diagram["edges"]}
+    assert {("ClassInheritance", "Employee", "Person"), ("ClassInheritance", "Manager", "Employee"),
+            ("ClassInheritance", "Intern", "Person"), ("ClassRealization", "Employee", "Payable"),
+            ("ClassRealization", "Employee", "Comparable")} <= rels
+    attrs = {n["data"]["name"]: [a["name"] for a in n["data"]["attributes"]] for n in v.diagram["nodes"]}
+    assert attrs["Employee"] == ["+ salary : double"] and attrs["Manager"] == ["+ level : int"]  # corpo sulla riga
+    assert "syntax_rewrites" in v.row() and v.row()["syntax_rewrites"] == "extends=3;headers=3;implements=2"
+    no_end = PU_OK.replace("@enduml", "")
+    assert ppu.validate_plantuml_response(no_end, "stop", "t", "pilot2_v1").failure == "incomplete_block"
+    v = ppu.validate_plantuml_response(no_end, "stop", "t", "v2")
+    assert v.level == 4 and "enduml_mancante" in v.format_issues
+    assert ppu.validate_plantuml_response(no_end, "length", "t", "v2").failure == "truncated"  # con length: troncata
+    assert ppu.validate_plantuml_response(PU_OK, "stop", "t", "pilot2_v1").level == 4
+    assert ppu.DEFAULT_VERSION == "v2" and ppu.PILOT2_VERSION == "pilot2_v1"
+    try:
+        ppu.validate_plantuml_response(PU_OK, "stop", "t", "v3")
+        raise AssertionError("versione sconosciuta accettata")
+    except ValueError:
+        pass
     rels = [{"kind": "binary", "source_mult": "0..1*", "source_role": "", "target_mult": "boss", "target_role": "x"}]
     assert ppu.apply_auto_label_rule(rels) == 1 and rels[0]["target_role"] == "boss x" and rels[0]["source_mult"] == "0..1*"
     q = builder.by_id["ApartmentBuilding"]
@@ -772,7 +811,8 @@ def check_plantuml(builder: PromptBuilder) -> None:
     assert all(summ[x]["levels"] == {4: 79} for x in "AB") and summ["B"]["n_diff"] == 0
     assert summ["A"]["kinds"] == {"ruolo del Passo 1 rimasto come nome di associazione (testo dopo i due punti)": 106}
     print("  OK  strada 1 (PlantUML): P0 / P1 / P1b / L2-L4, righe scartate contate, troncamento, diamante "
-          "n-ario, regola automatica delle etichette, prompt PlantUML con esempi canonici e stessi esempi del formato "
+          "n-ario, post-processing v2 (extends / implements anche con corpo sulla riga, blocco senza @enduml) con "
+          "pilot2_v1 invariata, regola automatica delle etichette, prompt PlantUML con esempi canonici e stessi esempi del formato "
           "JSON; 79 diagrammi a L4 (canonico identico al Passo 1, diagram_plantuml grezzo: 106 ruoli come etichette)")
 
 
@@ -1019,8 +1059,10 @@ def check_analyze_pilot2(tmp: Path) -> None:
     assert a2.SIZE_NOTE in text and "taglia diversa" in a2.SIZE_NOTE
     assert "scelta la configurazione P-G" in text and "ESCLUSA: non eseguita" in text and "fermata per ragionamento" in text
     assert text.count("| P-G (strada 1 (PlantUML), Gemma 4 12B QAT) |") == 1
-    assert "| 1 | P-G (strada 1 (PlantUML), Gemma 4 12B QAT) | 12/12 | 0 | 1.000 | 1.000 | 5.5 |" in text
-    assert "| 2 | P-Q (strada 1 (PlantUML), Qwen2.5-Coder 7B) | 11/12 | 1 |" in text
+    assert "| 1 | P-G (strada 1 (PlantUML), Gemma 4 12B QAT) | 12/12 | 12/12 | 0 | 1.000 | 1.000 | 5.5 |" in text
+    assert "| 2 | P-Q (strada 1 (PlantUML), Qwen2.5-Coder 7B) | 11/12 | 11/12 | 1 |" in text  # colonna P1 (voce 89)
+    assert "| J-Q (strada 2 (JSON vincolato), Qwen2.5-Coder 7B) | 12/12 | — |" in text
+    assert "interactive_present n/a (aggiunto dal convertitore)" in text and "interactive_present 12" not in text
     # RIFERIMENTI (voce 83): J0-Q e Gemma libero del primo pilota, fuori dalla regola e dalla classifica
     refs = {a2.FIRST_PILOT_NAME: a2.load_first_pilot(res, gt), "J0-Q": a2.load_configuration(res, "J0-Q", gt)}
     assert refs[a2.FIRST_PILOT_NAME]["excluded"].startswith("run del primo pilota assente")
@@ -1061,6 +1103,30 @@ def check_analyze_pilot2(tmp: Path) -> None:
         assert a2.main(["--results-dir", str(res)]) == 0
     refs = {a2.FIRST_PILOT_NAME: a2.load_first_pilot(res, gt), "J0-Q": a2.load_configuration(res, "J0-Q", gt)}
     assert (res / a2.OUT_NAME / "summary.md").read_text(encoding="utf-8") == a2.report(infos, refs)[0]
+    # analisi v2 (voce 89): descrittiva, cartella a parte, l'originale non cambia
+    original = (res / a2.OUT_NAME / "summary.md").read_bytes()
+    with contextlib.redirect_stdout(io.StringIO()):
+        assert a2.main(["--results-dir", str(res), "--postprocess", "v2"]) == 0
+    assert (res / a2.OUT_NAME / "summary.md").read_bytes() == original
+    v2_text = (res / f"{a2.OUT_NAME}_v2" / "summary.md").read_text(encoding="utf-8")
+    assert v2_text.startswith("# Secondo pilota — ANALISI v2 (SOLO DESCRITTIVA")
+    assert "Esito che la regola darebbe con la v2" in v2_text and "**Esito:" not in v2_text
+    assert "## Risposte cambiate rispetto all'analisi originale" in v2_text
+    assert "| nessuna | — | — | — | — | — |" in v2_text  # risposte finte = GT canonico: nessun cambiamento
+    # visualizzatore (experiments/render_pilot2.py): pagina autonoma, solo lettura delle run
+    import render_pilot2 as rp
+    before = sorted(p.relative_to(res) for p in res.rglob("*") if p.is_file())
+    with contextlib.redirect_stdout(io.StringIO()):
+        assert rp.main(["--results-dir", str(res)]) == 0
+    after = sorted(p.relative_to(res) for p in res.rglob("*") if p.is_file())
+    assert set(after) - set(before) == {Path(a2.OUT_NAME) / "viewer.html"}  # scrive solo viewer.html
+    page = (res / a2.OUT_NAME / "viewer.html").read_text(encoding="utf-8")
+    assert all(f'id="{q}"' in page for q in cfg["query_ids"])
+    assert not any(x in page for x in ("<script", "<link", "src=", 'href="http'))  # nessuna risorsa esterna
+    assert "&lt;|--" in page or "*--" in page  # PlantUML del GT presente ed escapato
+    assert "incompleta (11/12" in page  # stato della run incompleta riportato
+    n_calls = sum(len(i["calls"]) for i in infos.values()) + len(refs["J0-Q"]["calls"])
+    assert page.count("<details>") == n_calls
     print("  OK  analisi del secondo pilota: regola della voce 78 (pareggio entro 1, spareggi nell'ordine troncamenti "
           "/ Jaccard / relazioni / latenza / strada 1 / Gemma, soglia 6/12, meno di 2 eseguibili), classifica "
           "completa con le escluse; run finte: assente, fermata per ragionamento, incompleta, troncata; riferimenti "

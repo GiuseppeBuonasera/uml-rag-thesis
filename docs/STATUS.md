@@ -101,6 +101,8 @@ python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml -
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G      # P-G P-Q J-G J-Q
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration J0-Q     # riferimento, fuori dalla regola (voce 83)
 python experiments/analyze_pilot2.py                 # regola della voce 78 + classifica completa -> pilot2_formats_analysis/summary.md
+python experiments/analyze_pilot2.py --postprocess v2   # analisi v2 SOLO descrittiva (voce 89) -> pilot2_formats_analysis_v2/
+python experiments/render_pilot2.py                  # pagina autonoma con tracce, GT e risposte -> pilot2_formats_analysis/viewer.html (non versionata)
 ```
 
 ## Contatori
@@ -487,12 +489,16 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
      (voce 79: esempi PlantUML canonici, regola `auto_v1`, regola di decisione definitiva con classifica completa,
      schema di generazione); script di analisi `experiments/analyze_pilot2.py` scritto e testato PRIMA delle run
      (voce 82: da qui la regola nel codice non cambia senza una nuova voce). **Modello Q = Qwen2.5-Coder 7B Q6_K**
-     (voci 84-85; il 14B non entra in VRAM a 32768), smoke test fatto (voce 86): si può lanciare la **calibrazione
-     J-Q**, poi P-Q / J-Q / J0-Q; la VRAM del 7B si registra dopo la calibrazione. **Gemma pronto** (voce 87:
-     Flash Attention attiva, KV cache F16, come nel primo pilota): calibrazione J-G, poi P-G / J-G.
-     **Riferimento J0-Q** (voce 83): Qwen in Apollon JSON libero, 12 generazioni, solo descrittivo e fuori dalla
-     regola; completa il 2x2 della strada JSON con Gemma libero del primo pilota (sezione "Riferimenti"
-     di `analyze_pilot2.py`).
+     (voci 84-85; il 14B non entra in VRAM a 32768). Gemma: Flash Attention attiva, KV cache F16 (voce 87).
+     Riferimento J0-Q (voce 83): Qwen in Apollon JSON libero, fuori dalla regola. **Run eseguite e analizzate
+     (STOP 2, voce 88)**: la regola sceglie **P-Q** (S 12/12; poi P-G 10, J-G 9, J-Q 0); 2x2 della strada JSON:
+     Gemma 8/18 libero, 9/12 vincolato; Qwen 7B 1/12 libero, 0/12 vincolato. Da notare: P-Q ha J e R più bassi di
+     P-G e perde contenuto con la sintassi `extends` (righe scartate, contate come valide da S). Report in
+     `data/results/generation/pilot2_formats_analysis/summary.md`. **Decisioni dello STOP 2 (voce 89)**: strada
+     PlantUML adottata, Apollon completo scritto dal modello chiuso, entrambi i modelli; post-processing PlantUML v2
+     (extends / implements, blocco senza @enduml; default per le run nuove, `pilot2_v1` per l'analisi originale);
+     analisi v2 descrittiva in `pilot2_formats_analysis_v2/` (P-G e P-Q entrambi 12/12; l'esito valido resta P-Q).
+     Resta TODO `vram_used` del 7B.
    - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM, parametri,
      finestra di contesto, temperatura e ripetizioni), 9 (baseline statica), 11 (metriche), 14 (generazione libera
      o vincolata allo schema) e 15 (ragionamento acceso o spento).

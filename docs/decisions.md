@@ -96,6 +96,8 @@ non sono state modificate.
 85. 2026-10-07 — Qwen2.5-Coder 7B Instruct Q6_K come modello da coding; confronto tra modelli di taglia diversa
 86. 2026-10-07 — Smoke test di Qwen2.5-Coder 7B Instruct: risposta attesa, nessun ragionamento, seed come Gemma e il 14B
 87. 2026-10-08 — Gemma 4 12B QAT: impostazioni di caricamento (Flash Attention, KV cache) del primo pilota
+88. 2026-10-08 — Secondo pilota, STOP 2: la regola della voce 78 sceglie P-Q (Qwen2.5-Coder 7B, PlantUML)
+89. 2026-10-08 — Secondo pilota, decisioni dello STOP 2: strada PlantUML adottata, entrambi i modelli, post-processing PlantUML v2, analisi v2 descrittiva
 
 ## Formato
 
@@ -2989,3 +2991,90 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   attiva per entrambi; restano diverse taglia e quantizzazione dei pesi (QAT q4_0 contro Q6_K, voce 85).
 - Il test sui valori fittizi del client J-G (`kv_cache_quant` F16, `flash_attention` false, solo per costruire la
   richiesta) è sostituito dal config reale.
+
+### [2026-10-08] Secondo pilota, STOP 2: la regola della voce 78 sceglie P-Q (Qwen2.5-Coder 7B, PlantUML)
+- `python experiments/analyze_pilot2.py` sulle cinque run committate (`48f3763` Qwen 7B: J-Q, J0-Q, P-Q; `58896d0`
+  Gemma: J-G, P-G), tutte complete (12/12), nessun ragionamento, livelli ricalcolati uguali al manifest, run omogenee.
+  Report: `data/results/generation/pilot2_formats_analysis/summary.md` (analisi sul commit `58896d0`).
+- **Regola della voce 78, applicata così com'è**: soglia superata (miglior S 12/12 >= 6); **scelta P-Q** con S = 12/12,
+  senza pareggio (la seconda, P-G, ha 10/12, fuori dalla finestra di 1).
+- **Classifica completa**:
+
+  | posizione | configurazione | S | troncate | J | R | latenza mediana (s) | decisa da |
+  |---|---|---|---|---|---|---|---|
+  | 1 | P-Q (PlantUML, Qwen2.5-Coder 7B) | 12/12 | 0 | 0,577 | 0,183 | 6,0 | S più alto |
+  | 2 | P-G (PlantUML, Gemma 4 12B QAT) | 10/12 | 0 | 0,606 | 0,321 | 9,1 | Jaccard (pari con J-G su S e troncate) |
+  | 3 | J-G (JSON vincolato, Gemma) | 9/12 | 0 | 0,582 | 0,123 | 99,1 | S più alto |
+  | 4 | J-Q (JSON vincolato, Qwen 7B) | 0/12 | 0 | — | — | 65,2 | S più alto |
+
+- **Riferimenti e 2x2 (solo descrittivi)**: S in JSON libero / vincolato: Gemma 8/18 (0,44, primo pilota) / 9/12
+  (0,75); Qwen 7B 1/12 (0,08, J0-Q) / 0/12. Prompt JSON identici al primo pilota in 12/12 risposte per J-G, J-Q e J0-Q.
+  Taglie diverse (voce 85): la differenza tra i modelli non è attribuibile alla sola specializzazione sul codice.
+- **Metriche secondarie**: nessuna risposta troncata nelle quattro configurazioni (contro 3/18 di Gemma in JSON libero
+  nel primo pilota). Strada 1 circa 10 volte più veloce (latenza mediana 6-9 s contro 65-99 s) con prompt di circa 3
+  mila token contro 12 mila. Relazioni scritte / relazioni del GT sulle risposte valide: P-G 81/78, P-Q 62/104, J-G
+  67/65. Scambi di tipo più frequenti: P-G unidirezionale → composizione (4); P-Q unidirezionale → bidirezionale (4);
+  J-G unidirezionale → composizione (5).
+- **Errori tipici, strada 1 (PlantUML)**:
+  - P-G: 2 risposte senza `@enduml` (CardGameApp r0, FilmSet r1; finish_reason = stop, circa 330 token: il modello
+    chiude il diagramma senza la riga finale) → nessun blocco, P0 fallito; 1 riga scartata (`class MandatorySoloRound
+    --|> SoloRound`, dichiarazione e generalizzazione sulla stessa riga).
+  - P-Q: **sintassi stile Java** `class X extends Y { ... }`, non riconosciuta dal parser: 42 righe scartate in 4
+    risposte (P1 pulite 8/12). Le risposte restano valide fino a L3 (P1b, come previsto dalla regola), ma **perdono
+    contenuto**: Sober r0 29 righe scartate, di cui 20 attributi / metodi e 4 generalizzazioni (RideHailing,
+    RideSharing → TaxiService; SelfDrivingCar, RegisteredCar → Vehicle); CardGameApp r0 e r1 3 generalizzazioni
+    ciascuna (JackRound, SoloRound → Round; MandatorySoloRound → SoloRound). 2 risposte ferme a L3 per tipi di
+    attributo che citano classi non dichiarate (`Person` in FilmSet r1, `Piece` / `Piece[]` in Louvre r0). Diagrammi
+    con poche relazioni (CardGameApp 3 su 13 del GT in entrambe le ripetizioni).
+- **Errori tipici, strada 2 (JSON)**:
+  - J-G: 3 risposte ferme a L2 per integrità: relazioni che puntano a id di nodo inesistenti, con id inventati a
+    schema ripetuto (es. `e2e2e2e2-e2e2-…`), e id duplicati a schema (`a0b0c0d0-…`, `a1b1c1d1-…`); nessun id copiato
+    dagli esempi (0/440). Metodi senza `+ ` (`compareHeight(other: Card): ComparisonResult`), recuperati dalla
+    riscrittura ammessa di L4.
+  - J-Q (12/12 ferme a L2) e J0-Q (10 ferme a L2): **id copiati dagli esempi del prompt** (J-Q: 4 risposte su 12, 111
+    id distinti su 329; J0-Q: 7 su 12, 149 su 313), quindi id duplicati e relazioni verso nodi che non esistono nella
+    risposta; id ricavati dai nomi dei campi, ripetuti tra nodi e membri (`studentId`, `email`, `name`); riuso dell'id
+    non valido del template v4 (`a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8`). Lo schema non può imporre unicità e
+    riferimenti (L3): per questo il vincolo non aiuta Qwen. J0-Q scrive il JSON dentro un blocco ```json (11/12,
+    estratto correttamente).
+- **Da notare per la decisione** (fatti, nessuna proposta di modifica della regola): S conta come valide le risposte
+  della strada 1 con righe scartate (P1b), come stabilito nella voce 78, e non misura la qualità. La vincitrice P-Q ha
+  S massimo ma J e R più bassi di P-G (0,577 contro 0,606; 0,183 contro 0,321) e perde contenuto con la sintassi
+  `extends`.
+- **STOP 2**: in attesa della decisione dell'utente sul seguito; nessuna modifica a regola, config, prompt o codice.
+
+### [2026-10-08] Secondo pilota, decisioni dello STOP 2: strada PlantUML adottata, entrambi i modelli, post-processing PlantUML v2, analisi v2 descrittiva
+- **Decisioni dell'utente sullo STOP 2** (voce 88):
+  - l'esito della regola della voce 78 resta registrato così com'è (vince **P-Q**), con il limite emerso: **S conta
+    anche le risposte con righe scartate** (P-Q: 42 righe in 4 risposte, contenuto perso);
+  - **strada PlantUML adottata**; la strada "Apollon completo scritto dal modello" è **chiusa** come risultato del
+    pilota (J-G 9/12, J-Q 0/12; errori di integrità che lo schema non può impedire);
+  - modelli per il seguito: **ENTRAMBI** (Gemma 4 12B QAT e Qwen2.5-Coder 7B).
+- **Post-processing PlantUML v2** (`generation/plantuml_postprocess.py`, parametro `version`; `corpus/apollon_convert.py`
+  NON modificato: le correzioni riscrivono il testo della risposta prima del parser):
+  - intestazioni `class X extends Y` e `class X implements A, B` (anche `abstract class` / `interface`, con o senza
+    corpo `{ }` sulla stessa riga, anche con contenuto): l'intestazione diventa `class X ...` e si aggiungono in fondo
+    al blocco `X --|> Y` e `X ..|> A`; conteggi in `syntax_rewrites` (intestazioni, extends, implements), colonna di
+    `validation.csv`;
+  - `@startuml` senza `@enduml` con finish_reason diverso da `length`: il blocco arriva fino alla fine del testo, con il
+    diagnostico di formato `enduml_mancante` (con `length` resta `truncated`);
+  - versioni: `pilot2_v1` (analisi originale del secondo pilota) e **`v2`, default per le run nuove**; il runner
+    registra `plantuml_postprocess_version` nella provenienza. Verificato: con `pilot2_v1` i livelli ricalcolati
+    coincidono con il manifest in 24/24 risposte PlantUML. Resta scartata la riga di P-G `class MandatorySoloRound
+    --|> SoloRound` (dichiarazione e relazione sulla stessa riga: fuori da queste correzioni).
+- **Report del secondo pilota** (`experiments/analyze_pilot2.py`, solo presentazione; regola, numeri e criteri invariati,
+  verificato con un diff del summary): `interactive_present` riportato come "n/a (aggiunto dal convertitore)" per P-*;
+  colonna **P1** (valide fino a L3 e senza righe scartate) nella classifica: P-Q 8/12, P-G 9/12.
+- **Analisi v2, SOLO DESCRITTIVA** (`python experiments/analyze_pilot2.py --postprocess v2` →
+  `data/results/generation/pilot2_formats_analysis_v2/summary.md`, accanto all'originale invariata): stesse risposte
+  salvate, nessuna nuova generazione; sezione "Risposte cambiate rispetto all'analisi originale". Esiti:
+  - P-G: 2 risposte senza `@enduml` passano da −1 a L4 → **S 12/12**, P1 11/12, J 0,603, R 0,317;
+  - P-Q: 3 + 3 + 4 intestazioni `extends` riscritte (CardGameApp r0, r1; Sober r0), righe scartate da 42 a 2, S
+    invariato 12/12, P1 10/12, relazioni scritte da 62 a 72;
+  - con la v2 la regola, riapplicata solo per descrivere l'effetto, darebbe **P-G** (pari con P-Q su S e troncate,
+    Jaccard più alto). **L'esito valido resta P-Q (voce 88)**; la differenza va riportata in tesi come effetto del
+    post-processing, non come risultato del pilota.
+- Test (`check_plantuml`, `check_analyze_pilot2`): extends / implements (eredità multipla, interfacce, corpo sulla
+  riga), conteggi, `pilot2_v1` che scarta le stesse righe di prima, blocco senza `@enduml` (stop → L4 con diagnostico;
+  length → troncata), versione sconosciuta rifiutata; colonna P1 e `interactive_present` n/a nel report; analisi v2 in
+  una cartella a parte senza modificare il summary originale.

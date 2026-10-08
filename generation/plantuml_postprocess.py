@@ -15,6 +15,17 @@ Livelli propri della strada 1 (cumulativi):
   build_apollon_json) e L2 schema, L3 integrita', L4 stile sull'Apollon prodotto.
 Troncamento: finish_reason = length senza @enduml -> failure "truncated".
 
+VERSIONI DEL POST-PROCESSING (parametro `version`; decisioni dello STOP 2 del secondo pilota, docs/decisions.md voce 89):
+  pilot2_v1  comportamento con cui sono state analizzate le run del secondo pilota (analisi ORIGINALE, invariata);
+  v2         (default per le run nuove) due correzioni, entrambe contate e registrate, mai nascoste:
+             - intestazioni "class X extends Y" / "class X implements A, B" (anche abstract class / interface, con o
+               senza corpo { } sulla stessa riga; sintassi PlantUML valida, non riconosciuta da apollon_convert):
+               l'intestazione diventa "class X ..." e si aggiungono le relazioni "X --|> Y" (extends) e "X ..|> A"
+               (implements) in fondo al blocco; conteggi in `syntax_rewrites`;
+             - @startuml senza @enduml con finish_reason diverso da "length": il blocco arriva fino alla fine del
+               testo, con il diagnostico di formato "enduml_mancante" (con "length" resta "truncated").
+  corpus/apollon_convert.py non cambia: le correzioni riscrivono il testo della risposta prima del parser.
+
 REGOLA AUTOMATICA DELLE ETICHETTE "auto_v1" (APPROVATA allo STOP 1 del secondo pilota, docs/decisions.md voci 78-79; per le
 risposte generate non esiste corpus/label_classification.json). Uguale per tutte le condizioni, deterministica:
   (a) testo dopo i due punti = NOME DI ASSOCIAZIONE (label), tolti i marcatori di verso di lettura (gia' nel parser);
@@ -38,10 +49,48 @@ import apollon_convert as ac  # noqa: E402  (sola lettura)
 import postprocess as pp  # noqa: E402
 
 LABEL_RULE = "auto_v1"
+VERSIONS = ("pilot2_v1", "v2")
+PILOT2_VERSION = "pilot2_v1"  # analisi originale del secondo pilota (voce 88)
+DEFAULT_VERSION = "v2"  # run nuove (voce 89)
 BLOCK_RE = re.compile(r"@startuml\b(.*?)@enduml", re.S | re.I)
 # "forma di molteplicita'": solo cifre, '*', '.', ',', 'n' / 'N', con almeno una cifra, '*' o 'n' (comprende "1",
 # "0..*", "1..n", "1...*" e anche la grafia "0..1*" presente in un ground truth del corpus, HomeForTheElderly)
 MULT_RE = re.compile(r"^(?=.*[0-9*nN])[0-9*.,nN]+$")
+# v2: intestazione con extends / implements (anche corpo { ... } sulla stessa riga)
+JAVA_HEADER_RE = re.compile(r"^(abstract\s+class|class|interface|enum)\s+(\w+)(\s*<<\w+>>)?\s+"
+                            r"((?:extends|implements)\b[^{]*?)\s*(\{.*)?$")
+JAVA_CLAUSE_RE = re.compile(r"(extends|implements)\s+([\w\s,]+?)\s*(?=\b(?:extends|implements)\b|$)")
+
+
+def rewrite_java_headers(block: str) -> tuple[str, dict]:
+    """v2: 'class X extends Y implements A, B { ...' -> 'class X { ...' + relazioni 'X --|> Y', 'X ..|> A', 'X ..|> B'
+    in fondo al blocco (non dentro un eventuale corpo aperto). Ritorna (testo, conteggi)."""
+    counts = {"headers": 0, "extends": 0, "implements": 0}
+    out, rels = [], []
+    for raw in block.splitlines():
+        m = JAVA_HEADER_RE.match(raw.strip())
+        if not m:
+            out.append(raw)
+            continue
+        kind, name, stereo, clause, body = m.groups()
+        counts["headers"] += 1
+        for word, parents in JAVA_CLAUSE_RE.findall(clause):
+            for parent in (x.strip() for x in parents.split(",")):
+                if parent:
+                    counts[word] += 1
+                    rels.append(f"{name} {'--|>' if word == 'extends' else '..|>'} {parent}")
+        head = f"{kind} {name}{stereo or ''}"
+        body = (body or "").strip()
+        if not body:
+            out.append(head)
+        elif re.fullmatch(r"\{\s*\}", body):
+            out.append(head + " {}")
+        else:  # '{' oppure '{ contenuto' oppure '{ contenuto }': il contenuto va su righe sue
+            inner = body[1:].strip()
+            closed = inner.endswith("}")
+            inner = inner[:-1].strip() if closed else inner
+            out += [head + " {"] + ([inner] if inner else []) + (["}"] if closed else [])
+    return "\n".join(out + rels), counts
 
 
 @dataclass
@@ -51,11 +100,14 @@ class PlantValidation(pp.Validation):
     P1_clean: bool = False
     discarded_lines: list = field(default_factory=list)
     parse_warnings: int = 0
+    postprocess_version: str = DEFAULT_VERSION
+    syntax_rewrites: dict = field(default_factory=dict)  # v2: intestazioni extends / implements riscritte
 
     def row(self) -> dict:
         d = super().row()
         d["discarded_lines_count"] = len(self.discarded_lines)
         d["discarded_lines"] = " | ".join(self.discarded_lines)[:2000]
+        d["syntax_rewrites"] = ";".join(f"{k}={v}" for k, v in sorted(self.syntax_rewrites.items()) if v)
         return d
 
 
@@ -101,17 +153,27 @@ def plantuml_to_apollon(text: str, model_id: str) -> tuple[dict | None, dict]:
     return diagram, info
 
 
-def validate_plantuml_response(text: str, finish_reason: str | None, model_id: str) -> PlantValidation:
-    v = PlantValidation(finish_reason=finish_reason, truncated=finish_reason == "length")
+def validate_plantuml_response(text: str, finish_reason: str | None, model_id: str,
+                                version: str = DEFAULT_VERSION) -> PlantValidation:
+    if version not in VERSIONS:
+        raise ValueError(f"versione del post-processing sconosciuta: {version} (ammesse: {VERSIONS})")
+    v = PlantValidation(finish_reason=finish_reason, truncated=finish_reason == "length", postprocess_version=version)
     body, v.reasoning_removed = pp.strip_reasoning(text or "")
     m = BLOCK_RE.search(body)
-    if not m:
-        v.failure = ("truncated" if v.truncated else
-                     "incomplete_block" if re.search(r"@startuml", body, re.I) else "no_block")
-        return v
+    missing_enduml = False
+    if m:
+        block, outside = m.group(0), (body[:m.start()] + body[m.end():]).strip()
+    else:
+        start = re.search(r"@startuml\b", body, re.I)
+        if version == "v2" and start and not v.truncated:  # v2: il blocco arriva fino alla fine del testo
+            block, outside, missing_enduml = body[start.start():], body[:start.start()].strip(), True
+        else:
+            v.failure = "truncated" if v.truncated else "incomplete_block" if start else "no_block"
+            return v
     v.P0_block, v.L0_extracted, v.extraction = True, True, "plantuml_block"
-    outside = (body[:m.start()] + body[m.end():]).strip()
-    diagram, info = plantuml_to_apollon(m.group(0), model_id)
+    if version == "v2":
+        block, v.syntax_rewrites = rewrite_java_headers(block)
+    diagram, info = plantuml_to_apollon(block, model_id)
     v.discarded_lines, v.parse_warnings = info["discarded_lines"], len(info["warnings"])
     if diagram is None:
         v.failure = "unsupported" if info["unsupported"] else "parse_error" if info["error"] else "no_classes"
@@ -120,4 +182,7 @@ def validate_plantuml_response(text: str, finish_reason: str | None, model_id: s
     v.P1b_parsed, v.P1_clean = True, not info["discarded_lines"]
     v.L1_json, v.level, v.diagram = True, 1, diagram  # l'Apollon prodotto e' JSON per costruzione
     v.format_issues, v.layout_issues = pp.instruction_checks(diagram, bool(outside))
+    if missing_enduml:
+        v.format_issues["enduml_mancante"] = "blocco senza @enduml, letto fino alla fine del testo (finish_reason " \
+                                             f"{finish_reason})"
     return pp.check_l2_l4(v, diagram)
