@@ -10,8 +10,12 @@ prompt reale + max_tokens <= contesto per ogni configurazione dello stesso model
 Prima della prima chiamata verifica il contesto del modello caricato (come il runner). L'esito si salva in
 docs/smoke_tests/<data>_<id-modello>_calibrationN.json (N progressivo, mai sovrascrivere).
 
+Formati: per default apollon e plantuml (secondo pilota); con --formats si sceglie l'elenco, es. per l'insieme di
+sviluppo (voce 92) --formats plantuml compact.
+
 Uso:
     python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q
+    python experiments/calibrate_tokens.py experiments/configs/dev_formats.yaml --configuration C-Q --formats plantuml compact
 """
 
 from __future__ import annotations
@@ -44,7 +48,10 @@ def next_path(save_dir: Path, date: str, model: str) -> Path:
     return save_dir / f"{prefix}{max(used, default=0) + 1}.json"
 
 
-def calibrate(cfg: dict, client, accept_unverified: bool = False, ask=input) -> dict:
+DEFAULT_FORMATS = ("apollon", "plantuml")
+
+
+def calibrate(cfg: dict, client, accept_unverified: bool = False, ask=input, formats=DEFAULT_FORMATS) -> dict:
     server_context = rx.check_server_context(client, cfg, accept_unverified, ask)
     candidates, queries = cl.load_all()
     builder = PromptBuilder(candidates, queries)
@@ -52,7 +59,7 @@ def calibrate(cfg: dict, client, accept_unverified: bool = False, ask=input) -> 
     params = GenerationParams(temperature=0.0, top_p=gen["top_p"], top_k=gen["top_k"], max_tokens=1, seed=gen["seed"])
     by_id = {c["id"]: c for c in candidates}
     rows = []
-    for fmt in ("apollon", "plantuml"):
+    for fmt in formats:
         for qid in cfg["query_ids"]:
             bp = builder.build(by_id[qid], PromptSpec("bm25", k=cfg["k"][0], output_format=fmt))
             res = client.generate(bp.messages, params)
@@ -61,7 +68,7 @@ def calibrate(cfg: dict, client, accept_unverified: bool = False, ask=input) -> 
                          "ratio": res.prompt_tokens / est if res.prompt_tokens else None})
     context, max_tokens = cfg["model_metadata"]["context_length"], gen["max_tokens"]
     summary = {}
-    for fmt in ("apollon", "plantuml"):
+    for fmt in formats:
         rs = [r for r in rows if r["format"] == fmt and r["ratio"]]
         if not rs:
             summary[fmt] = {"error": "il server non riporta i token di prompt (usage.prompt_tokens)"}
@@ -80,10 +87,11 @@ def main(argv=None) -> int:
     ap.add_argument("config")
     ap.add_argument("--configuration", required=True, help="configurazione del modello da calibrare (es. J-Q)")
     ap.add_argument("--accept-unverified-context", action="store_true")
+    ap.add_argument("--formats", nargs="+", default=list(DEFAULT_FORMATS), choices=["apollon", "plantuml", "compact"])
     ap.add_argument("--save-dir", default=str(SAVE_DIR), help=argparse.SUPPRESS)
     a = ap.parse_args(argv)
     cfg = rx.resolve_configuration(yaml.safe_load(Path(a.config).read_text(encoding="utf-8")), a.configuration)
-    out = calibrate(cfg, rx.make_client(cfg), a.accept_unverified_context)
+    out = calibrate(cfg, rx.make_client(cfg), a.accept_unverified_context, formats=tuple(a.formats))
     for fmt, s in out["summary"].items():
         print(f"{fmt}: " + (s["error"] if "error" in s else
               f"rapporto reale / stima min {s['ratio_min']:.3f}, mediana {s['ratio_median']:.3f}, max {s['ratio_max']:.3f}; "

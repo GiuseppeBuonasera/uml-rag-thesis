@@ -99,6 +99,8 @@ non sono state modificate.
 88. 2026-10-08 — Secondo pilota, STOP 2: la regola della voce 78 sceglie P-Q (Qwen2.5-Coder 7B, PlantUML)
 89. 2026-10-08 — Secondo pilota, decisioni dello STOP 2: strada PlantUML adottata, entrambi i modelli, post-processing PlantUML v2, analisi v2 descrittiva
 90. 2026-10-08 — Struttura comune, espansore unico e formato JSON compatto (FASE 1, STOP 1)
+91. 2026-10-08 — Strada "JSON compatto" (FASE 2): istruzioni, post-processing C0-C2, schema disattivato, runner
+92. 2026-10-08 — Insieme di sviluppo e confronto dei formati PlantUML / JSON compatto (FASE 3, STOP 2): selezione, config, metriche e regola PRIMA delle run
 
 ## Formato
 
@@ -3132,3 +3134,144 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   mediana 338, massimo 960).
 - **STOP 1**: in attesa di approvazione della struttura, dei nomi delle chiavi e del formato di attributi e metodi
   (`docs/compact_format.md`, "Punti da approvare"), e dell'eccezione sugli id dei metodi. Nessuna chiamata a un LLM.
+- **Decisioni dello STOP 1 (utente)**:
+  1. struttura comune ed espansore unico: **approvati**;
+  2. id dei metodi: **eccezione approvata** (gli id sono etichette interne; contenuto, layout e altri id identici).
+     **Condizione**, scritta in STATUS.md tra i requisiti della valutazione: le metriche confrontano gli elementi sempre
+     per contenuto (nomi, firme, tipi), mai per id;
+  3. formato compatto: approvate le chiavi di Apollon per molteplicità, ruoli ed etichetta, le chiavi vuote e
+     `kind: "class"` omessi (il post-processing accetta anche le chiavi vuote presenti), gli enum con `values`, attributi
+     e metodi come stringhe `"+ nome : tipo"`, i tipi di relazione con nomi brevi (**elenco chiuso** di sette valori,
+     nella specifica e nelle istruzioni);
+  4. **verso delle relazioni per RUOLO** (modifica): non `source` / `target` con il verso di Apollon (sorgente = parte),
+     controintuitivo e causa delle composizioni invertite del primo pilota. Chiavi adottate: composizione e
+     aggregazione `whole` / `part` con `wholeMultiplicity`, `partMultiplicity`, `wholeRole`, `partRole` (più `label`);
+     generalizzazione e realizzazione `child` / `parent` (nient'altro); associazione, unidirezionale e dipendenza
+     `source` / `target` con le chiavi di Apollon. L'espansore converte nel verso di Apollon (parte → sorgente, tutto →
+     destinazione; figlia → sorgente, madre → destinazione). Le chiavi di un'altra famiglia presenti ma vuote sono
+     ammesse come le altre chiavi vuote; con un valore non sono conformi.
+- **Dopo la modifica** (`docs/compact_format.md` riscritta, esempi aggiornati e verificati dai test): controllo b sui 79
+  diagrammi **invariato** (identico in 57, identico salvo gli id dei metodi in 22 con 148 id, nessun'altra
+  differenza); controllo a invariato; token del compatto **invariati**: mediana 338, massimo 960 (caratteri mediana da
+  1.546 a 1.542). `read_compact` ha ora due modalità: stretta (esempi, controlli) e tollerante (risposte del modello:
+  ogni elemento non conforme scartato o chiave ignorata, con categoria e dettaglio, nulla riparato o inventato).
+
+### [2026-10-08] Strada "JSON compatto" (FASE 2): istruzioni, post-processing C0-C2, schema disattivato, runner
+- **Istruzioni** `generation/templates/v4_compact_instructions.txt`: dal template v4 cambiano SOLO le parti sul formato
+  (come per PlantUML, voce 78): ruolo di esperto del formato compatto; struttura di primo livello `classes` /
+  `relations`; voce di classe (`name`, `kind`, `attributes`, `methods`, `values`) al posto di id, posizione,
+  dimensioni e `data`; voce di relazione con l'**elenco chiuso** dei sette tipi e le chiavi per famiglia (`whole` /
+  `part`, `child` / `parent`, `source` / `target`) al posto di id, handle e punti; regole di scelta del tipo
+  riformulate con i nuovi nomi e le chiavi di ruolo; righe tolte: id univoci, coordinate, canvas. **Identiche** (salvo
+  i nomi dei tipi e "edge" → "relation"): tipi semplici degli attributi e notazione `tipo[]`, molteplicità, linee guida
+  di modellazione (righe 61-67 della v4; verificato da un test). Esempi: voce `v4_example_item.txt` della v4
+  ("Example n — JSON:") con il compatto del Passo 1 su una riga (`prompt_builder`, `output_format: "compact"`); stessi
+  esempi recuperati degli altri formati.
+- **Post-processing** `generation/compact_postprocess.py`: stessa estrazione di `postprocess.py` (ragionamento tolto,
+  risposta intera / blocco ``` / oggetto bilanciato); livelli **C0** JSON trovato, **C1** JSON valido (oggetto), **C2b**
+  conversione tollerante riuscita (`read_compact(strict=False)`, almeno una classe), **C2** conforme alla specifica
+  (nessuno scarto); poi espansore unico e GLI STESSI L2-L4. Ogni scarto o chiave ignorata è registrato con categoria e
+  dettaglio (`compact_issues`, conteggio per categoria in `validation.csv`); nulla viene riparato o inventato; le
+  chiavi vuote presenti sono ammesse. Le normalizzazioni dell'espansore (tipi noti, visibilità → `+`, molteplicità
+  `n` → `*`) sono contate a parte (`normalizations`). Troncamento come in `postprocess.py`. Diagnostico di formato
+  della risposta: solo `extra_text` (il resto dell'Apollon lo produce l'espansore). Sui 79 ground truth passati come
+  risposte (anche in un blocco ```json): 79/79 a L4, C2 senza scarti, nessuna normalizzazione.
+- **Schema per la generazione vincolata** `generation/schemas/compact_generation.schema.json` (da
+  `python generation/compact_postprocess.py`): niente `$ref`, `anyOf` per le tre famiglie di relazione,
+  `additionalProperties: false`, `maxItems` 39 sulle relazioni come lo schema Apollon (voce 78); i 79 ground truth sono
+  validi. **DISATTIVATO**: nessuna config lo usa (verificato da un test); si proverà dopo. Come per lo schema Apollon,
+  non vincola i riferimenti per nome.
+- **Runner**: ramo `output_format: "compact"` (validazione con `compact_postprocess`), provenienza
+  `compact_format_spec`. **Calibrazione**: `calibrate_tokens.py --formats` (default apollon e plantuml, invariato per il
+  secondo pilota).
+- Test (`check_compact`): istruzioni e righe identiche alla v4, esempi compatti uguali al Passo 1 e agli esempi degli
+  altri formati, livelli e fallimenti (ragionamento, fence, troncamento, JSON incompleto, oggetto non compatto, nessuna
+  classe, nessun JSON), scarti per categoria e normalizzazioni su una risposta disordinata, schema (aggiornato, 79 GT
+  validi, nessuna config lo usa), ramo del runner con MockClient.
+
+### [2026-10-08] Insieme di sviluppo e confronto dei formati PlantUML / JSON compatto (FASE 3, STOP 2): selezione, config, metriche e regola PRIMA delle run
+- **Insieme di sviluppo** (`experiments/select_dev.py`, deterministico; solo CORPUS, query in leave-one-out, test set mai
+  toccato): candidati del primo pilota (59 convertiti, esclusi EatAtHome e i 14 fuori scala rispetto al test set) → 44;
+  **PROPOSTA: esclusi i 6 esercizi dei piloti** (il post-processing v2 è nato dalle loro risposte, voce 89: l'insieme di
+  sviluppo deve esserne indipendente) → 38 (basso 13, medio 14, alto 11). Quote per fascia di score_norm proporzionali
+  con il metodo dei resti più grandi: **7 / 7 / 6**; dentro la fascia, quantili equispaziati di dimensione (posizioni
+  floor((i + 0,5) · n / k) sull'ordine per dimensione e id). Con i piloti inclusi nessuno dei 6 verrebbe comunque scelto
+  (cambierebbero 3 esercizi della fascia media). Esercizi (fascia, dimensione, GT Apollon compatto in token):
+  basso — Boeing (22, 1.641), OilWells (22, 1.500), Restaurant (23, 1.568), EUScienceConnect (29, 2.374),
+  HomeForTheElderly (35, 2.764), HelpingHands (43, 3.347), Bookmaker (50, 3.149);
+  medio — BusTransportationManagementSystem (21, 1.388), FitnessCompanyConan (27, 2.167), Facepage (32, 2.622),
+  Musicmatic (32, 2.595), AlphaInsurance (34, 2.651), ClothingCompany (38, 2.488), PizzaDeliveryWithEntertainment (45,
+  3.098); alto — ProjectManagement (16, 1.742), HospitalHouseMD (18, 1.503), InsuranceCompany (22, 1.723),
+  TruckLogistics (27, 2.196), Ebike (34, 2.583), eHome2020 (36, 2.618).
+- **Config** `experiments/configs/dev_formats.yaml`: P-G, P-Q (PlantUML, post-processing v2), C-G, C-Q (JSON compatto,
+  generazione libera); stessi modelli e metadati del secondo pilota (Gemma 4 12B QAT; Qwen2.5-Coder 7B Q6_K); bm25 k =
+  2, temperature 0.3, top_p 0.95, top_k 64, max_tokens 12288, contesto 32768, 2 ripetizioni: 4 × 40 = **160
+  generazioni**. Prompt stimati (cl100k_base) min / mediana / max: PlantUML 2.187 / 2.970 / 3.689; compatto 2.556 /
+  3.471 / 4.116 (Apollon completo, per confronto: 6.731 / 8.651 / 13.132); output dei GT: PlantUML 142 / 203 / 442,
+  compatto 207 / 333 / 532.
+- **Calibrazione prima delle run** (chiamate reali con max_tokens = 1, una per modello): `calibrate_tokens.py
+  experiments/configs/dev_formats.yaml --configuration C-G --formats plantuml compact` e lo stesso con C-Q.
+- **Stima della durata** (non misurata; dalle latenze del secondo pilota, P-G mediana 9,1 s e P-Q 6,0 s con prompt di
+  circa 3 mila token, e dall'output del compatto circa 1,6 volte quello PlantUML): P-G circa 5-8 minuti, P-Q 3-5, C-G
+  7-11, C-Q 5-8; calibrazioni circa 1-2 minuti per modello; totale circa 25-35 minuti di generazione più i cambi di
+  modello.
+- **METRICHE DI SVILUPPO (registrate prima delle run; le metriche semantiche definitive restano da decidere con i
+  relatori, domanda 11)**, per configurazione e per formato, sempre per CONTENUTO e mai per id (requisito di STATUS.md):
+  - validità: **V** = risposte valide fino a L3; **Vc** = valide fino a L3 e senza scarti (P1 per PlantUML, C2 per il
+    compatto); troncamenti; righe scartate / scarti per categoria; normalizzazioni;
+  - **J** = Jaccard medio dei nomi di classe con il GT (risposte valide fino a L3);
+  - relazioni (`analyze_pilot.compare_relations`, accoppiamento 1:1 per coppia di classi): **R** = relazioni del GT con
+    stessa coppia e stesso tipo / relazioni del GT; stessa coppia / relazioni del GT; **verso** uguale / relazioni dello
+    stesso tipo orientato (e a parte per composizione / aggregazione); **molteplicità** uguali / confrontate;
+  - token di prompt e di completamento reali, latenza (mediana, min, max), durata.
+- **REGOLA DI CONFRONTO (PROPOSTA allo STOP 2; diventa definitiva con l'approvazione, PRIMA delle run)**. Per ciascun
+  formato F, sulle 80 risposte (2 modelli × 20 esercizi × 2 ripetizioni):
+  - controllo preliminare: una configurazione non eseguibile, incompleta o fermata per ragionamento → STOP senza
+    decidere; più di 2 troncamenti su 40 in una configurazione → segnalato (non blocca);
+  - (1) **validità**: se |V(compatto) − V(PlantUML)| ≥ 4 (5 punti percentuali), vince il formato con V più alto;
+  - (2) altrimenti **R**: se la differenza è ≥ 0,03, vince R più alto;
+  - (3) altrimenti **J**: se la differenza è ≥ 0,03, vince J più alto;
+  - (4) altrimenti **Vc**: se la differenza è ≥ 4, vince Vc più alto;
+  - (5) altrimenti **pareggio pieno → PlantUML** (strada già adottata, voce 89: senza un vantaggio misurato non si cambia).
+  - **Coerenza tra i modelli**: la stessa regola si applica a ciascun modello (40 risposte per formato, soglie 2
+    risposte per V e Vc, 0,03 per R e J); se i vincitori per Gemma e per Qwen sono diversi l'esito è "dipende dal
+    modello": si riporta e ci si ferma per una decisione, senza scelta automatica.
+  - Riportati ma fuori dalla regola: confronto appaiato per (esercizio, modello, ripetizione) (valida in un formato e
+    non nell'altro, nei due versi), verso e molteplicità, token, latenze, scarti, normalizzazioni; per fascia di
+    score_norm, solo descrittivo. Nessun test statistico (n piccoli).
+- **STOP 2**: in attesa di approvazione di insieme di sviluppo (piloti esclusi o inclusi), config, metriche, regola e
+  soglie. Proposta: scrivere e testare lo script di analisi dell'insieme di sviluppo PRIMA delle run, come per il
+  secondo pilota (voce 82).
+- **Decisioni dello STOP 2 (utente)**:
+  1. insieme di sviluppo **approvato, con i 6 esercizi dei piloti ESCLUSI** (il post-processing v2 è nato dalle loro
+     risposte);
+  2. config `experiments/configs/dev_formats.yaml` **approvata**;
+  3. regola approvata con due modifiche:
+     a. **ordine dei criteri: 1) Vc, 2) R, 3) J, 4) V, 5) pareggio pieno → PlantUML**, stesse soglie (Vc e V ≥ 4
+        risposte su 80; R e J ≥ 0,03; per modello 2 risposte su 40 e 0,03). Motivo: nel secondo pilota contare come
+        valide le risposte con contenuto scartato ha falsato l'esito (P-Q);
+     b. **J e R su TUTTE le risposte**, con 0 per quelle che non arrivano a L3 (per R: 0 relazioni ritrovate, mentre le
+        relazioni del GT contano al denominatore). Motivo: evitare l'effetto di selezione (riferimento Gemma libero: J
+        0,705 su sole 8 valide). Le versioni sulle sole valide restano tra le metriche secondarie;
+     coerenza tra i modelli e controllo preliminare **approvati** come proposti;
+  4. script di analisi PRIMA delle run, testato su dati finti.
+- **REGOLA DEFINITIVA** (sostituisce la proposta sopra; non si modifica dopo aver visto i dati): controllo preliminare
+  (configurazione non eseguita, incompleta o fermata per ragionamento → STOP; più di 2 troncamenti su 40 segnalati);
+  per formato sulle 80 risposte, il primo criterio con differenza ≥ soglia decide: **Vc (4), R (0,03), J (0,03), V (4)**;
+  altrimenti **PlantUML**; la stessa regola per modello (soglie 2 / 0,03 / 0,03 / 2): vincitori diversi → **"dipende dal
+  modello"**, STOP per decisione dell'utente; altrimenti decide il confronto sulle 80 risposte (se diverso dal vincitore
+  comune dei due modelli lo si segnala, senza cambiare l'esito: caso non previsto dalla proposta, applicata alla
+  lettera).
+- **Script** `experiments/analyze_dev.py` (scritto e testato PRIMA delle run): legge `dev_formats__<C>` in sola
+  lettura e ricalcola tutto dalle risposte grezze (PlantUML con la versione del post-processing registrata nella
+  provenienza, v2; compatto con `compact_postprocess`); scarta le run di un altro modello; scrive
+  `data/results/generation/dev_formats_analysis/summary.md` con l'esito, le tabelle dei criteri (80 risposte e per
+  modello), metriche per configurazione (V, Vc, J, R, J e R sulle valide, troncate, latenza), livelli, fallimenti,
+  scarti e normalizzazioni, relazioni (coppia, tipo, verso, molteplicità), confronto appaiato, fasce di score_norm,
+  token e latenze. **Da qui la regola nel codice (`CRITERIA`, soglie, `TIE_WINNER`, `MAX_TRUNCATED`, `decide`,
+  `outcome`, `metrics`) non si modifica senza una nuova voce.**
+- Test (`check_analyze_dev`): ciascun criterio che decide (anche con la soglia esatta in virgola mobile), pareggio a ogni
+  criterio fino al pareggio pieno → PlantUML, soglie per modello, R non definito = 0; J e R con 0 per le non valide
+  (e denominatore su tutte le relazioni del GT); "dipende dal modello"; configurazione incompleta (STOP); troncamenti
+  segnalati senza bloccare; run finte con 160 risposte (Vc 80 contro 74 → PlantUML per Vc; Gemma pari → pareggio pieno);
+  run di un altro modello scartata; costanti della regola.

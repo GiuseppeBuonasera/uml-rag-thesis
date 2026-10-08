@@ -178,15 +178,31 @@ def expand(st: UMLStructure, model_id: str) -> tuple[dict, list[str]]:
 
 
 # --- formato JSON compatto ------------------------------------------------------------------------------------------
-# Specifica: docs/compact_format.md. Chiavi omesse quando vuote; tipo di classe omesso quando "class".
+# Specifica: docs/compact_format.md (voce 90). Chiavi vuote omesse; kind omesso quando "class". Il VERSO e' dato da
+# chiavi che dicono il ruolo (decisione dello STOP 1): composizione / aggregazione "whole" / "part", generalizzazione /
+# realizzazione "child" / "parent", associazioni "source" / "target"; l'espansore converte nel verso di Apollon.
 
 COMPACT_REL_TYPES = {"ClassBidirectional": "association", "ClassUnidirectional": "unidirectional",
-                     "ClassInheritance": "inheritance", "ClassRealization": "realization",
-                     "ClassAggregation": "aggregation", "ClassComposition": "composition",
-                     "ClassDependency": "dependency"}
+                     "ClassDependency": "dependency", "ClassComposition": "composition",
+                     "ClassAggregation": "aggregation", "ClassInheritance": "inheritance",
+                     "ClassRealization": "realization"}
 FROM_COMPACT_REL = {v: k for k, v in COMPACT_REL_TYPES.items()}
-REL_KEYS = (("label", "label"), ("sourceMultiplicity", "source_multiplicity"),
-            ("targetMultiplicity", "target_multiplicity"), ("sourceRole", "source_role"), ("targetRole", "target_role"))
+# famiglia -> {chiave del compatto: campo di UMLRelation (verso di Apollon)}; le prime due chiavi sono gli estremi
+FAMILY_KEYS = {
+    "source_target": {"source": "source", "target": "target", "label": "label",
+                      "sourceMultiplicity": "source_multiplicity", "targetMultiplicity": "target_multiplicity",
+                      "sourceRole": "source_role", "targetRole": "target_role"},
+    # Apollon: sorgente = parte, destinazione = tutto (il rombo e' sul target)
+    "whole_part": {"whole": "target", "part": "source", "label": "label",
+                   "wholeMultiplicity": "target_multiplicity", "partMultiplicity": "source_multiplicity",
+                   "wholeRole": "target_role", "partRole": "source_role"},
+    # Apollon: sorgente = figlia / classe che implementa, destinazione = madre / interfaccia; nient'altro
+    "child_parent": {"child": "source", "parent": "target"},
+}
+REL_FAMILY = {"association": "source_target", "unidirectional": "source_target", "dependency": "source_target",
+              "composition": "whole_part", "aggregation": "whole_part",
+              "inheritance": "child_parent", "realization": "child_parent"}
+CLASS_KEYS = ("name", "kind", "attributes", "methods", "values")
 
 
 def to_compact(st: UMLStructure) -> dict:
@@ -206,43 +222,116 @@ def to_compact(st: UMLStructure) -> dict:
         classes.append(d)
     rels = []
     for r in st.relations:
-        d = {"type": COMPACT_REL_TYPES[r.type], "source": r.source, "target": r.target}
-        d.update({k: getattr(r, attr) for k, attr in REL_KEYS if getattr(r, attr)})
+        typ = COMPACT_REL_TYPES[r.type]
+        keys = FAMILY_KEYS[REL_FAMILY[typ]]
+        d = {"type": typ}
+        for i, (k, attr) in enumerate(keys.items()):
+            if i < 2 or getattr(r, attr):  # gli estremi sempre, il resto solo se non vuoto
+                d[k] = getattr(r, attr)
+        lost = [a for a in ("label", "source_multiplicity", "target_multiplicity", "source_role", "target_role")
+                if getattr(r, a) and a not in keys.values()]
+        if lost:  # generalizzazione con etichetta / molteplicita': il convertitore le toglierebbe comunque
+            raise StructureError(f"{typ} {r.source} -> {r.target}: campi non rappresentabili nel compatto {lost}")
         rels.append(d)
     return {"classes": classes, "relations": rels}
 
 
-def from_compact(data: dict) -> UMLStructure:
-    """JSON compatto -> struttura. Conversione STRETTA (FASE 1): qualunque scostamento dalla specifica solleva
-    StructureError; la validazione a livelli delle risposte (C0-C2, scarti contati) e' della FASE 2."""
-    if not isinstance(data, dict) or set(data) - {"classes", "relations"} or "classes" not in data:
-        raise StructureError("oggetto di primo livello: servono 'classes' (e 'relations'), nessun'altra chiave")
+def read_compact(data, strict: bool = True) -> tuple[UMLStructure, list[tuple[str, str]]]:
+    """JSON compatto (gia' decodificato) -> (struttura, scarti). strict=True: il primo scostamento dalla specifica
+    solleva StructureError. strict=False (post-processing delle risposte): ogni elemento non conforme si SCARTA (o si
+    ignora la chiave) e si registra come (categoria, dettaglio); nulla viene riparato o inventato. Le chiavi presenti
+    ma vuote sono ammesse (non sono scarti)."""
+    issues: list[tuple[str, str]] = []
+
+    def issue(cat: str, detail: str) -> None:
+        if strict:
+            raise StructureError(f"{cat}: {detail}")
+        issues.append((cat, detail))
+
+    if not isinstance(data, dict):
+        raise StructureError("il primo livello non e' un oggetto JSON")
+    for k in data:
+        if k not in ("classes", "relations"):
+            issue("chiave di primo livello non prevista (ignorata)", repr(k))
+    if not isinstance(data.get("classes"), list):
+        raise StructureError("manca la lista 'classes'")
     st = UMLStructure()
     for c in data["classes"]:
-        extra = set(c) - {"name", "kind", "attributes", "methods", "values"}
-        if extra:
-            raise StructureError(f"classe {c.get('name')!r}: chiavi non previste {sorted(extra)}")
-        kind = c.get("kind", "class")
+        if not isinstance(c, dict) or not isinstance(c.get("name"), str) or not c["name"].strip():
+            issue("classe senza nome (scartata)", repr(c)[:80])
+            continue
+        name = c["name"]
+        for k in c:
+            if k not in CLASS_KEYS:
+                issue("chiave di classe non prevista (ignorata)", f"{name}.{k}")
+        kind = c.get("kind") or "class"
         if kind not in KINDS:
-            raise StructureError(f"classe {c.get('name')!r}: kind {kind!r} non previsto")
-        if kind == "enum" and ("attributes" in c or "methods" in c):
-            raise StructureError(f"enum {c['name']!r}: usare 'values', non attributi o metodi")
-        if kind != "enum" and "values" in c:
-            raise StructureError(f"classe {c['name']!r}: 'values' solo per gli enum")
-        st.classes.append(UMLClass(c["name"], kind, list(c.get("values" if kind == "enum" else "attributes", [])),
-                                   list(c.get("methods", []))))
-    names = st.class_names()
-    if len(names) != len(set(names)):
-        raise StructureError("nomi di classe ripetuti")
-    for r in data.get("relations", []):
-        extra = set(r) - {"type", "source", "target", *(k for k, _ in REL_KEYS)}
-        if extra:
-            raise StructureError(f"relazione {r.get('source')!r} -> {r.get('target')!r}: chiavi non previste {sorted(extra)}")
-        if r.get("type") not in FROM_COMPACT_REL:
-            raise StructureError(f"tipo di relazione non previsto: {r.get('type')!r}")
-        st.relations.append(UMLRelation(FROM_COMPACT_REL[r["type"]], r["source"], r["target"],
-                                        **{attr: r.get(k, "") for k, attr in REL_KEYS}))
-    return st
+            issue("kind non previsto (classe scartata)", f"{name}: {kind!r}")
+            continue
+        if name in st.class_names():
+            issue("classe ripetuta (seconda scartata)", name)
+            continue
+        lists = {}
+        for k in ("attributes", "methods", "values"):
+            v = c.get(k) or []
+            if not isinstance(v, list):
+                issue(f"'{k}' non e' una lista (ignorato)", name)
+                v = []
+            bad = [x for x in v if not isinstance(x, str) or not x.strip()]
+            for x in bad:
+                issue(f"elemento di '{k}' non stringa o vuoto (scartato)", f"{name}: {x!r}"[:80])
+            lists[k] = [x for x in v if isinstance(x, str) and x.strip()]
+        if kind == "enum":
+            for k in ("attributes", "methods"):
+                if lists[k]:
+                    issue(f"enum con '{k}' (ignorati: i valori vanno in 'values')", name)
+            st.classes.append(UMLClass(name, kind, lists["values"], []))
+        else:
+            if lists["values"]:
+                issue("'values' su una classe non enum (ignorati)", name)
+            st.classes.append(UMLClass(name, kind, lists["attributes"], lists["methods"]))
+    rels = data.get("relations") or []
+    if not isinstance(rels, list):
+        issue("'relations' non e' una lista (ignorata)", "")
+        rels = []
+    names = set(st.class_names())
+    for r in rels:
+        if not isinstance(r, dict) or r.get("type") not in REL_FAMILY:
+            issue("tipo di relazione non previsto (relazione scartata)", repr(r.get("type") if isinstance(r, dict) else r)[:80])
+            continue
+        typ, keys = r["type"], FAMILY_KEYS[REL_FAMILY[r["type"]]]
+        ends = list(keys)[:2]
+        known = {k for fk in FAMILY_KEYS.values() for k in fk}
+        # chiavi di altre famiglie presenti ma VUOTE: nessuna informazione, ammesse come le chiavi vuote (STOP 1)
+        others = [k for k in r if k != "type" and k not in keys and not (k in known and r[k] in ("", None))]
+        wrong_ends = [k for k in others if any(k in fk for fk in FAMILY_KEYS.values())]
+        if any(not isinstance(r.get(e), str) or not r.get(e) for e in ends):
+            cat = ("chiavi di verso di un'altra famiglia (relazione scartata)" if wrong_ends
+                   else "estremo mancante (relazione scartata)")
+            issue(cat, f"{typ}: servono {ends}, presenti {sorted(k for k in r if k != 'type')}")
+            continue
+        for k in others:
+            issue("chiave di relazione non prevista (ignorata)", f"{typ} {r[ends[0]]}-{r[ends[1]]}: {k}")
+        missing = [r[e] for e in ends if r[e] not in names]
+        if missing:
+            issue("relazione verso una classe non dichiarata (scartata)", f"{typ} {r[ends[0]]}-{r[ends[1]]}: {missing}")
+            continue
+        vals = {}
+        for k, attr in keys.items():
+            v = r.get(k, "")
+            if v is None:
+                v = ""
+            if not isinstance(v, str):
+                issue("valore non stringa (ignorato)", f"{typ} {r[ends[0]]}-{r[ends[1]]}: {k}={v!r}")
+                v = ""
+            vals[attr] = v
+        st.relations.append(UMLRelation(FROM_COMPACT_REL[typ], **vals))
+    return st, issues
+
+
+def from_compact(data: dict) -> UMLStructure:
+    """JSON compatto -> struttura, conversione STRETTA (esempi, controlli): qualunque scostamento solleva errore."""
+    return read_compact(data, strict=True)[0]
 
 
 def apollon_to_compact(diagram: dict) -> dict:

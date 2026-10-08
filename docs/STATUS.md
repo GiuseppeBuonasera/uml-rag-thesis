@@ -98,6 +98,12 @@ python experiments/context_budget.py                 # fattore token reali / sti
 python generation/plantuml_sanity_check.py           # 79 diagrammi come risposte PlantUML (canonico = Passo 1)
 python generation/make_generation_schema.py          # schema per la generazione vincolata (rigenera e verifica)
 python generation/compact_sanity_check.py            # struttura comune + JSON compatto sui 79 diagrammi (voce 90)
+python generation/compact_postprocess.py             # rigenera lo schema del compatto (generazione vincolata DISATTIVATA)
+# insieme di sviluppo (voci 91-92): PlantUML contro JSON compatto, 20 esercizi del corpus, 160 generazioni
+python experiments/select_dev.py [--include-pilot]   # selezione deterministica dei 20 esercizi (gia' nel config)
+python experiments/calibrate_tokens.py experiments/configs/dev_formats.yaml --configuration C-G --formats plantuml compact
+python experiments/run_experiment.py experiments/configs/dev_formats.yaml --configuration P-G      # P-G P-Q C-G C-Q
+python experiments/analyze_dev.py                    # regola della voce 92 -> dev_formats_analysis/summary.md
 python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q   # max_tokens 1 (Q = 7B)
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G      # P-G P-Q J-G J-Q
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration J0-Q     # riferimento, fuori dalla regola (voce 83)
@@ -136,6 +142,9 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
 | Candidati distinti al rank 1 (hubness) | 39 su 59 | 17 su 20 query | — |
 
 ## Requisiti per la fase di valutazione
+- **Le metriche confrontano gli elementi SEMPRE per contenuto (nomi, firme, tipi, estremi delle relazioni per nome),
+  MAI per id** (condizione dell'eccezione sugli id dei metodi approvata allo STOP 1 del formato compatto, voce 90: gli
+  id sono etichette interne, e nel percorso struttura → espansore gli id dei metodi differiscono da quelli del Passo 1).
 - **Ogni metrica va riportata su 20 esercizi e su 19 (senza l'es. 6 Flights)**, per tutte le condizioni, in
   particolare few-shot statico vs retrieval: AirTravel è sia candidato del retrieval sia l'esempio 2 del prompt
   statico (TF-IDF 0.418, 4 classi condivise, Jaccard dei nomi di classe 0.24).
@@ -500,6 +509,12 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
      (extends / implements, blocco senza @enduml; default per le run nuove, `pilot2_v1` per l'analisi originale);
      analisi v2 descrittiva in `pilot2_formats_analysis_v2/` (P-G e P-Q entrambi 12/12; l'esito valido resta P-Q).
      Resta TODO `vram_used` del 7B.
+   - **Formato JSON compatto e insieme di sviluppo** (voci 90-92): struttura comune ed espansore unico approvati (STOP
+     1, eccezione sugli id dei metodi), formato compatto con chiavi di verso per ruolo, post-processing C0-C2,
+     schema disattivato; insieme di sviluppo di 20 esercizi del corpus e config `dev_formats.yaml` (160 generazioni).
+     **STOP 2 approvato** (voce 92): piloti esclusi, regola Vc → R → J → V → PlantUML con J e R su tutte le
+     risposte; `experiments/analyze_dev.py` scritto e testato PRIMA delle run. Prossimo: calibrazione dei token del
+     compatto (C-G, C-Q) e le 4 run (lanciate dall'utente).
    - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM, parametri,
      finestra di contesto, temperatura e ripetizioni), 9 (baseline statica), 11 (metriche), 14 (generazione libera
      o vincolata allo schema) e 15 (ragionamento acceso o spento).

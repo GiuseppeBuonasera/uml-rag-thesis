@@ -63,6 +63,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generation"))
 import plantuml_postprocess as ppu  # noqa: E402
+import compact_postprocess as cpp  # noqa: E402
 import postprocess as pp  # noqa: E402
 from plantuml_format import apollon_to_plantuml  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient  # noqa: E402
@@ -420,6 +421,8 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
         if (cfg.get("prompt") or {}).get("output_format") == "plantuml":
             prov["plantuml_label_rule"] = cfg.get("plantuml_label_rule")
             prov["plantuml_postprocess_version"] = ppu.DEFAULT_VERSION  # v2 dal 2026-10-08 (voce 89)
+        if (cfg.get("prompt") or {}).get("output_format") == "compact":
+            prov["compact_format_spec"] = "docs/compact_format.md"  # voci 90-91
         (out_dir / "config.json").write_text(json.dumps({"config": cfg, "provenance": prov}, indent=2,
                                                         ensure_ascii=False), encoding="utf-8")
     elif server_context is not None:  # a ogni ripresa: config.json non si riscrive, l'esito va in un file a parte
@@ -449,6 +452,8 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
                                                      encoding="utf-8")
         if spec.output_format == "plantuml":
             v = ppu.validate_plantuml_response(res.text, res.finish_reason, cid)
+        elif spec.output_format == "compact":  # JSON compatto -> struttura -> espansore unico (voce 91)
+            v = cpp.validate_compact_response(res.text, res.finish_reason, cid)
         else:
             v = pp.validate_response(res.text, res.finish_reason)
         if v.diagram is not None:

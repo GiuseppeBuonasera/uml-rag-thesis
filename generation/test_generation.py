@@ -833,9 +833,35 @@ def check_uml_structure() -> None:
     assert d["nodes"][0]["data"]["methods"][0]["name"] == "+ describe() : string"
     assert us.expand(us.from_compact(compact), "m")[0] == d  # deterministico
     with_empty = {"classes": [{"name": "A", "kind": "class", "attributes": [], "methods": []}, {"name": "B"}],
-                  "relations": [{"type": "inheritance", "source": "A", "target": "B", "label": ""}]}
+                  "relations": [{"type": "inheritance", "child": "A", "parent": "B", "label": ""}]}
     assert us.to_compact(us.from_compact(with_empty)) == {"classes": [{"name": "A"}, {"name": "B"}], "relations": [
-        {"type": "inheritance", "source": "A", "target": "B"}]}  # chiavi vuote accettate, poi omesse
+        {"type": "inheritance", "child": "A", "parent": "B"}]}  # chiavi vuote accettate, poi omesse
+    # verso per ruolo (STOP 1): tutto / parte e figlia / madre convertiti nel verso di Apollon
+    wp = {"classes": [{"name": "Car"}, {"name": "Wheel"}, {"name": "Sedan"}], "relations": [
+        {"type": "composition", "whole": "Car", "part": "Wheel", "wholeMultiplicity": "1", "partMultiplicity": "4",
+         "partRole": "wheels"}, {"type": "inheritance", "child": "Sedan", "parent": "Car"}]}
+    d, _ = us.compact_to_apollon(wp, "m")
+    nm = {n["id"]: n["data"]["name"] for n in d["nodes"]}
+    comp, inh = d["edges"]
+    assert (comp["type"], nm[comp["source"]], nm[comp["target"]]) == ("ClassComposition", "Wheel", "Car")
+    assert (comp["data"]["sourceMultiplicity"], comp["data"]["targetMultiplicity"], comp["data"]["sourceRole"]) == (
+        "4", "1", "wheels")
+    assert (inh["type"], nm[inh["source"]], nm[inh["target"]]) == ("ClassInheritance", "Sedan", "Car")
+    assert us.apollon_to_compact(d) == wp  # e ritorno
+    tolerant = {"classes": [{"name": "Car", "id": "c1"}, {"name": "Car"}, {"name": "Wheel"}], "version": "4.2.0",
+                "relations": [{"type": "composition", "source": "Wheel", "target": "Car"},  # chiavi della famiglia sbagliata
+                              {"type": "ClassComposition", "whole": "Car", "part": "Wheel"},  # tipo Apollon
+                              {"type": "aggregation", "whole": "Car", "part": "Tyre"},  # classe non dichiarata
+                              {"type": "association", "source": "Car", "target": "Wheel", "wholeRole": "x"}]}
+    st, issues = us.read_compact(tolerant, strict=False)
+    cats = sorted(c for c, _ in issues)
+    assert cats == sorted(["chiave di primo livello non prevista (ignorata)", "chiave di classe non prevista (ignorata)",
+                           "classe ripetuta (seconda scartata)",
+                           "chiavi di verso di un'altra famiglia (relazione scartata)",
+                           "tipo di relazione non previsto (relazione scartata)",
+                           "relazione verso una classe non dichiarata (scartata)",
+                           "chiave di relazione non prevista (ignorata)"]), cats
+    assert [c.name for c in st.classes] == ["Car", "Wheel"] and len(st.relations) == 1
     bad = [{"classes": [{"name": "A"}], "version": "4.2.0"},  # metadati non ammessi
            {"classes": [{"name": "A"}, {"name": "A"}]},  # nomi ripetuti
            {"classes": [{"name": "A", "kind": "record"}]},
@@ -850,7 +876,7 @@ def check_uml_structure() -> None:
             pass
     try:  # relazione verso una classe non dichiarata: rifiutata dall'espansore
         us.compact_to_apollon({"classes": [{"name": "A"}], "relations": [
-            {"type": "association", "source": "A", "target": "Z"}]}, "m")
+            {"type": "association", "source": "A", "target": "Z"}]}, "m")  # stretto: anche from_compact
         raise AssertionError("relazione verso classe inesistente accettata")
     except us.StructureError:
         pass
@@ -881,6 +907,261 @@ def check_uml_structure() -> None:
     print("  OK  struttura comune ed espansore unico: Apollon <-> struttura <-> JSON compatto, chiavi vuote omesse, "
           "compatto non valido rifiutato, vincoli da PlantUML conservati, esempi della specifica a L4; 79 diagrammi "
           "identici al Passo 1 nei percorsi PlantUML e compatto (57) o salvo gli id dei metodi (22, 148 id)")
+
+
+def check_compact(builder: PromptBuilder, tmp: Path) -> None:
+    """Strada JSON compatto (voce 91): prompt, post-processing C0-C2 + L2-L4, schema disattivato, ramo del runner."""
+    import jsonschema
+    import compact_postprocess as cpp
+    import uml_structure as us
+    q = builder.by_id["ApartmentBuilding"]
+    a = builder.build(q, PromptSpec("bm25", k=2, output_format="compact"))
+    z = builder.build(q, PromptSpec("zero_shot", output_format="compact"))
+    assert a.instructions == z.instructions == (HERE / "templates" / "v4_compact_instructions.txt").read_text(
+        encoding="utf-8") and a.task == z.task
+    assert '"nodes"' not in a.examples_block and a.examples_block.count("— JSON:") == 2
+    assert a.example_ids == builder.build(q, PromptSpec("bm25", k=2)).example_ids  # stessi esempi degli altri formati
+    for eid in a.example_ids:  # ogni esempio e' il compatto del Passo 1, su una riga
+        line = json.dumps(us.apollon_to_compact(builder.by_id[eid]["diagram_apollon_json"]), ensure_ascii=False,
+                          separators=(",", ":"))
+        assert line in a.examples_block
+    assert a.text == builder.build(q, PromptSpec("bm25", k=2, output_format="compact")).text
+    v4 = (HERE / "templates" / "v4_instructions.txt").read_text(encoding="utf-8").splitlines()
+    comp = a.instructions.splitlines()
+    for keep in range(61, 68):  # molteplicita' e linee guida di modellazione: identiche alla v4 (salvo i nomi)
+        line = v4[keep - 1].replace("ClassComposition or ClassAggregation", "composition or aggregation")
+        line = line.replace("separate edge", "separate relation").replace('"sourceRole"/"targetRole"', "the role keys")
+        line = line.replace("class node", "class").replace("separate edges", "separate relations")
+        line = line.replace("its own edge", "its own relation")
+        assert line in comp, (keep, line)
+
+    gt = builder.by_id["ApartmentBuilding"]["diagram_apollon_json"]
+    good = json.dumps(us.apollon_to_compact(gt))
+    v = cpp.validate_compact_response(good, "stop", "t")
+    assert (v.C0_found, v.C1_valid_json, v.C2b_converted, v.C2_clean, v.level) == (True, True, True, True, 4)
+    assert not v.format_issues and not v.normalizations and v.diagram["nodes"][0]["data"]["name"] == gt["nodes"][0]["data"]["name"]
+    v = cpp.validate_compact_response("<think>x</think>Here:\n```json\n" + good + "\n```", "stop", "t")
+    assert v.level == 4 and v.reasoning_removed and v.format_issues == {"extra_text": True}
+    assert cpp.validate_compact_response(good[:-5], "length", "t").failure == "truncated"
+    assert cpp.validate_compact_response(good[:-5], "stop", "t").failure == "incomplete_json"
+    assert cpp.validate_compact_response("[1, 2]", "stop", "t").failure in ("not_object", "no_json")
+    assert cpp.validate_compact_response('{"nodes": []}', "stop", "t").failure == "not_compact"
+    assert cpp.validate_compact_response('{"classes": [], "relations": []}', "stop", "t").failure == "no_classes"
+    assert cpp.validate_compact_response("nessun json", "stop", "t").failure == "no_json"
+    messy = {"classes": [{"name": "Car", "attributes": ["- plate : String"], "id": "x"}, {"name": "Wheel"}],
+             "relations": [{"type": "composition", "whole": "Car", "part": "Wheel", "partMultiplicity": "1..n"},
+                           {"type": "composition", "source": "Wheel", "target": "Car"},
+                           {"type": "association", "source": "Car", "target": "Driver"}]}
+    v = cpp.validate_compact_response(json.dumps(messy), "stop", "t")
+    assert (v.C2b_converted, v.C2_clean, v.level) == (True, False, 4), (v.failure, v.errors)
+    assert sorted(c for c, _ in v.compact_issues) == sorted([
+        "chiave di classe non prevista (ignorata)", "chiavi di verso di un'altra famiglia (relazione scartata)",
+        "relazione verso una classe non dichiarata (scartata)"])
+    assert v.normalizations == {"attributi": 1, "molteplicita'": 1}  # "- plate : String" -> "+ plate : string", 1..n
+    assert len(v.diagram["edges"]) == 1 and v.row()["compact_issues_count"] == 3
+    # schema per la generazione vincolata: preparato e DISATTIVATO
+    sch = json.loads(cpp.SCHEMA_PATH.read_text(encoding="utf-8"))
+    assert sch == cpp.generation_schema(), "schema non aggiornato: rilancia python generation/compact_postprocess.py"
+    assert '"$ref"' not in json.dumps(sch) and sch["properties"]["relations"]["maxItems"] == 39
+    gv = jsonschema.Draft7Validator(sch)
+    assert all(not list(gv.iter_errors(us.apollon_to_compact(c["diagram_apollon_json"])))
+               for c in builder.candidates + cl.load_queries())
+    assert list(gv.iter_errors(messy))  # chiavi non previste rifiutate dallo schema
+    for cfg_path in (ROOT / "experiments" / "configs").glob("*.yaml"):  # nessuna config lo usa
+        assert "compact_generation.schema" not in cfg_path.read_text(encoding="utf-8"), cfg_path
+    # ramo del runner (MockClient senza risposte: testo vuoto -> no_json)
+    import yaml
+    cfg = {"run_id": "c1", "split": "corpus", "query_ids": ["ApartmentBuilding"], "conditions": ["bm25"], "k": [2],
+           "repetitions": 1, "seed": 0, "prompt": {"output_format": "compact"}, "client": {"kind": "mock"},
+           "generation": {"temperature": 0.3, "top_p": 0.95, "top_k": 64, "max_tokens": 100, "seed": 42}}
+    (tmp / "c.yaml").write_text(yaml.safe_dump(cfg), encoding="utf-8")
+    with contextlib.redirect_stdout(io.StringIO()):
+        assert rx.main([str(tmp / "c.yaml"), "--results-dir", str(tmp / "cres")]) == 0
+    m = json.loads((tmp / "cres" / "c1" / "manifest.jsonl").read_text(encoding="utf-8"))
+    assert m["output_format"] == "compact" and m["failure"] == "no_json"
+    assert "compact_issues_count" in (tmp / "cres" / "c1" / "validation.csv").read_text(encoding="utf-8")
+    prov = json.loads((tmp / "cres" / "c1" / "config.json").read_text(encoding="utf-8"))["provenance"]
+    assert prov["compact_format_spec"] == "docs/compact_format.md"
+    print("  OK  strada JSON compatto: istruzioni con la sola parte sul formato riscritta, esempi compatti (stessi "
+          "esempi degli altri formati), C0 / C1 / C2b / C2 + L2-L4, scarti per categoria e normalizzazioni contati a "
+          "parte, troncamento, schema di generazione preparato e disattivato (79 GT validi), ramo del runner")
+
+
+def check_dev(builder: PromptBuilder) -> None:
+    """Insieme di sviluppo (voce 92): selezione deterministica, config dev_formats, calibrazione con --formats."""
+    import yaml
+    import calibrate_tokens as ct
+    import select_dev as sd
+    import select_pilot as sp
+    chosen, counts, q = sd.select(builder)
+    assert [r["id"] for r in chosen] == [r["id"] for r in sd.select(builder)[0]]  # deterministica
+    assert counts == {"basso": 13, "medio": 14, "alto": 11} and q == {"basso": 7, "medio": 7, "alto": 6}
+    ids = [r["id"] for r in chosen]
+    assert len(set(ids)) == 20 and not set(ids) & set(sd.PILOT_IDS) and not set(ids) & builder.test_ids
+    assert "EatAtHome" not in ids and all(r["gt_tokens"] <= sp.testset_max_gt_tokens() for r in chosen)
+    assert sd.quotas({"basso": 1, "medio": 1, "alto": 1}, 2) == {"basso": 1, "medio": 1, "alto": 0}  # parita' di resto
+    assert [r["id"] for r in sd.spread([{"id": c, "size": s} for c, s in zip("abcde", (5, 1, 3, 2, 4))], 2)] == ["d", "e"]
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_formats.yaml").read_text(encoding="utf-8"))
+    assert cfg["query_ids"] == ids and cfg["split"] == "corpus" and cfg["repetitions"] == 2
+    pilot2 = yaml.safe_load((ROOT / "experiments" / "configs" / "pilot2_formats.yaml").read_text(encoding="utf-8"))
+    assert cfg["models"] == pilot2["models"]  # stessi modelli e metadati del secondo pilota
+    total = 0
+    for name, fmt in (("P-G", "plantuml"), ("P-Q", "plantuml"), ("C-G", "compact"), ("C-Q", "compact")):
+        r = rx.resolve_configuration(cfg, name)
+        assert r["prompt"]["output_format"] == fmt and r["generation"]["structured_output"] is False
+        assert (r["generation"]["temperature"], r["generation"]["top_p"], r["generation"]["top_k"],
+                r["generation"]["max_tokens"], r["model_metadata"]["context_length"]) == (0.3, 0.95, 64, 12288, 32768)
+        rx.check_label_rule(r)
+        total += len(rx.plan(r, builder.candidates))
+    assert sorted(cfg["configurations"]) == ["C-G", "C-Q", "P-G", "P-Q"] and total == 160
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), FakeLMStudio)  # calibrazione del compatto sul server finto
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    try:
+        cq = rx.resolve_configuration(cfg, "C-Q")
+        cq["client"].update(model="fake-qwen", base_url=f"http://127.0.0.1:{srv.server_address[1]}/v1")
+        FakeLMStudio.models_payload = models_payload("fake-qwen", 32768, flash_attention=True)
+        out = ct.calibrate(cq, rx.make_client(cq), formats=("plantuml", "compact"))
+    finally:
+        FakeLMStudio.models_payload = None
+        srv.shutdown()
+        srv.server_close()
+    assert len(out["rows"]) == 40 and {r["format"] for r in out["rows"]} == {"plantuml", "compact"}
+    assert set(out["summary"]) == {"plantuml", "compact"} and out["summary"]["compact"]["fits"]
+    print("  OK  insieme di sviluppo: 20 esercizi (7 / 7 / 6 per fascia, quantili di dimensione, senza piloti, EatAtHome "
+          "e test set), config dev_formats (4 configurazioni, 160 generazioni, stessi modelli del secondo pilota), "
+          "calibrazione con --formats plantuml compact")
+
+
+def check_analyze_dev(builder: PromptBuilder, tmp: Path) -> None:
+    """experiments/analyze_dev.py su dati finti (voce 92): ordine dei criteri Vc, R, J, V, pareggio pieno -> PlantUML,
+    J e R su tutte le risposte, coerenza tra i modelli, controllo preliminare, run finte."""
+    from types import SimpleNamespace
+    import yaml
+    import analyze_dev as ad
+    import uml_structure as us
+    from plantuml_format import apollon_to_plantuml
+
+    def M(Vc=20, R=0.5, J=0.5, V=30):
+        return {"Vc": Vc, "R": R, "J": J, "V": V}
+
+    def dec(p, c, per_model=False):
+        return ad.decide({"plantuml": p, "compact": c}, per_model)
+
+    d = dec(M(Vc=20), M(Vc=24))
+    assert (d["winner"], d["decided_by"]) == ("compact", "Vc") and len(d["steps"]) == 1
+    assert dec(M(Vc=24), M(Vc=20))["winner"] == "plantuml"
+    d = dec(M(Vc=20, R=0.50), M(Vc=23, R=0.53))  # Vc entro la soglia (3 < 4): decide R, soglia 0,03 inclusa
+    assert (d["winner"], d["decided_by"]) == ("compact", "R")
+    d = dec(M(R=0.80, J=0.60), M(R=0.83, J=0.50))  # 0,83 - 0,80 in virgola mobile: soglia inclusa
+    assert d["decided_by"] == "R" and d["winner"] == "compact"
+    d = dec(M(R=0.50, J=0.60), M(R=0.52, J=0.50))  # R entro la soglia: decide J
+    assert (d["winner"], d["decided_by"]) == ("plantuml", "J")
+    d = dec(M(V=30), M(V=34, R=0.51, J=0.52, Vc=22))  # Vc, R, J entro le soglie: decide V
+    assert (d["winner"], d["decided_by"]) == ("compact", "V") and [s["criterion"] for s in d["steps"]] == [
+        "Vc", "R", "J", "V"]
+    d = dec(M(), M(Vc=23, R=0.52, J=0.52, V=33))  # pareggio pieno: PlantUML anche se il compatto e' di poco meglio
+    assert (d["winner"], d["decided_by"]) == ("plantuml", "pareggio pieno")
+    assert dec(M(Vc=10), M(Vc=12), per_model=True)["decided_by"] == "Vc"  # per modello la soglia e' 2
+    assert dec(M(Vc=10), M(Vc=12))["decided_by"] != "Vc"
+    assert dec(M(R=None), M(R=0.1))["decided_by"] == "R"  # R non definito vale 0
+
+    gts = [builder.by_id[q]["diagram_apollon_json"] for q in ("TruckLogistics", "Boeing")]
+
+    def call(fmt, model, valid=True, clean=True, truncated=False, gt=gts[0], q="TruckLogistics", r=0):
+        v = SimpleNamespace(level=4 if valid else -1, P1_clean=clean, C2_clean=clean, truncated=truncated,
+                            diagram=gt if valid else None, L0_extracted=valid, failure="" if valid else "no_json",
+                            normalizations={}, compact_issues=[], discarded_lines=[])
+        return {"v": v, "gt": gt, "format": fmt, "model": model, "q": q, "r": r, "m": {"latency_s": 1.0}}
+
+    m = ad.metrics([call("compact", "G", gt=gts[0]), call("compact", "G", valid=False, gt=gts[1])])
+    assert (m["V"], m["Vc"], m["J"], m["J_valid"]) == (1, 1, 0.5, 1.0)  # J: 0 per la non valida
+    e0, e1 = len(gts[0]["edges"]), len(gts[1]["edges"])
+    assert abs(m["R"] - e0 / (e0 + e1)) < 1e-12 and m["R_valid"] == 1.0  # R: le relazioni del GT della non valida contano
+    assert ad.metrics([call("plantuml", "G", clean=False)])["Vc"] == 0  # valida con scarti: non conta in Vc
+
+    def infos(calls_by_conf, excluded=None):
+        return {n: {"name": n, "calls": calls_by_conf.get(n, []), "excluded": (excluded or {}).get(n),
+                    "level_mismatch": 0, "cfg": None} for n in ad.CONFIGURATIONS}
+
+    def conf(fmt, model, n_valid, n=4, **kw):
+        return [call(fmt, model, valid=i < n_valid, r=i, **kw) for i in range(n)]
+
+    agree = {"P-G": conf("plantuml", "G", 4), "C-G": conf("compact", "G", 0),
+             "P-Q": conf("plantuml", "Q", 4), "C-Q": conf("compact", "Q", 1)}
+    res = ad.outcome(infos(agree))
+    assert res["winner"] == "plantuml" and res["outcome"] == "vince il formato PlantUML"
+    assert {d["winner"] for d in res["per_model"].values()} == {"plantuml"}
+    split = {"P-G": conf("plantuml", "G", 4), "C-G": conf("compact", "G", 0),
+             "P-Q": conf("plantuml", "Q", 0), "C-Q": conf("compact", "Q", 4)}
+    res = ad.outcome(infos(split))
+    assert res["winner"] is None and res["outcome"].startswith("STOP: dipende dal modello")
+    res = ad.outcome(infos(agree, excluded={"C-Q": "incompleta (39/40 risposte)"}))
+    assert res["winner"] is None and res["outcome"].startswith("STOP") and "C-Q" in res["excluded"]
+    trunc = dict(agree, **{"C-G": conf("compact", "G", 0, truncated=True)})
+    res = ad.outcome(infos(trunc))
+    assert res["winner"] == "plantuml" and res["warnings"] and "C-G: 4 risposte troncate" in res["warnings"][0]
+    text, _ = ad.report(infos(split))
+    assert "**Esito: STOP: dipende dal modello" in text and "Gemma 4 12B QAT (40 risposte" in text
+
+    # run finte: PlantUML canonico e compatto del GT; il compatto di Qwen rotto in 6 risposte su 40
+    cfg = yaml.safe_load(ad.CONFIG.read_text(encoding="utf-8"))
+    gt = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates()}
+    res_dir = tmp / "dev"
+
+    def fake_run(name, broken=0, n=None):
+        r = rx.resolve_configuration(cfg, name)
+        out = res_dir / r["run_id"]
+        (out / "raw").mkdir(parents=True)
+        (out / "config.json").write_text(json.dumps({"config": r, "provenance": {
+            "plantuml_postprocess_version": "v2"}}), encoding="utf-8")
+        lines, k = [], 0
+        for q in r["query_ids"]:
+            for rep in range(r["repetitions"]):
+                cid = f"{q}__bm25__k2__r{rep}"
+                fmt = r["prompt"]["output_format"]
+                text = (apollon_to_plantuml(gt[q]) if fmt == "plantuml"
+                        else json.dumps(us.apollon_to_compact(gt[q]), separators=(",", ":")))
+                if k < broken:
+                    text = text[: len(text) // 2]
+                k += 1
+                v = ad.validate(fmt, text, "stop", cid, "v2")
+                (out / "raw" / f"{cid}.json").write_text(json.dumps({"text": text, "finish_reason": "stop"}),
+                                                         encoding="utf-8")
+                lines.append(json.dumps({"call_id": cid, "query_id": q, "repetition": rep, "level": v.level,
+                                         "latency_s": 2.0, "prompt_tokens_server": 3000,
+                                         "completion_tokens_server": 300, "reasoning_field": None,
+                                         "reasoning_markers_in_content": []}))
+        (out / "manifest.jsonl").write_text("\n".join(lines[:n]) + "\n", encoding="utf-8")
+
+    fake_run("P-G")
+    fake_run("C-G")
+    fake_run("P-Q")
+    fake_run("C-Q", broken=6)
+    models = ad.expected_model_ids()
+    loaded = {n: ad.load_configuration(res_dir, n, gt, models[n]) for n in ad.CONFIGURATIONS}
+    assert all(i["excluded"] is None and len(i["calls"]) == 40 and i["level_mismatch"] == 0 for i in loaded.values())
+    band_of = {q: "basso" for q in cfg["query_ids"]}
+    text, res = ad.report(loaded, band_of)
+    pooled = {s["criterion"]: s for s in res["pooled"]["steps"]}
+    assert (pooled["Vc"]["plantuml"], pooled["Vc"]["compact"]) == (80, 74)  # 6 compatti rotti
+    assert (res["pooled"]["winner"], res["pooled"]["decided_by"]) == ("plantuml", "Vc")
+    assert res["per_model"]["G"]["decided_by"] == "pareggio pieno"  # Gemma: tutto identico -> PlantUML
+    assert (res["per_model"]["Q"]["winner"], res["per_model"]["Q"]["decided_by"]) == ("plantuml", "Vc")
+    assert res["winner"] == "plantuml" and "| P-G | 40/40 | 40/40 | 1.000 | 1.000 |" in text
+    assert "| C-Q | 34/40 | 34/40 |" in text and "Confronto appaiato" in text and "Per fascia" in text
+    other = ad.load_configuration(res_dir, "C-Q", gt, expected_model_id="altro/modello")
+    assert "traccia NON usata" in other["excluded"]
+    import shutil as _sh
+    _sh.rmtree(res_dir / "dev_formats__C-Q")
+    fake_run("C-Q", n=39)  # incompleta: STOP
+    loaded["C-Q"] = ad.load_configuration(res_dir, "C-Q", gt, models["C-Q"])
+    assert loaded["C-Q"]["excluded"].startswith("incompleta (39/40")
+    assert ad.outcome(loaded)["outcome"].startswith("STOP: nessuna decisione")
+    assert (ad.MAX_TRUNCATED, ad.TIE_WINNER, [c[0] for c in ad.CRITERIA]) == (2, "plantuml", ["Vc", "R", "J", "V"])
+    assert [(c[2], c[3]) for c in ad.CRITERIA] == [(4, 2), (0.03, 0.03), (0.03, 0.03), (4, 2)]  # soglie (voce 92)
+    print("  OK  analisi dell'insieme di sviluppo: criteri Vc / R / J / V con soglie incluse (anche per modello), "
+          "pareggio pieno -> PlantUML, J e R su tutte le risposte (0 per le non valide), dipende dal modello, "
+          "configurazione incompleta, troncamenti segnalati, run finte (160 risposte), run di un altro modello scartata")
 
 
 def builder_free_record(rid: str) -> dict:
@@ -1336,6 +1617,9 @@ def main() -> None:
         check_analyze_pilot()
         check_plantuml(builder)
         check_uml_structure()
+        check_compact(builder, tmp)
+        check_dev(builder)
+        check_analyze_dev(builder, tmp)
         check_pilot2(tmp)
         check_analyze_pilot2(tmp)
         check_smoke(tmp)

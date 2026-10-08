@@ -23,8 +23,10 @@ entra nelle statistiche IDF / avgdl), random e oracle sugli altri 58; static con
 
 Formato di uscita (secondo pilota, 2026-10-07): output_format "apollon" (istruzioni v4, esempi JSON) oppure
 "plantuml" (istruzioni templates/v4_plantuml_instructions.txt, che cambiano SOLO la parte sul formato; esempi in
-PlantUML CANONICO ricavato dal JSON Apollon del Passo 1, generation/plantuml_format.py). Il blocco esempi resta l'unica
-parte che cambia tra le condizioni dello stesso formato.
+PlantUML CANONICO ricavato dal JSON Apollon del Passo 1, generation/plantuml_format.py) oppure "compact" (2026-10-08,
+voce 91: istruzioni templates/v4_compact_instructions.txt, che cambiano SOLO la parte sul formato; esempi nel formato
+JSON compatto ricavato dal JSON del Passo 1, generation/uml_structure.py, docs/compact_format.md). Il blocco esempi resta
+l'unica parte che cambia tra le condizioni dello stesso formato.
 
 Ogni esempio = description + JSON Apollon, serializzati allo stesso modo in tutte le condizioni. corpus/ e
 config_bm25.yaml sono letti e mai scritti. Determinismo: stessa spec + stessa query -> stesso prompt byte per byte.
@@ -55,9 +57,12 @@ BM25_CONFIG = ROOT / "retrieval" / "config_bm25.yaml"
 CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle")
 ANALYSIS_ONLY = {"oracle"}
 SERIALIZATIONS = ("indent2", "compact")
-OUTPUT_FORMATS = ("apollon", "plantuml")
-INSTRUCTION_TEMPLATES = {"apollon": "v4_instructions.txt", "plantuml": "v4_plantuml_instructions.txt"}
-ITEM_TEMPLATES = {"apollon": "v4_example_item.txt", "plantuml": "v4_plantuml_example_item.txt"}
+OUTPUT_FORMATS = ("apollon", "plantuml", "compact")
+INSTRUCTION_TEMPLATES = {"apollon": "v4_instructions.txt", "plantuml": "v4_plantuml_instructions.txt",
+                         "compact": "v4_compact_instructions.txt"}
+# il compatto riusa la voce di esempio JSON della v4 ("Example n — JSON:")
+ITEM_TEMPLATES = {"apollon": "v4_example_item.txt", "plantuml": "v4_plantuml_example_item.txt",
+                  "compact": "v4_example_item.txt"}
 LAYOUTS = ("user_only", "system_user")  # system_user disponibile, ma non si usa senza decisione (decisions.md, voce 64)
 
 
@@ -180,6 +185,11 @@ class PromptBuilder:
         if spec.output_format == "plantuml":
             from plantuml_format import apollon_to_plantuml
             return apollon_to_plantuml(example["diagram_apollon_json"])
+        if spec.output_format == "compact":  # stessa serializzazione dell'Apollon (su una riga con "compact")
+            from uml_structure import apollon_to_compact
+            data = apollon_to_compact(example["diagram_apollon_json"])
+            return (json.dumps(data, ensure_ascii=False, separators=(",", ":")) if spec.serialization == "compact"
+                    else json.dumps(data, ensure_ascii=False, indent=2))
         return serialize_diagram(example["diagram_apollon_json"], spec.serialization, spec.drop_interactive)
 
     def build(self, query: dict, spec: PromptSpec) -> BuiltPrompt:

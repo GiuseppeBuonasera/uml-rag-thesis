@@ -1,0 +1,99 @@
+# INSIEME DI SVILUPPO (2026-10-08, FASE 3 del formato compatto, voce 92): confronto dei formati di uscita PlantUML e
+# JSON compatto (docs/compact_format.md), entrambi espansi in Apollon dall'espansore unico (generation/uml_structure.py).
+# Solo CORPUS (split corpus, selezione leave-one-out), MAI il test set. 20 esercizi scelti in modo deterministico da
+# experiments/select_dev.py (piloti esclusi; PROPOSTA allo STOP 2). Regola di confronto registrata PRIMA delle run
+# (voce 92). Una configurazione per volta (un modello caricato alla volta in LM Studio):
+#   python experiments/run_experiment.py experiments/configs/dev_formats.yaml --configuration P-G
+# Totale: 4 configurazioni x 20 esercizi x 2 ripetizioni = 160 generazioni.
+# Post-processing: PlantUML v2 (voce 89, registrato nella provenienza); compatto: generation/compact_postprocess.py.
+# Generazione vincolata del compatto: schema preparato ma DISATTIVATO (structured_output false).
+run_id: dev_formats
+split: corpus
+query_ids:   # python experiments/select_dev.py (fasce basso / medio / alto: 7 / 7 / 6)
+  - Boeing
+  - OilWells
+  - Restaurant
+  - EUScienceConnect
+  - HomeForTheElderly
+  - HelpingHands
+  - Bookmaker
+  - BusTransportationManagementSystem
+  - FitnessCompanyConan
+  - Facepage
+  - Musicmatic
+  - AlphaInsurance
+  - ClothingCompany
+  - PizzaDeliveryWithEntertainment
+  - ProjectManagement
+  - HospitalHouseMD
+  - InsuranceCompany
+  - TruckLogistics
+  - Ebike
+  - eHome2020
+conditions: [bm25]
+k: [2]
+repetitions: 2
+seed: 0
+stop_on_reasoning: true
+prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+generation:
+  temperature: 0.3          # valore di lavoro dei piloti, NON la decisione finale sulla temperatura (domanda 8)
+  top_p: 0.95               # identici per i due modelli e i due formati
+  top_k: 64
+  max_tokens: 12288         # identico per modello a tutte le run (regola del runner)
+  seed: 42
+plantuml_label_rule: auto_v1   # regola automatica delle etichette approvata (voce 79)
+models:
+  G:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-12b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-12b-qat
+      quantization: QAT (q4_0)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: false
+      kv_cache_quant: F16            # K e V F16 (non quantizzata), come nel primo pilota (voce 87)
+      flash_attention: true          # come nel primo pilota (voce 87)
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"
+  Q:                                 # Qwen2.5-Coder 7B Instruct Q6_K (dal 2026-10-07 sera; prima 14B, voce 84)
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: qwen2.5-coder-7b-instruct   # id LM Studio (smoke test del 2026-10-07, voce 86); senza editore
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:                  # experiments/configs/qwen25coder7b_template.yaml (voce 85; il 14B non entra
+                                     #   in VRAM a 32768, voce 84)
+      model_id: qwen2.5-coder-7b-instruct   # l'id esposto da LM Studio non contiene l'editore: la fonte
+                                            #   (lmstudio-community, Q6_K) e' nel campo source (voce 86)
+      quantization: Q6_K
+      source: lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF   # confermata dall'utente in My Models (voce 86)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: false         # il modello NON ha una modalita' di ragionamento
+      kv_cache_quant: F16            # nessuna quantizzazione della KV cache
+      flash_attention: true
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+configurations:
+  P-G: {model: G, output_format: plantuml}
+  P-Q: {model: Q, output_format: plantuml}
+  C-G: {model: G, output_format: compact}
+  C-Q: {model: Q, output_format: compact}
