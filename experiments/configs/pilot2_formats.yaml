@@ -44,8 +44,8 @@ models:
       context_length: 32768
       lmstudio_version: 0.4.25+1
       enable_thinking: false
-      kv_cache_quant: TODO           # come nel primo pilota: da chiedere all'utente
-      flash_attention: TODO          # come nel primo pilota: da chiedere all'utente
+      kv_cache_quant: F16            # K e V F16 (non quantizzata), come nel primo pilota (voce 87)
+      flash_attention: true          # come nel primo pilota (voce 87)
       hardware:
         cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
         gpu: NVIDIA GeForce RTX 4070 12 GB

@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nenum Suit {\n  Diamonds\n  Hearts\n  Spades\n  Clubs\n}\n\nenum ComparisonResult {\n  Lower\n  Equal\n  Higher\n}\n\nenum SoloType {\n  Trump\n  Jack\n  Queen\n}\n\nabstract class GameObject {\n  + id : string\n}\n\nclass Game {\n  + gameId : string\n}\n\nclass Card {\n  + rank : int\n  + suit : Suit\n  + compareHeight(otherCard : Card) : ComparisonResult\n}\n\nclass Deck {\n  + cardCount : int\n}\n\nclass ScoringTable {\n  + tableId : string\n}\n\nclass Round {\n  + roundNumber : int\n}\n\nclass SoloRound {\n  + soloType : SoloType\n}\n\nclass MandatorySoloRound --|> SoloRound\n\nclass Player {\n  + playerName : string\n}\n\nclass PointValue {\n  + value : int\n}\n\nGameObject --|> Game\nGameObject --|> Card\nGameObject --|> Deck\nGameObject --|> ScoringTable\nGameObject --|> Round\nGameObject --|> SoloRound\nGameObject --|> Player\nGameObject --|> PointValue\n\nGame \"1\" *-- \"4\" Player\nGame \"1\" *-- \"1\" Deck\nGame \"1\" *-- \"1\" ScoringTable\n\nDeck \"1\" *-- \"0..48\" Card\n\nScoringTable \"1\" *-- \"1..*\" Round\n\nRound \"1\" *-- \"0..*\" PointValue\nRound \"1\" *-- \"0..*\" Player\nRound \"1\" *-- \"0..*\" SoloRound\n\nSoloRound \"1\" *-- \"1\" Player\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 9.7935023,
+ "prompt_tokens": 3103,
+ "completion_tokens": 363,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-th8s5uxb1zpvqzu5yu7ce",
+  "object": "chat.completion",
+  "created": 1791448821,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum Suit {\n  Diamonds\n  Hearts\n  Spades\n  Clubs\n}\n\nenum ComparisonResult {\n  Lower\n  Equal\n  Higher\n}\n\nenum SoloType {\n  Trump\n  Jack\n  Queen\n}\n\nabstract class GameObject {\n  + id : string\n}\n\nclass Game {\n  + gameId : string\n}\n\nclass Card {\n  + rank : int\n  + suit : Suit\n  + compareHeight(otherCard : Card) : ComparisonResult\n}\n\nclass Deck {\n  + cardCount : int\n}\n\nclass ScoringTable {\n  + tableId : string\n}\n\nclass Round {\n  + roundNumber : int\n}\n\nclass SoloRound {\n  + soloType : SoloType\n}\n\nclass MandatorySoloRound --|> SoloRound\n\nclass Player {\n  + playerName : string\n}\n\nclass PointValue {\n  + value : int\n}\n\nGameObject --|> Game\nGameObject --|> Card\nGameObject --|> Deck\nGameObject --|> ScoringTable\nGameObject --|> Round\nGameObject --|> SoloRound\nGameObject --|> Player\nGameObject --|> PointValue\n\nGame \"1\" *-- \"4\" Player\nGame \"1\" *-- \"1\" Deck\nGame \"1\" *-- \"1\" ScoringTable\n\nDeck \"1\" *-- \"0..48\" Card\n\nScoringTable \"1\" *-- \"1..*\" Round\n\nRound \"1\" *-- \"0..*\" PointValue\nRound \"1\" *-- \"0..*\" Player\nRound \"1\" *-- \"0..*\" SoloRound\n\nSoloRound \"1\" *-- \"1\" Player\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3103,
+   "completion_tokens": 363,
+   "total_tokens": 3466,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

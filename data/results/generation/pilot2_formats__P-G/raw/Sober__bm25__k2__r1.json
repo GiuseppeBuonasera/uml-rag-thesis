@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Car {\n  + licensePlate : string\n  + model : string\n  + capacity : int\n}\n\nclass SoberCar {\n  + isOwnedBySober : boolean\n}\n\nclass CarOwner {\n  + name : string\n  + phoneNumber : string\n}\n\nclass Customer {\n  + name : string\n  + phoneNumber : string\n}\n\nclass RideHailService {\n  + pickUpTime : datetime\n  + dropOffTime : datetime\n  + pickUpLocation : string\n  + dropOffLocation : string\n  + duration : float\n  + distance : float\n  + passengerCount : int\n  + fee : float\n  + requestType : RequestType\n}\n\nclass RideShareService {\n  + pickUpTime : datetime\n  + dropOffTime : datetime\n  + pickUpLocation : string\n  + dropOffLocation : string\n  + duration : float\n  + distance : float\n  + negotiatedFee : float\n}\n\nclass Accident {\n  + date : date\n  + location : string\n  + damageAmount : float\n}\n\nenum RequestType {\n  SoberApp\n  HandWaving\n}\n\nSoberCar --|> Car\nCarOwner \"1\" -- \"0..*\" SoberCar : owns\nCustomer \"1\" -- \"0..*\" RideHailService : initiates\nCustomer \"1\" -- \"0..*\" RideShareService : books\n\nRideHailService \"*\" -- \"1\" SoberCar : uses\nRideShareService \"*\" -- \"1\" SoberCar : uses\n\nRideHailService \"1\" -- \"1..*\" Customer : passengers\nRideShareService \"1\" -- \"1..*\" Customer : passengers\n\nSoberCar \"1\" *-- \"0..*\" Accident\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 10.000483499999973,
+ "prompt_tokens": 3058,
+ "completion_tokens": 387,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-dbjwc6byzetu4fn5dvvi2c",
+  "object": "chat.completion",
+  "created": 1791450520,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Car {\n  + licensePlate : string\n  + model : string\n  + capacity : int\n}\n\nclass SoberCar {\n  + isOwnedBySober : boolean\n}\n\nclass CarOwner {\n  + name : string\n  + phoneNumber : string\n}\n\nclass Customer {\n  + name : string\n  + phoneNumber : string\n}\n\nclass RideHailService {\n  + pickUpTime : datetime\n  + dropOffTime : datetime\n  + pickUpLocation : string\n  + dropOffLocation : string\n  + duration : float\n  + distance : float\n  + passengerCount : int\n  + fee : float\n  + requestType : RequestType\n}\n\nclass RideShareService {\n  + pickUpTime : datetime\n  + dropOffTime : datetime\n  + pickUpLocation : string\n  + dropOffLocation : string\n  + duration : float\n  + distance : float\n  + negotiatedFee : float\n}\n\nclass Accident {\n  + date : date\n  + location : string\n  + damageAmount : float\n}\n\nenum RequestType {\n  SoberApp\n  HandWaving\n}\n\nSoberCar --|> Car\nCarOwner \"1\" -- \"0..*\" SoberCar : owns\nCustomer \"1\" -- \"0..*\" RideHailService : initiates\nCustomer \"1\" -- \"0..*\" RideShareService : books\n\nRideHailService \"*\" -- \"1\" SoberCar : uses\nRideShareService \"*\" -- \"1\" SoberCar : uses\n\nRideHailService \"1\" -- \"1..*\" Customer : passengers\nRideShareService \"1\" -- \"1..*\" Customer : passengers\n\nSoberCar \"1\" *-- \"0..*\" Accident\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3058,
+   "completion_tokens": 387,
+   "total_tokens": 3445,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

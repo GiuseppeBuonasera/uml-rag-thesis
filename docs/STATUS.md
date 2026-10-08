@@ -318,6 +318,7 @@ python experiments/analyze_pilot2.py                 # regola della voce 78 + cl
   Q4_0): scelto il 2026-10-06 per lo smoke test e il pilota. Quantizzazione registrata come "QAT (q4_0)". Ragionamento
   attivo di default ("Enable Thinking" = true), marcatori `<|channel>thought ... <channel|>`. Default del modello NON
   usati (temperature 1, top_k 64, top_p 0.95). Config: `experiments/configs/gemma4_12b_qat_template.yaml`.
+  Caricamento (primo pilota e successivi, voce 87): Flash Attention attiva, K e V cache F16 (non quantizzata).
   **max_tokens = 12288** per tutte le run di questo modello, Passo 3b compreso (deciso allo STOP 1 del pilota, voce
   75): è un tetto, non riserva contesto.
 - **Licenza: Apache 2.0** (confermata il 2026-10-06; primi modelli Gemma sotto una licenza approvata da OSI). Fonti:
@@ -487,9 +488,8 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
      schema di generazione); script di analisi `experiments/analyze_pilot2.py` scritto e testato PRIMA delle run
      (voce 82: da qui la regola nel codice non cambia senza una nuova voce). **Modello Q = Qwen2.5-Coder 7B Q6_K**
      (voci 84-85; il 14B non entra in VRAM a 32768), smoke test fatto (voce 86): si può lanciare la **calibrazione
-     J-Q**, poi P-Q / J-Q / J0-Q; la VRAM del 7B si registra dopo la calibrazione. Mancano i **metadati di
-     caricamento di Gemma nel primo pilota** (`kv_cache_quant`,
-     `flash_attention`; bloccano calibrazione e run di P-G / J-G).
+     J-Q**, poi P-Q / J-Q / J0-Q; la VRAM del 7B si registra dopo la calibrazione. **Gemma pronto** (voce 87:
+     Flash Attention attiva, KV cache F16, come nel primo pilota): calibrazione J-G, poi P-G / J-G.
      **Riferimento J0-Q** (voce 83): Qwen in Apollon JSON libero, 12 generazioni, solo descrittivo e fuori dalla
      regola; completa il 2x2 della strada JSON con Gemma libero del primo pilota (sezione "Riferimenti"
      di `analyze_pilot2.py`).

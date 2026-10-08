@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\nclass Apartment {\n  + address : string\n}\nclass Room {\n  + length : float\n  + width : float\n}\nclass Person {\n  + name : string\n}\nclass Building {\n  + numberOfFloors : int\n}\nApartment \"1..*\" *-- \"1..*\" Room\nPerson \"1..*\" -- \"1..*\" Apartment\nBuilding \"1\" *-- \"1..*\" Apartment\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 4.191192600000022,
+ "prompt_tokens": 2562,
+ "completion_tokens": 102,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-vn76zddpc3mr425gmtkmb",
+  "object": "chat.completion",
+  "created": 1791450547,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Apartment {\n  + address : string\n}\nclass Room {\n  + length : float\n  + width : float\n}\nclass Person {\n  + name : string\n}\nclass Building {\n  + numberOfFloors : int\n}\nApartment \"1..*\" *-- \"1..*\" Room\nPerson \"1..*\" -- \"1..*\" Apartment\nBuilding \"1\" *-- \"1..*\" Apartment\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2562,
+   "completion_tokens": 102,
+   "total_tokens": 2664,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

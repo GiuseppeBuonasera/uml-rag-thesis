@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Museum {\n  + name : string\n  + location : string\n}\n\nclass Location {\n  + roomNumber : string\n  + floor : int\n  + wing : string\n}\n\nclass Exhibition {\n  + title : string\n  + openingDate : date\n  + planningStartDate : date\n  + status : string\n}\n\nclass Employee {\n  + employeeID : int\n  + name : string\n  + role : string\n}\n\nclass ExhibitionItem {\n  + description : string\n  + period : string\n}\n\nclass Piece {\n  + title : string\n  + artist : string\n  + dimensions : string\n}\n\nclass Collector {\n  + collectorID : int\n  + name : string\n  + contactInfo : string\n}\n\nclass Request {\n  + requestDate : date\n  + status : string\n}\n\nMuseum \"1\" *-- \"1..*\" Location\nLocation \"1\" -- \"0..*\" Exhibition\nExhibition \"1\" -- \"1\" Employee : coordinatedBy\nExhibition \"1\" -- \"1..*\" ExhibitionItem : contains\nExhibitionItem \"1\" -- \"0..*\" Request\nRequest \"1\" -- \"1\" Piece : forPiece\nRequest \"1\" -- \"1\" Collector : requestedFrom\nEmployee \"1\" -- \"0..1\" Employee : coachedBy\nEmployee \"1\" -- \"0..*\" Employee : coaches\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 12288,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 8.71608880000008,
+ "prompt_tokens": 3215,
+ "completion_tokens": 315,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-crvww6p974f7nxljytk3is",
+  "object": "chat.completion",
+  "created": 1791450501,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Museum {\n  + name : string\n  + location : string\n}\n\nclass Location {\n  + roomNumber : string\n  + floor : int\n  + wing : string\n}\n\nclass Exhibition {\n  + title : string\n  + openingDate : date\n  + planningStartDate : date\n  + status : string\n}\n\nclass Employee {\n  + employeeID : int\n  + name : string\n  + role : string\n}\n\nclass ExhibitionItem {\n  + description : string\n  + period : string\n}\n\nclass Piece {\n  + title : string\n  + artist : string\n  + dimensions : string\n}\n\nclass Collector {\n  + collectorID : int\n  + name : string\n  + contactInfo : string\n}\n\nclass Request {\n  + requestDate : date\n  + status : string\n}\n\nMuseum \"1\" *-- \"1..*\" Location\nLocation \"1\" -- \"0..*\" Exhibition\nExhibition \"1\" -- \"1\" Employee : coordinatedBy\nExhibition \"1\" -- \"1..*\" ExhibitionItem : contains\nExhibitionItem \"1\" -- \"0..*\" Request\nRequest \"1\" -- \"1\" Piece : forPiece\nRequest \"1\" -- \"1\" Collector : requestedFrom\nEmployee \"1\" -- \"0..1\" Employee : coachedBy\nEmployee \"1\" -- \"0..*\" Employee : coaches\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3215,
+   "completion_tokens": 315,
+   "total_tokens": 3530,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 12288,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

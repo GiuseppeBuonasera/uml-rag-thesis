@@ -841,21 +841,20 @@ def check_pilot2(tmp: Path) -> None:
         r_q = rx.resolve_configuration(cfg, name)
         assert r_q["client"]["model"] == r_q["model_metadata"]["model_id"] == "qwen2.5-coder-7b-instruct"
         assert rx.make_client(r_q).model == "qwen2.5-coder-7b-instruct"
-    for name in ("J-G", "P-G"):  # metadati di caricamento di Gemma ancora TODO
-        try:
-            rx.make_client(rx.resolve_configuration(cfg, name))
-            raise AssertionError(f"{name} con metadati TODO accettato")
-        except SystemExit as e:
-            assert "kv_cache_quant" in str(e) and "flash_attention" in str(e)
+    g_tpl = yaml.safe_load((ROOT / "experiments" / "configs" / "gemma4_12b_qat_template.yaml").read_text(
+        encoding="utf-8"))["model_metadata"]
+    for name in ("J-G", "P-G"):  # metadati di caricamento di Gemma (voce 87): F16 e Flash Attention, come il template
+        g = rx.resolve_configuration(cfg, name)["model_metadata"]
+        assert (g["kv_cache_quant"], g["flash_attention"]) == ("F16", True) == (g_tpl["kv_cache_quant"],
+                                                                               g_tpl["flash_attention"])
+        assert rx.make_client(rx.resolve_configuration(cfg, name)).model == "google/gemma-4-12b-qat"
     for bad in (None, "X"):
         try:
             rx.resolve_configuration(cfg, bad)
             raise AssertionError("configurazione mancante o sconosciuta accettata")
         except SystemExit:
             pass
-    jg = rx.resolve_configuration(cfg, "J-G")
-    jg["model_metadata"].update(kv_cache_quant="F16", flash_attention=False)  # valori fittizi solo per il test
-    client = rx.make_client(jg)
+    client = rx.make_client(rx.resolve_configuration(cfg, "J-G"))
     body = client.request_body([{"role": "user", "content": "x"}],
                                GenerationParams(top_k=64, seed=1, structured_output=True))
     gen_schema = body["response_format"]["json_schema"]["schema"]
@@ -898,7 +897,7 @@ def check_pilot2(tmp: Path) -> None:
     print("  OK  secondo pilota: 4 configurazioni (48 generazioni, stessi 6 esercizi, parametri identici), run_id "
           "per configurazione, response_format solo per J-*, PlantUML solo con la regola approvata auto_v1, "
           "Qwen2.5-Coder 7B (qwen2.5-coder-7b-instruct, Q6_K, KV F16, Flash Attention, = template) pronto, Gemma "
-          "bloccato dai TODO, template del 14B "
+          "pronto (KV F16, Flash Attention), template del 14B "
           "segnato come non usato; "
           "schema di generazione con $ref "
           "espansi e maxItems 39 (79 ground truth validi); calibrazione dei token con max_tokens = 1 sul server finto")

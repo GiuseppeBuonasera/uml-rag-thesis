@@ -1,0 +1,163 @@
+{
+  "timestamp": "2026-10-08T03:06:05+0200",
+  "model": "google/gemma-4-12b-qat",
+  "model_metadata": {
+    "model_id": "google/gemma-4-12b-qat",
+    "quantization": "QAT (q4_0)",
+    "context_length": 32768,
+    "lmstudio_version": "0.4.25+1",
+    "enable_thinking": false,
+    "kv_cache_quant": "F16",
+    "flash_attention": true,
+    "hardware": {
+      "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)",
+      "gpu": "NVIDIA GeForce RTX 4070 12 GB",
+      "ram_gb": 32,
+      "vram_gb": 12,
+      "vram_used": "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"
+    }
+  },
+  "context_length": 32768,
+  "max_tokens": 12288,
+  "server_context": {
+    "endpoint": "http://localhost:1234/api/v1/models",
+    "available": true,
+    "loaded": true,
+    "context_lengths": [
+      32768
+    ],
+    "parallel": [
+      4
+    ],
+    "max_context_length": 262144,
+    "instances": [
+      {
+        "id": "google/gemma-4-12b-qat",
+        "config": {
+          "context_length": 32768,
+          "eval_batch_size": 2048,
+          "physical_batch_size": 512,
+          "parallel": 4,
+          "flash_attention": true,
+          "context_checkpoints": 32,
+          "reasoning_budget_message": "",
+          "speculative_draft_mtp": false,
+          "speculative_draft_simple": false,
+          "speculative_draft_model": "",
+          "speculative_draft_max_tokens": 3,
+          "speculative_draft_min_tokens": 0,
+          "speculative_draft_min_continue_probability": 0,
+          "offload_kv_cache_to_gpu": true
+        }
+      }
+    ],
+    "error": null,
+    "expected_context_length": 32768,
+    "checked_at": "2026-10-08T03:05:01",
+    "verified": true
+  },
+  "rows": [
+    {
+      "format": "apollon",
+      "query_id": "Louvre",
+      "est": 11279,
+      "real": 13870,
+      "ratio": 1.2297189467151344
+    },
+    {
+      "format": "apollon",
+      "query_id": "Sober",
+      "est": 8495,
+      "real": 10150,
+      "ratio": 1.1948204826368451
+    },
+    {
+      "format": "apollon",
+      "query_id": "StudentAppointment",
+      "est": 6626,
+      "real": 8046,
+      "ratio": 1.2143072743736794
+    },
+    {
+      "format": "apollon",
+      "query_id": "CardGameApp",
+      "est": 11842,
+      "real": 14672,
+      "ratio": 1.2389799020435737
+    },
+    {
+      "format": "apollon",
+      "query_id": "ApartmentBuilding",
+      "est": 6860,
+      "real": 8233,
+      "ratio": 1.2001457725947522
+    },
+    {
+      "format": "apollon",
+      "query_id": "FilmSet",
+      "est": 11357,
+      "real": 14067,
+      "ratio": 1.2386193537025623
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Louvre",
+      "est": 3115,
+      "real": 3215,
+      "ratio": 1.0321027287319422
+    },
+    {
+      "format": "plantuml",
+      "query_id": "Sober",
+      "est": 2935,
+      "real": 3058,
+      "ratio": 1.04190800681431
+    },
+    {
+      "format": "plantuml",
+      "query_id": "StudentAppointment",
+      "est": 2108,
+      "real": 2198,
+      "ratio": 1.0426944971537002
+    },
+    {
+      "format": "plantuml",
+      "query_id": "CardGameApp",
+      "est": 2993,
+      "real": 3103,
+      "ratio": 1.0367524223187436
+    },
+    {
+      "format": "plantuml",
+      "query_id": "ApartmentBuilding",
+      "est": 2450,
+      "real": 2562,
+      "ratio": 1.0457142857142858
+    },
+    {
+      "format": "plantuml",
+      "query_id": "FilmSet",
+      "est": 2981,
+      "real": 3075,
+      "ratio": 1.0315330426031533
+    }
+  ],
+  "summary": {
+    "apollon": {
+      "ratio_min": 1.1948204826368451,
+      "ratio_median": 1.222013110544407,
+      "ratio_max": 1.2389799020435737,
+      "prompt_real_max": 14672,
+      "fits": true,
+      "margin": 5808
+    },
+    "plantuml": {
+      "ratio_min": 1.0315330426031533,
+      "ratio_median": 1.0393302145665269,
+      "ratio_max": 1.0457142857142858,
+      "prompt_real_max": 3215,
+      "fits": true,
+      "margin": 17265
+    }
+  }
+}

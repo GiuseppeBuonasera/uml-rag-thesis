@@ -95,6 +95,7 @@ non sono state modificate.
 84. 2026-10-07 — Qwen2.5-Coder 14B scartato: non regge 32768 di contesto sulla RTX 4070 12 GB
 85. 2026-10-07 — Qwen2.5-Coder 7B Instruct Q6_K come modello da coding; confronto tra modelli di taglia diversa
 86. 2026-10-07 — Smoke test di Qwen2.5-Coder 7B Instruct: risposta attesa, nessun ragionamento, seed come Gemma e il 14B
+87. 2026-10-08 — Gemma 4 12B QAT: impostazioni di caricamento (Flash Attention, KV cache) del primo pilota
 
 ## Formato
 
@@ -2972,3 +2973,19 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   `experiments/configs/qwen25coder7b_template.yaml` e nel modello Q di `experiments/configs/pilot2_formats.yaml`, con
   l'annotazione sull'editore. P-Q, J-Q e J0-Q non hanno più TODO: il runner e `calibrate_tokens.py` accettano il
   client (test). Resta da registrare `hardware.vram_used` (dopo la calibrazione; campo descrittivo, non obbligatorio).
+
+### [2026-10-08] Gemma 4 12B QAT: impostazioni di caricamento (Flash Attention, KV cache) del primo pilota
+- **Dato dell'utente**: Gemma 4 12B QAT è caricato in LM Studio con **Flash Attention = true**, **K cache = F16**, **V
+  cache = F16** (KV cache non quantizzata). Sono le stesse impostazioni del primo pilota e non sono mai cambiate.
+- **Config**: `kv_cache_quant: F16` (K e V F16, stessa convenzione del 7B) e `flash_attention: true` in
+  `experiments/configs/gemma4_12b_qat_template.yaml` e nel modello G di `experiments/configs/pilot2_formats.yaml`.
+  P-G e J-G non hanno più TODO: il runner e `calibrate_tokens.py` accettano il client (test). All'avvio il runner
+  confronta Flash Attention con quella dell'istanza caricata, se LM Studio la riporta; la quantizzazione della KV
+  cache non è esposta dall'API e resta un metadato dichiarato (voce 78).
+- **Primo pilota**: il suo `config.json` (run conclusa) e `experiments/configs/pilot_temperature.yaml` non contengono
+  questi campi, perché sono precedenti ai metadati di caricamento (voce 78); non si modificano. Per il primo pilota
+  il valore resta quello dichiarato qui, non registrato nella run.
+- **Confronto tra i modelli del secondo pilota**: KV cache F16 per entrambi (Gemma e Qwen2.5-Coder 7B), Flash Attention
+  attiva per entrambi; restano diverse taglia e quantizzazione dei pesi (QAT q4_0 contro Q6_K, voce 85).
+- Il test sui valori fittizi del client J-G (`kv_cache_quant` F16, `flash_attention` false, solo per costruire la
+  richiesta) è sostituito dal config reale.
