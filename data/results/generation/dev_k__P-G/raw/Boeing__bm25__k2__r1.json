@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Boeing {\n  + CompanyName : string\n}\n\nclass Airline {\n  + Name : string\n}\n\nclass Employee {\n  + Name : string\n  + EmployeeID : string\n}\n\nclass Salesperson {\n  + SalesID : string\n}\n\nclass Contract {\n  + DeliveryConditions : string\n  + LegalAspects : string\n}\n\nclass Acquisition {\n  + Model : string\n  + NegotiatedPrice : float\n  + Customizations : string\n  + DeliveryDate : date\n}\n\nclass Airplane {\n  + SerialNumber : string\n  + ModelType : string\n}\n\nEmployee \"1\" -- \"0..*\" Salesperson\nSalesperson \"1\" -- \"0..*\" Contract\nAirline \"1\" -- \"0..*\" Contract\nContract \"1\" *-- \"1..*\" Acquisition\nAcquisition \"1\" -- \"1\" Airplane\nAirline \"0..1\" o-- \"0..*\" Airline : daughterOf\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.507552300001407,
+ "prompt_tokens": 2969,
+ "completion_tokens": 216,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tdowqm91o2hzf7lyalk89",
+  "object": "chat.completion",
+  "created": 1791477638,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Boeing {\n  + CompanyName : string\n}\n\nclass Airline {\n  + Name : string\n}\n\nclass Employee {\n  + Name : string\n  + EmployeeID : string\n}\n\nclass Salesperson {\n  + SalesID : string\n}\n\nclass Contract {\n  + DeliveryConditions : string\n  + LegalAspects : string\n}\n\nclass Acquisition {\n  + Model : string\n  + NegotiatedPrice : float\n  + Customizations : string\n  + DeliveryDate : date\n}\n\nclass Airplane {\n  + SerialNumber : string\n  + ModelType : string\n}\n\nEmployee \"1\" -- \"0..*\" Salesperson\nSalesperson \"1\" -- \"0..*\" Contract\nAirline \"1\" -- \"0..*\" Contract\nContract \"1\" *-- \"1..*\" Acquisition\nAcquisition \"1\" -- \"1\" Airplane\nAirline \"0..1\" o-- \"0..*\" Airline : daughterOf\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2969,
+   "completion_tokens": 216,
+   "total_tokens": 3185,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

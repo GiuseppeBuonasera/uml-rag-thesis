@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass OilWell {\n  + code : string\n}\n\nabstract class OnshoreWell {\n  + surfaceExtension : float\n}\n\nabstract class OffshoreWell {\n  + installationYear : int\n}\n\nclass Area {\n  + code : string\n  + environmentalImportance : int\n}\n\nclass OilCompany {\n  + taxCode : string\n  + numberOfEmployees : int\n}\n\nclass Extraction {\n  + quantity : float\n}\n\nenum WellCategory {\n  Onshore\n  Offshore\n}\n\nOnshoreWell --|> OilWell\nOffshoreWell --|> OilWell\n\nOilWell \"1\" -- \"0..*\" Extraction\nOilCompany \"1\" -- \"0..*\" Extraction\nExtraction \"1\" -- \"1\" OilWell\nExtraction \"1\" -- \"1\" OilCompany\n\nOffshoreWell \"0..1\" -- \"0..1\" Area : locatedIn\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.052530799999658,
+ "prompt_tokens": 4803,
+ "completion_tokens": 200,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-h7ncpoytnptl1xi99vr4mh",
+  "object": "chat.completion",
+  "created": 1791478869,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass OilWell {\n  + code : string\n}\n\nabstract class OnshoreWell {\n  + surfaceExtension : float\n}\n\nabstract class OffshoreWell {\n  + installationYear : int\n}\n\nclass Area {\n  + code : string\n  + environmentalImportance : int\n}\n\nclass OilCompany {\n  + taxCode : string\n  + numberOfEmployees : int\n}\n\nclass Extraction {\n  + quantity : float\n}\n\nenum WellCategory {\n  Onshore\n  Offshore\n}\n\nOnshoreWell --|> OilWell\nOffshoreWell --|> OilWell\n\nOilWell \"1\" -- \"0..*\" Extraction\nOilCompany \"1\" -- \"0..*\" Extraction\nExtraction \"1\" -- \"1\" OilWell\nExtraction \"1\" -- \"1\" OilCompany\n\nOffshoreWell \"0..1\" -- \"0..1\" Area : locatedIn\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4803,
+   "completion_tokens": 200,
+   "total_tokens": 5003,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

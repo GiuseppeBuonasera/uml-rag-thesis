@@ -104,6 +104,10 @@ python experiments/select_dev.py [--include-pilot]   # selezione deterministica 
 python experiments/calibrate_tokens.py experiments/configs/dev_formats.yaml --configuration C-G --formats plantuml compact
 python experiments/run_experiment.py experiments/configs/dev_formats.yaml --configuration P-G      # P-G P-Q C-G C-Q
 python experiments/analyze_dev.py                    # regola della voce 92 -> dev_formats_analysis/summary.md
+# leva k (voci 93-94, versione di configurazione 2): k = 2, 3, 5, 8, 640 generazioni
+python experiments/calibrate_tokens.py experiments/configs/dev_k.yaml --configuration C-G --formats plantuml compact   # k = 8
+python experiments/run_experiment.py experiments/configs/dev_k.yaml --configuration P-G      # P-G C-G P-Q C-Q
+python experiments/analyze_k.py                      # regola della voce 94 -> dev_k_analysis/summary.md
 python experiments/calibrate_tokens.py experiments/configs/pilot2_formats.yaml --configuration J-Q   # max_tokens 1 (Q = 7B)
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration P-G      # P-G P-Q J-G J-Q
 python experiments/run_experiment.py experiments/configs/pilot2_formats.yaml --configuration J0-Q     # riferimento, fuori dalla regola (voce 83)
@@ -214,9 +218,11 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
   tesi, poi gli stessi controlli L2-L4) e **strada 2** Apollon JSON con generazione vincolata allo schema.
 - Metadati obbligatori anche `kv_cache_quant` e `flash_attention` (impostazioni di caricamento in LM Studio); Flash
   Attention è verificata all'avvio se LM Studio la riporta, la quantizzazione della KV cache no (non esposta).
-- **Per uno stesso modello (model_id + quantizzazione), la lunghezza di contesto impostata in LM Studio e `max_tokens`
-  sono IDENTICI per tutte le condizioni e tutti i k.** Il runner rifiuta una run i cui valori differiscono da quelli
-  di una run già presente dello stesso modello.
+- **Per uno stesso modello (model_id + quantizzazione) e una stessa versione di configurazione (`config_version`,
+  assente = 1), la lunghezza di contesto impostata in LM Studio e `max_tokens` sono IDENTICI per tutte le condizioni e
+  tutti i k.** Il runner rifiuta una run i cui valori differiscono da quelli di una run già presente dello stesso
+  modello e della stessa versione. Versione 1 (piloti, `dev_formats`): 32768 / 12288; **versione 2** (voce 93, run
+  nuove come `dev_k`): 32768 / 4096.
 - Un client reale parte solo con tutti i metadati del modello in config (model_id, quantizzazione, contesto,
   versione di LM Studio, `enable_thinking` true / false come impostato in LM Studio, hardware CPU / GPU / RAM / VRAM,
   parametri di generazione); nessuna chiave API.

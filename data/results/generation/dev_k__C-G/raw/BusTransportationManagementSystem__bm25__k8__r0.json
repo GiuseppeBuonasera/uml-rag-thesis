@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Driver\",\"attributes\":[\"+ DriverID : int\",\"+ Name : string\",\"+ IsOnSickLeave : boolean\"]},{\"name\":\"Bus\",\"attributes\":[\"+ LicensePlate : string\",\"+ IsInRepairShop : boolean\"]},{\"name\":\"BusRoute\",\"attributes\":[\"+ RouteNumber : int\"]},{\"name\":\"Shift\",\"attributes\":[\"+ ShiftType : ShiftType\"]},{\"name\":\"Assignment\",\"attributes\":[\"+ Date : date\"]},{\"name\":\"CityStaff\",\"attributes\":[\"+ StaffID : int\"]},{\"name\":\"ShiftType\",\"kind\":\"enum\",\"values\":[\"Morning\",\"Afternoon\",\"Night\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"BusRoute\",\"part\":\"Assignment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\",\"partRole\":\"busAssignment\"},{\"type\":\"composition\",\"whole\":\"Assignment\",\"part\":\"Bus\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Assignment\",\"part\":\"BusRoute\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Shift\",\"part\":\"Driver\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\",\"partRole\":\"assignedDriver\"},{\"type\":\"composition\",\"whole\":\"Shift\",\"part\":\"Bus\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\",\"partRole\":\"assignedBus\"},{\"type\":\"composition\",\"whole\":\"Shift\",\"part\":\"Date\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"BusRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"assignsRoute\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Bus\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"assignsBus\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Shift\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"postsSchedule\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 14.027256800000032,
+ "prompt_tokens": 8549,
+ "completion_tokens": 384,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-f6twmt6mr9m2a4exduqp88",
+  "object": "chat.completion",
+  "created": 1791479341,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Driver\",\"attributes\":[\"+ DriverID : int\",\"+ Name : string\",\"+ IsOnSickLeave : boolean\"]},{\"name\":\"Bus\",\"attributes\":[\"+ LicensePlate : string\",\"+ IsInRepairShop : boolean\"]},{\"name\":\"BusRoute\",\"attributes\":[\"+ RouteNumber : int\"]},{\"name\":\"Shift\",\"attributes\":[\"+ ShiftType : ShiftType\"]},{\"name\":\"Assignment\",\"attributes\":[\"+ Date : date\"]},{\"name\":\"CityStaff\",\"attributes\":[\"+ StaffID : int\"]},{\"name\":\"ShiftType\",\"kind\":\"enum\",\"values\":[\"Morning\",\"Afternoon\",\"Night\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"BusRoute\",\"part\":\"Assignment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\",\"partRole\":\"busAssignment\"},{\"type\":\"composition\",\"whole\":\"Assignment\",\"part\":\"Bus\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Assignment\",\"part\":\"BusRoute\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Shift\",\"part\":\"Driver\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\",\"partRole\":\"assignedDriver\"},{\"type\":\"composition\",\"whole\":\"Shift\",\"part\":\"Bus\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\",\"partRole\":\"assignedBus\"},{\"type\":\"composition\",\"whole\":\"Shift\",\"part\":\"Date\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"BusRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"assignsRoute\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Bus\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"assignsBus\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Shift\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"postsSchedule\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8549,
+   "completion_tokens": 384,
+   "total_tokens": 8933,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"User\",\"attributes\":[\"+ userID : int\",\"+ name : string\",\"+ address : string\",\"+ birthday : date\"]},{\"name\":\"BusinessOwner\",\"attributes\":[\"+ linkedinAccount : string\"]},{\"name\":\"HungryCustomer\",\"attributes\":[\"+ deliveryAddress : string\"]},{\"name\":\"Entertainer\",\"attributes\":[\"+ stageName : string\",\"+ bio : string\",\"+ pricePer30Min : double\"]},{\"name\":\"Restaurant\",\"attributes\":[\"+ zipCode : string\",\"+ address : string\",\"+ phoneNumber : string\",\"+ website : string\",\"+ openingHours : string\"]},{\"name\":\"Pizza\",\"attributes\":[\"+ name : string\",\"+ crustStructure : string\",\"+ price : double\"]},{\"name\":\"Order\",\"attributes\":[\"+ orderID : int\",\"+ orderDateTime : datetime\",\"+ latestDeliveryTime : time\",\"+ numberOfPeople : int\"]},{\"name\":\"EntertainmentOrder\",\"attributes\":[\"+ entertainmentType : string\",\"+ duration : int\"]},{\"name\":\"Availability\",\"attributes\":[\"+ day : string\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"BusinessOwner\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"HungryCustomer\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"Entertainer\",\"parent\":\"User\"},{\"type\":\"composition\",\"whole\":\"BusinessOwner\",\"part\":\"Restaurant\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"Restaurant\",\"part\":\"Pizza\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"HungryCustomer\",\"target\":\"Order\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"inheritance\",\"child\":\"EntertainmentOrder\",\"parent\":\"Order\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Pizza\",\"label\":\"contains\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"EntertainmentOrder\",\"target\":\"Entertainer\",\"label\":\"fulfilledBy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Entertainer\",\"target\":\"Restaurant\",\"label\":\"worksWith\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Entertainer\",\"part\":\"Availability\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 16.135509899999306,
+ "prompt_tokens": 8724,
+ "completion_tokens": 472,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-x8u7qv67tvhfcn8gxk4gw",
+  "object": "chat.completion",
+  "created": 1791480933,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"User\",\"attributes\":[\"+ userID : int\",\"+ name : string\",\"+ address : string\",\"+ birthday : date\"]},{\"name\":\"BusinessOwner\",\"attributes\":[\"+ linkedinAccount : string\"]},{\"name\":\"HungryCustomer\",\"attributes\":[\"+ deliveryAddress : string\"]},{\"name\":\"Entertainer\",\"attributes\":[\"+ stageName : string\",\"+ bio : string\",\"+ pricePer30Min : double\"]},{\"name\":\"Restaurant\",\"attributes\":[\"+ zipCode : string\",\"+ address : string\",\"+ phoneNumber : string\",\"+ website : string\",\"+ openingHours : string\"]},{\"name\":\"Pizza\",\"attributes\":[\"+ name : string\",\"+ crustStructure : string\",\"+ price : double\"]},{\"name\":\"Order\",\"attributes\":[\"+ orderID : int\",\"+ orderDateTime : datetime\",\"+ latestDeliveryTime : time\",\"+ numberOfPeople : int\"]},{\"name\":\"EntertainmentOrder\",\"attributes\":[\"+ entertainmentType : string\",\"+ duration : int\"]},{\"name\":\"Availability\",\"attributes\":[\"+ day : string\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"BusinessOwner\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"HungryCustomer\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"Entertainer\",\"parent\":\"User\"},{\"type\":\"composition\",\"whole\":\"BusinessOwner\",\"part\":\"Restaurant\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"Restaurant\",\"part\":\"Pizza\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"HungryCustomer\",\"target\":\"Order\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"inheritance\",\"child\":\"EntertainmentOrder\",\"parent\":\"Order\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Pizza\",\"label\":\"contains\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"EntertainmentOrder\",\"target\":\"Entertainer\",\"label\":\"fulfilledBy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Entertainer\",\"target\":\"Restaurant\",\"label\":\"worksWith\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Entertainer\",\"part\":\"Availability\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8724,
+   "completion_tokens": 472,
+   "total_tokens": 9196,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

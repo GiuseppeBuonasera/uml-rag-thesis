@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Boeing\",\n      \"attributes\": [\n        \"+ CompanyName : string\"\n      ]\n    },\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ RegistrationNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ EmployeeID : int\",\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Salesperson\",\n      \"attributes\": [\n        \"+ SalesID : int\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractID : int\",\n        \"+ DeliveryConditions : string\",\n        \"+ LegalAspects : string\"\n      ]\n    },\n    {\n      \"name\": \"Acquisition\",\n      \"attributes\": [\n        \"+ AcquisitionID : int\",\n        \"+ Model : string\",\n        \"+ NegotiatedPrice : double\",\n        \"+ Options : string\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Airplane\",\n      \"attributes\": [\n        \"+ SerialNumber : string\",\n        \"+ ModelType : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Salesperson\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Salesperson\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Salesperson\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Airline\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"Acquisition\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Acquisition\",\n      \"part\": \"Airplane\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Airline\",\n      \"part\": \"Airline\",\n      \"wholeMultiplicity\": \"0..1\",\n      \"partMultiplicity\": \"0..*\",\n      \"label\": \"mother_daughter_relationship\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 20.28168480000022,
+ "prompt_tokens": 8663,
+ "completion_tokens": 673,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-t6qeoiav08rjd6qd43twi",
+  "object": "chat.completion",
+  "created": 1791479217,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Boeing\",\n      \"attributes\": [\n        \"+ CompanyName : string\"\n      ]\n    },\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ RegistrationNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ EmployeeID : int\",\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Salesperson\",\n      \"attributes\": [\n        \"+ SalesID : int\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractID : int\",\n        \"+ DeliveryConditions : string\",\n        \"+ LegalAspects : string\"\n      ]\n    },\n    {\n      \"name\": \"Acquisition\",\n      \"attributes\": [\n        \"+ AcquisitionID : int\",\n        \"+ Model : string\",\n        \"+ NegotiatedPrice : double\",\n        \"+ Options : string\",\n        \"+ DeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Airplane\",\n      \"attributes\": [\n        \"+ SerialNumber : string\",\n        \"+ ModelType : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Salesperson\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Salesperson\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Salesperson\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Airline\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"Acquisition\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Acquisition\",\n      \"part\": \"Airplane\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Airline\",\n      \"part\": \"Airline\",\n      \"wholeMultiplicity\": \"0..1\",\n      \"partMultiplicity\": \"0..*\",\n      \"label\": \"mother_daughter_relationship\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8663,
+   "completion_tokens": 673,
+   "total_tokens": 9336,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

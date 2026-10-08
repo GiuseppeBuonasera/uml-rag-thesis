@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"University\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Department\",\"attributes\":[\"+ name : string\"]},{\"name\":\"ResearchGroup\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Researcher\",\"attributes\":[\"+ name : string\",\"+ id : int\"]},{\"name\":\"Project\",\"attributes\":[\"+ title : string\",\"+ id : int\"]},{\"name\":\"WorkPackage\",\"attributes\":[\"+ wpId : int\",\"+ description : string\"]},{\"name\":\"Assignment\",\"attributes\":[\"+ assignmentDate : date\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"University\",\"part\":\"Department\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"Department\",\"part\":\"ResearchGroup\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Researcher\",\"target\":\"ResearchGroup\",\"label\":\"belongsTo\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Project\",\"part\":\"WorkPackage\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"ResearchGroup\",\"target\":\"WorkPackage\",\"label\":\"leads\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Researcher\",\"target\":\"WorkPackage\",\"label\":\"worksOn\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"WorkPackage\",\"part\":\"Assignment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Researcher\",\"target\":\"Assignment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"WorkPackage\",\"target\":\"Assignment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.7374129000018,
+ "prompt_tokens": 4943,
+ "completion_tokens": 345,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-dpd14i8h0mumg3hkq9089",
+  "object": "chat.completion",
+  "created": 1791481003,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"University\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Department\",\"attributes\":[\"+ name : string\"]},{\"name\":\"ResearchGroup\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Researcher\",\"attributes\":[\"+ name : string\",\"+ id : int\"]},{\"name\":\"Project\",\"attributes\":[\"+ title : string\",\"+ id : int\"]},{\"name\":\"WorkPackage\",\"attributes\":[\"+ wpId : int\",\"+ description : string\"]},{\"name\":\"Assignment\",\"attributes\":[\"+ assignmentDate : date\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"University\",\"part\":\"Department\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"Department\",\"part\":\"ResearchGroup\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Researcher\",\"target\":\"ResearchGroup\",\"label\":\"belongsTo\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Project\",\"part\":\"WorkPackage\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"ResearchGroup\",\"target\":\"WorkPackage\",\"label\":\"leads\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Researcher\",\"target\":\"WorkPackage\",\"label\":\"worksOn\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"WorkPackage\",\"part\":\"Assignment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Researcher\",\"target\":\"Assignment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"WorkPackage\",\"target\":\"Assignment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4943,
+   "completion_tokens": 345,
+   "total_tokens": 5288,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

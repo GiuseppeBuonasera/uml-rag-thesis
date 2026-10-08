@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass InsuranceCompany {}\n\nclass Policy {\n  + PolicyType : string\n}\n\nclass CarLiabilityPolicy {\n  + CoverageLimit : float\n}\n\nclass LifePolicy {\n  + BeneficiaryName : string\n}\n\nclass RiskPolicy {\n  + RiskFactor : float\n}\n\nclass Customer {\n  + Name : string\n  + CustomerId : int\n}\n\nclass Contract {\n  + ContractId : int\n  + SigningDate : date\n}\n\nInsuranceCompany \"1\" -- \"0..*\" Policy\nInsuranceCompany \"1\" -- \"0..*\" Customer\nCustomer \"1\" -- \"0..*\" Contract\nPolicy \"1\" -- \"0..*\" Contract\n\nCarLiabilityPolicy --|> Policy\nLifePolicy --|> Policy\nRiskPolicy --|> Policy\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 5.843627500002185,
+ "prompt_tokens": 4914,
+ "completion_tokens": 174,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-fqk90p1zlbqnvmvs77vldr",
+  "object": "chat.completion",
+  "created": 1791478825,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass InsuranceCompany {}\n\nclass Policy {\n  + PolicyType : string\n}\n\nclass CarLiabilityPolicy {\n  + CoverageLimit : float\n}\n\nclass LifePolicy {\n  + BeneficiaryName : string\n}\n\nclass RiskPolicy {\n  + RiskFactor : float\n}\n\nclass Customer {\n  + Name : string\n  + CustomerId : int\n}\n\nclass Contract {\n  + ContractId : int\n  + SigningDate : date\n}\n\nInsuranceCompany \"1\" -- \"0..*\" Policy\nInsuranceCompany \"1\" -- \"0..*\" Customer\nCustomer \"1\" -- \"0..*\" Contract\nPolicy \"1\" -- \"0..*\" Contract\n\nCarLiabilityPolicy --|> Policy\nLifePolicy --|> Policy\nRiskPolicy --|> Policy\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4914,
+   "completion_tokens": 174,
+   "total_tokens": 5088,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

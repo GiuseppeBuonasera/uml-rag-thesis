@@ -37,9 +37,9 @@ chiama <run_id>__<NOME>. Le risposte PlantUML passano da generation/plantuml_pos
 poi gli stessi L2-L4), solo se la regola automatica delle etichette e' approvata (plantuml_label_rule).
 
 Un client reale (lmstudio) parte solo se la config contiene TUTTI i metadati del modello (MODEL_METADATA_REQUIRED),
-senza segnaposto. Regola metodologica (STOP 2, decisions.md voce 66): per uno stesso modello (model_id +
-quantization) la lunghezza di contesto impostata in LM Studio e max_tokens sono IDENTICI per tutte le condizioni e
-tutti i k; dentro una config sono unici per costruzione, tra config diverse il runner confronta la nuova run con le
+senza segnaposto. Regola metodologica (STOP 2, decisions.md voce 66; versioni dalla voce 93): per uno stesso modello
+(model_id + quantization) e una stessa versione di configurazione (config_version, assente = 1) la lunghezza di
+contesto impostata in LM Studio e max_tokens sono IDENTICI per tutte le condizioni e tutti i k; dentro una config sono unici per costruzione, tra config diverse il runner confronta la nuova run con le
 run gia' presenti nella cartella dei risultati e rifiuta di partire se differiscono. Ripetizioni: indice r = 0..n-1 nella chiave di cache; se generation.seed e' impostato, la
 ripetizione r usa seed + r.
 """
@@ -129,15 +129,26 @@ def missing_metadata(meta: dict | None) -> list[str]:
     return out
 
 
-def model_key(cfg: dict) -> tuple[str, str] | None:
+# Versione di configurazione (voce 93): le run senza la chiave (piloti, insieme di sviluppo dei formati) sono la
+# versione 1 (contesto 32768, max_tokens 12288); le run nuove dichiarano config_version: 2 (32768, 4096). Il vincolo
+# "contesto e max_tokens identici" vale tra run dello stesso modello E della stessa versione.
+DEFAULT_CONFIG_VERSION = 1
+
+
+def config_version(cfg: dict) -> int:
+    return int(cfg.get("config_version", DEFAULT_CONFIG_VERSION))
+
+
+def model_key(cfg: dict) -> tuple[str, str, int] | None:
     meta = cfg.get("model_metadata") or {}
     if cfg.get("client", {}).get("kind") != "lmstudio":
         return None
-    return str(meta.get("model_id")), str(meta.get("quantization"))
+    return str(meta.get("model_id")), str(meta.get("quantization")), config_version(cfg)
 
 
 def inconsistent_runs(cfg: dict, results_root: Path) -> list[str]:
-    """Run gia' presenti dello stesso modello con context_length o max_tokens diversi da quelli di cfg."""
+    """Run gia' presenti dello stesso modello e della stessa versione di configurazione con context_length o
+    max_tokens diversi da quelli di cfg."""
     key = model_key(cfg)
     if key is None or not results_root.exists():
         return []
@@ -398,8 +409,9 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
     if clash:
         meta = cfg.get("model_metadata") or {}
         raise SystemExit(f"stesso modello ({meta.get('model_id')}, {meta.get('quantization')}) con context_length o "
-                         f"max_tokens diversi da run esistenti: {clash}. Devono essere identici per tutte le "
-                         f"condizioni e tutti i k (docs/STATUS.md, regole della generazione)")
+                         f"max_tokens diversi da run esistenti della stessa versione di configurazione "
+                         f"({config_version(cfg)}): {clash}. Devono essere identici per tutte le condizioni e tutti i k "
+                         f"(docs/STATUS.md, regole della generazione)")
     ntok = token_counter()
     if out_dir.exists() and not resume:
         raise SystemExit(f"{out_dir} esiste gia': non si sovrascrive (usa --resume per riprendere)")

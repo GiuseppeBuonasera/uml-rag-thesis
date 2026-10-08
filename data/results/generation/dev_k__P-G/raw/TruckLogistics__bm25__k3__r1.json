@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Location {\n  + address : string\n}\n\nclass Driver {\n  + firstName : string\n  + lastName : string\n}\n\nabstract class Vehicle {\n  + vehicleNumber : string\n}\n\nclass Truck {}\n\nclass Car {\n  + numberOfSeats : int\n}\n\nclass Van {}\n\nclass Order {\n  + originLocation : string\n  + destinationLocation : string\n  + executionDate : date\n}\n\nLocation \"1\" *-- \"1..*\" Driver\nLocation \"1\" *-- \"1..*\" Vehicle\nVehicle --|> Truck\nVehicle --|> Car\nVehicle --|> Van\n\nDriver \"1\" -- \"0..1\" Order : carries\nDriver \"0..1\" -- \"1..*\" Vehicle : drives\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 5.654228899998998,
+ "prompt_tokens": 3653,
+ "completion_tokens": 168,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ar10yvdmrfnz37o204s2xc",
+  "object": "chat.completion",
+  "created": 1791478702,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Location {\n  + address : string\n}\n\nclass Driver {\n  + firstName : string\n  + lastName : string\n}\n\nabstract class Vehicle {\n  + vehicleNumber : string\n}\n\nclass Truck {}\n\nclass Car {\n  + numberOfSeats : int\n}\n\nclass Van {}\n\nclass Order {\n  + originLocation : string\n  + destinationLocation : string\n  + executionDate : date\n}\n\nLocation \"1\" *-- \"1..*\" Driver\nLocation \"1\" *-- \"1..*\" Vehicle\nVehicle --|> Truck\nVehicle --|> Car\nVehicle --|> Van\n\nDriver \"1\" -- \"0..1\" Order : carries\nDriver \"0..1\" -- \"1..*\" Vehicle : drives\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3653,
+   "completion_tokens": 168,
+   "total_tokens": 3821,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

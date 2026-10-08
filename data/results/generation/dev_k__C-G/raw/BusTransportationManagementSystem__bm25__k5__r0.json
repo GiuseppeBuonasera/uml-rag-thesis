@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Driver\",\"attributes\":[\"+ driverID : int\",\"+ name : string\",\"+ isOnSickLeave : boolean\"]},{\"name\":\"Bus\",\"attributes\":[\"+ licensePlate : string\",\"+ isInRepairShop : boolean\"]},{\"name\":\"Route\",\"attributes\":[\"+ routeNumber : int\"]},{\"name\":\"Shift\",\"attributes\":[\"+ shiftType : ShiftType\"]},{\"name\":\"Schedule\",\"attributes\":[\"+ scheduleDate : date\"]},{\"name\":\"ShiftType\",\"kind\":\"enum\",\"values\":[\"Morning\",\"Afternoon\",\"Night\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Route\",\"part\":\"Shift\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"3\",\"partRole\":\"shift\"},{\"type\":\"composition\",\"whole\":\"Schedule\",\"part\":\"Shift\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"assignedShift\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Route\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"sourceRole\":\"dailyAssignment\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"label\":\"assignedTo\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"label\":\"scheduledFor\"},{\"type\":\"dependency\",\"source\":\"Route\",\"target\":\"Bus\",\"label\":\"overview\"},{\"type\":\"dependency\",\"source\":\"Route\",\"target\":\"Driver\",\"label\":\"overview\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.014550699997926,
+ "prompt_tokens": 6071,
+ "completion_tokens": 296,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tymomzy973jot9jf6xeid",
+  "object": "chat.completion",
+  "created": 1791479314,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Driver\",\"attributes\":[\"+ driverID : int\",\"+ name : string\",\"+ isOnSickLeave : boolean\"]},{\"name\":\"Bus\",\"attributes\":[\"+ licensePlate : string\",\"+ isInRepairShop : boolean\"]},{\"name\":\"Route\",\"attributes\":[\"+ routeNumber : int\"]},{\"name\":\"Shift\",\"attributes\":[\"+ shiftType : ShiftType\"]},{\"name\":\"Schedule\",\"attributes\":[\"+ scheduleDate : date\"]},{\"name\":\"ShiftType\",\"kind\":\"enum\",\"values\":[\"Morning\",\"Afternoon\",\"Night\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Route\",\"part\":\"Shift\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"3\",\"partRole\":\"shift\"},{\"type\":\"composition\",\"whole\":\"Schedule\",\"part\":\"Shift\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"assignedShift\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Route\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"sourceRole\":\"dailyAssignment\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"label\":\"assignedTo\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"label\":\"scheduledFor\"},{\"type\":\"dependency\",\"source\":\"Route\",\"target\":\"Bus\",\"label\":\"overview\"},{\"type\":\"dependency\",\"source\":\"Route\",\"target\":\"Driver\",\"label\":\"overview\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6071,
+   "completion_tokens": 296,
+   "total_tokens": 6367,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

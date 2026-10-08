@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ familyName : string\",\n        \"+ birthDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Trainer\",\n      \"attributes\": [\n        \"+ diploma : string\"\n      ]\n    },\n    {\n      \"name\": \"Member\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Prospect\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"FitnessCenter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ roomNumber : int\",\n        \"+ capacity : int\"\n      ]\n    },\n    {\n      \"name\": \"Session\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ startTime : time\"\n      ]\n    },\n    {\n      \"name\": \"GroupSession\",\n      \"attributes\": [\n        \"+ type : string\"\n      ]\n    },\n    {\n      \"name\": \"IndividualSession\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Trainer\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Member\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Prospect\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Session\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Session\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"GroupSession\",\n      \"parent\": \"Session\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"IndividualSession\",\n      \"parent\": \"Session\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trainer\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"Session\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"participatesIn\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 19.935772499997256,
+ "prompt_tokens": 5635,
+ "completion_tokens": 729,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-y2tm8zscujoalogvg5yv1",
+  "object": "chat.completion",
+  "created": 1791480078,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ familyName : string\",\n        \"+ birthDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Trainer\",\n      \"attributes\": [\n        \"+ diploma : string\"\n      ]\n    },\n    {\n      \"name\": \"Member\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Prospect\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"FitnessCenter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ roomNumber : int\",\n        \"+ capacity : int\"\n      ]\n    },\n    {\n      \"name\": \"Session\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ startTime : time\"\n      ]\n    },\n    {\n      \"name\": \"GroupSession\",\n      \"attributes\": [\n        \"+ type : string\"\n      ]\n    },\n    {\n      \"name\": \"IndividualSession\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Trainer\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Member\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Prospect\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"FitnessCenter\",\n      \"part\": \"Session\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Session\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"GroupSession\",\n      \"parent\": \"Session\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"IndividualSession\",\n      \"parent\": \"Session\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trainer\",\n      \"target\": \"GroupSession\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"Session\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"participatesIn\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5635,
+   "completion_tokens": 729,
+   "total_tokens": 6364,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

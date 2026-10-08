@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Customer\",\"attributes\":[\"+ name : string\",\"+ phoneNumber : string\"]},{\"name\":\"Table\",\"attributes\":[\"+ seatCount : int\",\"+ isSmoking : boolean\"]},{\"name\":\"Reservation\",\"attributes\":[\"+ reservationDate : date\",\"+ reservationTime : time\",\"+ numberOfPeople : int\"]},{\"name\":\"Waiter\",\"attributes\":[\"+ name : string\",\"+ yearsOfService : int\"]},{\"name\":\"Dish\",\"attributes\":[\"+ name : string\",\"+ unitPrice : double\"]},{\"name\":\"Bill\",\"attributes\":[\"+ totalAmount : double\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Reservation\",\"label\":\"makes\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Reservation\",\"target\":\"Table\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Waiter\",\"target\":\"Customer\",\"label\":\"serves\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Waiter\",\"target\":\"Table\",\"label\":\"servesAt\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"source\":\"Bill\",\"part\":\"Dish\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.395607200000086,
+ "prompt_tokens": 3338,
+ "completion_tokens": 258,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8bbkm1yh9eurjlcs7bz8di",
+  "object": "chat.completion",
+  "created": 1791481448,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Customer\",\"attributes\":[\"+ name : string\",\"+ phoneNumber : string\"]},{\"name\":\"Table\",\"attributes\":[\"+ seatCount : int\",\"+ isSmoking : boolean\"]},{\"name\":\"Reservation\",\"attributes\":[\"+ reservationDate : date\",\"+ reservationTime : time\",\"+ numberOfPeople : int\"]},{\"name\":\"Waiter\",\"attributes\":[\"+ name : string\",\"+ yearsOfService : int\"]},{\"name\":\"Dish\",\"attributes\":[\"+ name : string\",\"+ unitPrice : double\"]},{\"name\":\"Bill\",\"attributes\":[\"+ totalAmount : double\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Reservation\",\"label\":\"makes\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Reservation\",\"target\":\"Table\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Waiter\",\"target\":\"Customer\",\"label\":\"serves\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Waiter\",\"target\":\"Table\",\"label\":\"servesAt\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"source\":\"Bill\",\"part\":\"Dish\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3338,
+   "completion_tokens": 258,
+   "total_tokens": 3596,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

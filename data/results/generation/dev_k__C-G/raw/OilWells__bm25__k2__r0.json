@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Well\",\"attributes\":[\"+ code : string\",\"+ pollutionRate : float\"]},{\"name\":\"OnshoreWell\",\"attributes\":[\"+ surfaceExtension : float\"]},{\"name\":\"OffshoreWell\",\"attributes\":[\"+ installationYear : int\"]},{\"name\":\"OilCompany\",\"attributes\":[\"+ taxCode : string\",\"+ employeeCount : int\"]},{\"name\":\"Extraction\",\"attributes\":[\"+ quantity : float\"]},{\"name\":\"GeographicalArea\",\"attributes\":[\"+ code : string\",\"+ environmentalImportance : int\"]},{\"name\":\"WellCategory\",\"kind\":\"enum\",\"values\":[\"Onshore\",\"Offshore\"]Copied}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"OnshoreWell\",\"parent\":\"Well\"},{\"type\":\"inheritance\",\"child\":\"OffshoreWell\",\"parent\":\"Well\"},{\"type\":\"composition\",\"whole\":\"Well\",\"part\":\"Extraction\",\"label\":\"extractionData\"},{\"type\":\"association\",\"source\":\"OilCompany\",\"target\":\"Extraction\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Well\",\"target\":\"Extraction\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"OffshoreWell\",\"target\":\"GeographicalArea\",\"label\":\"locatedIn\",\"sourceMultiplicity\":\"0..1\",\"targetMultiplicity\":\"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.714105600000039,
+ "prompt_tokens": 3152,
+ "completion_tokens": 251,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1emj0lfwccz3i029dpc2j",
+  "object": "chat.completion",
+  "created": 1791481372,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Well\",\"attributes\":[\"+ code : string\",\"+ pollutionRate : float\"]},{\"name\":\"OnshoreWell\",\"attributes\":[\"+ surfaceExtension : float\"]},{\"name\":\"OffshoreWell\",\"attributes\":[\"+ installationYear : int\"]},{\"name\":\"OilCompany\",\"attributes\":[\"+ taxCode : string\",\"+ employeeCount : int\"]},{\"name\":\"Extraction\",\"attributes\":[\"+ quantity : float\"]},{\"name\":\"GeographicalArea\",\"attributes\":[\"+ code : string\",\"+ environmentalImportance : int\"]},{\"name\":\"WellCategory\",\"kind\":\"enum\",\"values\":[\"Onshore\",\"Offshore\"]Copied}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"OnshoreWell\",\"parent\":\"Well\"},{\"type\":\"inheritance\",\"child\":\"OffshoreWell\",\"parent\":\"Well\"},{\"type\":\"composition\",\"whole\":\"Well\",\"part\":\"Extraction\",\"label\":\"extractionData\"},{\"type\":\"association\",\"source\":\"OilCompany\",\"target\":\"Extraction\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Well\",\"target\":\"Extraction\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"OffshoreWell\",\"target\":\"GeographicalArea\",\"label\":\"locatedIn\",\"sourceMultiplicity\":\"0..1\",\"targetMultiplicity\":\"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3152,
+   "completion_tokens": 251,
+   "total_tokens": 3403,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

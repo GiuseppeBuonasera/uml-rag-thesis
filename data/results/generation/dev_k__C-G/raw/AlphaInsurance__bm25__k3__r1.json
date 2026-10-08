@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"InsuranceCompany\",\"attributes\":[\"+ CompanyName : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ CustomerId : int\",\"+ Name : string\",\"+ Address : string\"]},{\"name\":\"Broker\",\"attributes\":[\"+ BrokerId : int\",\"+ Name : string\"]},{\"name\":\"Policy\",\"kind\":\"abstract\",\"attributes\":[\"+ PolicyType : string\",\"+ CoverageDetails : string\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractId : int\",\"+ SigningDate : date\",\"+ BillingFrequency : string\"]},{\"name\":\"Offer\",\"attributes\":[\"+ OfferId : int\",\"+ ExpiryDate : date\",\"+ Status : string\"]},{\"name\":\"ClaimCase\",\"attributes\":[\"+ CaseId : int\",\"+ Status : string\",\"+ Description : string\"]},{\"name\":\"Estimator\",\"attributes\":[\"+ EstimatorId : int\",\"+ ExpertiseArea : string\"]},{\"name\":\"CompensationDecision\",\"attributes\":[\"+ DecisionId : int\",\"+ TotalAmount : float\",\"+ EligibleCosts : string\"]},{\"name\":\"Report\",\"attributes\":[\"+ ReportId : int\",\"+ Findings : string\",\"+ SubmissionDate : date\"]},{\"name\":\"Invoice\",\"attributes\":[\"+ InvoiceId : int\",\"+ Amount : float\",\"+ DueDate : date\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Broker\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"label\":\"accountManager\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Broker\",\"target\":\"Policy\",\"sourceMultiplicity\":\"0..*\",\"label\":\"assessor\"},{\"type\":\"association\",\"source\":\"Broker\",\"target\":\"Offer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Offer\",\"target\":\"Customer\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Invoice\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"ClaimCase\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"ClaimCase\",\"target\":\"CompensationDecision\",\"sourceMultiplicity\":\"0..1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"ClaimCase\",\"target\":\"Report\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Estimator\",\"target\":\"Report\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"dependency\",\"source\":\"InsuranceCompany\",\"target\":\"Report\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 14.590876899997966,
+ "prompt_tokens": 3685,
+ "completion_tokens": 605,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-58gppvf7loj323vls3796l",
+  "object": "chat.completion",
+  "created": 1791479010,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"InsuranceCompany\",\"attributes\":[\"+ CompanyName : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ CustomerId : int\",\"+ Name : string\",\"+ Address : string\"]},{\"name\":\"Broker\",\"attributes\":[\"+ BrokerId : int\",\"+ Name : string\"]},{\"name\":\"Policy\",\"kind\":\"abstract\",\"attributes\":[\"+ PolicyType : string\",\"+ CoverageDetails : string\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractId : int\",\"+ SigningDate : date\",\"+ BillingFrequency : string\"]},{\"name\":\"Offer\",\"attributes\":[\"+ OfferId : int\",\"+ ExpiryDate : date\",\"+ Status : string\"]},{\"name\":\"ClaimCase\",\"attributes\":[\"+ CaseId : int\",\"+ Status : string\",\"+ Description : string\"]},{\"name\":\"Estimator\",\"attributes\":[\"+ EstimatorId : int\",\"+ ExpertiseArea : string\"]},{\"name\":\"CompensationDecision\",\"attributes\":[\"+ DecisionId : int\",\"+ TotalAmount : float\",\"+ EligibleCosts : string\"]},{\"name\":\"Report\",\"attributes\":[\"+ ReportId : int\",\"+ Findings : string\",\"+ SubmissionDate : date\"]},{\"name\":\"Invoice\",\"attributes\":[\"+ InvoiceId : int\",\"+ Amount : float\",\"+ DueDate : date\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Broker\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"label\":\"accountManager\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Broker\",\"target\":\"Policy\",\"sourceMultiplicity\":\"0..*\",\"label\":\"assessor\"},{\"type\":\"association\",\"source\":\"Broker\",\"target\":\"Offer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Offer\",\"target\":\"Customer\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Invoice\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"ClaimCase\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"ClaimCase\",\"target\":\"CompensationDecision\",\"sourceMultiplicity\":\"0..1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"ClaimCase\",\"target\":\"Report\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Estimator\",\"target\":\"Report\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"dependency\",\"source\":\"InsuranceCompany\",\"target\":\"Report\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3685,
+   "completion_tokens": 605,
+   "total_tokens": 4290,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

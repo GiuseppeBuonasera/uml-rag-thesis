@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + DepartmentName : string\n}\n\nclass Room {\n  + RoomNumber : string\n}\n\nclass Bed {\n  + BedNumber : string\n}\n\nclass Category {\n  + CategoryName : string\n  + Price : double\n}\n\nenum StayType {\n  RH\n  RNH\n  SF\n}\n\nclass Inhabitant {\n  + Name : string\n  + ID : string\n}\n\nclass Registration {\n  + RegistrationDate : date\n}\n\nclass Assessment {\n  + NeedsHelpScore : int\n  + RecommendedStayType : StayType\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + ProposalDate : date\n  + Status : string\n}\n\nclass Stay {\n  + StartDate : date\n  + Status : string\n}\n\nclass Invoice {\n  + InvoiceNumber : string\n  + OutstandingAmount : double\n  + TotalAmount : double\n  + Status : string\n}\n\nclass CreditNote {\n  + Amount : double\n}\n\nclass PaymentEvent {\n  + AmountPaid : double\n  + PaymentDate : date\n}\n\nHome \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" Room\nRoom \"1\" *-- \"1..*\" Bed\nBed \"*\" -- \"1\" Category\nInhabitant \"1\" -- \"1..*\" Stay\nStay \"*\" -- \"1\" Category\nStay \"1\" -- \"0..*\" Invoice\nInhabitant \"1\" -- \"0..*\" Registration\nRegistration \"1\" -- \"1\" Assessment\nAssessment \"1\" -- \"1\" Inhabitant\nInhabitant \"1\" -- \"0..*\" WaitingList\nWaitingList \"1\" -- \"1\" Stay\nStay \"1\" -- \"0..*\" Proposal\nProposal \"*\" -- \"1\" Inhabitant\nInvoice \"1\" -- \"0..*\" PaymentEvent\nInvoice \"1\" -- \"0..1\" CreditNote\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 15.772027099999832,
+ "prompt_tokens": 9149,
+ "completion_tokens": 451,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-sg2kgu3nxadya4s4pl0ja",
+  "object": "chat.completion",
+  "created": 1791478362,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + DepartmentName : string\n}\n\nclass Room {\n  + RoomNumber : string\n}\n\nclass Bed {\n  + BedNumber : string\n}\n\nclass Category {\n  + CategoryName : string\n  + Price : double\n}\n\nenum StayType {\n  RH\n  RNH\n  SF\n}\n\nclass Inhabitant {\n  + Name : string\n  + ID : string\n}\n\nclass Registration {\n  + RegistrationDate : date\n}\n\nclass Assessment {\n  + NeedsHelpScore : int\n  + RecommendedStayType : StayType\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + ProposalDate : date\n  + Status : string\n}\n\nclass Stay {\n  + StartDate : date\n  + Status : string\n}\n\nclass Invoice {\n  + InvoiceNumber : string\n  + OutstandingAmount : double\n  + TotalAmount : double\n  + Status : string\n}\n\nclass CreditNote {\n  + Amount : double\n}\n\nclass PaymentEvent {\n  + AmountPaid : double\n  + PaymentDate : date\n}\n\nHome \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" Room\nRoom \"1\" *-- \"1..*\" Bed\nBed \"*\" -- \"1\" Category\nInhabitant \"1\" -- \"1..*\" Stay\nStay \"*\" -- \"1\" Category\nStay \"1\" -- \"0..*\" Invoice\nInhabitant \"1\" -- \"0..*\" Registration\nRegistration \"1\" -- \"1\" Assessment\nAssessment \"1\" -- \"1\" Inhabitant\nInhabitant \"1\" -- \"0..*\" WaitingList\nWaitingList \"1\" -- \"1\" Stay\nStay \"1\" -- \"0..*\" Proposal\nProposal \"*\" -- \"1\" Inhabitant\nInvoice \"1\" -- \"0..*\" PaymentEvent\nInvoice \"1\" -- \"0..1\" CreditNote\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 9149,
+   "completion_tokens": 451,
+   "total_tokens": 9600,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

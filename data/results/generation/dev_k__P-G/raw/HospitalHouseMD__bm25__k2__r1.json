@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nenum PriorityScore {\n  High\n  Low\n}\n\nenum TreatmentStage {\n  Stage1\n  Stage2\n  Stage3\n}\n\nclass Patient {\n  + Name : string\n  + ID : string\n}\n\nclass Doctor {\n  + Name : string\n  + PractitionerNumber : int\n}\n\nclass HeadDoctor {\n  + Name : string\n}\n\nclass Diagnosis {\n  + Description : string\n  + Date : date\n}\n\nclass Treatment {\n  + Name : string\n  + Description : string\n  + CurrentStage : TreatmentStage\n}\n\nclass ConsentForm {\n  + Signature : string\n  + DateSigned : date\n  + IsRetracted : boolean\n}\n\nclass Illness {\n  + Name : string\n  + Priority : PriorityScore\n}\n\nclass HospitalHouseMD {\n  + Address : string\n  + RegistrationNumber : string\n}\n\nDoctor \"1..*\" -- \"0..*\" Patient : treats\nDoctor \"1\" -- \"0..*\" Diagnosis : makes\nHeadDoctor \"1\" -- \"0..*\" Diagnosis : approves\nDiagnosis \"1\" -- \"1\" Illness : identifies\nIllness \"1\" -- \"0..*\" Treatment : relatesTo\nPatient \"1\" -- \"0..*\" Treatment : receives\nPatient \"1\" -- \"0..*\" ConsentForm : signs\nConsentForm \"1\" -- \"0..*\" Treatment : authorizes\nHospitalHouseMD \"1\" -- \"0..*\" Treatment : database\nHospitalHouseMD \"1\" -- \"1\" HeadDoctor : employs\nHospitalHouseMD \"1\" -- \"1..*\" Doctor : employs\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 9.444009399998322,
+ "prompt_tokens": 3442,
+ "completion_tokens": 356,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qcgjqb8qsxgb85q5uk9bki",
+  "object": "chat.completion",
+  "created": 1791478400,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum PriorityScore {\n  High\n  Low\n}\n\nenum TreatmentStage {\n  Stage1\n  Stage2\n  Stage3\n}\n\nclass Patient {\n  + Name : string\n  + ID : string\n}\n\nclass Doctor {\n  + Name : string\n  + PractitionerNumber : int\n}\n\nclass HeadDoctor {\n  + Name : string\n}\n\nclass Diagnosis {\n  + Description : string\n  + Date : date\n}\n\nclass Treatment {\n  + Name : string\n  + Description : string\n  + CurrentStage : TreatmentStage\n}\n\nclass ConsentForm {\n  + Signature : string\n  + DateSigned : date\n  + IsRetracted : boolean\n}\n\nclass Illness {\n  + Name : string\n  + Priority : PriorityScore\n}\n\nclass HospitalHouseMD {\n  + Address : string\n  + RegistrationNumber : string\n}\n\nDoctor \"1..*\" -- \"0..*\" Patient : treats\nDoctor \"1\" -- \"0..*\" Diagnosis : makes\nHeadDoctor \"1\" -- \"0..*\" Diagnosis : approves\nDiagnosis \"1\" -- \"1\" Illness : identifies\nIllness \"1\" -- \"0..*\" Treatment : relatesTo\nPatient \"1\" -- \"0..*\" Treatment : receives\nPatient \"1\" -- \"0..*\" ConsentForm : signs\nConsentForm \"1\" -- \"0..*\" Treatment : authorizes\nHospitalHouseMD \"1\" -- \"0..*\" Treatment : database\nHospitalHouseMD \"1\" -- \"1\" HeadDoctor : employs\nHospitalHouseMD \"1\" -- \"1..*\" Doctor : employs\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3442,
+   "completion_tokens": 356,
+   "total_tokens": 3798,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

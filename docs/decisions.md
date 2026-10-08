@@ -101,6 +101,8 @@ non sono state modificate.
 90. 2026-10-08 — Struttura comune, espansore unico e formato JSON compatto (FASE 1, STOP 1)
 91. 2026-10-08 — Strada "JSON compatto" (FASE 2): istruzioni, post-processing C0-C2, schema disattivato, runner
 92. 2026-10-08 — Insieme di sviluppo e confronto dei formati PlantUML / JSON compatto (FASE 3, STOP 2): selezione, config, metriche e regola PRIMA delle run
+93. 2026-10-08 — Versione di configurazione 2: max_tokens 4096, contesto 32768 (STOP 1 della leva k)
+94. 2026-10-08 — Leva "numero di esempi k" sull'insieme di sviluppo (FASE 2, STOP 2): config, calibrazione, regola PROPOSTA, analisi PRIMA delle run
 
 ## Formato
 
@@ -3275,3 +3277,89 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   (e denominatore su tutte le relazioni del GT); "dipende dal modello"; configurazione incompleta (STOP); troncamenti
   segnalati senza bloccare; run finte con 160 risposte (Vc 80 contro 74 → PlantUML per Vc; Gemma pari → pareggio pieno);
   run di un altro modello scartata; costanti della regola.
+
+### [2026-10-08] Versione di configurazione 2: max_tokens 4096, contesto 32768 (STOP 1 della leva k)
+- **Dati misurati** nell'insieme di sviluppo (voce 92, raw delle run `dev_formats__*`): risposta più lunga 537 token in
+  PlantUML (P-G) e 1.094 nel compatto (C-G); prompt reale massimo con k = 2: 4.224 (C-G). Fattori di calibrazione
+  misurati (token reali / stima cl100k_base), massimo per modello: Gemma 1,239, Qwen 7B 1,206 (prompt Apollon dei
+  piloti); sui formati attuali con k = 2: Gemma 1,046 (PlantUML) e 1,039 (compatto), Qwen 1,014 e 1,011.
+- **Dry run dei prompt** (20 esercizi dell'insieme di sviluppo, bm25 in leave-one-out; stima cl100k_base min / mediana /
+  max e massimo moltiplicato per il fattore prudente del modello):
+
+  | formato | k | stima | max × 1,239 (Gemma) | max × 1,206 (Qwen) |
+  |---|---|---|---|---|
+  | PlantUML | 2 | 2.187 / 2.970 / 3.689 | 4.571 | 4.449 |
+  | PlantUML | 3 | 2.778 / 3.563 / 4.365 | 5.408 | 5.264 |
+  | PlantUML | 5 | 4.043 / 4.860 / 6.307 | 7.814 | 7.606 |
+  | PlantUML | 8 | 5.688 / 7.186 / 8.880 | 11.002 | 10.709 |
+  | compatto | 2 | 2.556 / 3.471 / 4.116 | 5.100 | 4.964 |
+  | compatto | 3 | 3.295 / 4.168 / 4.931 | 6.110 | 5.947 |
+  | compatto | 5 | 4.802 / 5.654 / 7.256 | 8.990 | 8.751 |
+  | compatto | 8 | 6.713 / 8.372 / 10.259 | **12.711** | 12.372 |
+
+- **Decisione dell'utente**: versione di configurazione 2 con **max_tokens 4096** (3,7 volte la risposta più lunga
+  misurata) e **contesto 32768** (invariato, già verificato in VRAM per entrambi i modelli), uguali per entrambi i
+  modelli, tutti i formati e tutti i k. Non si scende a 25.600 (proposto come minimo con il 50% di margine): non serve
+  VRAM ai modelli attuali e non basterebbe comunque per il Qwen 14B. Con 16384 il caso peggiore prudente (12.711 +
+  4.096 = 16.807) non ci stava.
+- **Margine nel caso peggiore** (k = 8, compatto, Gemma; prompt massimo + max_tokens contro 32768): con il fattore
+  prudente 1,239 fabbisogno 16.807, margine 15.961 token (**95%** del fabbisogno, 49% del contesto libero); con il
+  fattore del formato 1,039 fabbisogno 14.755, margine 18.013 (**122%**, 55% del contesto libero).
+- **Versione di configurazione** (`experiments/run_experiment.py`): chiave di primo livello `config_version` (assente =
+  1). Le run esistenti (piloti, `dev_formats`) sono la versione 1 (32768 / 12288) e restano intatte; i config nuovi
+  dichiarano `config_version: 2`. Il controllo "contesto e max_tokens identici per modello" confronta ora solo le run
+  con lo stesso (model_id, quantizzazione, config_version) (`model_key`, `inconsistent_runs`); il runner salva la
+  chiave in `config.json` con il resto del config. Test: stessa versione con valori diversi rifiutata, versione diversa
+  ammessa, run vecchie senza chiave = versione 1; le 4 configurazioni di `dev_k.yaml` non sono bloccate dalle run
+  esistenti. I template del Passo 3b (`gemma4_12b_qat_template.yaml`, `qwen25coder7b_template.yaml`) NON sono stati
+  modificati (restano 12288): da decidere quando si sblocca il 3b.
+- **Qwen2.5-Coder 14B Q4_K_M a contesto 16384 in 12 GB (solo stima, nessuna azione)**: 48 strati, 8 teste KV, dimensione
+  128 → KV cache F16 192 KiB per token; pesi circa 9,0 GB (dimensione del GGUF, da verificare in My Models); buffer di
+  calcolo circa 0,7 GB. KV F16 3,2 GB → circa 12,9 GB (non ci sta); KV Q8_0 1,7 GB → circa 11,4 GB (al limite); KV Q4_0
+  0,9 GB → circa 10,6 GB (probabilmente sì, margine circa 1 GB). Coerente con l'osservazione a 32768 con KV Q4 (circa
+  11,5 GB più la memoria del desktop: trabocca, voce 84). Da misurare, non verificata.
+
+### [2026-10-08] Leva "numero di esempi k" sull'insieme di sviluppo (FASE 2, STOP 2): config, calibrazione, regola PROPOSTA, analisi PRIMA delle run
+- **Config** `experiments/configs/dev_k.yaml` (versione di configurazione 2): stessi 20 esercizi e stessi modelli di
+  `dev_formats.yaml`, bm25 con **k = 2, 3, 5, 8**, formati PlantUML (v2) e compatto, temperature 0.3, top_p 0.95, top_k
+  64, max_tokens 4096, contesto 32768, 2 ripetizioni; anche k = 2 si rigenera (stessi parametri per tutte le
+  condizioni). Configurazioni P-G, C-G, P-Q, C-Q da 160 generazioni ciascuna: **640** in tutto, un modello per volta.
+- **Calibrazione** prima delle run, una per modello, con il caso peggiore: `calibrate_tokens.py` usa ora il k PIÙ ALTO
+  della config (8; per le config con un solo k nulla cambia) e registra k e versione nell'esito.
+- **Stima della durata** (non misurata; dalle latenze di `dev_formats` a k = 2, mediane P-G 7,6 s, C-G 12,1, P-Q 5,8, C-Q
+  13,3, più 1-4 s di lettura del prompt in più a k = 8): P-G circa 20-28 minuti, C-G 30-40, P-Q 16-22, C-Q 33-42;
+  totale circa 1 h 45 - 2 h 15, più circa 2-3 minuti di calibrazione per modello e i cambi di modello. Un ciclo fino al
+  tetto di 4096 token costa circa 2 minuti per risposta.
+- **REGOLA DI SCELTA DI k (PROPOSTA allo STOP 2; diventa definitiva con l'approvazione, PRIMA delle run)**, per ciascun
+  formato e ciascun modello separatamente, 40 risposte per k (20 esercizi × 2 ripetizioni); metriche della voce 92 (Vc =
+  valide fino a L3 e senza scarti; R = relazioni del GT con stessa coppia e stesso tipo su TUTTE le risposte, 0 per le
+  non valide):
+  0. controllo preliminare: configurazione (formato, modello) completa (160 risposte, tutti i k), non fermata per
+     ragionamento, del modello del config; altrimenti quel formato non si decide (STOP per il formato; l'altro formato
+     si decide comunque). Più di 2 troncamenti su 40 per un k: segnalato, non blocca;
+  1. **k ammissibili**: Vc(k) ≥ Vc(2) − 2 (k = 2 sempre ammissibile);
+  2. **R\*** = il miglior R tra i k ammissibili (R non definito = 0);
+  3. **k scelto = il più piccolo k ammissibile con R(k) ≥ R\* − 0,02** (soglia inclusa; a parità di qualità, meno
+     token) — **portata a 0,03 allo STOP 2, vedi sotto**;
+  4. per formato: stesso k per Gemma e per Qwen → quello è il k del formato; k diversi → **"dipende dal modello"**,
+     STOP e decisione dell'utente. I due formati possono avere k diversi.
+  Riportati ma fuori dalla regola, per ogni k: V, J (su tutte le risposte e sulle sole valide), R sulle valide,
+  molteplicità corrette, verso delle relazioni, scarti, troncamenti, token di prompt e di completamento, latenza;
+  andamento di R e Vc per fascia di score_norm (solo descrittivo).
+- **Script** `experiments/analyze_k.py` (scritto e testato PRIMA delle run): riusa senza modificarle validazione e
+  metriche di `analyze_dev.py`; legge `dev_k__<C>` in sola lettura, scarta le run di un altro modello, scrive
+  `data/results/generation/dev_k_analysis/summary.md`. Test (`check_k`): versione di configurazione, config, calibrazione
+  con k = 8, regola (ammissibili per Vc, R entro 0,02 con la soglia inclusa in virgola mobile, il più piccolo, R non
+  definito, "dipende dal modello", formato non decidibile mentre l'altro si decide, troncamenti segnalati), run finte.
+- **Nota**: la leva k vale solo per le condizioni con esempi (bm25, random, oracle); quando si arriverà al test set il
+  confronto con random dovrà usare lo stesso k.
+- **STOP 2**: in attesa di approvazione di config, regola e soglie (Vc − 2 su 40, R entro 0,02). Nessuna chiamata a un
+  LLM.
+- **Decisioni dello STOP 2 (utente)**: config, calibrazione e regola **approvate**, con una modifica: **tolleranza su R =
+  0,03** (non 0,02). Motivo: con 40 risposte per k la variabilità di R è di qualche centesimo; la regola sceglie il k
+  più piccolo entro la tolleranza, quindi una soglia più larga è conservativa (preferisce meno esempi salvo guadagni
+  chiari) ed è coerente con la soglia di R della voce 92. Tolleranza su Vc = 2 risposte su 40: approvata.
+  **Regola definitiva**: k ammissibili con Vc(k) ≥ Vc(2) − 2; R\* = miglior R tra gli ammissibili; k scelto = il più
+  piccolo ammissibile con R(k) ≥ R\* − 0,03; stesso k per i due modelli → k del formato, altrimenti "dipende dal
+  modello". Aggiornati `experiments/analyze_k.py` (`R_TOLERANCE = 0.03`) e i test (`check_k`: soglia 0,03 inclusa in
+  virgola mobile, k escluso appena fuori soglia). **Da qui la regola nel codice non si modifica senza una nuova voce.**

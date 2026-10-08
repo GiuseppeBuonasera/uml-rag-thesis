@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + userId : string\n  + name : string\n  + address : string\n  + birthday : date\n}\n\nabstract class BusinessOwner {\n  + linkedinAccount : string\n}\n\nabstract class HungryCustomer {\n  + deliveryAddress : string\n}\n\nabstract class Entertainer {\n  + stageName : string\n  + bio : string\n  + pricePer30Min : double\n}\n\nclass PizzaRestaurant {\n  + zipCode : string\n  + address : string\n  + phoneNumber : string\n  + website : string\n  + openingHours : string\n}\n\nclass Pizza {\n  + name : string\n  + crustStructure : string\n  + price : double\n}\n\nclass Order {\n  + orderId : string\n  + dateTimePlaced : datetime\n  + latestDeliveryTime : time\n  + numberOfPeople : int\n}\n\nclass EntertainmentOrder {\n  + entertainmentType : string\n  + duration : int\n}\n\nclass Availability {\n  + day : string\n}\n\nBusinessOwner --|> User\nHungryCustomer --|> User\nEntertainer --|> User\n\nBusinessOwner \"1\" -- \"1..*\" PizzaRestaurant : owns\nPizzaRestaurant \"1\" -- \"1..*\" Pizza : offers\nHungryCustomer \"1\" -- \"0..*\" Order : places\nOrder \"1\" -- \"1..*\" Pizza : contains\nOrder \"1\" -- \"0..1\" EntertainmentOrder : is_type\n\nEntertainer \"1\" -- \"0..*\" Availability : has\nPizzaRestaurant \"1\" -- \"0..*\" Availability : works_at\nAvailability \"0..*\" -- \"1\" Entertainer : assigned_to\nAvailability \"0..*\" -- \"1\" PizzaRestaurant : assigned_to\n\nEntertainmentOrder \"0..*\" -- \"1\" Entertainer : fulfilled_by\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.681657400000404,
+ "prompt_tokens": 3739,
+ "completion_tokens": 404,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-j3b154zdhp9zxevwkdyslc",
+  "object": "chat.completion",
+  "created": 1791478566,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + userId : string\n  + name : string\n  + address : string\n  + birthday : date\n}\n\nabstract class BusinessOwner {\n  + linkedinAccount : string\n}\n\nabstract class HungryCustomer {\n  + deliveryAddress : string\n}\n\nabstract class Entertainer {\n  + stageName : string\n  + bio : string\n  + pricePer30Min : double\n}\n\nclass PizzaRestaurant {\n  + zipCode : string\n  + address : string\n  + phoneNumber : string\n  + website : string\n  + openingHours : string\n}\n\nclass Pizza {\n  + name : string\n  + crustStructure : string\n  + price : double\n}\n\nclass Order {\n  + orderId : string\n  + dateTimePlaced : datetime\n  + latestDeliveryTime : time\n  + numberOfPeople : int\n}\n\nclass EntertainmentOrder {\n  + entertainmentType : string\n  + duration : int\n}\n\nclass Availability {\n  + day : string\n}\n\nBusinessOwner --|> User\nHungryCustomer --|> User\nEntertainer --|> User\n\nBusinessOwner \"1\" -- \"1..*\" PizzaRestaurant : owns\nPizzaRestaurant \"1\" -- \"1..*\" Pizza : offers\nHungryCustomer \"1\" -- \"0..*\" Order : places\nOrder \"1\" -- \"1..*\" Pizza : contains\nOrder \"1\" -- \"0..1\" EntertainmentOrder : is_type\n\nEntertainer \"1\" -- \"0..*\" Availability : has\nPizzaRestaurant \"1\" -- \"0..*\" Availability : works_at\nAvailability \"0..*\" -- \"1\" Entertainer : assigned_to\nAvailability \"0..*\" -- \"1\" PizzaRestaurant : assigned_to\n\nEntertainmentOrder \"0..*\" -- \"1\" Entertainer : fulfilled_by\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3739,
+   "completion_tokens": 404,
+   "total_tokens": 4143,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

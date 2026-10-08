@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Song {\n  + title : string\n  + year : int\n  + length : time\n  + genre : string\n}\n\nclass Artist {\n  + name : string\n  + dateOfBirth : date\n  + websiteURL : string\n}\n\nclass User {\n  + userID : int\n  + name : string\n  + address : string\n}\n\nclass RegularUser {\n  + purchaseHistory : string\n}\n\nclass BusinessUser {\n  + VATNumber : string\n}\n\nclass Single {}\n\nclass Hit {}\n\nclass Album {\n  + title : string\n}\n\nclass Track {\n  + trackNumber : int\n}\n\nclass Suggestion {\n  + similarityScore : double\n}\n\nUser \"1\" -- \"0..*\" RegularUser\nUser \"1\" -- \"0..*\" BusinessUser\n\nRegularUser \"1\" -- \"*\" Single : buys\nRegularUser \"1\" -- \"*\" Album : buys\n\nBusinessUser \"1\" -- \"*\" Single : uploads\nBusinessUser \"1\" -- \"*\" Hit : uploads\n\nHit \"1\" *-- \"1\" Track\nTrack \"*\" -- \"1\" Album\n\nAlbum \"1\" -- \"0..*\" Suggestion\nRegularUser \"1\" -- \"0..*\" Suggestion\n\nSong \"1\" -- \"1\" Artist : belongsTo\nSong \"1\" -- \"1\" Single : is\nSong \"1\" -- \"1\" Hit : is\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 10.062926499998866,
+ "prompt_tokens": 4143,
+ "completion_tokens": 313,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ymkvmx9uschm36t3wfzb",
+  "object": "chat.completion",
+  "created": 1791478488,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Song {\n  + title : string\n  + year : int\n  + length : time\n  + genre : string\n}\n\nclass Artist {\n  + name : string\n  + dateOfBirth : date\n  + websiteURL : string\n}\n\nclass User {\n  + userID : int\n  + name : string\n  + address : string\n}\n\nclass RegularUser {\n  + purchaseHistory : string\n}\n\nclass BusinessUser {\n  + VATNumber : string\n}\n\nclass Single {}\n\nclass Hit {}\n\nclass Album {\n  + title : string\n}\n\nclass Track {\n  + trackNumber : int\n}\n\nclass Suggestion {\n  + similarityScore : double\n}\n\nUser \"1\" -- \"0..*\" RegularUser\nUser \"1\" -- \"0..*\" BusinessUser\n\nRegularUser \"1\" -- \"*\" Single : buys\nRegularUser \"1\" -- \"*\" Album : buys\n\nBusinessUser \"1\" -- \"*\" Single : uploads\nBusinessUser \"1\" -- \"*\" Hit : uploads\n\nHit \"1\" *-- \"1\" Track\nTrack \"*\" -- \"1\" Album\n\nAlbum \"1\" -- \"0..*\" Suggestion\nRegularUser \"1\" -- \"0..*\" Suggestion\n\nSong \"1\" -- \"1\" Artist : belongsTo\nSong \"1\" -- \"1\" Single : is\nSong \"1\" -- \"1\" Hit : is\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4143,
+   "completion_tokens": 313,
+   "total_tokens": 4456,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

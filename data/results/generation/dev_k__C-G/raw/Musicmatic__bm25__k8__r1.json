@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Song\",\"attributes\":[\"+ Title : string\",\"+ Year : int\",\"+ Length : double\",\"+ Genre : string\"]},{\"name\":\"Artist\",\"attributes\":[\"+ Name : string\",\"+ DateOfBirth : date\",\"+ WebsiteURL : string\"]},{\"name\":\"User\",\"attributes\":[\"+ ID : int\",\"+ Name : string\",\"+ Address : string\"]},{\"name\":\"RegularUser\"},{\"name\":\"BusinessUser\",\"attributes\":[\"+ VATNumber : string\"]},{\"name\":\"Single\"},{\"name\":\"Hit\",\"attributes\":[\"+ TrackNumber : int\"]},{\"name\":\"Album\",\"attributes\":[\"+ AlbumName : string\"]},{\"name\":\"Suggestion\",\"attributes\":[\"+ SuggestionID : int\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Song\",\"target\":\"Artist\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\",\"targetRole\":\"creator\"},{\"type\":\"inheritance\",\"child\":\"RegularUser\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"BusinessUser\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"Single\",\"parent\":\"Song\"},{\"type\":\"inheritance\",\"child\":\"Hit\",\"parent\":\"Song\"},{\"type\":\"composition\",\"whole\":\"Album\",\"part\":\"Hit\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"BusinessUser\",\"target\":\"Single\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"uploads\"},{\"type\":\"association\",\"source\":\"RegularUser\",\"target\":\"Single\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"buys\"},{\"type\":\"association\",\"source\":\"RegularUser\",\"target\":\"Album\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"composes\"},{\"type\":\"association\",\"source\":\"RegularUser\",\"target\":\"Suggestion\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"receives\"},{\"type\":\"association\",\"source\":\"Album\",\"target\":\"Suggestion\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 10.44841919999817,
+ "prompt_tokens": 9805,
+ "completion_tokens": 388,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-b65484dwf913yhb50rul3",
+  "object": "chat.completion",
+  "created": 1791480828,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Song\",\"attributes\":[\"+ Title : string\",\"+ Year : int\",\"+ Length : double\",\"+ Genre : string\"]},{\"name\":\"Artist\",\"attributes\":[\"+ Name : string\",\"+ DateOfBirth : date\",\"+ WebsiteURL : string\"]},{\"name\":\"User\",\"attributes\":[\"+ ID : int\",\"+ Name : string\",\"+ Address : string\"]},{\"name\":\"RegularUser\"},{\"name\":\"BusinessUser\",\"attributes\":[\"+ VATNumber : string\"]},{\"name\":\"Single\"},{\"name\":\"Hit\",\"attributes\":[\"+ TrackNumber : int\"]},{\"name\":\"Album\",\"attributes\":[\"+ AlbumName : string\"]},{\"name\":\"Suggestion\",\"attributes\":[\"+ SuggestionID : int\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Song\",\"target\":\"Artist\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\",\"targetRole\":\"creator\"},{\"type\":\"inheritance\",\"child\":\"RegularUser\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"BusinessUser\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"Single\",\"parent\":\"Song\"},{\"type\":\"inheritance\",\"child\":\"Hit\",\"parent\":\"Song\"},{\"type\":\"composition\",\"whole\":\"Album\",\"part\":\"Hit\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"BusinessUser\",\"target\":\"Single\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"uploads\"},{\"type\":\"association\",\"source\":\"RegularUser\",\"target\":\"Single\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"buys\"},{\"type\":\"association\",\"source\":\"RegularUser\",\"target\":\"Album\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"composes\"},{\"type\":\"association\",\"source\":\"RegularUser\",\"target\":\"Suggestion\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"receives\"},{\"type\":\"association\",\"source\":\"Album\",\"target\":\"Suggestion\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 9805,
+   "completion_tokens": 388,
+   "total_tokens": 10193,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

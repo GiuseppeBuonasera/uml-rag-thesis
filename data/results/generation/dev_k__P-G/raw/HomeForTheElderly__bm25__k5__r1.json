@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + RoomNumber : string\n}\n\nclass Bed {\n  + BedNumber : string\n}\n\nclass Category {\n  + Name : string\n  + Price : float\n}\n\nenum StayType {\n  RH\n  RNH\n  SF\n}\n\nclass Inhabitant {\n  + Name : string\n  + DateOfBirth : date\n}\n\nclass Registration {\n  + RegistrationDate : date\n}\n\nclass Assessment {\n  + NeedsSummary : string\n  + RecommendedStayType : StayType\n}\n\nclass Stay {\n  + Status : string\n  + IntakeDate : date\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + ProposalDate : date\n  + Status : string\n}\n\nclass Invoice {\n  + InvoiceNumber : string\n  + OutstandingAmount : float\n  + TotalAmount : float\n  + Status : string\n}\n\nclass CreditNote {\n  + Amount : float\n}\n\nclass PaymentEvent {\n  + AmountPaid : float\n  + PaymentDate : date\n}\n\nHome \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" Room\nRoom \"1\" *-- \"1..*\" Bed\nBed \"1\" -- \"1\" Category\nInhabitant \"1\" -- \"1..*\" Stay\nStay \"1\" -- \"1\" Category\nStay \"1\" -- \"1..*\" Invoice\nInhabitant \"1\" -- \"1\" Registration\nRegistration \"1\" -- \"1\" Assessment\nAssessment \"1\" -- \"1\" Inhabitant\nInhabitant \"1\" -- \"0..*\" Proposal\nProposal \"1\" -- \"1\" Stay\nInhabitant \"1\" -- \"0..*\" WaitingList\nInvoice \"1\" -- \"0..*\" PaymentEvent\nInvoice \"1\" -- \"0..1\" CreditNote\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 11.545322599999054,
+ "prompt_tokens": 6514,
+ "completion_tokens": 444,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-azruka5rx8v90mrk3sf82g",
+  "object": "chat.completion",
+  "created": 1791478350,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Home {\n  + Name : string\n}\n\nclass Department {\n  + Name : string\n}\n\nclass Room {\n  + RoomNumber : string\n}\n\nclass Bed {\n  + BedNumber : string\n}\n\nclass Category {\n  + Name : string\n  + Price : float\n}\n\nenum StayType {\n  RH\n  RNH\n  SF\n}\n\nclass Inhabitant {\n  + Name : string\n  + DateOfBirth : date\n}\n\nclass Registration {\n  + RegistrationDate : date\n}\n\nclass Assessment {\n  + NeedsSummary : string\n  + RecommendedStayType : StayType\n}\n\nclass Stay {\n  + Status : string\n  + IntakeDate : date\n}\n\nclass WaitingList {\n  + Position : int\n}\n\nclass Proposal {\n  + ProposalDate : date\n  + Status : string\n}\n\nclass Invoice {\n  + InvoiceNumber : string\n  + OutstandingAmount : float\n  + TotalAmount : float\n  + Status : string\n}\n\nclass CreditNote {\n  + Amount : float\n}\n\nclass PaymentEvent {\n  + AmountPaid : float\n  + PaymentDate : date\n}\n\nHome \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" Room\nRoom \"1\" *-- \"1..*\" Bed\nBed \"1\" -- \"1\" Category\nInhabitant \"1\" -- \"1..*\" Stay\nStay \"1\" -- \"1\" Category\nStay \"1\" -- \"1..*\" Invoice\nInhabitant \"1\" -- \"1\" Registration\nRegistration \"1\" -- \"1\" Assessment\nAssessment \"1\" -- \"1\" Inhabitant\nInhabitant \"1\" -- \"0..*\" Proposal\nProposal \"1\" -- \"1\" Stay\nInhabitant \"1\" -- \"0..*\" WaitingList\nInvoice \"1\" -- \"0..*\" PaymentEvent\nInvoice \"1\" -- \"0..1\" CreditNote\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6514,
+   "completion_tokens": 444,
+   "total_tokens": 6958,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

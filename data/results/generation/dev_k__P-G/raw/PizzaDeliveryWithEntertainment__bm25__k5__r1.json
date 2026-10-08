@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + UserID : int\n  + Name : string\n  + Address : string\n  + Birthday : date\n}\n\nabstract class BusinessOwner {\n  + LinkedInAccount : string\n}\n\nclass PizzaRestaurant {\n  + ZipCode : string\n  + Address : string\n  + PhoneNumber : string\n  + Website : string\n  + OpeningHours : string\n}\n\nclass Pizza {\n  + Name : string\n  + CrustStructure : string\n  + Price : double\n}\n\nclass HungryCustomer {\n  + DeliveryAddress : string\n}\n\nclass Entertainer {\n  + StageName : string\n  + Bio : string\n  + PricePer30Min : double\n}\n\nclass Order {\n  + OrderID : int\n  + OrderDateTime : datetime\n  + LatestDeliveryTime : time\n  + NumberOfPeople : int\n}\n\nclass EntertainmentOrder {\n  + EntertainmentType : string\n  + Duration : int\n}\n\nclass Availability {\n  + Day : string\n}\n\nenum Day {\n  Monday\n  Tuesday\n  Wednesday\n  Thursday\n  Friday\n  Saturday\n  Sunday\n}\n\nBusinessOwner --|> User\nHungryCustomer --|> User\nEntertainer --|> User\n\nBusinessOwner \"1\" -- \"*\" PizzaRestaurant : owns\nPizzaRestaurant \"1\" -- \"*\" Pizza : offers\nHungryCustomer \"1\" -- \"*\" Order : places\nOrder \"1\" -- \"1..*\" Pizza : contains\nOrder \"1\" -- \"0..1\" EntertainmentOrder : is_type\n\nEntertainmentOrder \"*\" -- \"1\" Entertainer : fulfilled_by\nEntertainer \"1\" -- \"*\" Availability : has\nAvailability \"*\" -- \"1\" PizzaRestaurant : for_restaurant\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 10.128027499999007,
+ "prompt_tokens": 5145,
+ "completion_tokens": 381,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tb89w4zzjrdbl6jcus2a67",
+  "object": "chat.completion",
+  "created": 1791478598,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + UserID : int\n  + Name : string\n  + Address : string\n  + Birthday : date\n}\n\nabstract class BusinessOwner {\n  + LinkedInAccount : string\n}\n\nclass PizzaRestaurant {\n  + ZipCode : string\n  + Address : string\n  + PhoneNumber : string\n  + Website : string\n  + OpeningHours : string\n}\n\nclass Pizza {\n  + Name : string\n  + CrustStructure : string\n  + Price : double\n}\n\nclass HungryCustomer {\n  + DeliveryAddress : string\n}\n\nclass Entertainer {\n  + StageName : string\n  + Bio : string\n  + PricePer30Min : double\n}\n\nclass Order {\n  + OrderID : int\n  + OrderDateTime : datetime\n  + LatestDeliveryTime : time\n  + NumberOfPeople : int\n}\n\nclass EntertainmentOrder {\n  + EntertainmentType : string\n  + Duration : int\n}\n\nclass Availability {\n  + Day : string\n}\n\nenum Day {\n  Monday\n  Tuesday\n  Wednesday\n  Thursday\n  Friday\n  Saturday\n  Sunday\n}\n\nBusinessOwner --|> User\nHungryCustomer --|> User\nEntertainer --|> User\n\nBusinessOwner \"1\" -- \"*\" PizzaRestaurant : owns\nPizzaRestaurant \"1\" -- \"*\" Pizza : offers\nHungryCustomer \"1\" -- \"*\" Order : places\nOrder \"1\" -- \"1..*\" Pizza : contains\nOrder \"1\" -- \"0..1\" EntertainmentOrder : is_type\n\nEntertainmentOrder \"*\" -- \"1\" Entertainer : fulfilled_by\nEntertainer \"1\" -- \"*\" Availability : has\nAvailability \"*\" -- \"1\" PizzaRestaurant : for_restaurant\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5145,
+   "completion_tokens": 381,
+   "total_tokens": 5526,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

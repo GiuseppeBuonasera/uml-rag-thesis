@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"H2SLocation\",\n      \"attributes\": [\n        \"+ LocationID : int\",\n        \"+ CityName : string\"\n      ]\n    },\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\",\n        \"+ ItemDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupRequest\",\n      \"attributes\": [\n        \"+ RequestID : int\",\n        \"+ RequestedDate : date\",\n        \"+ RequestedTime : time\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ LicensePlate : string\",\n        \"+ StorageCapacity : float\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ DriverID : int\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteID : int\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"ScheduledItem\",\n      \"attributes\": [\n        \"+ Weight : float\",\n        \"+ Dimensions : string\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"attributes\": [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : Category\"\n      ]\n    },\n    {\n      \"name\": \"FoodItem\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"H2SEmployee\",\n      \"attributes\": [\n        \"+ EmployeeID : int\",\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : Category[]\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"BabyClothing\",\n        \"WomensWinterBoots\",\n        \"Fridge\",\n        \"Microwave\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"H2SLocation\",\n      \"part\": \"Article\",\n      \"label\": \"stores\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"PickupRequest\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRequest\",\n      \"target\": \"Resident\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"executes\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PickupRoute\",\n      \"part\": \"ScheduledItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScheduledItem\",\n      \"target\": \"Resident\",\n      \"label\": \"belongsTo\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Article\",\n      \"label\": \"processes\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Client\",\n      \"label\": \"notifies\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"Article\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"Client\",\n      \"label\": \"deliversTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 26.250989899999695,
+ "prompt_tokens": 4335,
+ "completion_tokens": 1168,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-q9cczw5s71a6isrk95t90x",
+  "object": "chat.completion",
+  "created": 1791480222,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"H2SLocation\",\n      \"attributes\": [\n        \"+ LocationID : int\",\n        \"+ CityName : string\"\n      ]\n    },\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\",\n        \"+ ItemDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupRequest\",\n      \"attributes\": [\n        \"+ RequestID : int\",\n        \"+ RequestedDate : date\",\n        \"+ RequestedTime : time\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ LicensePlate : string\",\n        \"+ StorageCapacity : float\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ DriverID : int\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteID : int\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"ScheduledItem\",\n      \"attributes\": [\n        \"+ Weight : float\",\n        \"+ Dimensions : string\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"attributes\": [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : Category\"\n      ]\n    },\n    {\n      \"name\": \"FoodItem\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"H2SEmployee\",\n      \"attributes\": [\n        \"+ EmployeeID : int\",\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : Category[]\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"BabyClothing\",\n        \"WomensWinterBoots\",\n        \"Fridge\",\n        \"Microwave\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"H2SLocation\",\n      \"part\": \"Article\",\n      \"label\": \"stores\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"PickupRequest\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRequest\",\n      \"target\": \"Resident\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"assignedTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"label\": \"executes\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PickupRoute\",\n      \"part\": \"ScheduledItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScheduledItem\",\n      \"target\": \"Resident\",\n      \"label\": \"belongsTo\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Article\",\n      \"label\": \"processes\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Client\",\n      \"label\": \"notifies\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"Article\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"Client\",\n      \"label\": \"deliversTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4335,
+   "completion_tokens": 1168,
+   "total_tokens": 5503,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

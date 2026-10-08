@@ -10,6 +10,7 @@ prompt reale + max_tokens <= contesto per ogni configurazione dello stesso model
 Prima della prima chiamata verifica il contesto del modello caricato (come il runner). L'esito si salva in
 docs/smoke_tests/<data>_<id-modello>_calibrationN.json (N progressivo, mai sovrascrivere).
 
+k: il PIU' ALTO della config (caso peggiore; voce 94: dev_k.yaml ha k = 2, 3, 5, 8 -> si calibra con k = 8).
 Formati: per default apollon e plantuml (secondo pilota); con --formats si sceglie l'elenco, es. per l'insieme di
 sviluppo (voce 92) --formats plantuml compact.
 
@@ -61,7 +62,7 @@ def calibrate(cfg: dict, client, accept_unverified: bool = False, ask=input, for
     rows = []
     for fmt in formats:
         for qid in cfg["query_ids"]:
-            bp = builder.build(by_id[qid], PromptSpec("bm25", k=cfg["k"][0], output_format=fmt))
+            bp = builder.build(by_id[qid], PromptSpec("bm25", k=max(cfg["k"]), output_format=fmt))
             res = client.generate(bp.messages, params)
             est = count_tokens(bp.text)
             rows.append({"format": fmt, "query_id": qid, "est": est, "real": res.prompt_tokens,
@@ -77,7 +78,8 @@ def calibrate(cfg: dict, client, accept_unverified: bool = False, ask=input, for
         summary[fmt] = {"ratio_min": min(r["ratio"] for r in rs), "ratio_median": statistics.median(r["ratio"] for r in rs),
                         "ratio_max": max(r["ratio"] for r in rs), "prompt_real_max": worst,
                         "fits": worst + max_tokens <= context, "margin": context - (worst + max_tokens)}
-    return {"timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "model": client.model,
+    return {"timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "model": client.model, "k": max(cfg["k"]),
+            "config_version": cfg.get("config_version", 1),
             "model_metadata": cfg["model_metadata"], "context_length": context, "max_tokens": max_tokens,
             "server_context": server_context, "rows": rows, "summary": summary}
 

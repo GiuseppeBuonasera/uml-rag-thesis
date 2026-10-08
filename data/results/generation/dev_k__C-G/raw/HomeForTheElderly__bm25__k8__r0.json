@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Home\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ RoomNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\n        \"+ BedNumber : string\",\n        \"+ IsFree : boolean\"\n      ]\n    },\n    {\n      \"name\": \"StayCategory\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RH\",\n        \"RNH\",\n        \"SF\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"attributes\": [\n        \"+ Price : double\"\n      ]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : int\",\n        \"+ RegistrationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Stay\",\n      \"attributes\": [\n        \"+ IntakeDate : date\",\n        \"+ IsSuspended : boolean\",\n        \"+ DiscountRate : float\"\n      ]\n    },\n    {\n      \"name\": \"Registration\",\n      \"attributes\": [\n        \"+ BasicData : string\",\n        \"+ AssessmentResults : string\"\n      ]\n    },\n    {\n      \"name\": \"WaitingList\",\n      \"attributes\": [\n        \"+ Position : int\"\n      ]\n    },\n    {\n      \"name\": \"Proposal\",\n      \"attributes\": [\n        \"+ IsAccepted : boolean\",\n        \"+ IsInvalidated : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceNumber : int\",\n        \"+ OutstandingAmount : double\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"CreditNote\",\n      \"attributes\": [\n        \"+ Amount : double\"\n      ]\n    },\n    {\n      \"name\": \"PaymentEvent\",\n      \"attributes\": [\n        \"+ AmountPaid : double\",\n        \"+ Timestamp : datetime\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Home\",\n      \"part\": \"Department\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Bed\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Bed\",\n      \"target\": \"Category\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Stay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Stay\",\n      \"target\": \"StayCategory\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Stay\",\n      \"target\": \"Bed\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Registration\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"WaitingList\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Proposal\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Proposal\",\n      \"target\": \"Stay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Stay\",\n      \"part\": \"Invoice\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Invoice\",\n      \"target\": \"PaymentEvent\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Invoice\",\n      \"target\": \"CreditNote\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 33.526641200001905,
+ "prompt_tokens": 10548,
+ "completion_tokens": 1259,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ppgcn939uuknfgvkzl6my",
+  "object": "chat.completion",
+  "created": 1791480487,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Home\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ RoomNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Bed\",\n      \"attributes\": [\n        \"+ BedNumber : string\",\n        \"+ IsFree : boolean\"\n      ]\n    },\n    {\n      \"name\": \"StayCategory\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RH\",\n        \"RNH\",\n        \"SF\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"attributes\": [\n        \"+ Price : double\"\n      ]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : int\",\n        \"+ RegistrationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Stay\",\n      \"attributes\": [\n        \"+ IntakeDate : date\",\n        \"+ IsSuspended : boolean\",\n        \"+ DiscountRate : float\"\n      ]\n    },\n    {\n      \"name\": \"Registration\",\n      \"attributes\": [\n        \"+ BasicData : string\",\n        \"+ AssessmentResults : string\"\n      ]\n    },\n    {\n      \"name\": \"WaitingList\",\n      \"attributes\": [\n        \"+ Position : int\"\n      ]\n    },\n    {\n      \"name\": \"Proposal\",\n      \"attributes\": [\n        \"+ IsAccepted : boolean\",\n        \"+ IsInvalidated : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceNumber : int\",\n        \"+ OutstandingAmount : double\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"CreditNote\",\n      \"attributes\": [\n        \"+ Amount : double\"\n      ]\n    },\n    {\n      \"name\": \"PaymentEvent\",\n      \"attributes\": [\n        \"+ AmountPaid : double\",\n        \"+ Timestamp : datetime\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Home\",\n      \"part\": \"Department\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Bed\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Bed\",\n      \"target\": \"Category\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Stay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Stay\",\n      \"target\": \"StayCategory\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Stay\",\n      \"target\": \"Bed\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Registration\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"WaitingList\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Proposal\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Proposal\",\n      \"target\": \"Stay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Stay\",\n      \"part\": \"Invoice\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Invoice\",\n      \"target\": \"PaymentEvent\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Invoice\",\n      \"target\": \"CreditNote\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 10548,
+   "completion_tokens": 1259,
+   "total_tokens": 11807,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

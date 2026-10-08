@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Hospital\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Patient\",\"attributes\":[\"+ Name : string\",\"+ ID : int\"]},{\"name\":\"Doctor\",\"attributes\":[\"+ Name : string\",\"+ ID : int\"]},{\"name\":\"HeadDoctor\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Illness\",\"attributes\":[\"+ Name : string\",\"+ PriorityScore : PriorityScore\"]},{\"name\":\"Diagnosis\",\"attributes\":[\"+ Description : string\",\"+ Date : date\"]},{\"name\":\"Treatment\",\"attributes\":[\"+ Name : string\",\"+ CurrentStage : TreatmentStage\"]},{\"name\":\"ConsentForm\",\"attributes\":[\"+ Signature : string\",\"+ Date : date\"]},{\"name\":\"Nurse\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"PriorityScore\",\"kind\":\"enum\",\"values\":[\"High\",\"Low\"]},{\"name\":\"TreatmentStage\",\"kind\":\"enum\",\"values\":[\"Stage1\",\"Stage2\",\"Stage3\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"HeadDoctor\",\"parent\":\"Doctor\"},{\"type\":\"association\",\"source\":\"Hospital\",\"target\":\"Patient\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Patient\",\"target\":\"Doctor\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Doctor\",\"target\":\"Diagnosis\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Diagnosis\",\"target\":\"Illness\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Illness\",\"target\":\"Treatment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"HeadDoctor\",\"target\":\"Diagnosis\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"approves\"},{\"type\":\"composition\",\"source\":\"Patient\",\"target\":\"ConsentForm\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"ConsentForm\",\"target\":\"Treatment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Doctor\",\"target\":\"Treatment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Nurse\",\"target\":\"Treatment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 11.492592200000217,
+ "prompt_tokens": 4039,
+ "completion_tokens": 448,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zgnq1akozl8tfnstxga10n",
+  "object": "chat.completion",
+  "created": 1791480566,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Hospital\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Patient\",\"attributes\":[\"+ Name : string\",\"+ ID : int\"]},{\"name\":\"Doctor\",\"attributes\":[\"+ Name : string\",\"+ ID : int\"]},{\"name\":\"HeadDoctor\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Illness\",\"attributes\":[\"+ Name : string\",\"+ PriorityScore : PriorityScore\"]},{\"name\":\"Diagnosis\",\"attributes\":[\"+ Description : string\",\"+ Date : date\"]},{\"name\":\"Treatment\",\"attributes\":[\"+ Name : string\",\"+ CurrentStage : TreatmentStage\"]},{\"name\":\"ConsentForm\",\"attributes\":[\"+ Signature : string\",\"+ Date : date\"]},{\"name\":\"Nurse\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"PriorityScore\",\"kind\":\"enum\",\"values\":[\"High\",\"Low\"]},{\"name\":\"TreatmentStage\",\"kind\":\"enum\",\"values\":[\"Stage1\",\"Stage2\",\"Stage3\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"HeadDoctor\",\"parent\":\"Doctor\"},{\"type\":\"association\",\"source\":\"Hospital\",\"target\":\"Patient\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Patient\",\"target\":\"Doctor\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Doctor\",\"target\":\"Diagnosis\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Diagnosis\",\"target\":\"Illness\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Illness\",\"target\":\"Treatment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"HeadDoctor\",\"target\":\"Diagnosis\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"approves\"},{\"type\":\"composition\",\"source\":\"Patient\",\"target\":\"ConsentForm\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"ConsentForm\",\"target\":\"Treatment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Doctor\",\"target\":\"Treatment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Nurse\",\"target\":\"Treatment\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4039,
+   "completion_tokens": 448,
+   "total_tokens": 4487,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

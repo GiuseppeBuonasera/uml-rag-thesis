@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"SensorController\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"Sensor\",\"kind\":\"abstract\",\"attributes\":[\"+ vendorId : string\",\"+ description : string\",\"+ unit : string\",\"+ threshold : float\"]},{\"name\":\"TemperatureSensor\",\"attributes\":[\"+ minValue : float\",\"+ maxValue : float\"]},{\"name\":\"PowerSensor\",\"attributes\":[\"+ totalPowerConsumption : float\"]},{\"name\":\"Inhabitant\",\"attributes\":[\"+ username : string\",\"+ password : string\"]},{\"name\":\"Administrator\",\"attributes\":[\"+ adminRights : boolean\"]},{\"name\":\"Apartment\",\"attributes\":[\"+ address : string\"]},{\"name\":\"Room\",\"attributes\":[\"+ description : string\"]},{\"name\":\"SensorValue\",\"attributes\":[\"+ timestamp : datetime\",\"+ value : double\"]},{\"name\":\"EMonitor\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"Unit\",\"kind\":\"enum\",\"values\":[\"CELSIUS\",\"WATT\"]},{\"name\":\"EHome2020\",\"attributes\":[\"+ version : string\"]},{\"name\":\"AlertMessage\",\"attributes\":[\"+ content : string\"]},{\"name\":\"SensorReading\",\"attributes\":[\"+ lastValue : SensorValue\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"EHome2020\",\"part\":\"SensorController\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"controller\"},{\"type\":\"composition\",\"whole\":\"SensorController\",\"part\":\"Apartment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"managedApartment\"},{\"type\":\"composition\",\"whole\":\"Apartment\",\"part\":\"Room\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2..*\"},{\"type\":\"composition\",\"whole\":\"Room\",\"part\":\"Sensor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"inheritance\",\"child\":\"TemperatureSensor\",\"parent\":\"Sensor\"},{\"type\":\"inheritance\",\"child\":\"PowerSensor\",\"parent\":\"Sensor\"},{\"type\":\"inheritance\",\"child\":\"Administrator\",\"parent\":\"Inhabitant\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"SensorController\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"logs_on\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"queries_values\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"sets_threshold\"},{\"type\":\"association\",\"source\":\"Administrator\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"configures\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"SensorController\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"label\":\"attached_to\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"AlertMessage\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"EHome2020\",\"target\":\"AlertMessage\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"targetRole\":\"sends\"},{\"type\":\"composition\",\"whole\":\"Sensor\",\"part\":\"SensorValue\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"unidirectional\",\"source\":\"Sensor\",\"target\":\"SensorValue\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"targetRole\":\"lastValue\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Apartment\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\",\"targetRole\":\"lives_in\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.94500369999878,
+ "prompt_tokens": 4576,
+ "completion_tokens": 705,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wdlhs9vt1d9dqdt5l40a5g",
+  "object": "chat.completion",
+  "created": 1791479676,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"SensorController\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"Sensor\",\"kind\":\"abstract\",\"attributes\":[\"+ vendorId : string\",\"+ description : string\",\"+ unit : string\",\"+ threshold : float\"]},{\"name\":\"TemperatureSensor\",\"attributes\":[\"+ minValue : float\",\"+ maxValue : float\"]},{\"name\":\"PowerSensor\",\"attributes\":[\"+ totalPowerConsumption : float\"]},{\"name\":\"Inhabitant\",\"attributes\":[\"+ username : string\",\"+ password : string\"]},{\"name\":\"Administrator\",\"attributes\":[\"+ adminRights : boolean\"]},{\"name\":\"Apartment\",\"attributes\":[\"+ address : string\"]},{\"name\":\"Room\",\"attributes\":[\"+ description : string\"]},{\"name\":\"SensorValue\",\"attributes\":[\"+ timestamp : datetime\",\"+ value : double\"]},{\"name\":\"EMonitor\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"Unit\",\"kind\":\"enum\",\"values\":[\"CELSIUS\",\"WATT\"]},{\"name\":\"EHome2020\",\"attributes\":[\"+ version : string\"]},{\"name\":\"AlertMessage\",\"attributes\":[\"+ content : string\"]},{\"name\":\"SensorReading\",\"attributes\":[\"+ lastValue : SensorValue\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"EHome2020\",\"part\":\"SensorController\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"controller\"},{\"type\":\"composition\",\"whole\":\"SensorController\",\"part\":\"Apartment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"managedApartment\"},{\"type\":\"composition\",\"whole\":\"Apartment\",\"part\":\"Room\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2..*\"},{\"type\":\"composition\",\"whole\":\"Room\",\"part\":\"Sensor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"inheritance\",\"child\":\"TemperatureSensor\",\"parent\":\"Sensor\"},{\"type\":\"inheritance\",\"child\":\"PowerSensor\",\"parent\":\"Sensor\"},{\"type\":\"inheritance\",\"child\":\"Administrator\",\"parent\":\"Inhabitant\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"SensorController\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"logs_on\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"queries_values\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"sets_threshold\"},{\"type\":\"association\",\"source\":\"Administrator\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"configures\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"SensorController\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"label\":\"attached_to\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"AlertMessage\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"EHome2020\",\"target\":\"AlertMessage\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"targetRole\":\"sends\"},{\"type\":\"composition\",\"whole\":\"Sensor\",\"part\":\"SensorValue\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"unidirectional\",\"source\":\"Sensor\",\"target\":\"SensorValue\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"targetRole\":\"lastValue\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Apartment\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\",\"targetRole\":\"lives_in\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4576,
+   "completion_tokens": 705,
+   "total_tokens": 5281,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

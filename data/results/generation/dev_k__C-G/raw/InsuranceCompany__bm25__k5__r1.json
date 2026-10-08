@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"InsuranceCompany\"},{\"name\":\"Policy\",\"attributes\":[\"+ PolicyType : string\"]},{\"name\":\"CarLiabilityPolicy\"},{\"name\":\"LifePolicy\"},{\"name\":\"RiskPolicy\"},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ CustomerID : int\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractID : int\",\"+ SigningDate : date\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"CarLiabilityPolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"LifePolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"RiskPolicy\",\"parent\":\"Policy\"},{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Policy\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 6.871817100000044,
+ "prompt_tokens": 5646,
+ "completion_tokens": 222,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3h6fkqj4pg2nvsba2l182",
+  "object": "chat.completion",
+  "created": 1791481331,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"InsuranceCompany\"},{\"name\":\"Policy\",\"attributes\":[\"+ PolicyType : string\"]},{\"name\":\"CarLiabilityPolicy\"},{\"name\":\"LifePolicy\"},{\"name\":\"RiskPolicy\"},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ CustomerID : int\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractID : int\",\"+ SigningDate : date\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"CarLiabilityPolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"LifePolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"RiskPolicy\",\"parent\":\"Policy\"},{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Policy\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5646,
+   "completion_tokens": 222,
+   "total_tokens": 5868,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

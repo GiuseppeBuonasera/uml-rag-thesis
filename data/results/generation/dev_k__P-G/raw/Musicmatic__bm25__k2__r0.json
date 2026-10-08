@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Song {\n  + Title : string\n  + Year : int\n  + Length : double\n  + Genre : string\n}\n\nclass Artist {\n  + Name : string\n  + DateOfBirth : date\n  + WebsiteURL : string\n}\n\nabstract class User {\n  + ID : int\n  + Name : string\n  + Address : string\n}\n\nclass RegularUser {\n}\n\nclass BusinessUser {\n  + VATNumber : string\n}\n\nclass Single {\n}\n\nclass Hit {\n  + TrackNumber : int\n}\n\nclass Album {\n  + AlbumName : string\n}\n\nclass Suggestion {\n}\n\nSingle --|> Song\nHit --|> Song\n\nUser \"1\" -- \"1\" Artist : belongsTo\nBusinessUser \"1\" -- \"*\" Single : uploads\nRegularUser \"1\" -- \"*\" Single : buys\nRegularUser \"1\" -- \"*\" Album : composes\nAlbum \"1\" *-- \"1..*\" Hit\nRegularUser \"1\" -- \"*\" Suggestion : receives\nRegularUser \"1\" -- \"*\" Suggestion : suggests\nUser --|> RegularUser\nUser --|> BusinessUser\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.960595699998521,
+ "prompt_tokens": 3400,
+ "completion_tokens": 255,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-u7ye6mei6ilqpuncy8m42o",
+  "object": "chat.completion",
+  "created": 1791478472,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Song {\n  + Title : string\n  + Year : int\n  + Length : double\n  + Genre : string\n}\n\nclass Artist {\n  + Name : string\n  + DateOfBirth : date\n  + WebsiteURL : string\n}\n\nabstract class User {\n  + ID : int\n  + Name : string\n  + Address : string\n}\n\nclass RegularUser {\n}\n\nclass BusinessUser {\n  + VATNumber : string\n}\n\nclass Single {\n}\n\nclass Hit {\n  + TrackNumber : int\n}\n\nclass Album {\n  + AlbumName : string\n}\n\nclass Suggestion {\n}\n\nSingle --|> Song\nHit --|> Song\n\nUser \"1\" -- \"1\" Artist : belongsTo\nBusinessUser \"1\" -- \"*\" Single : uploads\nRegularUser \"1\" -- \"*\" Single : buys\nRegularUser \"1\" -- \"*\" Album : composes\nAlbum \"1\" *-- \"1..*\" Hit\nRegularUser \"1\" -- \"*\" Suggestion : receives\nRegularUser \"1\" -- \"*\" Suggestion : suggests\nUser --|> RegularUser\nUser --|> BusinessUser\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3400,
+   "completion_tokens": 255,
+   "total_tokens": 3655,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

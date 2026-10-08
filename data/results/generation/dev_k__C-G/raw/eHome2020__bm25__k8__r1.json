@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"SensorController\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"Sensor\",\"kind\":\"abstract\",\"attributes\":[\"+ vendorId : string\",\"+ description : string\",\"+ unit : string\",\"+ threshold : float\"]},{\"name\":\"TemperatureSensor\",\"attributes\":[\"+ minValue : float\",\"+ maxValue : float\"]},{\"name\":\"PowerSensor\",\"attributes\":[\"+ counterReading : float\"]},{\"name\":\"Unit\",\"kind\":\"enum\",\"values\":[\"CELSIUS\",\"WATT\"]},{\"name\":\"Inhabitant\",\"attributes\":[\"+ username : string\",\"+ password : string\",\"+ email : string\"]},{\"name\":\"Apartment\",\"attributes\":[\"+ address : string\"]},{\"name\":\"Room\",\"attributes\":[\"+ description : string\"]},{\"name\":\"MeasuredValue\",\"attributes\":[\"+ timestamp : datetime\",\"+ value : float\"]},{\"name\":\"EMonitor\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"SensorReading\",\"attributes\":[\"+ timestamp : datetime\",\"+ value : float\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"SensorController\",\"part\":\"Sensor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"SensorController\",\"part\":\"Apartment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Apartment\",\"part\":\"Room\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2..*\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"SensorController\",\"label\":\"logs_on\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"label\":\"queries\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"label\":\"configures\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"*\",\"sourceRole\":\"administrator\"},{\"type\":\"association\",\"source\":\"Sensor\",\"target\":\"Room\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Sensor\",\"part\":\"MeasuredValue\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"Inhabitant\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"targetRole\":\"alert_recipient\"},{\"type\":\"inheritance\",\"child\":\"TemperatureSensor\",\"parent\":\"Sensor\"},{\"type\":\"inheritance\",\"child\":\"PowerSensor\",\"parent\":\"Sensor\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 13.032421500000055,
+ "prompt_tokens": 8150,
+ "completion_tokens": 514,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-i6sxjdhf2xctszwww24fgr",
+  "object": "chat.completion",
+  "created": 1791479791,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"SensorController\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"Sensor\",\"kind\":\"abstract\",\"attributes\":[\"+ vendorId : string\",\"+ description : string\",\"+ unit : string\",\"+ threshold : float\"]},{\"name\":\"TemperatureSensor\",\"attributes\":[\"+ minValue : float\",\"+ maxValue : float\"]},{\"name\":\"PowerSensor\",\"attributes\":[\"+ counterReading : float\"]},{\"name\":\"Unit\",\"kind\":\"enum\",\"values\":[\"CELSIUS\",\"WATT\"]},{\"name\":\"Inhabitant\",\"attributes\":[\"+ username : string\",\"+ password : string\",\"+ email : string\"]},{\"name\":\"Apartment\",\"attributes\":[\"+ address : string\"]},{\"name\":\"Room\",\"attributes\":[\"+ description : string\"]},{\"name\":\"MeasuredValue\",\"attributes\":[\"+ timestamp : datetime\",\"+ value : float\"]},{\"name\":\"EMonitor\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"SensorReading\",\"attributes\":[\"+ timestamp : datetime\",\"+ value : float\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"SensorController\",\"part\":\"Sensor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"SensorController\",\"part\":\"Apartment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Apartment\",\"part\":\"Room\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2..*\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"SensorController\",\"label\":\"logs_on\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"label\":\"queries\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"label\":\"configures\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"*\",\"sourceRole\":\"administrator\"},{\"type\":\"association\",\"source\":\"Sensor\",\"target\":\"Room\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Sensor\",\"part\":\"MeasuredValue\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"Inhabitant\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"targetRole\":\"alert_recipient\"},{\"type\":\"inheritance\",\"child\":\"TemperatureSensor\",\"parent\":\"Sensor\"},{\"type\":\"inheritance\",\"child\":\"PowerSensor\",\"parent\":\"Sensor\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 8150,
+   "completion_tokens": 514,
+   "total_tokens": 8664,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

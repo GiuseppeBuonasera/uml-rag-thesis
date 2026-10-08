@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"HospitalHouseMD\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : int\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ PractitionerNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"HeadDoctor\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ Description : string\",\n        \"+ IsApproved : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ CurrentStage : int\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ PriorityScore : PriorityScore\"\n      ]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ Signature : string\",\n        \"+ DateSigned : date\"\n      ]\n    },\n    {\n      \"name\": \"PriorityScore\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"High\",\n        \"Low\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HeadDoctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"approves\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HospitalHouseMD\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"database\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Patient\",\n      \"part\": \"ConsentForm\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ConsentForm\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadDoctor\",\n      \"parent\": \"Doctor\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 25.115113799998653,
+ "prompt_tokens": 9787,
+ "completion_tokens": 876,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-nkc8dt6amfmtyhylust8j",
+  "object": "chat.completion",
+  "created": 1791480662,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"HospitalHouseMD\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : int\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ PractitionerNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"HeadDoctor\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ Description : string\",\n        \"+ IsApproved : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ CurrentStage : int\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ PriorityScore : PriorityScore\"\n      ]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ Signature : string\",\n        \"+ DateSigned : date\"\n      ]\n    },\n    {\n      \"name\": \"PriorityScore\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"High\",\n        \"Low\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HeadDoctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"approves\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HospitalHouseMD\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"database\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Patient\",\n      \"part\": \"ConsentForm\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ConsentForm\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadDoctor\",\n      \"parent\": \"Doctor\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 9787,
+   "completion_tokens": 876,
+   "total_tokens": 10663,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

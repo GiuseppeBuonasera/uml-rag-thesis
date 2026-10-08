@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\",\"+ ItemDescription : string\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ LicensePlate : string\",\"+ StorageSpace : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ AvailableDays : string\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ RouteDate : date\"]},{\"name\":\"Article\",\"attributes\":[\"+ Description : string\",\"+ Weight : float\",\"+ Dimensions : string\",\"+ RFIDTag : string\"]},{\"name\":\"FoodItem\",\"attributes\":[\"+ Description : string\"]},{\"name\":\"Category\",\"attributes\":[\"+ CategoryName : string\"]},{\"name\":\"H2SLocation\",\"attributes\":[\"+ City : string\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ LocationID : string\"]},{\"name\":\"H2SEmployee\",\"attributes\":[\"+ EmployeeID : string\"]},{\"name\":\"Client\",\"attributes\":[\"+ Name : string\",\"+ HomeAddress : string\",\"+ NeededCategories : Category[]\"]},{\"name\":\"PickupRequest\",\"attributes\":[\"+ RequestDate : date\",\"+ RequestTime : time\"]},{\"name\":\"Delivery\",\"attributes\":[\"+ DeliveryDate : date\"]},{\"name\":\"FoodBank\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"PickupVehicle\",\"kind\":\"abstract\"},{\"name\":\"DeliveryVehicle\",\"kind\":\"abstract\"}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"PickupVehicle\",\"parent\":\"Vehicle\"},{\"type\":\"inheritance\",\"child\":\"DeliveryVehicle\",\"parent\":\"Vehicle\"},{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"PickupRequest\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PickupRequest\",\"target\":\"Vehicle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Vehicle\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Article\",\"target\":\"Category\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"FoodItem\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"FoodItem\",\"target\":\"FoodBank\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Client\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"Article\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Delivery\",\"target\":\"VolunteerDriver\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SLocation\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 20.080169499997282,
+ "prompt_tokens": 9284,
+ "completion_tokens": 649,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-mcmu7y7d5gjkftbpd1o5po",
+  "object": "chat.completion",
+  "created": 1791480306,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\",\"+ ItemDescription : string\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ LicensePlate : string\",\"+ StorageSpace : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ AvailableDays : string\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ RouteDate : date\"]},{\"name\":\"Article\",\"attributes\":[\"+ Description : string\",\"+ Weight : float\",\"+ Dimensions : string\",\"+ RFIDTag : string\"]},{\"name\":\"FoodItem\",\"attributes\":[\"+ Description : string\"]},{\"name\":\"Category\",\"attributes\":[\"+ CategoryName : string\"]},{\"name\":\"H2SLocation\",\"attributes\":[\"+ City : string\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ LocationID : string\"]},{\"name\":\"H2SEmployee\",\"attributes\":[\"+ EmployeeID : string\"]},{\"name\":\"Client\",\"attributes\":[\"+ Name : string\",\"+ HomeAddress : string\",\"+ NeededCategories : Category[]\"]},{\"name\":\"PickupRequest\",\"attributes\":[\"+ RequestDate : date\",\"+ RequestTime : time\"]},{\"name\":\"Delivery\",\"attributes\":[\"+ DeliveryDate : date\"]},{\"name\":\"FoodBank\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"PickupVehicle\",\"kind\":\"abstract\"},{\"name\":\"DeliveryVehicle\",\"kind\":\"abstract\"}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"PickupVehicle\",\"parent\":\"Vehicle\"},{\"type\":\"inheritance\",\"child\":\"DeliveryVehicle\",\"parent\":\"Vehicle\"},{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"PickupRequest\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PickupRequest\",\"target\":\"Vehicle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Vehicle\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Article\",\"target\":\"Category\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"FoodItem\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"FoodItem\",\"target\":\"FoodBank\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Client\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"Article\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Delivery\",\"target\":\"VolunteerDriver\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SLocation\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 9284,
+   "completion_tokens": 649,
+   "total_tokens": 9933,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

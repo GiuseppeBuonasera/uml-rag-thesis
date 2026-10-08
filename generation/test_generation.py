@@ -1164,6 +1164,168 @@ def check_analyze_dev(builder: PromptBuilder, tmp: Path) -> None:
           "configurazione incompleta, troncamenti segnalati, run finte (160 risposte), run di un altro modello scartata")
 
 
+def check_k(builder: PromptBuilder, tmp: Path) -> None:
+    """Versione di configurazione (voce 93) e leva k sull'insieme di sviluppo (voce 94): config dev_k, calibrazione con
+    il k piu' alto, regola di scelta di k di experiments/analyze_k.py su dati finti."""
+    from types import SimpleNamespace
+    import yaml
+    import analyze_k as ak
+    import calibrate_tokens as ct
+    import uml_structure as us
+    from plantuml_format import apollon_to_plantuml
+    from token_estimate import count_tokens
+
+    # versione di configurazione: confronto solo tra run dello stesso modello E della stessa versione
+    meta = {"model_id": "m", "quantization": "q", "context_length": 32768}
+    res = tmp / "versions"
+    (res / "old").mkdir(parents=True)
+    old = {"run_id": "old", "client": {"kind": "lmstudio"}, "model_metadata": meta,
+           "generation": {"max_tokens": 12288}}  # run esistente senza chiave = versione 1
+    (res / "old" / "config.json").write_text(json.dumps({"config": old}), encoding="utf-8")
+    v2 = {"run_id": "new", "config_version": 2, "client": {"kind": "lmstudio"}, "model_metadata": meta,
+          "generation": {"max_tokens": 4096}}
+    assert rx.config_version(old) == 1 and rx.config_version(v2) == 2
+    assert rx.inconsistent_runs(v2, res) == []  # versione diversa: ammessa
+    assert rx.inconsistent_runs(dict(v2, config_version=1), res) == ["old: context_length=32768, max_tokens=12288"]
+    (res / "new2").mkdir()
+    (res / "new2" / "config.json").write_text(json.dumps({"config": dict(v2, run_id="new2")}), encoding="utf-8")
+    assert rx.inconsistent_runs(v2, res) == []  # stessa versione, stessi valori: ammessa
+    bad = dict(v2, generation={"max_tokens": 2048})  # stessa versione, valori diversi: rifiutata
+    assert rx.inconsistent_runs(bad, res) == ["new2: context_length=32768, max_tokens=4096"]
+
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_k.yaml").read_text(encoding="utf-8"))
+    dev = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_formats.yaml").read_text(encoding="utf-8"))
+    assert cfg["query_ids"] == dev["query_ids"] and cfg["models"] == dev["models"] and cfg["k"] == [2, 3, 5, 8]
+    assert cfg["config_version"] == 2 and cfg["repetitions"] == 2 and cfg["conditions"] == ["bm25"]
+    total = 0
+    for name in ("P-G", "C-G", "P-Q", "C-Q"):
+        r = rx.resolve_configuration(cfg, name)
+        assert (r["generation"]["max_tokens"], r["model_metadata"]["context_length"], rx.config_version(r)) == (
+            4096, 32768, 2)
+        assert (r["generation"]["temperature"], r["generation"]["top_p"], r["generation"]["top_k"]) == (0.3, 0.95, 64)
+        total += len(rx.plan(r, builder.candidates))
+        real = ROOT / "data" / "results" / "generation"  # le run esistenti (versione 1) non bloccano le nuove
+        assert rx.inconsistent_runs(r, real) == []
+    assert total == 640
+    # calibrazione con il k piu' alto (8) sul server finto
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), FakeLMStudio)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    try:
+        cq = rx.resolve_configuration(cfg, "C-Q")
+        cq["client"].update(model="fake-qwen", base_url=f"http://127.0.0.1:{srv.server_address[1]}/v1")
+        FakeLMStudio.models_payload = models_payload("fake-qwen", 32768, flash_attention=True)
+        out = ct.calibrate(cq, rx.make_client(cq), formats=("compact",))
+    finally:
+        FakeLMStudio.models_payload = None
+        srv.shutdown()
+        srv.server_close()
+    first = builder.build(builder.by_id[cfg["query_ids"][0]], PromptSpec("bm25", k=8, output_format="compact"))
+    assert out["k"] == 8 and out["config_version"] == 2 and out["rows"][0]["est"] == count_tokens(first.text)
+    assert out["max_tokens"] == 4096 and out["summary"]["compact"]["fits"]
+
+    # regola di scelta di k
+    def M(Vc=30, R=0.30):
+        return {"Vc": Vc, "R": R}
+
+    assert ak.choose_k({2: M(R=0.30), 3: M(R=0.31), 5: M(R=0.32), 8: M(R=0.33)})["k"] == 2  # 0,30 = 0,33 - 0,03: incluso
+    assert ak.choose_k({2: M(R=0.30), 3: M(R=0.32), 5: M(R=0.33), 8: M(R=0.35)})["k"] == 3  # 0,32 = 0,35 - 0,03: incluso
+    assert ak.choose_k({2: M(R=0.30), 3: M(R=0.31), 5: M(R=0.33), 8: M(R=0.35)})["k"] == 5  # 0,31 < 0,32: escluso
+    assert ak.choose_k({2: M(R=0.30), 3: M(R=0.30), 5: M(R=0.40), 8: M(R=0.41)})["k"] == 5
+    d = ak.choose_k({2: M(Vc=30, R=0.30), 3: M(Vc=28, R=0.31), 5: M(Vc=27, R=0.50), 8: M(Vc=20, R=0.60)})
+    assert d["admissible"] == [2, 3] and d["excluded"] == [5, 8] and d["k"] == 2  # Vc oltre 2 sotto k=2: escluso
+    assert ak.choose_k({2: M(R=None), 3: M(R=None), 5: M(R=0.01), 8: M(R=0.0)})["k"] == 2  # R non definito = 0
+    assert ak.choose_k({2: M(Vc=10, R=0.1), 3: M(Vc=12, R=0.5), 5: M(Vc=12, R=0.5), 8: M(Vc=12, R=0.5)})["k"] == 3
+
+    gt = builder.by_id["TruckLogistics"]["diagram_apollon_json"]
+
+    def call(name, k, valid=True, truncated=False, q="TruckLogistics", r=0):
+        fmt_, mk = ak.CONFIGURATIONS[name]
+        v = SimpleNamespace(level=4 if valid else -1, P1_clean=True, C2_clean=True, truncated=truncated,
+                            diagram=gt if valid else None, L0_extracted=valid, failure="" if valid else "no_json",
+                            discarded_lines=[], compact_issues=[])
+        return {"v": v, "gt": gt, "format": fmt_, "model": mk, "q": q, "r": r, "k": k, "m": {"latency_s": 1.0}}
+
+    def conf(name, valid_by_k, n=4, trunc_k=None):
+        return [call(name, k, valid=i < valid_by_k[k], truncated=(k == trunc_k), r=i) for k in ak.K_VALUES
+                for i in range(n)]
+
+    def infos(by_name, excluded=None):
+        return {n: {"name": n, "format": ak.CONFIGURATIONS[n][0], "model": ak.CONFIGURATIONS[n][1],
+                    "calls": by_name.get(n, []), "excluded": (excluded or {}).get(n), "level_mismatch": 0}
+                for n in ak.CONFIGURATIONS}
+
+    full = {2: 4, 3: 4, 5: 4, 8: 4}
+    same = {"P-G": conf("P-G", full), "P-Q": conf("P-Q", full), "C-G": conf("C-G", full), "C-Q": conf("C-Q", full)}
+    out = ak.outcome(infos(same))
+    assert out["formats"]["plantuml"]["k"] == 2 and out["formats"]["compact"]["k"] == 2  # tutto pari: il piu' piccolo
+    diff = dict(same, **{"C-Q": conf("C-Q", {2: 1, 3: 1, 5: 4, 8: 4})})  # Qwen: R migliore con k = 5 (Vc in salita)
+    out = ak.outcome(infos(diff))
+    assert out["per_model"][("compact", "Q")]["k"] == 5 and out["formats"]["compact"]["outcome"].startswith(
+        "STOP: dipende dal modello") and out["formats"]["plantuml"]["k"] == 2
+    out = ak.outcome(infos(same, excluded={"P-Q": "incompleta (150/160 risposte)"}))
+    assert out["formats"]["plantuml"]["k"] is None and "non decidibile" in out["formats"]["plantuml"]["outcome"]
+    assert out["formats"]["compact"]["k"] == 2  # l'altro formato si decide comunque
+    out = ak.outcome(infos(dict(same, **{"P-G": conf("P-G", full, n=4, trunc_k=8)})))
+    assert out["formats"]["plantuml"]["k"] == 2 and out["warnings"] == [  # 4 > 2: segnalato, non blocca
+        "P-G, k=8: 4 risposte troncate su 40 (soglia di segnalazione: piu' di 2)"]
+    many = dict(same, **{"P-G": conf("P-G", full, n=40, trunc_k=8)})
+    out = ak.outcome(infos(many))
+    assert any("P-G, k=8: 40 risposte troncate" in w for w in out["warnings"])
+
+    # run finte (3 esercizi, 4 k, 2 ripetizioni = 24 risposte per configurazione)
+    ids = cfg["query_ids"][:3]
+    gts = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates()}
+    rd = tmp / "kres"
+
+    def fake_run(name, broken_k=None, n=None):
+        r = dict(rx.resolve_configuration(cfg, name), query_ids=ids)
+        out_dir = rd / r["run_id"]
+        (out_dir / "raw").mkdir(parents=True)
+        (out_dir / "config.json").write_text(json.dumps({"config": r, "provenance": {
+            "plantuml_postprocess_version": "v2"}}), encoding="utf-8")
+        lines = []
+        for q in ids:
+            for k in r["k"]:
+                for rep in range(r["repetitions"]):
+                    cid = f"{q}__bm25__k{k}__r{rep}"
+                    fmt_ = r["prompt"]["output_format"]
+                    text = (apollon_to_plantuml(gts[q]) if fmt_ == "plantuml"
+                            else json.dumps(us.apollon_to_compact(gts[q]), separators=(",", ":")))
+                    if k == broken_k:
+                        text = text[: len(text) // 2]
+                    v = ak.ad.validate(fmt_, text, "stop", cid, "v2")
+                    (out_dir / "raw" / f"{cid}.json").write_text(json.dumps({"text": text, "finish_reason": "stop"}),
+                                                                 encoding="utf-8")
+                    lines.append(json.dumps({"call_id": cid, "query_id": q, "repetition": rep, "k": k,
+                                             "level": v.level, "latency_s": 1.0 + k, "prompt_tokens_server": 1000 * k,
+                                             "completion_tokens_server": 300, "reasoning_field": None,
+                                             "reasoning_markers_in_content": []}))
+        (out_dir / "manifest.jsonl").write_text("\n".join(lines[:n]) + "\n", encoding="utf-8")
+
+    for name in ("P-G", "C-G", "P-Q"):
+        fake_run(name)
+    fake_run("C-Q", broken_k=2)  # Qwen compatto: k = 2 tutto rotto -> R(2) = 0, sceglie il piu' piccolo tra 3, 5, 8
+    models = ak.expected_model_ids()
+    loaded = {n: ak.load_configuration(rd, n, gts, models[n]) for n in ak.CONFIGURATIONS}
+    assert all(i["excluded"] is None and len(i["calls"]) == 24 and i["level_mismatch"] == 0 for i in loaded.values())
+    text, out = ak.report(loaded, {q: "basso" for q in ids})
+    assert out["formats"]["plantuml"]["k"] == 2
+    assert out["per_model"][("compact", "Q")]["k"] == 3 and out["per_model"][("compact", "G")]["k"] == 2
+    assert "dipende dal modello" in out["formats"]["compact"]["outcome"]
+    assert "**PlantUML: k = 2**" in text and "| 3 | si | 6/6 |" in text and "Andamento per fascia" in text
+    import shutil as _sh
+    _sh.rmtree(rd / "dev_k__P-Q")
+    fake_run("P-Q", n=20)
+    loaded["P-Q"] = ak.load_configuration(rd, "P-Q", gts, models["P-Q"])
+    assert loaded["P-Q"]["excluded"].startswith("incompleta (20/24")
+    assert ak.outcome(loaded)["formats"]["plantuml"]["k"] is None
+    assert (ak.K_VALUES, ak.BASELINE_K, ak.VC_TOLERANCE, ak.R_TOLERANCE) == ((2, 3, 5, 8), 2, 2, 0.03)  # voce 94
+    print("  OK  versione di configurazione (stessa versione con valori diversi rifiutata, versione diversa ammessa, "
+          "run vecchie = versione 1); config dev_k (640 generazioni, versione 2, 32768 / 4096); calibrazione con k = 8; "
+          "regola di k (ammissibili per Vc, R entro 0,03 incluso, il piu' piccolo, dipende dal modello, formato non "
+          "decidibile, troncamenti segnalati); run finte")
+
+
 def builder_free_record(rid: str) -> dict:
     return next(c["diagram_apollon_json"] for c in cl.load_candidates() if c["id"] == rid)
 
@@ -1620,6 +1782,7 @@ def main() -> None:
         check_compact(builder, tmp)
         check_dev(builder)
         check_analyze_dev(builder, tmp)
+        check_k(builder, tmp)
         check_pilot2(tmp)
         check_analyze_pilot2(tmp)
         check_smoke(tmp)

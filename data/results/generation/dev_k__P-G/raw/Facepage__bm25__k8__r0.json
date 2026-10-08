@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + ID : int\n  + Name : string\n  + Email : string\n  + DateOfBirth : date\n}\n\nclass Account {\n  + AccountNumber : int\n}\n\nclass PersonalAccount {}\n\nclass BusinessAccount {\n  + CompanyName : string\n  + MonthlyFee : double\n}\n\nclass Page {\n  + PageName : string\n  + VisitCount : int\n}\n\nclass AdvertisementPage {\n  + BounceRate : float\n  + ClickThroughRate : float\n  + ConversionRate : float\n}\n\nclass FriendRequest {}\n\nUser \"1\" -- \"1\" Account\nAccount --|> PersonalAccount\nAccount --|> BusinessAccount\n\nPersonalAccount \"1\" -- \"*\" FriendRequest\nPersonalAccount \"1\" -- \"*\" Page : admin\nPersonalAccount \"1\" -- \"*\" Page : privilege\n\nBusinessAccount \"1\" -- \"*\" Page\nBusinessAccount \"1\" -- \"*\" AdvertisementPage\n\nAdvertisementPage --|> Page\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 10.121420000003127,
+ "prompt_tokens": 7686,
+ "completion_tokens": 212,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-apnh9xtha5dudorm0l2lfg",
+  "object": "chat.completion",
+  "created": 1791478099,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + ID : int\n  + Name : string\n  + Email : string\n  + DateOfBirth : date\n}\n\nclass Account {\n  + AccountNumber : int\n}\n\nclass PersonalAccount {}\n\nclass BusinessAccount {\n  + CompanyName : string\n  + MonthlyFee : double\n}\n\nclass Page {\n  + PageName : string\n  + VisitCount : int\n}\n\nclass AdvertisementPage {\n  + BounceRate : float\n  + ClickThroughRate : float\n  + ConversionRate : float\n}\n\nclass FriendRequest {}\n\nUser \"1\" -- \"1\" Account\nAccount --|> PersonalAccount\nAccount --|> BusinessAccount\n\nPersonalAccount \"1\" -- \"*\" FriendRequest\nPersonalAccount \"1\" -- \"*\" Page : admin\nPersonalAccount \"1\" -- \"*\" Page : privilege\n\nBusinessAccount \"1\" -- \"*\" Page\nBusinessAccount \"1\" -- \"*\" AdvertisementPage\n\nAdvertisementPage --|> Page\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7686,
+   "completion_tokens": 212,
+   "total_tokens": 7898,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

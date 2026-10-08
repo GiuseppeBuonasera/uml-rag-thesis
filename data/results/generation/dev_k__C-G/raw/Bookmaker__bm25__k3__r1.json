@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Bookmaker\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Bettor\",\"attributes\":[\"+ name : string\",\"+ id : int\"]},{\"name\":\"Race\",\"attributes\":[\"+ raceId : int\",\"+ startTime : datetime\"]},{\"name\":\"Runner\",\"attributes\":[\"+ runnerId : int\",\"+ name : string\"]},{\"name\":\"Horse\",\"attributes\":[\"+ breed : string\",\"+ age : int\"]},{\"name\":\"Jockey\",\"attributes\":[\"+ name : string\",\"+ licenseNumber : string\"]},{\"name\":\"Bet\",\"attributes\":[\"+ amount : double\",\"+ odds : double\"]},{\"name\":\"Winner\",\"kind\":\"interface\"}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Race\",\"part\":\"Runner\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"Runner\",\"part\":\"Horse\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Runner\",\"part\":\"Jockey\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"inheritance\",\"child\":\"Horse\",\"parent\":\"Runner\"},{\"type\":\"association\",\"source\":\"Bettor\",\"target\":\"Bet\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Bet\",\"target\":\"Race\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Bet\",\"target\":\"Runner\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Bookmaker\",\"target\":\"Bettor\",\"label\":\"manages\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Bookmaker\",\"target\":\"Bet\",\"label\":\"accepts\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Race\",\"target\":\"Winner\",\"label\":\"hasWinner\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 10.24085180000111,
+ "prompt_tokens": 3978,
+ "completion_tokens": 390,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-xzgrcjaesz88eoba1v07o6",
+  "object": "chat.completion",
+  "created": 1791481209,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Bookmaker\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Bettor\",\"attributes\":[\"+ name : string\",\"+ id : int\"]},{\"name\":\"Race\",\"attributes\":[\"+ raceId : int\",\"+ startTime : datetime\"]},{\"name\":\"Runner\",\"attributes\":[\"+ runnerId : int\",\"+ name : string\"]},{\"name\":\"Horse\",\"attributes\":[\"+ breed : string\",\"+ age : int\"]},{\"name\":\"Jockey\",\"attributes\":[\"+ name : string\",\"+ licenseNumber : string\"]},{\"name\":\"Bet\",\"attributes\":[\"+ amount : double\",\"+ odds : double\"]},{\"name\":\"Winner\",\"kind\":\"interface\"}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Race\",\"part\":\"Runner\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"Runner\",\"part\":\"Horse\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Runner\",\"part\":\"Jockey\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"inheritance\",\"child\":\"Horse\",\"parent\":\"Runner\"},{\"type\":\"association\",\"source\":\"Bettor\",\"target\":\"Bet\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Bet\",\"target\":\"Race\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Bet\",\"target\":\"Runner\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Bookmaker\",\"target\":\"Bettor\",\"label\":\"manages\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Bookmaker\",\"target\":\"Bet\",\"label\":\"accepts\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Race\",\"target\":\"Winner\",\"label\":\"hasWinner\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3978,
+   "completion_tokens": 390,
+   "total_tokens": 4368,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}
