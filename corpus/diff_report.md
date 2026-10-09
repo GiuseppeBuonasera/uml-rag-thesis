@@ -2,7 +2,7 @@
 
 Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa: la prima sezione confronta il PlantUML VERAMENTE originale (`corpus/raw/`) col PlantUML corretto (`corpus.jsonl.diagram_plantuml`, dopo `corpus/corrections/<id>.yaml`); tutte le altre confrontano il PlantUML corretto col JSON Apollon finale, prodotte da `corpus/apollon_convert.py`.
 
-## Correzioni di contenuto — errori (corpus/corrections/<id>.yaml) (31)
+## Correzioni di contenuto — errori (corpus/corrections/<id>.yaml) (32)
 
 - **AirTravel** — [correzione_errore] rename_token: 'Nmae' -> 'Name' (refuso di 'Name' nell'attributo Employee.Nmae.)
 - **AirTravel** — [correzione_errore] rename_token: 'Enterainment' -> 'Entertainment' (refuso di 'Entertainment' nell'attributo SeatCategory.Enterainment — description.md: "whether or not it offers an entertainment program".)
@@ -14,6 +14,7 @@ Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa:
 - **AlphaInsurance** — [correzione_errore] rename_token: 'calculateCompenstationSum' -> 'calculateCompensationSum' (refuso di 'Compensation' nel nome del metodo (compensazione dovuta).)
 - **Boeing** — [correzione_errore] rename_token: 'AirPlaneId' -> 'AirplaneId' (refuso di capitalizzazione: la classe si chiama 'Airplane' (una parola sola), non 'AirPlane'.)
 - **Boeing** — [correzione_errore] rename_token: 'NegotiatedPice' -> 'NegotiatedPrice' (refuso di 'Price' nell'attributo Acquisition.NegotiatedPice.)
+- **eHome2020** — [correzione_errore] replace_line: 'Room "2..*" *-- "1" Apartment' -> 'Apartment "1" *-- "2..*" Room' (lato del rombo della composizione invertito nella trascrizione: nell'immagine originale il rombo pieno sta su Wohnung (Apartment) e la molteplicita' 2..* sul lato Raum (Room); description.md: "An apartment has an address and consists of at least two rooms". Molteplicita' invariate (Apartment 1, Room 2..*), cambia solo il tutto della composizione (Apartment invece di Room).)
 - **Facepage** — [correzione_errore] rename_token: 'CoversionRate' -> 'ConversionRate' (refuso di 'ConversionRate' nell'attributo AdvertisementPage.CoversionRate.)
 - **FilmSet** — [correzione_errore] rename_token: 'AssistentName' -> 'AssistantName' (refuso di 'Assistant' nell'attributo Director.AssistentName — description.md: "the name of the director's assistant is stored".)
 - **HotelBookingManagementSystem** — [correzione_errore] replace_line: 'BookingInfo "0..5" -- "*" SpecialOffer : bestOffers' -> 'BookingInfo "*" -- "0..5" SpecialOffer : bestOffers' (SOLO scambio di lato della molteplicita' '0..5' (da BookingInfo a SpecialOffer, senza introdurre un '1' non richiesto dal testo): description.md, "HBMS sends the five best special offers to the traveller" — sono le SpecialOffer (al massimo 5) associate a UNA BookingInfo, non il contrario.)

@@ -431,26 +431,26 @@
       }
     },
     {
-      "id": "e9ad8a1e-87ff-511d-af21-9fe61d2a5ba9",
-      "source": "846cde7e-07a2-5042-a2bc-6a5da5768abc",
-      "target": "b90026df-a989-5bc6-9cba-ae0768899e97",
+      "id": "8ebc293a-f17b-514a-a0bc-7b86ee7e86ea",
+      "source": "b90026df-a989-5bc6-9cba-ae0768899e97",
+      "target": "846cde7e-07a2-5042-a2bc-6a5da5768abc",
       "type": "ClassComposition",
-      "sourceHandle": "left",
-      "targetHandle": "right",
+      "sourceHandle": "right",
+      "targetHandle": "left",
       "data": {
         "points": [
           {
-            "x": 320,
-            "y": 440.0
-          },
-          {
             "x": 260,
             "y": 425.0
+          },
+          {
+            "x": 320,
+            "y": 440.0
           }
         ],
         "label": "",
-        "sourceMultiplicity": "1",
-        "targetMultiplicity": "2..*",
+        "sourceMultiplicity": "2..*",
+        "targetMultiplicity": "1",
         "sourceRole": "",
         "targetRole": ""
       }

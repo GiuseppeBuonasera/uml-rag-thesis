@@ -63,6 +63,12 @@ INSTRUCTION_TEMPLATES = {"apollon": "v4_instructions.txt", "plantuml": "v4_plant
 # il compatto riusa la voce di esempio JSON della v4 ("Example n — JSON:")
 ITEM_TEMPLATES = {"apollon": "v4_example_item.txt", "plantuml": "v4_plantuml_example_item.txt",
                   "compact": "v4_example_item.txt"}
+# Variante delle istruzioni (voce 98): "base" = istruzioni del formato invariate (tutte le run fino al 2026-10-09);
+# "targeted" = stesse istruzioni con il blocco congelato di regole aggiuntive (templates/targeted_rules_block.txt, riga
+# del verso da templates/targeted_rules_direction.yaml) inserito subito prima dell'ultimo paragrafo ("Your output must
+# be ..."), separato da una riga vuota. Nessuna riga esistente cambia.
+INSTRUCTION_VARIANTS = ("base", "targeted")
+TARGETED_FORMATS = ("plantuml", "compact")
 LAYOUTS = ("user_only", "system_user")  # system_user disponibile, ma non si usa senza decisione (decisions.md, voce 64)
 
 
@@ -75,12 +81,17 @@ class PromptSpec:
     layout: str = "user_only"
     drop_interactive: bool = True  # toglie la chiave di primo livello "interactive" dagli esempi serializzati
     output_format: str = "apollon"  # "apollon" (JSON) | "plantuml" (convertito in Apollon nel post-processing)
+    instructions_variant: str = "base"  # "base" | "targeted" (voce 98)
 
     def __post_init__(self):
         if self.condition not in CONDITIONS:
             raise ValueError(f"condizione sconosciuta: {self.condition}")
         if self.output_format not in OUTPUT_FORMATS:
             raise ValueError(f"formato di uscita sconosciuto: {self.output_format}")
+        if self.instructions_variant not in INSTRUCTION_VARIANTS:
+            raise ValueError(f"variante delle istruzioni sconosciuta: {self.instructions_variant}")
+        if self.instructions_variant == "targeted" and self.output_format not in TARGETED_FORMATS:
+            raise ValueError(f"istruzioni mirate solo per {TARGETED_FORMATS}, non per {self.output_format}")
         if self.serialization not in SERIALIZATIONS or self.layout not in LAYOUTS:
             raise ValueError(f"serializzazione o layout non validi: {self.serialization}, {self.layout}")
 
@@ -100,6 +111,20 @@ class BuiltPrompt:
 
 def _template(name: str) -> str:
     return (TEMPLATES / name).read_text(encoding="utf-8")
+
+
+def targeted_block(output_format: str) -> str:
+    """Blocco congelato delle istruzioni mirate per un formato (voce 98), senza a capo finale."""
+    direction = yaml.safe_load(_template("targeted_rules_direction.yaml"))[output_format]
+    return _template("targeted_rules_block.txt").format(generalization_direction=direction).rstrip("\n")
+
+
+def targeted_instructions(instructions: str, output_format: str) -> str:
+    """Istruzioni del formato con il blocco inserito subito prima dell'ultimo paragrafo ("Your output must be ...")."""
+    head, sep, last = instructions.rstrip("\n").rpartition("\n\n")
+    if not sep or not last.startswith("Your output must be"):
+        raise ValueError("istruzioni senza l'ultimo paragrafo atteso ('Your output must be ...')")
+    return head + "\n\n" + targeted_block(output_format) + "\n\n" + last + "\n"
 
 
 def serialize_diagram(diagram: dict, serialization: str, drop_interactive: bool) -> str:
@@ -206,6 +231,8 @@ class PromptBuilder:
         task = _template("v4_task.txt").format(description=query["description"].strip())
         user = (examples_block + "\n" if examples_block else "") + task
         instructions = self.instructions_by_format[spec.output_format]
+        if spec.instructions_variant == "targeted":
+            instructions = targeted_instructions(instructions, spec.output_format)
         text = instructions + "\n" + user
         if spec.layout == "user_only":
             messages = [{"role": "user", "content": text}]

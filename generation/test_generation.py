@@ -1326,6 +1326,274 @@ def check_k(builder: PromptBuilder, tmp: Path) -> None:
           "decidibile, troncamenti segnalati); run finte")
 
 
+def check_instructions(builder: PromptBuilder, tmp: Path) -> None:
+    """Leva "istruzioni mirate" (voci 98-100): variante delle istruzioni, blocco congelato, config, regola di adozione e
+    metrica M di experiments/analyze_instructions.py, provata anche sulla baseline reale di dev_k a k = 3."""
+    import difflib
+    import shutil as _sh
+    import yaml
+    import analyze_instructions as ai
+    import prompt_builder as pb
+    import uml_structure as us
+    from plantuml_format import apollon_to_plantuml
+
+    # blocco congelato (sha256 dei file, LF, voce 98) e variante delle istruzioni
+    tpl = HERE / "templates"
+    assert hashlib.sha256((tpl / "targeted_rules_block.txt").read_bytes()).hexdigest() == \
+        "211d70938f1ee7a162c41ca0221a69adb86f1cc32ef2ca3117eab9326fcc8b91"
+    assert hashlib.sha256((tpl / "targeted_rules_direction.yaml").read_bytes()).hexdigest() == \
+        "5b4f93fca515efefe9f99207bc86b6ad8db69f51b4b1c3c2b603807551bd108a"
+    block = {f: pb.targeted_block(f) for f in ("plantuml", "compact")}
+    assert "common superclass" not in block["plantuml"] and len(block["plantuml"].splitlines()) == 11
+    names = {n["data"]["name"].lower() for c in builder.candidates + cl.load_queries()
+             for n in c["diagram_apollon_json"]["nodes"]}
+    texts = " ".join((c["description"] or "").lower() for c in builder.candidates + cl.load_queries())
+    assert not {"guitar", "instrument"} & names and " guitar" not in texts and " instrument" not in texts
+    for fmt in ("plantuml", "compact"):
+        for q in ("Boeing", "eHome2020"):
+            base = builder.build(builder.by_id[q], PromptSpec("bm25", k=3, output_format=fmt))
+            assert base.text == builder.build(builder.by_id[q], PromptSpec("bm25", k=3, output_format=fmt,
+                                                                            instructions_variant="base")).text
+            tr = builder.build(builder.by_id[q], PromptSpec("bm25", k=3, output_format=fmt,
+                                                            instructions_variant="targeted"))
+            d = list(difflib.ndiff(base.text.splitlines(), tr.text.splitlines()))
+            assert not [x for x in d if x.startswith("- ")]  # nessuna riga tolta o cambiata
+            assert [x[2:] for x in d if x.startswith("+ ") and x[2:]] == block[fmt].splitlines()
+            assert tr.example_ids == base.example_ids and tr.task == base.task
+            assert tr.instructions.rstrip("\n").endswith(base.instructions.rstrip("\n").rpartition("\n\n")[2])
+    for bad in (("apollon", "targeted"), ("plantuml", "altro")):
+        try:
+            PromptSpec("bm25", output_format=bad[0], instructions_variant=bad[1])
+            raise AssertionError(f"variante non ammessa accettata: {bad}")
+        except ValueError:
+            pass
+    try:
+        pb.targeted_instructions("istruzioni senza paragrafo finale", "plantuml")
+        raise AssertionError("istruzioni senza l'ultimo paragrafo accettate")
+    except ValueError:
+        pass
+    # config: uguale alla baseline dev_k salvo la variante delle istruzioni e k = [3]
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_instructions.yaml").read_text(encoding="utf-8"))
+    dk = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_k.yaml").read_text(encoding="utf-8"))
+    assert cfg["k"] == [3] and cfg["prompt"]["instructions_variant"] == "targeted" and sorted(cfg["configurations"]) == [
+        "C-G", "P-G"]
+    total = 0
+    for name in ("P-G", "C-G"):
+        r, b = rx.resolve_configuration(cfg, name), rx.resolve_configuration(dk, name)
+        for key in ("query_ids", "repetitions", "seed", "generation", "model_metadata", "client", "config_version"):
+            assert r[key] == b[key], key
+        plan = rx.plan(r, builder.candidates)
+        assert all(spec.instructions_variant == "targeted" and spec.k == 3 for _, spec, _, _ in plan)
+        total += len(plan)
+    assert total == 80
+
+    # regola di adozione (soglie incluse in virgola mobile)
+    def M(M1=0.30, R=0.30, Vc=30):
+        return {"M1": M1, "R": R, "Vc": Vc}
+
+    assert ai.adopt(M(), M(M1=0.35))["adopt"]  # dM 0,05 (incluso)
+    assert not ai.adopt(M(), M(M1=0.349))["adopt"]  # dM sotto la soglia, R uguale
+    assert ai.adopt(M(R=0.30), M(R=0.33))["adopt"]  # dR 0,03 (incluso)
+    assert not ai.adopt(M(), M(M1=0.50, R=0.269))["adopt"]  # M migliora ma R peggiora di oltre 0,03
+    assert ai.adopt(M(), M(M1=0.50, R=0.27))["adopt"]  # R peggiora esattamente di 0,03: ammesso
+    assert not ai.adopt(M(), M(M1=0.50, Vc=27))["adopt"]  # Vc peggiora di 3
+    assert ai.adopt(M(), M(M1=0.50, Vc=28))["adopt"]  # Vc peggiora di 2: ammesso
+    assert ai.adopt(M(M1=None), M(M1=0.05))["adopt"]  # M non definito = 0
+
+    # metrica M: estremi espliciti (primaria) e tutti (secondaria); risposta non valida = 0
+    def diag(edges):
+        nodes = [{"id": i, "data": {"name": n}} for i, n in (("a", "A"), ("b", "B"), ("c", "C"))]
+        return {"nodes": nodes, "edges": [{"id": f"e{j}", "source": s, "target": t, "type": ty,
+                                           "data": {"sourceMultiplicity": sm, "targetMultiplicity": tm}}
+                                          for j, (s, t, ty, sm, tm) in enumerate(edges)]}
+
+    gt = diag([("a", "b", "ClassBidirectional", "1", "0..*"), ("b", "c", "ClassBidirectional", "", "1"),
+               ("c", "a", "ClassInheritance", "", ""), ("a", "a", "ClassBidirectional", "0..1", "*")])
+    resp = diag([("b", "a", "ClassBidirectional", "n", "1"),  # stessa coppia, estremi giusti per classe (n = *)
+                 ("b", "c", "ClassComposition", "1", "1"),  # tipo diverso: molteplicita' confrontate lo stesso
+                 ("a", "a", "ClassBidirectional", "0..1", "1")])
+
+    def call(d, valid=True):
+        from types import SimpleNamespace
+        return {"v": SimpleNamespace(level=4 if valid else -1, diagram=d if valid else None), "gt": gt}
+
+    mc = ai.multiplicity_counts(call(resp))
+    assert (mc["explicit"], mc["explicit_same"], mc["all"], mc["all_same"]) == (5, 4, 6, 4)
+    assert ai.multiplicity_counts(call(resp, valid=False))["explicit_same"] == 0
+    assert ai.multiplicity_counts(call(resp, valid=False))["explicit"] == 5
+
+    # sulla baseline REALE (dev_k, Gemma, k = 3, GT attuale)
+    real = ROOT / "data" / "results" / "generation"
+    gts = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates()}
+    base = {f: ai.load_run(real, "dev_k", n, gts, "google/gemma-4-12b-qat", 3) for n, f in ai.CONFIGURATIONS.items()}
+    mb = {f: ai.metrics(b["calls"]) for f, b in base.items()}
+    assert all(b["excluded"] is None and len(b["calls"]) == 40 and b["level_mismatch"] == 0 for b in base.values())
+    assert (mb["plantuml"]["mult_counts"]["explicit_same"], mb["plantuml"]["mult_counts"]["explicit"]) == (137, 486)
+    assert (mb["compact"]["mult_counts"]["explicit_same"], mb["compact"]["Vc"]) == (104, 34)
+    # trattamenti finti costruiti dalle risposte reali: identico alla baseline (non adottato) e risposte = GT (adottato)
+    res = tmp / "instr"
+
+    def fake_treatment(name, perfect=False, n=None):
+        src = real / f"dev_k__{name}"
+        out = res / f"dev_instructions__{name}"
+        (out / "raw").mkdir(parents=True)
+        c = json.loads((src / "config.json").read_text(encoding="utf-8"))
+        c["config"].update(run_id=f"dev_instructions__{name}", k=[3])
+        (out / "config.json").write_text(json.dumps(c), encoding="utf-8")
+        lines = []
+        for line in (src / "manifest.jsonl").read_text(encoding="utf-8").splitlines():
+            m = json.loads(line)
+            if m["k"] != 3:
+                continue
+            raw = json.loads((src / "raw" / f"{m['call_id']}.json").read_text(encoding="utf-8"))
+            if perfect:
+                g = gts[m["query_id"]]
+                raw["text"] = apollon_to_plantuml(g) if name == "P-G" else json.dumps(us.apollon_to_compact(g))
+                raw["finish_reason"] = "stop"
+                m["level"] = 4
+            (out / "raw" / f"{m['call_id']}.json").write_text(json.dumps(raw), encoding="utf-8")
+            lines.append(json.dumps(m))
+        (out / "manifest.jsonl").write_text("\n".join(lines[:n]) + "\n", encoding="utf-8")
+
+    for name in ("P-G", "C-G"):
+        _sh.copytree(real / f"dev_k__{name}", res / f"dev_k__{name}")
+        fake_treatment(name)
+    text, out = ai.report(ai.load_pairs(res))
+    assert all(not d["adopt"] and abs(d["dM1"]) < 1e-12 and d["dVc"] == 0 for d in out["formats"].values())
+    assert "| PlantUML | baseline | 40/40 | 40/40 |" in text and "Tabelle di confusione" in text
+    _sh.rmtree(res / "dev_instructions__C-G")
+    fake_treatment("C-G", perfect=True)
+    out = ai.outcome(ai.load_pairs(res))
+    assert out["formats"]["compact"]["adopt"] and not out["formats"]["plantuml"]["adopt"]
+    assert out["note"] and "JSON compatto" in out["note"]  # esito diverso tra i formati: segnalato
+    _sh.rmtree(res / "dev_instructions__P-G")
+    fake_treatment("P-G", n=30)  # trattamento incompleto: formato non decidibile
+    out = ai.outcome(ai.load_pairs(res))
+    assert out["formats"]["plantuml"]["adopt"] is None and "non decidibile" in out["formats"]["plantuml"]["outcome"]
+    with contextlib.redirect_stdout(io.StringIO()):
+        assert ai.main(["--results-dir", str(res)]) == 0
+    assert (ai.ADOPT_M, ai.ADOPT_R, ai.MAX_R_LOSS, ai.MAX_VC_LOSS) == (0.05, 0.03, 0.03, 2)  # voce 98
+    print("  OK  istruzioni mirate: blocco congelato (sha256), variante base = prompt invariati, variante mirata = solo il "
+          "blocco in piu', config uguale alla baseline salvo le istruzioni (80 generazioni); regola di adozione con "
+          "soglie incluse, metrica M (esplicita / tutti gli estremi, 0 per le non valide); sulla baseline reale (M "
+          "137/486 e 104/486): trattamento identico non adottato, migliore adottato, esiti diversi segnalati, incompleto")
+
+
+def check_review(builder: PromptBuilder, tmp: Path) -> None:
+    """experiments/review_report.py: classificazione delle relazioni coerente con compare_relations, classi colorate,
+    pagina autonoma (rendering verificato solo se java e plantuml.jar sono disponibili)."""
+    import shutil as _sh
+    from types import SimpleNamespace
+    import review_report as rr
+
+    gt = builder.by_id["TruckLogistics"]["diagram_apollon_json"]
+    st = us_structure_from(gt)
+    # risposta: GT con una composizione invertita, una relazione tolta e una classe in piu'
+    resp = json.loads(json.dumps(gt))
+    comp = next(e for e in resp["edges"] if e["type"] == "ClassComposition")
+    comp["source"], comp["target"] = comp["target"], comp["source"]
+    resp["edges"] = [e for e in resp["edges"] if e is comp or e["type"] != "ClassBidirectional"]
+    resp["nodes"].append({"id": "x", "type": "class", "position": {"x": 0, "y": 0}, "width": 1, "height": 1,
+                          "measured": {"width": 1, "height": 1}, "data": {"name": "Depot", "attributes": [],
+                                                                          "methods": []}})
+    cats = [c for c, _ in rr.classify_relations(resp, gt)]
+    rc = ap.compare_relations(resp, gt)
+    assert cats.count("direzione invertita") == 1 and cats.count("mancante") == rc["gt_edges"] - rc["same_pair"] == 1
+    assert sum(cats.count(x) for x in ("corretta", "direzione invertita", "molteplicita' diverse")) == rc["same_type"]
+    assert [c for c, _ in rr.classify_relations(None, gt)] == ["mancante"] * len(gt["edges"])
+    text = rr.colored_plantuml(resp, "t", ap.class_names(gt))
+    assert "!pragma layout smetana" in text and f"class Depot {rr.ORANGE}" in text and f"class Vehicle {rr.GREEN}" in text
+    assert len(st.classes) == len(gt["nodes"])
+    assert rr.parse_filters(["k=3", "rep=0", "q=Boeing"]) == {"k": {"3"}, "rep": {"0"}, "q": {"Boeing"}}
+    try:
+        rr.parse_filters(["x=1"])
+        raise AssertionError("filtro non valido accettato")
+    except SystemExit:
+        pass
+    c_ok = {"v": SimpleNamespace(level=4, diagram=resp, truncated=False, failure="", P1_clean=True, C2_clean=True),
+            "gt": gt, "q": "TruckLogistics", "r": 0, "format": "compact", "cond": "finta k=3", "version": "",
+            "m": {"call_id": "TruckLogistics__bm25__k3__r0"}, "raw": {"text": "{}"}}
+    c_bad = dict(c_ok, v=SimpleNamespace(level=-1, diagram=None, truncated=False, failure="no_json", P1_clean=False,
+                                         C2_clean=False), r=1, raw={"text": "risposta <non valida>"})
+    m_ok, m_bad = rr.response_metrics(c_ok), rr.response_metrics(c_bad)
+    assert m_ok["V"] == m_ok["Vc"] == 1 and m_bad == {"V": 0, "Vc": 0, "J": 0.0, "R": 0.0, "M": 0.0}
+    if rr.DEFAULT_JAR.exists() and _sh.which("java"):
+        page, stats = rr.build([c_ok, c_bad], rr.DEFAULT_JAR, "prova")
+        assert stats["svgs"] == stats["diagrams"] == 2 and not stats["errors"]  # GT + risposta valida
+        assert page.count("data:image/svg+xml;base64,") == 2 and "&lt;non valida&gt;" in page
+        assert "<script" not in page and 'src="http' not in page
+        rendered = "rendering verificato"
+    else:
+        rendered = "rendering NON verificato (java o plantuml.jar assenti)"
+    print(f"  OK  report di revisione: classificazione delle relazioni coerente con compare_relations, classi colorate "
+          f"(GT / in piu'), filtri, metriche per risposta (0 per le non valide); {rendered}")
+
+
+def check_run_log(tmp: Path) -> None:
+    """experiments/run_log.py (voce 102): due righe per esecuzione, status per ogni modo di uscita, sha256 dei config,
+    output dichiarato, registro che non cambia mai l'esito; uno script vero lanciato da riga di comando."""
+    import subprocess
+    import run_log as rl
+    log = tmp / "run_log.jsonl"
+    old_env = os.environ.get("RUN_LOG_PATH")
+    os.environ["RUN_LOG_PATH"] = str(log)
+    try:
+        cfg = ROOT / "experiments" / "configs" / "dev_k.yaml"
+        argv = ["experiments/x.py", str(cfg), "--resume"]
+        with rl.logged("experiments/x.py", argv=argv):
+            rl.set_output(ROOT / "data" / "results" / "generation" / "x")
+        cases = ((SystemExit(0), "ok"), (SystemExit(2), "exit 2"), (SystemExit("messaggio"), "exit 1"),
+                 (KeyboardInterrupt(), "interrupted"), (ValueError("boom"), "error: ValueError"))
+        for exc, _ in cases:
+            try:
+                with rl.logged("experiments/x.py", argv=["experiments/x.py"]):
+                    raise exc
+            except BaseException as e:  # l'eccezione originale passa sempre
+                assert type(e) is type(exc)
+        rows = [json.loads(x) for x in log.read_text(encoding="utf-8").splitlines()]
+        assert len(rows) == 2 * (1 + len(cases)) and [r["event"] for r in rows[:2]] == ["start", "end"]
+        start, end = rows[0], rows[1]
+        assert start["id"] == end["id"] and start["resume"] and start["command"].startswith("python experiments/x.py")
+        assert start["config_sha256"]["experiments/configs/dev_k.yaml"] == hashlib.sha256(cfg.read_bytes()).hexdigest()
+        assert "retrieval/config_bm25.yaml" in start["config_sha256"]
+        assert "generation/templates/targeted_rules_block.txt" in start["config_sha256"]
+        assert end["output"] == "data/results/generation/x" and end["status"] == "ok" and end["duration_s"] >= 0
+        assert start["commit"] and isinstance(start["worktree_dirty"], bool)
+        assert [r["status"] for r in rows[3::2]] == [s for _, s in cases]
+        assert rows[7]["message"] == "messaggio" and "boom" in rows[11]["message"]
+        rl.set_output("ignorato")  # senza registro attivo: nessun effetto, nessun errore
+        os.environ["RUN_LOG_PATH"] = str(tmp)  # percorso non scrivibile (e' una cartella): solo un avviso
+        with contextlib.redirect_stderr(io.StringIO()) as err:
+            with rl.logged("experiments/x.py", argv=["experiments/x.py"]):
+                pass
+        assert "registro non scritto" in err.getvalue()
+        # uno script vero da riga di comando (dry run del runner, cartella temporanea): due righe con l'uscita
+        os.environ["RUN_LOG_PATH"] = str(log)
+        n0 = len(log.read_text(encoding="utf-8").splitlines())
+        proc = subprocess.run([sys.executable, str(ROOT / "experiments" / "run_experiment.py"),
+                               str(ROOT / "experiments" / "configs" / "mock_e2e.yaml"), "--dry-run",
+                               "--results-dir", str(tmp / "rl_results")], capture_output=True, text=True, cwd=ROOT,
+                              env=dict(os.environ))
+        assert proc.returncode == 0, proc.stderr[-500:]
+        new = [json.loads(x) for x in log.read_text(encoding="utf-8").splitlines()[n0:]]
+        assert [r["event"] for r in new] == ["start", "end"] and new[1]["status"] == "ok"
+        assert new[0]["script"] == "experiments/run_experiment.py" and "dry_run" in new[1]["output"]
+        assert "experiments/configs/mock_e2e.yaml" in new[0]["config_sha256"]
+    finally:
+        if old_env is None:
+            os.environ.pop("RUN_LOG_PATH", None)
+        else:
+            os.environ["RUN_LOG_PATH"] = old_env
+    print("  OK  registro delle esecuzioni: inizio e fine con lo stesso id, status per uscita normale / codice / "
+          "messaggio / interruzione / errore, eccezione originale invariata, sha256 dei config, --resume, output, "
+          "registro non scrivibile = solo avviso; runner vero da riga di comando registrato")
+
+
+def us_structure_from(diagram: dict):
+    import uml_structure as us
+    return us.structure_from_apollon(diagram)
+
+
 def builder_free_record(rid: str) -> dict:
     return next(c["diagram_apollon_json"] for c in cl.load_candidates() if c["id"] == rid)
 
@@ -1783,6 +2051,9 @@ def main() -> None:
         check_dev(builder)
         check_analyze_dev(builder, tmp)
         check_k(builder, tmp)
+        check_instructions(builder, tmp)
+        check_review(builder, tmp)
+        check_run_log(tmp)
         check_pilot2(tmp)
         check_analyze_pilot2(tmp)
         check_smoke(tmp)

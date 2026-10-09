@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ raceId : int\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ runnerId : int\",\n        \"+ horseName : string\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ licenseNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ]\n    },\n    {\n      \"name\": \"Winner\",\n      \"kind\": \"abstract\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Race\",\n      \"part\": \"Runner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Winner\",\n      \"parent\": \"Runner\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Race\",\n      \"part\": \"Winner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Runner\",\n      \"part\": \"Jockey\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Race\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Runner\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.682263099999545,
+ "prompt_tokens": 4354,
+ "completion_tokens": 578,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-og54kz97oogy9cnthyi44",
+  "object": "chat.completion",
+  "created": 1791544035,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ raceId : int\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ runnerId : int\",\n        \"+ horseName : string\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ licenseNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ]\n    },\n    {\n      \"name\": \"Winner\",\n      \"kind\": \"abstract\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Race\",\n      \"part\": \"Runner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Winner\",\n      \"parent\": \"Runner\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Race\",\n      \"part\": \"Winner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Runner\",\n      \"part\": \"Jockey\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Race\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bet\",\n      \"target\": \"Runner\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4354,
+   "completion_tokens": 578,
+   "total_tokens": 4932,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

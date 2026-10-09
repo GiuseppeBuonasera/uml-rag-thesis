@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass EBike {\n  + bikeId : string\n  + modelName : string\n  + manufactureDate : date\n}\n\nclass Frame {\n  + material : string\n  + frameId : string\n}\n\nclass DriveSystem {\n  + driveType : string\n}\n\nclass Motor {\n  + powerOutput : int\n  + motorType : string\n}\n\nclass Controller {\n  + state : ControllerState\n}\n\nclass BasicController {}\n\nclass AdvancedController {\n  + nextInspectionDate : date\n}\n\nclass Battery {\n  + storedEnergyWh : int\n  + capacity : int\n}\n\nclass Wheel {\n  + wheelSize : int\n  + tirePressure : float\n}\n\nenum ControllerState {\n  On\n  Off\n  Charging\n}\n\nEBike \"1\" *-- \"1\" Frame\nEBike \"1\" *-- \"1\" DriveSystem\nEBike \"1\" *-- \"1\" Controller\nEBike \"0..1\" o-- \"1\" Battery\nFrame \"1\" *-- \"2\" Wheel\nDriveSystem \"1\" *-- \"1\" Motor\nBasicController --|> Controller\nAdvancedController --|> Controller\nController --> Battery : controls\nController --> DriveSystem : commands\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 10.569765400000051,
+ "prompt_tokens": 4028,
+ "completion_tokens": 277,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6sadpk3cdp8v32k3i3oguf",
+  "object": "chat.completion",
+  "created": 1791543077,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass EBike {\n  + bikeId : string\n  + modelName : string\n  + manufactureDate : date\n}\n\nclass Frame {\n  + material : string\n  + frameId : string\n}\n\nclass DriveSystem {\n  + driveType : string\n}\n\nclass Motor {\n  + powerOutput : int\n  + motorType : string\n}\n\nclass Controller {\n  + state : ControllerState\n}\n\nclass BasicController {}\n\nclass AdvancedController {\n  + nextInspectionDate : date\n}\n\nclass Battery {\n  + storedEnergyWh : int\n  + capacity : int\n}\n\nclass Wheel {\n  + wheelSize : int\n  + tirePressure : float\n}\n\nenum ControllerState {\n  On\n  Off\n  Charging\n}\n\nEBike \"1\" *-- \"1\" Frame\nEBike \"1\" *-- \"1\" DriveSystem\nEBike \"1\" *-- \"1\" Controller\nEBike \"0..1\" o-- \"1\" Battery\nFrame \"1\" *-- \"2\" Wheel\nDriveSystem \"1\" *-- \"1\" Motor\nBasicController --|> Controller\nAdvancedController --|> Controller\nController --> Battery : controls\nController --> DriveSystem : commands\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4028,
+   "completion_tokens": 277,
+   "total_tokens": 4305,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -246,9 +246,20 @@ def main() -> None:
           "| A | B | Jaccard | TF-IDF | motivo |", "|---|---|---|---|---|"]
     L += [f"| {p['a']} | {p['b']} | {p['jaccard']:.3f} | {p['tfidf']:.3f} | {p['motivo']} |" for p in pairs]
     (out / "summary.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    _set_output(out)
     print(f"Scritto: {out}")
     print("\n".join(L[:12 + len(var_rows)]))
 
 
+def _set_output(path) -> None:
+    """Registro delle esecuzioni (voce 102): dichiara l'uscita, se lo script e' lanciato da riga di comando."""
+    run_log = sys.modules.get("run_log")
+    if run_log is not None:
+        run_log.set_output(path)
+
+
 if __name__ == "__main__":
-    main()
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiments"))
+    import run_log  # registro delle esecuzioni (voce 102): due righe in data/results/run_log.jsonl
+    with run_log.logged(__file__):
+        main()

@@ -1,8 +1,10 @@
 # Insieme di sviluppo — PlantUML contro JSON compatto (`dev_formats`)
 
+> **Rigenerato il 2026-10-09 dopo la correzione del GT di eHome2020 (voce 99; rigenerazione: voce 105).** Cambiano solo le colonne del verso nella tabella delle relazioni (stesso verso e composizione / aggregazione: +2 per configurazione, es. P-G 26/43 -> 28/43 e 4/6 -> 6/6), perche' la composizione Apartment / Room di eHome2020 era invertita nel GT. Criteri della regola della voce 92 (Vc, R, J, V) ed esito invariati.
+
 Esperimento di SVILUPPO sul corpus (20 esercizi, leave-one-out), mai sul test set. Regola registrata PRIMA delle run (docs/decisions.md, voce 92) e applicata cosi' com'e' da `experiments/analyze_dev.py`, ricalcolando tutto dalle risposte grezze. Metriche di sviluppo: le metriche semantiche definitive restano da decidere con i relatori. Confronto per contenuto, mai per id. Modelli di taglia diversa (Gemma 4 12B QAT, Qwen2.5-Coder 7B, voce 85).
 
-Analisi eseguita sul commit `0d76c2ba7f1a` (con modifiche non committate).
+Analisi eseguita sul commit `3017a8c6c289` (con modifiche non committate).
 Post-processing PlantUML: v2.
 
 ## Regola di confronto (voce 92), applicata cosi' com'e'
@@ -63,10 +65,10 @@ Livelli cumulativi: P0 / C0 trovato, P1b / C2b convertito (= L1), L2, L3, L4; pu
 
 | configurazione | relazioni GT (tutte le risposte) | stessa coppia | stesso tipo | stesso verso (tipi orientati) | comp./aggr.: stesso verso | stesse molteplicita' |
 |---|---|---|---|---|---|---|
-| P-G | 352 | 145 | 101 | 26/43 | 4/6 | 37/109 |
-| P-Q | 352 | 79 | 53 | 14/16 | 0/2 | 17/60 |
-| C-G | 352 | 124 | 73 | 44/46 | 4/6 | 25/87 |
-| C-Q | 352 | 75 | 39 | 13/16 | 2/4 | 11/60 |
+| P-G | 352 | 145 | 101 | 28/43 | 6/6 | 37/109 |
+| P-Q | 352 | 79 | 53 | 16/16 | 2/2 | 17/60 |
+| C-G | 352 | 124 | 73 | 46/46 | 6/6 | 25/87 |
+| C-Q | 352 | 75 | 39 | 15/16 | 4/4 | 11/60 |
 
 ### Confronto appaiato (stesso esercizio, modello e ripetizione; solo descrittivo)
 

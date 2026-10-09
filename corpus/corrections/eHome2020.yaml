@@ -1,0 +1,11 @@
+# Correzione del 2026-10-09 (voce 99 di docs/decisions.md), emersa dall'analisi degli errori della leva "istruzioni
+# mirate" (voce 96) e verificata sull'immagine originale (extramaterial/eHome2020.jpg).
+- type: replace_line
+  match: 'Room "2..*" *-- "1" Apartment'
+  replacement: 'Apartment "1" *-- "2..*" Room'
+  category: correzione_errore
+  reason: >-
+    lato del rombo della composizione invertito nella trascrizione: nell'immagine originale il rombo pieno sta su
+    Wohnung (Apartment) e la molteplicita' 2..* sul lato Raum (Room); description.md: "An apartment has an address and
+    consists of at least two rooms". Molteplicita' invariate (Apartment 1, Room 2..*), cambia solo il tutto della
+    composizione (Apartment invece di Room).

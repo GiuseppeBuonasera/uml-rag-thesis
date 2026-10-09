@@ -80,4 +80,6 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    import run_log  # registro delle esecuzioni (voce 102): due righe in data/results/run_log.jsonl
+    with run_log.logged(__file__):
+        sys.exit(main())

@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"InsuranceCompany\",\"attributes\":[\"+ CompanyName : string\",\"+ RegistrationNumber : string\"]},{\"name\":\"Policy\",\"attributes\":[\"+ PolicyId : string\",\"+ CoverageAmount : double\"]},{\"name\":\"CarLiabilityPolicy\",\"attributes\":[\"+ LiabilityLimit : double\"]},{\"name\":\"LifePolicy\",\"attributes\":[\"+ BeneficiaryName : string\"]},{\"name\":\"RiskPolicy\",\"attributes\":[\"+ RiskCategory : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ CustomerId : int\",\"+ CustomerName : string\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractId : int\",\"+ SigningDate : date\",\"+ Status : string\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"CarLiabilityPolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"LifePolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"RiskPolicy\",\"parent\":\"Policy\"},{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.82858170000054,
+ "prompt_tokens": 4362,
+ "completion_tokens": 265,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-agdm1klikaug5kdj8zzenl",
+  "object": "chat.completion",
+  "created": 1791544071,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"InsuranceCompany\",\"attributes\":[\"+ CompanyName : string\",\"+ RegistrationNumber : string\"]},{\"name\":\"Policy\",\"attributes\":[\"+ PolicyId : string\",\"+ CoverageAmount : double\"]},{\"name\":\"CarLiabilityPolicy\",\"attributes\":[\"+ LiabilityLimit : double\"]},{\"name\":\"LifePolicy\",\"attributes\":[\"+ BeneficiaryName : string\"]},{\"name\":\"RiskPolicy\",\"attributes\":[\"+ RiskCategory : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ CustomerId : int\",\"+ CustomerName : string\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractId : int\",\"+ SigningDate : date\",\"+ Status : string\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"CarLiabilityPolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"LifePolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"RiskPolicy\",\"parent\":\"Policy\"},{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Policy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4362,
+   "completion_tokens": 265,
+   "total_tokens": 4627,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

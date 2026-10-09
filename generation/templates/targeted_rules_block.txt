@@ -1,0 +1,11 @@
+ADDITIONAL MODELING RULES
+Multiplicities — read them from the wording of the text, separately for each end of every relationship. The multiplicity next to a class says how many instances of THAT class are linked to one instance of the other class:
+- "exactly one", "each ... belongs to one", "a single" -> "1"
+- "at most one", "may have a", "optionally", "can be assigned to a" -> "0..1"
+- "one or more", "at least one" -> "1..*"
+- "zero or more", "may have several", "can have many", or a plural with no stated minimum -> "*"
+Use "1..*" only when the text states that at least one is required, otherwise use "*"; use "1" only when exactly one is always required, and "0..1" when it may be missing.
+Relationship types:
+- Use composition only when the part cannot exist without its whole and belongs to exactly one whole (deleting the whole deletes its parts); use aggregation when the part can exist on its own or be shared. If the text only says that two things are related ("has", "is assigned to", "manages", "works for", "uses"), use a plain association, not a composition.
+- When the text says that an X "is a", "is a kind of" or "can be either" a Y, model a generalization from the subclasses to the superclass, not an association.
+{generalization_direction}

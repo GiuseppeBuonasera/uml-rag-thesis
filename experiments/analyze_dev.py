@@ -376,6 +376,7 @@ def main(argv=None) -> int:
     out = results / OUT_NAME
     out.mkdir(parents=True, exist_ok=True)
     (out / "summary.md").write_text(text, encoding="utf-8")
+    _set_output(out / "summary.md")
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     print(text)
@@ -383,5 +384,14 @@ def main(argv=None) -> int:
     return 0
 
 
+def _set_output(path) -> None:
+    """Registro delle esecuzioni (voce 102): dichiara l'uscita, se lo script e' lanciato da riga di comando."""
+    run_log = sys.modules.get("run_log")
+    if run_log is not None:
+        run_log.set_output(path)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    import run_log  # registro delle esecuzioni (voce 102): due righe in data/results/run_log.jsonl
+    with run_log.logged(__file__):
+        sys.exit(main())

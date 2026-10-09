@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"H2SLocation\",\n      \"attributes\": [\n        \"+ LocationID : string\"\n      ]\n    },\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\",\n        \"+ ItemDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupRequest\",\n      \"attributes\": [\n        \"+ RequestID : string\",\n        \"+ RequestedDate : date\",\n        \"+ PickupTime : time\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ VehicleID : string\",\n        \"+ StorageSpace : float\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ DriverID : string\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteID : string\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"attributes\": [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : Category\"\n      ]\n    },\n    {\n      \"name\": \"FoodItem\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ EmployeeID : string\",\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : Category[]\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"BabyClothing\",\n        \"WomensWinterBoots\",\n        \"Fridge\",\n        \"Microwave\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"H2SLocation\",\n      \"part\": \"Article\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"PickupRequest\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"PickupRoute\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRequest\",\n      \"target\": \"Vehicle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Article\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"Article\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Article\",\n      \"parent\": \"FoodItem\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 24.852233499999784,
+ "prompt_tokens": 4711,
+ "completion_tokens": 929,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8nuq0p7u84knmupryazbpd",
+  "object": "chat.completion",
+  "created": 1791543755,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"H2SLocation\",\n      \"attributes\": [\n        \"+ LocationID : string\"\n      ]\n    },\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\",\n        \"+ ItemDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupRequest\",\n      \"attributes\": [\n        \"+ RequestID : string\",\n        \"+ RequestedDate : date\",\n        \"+ PickupTime : time\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ VehicleID : string\",\n        \"+ StorageSpace : float\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ DriverID : string\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteID : string\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"attributes\": [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : Category\"\n      ]\n    },\n    {\n      \"name\": \"FoodItem\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ EmployeeID : string\",\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : Category[]\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"BabyClothing\",\n        \"WomensWinterBoots\",\n        \"Fridge\",\n        \"Microwave\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"H2SLocation\",\n      \"part\": \"Article\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"PickupRequest\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"PickupRoute\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRequest\",\n      \"target\": \"Vehicle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Article\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"Article\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Article\",\n      \"parent\": \"FoodItem\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4711,
+   "completion_tokens": 929,
+   "total_tokens": 5640,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

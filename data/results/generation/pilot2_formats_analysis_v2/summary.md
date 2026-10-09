@@ -1,12 +1,14 @@
 # Secondo pilota — ANALISI v2 (SOLO DESCRITTIVA, post-processing PlantUML v2)
 
+> **Rigenerato il 2026-10-09 dopo la correzione del GT di eHome2020 (voce 99; rigenerazione: voce 105).** Nessun numero cambia (eHome2020 non e' tra gli esercizi del pilota); cambia solo la riga del commit. Esito descrittivo invariato.
+
 **Analisi descrittiva** (voce 89): le STESSE risposte salvate, rilette con il post-processing PlantUML v2 (intestazioni `extends` / `implements`, blocco senza `@enduml`). La regola della voce 78 e' riapplicata solo per mostrare l'effetto delle correzioni: **l'esito valido del secondo pilota resta quello dell'analisi originale** (`pilot2_formats_analysis/summary.md`, voce 88). La strada 2 (JSON) non cambia.
 
 Post-processing: v2 (strada 1); strada 2 invariata.
 
 **Esperimento PRELIMINARE** sul corpus (split `corpus`, selezione leave-one-out), mai sul test set: da dichiarare come tale in tesi. Regola di decisione registrata PRIMA delle run (docs/decisions.md, voce 78, approvata nella voce 79) e applicata cosi' com'e' da `experiments/analyze_pilot2.py` (voce 82), ricalcolando tutto dalle risposte grezze (`raw/`).
 
-Analisi eseguita sul commit `58896d045b8e` (con modifiche non committate).
+Analisi eseguita sul commit `3017a8c6c289` (con modifiche non committate).
 
 Esercizi: Louvre, Sober, StudentAppointment, CardGameApp, ApartmentBuilding, FilmSet; bm25 k=2; 2 ripetizioni; temperature 0.3, top_p 0.95, top_k 64, max_tokens 12288.
 

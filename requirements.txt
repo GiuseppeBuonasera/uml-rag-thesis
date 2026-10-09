@@ -25,6 +25,9 @@ openpyxl  # lettura di docs/dati/debari/Analysis.xlsx (check_debari)
 
 # Notebook / analysis
 jupyter
+nbformat  # notebooks/runbook.ipynb: lettura / scrittura (voce 102)
+nbclient  # esecuzione senza interfaccia del runbook (Run All)
+nbstripout  # filtro git: il notebook si versiona senza output (python -m nbstripout --install --attributes .gitattributes)
 matplotlib
 
 # Utility

@@ -213,7 +213,8 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
                 spec = PromptSpec(condition=cond, k=k, seed=cfg.get("seed", 0),
                                   serialization=p.get("serialization", "compact"),
                                   layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True),
-                                  output_format=p.get("output_format", "apollon"))
+                                  output_format=p.get("output_format", "apollon"),
+                                  instructions_variant=p.get("instructions_variant", "base"))
                 for t in temperatures(cfg):
                     for r in range(cfg.get("repetitions", 1)):
                         out.append((q, spec, r, t))
@@ -435,6 +436,11 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
             prov["plantuml_postprocess_version"] = ppu.DEFAULT_VERSION  # v2 dal 2026-10-08 (voce 89)
         if (cfg.get("prompt") or {}).get("output_format") == "compact":
             prov["compact_format_spec"] = "docs/compact_format.md"  # voci 90-91
+        if (cfg.get("prompt") or {}).get("instructions_variant", "base") == "targeted":  # voce 98: blocco congelato
+            from prompt_builder import targeted_block
+            block = targeted_block(cfg["prompt"]["output_format"])
+            prov["instructions_variant"] = "targeted"
+            prov["targeted_block_sha256"] = hashlib.sha256(block.encode("utf-8")).hexdigest()
         (out_dir / "config.json").write_text(json.dumps({"config": cfg, "provenance": prov}, indent=2,
                                                         ensure_ascii=False), encoding="utf-8")
     elif server_context is not None:  # a ogni ripresa: config.json non si riscrive, l'esito va in un file a parte
@@ -531,15 +537,26 @@ def main(argv: list[str] | None = None) -> int:
     root = Path(a.results_dir)
     if a.dry_run:
         out = root / "dry_run" / cfg["run_id"]
+        _set_output(out)
         if out.exists():
             raise SystemExit(f"{out} esiste gia': non si sovrascrive")
         print(dry_run(cfg, builder, queries, out))
         print(f"scritto in {out}")
         return 0
+    _set_output(root / cfg["run_id"])
     counts = run(cfg, builder, queries, root / cfg["run_id"], a.resume, a.accept_unverified_context)
     print(f"run {cfg['run_id']}: {counts}")
     return 0
 
 
+def _set_output(path) -> None:
+    """Registro delle esecuzioni (voce 102): dichiara l'uscita, se lo script e' lanciato da riga di comando."""
+    run_log = sys.modules.get("run_log")
+    if run_log is not None:
+        run_log.set_output(path)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    import run_log  # registro delle esecuzioni (voce 102): due righe in data/results/run_log.jsonl
+    with run_log.logged(__file__):
+        sys.exit(main())

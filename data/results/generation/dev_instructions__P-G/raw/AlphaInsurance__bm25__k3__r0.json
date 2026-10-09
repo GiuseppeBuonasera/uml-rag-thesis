@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass InsuranceCompany {}\n\nclass Customer {\n  + name : string\n  + address : string\n  + customerId : int\n}\n\nclass Broker {\n  + brokerId : int\n  + name : string\n}\n\nclass Policy {\n  + policyType : string\n  + coverageDetails : string\n}\n\nclass Offer {\n  + offerId : int\n  + validityDate : date\n  + status : string\n}\n\nclass Contract {\n  + contractId : int\n  + signingDate : date\n  + billingFrequency : string\n  + price : float\n}\n\nclass ClaimCase {\n  + caseId : int\n  + description : string\n  + status : string\n}\n\nclass Estimator {\n  + estimatorId : int\n  + areaOfExpertise : string\n}\n\nclass EstimatorReport {\n  + reportId : int\n  + findings : string\n  + dateIssued : date\n}\n\nclass CompensationDecision {\n  + decisionId : int\n  + approvedAmount : float\n  + eligibleCosts : string\n}\n\nclass Payment {\n  + paymentId : int\n  + amount : float\n  + paymentDate : date\n}\n\nInsuranceCompany \"1\" -- \"*\" Customer\nBroker \"1\" -- \"*\" Customer : manages\nCustomer \"1\" -- \"*\" Contract\nContract \"1\" -- \"1\" Policy\nOffer \"0..1\" -- \"1\" Customer\nOffer \"1\" -- \"0..1\" Contract\nCustomer \"1\" -- \"*\" ClaimCase\nClaimCase \"1\" *-- \"1..*\" EstimatorReport\nEstimator \"1\" -- \"*\" EstimatorReport : assesses\nClaimCase \"1\" -- \"0..1\" CompensationDecision\nCompensationDecision \"1\" -- \"1\" Payment\nPayment \"1\" -- \"1\" Customer\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.873166699999729,
+ "prompt_tokens": 3583,
+ "completion_tokens": 400,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-pf5lsynosel0d2rbe1edcot",
+  "object": "chat.completion",
+  "created": 1791543006,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass InsuranceCompany {}\n\nclass Customer {\n  + name : string\n  + address : string\n  + customerId : int\n}\n\nclass Broker {\n  + brokerId : int\n  + name : string\n}\n\nclass Policy {\n  + policyType : string\n  + coverageDetails : string\n}\n\nclass Offer {\n  + offerId : int\n  + validityDate : date\n  + status : string\n}\n\nclass Contract {\n  + contractId : int\n  + signingDate : date\n  + billingFrequency : string\n  + price : float\n}\n\nclass ClaimCase {\n  + caseId : int\n  + description : string\n  + status : string\n}\n\nclass Estimator {\n  + estimatorId : int\n  + areaOfExpertise : string\n}\n\nclass EstimatorReport {\n  + reportId : int\n  + findings : string\n  + dateIssued : date\n}\n\nclass CompensationDecision {\n  + decisionId : int\n  + approvedAmount : float\n  + eligibleCosts : string\n}\n\nclass Payment {\n  + paymentId : int\n  + amount : float\n  + paymentDate : date\n}\n\nInsuranceCompany \"1\" -- \"*\" Customer\nBroker \"1\" -- \"*\" Customer : manages\nCustomer \"1\" -- \"*\" Contract\nContract \"1\" -- \"1\" Policy\nOffer \"0..1\" -- \"1\" Customer\nOffer \"1\" -- \"0..1\" Contract\nCustomer \"1\" -- \"*\" ClaimCase\nClaimCase \"1\" *-- \"1..*\" EstimatorReport\nEstimator \"1\" -- \"*\" EstimatorReport : assesses\nClaimCase \"1\" -- \"0..1\" CompensationDecision\nCompensationDecision \"1\" -- \"1\" Payment\nPayment \"1\" -- \"1\" Customer\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3583,
+   "completion_tokens": 400,
+   "total_tokens": 3983,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

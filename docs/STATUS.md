@@ -1,8 +1,18 @@
 # Stato del progetto — leggere a inizio sessione
 
-Aggiornato: 2026-10-07 (secondo pilota: STOP 1 approvato, script di analisi pronto prima delle run; modello da
-coding passato da Qwen2.5-Coder 14B, che non entra in VRAM a 32768, a Qwen2.5-Coder 7B Q6_K, voci 84-85; repository spostato in `C:\Progetti\uml-rag-thesis`, fuori da OneDrive, voce 81. Passo
-3b BLOCCATO in attesa dei relatori, domande 8, 9, 11, 14, 15).
+Aggiornato: 2026-10-08 (dopo la leva k, voce 95: **solo Gemma 4 12B QAT**, k di lavoro = 3, formati PlantUML e JSON
+compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei relatori, domande 8, 9, 11, 14, 15, 16).
+
+## Configurazione di lavoro (voce 95)
+- Modello: **Gemma 4 12B QAT** (`google/gemma-4-12b-qat`, QAT q4_0; Flash Attention attiva, KV cache F16, Enable
+  Thinking spento). Qwen2.5-Coder 7B: valutato e scartato (dati dell'insieme di sviluppo, voce 95).
+- **Versione di configurazione 2** (voce 93): contesto 32768, max_tokens 4096.
+- Campionamento: temperature 0.3, top_p 0.95, top_k 64 (valori di lavoro; domanda 8 aperta).
+- Retrieval: bm25, **k = 3** (per il Passo 3b anche k = 2, per il confronto con la baseline statica a parità di esempi).
+- Prompt: istruzioni dei formati **senza** il blocco di "istruzioni mirate" (non adottato, voci 101 e 103; i file del
+  blocco restano congelati solo come documentazione; nessuna iterazione sullo stesso insieme di sviluppo).
+- Formati: **PlantUML** (post-processing v2) e **JSON compatto** (docs/compact_format.md), entrambi espansi in Apollon
+  dall'espansore unico.
 
 ## Stato
 - **Corpus di retrieval** (`corpus/processed/corpus.jsonl`, 60 record): 45 esercizi originali
@@ -15,7 +25,9 @@ coding passato da Qwen2.5-Coder 14B, che non entra in VRAM a 32768, a Qwen2.5-Co
   et al. hanno valutato (Analysis.xlsx).
 - Pipeline **verde su entrambi gli split, 0 errori** (2026-10-04): schema / integrità / round-trip / stile, 0 righe
   PlantUML non riconosciute, 0 etichette non classificate; test OK; check_translated 15/15 + 1/1 (--debari);
-  check_debari OK; separazione degli split verificata (hard-fail).
+  check_debari OK; separazione degli split verificata (hard-fail). **2026-10-09**: corretto il GT di eHome2020 (lato
+  del rombo Apartment / Room, voce 99): `corpus.jsonl` e `apollon/eHome2020.json` non sono più byte-identici agli
+  sha256 del Passo 1 per quel solo record.
 - **Retriever BM25 (Passo 2, chiuso il 2026-10-05)**: configurazione CONGELATA in `retrieval/config_bm25.yaml`
   (stopword sì, stemming Snowball sì, k1 = 1.5, b = 0.75; scelta solo sul leave-one-out del corpus), con le fasce di
   score_norm del top-1 per la tassonomia (cut-off 0.2893 / 0.3473, terzili LOO). Run versionate in
@@ -52,6 +64,10 @@ restano accanto al modulo (`corpus/test_apollon_convert.py`; Passo 2: `retrieval
 `generation/test_generation.py`).
 
 ## Comandi (in ordine)
+**Runbook**: `notebooks/runbook.ipynb` raccoglie tutti i comandi in ordine, con le sicurezze (`ESEGUI_GENERAZIONI` e
+`SBLOCCA_TESTSET` a False, nessuna run sovrascritta, test set solo dalla sezione 3b). **Registro automatico**: ogni
+esecuzione degli script della pipeline appende due righe (inizio, fine) a `data/results/run_log.jsonl` (versionato;
+`experiments/run_log.py`, voce 102). Storico precedente al registro: `docs/runbook_history.md`.
 ```
 # --- corpus di retrieval ---
 python corpus/build_manifest.py                      # raw -> corpus.jsonl (corrections, description_exclusions, known_issues)
@@ -71,6 +87,9 @@ python corpus/leakage_check.py --debari-test --prompt --all-debari   # leakage t
 python corpus/leakage_check.py <id>... [--vs <id>]   # forma storica (tradotti vs corpus e PDF De Bari)
 # per un esercizio: apply_glossary.py <cartella> ; generate_relations_table.py [--english] <cartella>
 # render: java -jar .tools/plantuml-old.jar -charset UTF-8 -tpng file.puml   (Java 8)
+# report grafico di revisione (voce 100): pagina HTML autonoma, SVG con plantuml.jar locale e layout smetana
+python experiments/review_report.py --runs dev_k__P-G dev_k__C-G --filter k=3 --name dev_k_gemma_k3
+#   -> data/results/generation/<nome>_review/index.html (non versionato); filtri k=<int> rep=<int> q=<id>
 
 # --- retrieval (Passo 2): corpus/ in sola lettura ---
 python retrieval/test_retrieval.py                   # test (determinismo, no test set tra i candidati, no scritture in corpus/)
@@ -120,7 +139,7 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
 | | Corpus | Test set De Bari |
 |---|---|---|
 | Record / convertiti | 60 / 59 | 20 / 20 |
-| Correzioni attive | 41 (20 esercizi) | 40 (6 esercizi) |
+| Correzioni attive | 42 (21 esercizi) | 40 (6 esercizi) |
 | Esclusioni di paragrafi | 2 | 0 |
 | Warning di conversione | 27 | 215 (in gran parte "attributo senza tipo") |
 | Vincoli di generalizzazione | 9 | 12 |
@@ -132,7 +151,7 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
 - `label_classification.json`: **203 voci** = 74 associazioni + 109 ruoli (+2 righe di ruolo doppio) + 21 vincoli
   (corpus + test set).
 - check_debari: 84 discrepanze rispetto ad Analysis.xlsx, tutte giustificate (76 imprecisione_xlsx, 8
-  convenzione); diff_report (corpus): 618.
+  convenzione); diff_report (corpus): 619 (618 prima della correzione di eHome2020, voce 99).
 - Leakage (TF-IDF, soglia 0.4): tradotti tutti sotto soglia; test set: solo es. 6 Flights vs AirTravel 0.418 →
   resta nel test set e nel retrieval (decisione STOP B, `known_issues`).
 
@@ -316,7 +335,9 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
 | **Totale** | **60** | **20** | **80** |
 
 ## Modelli (LM Studio)
-- **Qwen2.5-Coder 7B Instruct** (modello da coding del secondo pilota dal 2026-10-07, voce 85): GGUF **Q6_K** da
+- **Qwen2.5-Coder 7B Instruct — VALUTATO E SCARTATO** (voce 95: R 0,11-0,16 contro 0,21-0,32 di Gemma a ogni k e in
+  entrambi i formati; decine di scarti nel compatto). Le sue run restano come risultato documentato. Dati del modello
+  (modello da coding del secondo pilota dal 2026-10-07, voce 85): GGUF **Q6_K** da
   lmstudio-community (`lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF`), modello originale non modificato; contesto
   32768, max_tokens 12288, Flash Attention attiva, KV cache F16 (non quantizzata), nessun ragionamento. Template
   `experiments/configs/qwen25coder7b_template.yaml`. Id in LM Studio **`qwen2.5-coder-7b-instruct`** (senza editore:
@@ -351,6 +372,15 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
   modellazioni alternative (§10); diagrammi talvolta incompleti rispetto al testo (annotati, non completati: es.
   test set 17 Phone/DoubleTransfer isolati).
 - Test set: 215 warning, in gran parte attributi senza tipo nelle immagini (non inventati).
+
+## Rendering dei diagrammi (plantuml.jar, non versionato)
+- `.tools/plantuml-old.jar` = **PlantUML 1.2023.0** (GPL), sha256
+  `0404edcf0af28e5b409bc17aa59ad8b05051f47347377749c46c8018135d0dec`; richiede Java 8 o superiore (qui 1.8.0_421).
+  Usato per i render dei diagrammi e da `experiments/review_report.py` (layout `!pragma layout smetana`, quindi senza
+  Graphviz). `.tools/` è escluso da git: per ricrearlo scaricare il jar della release v1.2023.0 da
+  github.com/plantuml/plantuml/releases, salvarlo come `.tools/plantuml-old.jar` e confrontarne lo sha256 con quello
+  sopra (registrato dalla copia locale). `.tools/plantuml.jar` (versione più recente, sha256 `5e1ecfa8…`) richiede Java
+  11 e con Java 8 non parte.
 
 ## File chiave
 `docs/decisions.md` (log decisioni, canonico, con indice) · `corpus/README.md` (mappa di corpus/) ·
@@ -465,7 +495,9 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    Double / DateTime, tipi di ritorno List<...>, molteplicità "N"); per ora resta invariato come eccezione
    documentata. Il confronto pulito sulla pertinenza è **bm25 vs random** (stesso corpus normalizzato), mentre
    **static vs bm25 mescola pertinenza e qualità degli esempi**: valutare se aggiungere una variante
-   `static_normalized` (stessi due esercizi, normalizzati come il corpus).
+   `static_normalized` (stessi due esercizi, normalizzati come il corpus). **Aggiunta 2026-10-09** (voci 97 e 103): il
+   blocco di "istruzioni mirate" NON è stato adottato, quindi il prompt della baseline statica resta quello attuale
+   (prompt v3 dello studio 2025 adattato ad Apollon v4): nessuno scostamento in più da dichiarare.
 10. **Quasi-duplicati nel leave-one-out** (es. GasStation_KUL / GasStation_TUW nel corpus): ammessi o esclusi come
     vicini recuperabili? **Esito dell'analisi (2026-10-04)**: nel corpus non c'è nessun quasi-duplicato di contenuto.
     GasStation_KUL/TUW è lo stesso caso con modellazioni diverse (Jaccard dei nomi di classe 0.09, TF-IDF 0.23); il
@@ -488,6 +520,10 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
     variabilità, (4) rende meno confrontabili modelli con e senza ragionamento. Opzione: un **esperimento aggiuntivo
     con ragionamento acceso** (su un sottoinsieme o una condizione), con max_tokens adeguato e `enable_thinking: true`
     nei metadati.
+
+16. **Secondo modello sul test set** (2026-10-08, voce 95): nell'insieme di sviluppo Qwen2.5-Coder 7B è stato
+    scartato (R circa la metà di Gemma 4 12B QAT a ogni k e in entrambi i formati). Desiderate comunque un secondo
+    modello sul test set? Con PlantUML il costo è basso (circa 6 s per generazione).
 
 ## Prossimi passi
 1. ~~Trascrizione De Bari (20 esercizi, test set)~~ — FATTO il 2026-10-04.

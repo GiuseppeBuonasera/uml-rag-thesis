@@ -1,5 +1,7 @@
 # Pilota sulla temperatura — `pilot_temperature_gemma4-12b-qat`
 
+> **Rigenerato il 2026-10-09 dopo la correzione del GT di eHome2020 (voce 99; rigenerazione: voce 105).** Cambia solo la colonna esplorativa "esempi: token" di ApartmentBuilding (4.382 -> 4.379; eHome2020 e' tra i suoi esempi e la dimensione si ricalcola dal corpus attuale: i prompt effettivamente inviati nel 2026-10-06 contenevano il GT precedente). Esito della regola della voce 75 invariato.
+
 **Esperimento PRELIMINARE** sul corpus (split `corpus`, selezione leave-one-out), mai sul test set: da dichiarare come tale in tesi. Regola di decisione registrata PRIMA della run (docs/decisions.md, voce 75) e applicata cosi' com'e'. Generato da `experiments/analyze_pilot.py` dalle risposte grezze (`raw/`).
 
 Modello `google/gemma-4-12b-qat` (QAT (q4_0)), contesto 32768, enable_thinking False; bm25 k=2; top_p 0.95, top_k 64, max_tokens 12288; 36 risposte (6 esercizi × 2 temperature × 3 ripetizioni). Ragionamento nelle risposte: no.
@@ -140,12 +142,12 @@ Conteggi testuali (valgono anche per le risposte non decodificabili): relazioni 
 
 | chiamata | t | troncata | prompt reale | esempi: token / relazioni | GT: token / relazioni | completamento | relazioni scritte | coppie distinte | classi dagli esempi |
 |---|---|---|---|---|---|---|---|---|---|
-| ApartmentBuilding__bm25__k2__t0__r0 | 0 | no | 8233 | 4382 / 14 | 841 / 3 | 1397 | 3 | 3 | — |
-| ApartmentBuilding__bm25__k2__t0__r1 | 0 | no | 8233 | 4382 / 14 | 841 / 3 | 2144 | 3 | 3 | — |
-| ApartmentBuilding__bm25__k2__t0__r2 | 0 | no | 8233 | 4382 / 14 | 841 / 3 | 2144 | 3 | 3 | — |
-| ApartmentBuilding__bm25__k2__t0.3__r0 | 0.3 | no | 8233 | 4382 / 14 | 841 / 3 | 2037 | 3 | 3 | — |
-| ApartmentBuilding__bm25__k2__t0.3__r1 | 0.3 | no | 8233 | 4382 / 14 | 841 / 3 | 2036 | 3 | 3 | — |
-| ApartmentBuilding__bm25__k2__t0.3__r2 | 0.3 | no | 8233 | 4382 / 14 | 841 / 3 | 2149 | 3 | 3 | — |
+| ApartmentBuilding__bm25__k2__t0__r0 | 0 | no | 8233 | 4379 / 14 | 841 / 3 | 1397 | 3 | 3 | — |
+| ApartmentBuilding__bm25__k2__t0__r1 | 0 | no | 8233 | 4379 / 14 | 841 / 3 | 2144 | 3 | 3 | — |
+| ApartmentBuilding__bm25__k2__t0__r2 | 0 | no | 8233 | 4379 / 14 | 841 / 3 | 2144 | 3 | 3 | — |
+| ApartmentBuilding__bm25__k2__t0.3__r0 | 0.3 | no | 8233 | 4379 / 14 | 841 / 3 | 2037 | 3 | 3 | — |
+| ApartmentBuilding__bm25__k2__t0.3__r1 | 0.3 | no | 8233 | 4379 / 14 | 841 / 3 | 2036 | 3 | 3 | — |
+| ApartmentBuilding__bm25__k2__t0.3__r2 | 0.3 | no | 8233 | 4379 / 14 | 841 / 3 | 2149 | 3 | 3 | — |
 | CardGameApp__bm25__k2__t0__r0 | 0 | no | 14672 | 9177 / 38 | 3450 / 13 | 4914 | 12 | 11 | — |
 | CardGameApp__bm25__k2__t0__r1 | 0 | SI | 14672 | 9177 / 38 | 3450 / 13 | 12288 | 63 | 6 | — |
 | CardGameApp__bm25__k2__t0__r2 | 0 | SI | 14672 | 9177 / 38 | 3450 / 13 | 12288 | 63 | 6 | — |
@@ -192,7 +194,7 @@ Per esercizio (prompt ed esempi sono gli stessi per le 6 risposte dell'esercizio
 | FilmSet | 14067 | TransportCompany, MilanLibrary | 8663 / 36 | 3401 / 13 | 3/3 | 0/3 |
 | Louvre | 13870 | MilanLibrary, HelpingHands | 8414 / 36 | 1724 / 7 | 1/3 | 0/3 |
 | Sober | 10150 | HelpingHands, TruckLogistics | 5543 / 22 | 3479 / 10 | 0/3 | 2/3 |
-| ApartmentBuilding | 8233 | eHome2020, RealEstateAgency | 4382 / 14 | 841 / 3 | 0/3 | 0/3 |
+| ApartmentBuilding | 8233 | eHome2020, RealEstateAgency | 4379 / 14 | 841 / 3 | 0/3 | 0/3 |
 | StudentAppointment | 8046 | UniversityExams, University | 4447 / 17 | 1308 / 6 | 0/3 | 0/3 |
 
 **Sintesi (esplorativa)**:

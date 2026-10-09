@@ -103,6 +103,17 @@ non sono state modificate.
 92. 2026-10-08 — Insieme di sviluppo e confronto dei formati PlantUML / JSON compatto (FASE 3, STOP 2): selezione, config, metriche e regola PRIMA delle run
 93. 2026-10-08 — Versione di configurazione 2: max_tokens 4096, contesto 32768 (STOP 1 della leva k)
 94. 2026-10-08 — Leva "numero di esempi k" sull'insieme di sviluppo (FASE 2, STOP 2): config, calibrazione, regola PROPOSTA, analisi PRIMA delle run
+95. 2026-10-08 — Dopo la leva k: solo Gemma 4 12B QAT, k di lavoro = 3, configurazione di lavoro (supera la voce 89 sui modelli)
+96. 2026-10-09 — Leva "istruzioni mirate", FASE 1 (STOP 1): analisi degli errori di Gemma a k = 3 (solo descrittiva)
+97. 2026-10-09 — Leva "istruzioni mirate", FASE 2 (STOP 2): blocco di regole di modellazione aggiuntive (PROPOSTA)
+98. 2026-10-09 — Istruzioni mirate: blocco DEFINITIVO congelato, metrica M e regola di adozione (PRIMA della run)
+99. 2026-10-09 — Correzione del GT di eHome2020: lato del rombo della composizione Apartment / Room
+100. 2026-10-09 — Report grafico di revisione delle generazioni (experiments/review_report.py)
+101. 2026-10-09 — Istruzioni mirate, STOP 3: la regola della voce 98 NON le adotta in nessuno dei due formati
+102. 2026-10-09 — Runbook in notebook, registro automatico delle esecuzioni e storico ricostruito
+103. 2026-10-09 — Istruzioni mirate chiuse: blocco fuori dalla pipeline, configurazione di lavoro invariata, nessuna iterazione
+104. 2026-10-09 — Test e controlli di sanità: lettura dei GT del test set solo per verificare il codice
+105. 2026-10-09 — Rigenerazione dei 5 report versionati con il GT corretto di eHome2020: nessun esito cambia
 
 ## Formato
 
@@ -3363,3 +3374,350 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   piccolo ammissibile con R(k) ≥ R\* − 0,03; stesso k per i due modelli → k del formato, altrimenti "dipende dal
   modello". Aggiornati `experiments/analyze_k.py` (`R_TOLERANCE = 0.03`) e i test (`check_k`: soglia 0,03 inclusa in
   virgola mobile, k escluso appena fuori soglia). **Da qui la regola nel codice non si modifica senza una nuova voce.**
+
+### [2026-10-08] Dopo la leva k: solo Gemma 4 12B QAT, k di lavoro = 3, configurazione di lavoro (supera la voce 89 sui modelli)
+- **Fonte dei dati**: `data/results/generation/dev_k_analysis/summary.md` (commit `3017a8c`), insieme di sviluppo (20
+  esercizi del corpus, leave-one-out), MAI il test set; 40 risposte per formato, modello e k.
+- **Esito della regola della voce 94, applicata così com'è**: PlantUML **k = 2** (Gemma k = 2: R\* 0,321 a k = 8, tutti
+  i k entro 0,03; Qwen k = 2); JSON compatto **"dipende dal modello"** (Gemma k = 3, Qwen k = 2).
+- **Decisioni dell'utente**:
+  1. **Modello per il seguito: SOLO Gemma 4 12B QAT** (supera la voce 89, che teneva entrambi i modelli). Motivazione
+     (dati di sviluppo): R di Gemma più alto a ogni k e in entrambi i formati — PlantUML 0,298-0,321, compatto
+     0,210-0,310 — contro Qwen2.5-Coder 7B 0,139-0,159 in PlantUML e 0,114-0,151 nel compatto (il minimo di Gemma supera
+     il massimo di Qwen); validità con PlantUML equivalente (V 40/40 per entrambi a ogni k; Vc Gemma 38-40, Qwen
+     34-38); nel compatto Qwen ha decine di scarti a ogni k (61, 56, 92, 47 per k = 2, 3, 5, 8; Gemma 12, 9, 0, 16). Le run
+     e le analisi di Qwen (secondo pilota, `dev_formats`, `dev_k`) restano come risultato documentato: modello da coding
+     valutato e scartato. Domanda aggiunta per i relatori (STATUS.md, domanda 16): se desiderano comunque un secondo
+     modello sul test set (costo basso con PlantUML).
+  2. **k di lavoro = 3 per entrambi i formati.** Con Gemma: PlantUML Vc 40/40, R 0,307 (entro 0,03 dal migliore, 0,321 a
+     k = 8); compatto Vc 34/40, R 0,310 contro 26/40 e 0,210 a k = 2. **Nota di trasparenza**: per PlantUML la regola
+     della voce 94 sceglie k = 2 (Vc 38/40, R 0,312); k = 3 è una scelta dell'utente che usa lo stesso k nei due formati,
+     resta entro la tolleranza su R e ha Vc 40 contro 38. Per il Passo 3b si tiene **anche k = 2**, per il confronto con
+     la baseline statica a parità di esempi (la statica ha 2 esempi).
+- **Risultati di sviluppo da annotare** (solo descrittivi, Gemma salvo dove indicato):
+  - **verso delle relazioni** (stesso verso sulle relazioni dello stesso tipo orientato) molto migliore nel compatto,
+    circa 95% a ogni k (42/44, 44/46, 50/52, 44/45), che in PlantUML (21/42, 19/33, 27/33, 26/40: 50-82%); le chiavi di
+    ruolo whole / part e child / parent (voce 90) sembrano funzionare;
+  - **molteplicità corrette solo nel 25-47% dei casi** a ogni k (PlantUML 39-47%, compatto 25-30%; Qwen 16-37%): è la
+    prossima leva.
+- **Configurazione di lavoro** (STATUS.md): Gemma 4 12B QAT, versione di configurazione 2 (contesto 32768, max_tokens
+  4096), temperature 0.3, top_p 0.95, top_k 64, bm25, **k = 3**, formati PlantUML e JSON compatto. La temperatura resta il
+  valore di lavoro dei piloti (domanda 8 aperta).
+
+### [2026-10-09] Leva "istruzioni mirate", FASE 1 (STOP 1): analisi degli errori di Gemma a k = 3 (solo descrittiva)
+- **Dati**: risposte di Gemma 4 12B QAT a k = 3 di `dev_k` (P-G 40, tutte valide fino a L3; C-G 40, 39 valide),
+  insieme di sviluppo, mai il test set; sola lettura dei raw. Relazioni accoppiate per coppia di classi come in
+  `analyze_pilot.compare_relations` (1:1, prima lo stesso tipo); molteplicità normalizzate (n → *, 0..* = *). Script di
+  analisi nello scratchpad (non versionato). Il punto 0 della richiesta (solo Gemma, k = 3, configurazione di lavoro)
+  era già registrato nella voce 95.
+- **Molteplicità** (per estremo, relazioni accoppiate esclusi generalizzazione e realizzazione): uguali 137/240 in
+  PlantUML e 104/236 nel compatto. Molti scarti vengono da estremi **vuoti nel GT** che il modello riempie, come chiedono
+  le istruzioni ("always specified"): 46 in PlantUML e 48 nel compatto (es. Ebike controller-battery, Bookmaker
+  bettor-bet); escludendoli, uguali 137/194 (71%) e 104/188 (55%). Errori veri più frequenti (GT → risposta):
+  `*` → `1..*` (18 e 28; es. Boeing acquisition-contract, AlphaInsurance report-estimator), `*` → `1` (19 e 18; es.
+  ClothingCompany representative-country, Boeing contract-airline), `0..1` → `1` (6 e 5; es. AlphaInsurance
+  customer-broker), `1` → `1..*` / `*` (4 e 13). Molteplicità scambiate tra i due estremi: rare (2 e 6 su 85 e 80
+  relazioni con valori diversi ai due estremi).
+- **Tipi di relazione** (stessa coppia): stesso tipo 108/156 in PlantUML e 109/158 nel compatto. Confusioni più
+  frequenti: associazione o unidirezionale → **composizione** (12 + 9 in PlantUML, 18 + 13 nel compatto; es.
+  FitnessCompanyConan center-room, EUScienceConnect publisher-journal, Ebike ebike-frame); unidirezionale →
+  associazione (13 e 8); **generalizzazione → associazione** (9 in PlantUML, es. FitnessCompanyConan member-person e
+  trainer-person). Tra le relazioni senza corrispondente nel GT le composizioni sono 22 in PlantUML e 48 nel compatto.
+- **Verso** (stesso tipo orientato): PlantUML **10 generalizzazioni invertite** (solo nel verso sbagliato) più una
+  risposta con le generalizzazioni scritte in entrambi i versi (Facepage r0); il modello scrive `Superclasse --|>
+  Sottoclasse` (es. FitnessCompanyConan `Person --|> Trainer`, Musicmatic `Song --|> Single`, TruckLogistics `Vehicle
+  --|> Truck`). Compatto: **0 generalizzazioni invertite su 40** (le chiavi child / parent della voce 90 funzionano).
+  Composizioni invertite: 2/6 e 2/5, tutte in eHome2020, dove però è il **GT a sembrare sbagliato** (`Room "2..*" *--
+  "1" Apartment`: rombo sulla stanza, mentre le molteplicità dicono che un appartamento ha due o più stanze; la risposta
+  scrive `Apartment "1" *-- "2..*" Room`). Da verificare sull'immagine originale; nessuna correzione fatta.
+- **Altri errori**: classi del GT mancanti 101 in PlantUML e 91 nel compatto (circa 2,5 per risposta), classi in più
+  122 e 124, in gran parte nomi diversi per lo stesso concetto (es. AlphaInsurance InsurancePolicy contro Policy): il
+  confronto sui nomi esatti le conta due volte e trascina le relazioni (196 e 185 relazioni del GT senza la coppia nella
+  risposta). Generalizzazioni del GT mancanti 59/76 in PlantUML (comprese le 10 invertite e quelle con una classe
+  assente) e 33/73 nel compatto. Attributi ripetuti nelle sottoclassi invece che nella superclasse: 0 in entrambi i
+  formati (non è un problema).
+
+### [2026-10-09] Leva "istruzioni mirate", FASE 2 (STOP 2): blocco di regole di modellazione aggiuntive (PROPOSTA)
+- **Blocco** `generation/templates/targeted_rules_block.txt` (13 righe; circa 395-400 token cl100k_base, istruzioni da
+  1.192 a 1.585 token in PlantUML e da 1.378 a 1.779 nel compatto): regole GENERALI di modellazione UML, una per
+  ciascuna categoria più frequente della voce 96, nessuna indicazione specifica degli esercizi di sviluppo:
+  1. **molteplicità** lette dalla formulazione del testo, estremo per estremo ("exactly one" → 1; "at most one", "may
+     have a", "optionally" → 0..1; "one or more", "at least one" → 1..*; "zero or more", plurale senza minimo → *), con
+     la regola del limite inferiore ("1..*" solo se il testo richiede almeno uno, "1" solo se sempre esattamente uno,
+     "0..1" se può mancare) e il significato della molteplicità accanto a una classe;
+  2. **composizione / aggregazione / associazione**: composizione solo se la parte non esiste senza il tutto e
+     appartiene a un solo tutto; aggregazione se la parte esiste da sola o è condivisa; associazione semplice quando il
+     testo dice solo che due cose sono collegate ("has", "is assigned to", "manages", "works for", "uses");
+  3. **generalizzazione**: "is a", "is a kind of", "can be either" → generalizzazione, non associazione; superclasse
+     comune quando più classi condividono attributi o relazioni, attributi comuni solo nella superclasse;
+  4. **verso della generalizzazione**: l'unica riga che cambia tra i formati (`targeted_rules_direction.yaml`):
+     PlantUML `"Subclass --|> Superclass" (e.g. "Guitar --|> Instrument"), never "Superclass --|> Subclass"`; compatto
+     `"child" ... subclass, "parent" ... superclass, e.g. {"type": "inheritance", "child": "Guitar", "parent":
+     "Instrument"}`. Esempio generico verificato: né "Guitar" né "Instrument" compaiono come classe o nel testo dei 79
+     esercizi (59 del corpus, 20 del test set); "Animal", la prima scelta, è stato scartato perché è una classe del test
+     set (DB08_VeterinaryClinic).
+- **Punto fisso di inserimento**: subito prima dell'ultimo paragrafo delle istruzioni ("Your output must be ..."),
+  separato da una riga vuota; nessuna riga esistente è modificata (verificato con un diff: solo righe aggiunte, 12 + la
+  riga vuota). Il blocco è identico nei due formati salvo la riga del verso. Il collegamento al prompt builder (variante
+  di istruzioni) si farà nella FASE 3, dopo l'approvazione.
+- **Se adottato**: il blocco andrà applicato a TUTTE le condizioni del Passo 3b (zero-shot, statico, random,
+  retrieval), perché le condizioni devono differire solo nel blocco degli esempi; di conseguenza il prompt della
+  baseline statica non sarà più identico a quello dello studio 2025 (Garaccione et al.): aggiunto alla domanda 9 per i
+  relatori (STATUS.md).
+- **Punti aperti per la FASE 3** (dalla voce 96): definizione della metrica M sugli estremi del GT con molteplicità
+  ESPLICITA (circa il 20% degli estremi del GT è vuoto e il modello li riempie come chiedono le istruzioni), con la
+  versione su tutti gli estremi tra le secondarie; verifica sull'immagine del verso della composizione di eHome2020
+  (`Room "2..*" *-- "1" Apartment` nel GT).
+- **STOP 2**: in attesa di approvazione del testo del blocco e del punto di inserimento. Nessuna chiamata a un LLM.
+
+### [2026-10-09] Istruzioni mirate: blocco DEFINITIVO congelato, metrica M e regola di adozione (PRIMA della run)
+- **Modifica approvata allo STOP 2**: dalla regola sulla generalizzazione è **eliminata** la frase "Introduce a common
+  superclass when two or more classes share the same attributes or the same relationships" (con il suo seguito "and
+  put the shared attributes only in the superclass", che senza la prima parte resterebbe senza soggetto). Restano il
+  trigger lessicale ("is a" / "is a kind of" / "can be either" → generalizzazione) e la regola del verso. **Motivo**:
+  nessuna evidenza nella FASE 1 di superclassi implicite mancanti (attributi ripetuti nelle sottoclassi: 0 in
+  PlantUML, 0 nel compatto, voce 96) e rischio di classi inventate. Tutto il resto (molteplicità, criterio composizione
+  / associazione, esempio, punto di inserimento) come approvato.
+- **Blocco definitivo** (`generation/templates/targeted_rules_block.txt`, 11 righe; `{generalization_direction}` è la
+  riga di `targeted_rules_direction.yaml` del formato):
+
+  ```
+  ADDITIONAL MODELING RULES
+  Multiplicities — read them from the wording of the text, separately for each end of every relationship. The multiplicity next to a class says how many instances of THAT class are linked to one instance of the other class:
+  - "exactly one", "each ... belongs to one", "a single" -> "1"
+  - "at most one", "may have a", "optionally", "can be assigned to a" -> "0..1"
+  - "one or more", "at least one" -> "1..*"
+  - "zero or more", "may have several", "can have many", or a plural with no stated minimum -> "*"
+  Use "1..*" only when the text states that at least one is required, otherwise use "*"; use "1" only when exactly one is always required, and "0..1" when it may be missing.
+  Relationship types:
+  - Use composition only when the part cannot exist without its whole and belongs to exactly one whole (deleting the whole deletes its parts); use aggregation when the part can exist on its own or be shared. If the text only says that two things are related ("has", "is assigned to", "manages", "works for", "uses"), use a plain association, not a composition.
+  - When the text says that an X "is a", "is a kind of" or "can be either" a Y, model a generalization from the subclasses to the superclass, not an association.
+  {generalization_direction}
+  ```
+  Riga del verso, PlantUML: `- In PlantUML the arrow of a generalization points from the subclass to the superclass:
+  write "Subclass --|> Superclass" (e.g. "Guitar --|> Instrument"), never "Superclass --|> Subclass".`; compatto: `- In
+  "inheritance" and "realization", "child" is always the subclass (or the implementing class) and "parent" the
+  superclass (or the interface), e.g. {"type": "inheritance", "child": "Guitar", "parent": "Instrument"}.`
+- **sha256** (file con a capo LF, protetti con `-text` in `.gitattributes` come da voce 68):
+  `targeted_rules_block.txt` = `211d70938f1ee7a162c41ca0221a69adb86f1cc32ef2ca3117eab9326fcc8b91`;
+  `targeted_rules_direction.yaml` = `5b4f93fca515efefe9f99207bc86b6ad8db69f51b4b1c3c2b603807551bd108a`; blocco reso
+  (UTF-8, senza a capo finale) PlantUML `1e3d96e723e53be16b41de9b5c5f1311b68b7605dc199dbbe985c4b94072a5ee`, compatto
+  `4bcdd9a2740d877f6c57aec9968f7f5a25615a26dff8db7e7a4928c2e74f2a05` (il runner registra lo sha256 del blocco reso
+  nella provenienza delle run con istruzioni mirate). Verificati dai test.
+- **Esempio**: nuovamente verificato che né "Guitar" né "Instrument" compaiono come classe o nel testo di uno qualsiasi
+  dei 79 esercizi (corpus e test set) e che non ne derivano.
+- **Prompt** (`generation/prompt_builder.py`): `PromptSpec.instructions_variant` "base" (default: tutti i prompt
+  esistenti invariati; verificato: i prompt di `dev_k` a k = 3 ricostruiti coincidono con il `prompt_sha256` del
+  manifest in 20/20 per formato) o "targeted" (blocco inserito subito prima dell'ultimo paragrafo, "Your output must be
+  ...", separato da una riga vuota; solo per PlantUML e compatto). Il runner legge `prompt.instructions_variant`.
+  **Diff baseline / trattamento**: solo il blocco (11 righe) più una riga vuota, nessuna riga tolta o cambiata, in
+  20/20 prompt per formato a k = 3.
+- **Budget dei token** (stima cl100k_base, 20 esercizi, k = 3): blocco 365 token in PlantUML e 373 nel compatto; prompt
+  PlantUML da 2.778 / 3.563 / 4.365 a 3.143 / 3.928 / 4.730 (min / mediana / max), compatto da 3.295 / 4.169 / 4.931 a
+  3.668 / 4.542 / 5.304. Caso peggiore con il fattore prudente 1,239: 6.572 + 4.096 = 10.668 su 32.768.
+- **Decisione metodologica**: se il blocco viene adottato, si applica **identico a TUTTE le condizioni del Passo 3b**
+  (zero-shot, statico, random, retrieval); la baseline statica diventa **"ispirata a De Bari"** e non più una replica
+  esatta del prompt dello studio 2025; lo scostamento va dichiarato in tesi e segnalato ai relatori (domanda 9,
+  STATUS.md).
+- **Metrica M** (concordata): relazioni accoppiate come in `analyze_pilot.compare_relations`, molteplicità
+  normalizzate (n → *, 0..* = *), esclusi gli estremi di generalizzazione e realizzazione. **M primaria** = estremi del
+  GT con molteplicità ESPLICITA per cui la risposta ha la stessa molteplicità, su tutti gli estremi espliciti del GT di
+  TUTTE le risposte (risposta non valida o relazione non trovata = 0); **M secondaria** = lo stesso su tutti gli estremi
+  del GT.
+- **REGOLA DI ADOZIONE (invariata, registrata PRIMA della run)**: per ciascun formato, con delta = trattamento −
+  baseline su 40 risposte, **adottare se (dM_primaria ≥ 0,05 OPPURE dR ≥ 0,03) E dR ≥ −0,03 E dVc ≥ −2**. Controllo
+  preliminare: baseline e trattamento completi, senza ragionamento, del modello del config, altrimenti il formato non
+  si decide. Se l'esito è diverso tra i formati si adotta per il formato in cui passa e lo si segnala.
+- **Esperimento** (`experiments/configs/dev_instructions.yaml`): Gemma 4 12B QAT, versione di configurazione 2, bm25
+  k = 3, formati PlantUML e compatto, `instructions_variant: targeted`, 2 ripetizioni, **80 generazioni**; identica alla
+  baseline (risposte a k = 3 di `dev_k`) in esercizi, esempi, parametri e seed (42, 43). **Script**
+  `experiments/analyze_instructions.py`, scritto e testato PRIMA della run, anche sulla baseline reale: Gemma a k = 3
+  con il GT attuale, PlantUML V 40, Vc 40, J 0,544, R 0,307, M primaria 0,282 (137/486), M secondaria 0,248 (137/552);
+  compatto V 39, Vc 34, J 0,529, R 0,310, M primaria 0,214 (104/486), M secondaria 0,188 (104/552). Test
+  (`check_instructions`): sha256 del blocco, variante base invariata, diff solo del blocco, config, regola con soglie
+  incluse, M su un caso costruito, trattamento identico alla baseline (non adottato), trattamento perfetto per un
+  formato (adottato, esito diverso segnalato), trattamento incompleto (non decidibile). **Da qui la regola e M nel
+  codice non si modificano senza una nuova voce.**
+
+### [2026-10-09] Correzione del GT di eHome2020: lato del rombo della composizione Apartment / Room
+- **Verifica sull'immagine originale** (`corpus/raw/models_original/eHome2020/extramaterial/eHome2020.jpg`): il rombo
+  pieno della composizione sta su **Wohnung (Apartment)**, con molteplicità 1, e il lato **Raum (Room)** ha 2..*;
+  description.md: "An apartment has an address and consists of at least two rooms". Il PlantUML trascritto aveva `Room
+  "2..*" *-- "1" Apartment` (rombo su Room): errore di trascrizione confermato (emerso dall'analisi degli errori, voce
+  96).
+- **Correzione** con il processo consueto (`corpus/corrections/eHome2020.yaml`, `replace_line`, categoria
+  `correzione_errore`): `Apartment "1" *-- "2..*" Room`; molteplicità invariate, cambia solo il tutto della composizione.
+  Rigenerati `corpus.jsonl`, `processed/apollon/eHome2020.json` e `diff_report.md` (da 618 a 619 differenze). Verificato
+  con gli sha256 di tutto `corpus/` prima e dopo: cambiano solo questi file e la correzione nuova; in `corpus.jsonl`
+  cambia solo il record eHome2020 (campi `diagram_plantuml`, `corrections_applied`, `diagram_apollon_json`). Tutte le
+  suite di test e i controlli di sanità verdi. Il test set e il tag `testset-v1` non sono toccati. Documentata in
+  `corpus/README.md`.
+- **Effetto sui confronti**: a k = 3 eHome2020 non è mai tra gli esempi recuperati per i 20 esercizi di sviluppo (né
+  nella baseline reale: 0 chiamate su 80), quindi i prompt della baseline e del trattamento non cambiano; cambia solo il
+  GT di eHome2020 come esercizio. Metriche della baseline `dev_k` Gemma k = 3 ricalcolate con lo stesso script: V, Vc, J,
+  R e M **invariati**; cambia solo il verso (composizioni: 2 in più con il verso giusto per formato; verso uguale
+  PlantUML da 19/33 a 21/33, compatto da 44/46 a 46/46). A k = 5 e k = 8 eHome2020 era un esempio per Ebike nelle run di
+  `dev_k` (con il GT vecchio): fatto storico, run e `dev_k_analysis/summary.md` non toccati (rigenerare quel report ora
+  cambierebbe le cifre di eHome2020 come esercizio: va dichiarato se lo si rigenera).
+
+### [2026-10-09] Report grafico di revisione delle generazioni (experiments/review_report.py)
+- **Scopo**: rivedere visivamente le risposte già salvate rispetto al GT. Pagina HTML unica e autonoma (SVG incorporati
+  come immagini `data:`, nessuna risorsa esterna, nessuno script), apribile offline. Solo lettura: nessuna modifica a
+  post-processing, validatori o metriche; validazione come il runner (`analyze_dev.validate`, PlantUML con la versione
+  registrata nella provenienza; `postprocess.validate_response` per l'Apollon completo).
+- **Rendering**: GT e risposte valide → struttura comune (`uml_structure.structure_from_apollon`) → espansore → PlantUML
+  canonico (`plantuml_format.apollon_to_plantuml`) → SVG con `plantuml.jar` locale (una sola JVM per tutti i diagrammi)
+  e `!pragma layout smetana` (niente Graphviz, niente server online). Classi colorate: verde = nel GT, arancione = in più.
+  Jar: `.tools/plantuml-old.jar` = PlantUML **1.2023.0**, sha256
+  `0404edcf0af28e5b409bc17aa59ad8b05051f47347377749c46c8018135d0dec`, compatibile con Java 8 (installato: 1.8.0_421);
+  non versionato (`.tools/` è in `.gitignore`), dettagli in STATUS.md. `.tools/plantuml.jar` (più recente, sha256
+  `5e1ecfa8…`) richiede Java 11 e qui non parte.
+- **Confronto** (funzioni esistenti, non riscritte): classi con `analyze_pilot.class_names`; relazioni con
+  `analyze_instructions.match` (accoppiamento 1:1 di `compare_relations`), `gt_ends`, `resp_mult`; categorie: corretta /
+  tipo sbagliato / direzione invertita / molteplicità diverse / mancante / in più. Metriche per risposta V, Vc, J, R, M
+  (stesse definizioni delle analisi, 0 per le non valide); indice con le medie per esercizio e condizione. Risposte non
+  valide: niente diagramma, testo grezzo e livello raggiunto.
+- **Verifica** su `dev_k` Gemma k = 3 (`--runs dev_k__P-G dev_k__C-G --filter k=3 --name dev_k_gemma_k3`): 80 risposte
+  (1 non valida), 99 diagrammi resi su 99 (20 GT + 79 risposte valide), rendering 4,4 s, HTML 3,59 MB (SVG medio 25 KB),
+  nessun errore di sintassi. I conteggi delle relazioni letti dall'HTML coincidono con `compare_relations` ricalcolato
+  dalle risposte grezze in 80/80 schede (stessa coppia, stesso tipo, mancanti, in più; a campione Boeing, Facepage e
+  TruckLogistics); R aggregato dalla pagina 0,307 (PlantUML) e 0,310 (compatto), uguale a `dev_k_analysis`. Il verso
+  differisce da `dev_k_analysis` solo per eHome2020, per la correzione del GT (voce 99). Test: `check_review`.
+
+### [2026-10-09] Istruzioni mirate, STOP 3: la regola della voce 98 NON le adotta in nessuno dei due formati
+- **Run** `dev_instructions__P-G` e `__C-G` (80 generazioni, 2026-10-09 12:50-13:07, Gemma 4 12B QAT caricato con `lms
+  load google/gemma-4-12b-qat -c 32768 --parallel 4 --gpu max`, impostazioni salvate del modello; contesto e Flash
+  Attention verificati dal runner; nessun ragionamento, nessuna risposta troncata). Provenienza: commit `3017a8c` con
+  modifiche NON committate (`worktree_dirty: true`: le modifiche di queste voci non erano ancora committate, per
+  richiesta dell'utente), `instructions_variant: targeted`, sha256 del blocco reso come nella voce 98. Report:
+  `data/results/generation/dev_instructions_analysis/summary.md`; baseline = `dev_k` Gemma k = 3, GT corretto (voce 99).
+- **Esito della regola (applicata meccanicamente)**:
+
+  | formato | V | Vc | J | R | M primaria | M secondaria | dM_primaria | dR | dVc | esito |
+  |---|---|---|---|---|---|---|---|---|---|---|
+  | PlantUML base / mirate | 40 / 40 | 40 / 40 | 0,544 / 0,551 | 0,307 / 0,312 | 0,282 / 0,284 | 0,248 / 0,254 | +0,002 | +0,006 | 0 | **non adottate** (nessun guadagno) |
+  | compatto base / mirate | 39 / 39 | 34 / 34 | 0,529 / 0,520 | 0,310 / 0,273 | 0,214 / 0,222 | 0,188 / 0,196 | +0,008 | −0,037 | 0 | **non adottate** (nessun guadagno e R peggiora di oltre 0,03) |
+
+- **Che cosa è cambiato** (tabelle di confusione, solo descrittive, n = 40 per parte):
+  - **errore `*` → `1..*`** (il bersaglio principale della regola sul limite inferiore): da 18 a 13 in PlantUML e **da
+    28 a 6 nel compatto**; ma M primaria sale di poco (+1 e +4 estremi) perché crescono altri errori, soprattutto nel
+    compatto (`1` → vuoto da 6 a 10, `*` → vuoto da 4 a 8, `1` → `*` da 6 a 9);
+  - **generalizzazioni** in PlantUML: accoppiate come generalizzazione da 27 a 34, rese come associazione da 9 a 4; ma
+    il **verso resta sbagliato** (invertite 12/27 → 13/34): la riga del verso non ha corretto la convenzione della
+    freccia. Nel compatto il verso era già giusto (0/40 → 0/40);
+  - **composizione**: la regola NON ha ridotto l'uso eccessivo; associazione → composizione 12 → 12 in PlantUML e 18 → 22
+    nel compatto; nel compatto le associazioni accoppiate come associazione scendono da 63 a 47, ed è la causa del calo
+    di R;
+  - **errori nuovi**: generalizzazioni in più (assenti dal GT) da 33 a 36 in PlantUML e da 23 a 29 nel compatto; classi
+    in più quasi invariate (122 → 120, 124 → 119); scarti del compatto da 9 a 15; risposte del compatto più lunghe
+    (completamento mediano 552 → 632 token, latenza 14,5 → 18,8 s).
+- Conseguenza secondo le voci 97-98: il blocco NON entra nelle condizioni del Passo 3b e il prompt statico resta quello
+  dello studio 2025 adattato (la nota alla domanda 9 resta condizionata all'adozione). In attesa della decisione
+  dell'utente sul seguito (lo STOP 3 non decide altro).
+
+### [2026-10-09] Runbook in notebook, registro automatico delle esecuzioni e storico ricostruito
+- **Registro** `experiments/run_log.py` → `data/results/run_log.jsonl` (**versionato**: eccezione aggiunta in
+  `.gitignore`). Ogni esecuzione da riga di comando di `run_experiment.py`, `calibrate_tokens.py`, `analyze_pilot.py`,
+  `analyze_pilot2.py`, `analyze_dev.py`, `analyze_k.py`, `analyze_instructions.py`, `select_pilot.py`, `select_dev.py`,
+  `review_report.py`, `retrieval/analyze_retrieval.py` e `retrieval/run_testset.py` scrive due righe con lo stesso id:
+  inizio (timestamp, comando completo, commit, flag di modifiche non committate, `--resume`, sha256 di
+  `config_bm25.yaml`, dei template e del blocco delle istruzioni in `generation/templates/` e di ogni .yaml del comando)
+  e fine (durata, status "ok" / "exit <codice>" / "interrupted" / "error: <tipo>", messaggio di uscita, output
+  dichiarato con `set_output`). Solo logging: il registro si aggancia al punto d'ingresso `__main__` (i test che chiamano
+  `main()` non scrivono nel registro), rilancia sempre l'eccezione o il `SystemExit` originale, e un errore di scrittura
+  produce solo un avviso. `RUN_LOG_PATH` sposta il registro (usato dai test). Test: `check_run_log`.
+- **Storico** `docs/runbook_history.md`: comando, data, commit, cartella e voce per ogni run fatta prima del registro.
+  Run di generazione: **tutte e 17 verificate** (il config attuale risolto con la stessa `--configuration` è identico a
+  quello salvato nella run); riprese con `--resume` da `server_checks.jsonl` (pilot2 P-G e J-G) o da decisions.md (primo
+  pilota). **Ricostruiti, non verificati**: le calibrazioni (la `--configuration` digitata non è registrata; ogni
+  configurazione dello stesso modello dà lo stesso calcolo), gli smoke test 1-2 di Gemma (prove manuali), la calibrazione
+  interrotta del 14B, le run del retrieval (`--run-id` dedotto dal nome).
+- **Notebook** `notebooks/runbook.ipynb` (generato senza output; 28 celle): setup e verifica dell'ambiente (versioni,
+  plantuml.jar, git, LM Studio in sola lettura) → test e controlli di sanità → retrieval → selezioni → esperimenti di
+  sviluppo (una sezione per esperimento: pilota temperatura, pilota 2, dev_formats, dev_k, dev_instructions) → analisi
+  → report grafico → Passo 3b. Helper `run(cmd)`: lancia `python <cmd>` dalla radice, mostra l'output in streaming e
+  registra eventi `notebook_start` / `notebook_end` (in più alle righe dello script). Sicurezze: `ESEGUI_GENERAZIONI =
+  False` (le celle con l'LLM stampano il comando); rifiuto se la cartella di output esiste, salvo `--resume`;
+  `SBLOCCA_TESTSET = False` (la sezione 3b non fa nulla) e `run()` rifiuta FUORI dalla sezione 3b ogni comando che
+  produce risultati sul test set (`retrieval/run_testset.py`, `retrieval/hubness_report.py`, config con `split:
+  testset`, compreso `mock_e2e.yaml`, che non ha `split` e quindi usa il test set). **Eccezione dichiarata**: le suite di
+  test e i controlli di sanità leggono i ground truth del test set solo per verificare il codice, come dal Passo 1.
+  Le analisi riscrivono i `summary.md` versionati.
+- **nbstripout**: `python -m nbstripout --install --attributes .gitattributes` (riga `*.ipynb filter=nbstripout` in
+  `.gitattributes`; la configurazione del filtro sta in `.git/config`, da ripetere su ogni clone). Aggiunti a
+  `requirements.txt`: nbformat, nbclient, nbstripout (installati: 5.11.1, 0.11.0, nbstripout).
+- **Verifica "Run All"** (nbclient, interruttori a False, copia eseguita nello scratchpad, notebook versionato senza
+  output): completato in 131 s senza errori; test e controlli di sanità verdi; retrieval storico rifiutato (cartella
+  esistente); nessuna generazione, calibrazione o chiamata all'LLM (solo i comandi stampati); sezione 3b bloccata; `raw/`
+  intatti (1.006 file, sha256 invariati), nessuna cartella di run nuova. Le analisi rigenerate differiscono dai report
+  versionati SOLO per la riga del commit e per gli effetti della correzione di eHome2020 (voce 99): colonna del verso in
+  `dev_formats_analysis` e `dev_k_analysis` (14 righe di `dev_k`, solo quella colonna, verificato), colonna esplorativa
+  "token degli esempi" di ApartmentBuilding nel primo pilota (eHome2020 è tra i suoi esempi). I report versionati sono
+  stati riportati alla versione del commit dopo la verifica (quelli storici restano com'erano); rigenerarli va deciso e
+  dichiarato.
+- **Trovati e corretti durante la verifica**: (1) le tabelle di confusione di `analyze_instructions.py` avevano un
+  ordinamento instabile a parità di conteggio (dipendeva dall'hash delle stringhe, variabile tra processi): aggiunta la
+  chiave come spareggio (solo presentazione; regola e M invariati; verificato identico con tre `PYTHONHASHSEED`), e il
+  report `dev_instructions_analysis` è stato rigenerato (numeri invariati); (2) il primo "Run All" ha registrato il
+  notebook come `notebooks/notebooks/runbook.ipynb` (percorso relativo risolto da `notebooks/`): corretto con il
+  percorso assoluto; le **30 righe** già scritte con `script: notebooks/notebooks/runbook.ipynb` (eventi
+  `notebook_start` / `notebook_end` del primo "Run All", 2026-10-09 13:17-13:19) restano INVARIATE: il registro è
+  append-only e non si corregge a posteriori; il percorso giusto è `notebooks/runbook.ipynb`.
+- **Verifica dal terminale**: `python experiments/analyze_k.py` e `python experiments/analyze_pilot2.py` scrivono le
+  due righe attese (commit, modifiche non committate, 10 file di configurazione con sha256, esito "ok", output
+  `.../summary.md`); `analyze_pilot2` identico salvo la riga del commit, `analyze_k` identico salvo la riga del commit e
+  la colonna del verso (eHome2020).
+
+### [2026-10-09] Istruzioni mirate chiuse: blocco fuori dalla pipeline, configurazione di lavoro invariata, nessuna iterazione
+- **STOP 3 approvato dall'utente**: istruzioni mirate NON adottate per nessun formato (esito meccanico della regola,
+  voce 101).
+- **Il blocco non entra nella pipeline.** `generation/templates/targeted_rules_block.txt` e
+  `targeted_rules_direction.yaml` restano nel repository, congelati con i loro sha256 (voce 98), SOLO come
+  documentazione dell'esperimento; la variante `instructions_variant: targeted` resta disponibile nel codice per
+  riprodurre `dev_instructions`, ma nessun config di lavoro la usa.
+- **Configurazione di lavoro invariata** (STATUS.md): Gemma 4 12B QAT, versione di configurazione 2 (contesto 32768,
+  max_tokens 4096), temperature 0.3, top_p 0.95, top_k 64, bm25 k = 3 (più k = 2 nel Passo 3b), formati PlantUML e JSON
+  compatto, **prompt senza il blocco** (`instructions_variant: base`).
+- **Domanda 9**: decade lo scostamento annunciato nella voce 97 (blocco applicato a tutte le condizioni): il prompt della
+  baseline statica resta quello attuale, cioè il prompt v3 dello studio 2025 (Garaccione et al.) adattato ad Apollon
+  v4 come descritto nella domanda 9; nessuno scostamento in più da dichiarare. (Nota di precisione: la richiesta
+  dell'utente parlava del prompt "di De Bari"; secondo la domanda 9 e la voce 55 la baseline statica deriva dallo
+  studio 2025, non da De Bari et al., che usavano PlantUML e un prompt diverso.)
+- **Nessuna iterazione sul blocco**: niente varianti successive valutate sullo stesso insieme di sviluppo, per non
+  adattare il prompt ai 20 esercizi di sviluppo. Un'eventuale ripresa della leva richiede un insieme di valutazione
+  diverso e una nuova voce.
+
+### [2026-10-09] Test e controlli di sanità: lettura dei GT del test set solo per verificare il codice
+- Le suite di test (`corpus/test_apollon_convert.py`, `retrieval/test_retrieval.py`, `generation/test_generation.py`) e i
+  controlli di sanità (`generation/sanity_check.py`, `plantuml_sanity_check.py`, `compact_sanity_check.py`) leggono i
+  ground truth del test set De Bari **solo per verificare il codice** (conversione PlantUML ↔ Apollon, validazione contro
+  lo schema, struttura comune e formato compatto, separazione degli split). Restano come sono (decisione dell'utente).
+- **Nessuna generazione, metrica o output del modello sul test set prima del Passo 3b.** Nel runbook
+  (`notebooks/runbook.ipynb`) i comandi che producono risultati sul test set sono eseguibili solo dalla sezione 3b con
+  `SBLOCCA_TESTSET = True` (voce 102); le uniche esecuzioni già fatte sul test set sono quelle del retrieval del Passo 2
+  (`testset_2026-10-04_stop2`, voce 60), che non coinvolgono un modello generativo.
+
+### [2026-10-09] Rigenerazione dei 5 report versionati con il GT corretto di eHome2020: nessun esito cambia
+- **Rigenerati** (comandi da terminale, registrati in `data/results/run_log.jsonl`): `analyze_pilot.py`,
+  `analyze_pilot2.py`, `analyze_pilot2.py --postprocess v2`, `analyze_dev.py`, `analyze_k.py`. In testa a ciascun
+  `summary.md` una nota "Rigenerato il 2026-10-09 dopo la correzione del GT di eHome2020 (voce 99; rigenerazione: voce
+  105)" con il dettaglio di ciò che cambia (la nota è aggiunta dopo la generazione: una nuova rigenerazione la toglie).
+- **Che cosa cambia** (confronto con la versione committata, esclusa la riga "Analisi eseguita sul commit ..."):
+  - `pilot_temperature_gemma4-12b-qat`: solo la colonna esplorativa "esempi: token" di ApartmentBuilding, 4.382 → 4.379 (7
+    righe), perché eHome2020 è tra i suoi esempi e la dimensione si ricalcola dal corpus attuale;
+  - `pilot2_formats_analysis` e `pilot2_formats_analysis_v2`: nessun numero (eHome2020 non è tra gli esercizi);
+  - `dev_formats_analysis`: solo le colonne del verso nella tabella delle relazioni, +2 per configurazione (stesso
+    verso P-G 26/43 → 28/43, P-Q 14/16 → 16/16, C-G 44/46 → 46/46, C-Q 13/16 → 15/16; composizione / aggregazione 4/6 →
+    6/6, 0/2 → 2/2, 4/6 → 6/6, 2/4 → 4/4);
+  - `dev_k_analysis`: solo la colonna "verso uguale" (14 righe): PlantUML Gemma 21/42 → 23/42, 19/33 → 21/33, 27/33 →
+    29/33, 26/40 → 28/40 (k = 2, 3, 5, 8); PlantUML Qwen 12/16 → 13/16, 15/17 → 17/17 (k = 2, 3); compatto Gemma 42/44 →
+    44/44, 44/46 → 46/46, 50/52 → 52/52, 44/45 → 45/45; compatto Qwen 17/19 → 19/19, 20/21 → 21/21, 13/14 → 14/14, 15/17 →
+    17/17.
+- **Esiti delle regole pre-registrate: TUTTI invariati** (verificato riga per riga): voce 75 (primo pilota: STOP per
+  troncamenti), voce 78 (secondo pilota: P-Q e classifica completa), voce 92 (`dev_formats`: esito, tabelle dei criteri
+  e vincitori per modello; il verso non entra nella regola), voce 94 (`dev_k`: PlantUML k = 2, compatto "dipende dal
+  modello", k scelto per ogni formato e modello identico; colonne della regola, ammissibile / Vc / R, invariate). Nessuno
+  STOP.
+- **Effetto sulle cifre descrittive della voce 95** (non modificata): con il GT corretto il verso delle relazioni nel
+  compatto con Gemma è **100%** a ogni k (44/44, 46/46, 52/52, 45/45; prima 95-98%) e in PlantUML va dal **55% all'88%**
+  (prima 50-82%). La conclusione della voce 95 (verso molto migliore nel compatto) è confermata.

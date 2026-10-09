@@ -1,0 +1,6 @@
+# Unica riga del blocco "istruzioni mirate" (targeted_rules_block.txt, segnaposto {generalization_direction}) che
+# cambia tra i formati: l'esempio di sintassi del verso della generalizzazione (voce 97). Esempio generico (Guitar /
+# Instrument): nessuna delle due parole compare come classe o nel testo dei 59 esercizi del corpus e dei 20 del test set
+# (verificato; "Animal" e' stato scartato perche' e' una classe del test set, DB08_VeterinaryClinic).
+plantuml: '- In PlantUML the arrow of a generalization points from the subclass to the superclass: write "Subclass --|> Superclass" (e.g. "Guitar --|> Instrument"), never "Superclass --|> Subclass".'
+compact: '- In "inheritance" and "realization", "child" is always the subclass (or the implementing class) and "parent" the superclass (or the interface), e.g. {"type": "inheritance", "child": "Guitar", "parent": "Instrument"}.'

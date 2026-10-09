@@ -62,7 +62,9 @@ def calibrate(cfg: dict, client, accept_unverified: bool = False, ask=input, for
     rows = []
     for fmt in formats:
         for qid in cfg["query_ids"]:
-            bp = builder.build(by_id[qid], PromptSpec("bm25", k=max(cfg["k"]), output_format=fmt))
+            bp = builder.build(by_id[qid], PromptSpec("bm25", k=max(cfg["k"]), output_format=fmt,
+                                                      instructions_variant=(cfg.get("prompt") or {}).get(
+                                                          "instructions_variant", "base")))
             res = client.generate(bp.messages, params)
             est = count_tokens(bp.text)
             rows.append({"format": fmt, "query_id": qid, "est": est, "real": res.prompt_tokens,
@@ -102,11 +104,21 @@ def main(argv=None) -> int:
     save_dir = Path(a.save_dir)
     save_dir.mkdir(parents=True, exist_ok=True)
     path = next_path(save_dir, time.strftime("%Y-%m-%d"), out["model"])
+    _set_output(path)
     with path.open("x", encoding="utf-8") as f:  # mai sovrascrivere
         json.dump(out, f, ensure_ascii=False, indent=2)
     print(f"salvato: {path}")
     return 0 if all(s.get("fits") for s in out["summary"].values()) else 1
 
 
+def _set_output(path) -> None:
+    """Registro delle esecuzioni (voce 102): dichiara l'uscita, se lo script e' lanciato da riga di comando."""
+    run_log = sys.modules.get("run_log")
+    if run_log is not None:
+        run_log.set_output(path)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    import run_log  # registro delle esecuzioni (voce 102): due righe in data/results/run_log.jsonl
+    with run_log.logged(__file__):
+        sys.exit(main())

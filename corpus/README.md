@@ -42,6 +42,11 @@ decisioni: [`docs/decisions.md`](../docs/decisions.md).
 | `apollon_limitations.md` | documento | limiti di rappresentazione di Apollon v4 rispetto al PlantUML |
 | `README.md` | documento | questo file |
 
+## Correzioni successive al Passo 1
+| data | esercizio | correzione | voce di docs/decisions.md |
+|---|---|---|---|
+| 2026-10-09 | eHome2020 | lato del rombo della composizione: `Room "2..*" *-- "1" Apartment` → `Apartment "1" *-- "2..*" Room` (verificato sull'immagine originale) | 99 |
+
 ## Ordine dei comandi
 Dalla radice del repository:
 ```

@@ -4,3 +4,10 @@
 generation/tokenizer/* -text
 retrieval/stopwords_en.txt -text
 retrieval/config_bm25.yaml -text
+# blocco delle istruzioni mirate, congelato con lo sha256 nella voce 98
+generation/templates/targeted_rules_block.txt -text
+generation/templates/targeted_rules_direction.yaml -text
+
+*.ipynb filter=nbstripout
+*.zpln filter=nbstripout
+*.ipynb diff=ipynb
