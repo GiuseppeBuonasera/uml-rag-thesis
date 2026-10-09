@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Song {\n  + title : string\n  + year : int\n  + length : int\n  + genre : string\n}\n\nclass Artist {\n  + name : string\n  + dateOfBirth : date\n  + websiteUrl : string\n}\n\nclass User {\n  + id : int\n  + name : string\n  + address : string\n}\n\nclass RegularUser {\n}\n\nclass BusinessUser {\n  + vatNumber : string\n}\n\nclass Single {\n}\n\nclass Hit {\n  + trackNumber : int\n}\n\nclass Album {\n  + title : string\n}\n\nclass Suggestion {\n}\n\nclass PurchasingBehavior {\n  + behaviorData : string\n}\n\nUser <|-- RegularUser\nUser <|-- BusinessUser\n\nArtist \"1\" -- \"*\" Song\nSong --|> Single\nSong --|> Hit\n\nBusinessUser \"1\" -- \"*\" Single\nBusinessUser \"1\" -- \"*\" Hit\n\nRegularUser \"1\" -- \"*\" Single\nRegularUser \"1\" -- \"*\" Album\n\nAlbum \"1\" *-- \"1..*\" Hit\n\nRegularUser \"1\" -- \"0..*\" Suggestion\nRegularUser \"1\" -- \"0..*\" PurchasingBehavior\nSuggestion \"*\" -- \"1\" PurchasingBehavior\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.1381767999992,
+ "prompt_tokens": 3739,
+ "completion_tokens": 277,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2p5u19msehzdzdfrx8ndn",
+  "object": "chat.completion",
+  "created": 1791565443,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Song {\n  + title : string\n  + year : int\n  + length : int\n  + genre : string\n}\n\nclass Artist {\n  + name : string\n  + dateOfBirth : date\n  + websiteUrl : string\n}\n\nclass User {\n  + id : int\n  + name : string\n  + address : string\n}\n\nclass RegularUser {\n}\n\nclass BusinessUser {\n  + vatNumber : string\n}\n\nclass Single {\n}\n\nclass Hit {\n  + trackNumber : int\n}\n\nclass Album {\n  + title : string\n}\n\nclass Suggestion {\n}\n\nclass PurchasingBehavior {\n  + behaviorData : string\n}\n\nUser <|-- RegularUser\nUser <|-- BusinessUser\n\nArtist \"1\" -- \"*\" Song\nSong --|> Single\nSong --|> Hit\n\nBusinessUser \"1\" -- \"*\" Single\nBusinessUser \"1\" -- \"*\" Hit\n\nRegularUser \"1\" -- \"*\" Single\nRegularUser \"1\" -- \"*\" Album\n\nAlbum \"1\" *-- \"1..*\" Hit\n\nRegularUser \"1\" -- \"0..*\" Suggestion\nRegularUser \"1\" -- \"0..*\" PurchasingBehavior\nSuggestion \"*\" -- \"1\" PurchasingBehavior\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3739,
+   "completion_tokens": 277,
+   "total_tokens": 4016,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

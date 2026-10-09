@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Person {\n  + FirstName : string\n  + FamilyName : string\n  + BirthDate : date\n}\n\nclass Trainer {\n  + Diploma : string\n}\n\nclass Member {\n}\n\nclass Center {\n  + Name : string\n  + Address : string\n}\n\nclass Room {\n  + RoomNumber : int\n  + MaxCapacity : int\n}\n\nclass Session {\n  + Date : date\n  + StartHour : time\n}\n\nclass GroupSession {\n  + Type : string\n}\n\nclass IndividualSession {}\n\nclass Participation {\n}\n\nTrainer --|> Person\nMember --|> Person\n\nCenter \"1\" *-- \"1..*\" Room\nRoom \"1\" -- \"0..*\" Session\n\nSession --|> GroupSession\nSession --|> IndividualSession\n\nGroupSession \"1\" -- \"1\" Trainer : supervisedBy\nTrainer \"1\" -- \"0..*\" GroupSession : supervises\n\nPerson \"1\" -- \"0..*\" Participation\nSession \"1\" -- \"0..*\" Participation\nParticipation \"1\" -- \"1\" Person : participant\n\nMember \"0..*\" -- \"0..*\" Session : participatesIn\nTrainer \"0..*\" -- \"0..*\" Session : supervises\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.700865700000577,
+ "prompt_tokens": 3509,
+ "completion_tokens": 271,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5ajlrm2a2nnbb80p5k2k3n",
+  "object": "chat.completion",
+  "created": 1791565234,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {\n  + FirstName : string\n  + FamilyName : string\n  + BirthDate : date\n}\n\nclass Trainer {\n  + Diploma : string\n}\n\nclass Member {\n}\n\nclass Center {\n  + Name : string\n  + Address : string\n}\n\nclass Room {\n  + RoomNumber : int\n  + MaxCapacity : int\n}\n\nclass Session {\n  + Date : date\n  + StartHour : time\n}\n\nclass GroupSession {\n  + Type : string\n}\n\nclass IndividualSession {}\n\nclass Participation {\n}\n\nTrainer --|> Person\nMember --|> Person\n\nCenter \"1\" *-- \"1..*\" Room\nRoom \"1\" -- \"0..*\" Session\n\nSession --|> GroupSession\nSession --|> IndividualSession\n\nGroupSession \"1\" -- \"1\" Trainer : supervisedBy\nTrainer \"1\" -- \"0..*\" GroupSession : supervises\n\nPerson \"1\" -- \"0..*\" Participation\nSession \"1\" -- \"0..*\" Participation\nParticipation \"1\" -- \"1\" Person : participant\n\nMember \"0..*\" -- \"0..*\" Session : participatesIn\nTrainer \"0..*\" -- \"0..*\" Session : supervises\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3509,
+   "completion_tokens": 271,
+   "total_tokens": 3780,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

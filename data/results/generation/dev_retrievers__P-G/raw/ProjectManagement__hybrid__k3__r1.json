@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\nclass University {}\nclass Department {}\nclass ResearchGroup {\n  + groupName : string\n}\nclass Researcher {\n  + researcherId : int\n  + name : string\n}\nclass Project {\n  + projectId : int\n  + title : string\n}\nclass WorkPackage {\n  + wpId : int\n  + description : string\n}\n\nUniversity \"1\" *-- \"1..*\" Department\nDepartment \"1\" -- \"1..*\" ResearchGroup\nResearchGroup \"1\" -- \"1..*\" Researcher\nResearchGroup \"1\" -- \"1..*\" WorkPackage : leads\nProject \"1\" *-- \"1..*\" WorkPackage\nWorkPackage \"1\" -- \"1..*\" Researcher : teamMember\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 5.475647799998114,
+ "prompt_tokens": 2877,
+ "completion_tokens": 166,
+ "cached": true,
+ "raw": {
+  "id": "chatcmpl-rtt9u7v49snhxl74wwhrl",
+  "object": "chat.completion",
+  "created": 1791565565,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass University {}\nclass Department {}\nclass ResearchGroup {\n  + groupName : string\n}\nclass Researcher {\n  + researcherId : int\n  + name : string\n}\nclass Project {\n  + projectId : int\n  + title : string\n}\nclass WorkPackage {\n  + wpId : int\n  + description : string\n}\n\nUniversity \"1\" *-- \"1..*\" Department\nDepartment \"1\" -- \"1..*\" ResearchGroup\nResearchGroup \"1\" -- \"1..*\" Researcher\nResearchGroup \"1\" -- \"1..*\" WorkPackage : leads\nProject \"1\" *-- \"1..*\" WorkPackage\nWorkPackage \"1\" -- \"1..*\" Researcher : teamMember\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2877,
+   "completion_tokens": 166,
+   "total_tokens": 3043,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

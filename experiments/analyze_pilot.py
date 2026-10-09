@@ -35,6 +35,8 @@ sys.path.insert(0, str(ROOT / "generation"))
 import postprocess as pp  # noqa: E402
 from prompt_builder import cl, serialize_diagram  # noqa: E402
 from token_estimate import count_tokens  # noqa: E402
+sys.path.insert(0, str(ROOT / "experiments"))
+import provenance  # noqa: E402  (riga di provenienza, voce 106)
 
 DEFAULT_RUN = ROOT / "data" / "results" / "generation" / "pilot_temperature_gemma4-12b-qat"
 TEMPERATURES = (0.0, 0.3)
@@ -302,6 +304,7 @@ def report(run_dir: Path) -> str:
          "**Esperimento PRELIMINARE** sul corpus (split `corpus`, selezione leave-one-out), mai sul test set: da "
          "dichiarare come tale in tesi. Regola di decisione registrata PRIMA della run (docs/decisions.md, voce 75) e "
          "applicata cosi' com'e'. Generato da `experiments/analyze_pilot.py` dalle risposte grezze (`raw/`).", "",
+         provenance.provenance_line(), "",
          f"Modello `{cfg['model_metadata']['model_id']}` ({cfg['model_metadata']['quantization']}), contesto "
          f"{cfg['model_metadata']['context_length']}, enable_thinking {cfg['model_metadata']['enable_thinking']}; "
          f"bm25 k={cfg['k'][0]}; top_p {cfg['generation']['top_p']}, top_k {cfg['generation']['top_k']}, max_tokens "

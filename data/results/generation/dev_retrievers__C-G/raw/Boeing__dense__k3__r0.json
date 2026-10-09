@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Airline\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Employee\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Salesperson\",\"attributes\":[\"+ EmployeeId : int\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractId : string\",\"+ DeliveryConditions : string\",\"+ LegalAspects : string\"]},{\"name\":\"Acquisition\",\"attributes\":[\"+ Model : string\",\"+ Price : float\",\"+ Options : string\",\"+ DeliveryDate : date\"]},{\"name\":\"Airplane\",\"attributes\":[\"+ SerialNumber : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ Address : string\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"Salesperson\",\"parent\":\"Employee\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Salesperson\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Contract\",\"part\":\"Acquisition\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Acquisition\",\"target\":\"Airplane\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Airline\",\"sourceMultiplicity\":\"0..1\",\"targetMultiplicity\":\"0..*\",\"label\":\"motherOf\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Airline\",\"sourceMultiplicity\":\"0..1\",\"targetMultiplicity\":\"0..*\",\"label\":\"daughterOf\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.2263071999987,
+ "prompt_tokens": 4511,
+ "completion_tokens": 334,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hpu805uykvanboy7m2208l",
+  "object": "chat.completion",
+  "created": 1791565914,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Airline\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Employee\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Salesperson\",\"attributes\":[\"+ EmployeeId : int\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractId : string\",\"+ DeliveryConditions : string\",\"+ LegalAspects : string\"]},{\"name\":\"Acquisition\",\"attributes\":[\"+ Model : string\",\"+ Price : float\",\"+ Options : string\",\"+ DeliveryDate : date\"]},{\"name\":\"Airplane\",\"attributes\":[\"+ SerialNumber : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ Address : string\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"Salesperson\",\"parent\":\"Employee\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Salesperson\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Contract\",\"part\":\"Acquisition\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Acquisition\",\"target\":\"Airplane\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Airline\",\"sourceMultiplicity\":\"0..1\",\"targetMultiplicity\":\"0..*\",\"label\":\"motherOf\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Airline\",\"sourceMultiplicity\":\"0..1\",\"targetMultiplicity\":\"0..*\",\"label\":\"daughterOf\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4511,
+   "completion_tokens": 334,
+   "total_tokens": 4845,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

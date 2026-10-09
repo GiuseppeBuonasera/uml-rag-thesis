@@ -1,0 +1,8 @@
+retriever,distinti_rank1,distinti_top3,mai_top3,max_rank1,max_rank1_id,max_top3,max_top3_id
+BM25,39,54,5,4,Facepage,9,University
+sentence-transformers/all-MiniLM-L6-v2,42,57,2,4,TransportCompany,12,TransportCompany
+BAAI/bge-small-en-v1.5,42,52,7,3,EatAtHome,10,TruckLogistics
+Alibaba-NLP/gte-modernbert-base,33,44,15,8,TransportCompany,17,TransportCompany
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),40,55,4,3,SmartHomeAutomationSystem,13,EatAtHome
+Ibrido RRF (BM25 + bge-small-en-v1.5),37,53,6,4,Facepage,11,TransportCompany
+Ibrido RRF (BM25 + gte-modernbert-base),34,53,6,5,PizzaDeliveryWithEntertainment,14,TransportCompany

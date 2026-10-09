@@ -1,0 +1,145 @@
+{
+  "run_id": "dense_2026-10-09_22f5adf",
+  "commit": "22f5adfbe6cee8f7376c9e0ecb439e08ed82e3b0",
+  "working_tree_dirty": true,
+  "created_utc": "2026-10-09T14:53:38Z",
+  "versions": {
+    "python": "3.12.10",
+    "sentence-transformers": "6.1.0",
+    "transformers": "5.19.0",
+    "torch": "2.10.0+cpu",
+    "tokenizers": "0.23.3",
+    "huggingface_hub": "1.33.0",
+    "numpy": "2.2.6",
+    "torch_threads": 8,
+    "HF_HUB_OFFLINE": "1"
+  },
+  "config_dense": {
+    "modelli": [
+      {
+        "nome": "sentence-transformers/all-MiniLM-L6-v2",
+        "revisione": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "licenza": "Apache-2.0",
+        "parametri_milioni": 22.7,
+        "limite_token": 256
+      },
+      {
+        "nome": "BAAI/bge-small-en-v1.5",
+        "revisione": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+        "licenza": "MIT",
+        "parametri_milioni": 33.4,
+        "limite_token": 512
+      },
+      {
+        "nome": "Alibaba-NLP/gte-modernbert-base",
+        "revisione": "e7f32e3c00f91d699e8c43b53106206bcc72bb22",
+        "licenza": "Apache-2.0",
+        "parametri_milioni": 149,
+        "limite_token": 8192
+      }
+    ],
+    "embedding": {
+      "device": "cpu",
+      "normalizzati": true,
+      "similarita": "coseno esatto (numpy, prodotto scalare di vettori normalizzati)",
+      "parita": "id crescente (base.rank_results, come BM25)",
+      "prefisso_query": "",
+      "prefisso_documento": "",
+      "batch_size": 8,
+      "cache": "data/cache/embeddings/"
+    },
+    "ibrido": {
+      "metodo": "reciprocal_rank_fusion",
+      "costante": 60,
+      "bm25": "retrieval/config_bm25.yaml"
+    },
+    "regola_di_scelta": {
+      "misura": "Jt@3",
+      "pareggio_entro": 0.01,
+      "bootstrap": {
+        "ricampionamenti": 1000,
+        "seme": 0,
+        "livello": 0.95
+      }
+    }
+  },
+  "snapshot": {
+    "sentence-transformers/all-MiniLM-L6-v2": "C:\\Users\\peppe\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "BAAI/bge-small-en-v1.5": "C:\\Users\\peppe\\.cache\\huggingface\\hub\\models--BAAI--bge-small-en-v1.5\\snapshots\\5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+    "Alibaba-NLP/gte-modernbert-base": "C:\\Users\\peppe\\.cache\\huggingface\\hub\\models--Alibaba-NLP--gte-modernbert-base\\snapshots\\e7f32e3c00f91d699e8c43b53106206bcc72bb22"
+  },
+  "tempi": {
+    "sentence-transformers/all-MiniLM-L6-v2": {
+      "caricamento_s": 8.49,
+      "embedding_59_s": 0.97,
+      "ms_per_testo": 16.5,
+      "dimensione": 384
+    },
+    "BAAI/bge-small-en-v1.5": {
+      "caricamento_s": 0.18,
+      "embedding_59_s": 2.72,
+      "ms_per_testo": 46.1,
+      "dimensione": 384
+    },
+    "Alibaba-NLP/gte-modernbert-base": {
+      "caricamento_s": 0.42,
+      "embedding_59_s": 105.58,
+      "ms_per_testo": 1789.5,
+      "dimensione": 768
+    }
+  },
+  "troncamenti": {
+    "sentence-transformers/all-MiniLM-L6-v2": {
+      "troncati": 37,
+      "limite": 256,
+      "mediana_token": 289,
+      "max_token": 814
+    },
+    "BAAI/bge-small-en-v1.5": {
+      "troncati": 12,
+      "limite": 512,
+      "mediana_token": 289,
+      "max_token": 814
+    },
+    "Alibaba-NLP/gte-modernbert-base": {
+      "troncati": 0,
+      "limite": 8192,
+      "mediana_token": 297,
+      "max_token": 798
+    }
+  },
+  "random_seeds": 20,
+  "loo": "58 candidati per query (esclusa solo la query); BM25 rifittato senza q",
+  "esito_regola": {
+    "Jt@3": {
+      "sentence-transformers/all-MiniLM-L6-v2": 0.069742814479007,
+      "BAAI/bge-small-en-v1.5": 0.06834541189480185,
+      "Alibaba-NLP/gte-modernbert-base": 0.06853999695849104
+    },
+    "scelto": "sentence-transformers/all-MiniLM-L6-v2",
+    "in_parita": [
+      "sentence-transformers/all-MiniLM-L6-v2",
+      "BAAI/bge-small-en-v1.5",
+      "Alibaba-NLP/gte-modernbert-base"
+    ],
+    "bootstrap_top2": {
+      "modelli": [
+        "sentence-transformers/all-MiniLM-L6-v2",
+        "Alibaba-NLP/gte-modernbert-base"
+      ],
+      "media": 0.0012028175205159594,
+      "ic95": [
+        -0.004404059679073768,
+        0.006604628503497849
+      ]
+    },
+    "bootstrap_scelto_vs_bm25": {
+      "media": -0.0137053919268354,
+      "ic95": [
+        -0.021196934001155607,
+        -0.006259002864954636
+      ]
+    }
+  },
+  "test_set_letto": false
+}

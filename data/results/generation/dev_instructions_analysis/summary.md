@@ -2,7 +2,7 @@
 
 Esperimento di SVILUPPO sul corpus (20 esercizi, leave-one-out), mai sul test set. Gemma 4 12B QAT, versione di configurazione 2, bm25 k = 3. Baseline: risposte a k = 3 di `dev_k`; trattamento: `dev_instructions` (stessi prompt salvo il blocco congelato della voce 98). Regola registrata PRIMA della run (voce 98) e applicata cosi' com'e' da `experiments/analyze_instructions.py`; ground truth attuale del corpus (eHome2020 corretto, voce 99). Confronto per contenuto, mai per id.
 
-Analisi eseguita sul commit `3017a8c6c289` (con modifiche non committate).
+Analisi eseguita sul commit `22f5adfbe6ce` (con modifiche non committate). GT del corpus: 59 diagrammi, sha256 del contenuto `b400d1dd7954e8a97c88ff604bc47f294e7eca2cb17d9cd7dd680542fd5db5fd` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `01ef9a52fa255f07…`.
 
 ## Regola di adozione (voce 98), applicata cosi' com'e'
 

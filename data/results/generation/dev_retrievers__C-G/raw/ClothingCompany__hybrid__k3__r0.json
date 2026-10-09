@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ description : string\",\n        \"+ netPrice : double\",\n        \"+ manufacturer : string\"\n      ]\n    },\n    {\n      \"name\": \"Country\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ vatRate : float\",\n        \"+ currency : string\",\n        \"+ conversionRateToEuro : float\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ ssn : int\",\n        \"+ telephone : string\",\n        \"+ email : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ telephone : string\",\n        \"+ email : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ orderId : string\",\n        \"+ quantity : int\",\n        \"+ orderDate : date\",\n        \"+ desiredDeliveryDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Country\",\n      \"label\": \"availableIn\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Representative\",\n      \"target\": \"Country\",\n      \"label\": \"manages\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Customer\",\n      \"part\": \"Country\",\n      \"label\": \"resellsIn\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Order\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Order\",\n      \"target\": \"Product\",\n      \"label\": \"refersTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 17.110462000000553,
+ "prompt_tokens": 4216,
+ "completion_tokens": 647,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3v1vv4hg00f9u313qol6d8",
+  "object": "chat.completion",
+  "created": 1791566086,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ description : string\",\n        \"+ netPrice : double\",\n        \"+ manufacturer : string\"\n      ]\n    },\n    {\n      \"name\": \"Country\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ vatRate : float\",\n        \"+ currency : string\",\n        \"+ conversionRateToEuro : float\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ ssn : int\",\n        \"+ telephone : string\",\n        \"+ email : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ telephone : string\",\n        \"+ email : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ orderId : string\",\n        \"+ quantity : int\",\n        \"+ orderDate : date\",\n        \"+ desiredDeliveryDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Country\",\n      \"label\": \"availableIn\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Representative\",\n      \"target\": \"Country\",\n      \"label\": \"manages\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Customer\",\n      \"part\": \"Country\",\n      \"label\": \"resellsIn\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Order\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Order\",\n      \"target\": \"Product\",\n      \"label\": \"refersTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4216,
+   "completion_tokens": 647,
+   "total_tokens": 4863,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

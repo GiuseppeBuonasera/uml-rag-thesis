@@ -149,6 +149,13 @@ def bm25_factory(cfg: dict):
     return lambda: KeywordRetriever(k1=cfg["k1"], b=cfg["b"], preprocess=PreprocessConfig(cfg["stopwords"], cfg["stem"]))
 
 
+def _provenance_line(candidates) -> str:
+    """Riga di provenienza comune ai report (voce 106): commit e impronta del GT del corpus."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiments"))
+    import provenance
+    return provenance.provenance_line({c["id"]: c["diagram_apollon_json"] for c in candidates})
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--run-id", default=None)
@@ -228,6 +235,7 @@ def main() -> None:
          f"Commit `{meta['commit'][:7]}` (working tree {'modificato' if meta['working_tree_dirty'] else 'pulito'}), "
          f"test set `{TESTSET_TAG}` (invariato dal tag: {meta['testset_unchanged_since_tag']}). "
          f"{len(candidates)} candidati, top-{TOP_K}, random su {args.seeds} seed. Pertinenza = Jaccard dei nomi di classe.", "",
+         _provenance_line(candidates), "",
          f"Configurazione di default: {DEFAULT}. Proposta: {proposal}.", "",
          "## Varianti (configurazione proposta)", "",
          "| Variante | n | BM25 J@1 | BM25 J@3 | Random J@1 (sd) | Random J@3 (sd) | Oracolo J@1 | Oracolo J@3 | Spearman rho (p) |",

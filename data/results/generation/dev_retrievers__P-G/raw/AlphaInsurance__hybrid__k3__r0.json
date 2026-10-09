@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + address : string\n  + accountNumber : string\n}\n\nclass Broker {\n  + brokerId : int\n  + name : string\n  + contactNumber : string\n}\n\nclass Contract {\n  + contractId : int\n  + signingDate : date\n  + billingFrequency : string\n  + totalPrice : double\n}\n\nclass InsuranceProduct {\n  + productId : int\n  + productName : string\n  + basePrice : double\n}\n\nclass Offer {\n  + offerId : int\n  + expiryDate : date\n  + status : string\n}\n\nclass ClaimCase {\n  + caseId : int\n  + description : string\n  + status : string\n  + openingDate : datetime\n}\n\nclass Estimator {\n  + estimatorId : int\n  + name : string\n  + areaOfExpertise : string\n}\n\nclass EstimatorReport {\n  + reportId : int\n  + findings : string\n  + dateIssued : date\n}\n\nclass CompensationDecision {\n  + decisionId : int\n  + isApproved : boolean\n  + eligibleCosts : string\n}\n\nclass Payment {\n  + paymentId : int\n  + amount : double\n  + paymentDate : datetime\n}\n\nCustomer \"1\" -- \"0..*\" Contract\nBroker \"1\" -- \"0..*\" Customer : manages\nContract \"0..*\" -- \"1\" InsuranceProduct : covers\nContract \"1\" -- \"0..*\" Offer : generates\nCustomer \"1\" -- \"0..*\" Offer : receives\nCustomer \"1\" -- \"0..*\" ClaimCase : files\nClaimCase \"1\" *-- \"1..*\" EstimatorReport : contains\nEstimator \"1\" -- \"1..*\" EstimatorReport : writes\nClaimCase \"1\" -- \"0..1\" CompensationDecision : resultsIn\nCompensationDecision \"1\" -- \"0..1\" Payment : triggers\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 12.060531599996466,
+ "prompt_tokens": 2855,
+ "completion_tokens": 432,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-14k6f6iiyx6u2slp8pyfc8",
+  "object": "chat.completion",
+  "created": 1791564824,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + address : string\n  + accountNumber : string\n}\n\nclass Broker {\n  + brokerId : int\n  + name : string\n  + contactNumber : string\n}\n\nclass Contract {\n  + contractId : int\n  + signingDate : date\n  + billingFrequency : string\n  + totalPrice : double\n}\n\nclass InsuranceProduct {\n  + productId : int\n  + productName : string\n  + basePrice : double\n}\n\nclass Offer {\n  + offerId : int\n  + expiryDate : date\n  + status : string\n}\n\nclass ClaimCase {\n  + caseId : int\n  + description : string\n  + status : string\n  + openingDate : datetime\n}\n\nclass Estimator {\n  + estimatorId : int\n  + name : string\n  + areaOfExpertise : string\n}\n\nclass EstimatorReport {\n  + reportId : int\n  + findings : string\n  + dateIssued : date\n}\n\nclass CompensationDecision {\n  + decisionId : int\n  + isApproved : boolean\n  + eligibleCosts : string\n}\n\nclass Payment {\n  + paymentId : int\n  + amount : double\n  + paymentDate : datetime\n}\n\nCustomer \"1\" -- \"0..*\" Contract\nBroker \"1\" -- \"0..*\" Customer : manages\nContract \"0..*\" -- \"1\" InsuranceProduct : covers\nContract \"1\" -- \"0..*\" Offer : generates\nCustomer \"1\" -- \"0..*\" Offer : receives\nCustomer \"1\" -- \"0..*\" ClaimCase : files\nClaimCase \"1\" *-- \"1..*\" EstimatorReport : contains\nEstimator \"1\" -- \"1..*\" EstimatorReport : writes\nClaimCase \"1\" -- \"0..1\" CompensationDecision : resultsIn\nCompensationDecision \"1\" -- \"0..1\" Payment : triggers\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2855,
+   "completion_tokens": 432,
+   "total_tokens": 3287,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

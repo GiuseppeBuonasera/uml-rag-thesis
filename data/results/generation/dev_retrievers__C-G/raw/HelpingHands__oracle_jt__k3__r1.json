@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"H2SLocation\",\"attributes\":[\"+ LocationName : string\"]},{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\"]},{\"name\":\"PickupRequest\",\"attributes\":[\"+ RequestID : string\",\"+ Description : string\",\"+ RequestedDate : date\",\"+ RequestedTime : time\"]},{\"name\":\"Item\",\"attributes\":[\"+ Description : string\",\"+ Weight : float\",\"+ Dimensions : string\",\"+ IsFood : boolean\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ LicensePlate : string\",\"+ StorageCapacity : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ Name : string\",\"+ AvailableDays : string[]\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ RouteID : string\",\"+ Date : date\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ CenterID : string\"]},{\"name\":\"Employee\",\"attributes\":[\"+ EmployeeID : string\",\"+ Name : string\"]},{\"name\":\"Article\",\"attributes\":[\"+ RFIDTag : string\",\"+ Category : string\"]},{\"name\":\"Category\",\"attributes\":[\"+ CategoryName : string\"]},{\"name\":\"Client\",\"attributes\":[\"+ Name : string\",\"+ HomeAddress : string\",\"+ NeededCategories : string[]\"]},{\"name\":\"FoodBank\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"Delivery\",\"attributes\":[\"+ DeliveryID : string\",\"+ DeliveryDate : date\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"DistributionCenter\",\"partMultiplicity\":\"0..1\"},{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"FoodBank\",\"partMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"PickupRequest\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"PickupRequest\",\"part\":\"Item\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Vehicle\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Article\",\"target\":\"Category\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Client\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Delivery\",\"target\":\"Client\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Delivery\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"FoodBank\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 16.20729229999779,
+ "prompt_tokens": 4718,
+ "completion_tokens": 667,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-sf8ofgbiaofit90ph26anl",
+  "object": "chat.completion",
+  "created": 1791566679,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"H2SLocation\",\"attributes\":[\"+ LocationName : string\"]},{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\"]},{\"name\":\"PickupRequest\",\"attributes\":[\"+ RequestID : string\",\"+ Description : string\",\"+ RequestedDate : date\",\"+ RequestedTime : time\"]},{\"name\":\"Item\",\"attributes\":[\"+ Description : string\",\"+ Weight : float\",\"+ Dimensions : string\",\"+ IsFood : boolean\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ LicensePlate : string\",\"+ StorageCapacity : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ Name : string\",\"+ AvailableDays : string[]\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ RouteID : string\",\"+ Date : date\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ CenterID : string\"]},{\"name\":\"Employee\",\"attributes\":[\"+ EmployeeID : string\",\"+ Name : string\"]},{\"name\":\"Article\",\"attributes\":[\"+ RFIDTag : string\",\"+ Category : string\"]},{\"name\":\"Category\",\"attributes\":[\"+ CategoryName : string\"]},{\"name\":\"Client\",\"attributes\":[\"+ Name : string\",\"+ HomeAddress : string\",\"+ NeededCategories : string[]\"]},{\"name\":\"FoodBank\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"Delivery\",\"attributes\":[\"+ DeliveryID : string\",\"+ DeliveryDate : date\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"DistributionCenter\",\"partMultiplicity\":\"0..1\"},{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"FoodBank\",\"partMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"PickupRequest\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"PickupRequest\",\"part\":\"Item\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Vehicle\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Article\",\"target\":\"Category\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Client\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Delivery\",\"target\":\"Client\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Delivery\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"FoodBank\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4718,
+   "completion_tokens": 667,
+   "total_tokens": 5385,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

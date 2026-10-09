@@ -1,0 +1,137 @@
+{
+  "config": {
+    "run_id": "dev_retrievers__P-G",
+    "config_version": 2,
+    "split": "corpus",
+    "query_ids": [
+      "Boeing",
+      "OilWells",
+      "Restaurant",
+      "EUScienceConnect",
+      "HomeForTheElderly",
+      "HelpingHands",
+      "Bookmaker",
+      "BusTransportationManagementSystem",
+      "FitnessCompanyConan",
+      "Facepage",
+      "Musicmatic",
+      "AlphaInsurance",
+      "ClothingCompany",
+      "PizzaDeliveryWithEntertainment",
+      "ProjectManagement",
+      "HospitalHouseMD",
+      "InsuranceCompany",
+      "TruckLogistics",
+      "Ebike",
+      "eHome2020"
+    ],
+    "conditions": [
+      "dense",
+      "hybrid",
+      "oracle_jt"
+    ],
+    "k": [
+      3
+    ],
+    "repetitions": 2,
+    "seed": 0,
+    "stop_on_reasoning": true,
+    "prompt": {
+      "serialization": "compact",
+      "layout": "user_only",
+      "drop_interactive": true,
+      "output_format": "plantuml"
+    },
+    "generation": {
+      "temperature": 0.3,
+      "top_p": 0.95,
+      "top_k": 64,
+      "max_tokens": 4096,
+      "seed": 42,
+      "structured_output": false
+    },
+    "plantuml_label_rule": "auto_v1",
+    "configuration": "P-G",
+    "client": {
+      "kind": "lmstudio",
+      "base_url": "http://localhost:1234/v1",
+      "model": "google/gemma-4-12b-qat",
+      "timeout_s": 1200,
+      "retries": 3,
+      "backoff_s": 2.0,
+      "unsupported_params": []
+    },
+    "model_metadata": {
+      "model_id": "google/gemma-4-12b-qat",
+      "quantization": "QAT (q4_0)",
+      "context_length": 32768,
+      "lmstudio_version": "0.4.25+1",
+      "enable_thinking": false,
+      "kv_cache_quant": "F16",
+      "flash_attention": true,
+      "hardware": {
+        "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)",
+        "gpu": "NVIDIA GeForce RTX 4070 12 GB",
+        "ram_gb": 32,
+        "vram_gb": 12,
+        "vram_used": "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"
+      }
+    }
+  },
+  "provenance": {
+    "commit": "22f5adfbe6cee8f7376c9e0ecb439e08ed82e3b0",
+    "worktree_dirty": true,
+    "testset_tag": "testset-v1",
+    "testset_tag_commit": "eb4d28bebd417d661db642bae06d859963177815",
+    "config_bm25": "retrieval/config_bm25.yaml",
+    "config_bm25_sha256": "d6dfa7228ee4eee2c07c913917e2b096d6727a88bb818f7d51ed37036f5f76ab",
+    "config_dense": "retrieval/config_dense.yaml",
+    "config_dense_sha256": "2ec55d27663fe1d5b5b88a059969ff901217e3e683deae42772b1cbf8d460b66",
+    "dense_model": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "python": "3.12.10",
+    "tiktoken": "0.14.0",
+    "token_estimate": "tiktoken cl100k_base (approssimazione)",
+    "token_vocab": "generation/tokenizer/cl100k_base.tiktoken",
+    "token_vocab_sha256": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7",
+    "started_at": "2026-10-09T18:53:18",
+    "server_context": {
+      "endpoint": "http://localhost:1234/api/v1/models",
+      "available": true,
+      "loaded": true,
+      "context_lengths": [
+        32768
+      ],
+      "parallel": [
+        4
+      ],
+      "max_context_length": 262144,
+      "instances": [
+        {
+          "id": "google/gemma-4-12b-qat",
+          "config": {
+            "context_length": 32768,
+            "eval_batch_size": 2048,
+            "physical_batch_size": 512,
+            "parallel": 4,
+            "flash_attention": true,
+            "context_checkpoints": 32,
+            "reasoning_budget_message": "",
+            "speculative_draft_mtp": false,
+            "speculative_draft_simple": false,
+            "speculative_draft_model": "",
+            "speculative_draft_max_tokens": 3,
+            "speculative_draft_min_tokens": 0,
+            "speculative_draft_min_continue_probability": 0,
+            "offload_kv_cache_to_gpu": true
+          }
+        }
+      ],
+      "error": null,
+      "expected_context_length": 32768,
+      "checked_at": "2026-10-09T18:53:18",
+      "verified": true
+    },
+    "plantuml_label_rule": "auto_v1",
+    "plantuml_postprocess_version": "v2"
+  }
+}

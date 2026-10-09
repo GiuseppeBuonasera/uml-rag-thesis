@@ -60,6 +60,7 @@ import analyze_pilot as ap  # noqa: E402  (nomi di classe, confronto delle relaz
 import plantuml_postprocess as ppu  # noqa: E402
 import postprocess as pp  # noqa: E402
 from prompt_builder import cl  # noqa: E402
+import provenance  # noqa: E402  (riga di provenienza, voce 106)
 
 RESULTS = ROOT / "data" / "results" / "generation"
 RUN_PREFIX = "pilot2_formats"
@@ -390,8 +391,7 @@ def report(infos: dict[str, dict], refs: dict[str, dict] | None = None,
          "dichiarare come tale in tesi. Regola di decisione registrata PRIMA delle run (docs/decisions.md, voce 78, "
          "approvata nella voce 79) e applicata cosi' com'e' da `experiments/analyze_pilot2.py` (voce 82), ricalcolando "
          "tutto dalle risposte grezze (`raw/`).", "",
-         f"Analisi eseguita sul commit `{git('rev-parse', 'HEAD')[:12] or '?'}`"
-         f"{' (con modifiche non committate)' if git('status', '--porcelain') else ''}."]
+         provenance.provenance_line()]  # commit e impronta del GT (voce 106)
     if ref:
         g = ref["generation"]
         L += ["", f"Esercizi: {', '.join(ref['query_ids'])}; bm25 k={ref['k'][0]}; {ref['repetitions']} ripetizioni; "

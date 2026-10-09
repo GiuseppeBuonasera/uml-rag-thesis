@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Driver\",\"attributes\":[\"+ driverID : int\",\"+ name : string\",\"+ isSickLeave : boolean\"]},{\"name\":\"Bus\",\"attributes\":[\"+ licensePlate : string\",\"+ isInRepairShop : boolean\"]},{\"name\":\"BusRoute\",\"attributes\":[\"+ routeNumber : int\"]},{\"name\":\"Shift\",\"attributes\":[\"+ shiftType : ShiftType\",\"+ date : date\"]},{\"name\":\"Schedule\",\"attributes\":[\"+ date : date\"]},{\"name\":\"CityStaff\",\"attributes\":[\"+ staffID : int\",\"+ name : string\"]},{\"name\":\"ShiftType\",\"kind\":\"enum\",\"values\":[\"Morning\",\"Afternoon\",\"Night\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"BusRoute\",\"label\":\"assigns\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Bus\",\"label\":\"assigns\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Schedule\",\"label\":\"posts\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"BusRoute\",\"part\":\"Shift\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Schedule\",\"part\":\"Driver\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Shift\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Shift\",\"label\":\"serves\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"BusRoute\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"]]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 9.668600599998172,
+ "prompt_tokens": 4357,
+ "completion_tokens": 357,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-aa8hc5sfpfe69pap6jnd1",
+  "object": "chat.completion",
+  "created": 1791566005,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Driver\",\"attributes\":[\"+ driverID : int\",\"+ name : string\",\"+ isSickLeave : boolean\"]},{\"name\":\"Bus\",\"attributes\":[\"+ licensePlate : string\",\"+ isInRepairShop : boolean\"]},{\"name\":\"BusRoute\",\"attributes\":[\"+ routeNumber : int\"]},{\"name\":\"Shift\",\"attributes\":[\"+ shiftType : ShiftType\",\"+ date : date\"]},{\"name\":\"Schedule\",\"attributes\":[\"+ date : date\"]},{\"name\":\"CityStaff\",\"attributes\":[\"+ staffID : int\",\"+ name : string\"]},{\"name\":\"ShiftType\",\"kind\":\"enum\",\"values\":[\"Morning\",\"Afternoon\",\"Night\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"BusRoute\",\"label\":\"assigns\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Bus\",\"label\":\"assigns\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Schedule\",\"label\":\"posts\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"BusRoute\",\"part\":\"Shift\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"composition\",\"whole\":\"Schedule\",\"part\":\"Driver\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Shift\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Shift\",\"label\":\"serves\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"BusRoute\",\"label\":\"assignedTo\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"]]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4357,
+   "completion_tokens": 357,
+   "total_tokens": 4714,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

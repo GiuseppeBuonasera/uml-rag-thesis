@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Driver {\n  + driverID : int\n  + name : string\n  + isOnSickLeave : boolean\n}\n\nclass Bus {\n  + licensePlate : string\n  + isInRepairShop : boolean\n}\n\nclass Route {\n  + routeNumber : int\n}\n\nclass Shift {\n  + shiftType : ShiftType\n}\n\nclass Schedule {\n  + date : date\n}\n\nenum ShiftType {\n  Morning\n  Afternoon\n  Night\n}\n\nclass CityStaff {}\n\nCityStaff \"1\" -- \"*\" Route : defines\nCityStaff \"1\" -- \"*\" Bus : assigns\nCityStaff \"1\" -- \"*\" Driver : assigns\nCityStaff \"1\" -- \"*\" Schedule : posts\n\nRoute \"1\" -- \"*\" Bus : \"assigned to\"\nBus \"1\" -- \"*\" Route : \"serves\"\n\nSchedule \"1\" *-- \"1..*\" Shift\nSchedule \"1\" -- \"1\" Route\nSchedule \"1\" -- \"1\" Driver\nSchedule \"1\" -- \"1\" Bus\n\nDriver \"1\" -- \"*\" Schedule\nBus \"1\" -- \"*\" Schedule\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.466491800001677,
+ "prompt_tokens": 3733,
+ "completion_tokens": 245,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-n8bw95ouq1rtx8yoyq5uud",
+  "object": "chat.completion",
+  "created": 1791564911,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Driver {\n  + driverID : int\n  + name : string\n  + isOnSickLeave : boolean\n}\n\nclass Bus {\n  + licensePlate : string\n  + isInRepairShop : boolean\n}\n\nclass Route {\n  + routeNumber : int\n}\n\nclass Shift {\n  + shiftType : ShiftType\n}\n\nclass Schedule {\n  + date : date\n}\n\nenum ShiftType {\n  Morning\n  Afternoon\n  Night\n}\n\nclass CityStaff {}\n\nCityStaff \"1\" -- \"*\" Route : defines\nCityStaff \"1\" -- \"*\" Bus : assigns\nCityStaff \"1\" -- \"*\" Driver : assigns\nCityStaff \"1\" -- \"*\" Schedule : posts\n\nRoute \"1\" -- \"*\" Bus : \"assigned to\"\nBus \"1\" -- \"*\" Route : \"serves\"\n\nSchedule \"1\" *-- \"1..*\" Shift\nSchedule \"1\" -- \"1\" Route\nSchedule \"1\" -- \"1\" Driver\nSchedule \"1\" -- \"1\" Bus\n\nDriver \"1\" -- \"*\" Schedule\nBus \"1\" -- \"*\" Schedule\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3733,
+   "completion_tokens": 245,
+   "total_tokens": 3978,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ driverID : int\",\n        \"+ name : string\",\n        \"+ isOnSickLeave : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ licensePlate : string\",\n        \"+ isInRepairShop : boolean\"\n      ]\n    },\n    {\n      \"name\": \"BusRoute\",\n      \"attributes\": [\n        \"+ routeNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Shift\",\n      \"attributes\": [\n        \"+ shiftType : ShiftType\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"ShiftType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Morning\",\n        \"Afternoon\",\n        \"Night\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"BusRoute\",\n      \"part\": \"Bus\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\",\n      \"label\": \"assignedBus\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"BusRoute\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"serves\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Shift\",\n      \"part\": \"Driver\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\",\n      \"label\": \"assignedDriver\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Shift\",\n      \"part\": \"Bus\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\",\n      \"label\": \"assignedBus\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Shift\",\n      \"part\": \"BusRoute\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\",\n      \"label\": \"routeShift\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 15.364232899999479,
+ "prompt_tokens": 4321,
+ "completion_tokens": 536,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-h54pyhgp1hg161cuqqxxjz",
+  "object": "chat.completion",
+  "created": 1791566041,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ driverID : int\",\n        \"+ name : string\",\n        \"+ isOnSickLeave : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ licensePlate : string\",\n        \"+ isInRepairShop : boolean\"\n      ]\n    },\n    {\n      \"name\": \"BusRoute\",\n      \"attributes\": [\n        \"+ routeNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Shift\",\n      \"attributes\": [\n        \"+ shiftType : ShiftType\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"ShiftType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Morning\",\n        \"Afternoon\",\n        \"Night\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"BusRoute\",\n      \"part\": \"Bus\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\",\n      \"label\": \"assignedBus\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"BusRoute\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"serves\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Shift\",\n      \"part\": \"Driver\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\",\n      \"label\": \"assignedDriver\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Shift\",\n      \"part\": \"Bus\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\",\n      \"label\": \"assignedBus\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Shift\",\n      \"part\": \"BusRoute\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\",\n      \"label\": \"routeShift\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4321,
+   "completion_tokens": 536,
+   "total_tokens": 4857,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

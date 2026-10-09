@@ -46,6 +46,7 @@ import analyze_dev as ad  # noqa: E402  (validazione e metriche della voce 92, n
 import plantuml_postprocess as ppu  # noqa: E402
 import run_experiment as rx  # noqa: E402
 from prompt_builder import cl  # noqa: E402
+import provenance  # noqa: E402  (riga di provenienza, voce 106)
 
 RESULTS = ROOT / "data" / "results" / "generation"
 CONFIG = ROOT / "experiments" / "configs" / "dev_k.yaml"
@@ -188,8 +189,7 @@ def report(infos: dict[str, dict], band_of: dict[str, str] | None = None) -> tup
          "cosi' com'e' da `experiments/analyze_k.py`; metriche della voce 92 (J e R su tutte le risposte, 0 per le non "
          "valide). Confronto per contenuto, mai per id. La leva vale solo per le condizioni con esempi: sul test set "
          "il confronto con random dovra' usare lo stesso k.", "",
-         f"Analisi eseguita sul commit `{ad.git('rev-parse', 'HEAD')[:12] or '?'}`"
-         f"{' (con modifiche non committate)' if ad.git('status', '--porcelain') else ''}."]
+         provenance.provenance_line()]  # commit e impronta del GT (voce 106)
     mism = {n: i["level_mismatch"] for n, i in infos.items() if i["level_mismatch"]}
     if mism:
         L.append(f"**ATTENZIONE**: livello ricalcolato diverso dal manifest in {mism} risposte.")

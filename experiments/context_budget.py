@@ -11,9 +11,16 @@ in sola lettura.
 4. Output del test set: ground truth compatti e indentati x fattore (riferimento per un max_tokens piu' basso), e il
    max_tokens massimo compatibile con il contesto per ogni condizione e k.
 
+Modalita' --config (2026-10-09, voce 109): bilancio di un config dell'insieme di SVILUPPO (split corpus): i prompt
+sono quelli degli esercizi del config, per ogni configurazione (formato) x condizione x k, con il contesto e il
+max_tokens del config; il fattore e' il massimo sui manifest indicati con --manifest (ripetibile). Il test set NON si
+legge in questa modalita'.
+
 Uso:
     python experiments/context_budget.py [--manifest data/results/generation/<run>/manifest.jsonl]
                                          [--context 32768] [--max-tokens 12288] [--out file.md]
+    python experiments/context_budget.py --config experiments/configs/dev_retrievers.yaml \
+        --manifest data/results/generation/dev_k__P-G/manifest.jsonl --manifest data/results/generation/dev_k__C-G/manifest.jsonl
 """
 
 from __future__ import annotations
@@ -26,6 +33,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generation"))
+sys.path.insert(0, str(ROOT / "experiments"))
 from prompt_builder import PromptBuilder, PromptSpec, cl, serialize_diagram  # noqa: E402
 from token_estimate import count_tokens  # noqa: E402
 
@@ -92,14 +100,61 @@ def report(manifest: Path, context: int, max_tokens: int) -> str:
     return "\n".join(L) + "\n"
 
 
+def report_config(config: Path, manifests: list[Path]) -> str:
+    """Bilancio dei prompt di un config dell'insieme di sviluppo (split corpus, solo i suoi query_ids)."""
+    import yaml
+    cfg = yaml.safe_load(config.read_text(encoding="utf-8"))
+    if cfg.get("split") != "corpus":
+        raise SystemExit("--config solo per lo split corpus (insieme di sviluppo): il test set non si legge qui")
+    contexts = {cfg["models"][c["model"]]["model_metadata"]["context_length"] for c in cfg["configurations"].values()}
+    assert len(contexts) == 1, contexts
+    context, max_tokens = contexts.pop(), cfg["generation"]["max_tokens"]
+    fs = [correction_factors(m) for m in manifests]
+    factor = max(f["max"] for f in fs)
+    candidates = cl.load_candidates()
+    builder = PromptBuilder(candidates, [])
+    queries = [c for c in candidates if c["id"] in set(cfg["query_ids"])]
+    assert len(queries) == len(cfg["query_ids"])
+    p = cfg.get("prompt", {})
+    L = [f"# Bilancio del contesto per `{config.relative_to(ROOT).as_posix()}`", "",
+         f"Fattore server / stima cl100k_base: **max {factor:.3f}** su "
+         + ", ".join(f"`{m.relative_to(ROOT).as_posix()}` ({f['n_prompts']} prompt, max {f['max']:.3f})"
+                     for m, f in zip(manifests, fs))
+         + f". Contesto {context}, max_tokens {max_tokens}: budget del prompt = {context - max_tokens}.", "",
+         "| configurazione | condizione | k | prompt reale stimato (mediana / max) | esercizio peggiore | entro il budget | "
+         "margine |", "|---|---|---|---|---|---|---|"]
+    worst_all = 0
+    for name, conf in cfg["configurations"].items():
+        for cond in cfg["conditions"]:
+            for k in cfg["k"]:
+                spec = PromptSpec(cond, k=k, serialization=p.get("serialization", "compact"),
+                                  layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True),
+                                  output_format=conf["output_format"],
+                                  instructions_variant=p.get("instructions_variant", "base"))
+                real = {q["id"]: round(count_tokens(builder.build(q, spec).text) * factor) for q in queries}
+                wid = max(real, key=lambda i: (real[i], i))
+                worst_all = max(worst_all, real[wid])
+                fit = sum(v + max_tokens <= context for v in real.values())
+                L.append(f"| {name} | {cond} | {k} | {statistics.median(real.values()):.0f} / {real[wid]} | {wid} | "
+                         f"{fit}/{len(real)} | {context - max_tokens - real[wid]} |")
+    L += ["", f"Prompt più lungo stimato: **{worst_all}** token reali, budget {context - max_tokens} "
+          f"({'entro il budget' if worst_all + max_tokens <= context else '**OLTRE IL BUDGET**'})."]
+    return "\n".join(L) + "\n"
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
+    ap.add_argument("--manifest", action="append")
     ap.add_argument("--context", type=int, default=32768)
     ap.add_argument("--max-tokens", type=int, default=12288)
+    ap.add_argument("--config", help="config dell'insieme di sviluppo (split corpus): bilancio dei suoi prompt")
     ap.add_argument("--out")
     a = ap.parse_args(argv)
-    text = report(Path(a.manifest), a.context, a.max_tokens)
+    manifests = [Path(m) for m in (a.manifest or [str(DEFAULT_MANIFEST)])]
+    if a.config:
+        text = report_config(Path(a.config).resolve(), [m.resolve() for m in manifests])
+    else:
+        text = report(manifests[0], a.context, a.max_tokens)
     print(text)
     if a.out:
         Path(a.out).write_text(text, encoding="utf-8")

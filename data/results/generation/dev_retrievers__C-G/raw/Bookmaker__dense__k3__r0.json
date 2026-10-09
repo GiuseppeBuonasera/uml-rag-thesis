@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Bookmaker\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Bettor\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Race\",\"attributes\":[\"+ raceId : int\"]},{\"name\":\"Runner\",\"attributes\":[\"+ runnerId : int\"]},{\"name\":\"Horse\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Jockey\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Bet\",\"attributes\":[\"+ amount : float\",\"+ odds : float\"]},{\"name\":\"Winner\",\"kind\":\"abstract\"}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Race\",\"part\":\"Runner\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"Race\",\"part\":\"Winner\",\"partMultiplicity\":\"1\"},{\"type\":\"inheritance\",\"child\":\"Horse\",\"parent\":\"Runner\"},{\"type\":\"composition\",\"whole\":\"Horse\",\"part\":\"Jockey\",\"partMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Bettor\",\"target\":\"Bet\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"unidirectional\",\"source\":\"Bet\",\"target\":\"Race\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Bet\",\"target\":\"Runner\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Bookmaker\",\"target\":\"Bettor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"unidirectional\",\"source\":\"Bookmaker\",\"target\":\"Bet\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.610589200001414,
+ "prompt_tokens": 3770,
+ "completion_tokens": 309,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4q5ohowu7yf0trbjxnvvnw",
+  "object": "chat.completion",
+  "created": 1791567239,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Bookmaker\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Bettor\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Race\",\"attributes\":[\"+ raceId : int\"]},{\"name\":\"Runner\",\"attributes\":[\"+ runnerId : int\"]},{\"name\":\"Horse\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Jockey\",\"attributes\":[\"+ name : string\"]},{\"name\":\"Bet\",\"attributes\":[\"+ amount : float\",\"+ odds : float\"]},{\"name\":\"Winner\",\"kind\":\"abstract\"}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Race\",\"part\":\"Runner\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"Race\",\"part\":\"Winner\",\"partMultiplicity\":\"1\"},{\"type\":\"inheritance\",\"child\":\"Horse\",\"parent\":\"Runner\"},{\"type\":\"composition\",\"whole\":\"Horse\",\"part\":\"Jockey\",\"partMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Bettor\",\"target\":\"Bet\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"unidirectional\",\"source\":\"Bet\",\"target\":\"Race\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Bet\",\"target\":\"Runner\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Bookmaker\",\"target\":\"Bettor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"unidirectional\",\"source\":\"Bookmaker\",\"target\":\"Bet\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3770,
+   "completion_tokens": 309,
+   "total_tokens": 4079,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

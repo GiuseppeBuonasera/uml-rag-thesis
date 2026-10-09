@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"EBike\",\n      \"attributes\": [\n        \"+ modelName : string\",\n        \"+ serialNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ]\n    },\n    {\n      \"name\": \"DriveSystem\",\n      \"attributes\": [\n        \"+ type : string\"\n      ]\n    },\n    {\n      \"name\": \"Motor\",\n      \"attributes\": [\n        \"+ power : int\",\n        \"+ weight : float\"\n      ]\n    },\n    {\n      \"name\": \"Controller\",\n      \"attributes\": [\n        \"+ firmwareVersion : string\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\",\n      \"attributes\": [\n        \"+ maxSpeed : int\"\n      ]\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"attributes\": [\n        \"+ nextMaintenanceDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ capacityWh : int\",\n        \"+ isRemovable : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Wheel\",\n      \"attributes\": [\n        \"+ size : string\",\n        \"+ tirePressure : float\"\n      ]\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Controller\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Frame\",\n      \"part\": \"Wheel\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DriveSystem\",\n      \"part\": \"Motor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"EBike\",\n      \"part\": \"Battery\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\",\n      \"partRole\": \"removableBattery\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvancedController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Controller\",\n      \"target\": \"Battery\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"sourceRole\": \"manages\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Controller\",\n      \"target\": \"DriveSystem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"commands\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Controller\",\n      \"target\": \"ControllerState\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 21.920864200001233,
+ "prompt_tokens": 4909,
+ "completion_tokens": 942,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-nkys70i8xub4imcqosm42p",
+  "object": "chat.completion",
+  "created": 1791566165,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"EBike\",\n      \"attributes\": [\n        \"+ modelName : string\",\n        \"+ serialNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ]\n    },\n    {\n      \"name\": \"DriveSystem\",\n      \"attributes\": [\n        \"+ type : string\"\n      ]\n    },\n    {\n      \"name\": \"Motor\",\n      \"attributes\": [\n        \"+ power : int\",\n        \"+ weight : float\"\n      ]\n    },\n    {\n      \"name\": \"Controller\",\n      \"attributes\": [\n        \"+ firmwareVersion : string\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\",\n      \"attributes\": [\n        \"+ maxSpeed : int\"\n      ]\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"attributes\": [\n        \"+ nextMaintenanceDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ capacityWh : int\",\n        \"+ isRemovable : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Wheel\",\n      \"attributes\": [\n        \"+ size : string\",\n        \"+ tirePressure : float\"\n      ]\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Controller\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Frame\",\n      \"part\": \"Wheel\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DriveSystem\",\n      \"part\": \"Motor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"EBike\",\n      \"part\": \"Battery\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\",\n      \"partRole\": \"removableBattery\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvancedController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Controller\",\n      \"target\": \"Battery\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"sourceRole\": \"manages\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Controller\",\n      \"target\": \"DriveSystem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"sourceRole\": \"commands\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Controller\",\n      \"target\": \"ControllerState\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4909,
+   "completion_tokens": 942,
+   "total_tokens": 5851,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

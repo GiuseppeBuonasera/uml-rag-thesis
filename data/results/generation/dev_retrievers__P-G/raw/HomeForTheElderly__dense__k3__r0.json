@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Home {}\n\nclass Department {}\n\nclass Room {}\n\nclass Bed {}\n\nclass Category {\n  + price : float\n}\n\nenum StayType {\n  RH\n  RNH\n  SF\n}\n\nclass Inhabitant {\n  + name : string\n  + id : string\n}\n\nclass Registration {\n  + registrationDate : date\n}\n\nclass Assessment {\n  + resultStayType : StayType\n}\n\nclass WaitingList {\n  + position : int\n}\n\nclass Stay {\n  + status : string\n  + startDate : date\n  + endDate : date\n}\n\nclass Invoice {\n  + amount : float\n  + outstandingAmount : float\n  + status : string\n}\n\nclass CreditNote {\n  + amount : float\n}\n\nclass PaymentEvent {\n  + amount : float\n  + date : date\n}\n\nHome \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" Room\nRoom \"1\" *-- \"1..*\" Bed\nBed \"1\" -- \"1\" Category\nCategory \"1\" -- \"1\" StayType\n\nInhabitant \"1\" -- \"0..*\" Stay\nStay \"1\" -- \"1\" StayType\nStay \"1\" -- \"1\" Bed\n\nInhabitant \"1\" -- \"1\" Registration\nRegistration \"1\" -- \"1\" Assessment\nAssessment \"1\" -- \"1\" WaitingList\nWaitingList \"1\" -- \"1\" StayType\n\nStay \"1\" -- \"1..*\" Invoice\nInvoice \"1\" -- \"0..*\" PaymentEvent\nInvoice \"1\" -- \"0..1\" CreditNote\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.526982999999746,
+ "prompt_tokens": 3621,
+ "completion_tokens": 367,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0bn6b98meikfie8ciw6wtua",
+  "object": "chat.completion",
+  "created": 1791565331,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Home {}\n\nclass Department {}\n\nclass Room {}\n\nclass Bed {}\n\nclass Category {\n  + price : float\n}\n\nenum StayType {\n  RH\n  RNH\n  SF\n}\n\nclass Inhabitant {\n  + name : string\n  + id : string\n}\n\nclass Registration {\n  + registrationDate : date\n}\n\nclass Assessment {\n  + resultStayType : StayType\n}\n\nclass WaitingList {\n  + position : int\n}\n\nclass Stay {\n  + status : string\n  + startDate : date\n  + endDate : date\n}\n\nclass Invoice {\n  + amount : float\n  + outstandingAmount : float\n  + status : string\n}\n\nclass CreditNote {\n  + amount : float\n}\n\nclass PaymentEvent {\n  + amount : float\n  + date : date\n}\n\nHome \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" Room\nRoom \"1\" *-- \"1..*\" Bed\nBed \"1\" -- \"1\" Category\nCategory \"1\" -- \"1\" StayType\n\nInhabitant \"1\" -- \"0..*\" Stay\nStay \"1\" -- \"1\" StayType\nStay \"1\" -- \"1\" Bed\n\nInhabitant \"1\" -- \"1\" Registration\nRegistration \"1\" -- \"1\" Assessment\nAssessment \"1\" -- \"1\" WaitingList\nWaitingList \"1\" -- \"1\" StayType\n\nStay \"1\" -- \"1..*\" Invoice\nInvoice \"1\" -- \"0..*\" PaymentEvent\nInvoice \"1\" -- \"0..1\" CreditNote\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3621,
+   "completion_tokens": 367,
+   "total_tokens": 3988,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

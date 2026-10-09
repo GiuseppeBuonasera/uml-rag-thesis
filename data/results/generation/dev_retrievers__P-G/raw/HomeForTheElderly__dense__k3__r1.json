@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Home {}\n\nclass Department {}\n\nclass Room {}\n\nclass Bed {}\n\nclass Category {\n  + price : float\n}\n\nenum StayType {\n  RH\n  RNH\n  SF\n}\n\nclass Inhabitant {\n  + name : string\n  + identificationData : string\n}\n\nclass Registration {\n  + registrationDate : date\n}\n\nclass Assessment {\n  + needsHelpEating : boolean\n  + needsHelpDressing : boolean\n  + needsHelpPersonalCare : boolean\n  + recommendedStayType : StayType\n}\n\nclass Stay {\n  + status : string\n  + startDate : date\n  + endDate : date\n  + discountApplied : boolean\n}\n\nclass Proposal {\n  + date : date\n  + status : string\n}\n\nclass Invoice {\n  + amount : float\n  + outstandingAmount : float\n  + isPaid : boolean\n}\n\nclass CreditNote {\n  + amount : float\n}\n\nclass PaymentEvent {\n  + amount : float\n  + date : date\n}\n\nHome \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" Room\nRoom \"1\" *-- \"1..*\" Bed\nBed \"1\" -- \"1\" Category\nCategory \"1\" -- \"1\" StayType\n\nInhabitant \"1\" -- \"1..*\" Stay\nStay \"1\" -- \"1\" Bed\nStay \"1\" -- \"1\" StayType\n\nInhabitant \"1\" -- \"1\" Registration\nRegistration \"1\" -- \"1\" Assessment\n\nStay \"1\" -- \"0..*\" Invoice\nInvoice \"1\" -- \"0..*\" PaymentEvent\n\nStay \"1\" -- \"0..*\" Proposal\nProposal \"1\" -- \"1\" Inhabitant\n\nInvoice \"1\" -- \"0..1\" CreditNote\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 10.514800000000832,
+ "prompt_tokens": 3621,
+ "completion_tokens": 407,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-p3jyshhosj8b3mev7dego",
+  "object": "chat.completion",
+  "created": 1791565342,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Home {}\n\nclass Department {}\n\nclass Room {}\n\nclass Bed {}\n\nclass Category {\n  + price : float\n}\n\nenum StayType {\n  RH\n  RNH\n  SF\n}\n\nclass Inhabitant {\n  + name : string\n  + identificationData : string\n}\n\nclass Registration {\n  + registrationDate : date\n}\n\nclass Assessment {\n  + needsHelpEating : boolean\n  + needsHelpDressing : boolean\n  + needsHelpPersonalCare : boolean\n  + recommendedStayType : StayType\n}\n\nclass Stay {\n  + status : string\n  + startDate : date\n  + endDate : date\n  + discountApplied : boolean\n}\n\nclass Proposal {\n  + date : date\n  + status : string\n}\n\nclass Invoice {\n  + amount : float\n  + outstandingAmount : float\n  + isPaid : boolean\n}\n\nclass CreditNote {\n  + amount : float\n}\n\nclass PaymentEvent {\n  + amount : float\n  + date : date\n}\n\nHome \"1\" *-- \"1..*\" Department\nDepartment \"1\" *-- \"1..*\" Room\nRoom \"1\" *-- \"1..*\" Bed\nBed \"1\" -- \"1\" Category\nCategory \"1\" -- \"1\" StayType\n\nInhabitant \"1\" -- \"1..*\" Stay\nStay \"1\" -- \"1\" Bed\nStay \"1\" -- \"1\" StayType\n\nInhabitant \"1\" -- \"1\" Registration\nRegistration \"1\" -- \"1\" Assessment\n\nStay \"1\" -- \"0..*\" Invoice\nInvoice \"1\" -- \"0..*\" PaymentEvent\n\nStay \"1\" -- \"0..*\" Proposal\nProposal \"1\" -- \"1\" Inhabitant\n\nInvoice \"1\" -- \"0..1\" CreditNote\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3621,
+   "completion_tokens": 407,
+   "total_tokens": 4028,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

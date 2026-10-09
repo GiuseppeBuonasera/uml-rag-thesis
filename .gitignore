@@ -43,6 +43,9 @@ data/results/generation/*/*
 data/results/generation/mock_*
 data/results/generation/dry_run
 
+# cache degli embedding del retriever denso (voce 107): rigenerabile, fuori da git
+data/cache/
+
 # Notebook checkpoints
 .ipynb_checkpoints/
 

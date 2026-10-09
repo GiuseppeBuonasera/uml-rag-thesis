@@ -15,6 +15,12 @@ Condizioni:
              il piu' simile per ULTIMO (vicino alla traccia);
   oracle     SOLO ANALISI: top-k per Jaccard dei nomi di classe con il ground truth, il piu' simile per ultimo. Usa il
              diagramma della query: non e' una condizione realizzabile in generazione, e' un limite superiore.
+  dense      (voce 109) top-k del retriever denso scelto in retrieval/config_dense.yaml (esito della voce 108:
+             all-MiniLM-L6-v2 alla revisione fissata, CPU, offline, embedding in cache), il piu' simile per ultimo;
+  hybrid     (voce 109) RRF (c = 60) tra BM25 congelato (lo stesso indice di bm25) e il denso, il piu' simile per ultimo;
+  oracle_jt  (voce 109) SOLO DIAGNOSTICA: top-k per Jt (Jaccard dei token dei nomi di classe, retrieval/relevance.py)
+             con il ground truth della query, pareggi per id, il piu' simile per ultimo. MAI nel Passo 3b.
+Tutte le condizioni con esempi del corpus usano gli STESSI candidati di bm25: pool(query) (voce 109, modifica 2).
 
 Query dal CORPUS (pilota, 2026-10-06): se la query e' un esercizio del corpus, la selezione e' leave-one-out con lo
 stesso protocollo di retrieval/analyze_retrieval.py: bm25 su un indice RIFITTATO sugli altri 58 record (la query non
@@ -48,14 +54,16 @@ import corpus_loader as cl  # noqa: E402
 from keyword_retriever import KeywordRetriever  # noqa: E402
 from random_retriever import RandomRetriever  # noqa: E402
 from text_preprocessing import PreprocessConfig  # noqa: E402
+import relevance  # noqa: E402  (Jt per oracle_jt, voce 109)
 
 TEMPLATES = Path(__file__).resolve().parent / "templates"
 V4_TEMPLATE = ROOT / "docs" / "dati" / "apollon_format_reference" / "prompt_template_v4.txt"
 STATIC_DIR = ROOT / "docs" / "dati" / "apollon_format_reference"
 BM25_CONFIG = ROOT / "retrieval" / "config_bm25.yaml"
+DENSE_CONFIG = ROOT / "retrieval" / "config_dense.yaml"
 
-CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle")
-ANALYSIS_ONLY = {"oracle"}
+CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle", "dense", "hybrid", "oracle_jt")
+ANALYSIS_ONLY = {"oracle", "oracle_jt"}
 SERIALIZATIONS = ("indent2", "compact")
 OUTPUT_FORMATS = ("apollon", "plantuml", "compact")
 INSTRUCTION_TEMPLATES = {"apollon": "v4_instructions.txt", "plantuml": "v4_plantuml_instructions.txt",
@@ -148,8 +156,16 @@ def static_examples(candidates_by_id: dict[str, dict]) -> list[dict]:
             {"id": "AirTravel", "description": air["description"], "diagram_apollon_json": air["diagram_apollon_json"]}]
 
 
+def dense_model() -> tuple[str, str]:
+    """(modello, revisione) scelti dalla regola della voce 107 (esito in config_dense.yaml, voce 108)."""
+    esito = yaml.safe_load(DENSE_CONFIG.read_text(encoding="utf-8"))["esito"]
+    return esito["scelto"], esito["revisione"]
+
+
 class PromptBuilder:
-    def __init__(self, candidates: list[dict] | None = None, queries: list[dict] | None = None):
+    def __init__(self, candidates: list[dict] | None = None, queries: list[dict] | None = None, dense=None):
+        """dense: retriever denso gia' costruito (i test passano embedding finti); None = quello di config_dense.yaml,
+        caricato solo alla prima condizione dense / hybrid."""
         if candidates is None:
             candidates, queries = cl.load_all()
         else:
@@ -168,6 +184,28 @@ class PromptBuilder:
         self.instructions = _template("v4_instructions.txt")  # formato apollon (identiche al template v4)
         self.instructions_by_format = {f: _template(t) for f, t in INSTRUCTION_TEMPLATES.items()}
         self.names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in candidates}
+        self.tokens = {c["id"]: relevance.class_tokens(c["diagram_apollon_json"]) for c in candidates}
+        self._dense = dense
+        self._dense_fitted = False
+
+    @property
+    def dense(self):
+        """Retriever denso indicizzato su TUTTI i candidati (l'embedding di un documento non dipende dagli altri); le
+        esclusioni si applicano in retrieve() con excluded(query), cosi' i candidati coincidono con pool(query)."""
+        if self._dense is None:
+            import os
+            os.environ.setdefault("HF_HUB_OFFLINE", "1")  # dopo il primo download (voce 107) si lavora offline
+            from dense_retriever import DenseRetriever
+            self._dense = DenseRetriever(*dense_model())
+        if not self._dense_fitted:
+            self._dense.fit(self.candidates)
+            self._dense_fitted = True
+        return self._dense
+
+    def excluded(self, query: dict) -> set[str]:
+        """Candidati NON ammessi per la query: il complemento di pool(query)."""
+        allowed = {c["id"] for c in self.pool(query)}
+        return {c["id"] for c in self.candidates if c["id"] not in allowed}
 
     def is_corpus_query(self, query: dict) -> bool:
         return query["id"] in self.by_id
@@ -200,6 +238,18 @@ class PromptBuilder:
         if c == "bm25":
             hits = self.bm25_for(query).retrieve(query["description"], spec.k)
             return [self.by_id[h.id] for h in reversed(hits)]  # il piu' simile per ultimo
+        if c == "dense":
+            hits = self.dense.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
+            return [self.by_id[h.id] for h in reversed(hits)]
+        if c == "hybrid":
+            from hybrid_retriever import HybridRetriever
+            h = HybridRetriever.prefitted(self.bm25_for(query), self.dense, [x["id"] for x in self.pool(query)])
+            hits = h.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
+            return [self.by_id[x.id] for x in reversed(hits)]
+        if c == "oracle_jt":
+            qt = relevance.class_tokens(query["diagram_apollon_json"])
+            ranked = sorted(self.pool(query), key=lambda x: (-cl.jaccard(qt, self.tokens[x["id"]]), x["id"]))[:spec.k]
+            return list(reversed(ranked))
         # oracle (solo analisi)
         qn = cl.class_names(query["diagram_apollon_json"])
         ranked = sorted(self.pool(query), key=lambda x: (-cl.jaccard(qn, self.names[x["id"]]), x["id"]))[:spec.k]

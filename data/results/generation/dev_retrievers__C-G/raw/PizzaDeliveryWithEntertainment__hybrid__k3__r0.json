@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"User\",\"attributes\":[\"+ UserID : int\",\"+ Name : string\",\"+ Address : string\",\"+ Birthday : date\"]},{\"name\":\"BusinessOwner\",\"attributes\":[\"+ LinkedInAccount : string\"]},{\"name\":\"HungryCustomer\",\"attributes\":[\"+ DeliveryAddress : string\"]},{\"name\":\"Entertainer\",\"attributes\":[\"+ StageName : string\",\"+ Bio : string\",\"+ PricePer30Min : float\"]},{\"name\":\"Restaurant\",\"attributes\":[\"+ ZipCode : string\",\"+ Address : string\",\"+ PhoneNumber : string\",\"+ Website : string\",\"+ OpeningHours : string\"]},{\"name\":\"Pizza\",\"attributes\":[\"+ Name : string\",\"+ CrustStructure : string\",\"+ Price : double\"]},{\"name\":\"Order\",\"attributes\":[\"+ OrderID : int\",\"+ OrderDateTime : datetime\",\"+ LatestDeliveryTime : time\",\"+ NumberOfPeople : int\"]},{\"name\":\"EntertainmentOrder\",\"attributes\":[\"+ EntertainmentType : string\",\"+ Duration : int\"]},{\"name\":\"Availability\",\"attributes\":[\"+ Day : string\"]},{\"name\":\"Day\",\"kind\":\"enum\",\"values\":[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\",\"Sunday\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"BusinessOwner\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"HungryCustomer\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"Entertainer\",\"parent\":\"User\"},{\"type\":\"composition\",\"whole\":\"BusinessOwner\",\"part\":\"Restaurant\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"Restaurant\",\"part\":\"Pizza\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"HungryCustomer\",\"target\":\"Order\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Order\",\"part\":\"Pizza\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"inheritance\",\"child\":\"EntertainmentOrder\",\"parent\":\"Order\"},{\"type\":\"association\",\"source\":\"EntertainmentOrder\",\"target\":\"Entertainer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Entertainer\",\"target\":\"Restaurant\",\"label\":\"worksAt\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"Entertainer\",\"part\":\"Availability\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Availability\",\"target\":\"Restaurant\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 14.835533500001475,
+ "prompt_tokens": 4493,
+ "completion_tokens": 504,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2pb97ucxprrox2h5wchc6c",
+  "object": "chat.completion",
+  "created": 1791567064,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"User\",\"attributes\":[\"+ UserID : int\",\"+ Name : string\",\"+ Address : string\",\"+ Birthday : date\"]},{\"name\":\"BusinessOwner\",\"attributes\":[\"+ LinkedInAccount : string\"]},{\"name\":\"HungryCustomer\",\"attributes\":[\"+ DeliveryAddress : string\"]},{\"name\":\"Entertainer\",\"attributes\":[\"+ StageName : string\",\"+ Bio : string\",\"+ PricePer30Min : float\"]},{\"name\":\"Restaurant\",\"attributes\":[\"+ ZipCode : string\",\"+ Address : string\",\"+ PhoneNumber : string\",\"+ Website : string\",\"+ OpeningHours : string\"]},{\"name\":\"Pizza\",\"attributes\":[\"+ Name : string\",\"+ CrustStructure : string\",\"+ Price : double\"]},{\"name\":\"Order\",\"attributes\":[\"+ OrderID : int\",\"+ OrderDateTime : datetime\",\"+ LatestDeliveryTime : time\",\"+ NumberOfPeople : int\"]},{\"name\":\"EntertainmentOrder\",\"attributes\":[\"+ EntertainmentType : string\",\"+ Duration : int\"]},{\"name\":\"Availability\",\"attributes\":[\"+ Day : string\"]},{\"name\":\"Day\",\"kind\":\"enum\",\"values\":[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\",\"Sunday\"]}],\"relations\":[{\"type\":\"inheritance\",\"child\":\"BusinessOwner\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"HungryCustomer\",\"parent\":\"User\"},{\"type\":\"inheritance\",\"child\":\"Entertainer\",\"parent\":\"User\"},{\"type\":\"composition\",\"whole\":\"BusinessOwner\",\"part\":\"Restaurant\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"composition\",\"whole\":\"Restaurant\",\"part\":\"Pizza\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"HungryCustomer\",\"target\":\"Order\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Order\",\"part\":\"Pizza\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"inheritance\",\"child\":\"EntertainmentOrder\",\"parent\":\"Order\"},{\"type\":\"association\",\"source\":\"EntertainmentOrder\",\"target\":\"Entertainer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Entertainer\",\"target\":\"Restaurant\",\"label\":\"worksAt\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"whole\":\"Entertainer\",\"part\":\"Availability\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Availability\",\"target\":\"Restaurant\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4493,
+   "completion_tokens": 504,
+   "total_tokens": 4997,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

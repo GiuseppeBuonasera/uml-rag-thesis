@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"User\",\"attributes\":[\"+ userID : int\",\"+ name : string\",\"+ email : string\",\"+ dateOfBirth : date\"]},{\"name\":\"Account\",\"attributes\":[\"+ accountNumber : int\"]},{\"name\":\"PersonalAccount\"},{\"name\":\"BusinessAccount\",\"attributes\":[\"+ companyName : string\",\"+ monthlyFee : double\"]},{\"name\":\"Page\",\"attributes\":[\"+ pageName : string\",\"+ visitCount : int\"]},{\"name\":\"AdvertisementPage\",\"attributes\":[\"+ bounceRate : float\",\"+ clickThroughRate : float\",\"+ conversionRate : float\"]},{\"name\":\"FriendRequest\"}],\"relations\":[{\"type\":\"composition\",\"whole\":\"User\",\"part\":\"Account\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"inheritance\",\"child\":\"PersonalAccount\",\"parent\":\"Account\"},{\"type\":\"inheritance\",\"child\":\"BusinessAccount\",\"parent\":\"Account\"},{\"type\":\"composition\",\"whole\":\"Account\",\"part\":\"Page\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"inheritance\",\"child\":\"AdvertisementPage\",\"parent\":\"Page\"},{\"type\":\"association\",\"source\":\"PersonalAccount\",\"target\":\"PersonalAccount\",\"label\":\"friendRequest\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PersonalAccount\",\"target\":\"Page\",\"label\":\"privilege\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.828830200000084,
+ "prompt_tokens": 4637,
+ "completion_tokens": 268,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-iepdk1ijxdhjxgtgpklru",
+  "object": "chat.completion",
+  "created": 1791566469,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"User\",\"attributes\":[\"+ userID : int\",\"+ name : string\",\"+ email : string\",\"+ dateOfBirth : date\"]},{\"name\":\"Account\",\"attributes\":[\"+ accountNumber : int\"]},{\"name\":\"PersonalAccount\"},{\"name\":\"BusinessAccount\",\"attributes\":[\"+ companyName : string\",\"+ monthlyFee : double\"]},{\"name\":\"Page\",\"attributes\":[\"+ pageName : string\",\"+ visitCount : int\"]},{\"name\":\"AdvertisementPage\",\"attributes\":[\"+ bounceRate : float\",\"+ clickThroughRate : float\",\"+ conversionRate : float\"]},{\"name\":\"FriendRequest\"}],\"relations\":[{\"type\":\"composition\",\"whole\":\"User\",\"part\":\"Account\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\"},{\"type\":\"inheritance\",\"child\":\"PersonalAccount\",\"parent\":\"Account\"},{\"type\":\"inheritance\",\"child\":\"BusinessAccount\",\"parent\":\"Account\"},{\"type\":\"composition\",\"whole\":\"Account\",\"part\":\"Page\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"*\"},{\"type\":\"inheritance\",\"child\":\"AdvertisementPage\",\"parent\":\"Page\"},{\"type\":\"association\",\"source\":\"PersonalAccount\",\"target\":\"PersonalAccount\",\"label\":\"friendRequest\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PersonalAccount\",\"target\":\"Page\",\"label\":\"privilege\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4637,
+   "completion_tokens": 268,
+   "total_tokens": 4905,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

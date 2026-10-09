@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Bettor {\n  + name : string\n  + id : int\n}\n\nclass Race {\n  + raceId : int\n  + date : date\n}\n\nclass Runner {\n  + horseName : string\n  + runnerId : int\n}\n\nclass Jockey {\n  + name : string\n}\n\nclass Bet {\n  + amount : float\n  + odds : float\n}\n\nBettor \"1\" -- \"0..*\" Bet\nRace \"1\" -- \"1..*\" Runner\nRunner \"1\" -- \"1\" Jockey\nBet \"*\" -- \"1\" Race\nBet \"*\" -- \"1\" Runner\nRace \"0..1\" -- \"1\" Runner : winner\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 6.4153205000002345,
+ "prompt_tokens": 3302,
+ "completion_tokens": 160,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5l85px12oi6713hltvq8qp",
+  "object": "chat.completion",
+  "created": 1791565637,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bettor {\n  + name : string\n  + id : int\n}\n\nclass Race {\n  + raceId : int\n  + date : date\n}\n\nclass Runner {\n  + horseName : string\n  + runnerId : int\n}\n\nclass Jockey {\n  + name : string\n}\n\nclass Bet {\n  + amount : float\n  + odds : float\n}\n\nBettor \"1\" -- \"0..*\" Bet\nRace \"1\" -- \"1..*\" Runner\nRunner \"1\" -- \"1\" Jockey\nBet \"*\" -- \"1\" Race\nBet \"*\" -- \"1\" Runner\nRace \"0..1\" -- \"1\" Runner : winner\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3302,
+   "completion_tokens": 160,
+   "total_tokens": 3462,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

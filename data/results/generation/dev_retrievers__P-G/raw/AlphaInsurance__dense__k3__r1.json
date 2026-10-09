@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass AlphaInsurance {\n  + companyName : string\n}\n\nclass Customer {\n  + name : string\n  + address : string\n  + customerId : int\n}\n\nclass Broker {\n  + brokerId : int\n  + name : string\n}\n\nclass Contract {\n  + contractId : int\n  + signingDate : date\n  + billingFrequency : string\n  + price : float\n}\n\nabstract class InsurancePolicy {\n  + policyType : string\n}\n\nclass LifePolicy {}\nclass CarPolicy {}\nclass RiskPolicy {}\n\nclass Offer {\n  + offerId : int\n  + status : string\n  + deliveryMethod : string\n}\n\nclass ClaimCase {\n  + caseId : int\n  + description : string\n  + status : string\n}\n\nclass Estimator {\n  + estimatorId : int\n  + areaOfExpertise : string\n}\n\nclass EstimatorReport {\n  + reportId : int\n  + findings : string\n  + reportDate : date\n}\n\nclass CompensationDecision {\n  + decisionId : int\n  + eligibleCosts : float\n  + isApproved : boolean\n}\n\nclass Payment {\n  + paymentId : int\n  + amount : float\n  + paymentDate : date\n}\n\nAlphaInsurance \"1\" *-- \"*\" Customer\nBroker \"1\" -- \"*\" Customer\nCustomer \"1\" -- \"*\" Contract\nContract \"1\" -- \"1\" InsurancePolicy\nInsurancePolicy --|> Policy\nLifePolicy --|> InsurancePolicy\nCarPolicy --|> InsurancePolicy\nRiskPolicy --|> InsurancePolicy\n\nCustomer \"1\" -- \"*\" Offer\nOffer \"0..1\" -- \"0..1\" Contract\n\nContract \"1\" -- \"*\" ClaimCase\nClaimCase \"1\" -- \"*\" EstimatorReport\nEstimator \"1\" -- \"*\" EstimatorReport\nEstimatorReport \"*\" -- \"0..1\" CompensationDecision\nCompensationDecision \"1\" -- \"1\" Payment\nPayment \"*\" -- \"1\" Customer\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 11.746767600001476,
+ "prompt_tokens": 3458,
+ "completion_tokens": 435,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-r4yijo1ng4bdufkdph60v5",
+  "object": "chat.completion",
+  "created": 1791564812,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass AlphaInsurance {\n  + companyName : string\n}\n\nclass Customer {\n  + name : string\n  + address : string\n  + customerId : int\n}\n\nclass Broker {\n  + brokerId : int\n  + name : string\n}\n\nclass Contract {\n  + contractId : int\n  + signingDate : date\n  + billingFrequency : string\n  + price : float\n}\n\nabstract class InsurancePolicy {\n  + policyType : string\n}\n\nclass LifePolicy {}\nclass CarPolicy {}\nclass RiskPolicy {}\n\nclass Offer {\n  + offerId : int\n  + status : string\n  + deliveryMethod : string\n}\n\nclass ClaimCase {\n  + caseId : int\n  + description : string\n  + status : string\n}\n\nclass Estimator {\n  + estimatorId : int\n  + areaOfExpertise : string\n}\n\nclass EstimatorReport {\n  + reportId : int\n  + findings : string\n  + reportDate : date\n}\n\nclass CompensationDecision {\n  + decisionId : int\n  + eligibleCosts : float\n  + isApproved : boolean\n}\n\nclass Payment {\n  + paymentId : int\n  + amount : float\n  + paymentDate : date\n}\n\nAlphaInsurance \"1\" *-- \"*\" Customer\nBroker \"1\" -- \"*\" Customer\nCustomer \"1\" -- \"*\" Contract\nContract \"1\" -- \"1\" InsurancePolicy\nInsurancePolicy --|> Policy\nLifePolicy --|> InsurancePolicy\nCarPolicy --|> InsurancePolicy\nRiskPolicy --|> InsurancePolicy\n\nCustomer \"1\" -- \"*\" Offer\nOffer \"0..1\" -- \"0..1\" Contract\n\nContract \"1\" -- \"*\" ClaimCase\nClaimCase \"1\" -- \"*\" EstimatorReport\nEstimator \"1\" -- \"*\" EstimatorReport\nEstimatorReport \"*\" -- \"0..1\" CompensationDecision\nCompensationDecision \"1\" -- \"1\" Payment\nPayment \"*\" -- \"1\" Customer\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3458,
+   "completion_tokens": 435,
+   "total_tokens": 3893,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

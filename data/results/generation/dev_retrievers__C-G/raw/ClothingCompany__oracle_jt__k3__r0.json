@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Product\",\"attributes\":[\"+ Name : string\",\"+ Description : string\",\"+ NetPrice : double\"]},{\"name\":\"Country\",\"attributes\":[\"+ CountryName : string\",\"+ VATRate : float\",\"+ Currency : string\",\"+ ConversionRateToEuro : float\"]},{\"name\":\"Representative\",\"attributes\":[\"+ FirstName : string\",\"+ LastName : string\",\"+ SocialSecurityNumber : string\",\"+ TelephoneNumber : string\",\"+ EmailAddress : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ Address : string\",\"+ TelephoneNumber : string\",\"+ EmailAddress : string\"]},{\"name\":\"Order\",\"attributes\":[\"+ OrderID : int\",\"+ OrderQuantity : int\",\"+ OrderDate : date\",\"+ DesiredDeliveryDate : date\"]},{\"name\":\"Manufacturer\",\"attributes\":[\"+ CompanyName : string\"]},{\"name\":\"Availability\",\"attributes\":[\"+ IsAvailable : boolean\"]},{\"name\":\"Company\",\"attributes\":[\"+ CompanyName : string\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Product\",\"part\":\"Availability\",\"label\":\"availability\"},{\"type\":\"unidirectional\",\"source\":\"Product\",\"target\":\"Manufacturer\",\"label\":\"manufacturedBy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Product\",\"target\":\"Country\",\"label\":\"soldIn\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Representative\",\"target\":\"Country\",\"label\":\"responsibleFor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Customer\",\"target\":\"Country\",\"label\":\"resellsIn\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Representative\",\"target\":\"Order\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Order\",\"target\":\"Product\",\"label\":\"refersTo\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Customer\",\"target\":\"Order\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*<|\"|>}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 12.472482899996976,
+ "prompt_tokens": 4464,
+ "completion_tokens": 421,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qp2nqgwhllj59yfn5o2crj",
+  "object": "chat.completion",
+  "created": 1791566113,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Product\",\"attributes\":[\"+ Name : string\",\"+ Description : string\",\"+ NetPrice : double\"]},{\"name\":\"Country\",\"attributes\":[\"+ CountryName : string\",\"+ VATRate : float\",\"+ Currency : string\",\"+ ConversionRateToEuro : float\"]},{\"name\":\"Representative\",\"attributes\":[\"+ FirstName : string\",\"+ LastName : string\",\"+ SocialSecurityNumber : string\",\"+ TelephoneNumber : string\",\"+ EmailAddress : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ Address : string\",\"+ TelephoneNumber : string\",\"+ EmailAddress : string\"]},{\"name\":\"Order\",\"attributes\":[\"+ OrderID : int\",\"+ OrderQuantity : int\",\"+ OrderDate : date\",\"+ DesiredDeliveryDate : date\"]},{\"name\":\"Manufacturer\",\"attributes\":[\"+ CompanyName : string\"]},{\"name\":\"Availability\",\"attributes\":[\"+ IsAvailable : boolean\"]},{\"name\":\"Company\",\"attributes\":[\"+ CompanyName : string\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"Product\",\"part\":\"Availability\",\"label\":\"availability\"},{\"type\":\"unidirectional\",\"source\":\"Product\",\"target\":\"Manufacturer\",\"label\":\"manufacturedBy\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Product\",\"target\":\"Country\",\"label\":\"soldIn\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Representative\",\"target\":\"Country\",\"label\":\"responsibleFor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Customer\",\"target\":\"Country\",\"label\":\"resellsIn\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Representative\",\"target\":\"Order\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"Order\",\"target\":\"Product\",\"label\":\"refersTo\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Customer\",\"target\":\"Order\",\"label\":\"places\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*<|\"|>}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4464,
+   "completion_tokens": 421,
+   "total_tokens": 4885,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

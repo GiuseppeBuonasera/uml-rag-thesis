@@ -114,6 +114,11 @@ non sono state modificate.
 103. 2026-10-09 — Istruzioni mirate chiuse: blocco fuori dalla pipeline, configurazione di lavoro invariata, nessuna iterazione
 104. 2026-10-09 — Test e controlli di sanità: lettura dei GT del test set solo per verificare il codice
 105. 2026-10-09 — Rigenerazione dei 5 report versionati con il GT corretto di eHome2020: nessun esito cambia
+106. 2026-10-09 — Riga di provenienza automatica nei report: commit e impronta del GT
+107. 2026-10-09 — Retriever denso e ibrido: APPROVATA (FASE 1, STOP 1), solo retrieval sul corpus, test set escluso
+108. 2026-10-09 — Retriever denso e ibrido: implementazione, analisi LOO sul corpus ed esito della regola (FASE 2-3, STOP 2)
+109. 2026-10-09 — Retriever come fattore sperimentale: controllo di funzionamento sul dev set e run oracolo — APPROVATA (STOP A)
+110. 2026-10-09 — Controllo di funzionamento dei retriever e run oracolo: esecuzione ed esito (STOP B)
 
 ## Formato
 
@@ -3721,3 +3726,233 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - **Effetto sulle cifre descrittive della voce 95** (non modificata): con il GT corretto il verso delle relazioni nel
   compatto con Gemma è **100%** a ogni k (44/44, 46/46, 52/52, 45/45; prima 95-98%) e in PlantUML va dal **55% all'88%**
   (prima 50-82%). La conclusione della voce 95 (verso molto migliore nel compatto) è confermata.
+
+### [2026-10-09] Riga di provenienza automatica nei report: commit e impronta del GT
+- `experiments/provenance.py`: `provenance_line()` scrive in testa ai report "Analisi eseguita sul commit `<hash>` (con
+  modifiche non committate). GT del corpus: 59 diagrammi, sha256 del contenuto `<impronta>` (JSON canonico dei
+  `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `<16 cifre>…`".
+  L'impronta è lo sha256 del JSON canonico (chiavi ordinate, separatori compatti, UTF-8) di {id: diagramma} dei record
+  del corpus: non dipende dagli a capo del checkout (lo sha256 dei byte del file invece sì, voce 68, ed è riportato solo
+  per informazione). Impronta attuale (GT con eHome2020 corretto): `b400d1dd7954e8a97c88ff604bc47f294e7eca2cb17d9cd7dd680542fd5db5fd`.
+- Usata da `analyze_pilot.py`, `analyze_pilot2.py`, `analyze_dev.py`, `analyze_k.py`, `analyze_instructions.py`,
+  `review_report.py` e `retrieval/analyze_retrieval.py` (al posto della vecchia riga del commit, che si ripeteva in ogni
+  script). **Sostituisce le note manuali** "Rigenerato … dopo la correzione del GT di eHome2020" della voce 105: i 6 report
+  di analisi sono stati rigenerati (registrati nel registro delle esecuzioni) e, salvo la riga di provenienza e la nota
+  tolta, sono identici riga per riga alla versione precedente (verificato). La run del retrieval
+  `loo_2026-10-04_stop1` NON è stata rigenerata (ricreerebbe la cartella della run): la riga comparirà nelle run nuove.
+- Test (`check_provenance`): impronta indipendente dall'ordine dei record e dagli a capo (corpus riletto in CRLF),
+  sensibile a una modifica del GT; riga con commit e numero di diagrammi. Suite della generazione e del retrieval verdi.
+
+### [2026-10-09] Retriever denso e ibrido: APPROVATA (FASE 1, STOP 1), solo retrieval sul corpus, test set escluso
+- **Perimetro**: implementazione e valutazione SOLO come retriever, in leave-one-out sul corpus (59 query, stesse
+  esclusioni della valutazione di BM25, voci 57-59); nessuna generazione; il test set NON si tocca (nemmeno per il solo
+  retrieval). BM25 resta congelato (`retrieval/config_bm25.yaml`).
+- **1a. Lunghezza dei testi** (campo `description`, lo stesso indicizzato da BM25; tokenizer reali scaricati da Hugging
+  Face, solo i file del tokenizer e dei metadati, nessun peso): vocabolario BERT (all-MiniLM-L6-v2, bge-small-en-v1.5,
+  e5-small-v2, nomic-embed-text-v1.5) mediana 289 token, massimo 814; **53 descrizioni su 59 superano 128 token, 37
+  superano 256, 12 superano 512**; vocabolario ModernBERT mediana 297, massimo 798. Quindi all-MiniLM-L6-v2 (limite 256)
+  troncherebbe in silenzio **37 testi su 59 (63%)**, i modelli a 512 token **12 su 59 (20%)**, i modelli a 8192 nessuno.
+  (Il minimo di 128 misurato con il tokenizer di all-MiniLM è un artefatto del padding attivo nel suo `tokenizer.json`;
+  i conteggi sopra 128 non ne dipendono.)
+- **1b. Modelli candidati (3)**, dati letti dai metadati del repository alla revisione indicata (il numero di parametri
+  è derivato dalla dimensione dei pesi float32):
+
+  | modello | revisione HF | licenza | pesi | parametri (circa) | limite di token | prefissi | testi troncati | ruolo |
+  |---|---|---|---|---|---|---|---|---|
+  | `sentence-transformers/all-MiniLM-L6-v2` | `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` | Apache-2.0 | 91 MB | 22,7 M (6 strati, 384) | 256 | nessuno | 37/59 | riferimento classico |
+  | `BAAI/bge-small-en-v1.5` | `5c38ec7c405ec4b44b94cc5a9bb96e735b38267a` | MIT | 133 MB | 33 M (12 strati, 384) | 512 | istruzione solo per query brevi verso passaggi lunghi ("Represent this sentence for searching relevant passages: "); qui query e documenti sono testi dello stesso tipo, quindi **nessun prefisso** | 12/59 | piccolo, 512 token |
+  | `Alibaba-NLP/gte-modernbert-base` | `e7f32e3c00f91d699e8c43b53106206bcc72bb22` | Apache-2.0 | 298 MB | 149 M (22 strati, 768) | 8192 | nessuno | 0/59 | contesto lungo senza codice remoto |
+
+  Tutti in inglese (il corpus è in inglese). **Scartati**: `nomic-ai/nomic-embed-text-v1.5` (8192 token ma richiede
+  `trust_remote_code`, cioè l'esecuzione di codice scaricato dal repository: rischio e riproducibilità peggiore);
+  `nomic-ai/modernbert-embed-base` (8192, nessun codice remoto, ma 596 MB e prefissi obbligatori: doppione più pesante
+  del gte); `intfloat/e5-small-v2` (stessa taglia e stesso limite di bge-small, prefissi "query: " / "passage: "
+  obbligatori: non aggiunge un caso diverso).
+  **Vincoli di esecuzione**: calcolo su CPU (`device="cpu"`); `sentence-transformers` con versione fissata in
+  requirements.txt (insieme a `transformers` ≥ 4.48, richiesto dall'architettura ModernBERT), da installare nella FASE 2
+  (oggi non installato; nota: l'ambiente ha già un conflitto `torchaudio` 2.6 / `torch` 2.10 segnalato da pip, da
+  controllare all'installazione); revisione del modello passata in modo esplicito (`revision=<hash>`) e registrata nei
+  risultati; dopo il primo download esecuzione con `HF_HUB_OFFLINE=1`; pesi nella cache di Hugging Face dell'utente,
+  MAI in git. Embedding normalizzati e **similarità coseno esatta con numpy** (59 documenti); **proposta: togliere
+  `faiss-cpu` da requirements.txt** (non installato e non necessario). Testo indicizzato: `description`, lo stesso di
+  BM25, senza stopword né stemming. Troncamento: nessun spezzettamento; i testi troncati si contano e si riportano per
+  ogni modello.
+- **1c. Ibrido (proposta principale)**: **Reciprocal Rank Fusion** tra BM25 congelato e il modello denso scelto, costante
+  standard **60**: punteggio(d) = 1 / (60 + rango_BM25(d)) + 1 / (60 + rango_denso(d)), ranghi da 1 sull'ordinamento
+  completo dei 58 candidati della query (leave-one-out); parità risolta per id. Nessun parametro da tarare.
+  **Alternativa scartata**: combinazione pesata α · score_BM25_norm + (1 − α) · coseno, che richiederebbe di tarare α (e la
+  normalizzazione degli score, su scale diverse) sugli stessi 59 esercizi su cui poi si valuta: rischio di adattamento
+  al corpus e nessun insieme separato per la taratura.
+- **1d. Misure di pertinenza** (sui diagrammi GT di query ed esempio recuperato; **nessun embedding**, né del modello
+  valutato né di altri):
+  - **J** = Jaccard dei nomi di classe esatti normalizzati (`corpus_loader.class_names`, minuscole e soli caratteri
+    alfanumerici): la misura del Passo 2 per BM25, per confronto diretto;
+  - **Jt (principale)** = Jaccard dei TOKEN dei nomi di classe: CamelCase spezzato (`ReservationSlot` → reservation,
+    slot), minuscole, stemming Snowball inglese (lo stesso stemmer di `retrieval/text_preprocessing.py`); misura
+    "morbida" che riconosce nomi parzialmente uguali (`InsurancePolicy` / `Policy`);
+  - **S** = similarità del profilo strutturale (descrittiva): vettore dei conteggi (classi, attributi, metodi, e
+    relazioni per ciascuno dei 7 tipi Apollon), similarità = 1 − distanza L1 tra le proporzioni dei tipi di relazione,
+    più il rapporto min / max del numero di classi; non usa il vocabolario, quindi è neutra rispetto a BM25.
+  Nota: J e Jt sono misure lessicali sui nomi del GT e possono favorire BM25 (le descrizioni contengono spesso i nomi
+  delle classi); il confronto TRA modelli densi non ne risente. Pertinenza a k = media della misura sui primi k
+  recuperati, mediata sulle 59 query (come J@k del Passo 2).
+- **1e. Analisi previste** (descrittive, leave-one-out sul corpus): J, Jt e S a k = 1, 2, 3 per BM25, ciascun modello
+  denso, l'ibrido (RRF con ciascun denso, descrittivo; quello ufficiale è con il denso scelto), il retriever casuale (20
+  seed, media ± deviazione standard) e l'oracolo (massimo raggiungibile, solo riferimento); sovrapposizione dei top-3 tra
+  BM25 e ciascun denso (media di |∩| / 3, quota di query con lo stesso top-1); hubness per ciascun retriever (candidati
+  distinti al rango 1 e massima frequenza di un candidato nei top-3, come `retrieval/hubness_report.py`); esempi
+  qualitativi: le 3 query con la sovrapposizione minima tra BM25 e il denso scelto, con i titoli recuperati; numero di
+  testi troncati per modello.
+- **1f. Regola di scelta del modello denso (PROPOSTA, da approvare PRIMA dei calcoli)**: dipende SOLO dalla pertinenza sul
+  corpus. (1) Si sceglie il modello con il **Jt@3 più alto** (k = 3 è il k di lavoro, voce 95); (2) **pareggio** =
+  modelli entro **0,01** dal migliore Jt@3: tra questi vince il **più piccolo** (numero di parametri: MiniLM < bge-small <
+  gte-modernbert). Nessun altro criterio (troncamenti, velocità, hubness si riportano soltanto). Il modello scelto entra
+  nell'ibrido RRF e, più avanti, nelle generazioni sull'insieme di sviluppo (con una regola a parte).
+- **Dopo l'approvazione** (non ora): FASE 2, implementazione di `retrieval/dense_retriever.py` e `hybrid_retriever.py`
+  con test su embedding finti (nessun download durante la suite); FASE 3, calcoli, scelta meccanica, report; STOP 2.
+- **STOP 1**: proposta registrata prima di implementare (nessun retriever implementato, nessun peso scaricato).
+- **APPROVATA (2026-10-09)**, con queste precisazioni (vincolanti):
+  1. **Ruolo delle misure**: J, Jt e S servono SOLO a scegliere il modello denso (regola 1f invariata). Il confronto BM25
+     / denso / ibrido NON si decide su queste misure (lessicali, favoriscono BM25 per costruzione): si deciderà con le
+     generazioni sull'insieme di sviluppo, con una regola scritta prima delle run, in un passo successivo.
+  2. **Intervallo bootstrap al 95%** (1000 ricampionamenti delle 59 query con reinserimento, seme fisso 0, percentili
+     2,5 e 97,5) della differenza appaiata di Jt@3 tra i due migliori modelli densi e tra il denso scelto e BM25. Solo
+     descrittivo: la regola non cambia.
+  3. **Pareggi di coseno**: ordinamento per id crescente, come BM25 (`base.rank_results`). **Cache degli embedding del
+     corpus** su disco, con nome del modello e revisione nel nome del file, fuori da git.
+  4. **Ambiente**: versioni registrate PRIMA dell'installazione: torch 2.10.0, torchaudio 2.6.0+cu124, torchvision
+     0.25.0, tokenizers 0.23.3, huggingface_hub 2.2.0 (installato il 2026-10-09 per leggere i tokenizer della FASE 1),
+     numpy 2.2.6, scipy 1.16.3, scikit-learn 1.8.0; transformers e sentence-transformers assenti; Python 3.12.10.
+     L'installazione di sentence-transformers NON deve cambiare torch (se pip ci prova: stop e segnalazione).
+     torchaudio non è usato dal progetto: il conflitto si segnala in STATUS.md, non si risolve toccando torch.
+  5. **requirements.txt**: tolto `faiss-cpu`; `sentence-transformers` e `transformers` (>= 4.48) fissati alle versioni
+     installate.
+  Poi FASE 2 (implementazione e test con embedding finti) e FASE 3 (download alle revisioni fissate, esecuzione offline,
+  analisi, regola meccanica), STOP 2.
+
+### [2026-10-09] Retriever denso e ibrido: implementazione, analisi LOO sul corpus ed esito della regola (FASE 2-3, STOP 2)
+- **Ambiente** (precisazione 4 della voce 107): `pip install sentence-transformers==6.1.0 transformers==5.19.0`; torch
+  INVARIATO (2.10.0, build CPU), nessun tentativo di pip di cambiarlo (verificato prima con `--dry-run`); effetti
+  collaterali: huggingface_hub 2.2.0 -> 1.33.0 (richiesto da transformers 5), più httpx, safetensors 0.8.0, typer, rich.
+  torchaudio 2.6.0+cu124 (non usato) non si carica con torch 2.10 e transformers 5.19 lo importa se installato: il
+  retriever denso lo dichiara non disponibile SOLO nel proprio processo (`_disable_broken_torchaudio`), senza toccare
+  l'ambiente; conflitto segnalato in STATUS.md, non risolto. requirements.txt: `faiss-cpu` tolto,
+  `sentence-transformers==6.1.0` e `transformers==5.19.0` fissati.
+- **Codice (FASE 2)**: `retrieval/dense_retriever.py` (interfaccia di `base.py`; coseno esatto numpy su embedding
+  normalizzati; `revision` esplicita, `device="cpu"`, `trust_remote_code=False`; parità per id; cache su disco in
+  `data/cache/embeddings/<modello>@<revisione[:12]>.npz`, indicizzata dallo sha256 del testo, fuori da git);
+  `retrieval/hybrid_retriever.py` (RRF, c = 60, ranghi sui candidati non esclusi, score_norm = score / (2 / 61));
+  `retrieval/relevance.py` (J, Jt, S; S = media di 1 − distanza di variazione totale tra le proporzioni dei 7 tipi di
+  relazione e del rapporto min / max del numero di classi); `retrieval/config_dense.yaml` (modelli, revisioni, regola);
+  `retrieval/download_dense_models.py` (download unico, solo i file PyTorch: niente ONNX / OpenVINO / TF);
+  `retrieval/analyze_dense.py` (offline, `HF_HUB_OFFLINE=1` obbligatorio). Test in `retrieval/test_retrieval.py` con
+  embedding finti (nessun download, sentence-transformers mai importato): cache per modello e revisione, parità per id,
+  RRF a mano, misure a mano, regola, bootstrap, sovrapposizione, hubness. Suite del retrieval e della generazione verdi.
+- **Esecuzione (FASE 3)**: download alle revisioni fissate (92, 135, 302 MB nella cache di Hugging Face dell'utente),
+  poi analisi offline: run `data/results/retrieval/dense_2026-10-09_22f5adf/` (summary.md, config.json, relevance.csv,
+  top3.csv, hubness.csv). Rieseguita una seconda volta (la prima si era fermata DOPO aver scritto i file, sulla stampa
+  in console di "−" in cp1252; corretto): `relevance.csv` e `top3.csv` identici byte per byte. Il test set NON è stato
+  letto (solo `load_candidates`). Controllo di coerenza: BM25 riproduce la run congelata (J@1 0,096, J@3 0,067).
+- **Risultati (LOO, 59 query)**, Jt@3: casuale 0,018 ± 0,002; BM25 0,083; all-MiniLM-L6-v2 0,0697; gte-modernbert-base
+  0,0685; bge-small-en-v1.5 0,0683; ibrido RRF (BM25 + MiniLM) 0,081; oracolo 0,120. J@1: BM25 0,096, MiniLM 0,087, bge
+  0,073, gte 0,067, ibrido 0,093. S è poco discriminante (casuale 0,61, tutti i retriever 0,64-0,67, oracolo 0,90).
+- **Esito della regola (meccanico)**: i tre modelli sono entro 0,0014 di Jt@3, quindi **tutti in parità** (soglia
+  0,01) e vince il più piccolo: **`sentence-transformers/all-MiniLM-L6-v2` @ `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`**.
+  Bootstrap al 95% (1000 ricampionamenti, seme 0, descrittivo): MiniLM − gte-modernbert +0,0012 [−0,0044, +0,0066];
+  MiniLM − BM25 −0,0137 [−0,0212, −0,0063]. **Da notare**: la scelta la decide di fatto il criterio di parità (i modelli
+  non si distinguono con questa misura), e MiniLM tronca 37 descrizioni su 59 a 256 token (vede solo l'inizio del
+  testo). Che i densi stiano sotto BM25 su J e Jt è atteso (misure lessicali, voce 107 precisazione 1) e NON decide il
+  confronto tra retriever, che resta alle generazioni sull'insieme di sviluppo con una regola da scrivere prima.
+- **Descrittivo**: sovrapposizione dei top-3 con BM25 0,41 (MiniLM), 0,44 (bge), 0,36 (gte); stesso top-1 46%, 46%,
+  36%. Hubness: gte concentra molto (TransportCompany 17 volte nei top-3 e 8 al rango 1; 15 candidati mai nei top-3),
+  MiniLM 2 mai nei top-3, BM25 5. Tempi su CPU (8 thread) per le 59 descrizioni: MiniLM circa 1 s, bge circa 2,8 s, gte
+  circa 105 s (1,8 s per testo).
+- **STOP 2**: in attesa dell'utente. Nessuna generazione; nessuna modifica a BM25, al prompt o alla configurazione di
+  lavoro (voce 95).
+- **STOP 2 APPROVATO (2026-10-09)**. Modello denso: **all-MiniLM-L6-v2, scelto per spareggio** (i tre densi sono in
+  pareggio su Jt@3; bootstrap MiniLM − gte [−0,0044; +0,0066]).
+
+### [2026-10-09] Retriever come fattore sperimentale: controllo di funzionamento sul dev set e run oracolo — APPROVATA (STOP A)
+- **Decisione metodologica**: il tipo di retriever è un **fattore sperimentale** (domanda di ricerca), non un parametro
+  da tarare. **BM25, MiniLM (all-MiniLM-L6-v2 @ `1110a243`, voce 108) e ibrido RRF entrano TUTTI nel Passo 3b** come
+  condizioni a confronto. Sull'insieme di sviluppo **non si sceglie un vincitore**: solo un controllo di funzionamento.
+- **Configurazione** (`experiments/configs/dev_retrievers.yaml`): Gemma 4 12B QAT, versione di configurazione 2
+  (contesto 32768, max_tokens 4096), temperatura 0,3, top_p 0,95, top_k 64, k = 3, formati PlantUML (P-G) e compatto
+  (C-G), 2 ripetizioni, gli stessi 20 esercizi di sviluppo (voce 92), prompt SENZA blocco di istruzioni mirate (voce
+  100). Condizioni nuove del prompt builder: `dense` (MiniLM; il più simile per ultimo, come bm25), `hybrid` (RRF c = 60
+  tra BM25 congelato rifittato senza la query e MiniLM; il più simile per ultimo), `oracle_jt` (vedi sotto). La
+  condizione `oracle` esistente (Jaccard esatto, voce del Passo 3a) resta invariata e non si usa qui. Totale 3 condizioni
+  × 2 formati × 20 × 2 = **240 generazioni**. **Baseline** = run di Gemma a k = 3 di `dev_k` (bm25, stessi parametri,
+  esercizi ed esempi), ricalcolata con il GT corretto.
+- **Regola di ESCLUSIONE (per formato)**: MiniLM o l'ibrido sono **esclusi dal Passo 3b in quel formato** se, rispetto a
+  BM25 k = 3 (baseline):
+  - **Vc peggiora di più di 4 su 40** (Vc(retriever) < Vc(BM25) − 4, cioè una perdita di 5 o più risposte), oppure
+  - compare **anche un solo troncamento per max_tokens** (finish_reason `length`) o **un prompt oltre il budget di
+    contesto**.
+  **Nessun criterio su R, J o M**: le differenze sono attese piccole e verranno valutate nel 3b. Controllo preliminare
+  (come voce 98): baseline e condizione complete (40 risposte per formato), senza ragionamento, del modello del config;
+  altrimenti quel formato non si decide e lo si segnala.
+- **Run ORACOLO** (`oracle_jt`): sceglie i k = 3 esempi con **Jt massimo** (voce 107: Jaccard dei token dei nomi di
+  classe) rispetto al GT della query, in leave-one-out (gli altri 58 candidati), **pareggi per id crescente**, il più
+  simile per ultimo. **Solo diagnostica, MAI nel 3b** (usa il GT della query). Interpretazione fissata prima:
+  - se **R(oracolo) − R(BM25) < 0,03 in entrambi i formati** → "la qualità del retrieval non è il collo di bottiglia con
+    questo corpus e questo modello";
+  - se **≥ 0,03 in almeno un formato** → "un retrieval migliore avrebbe margine"; si riporta il valore senza trarne
+    scelte per il 3b.
+- **Prima delle run (dopo il via)**: lunghezza dei prompt per dense, hybrid e oracle_jt con `context_budget.py` (massimo
+  rispetto al budget); diff dei prompt con la baseline su 1 esercizio per formato e per condizione (devono differire
+  SOLO negli esempi recuperati); verifica che l'oracolo non recuperi mai la query e rispetti il leave-one-out; script di
+  analisi (riuso di `analyze_k.py` / `analyze_instructions.py`) testato sulla baseline PRIMA delle run.
+- **Analisi prevista**: tabella per formato e retriever (BM25 baseline, MiniLM, ibrido, oracolo) con V, Vc, J, R, M
+  primaria e verso; esito della regola di esclusione; interpretazione dell'oracolo secondo la regola; esempi recuperati
+  in comune con BM25 per esercizio; report grafico con `review_report.py` per le tre condizioni nuove.
+- **Esecuzione su CPU del denso durante le run**: gli embedding di MiniLM sono in cache (`data/cache/embeddings/`),
+  il modello gira offline su CPU (la GPU resta a LM Studio).
+- **STOP A**: proposta registrata prima del codice e delle run.
+- **APPROVATA (2026-10-09) con due modifiche** (vincolanti, prevalgono sul testo sopra):
+  1. **Troncamenti**: un retriever è escluso in quel formato se i troncamenti per max_tokens sono **2 o più**; con **1
+     solo** troncamento non è escluso, ma la risposta si riporta e si allega nel report. Invariati: **anche un solo
+     prompt oltre il budget di contesto → esclusione**; criterio Vc (perdita di più di 4 su 40 → esclusione).
+  2. **Esclusioni dei candidati (verificato)**: nelle run `dev_k` BM25 esclude **SOLO la query stessa**
+     (`PromptBuilder.bm25_for`: indice rifittato su `pool(query)` = i 59 candidati convertiti meno la query, nessun
+     `exclude_ids`; Cruise, non convertito, e il test set non sono mai candidati per nessuna condizione). `dense`,
+     `hybrid` e `oracle_jt` usano **esattamente lo stesso `pool(query)`** (58 candidati): nessuna differenza con BM25.
+     Il controllo prima delle run lo verifica di nuovo sugli esempi effettivamente scelti.
+
+### [2026-10-09] Controllo di funzionamento dei retriever e run oracolo: esecuzione ed esito (STOP B)
+- **Codice**: condizioni `dense`, `hybrid`, `oracle_jt` in `generation/prompt_builder.py` (il più simile per ultimo;
+  candidati = `pool(query)`, gli stessi di bm25; il denso è quello di `config_dense.yaml`, caricato su CPU e offline
+  solo alla prima condizione densa; `oracle_jt` analysis_only); `HybridRetriever.prefitted`; provenienza del runner
+  con `config_dense.yaml` (sha256) e modello denso@revisione; `experiments/context_budget.py --config` (bilancio dei
+  prompt di un config dell'insieme di sviluppo, senza leggere il test set); `experiments/check_dev_retrievers.py`
+  (controlli prima delle run); `experiments/analyze_retrievers.py` (regola della voce 109, testata sulla sola baseline
+  PRIMA delle run: metriche della baseline identiche a quelle di `dev_instructions_analysis`);
+  `experiments/review_report.py`: la condizione entra nell'etichetta delle risposte e c'è il filtro `cond=` (con più
+  retriever nella stessa run le risposte erano indistinguibili). Test: `check_retrievers` in
+  `generation/test_generation.py` (embedding finti, nessun download). Suite verdi.
+- **Controlli prima delle run** (tutti passati): prompt più lungo stimato 5.359 token reali (C-G, dense, Facepage)
+  contro un budget di 28.672 (fattore server / stima 1,044 dai manifest di `dev_k`); i prompt bm25 k = 3 ricostruiti
+  hanno lo stesso sha256 di `dev_k` (20/20 per formato); dense, hybrid e oracle_jt differiscono dalla baseline SOLO nel
+  blocco esempi (20/20 per formato e condizione, diff su AlphaInsurance); su tutte le 59 query del corpus la query non
+  è mai tra gli esempi, i candidati sono gli stessi 58 di bm25, oracle_jt = top-3 per Jt, e bm25 / dense / hybrid
+  coincidono con i top-3 del LOO della voce 108. Esempi in comune con bm25 sul dev set: dense 26/60, hybrid 39/60,
+  oracle_jt 32/60.
+- **Run**: `dev_retrievers__P-G` e `__C-G`, 120 + 120 generazioni, tutte `stop`, nessun ragionamento, nessuna
+  ripresa necessaria. 4 risposte per formato vengono dalla cache perché il prompt è IDENTICO a quello di `dev_k` (stessi
+  esempi nello stesso ordine: HospitalHouseMD con oracle_jt, ProjectManagement con hybrid, 2 ripetizioni ciascuno):
+  sono le risposte della baseline, come atteso a parità di richiesta e seme. **Caricamento del modello**: Gemma 4 12B
+  QAT caricato da me con `lms load google/gemma-4-12b-qat --context-length 32768 --gpu max` (nessun modello era
+  caricato); impostazioni salvate di LM Studio per il modello: contesto 32768, cache K e V F16, ragionamento spento;
+  **Flash Attention NON verificabile** dai log né dall'API (il config la dichiara attiva come nella baseline).
+- **Esito della regola di esclusione (voce 109)**: **nessuna esclusione**. PlantUML: dense dVc −1, hybrid dVc 0;
+  compatto: dense dVc +1, hybrid dVc +1; nessun troncamento, nessun prompt oltre il budget. **BM25, MiniLM e ibrido
+  entrano tutti nel Passo 3b in entrambi i formati.**
+- **Oracolo (solo diagnostica)**: R(oracolo) − R(BM25) = PlantUML +0,017, compatto −0,065 → **"la qualità del
+  retrieval non è il collo di bottiglia con questo corpus e questo modello"** (interpretazione fissata prima).
+- **Descrittivo, fuori dalla regola** (2 ripetizioni, temperatura 0,3: differenze di pochi centesimi possono essere
+  rumore): PlantUML R 0,307 (BM25) / 0,327 (MiniLM) / 0,330 (ibrido) / 0,324 (oracolo); compatto R 0,310 / 0,256 /
+  0,250 / 0,244, con J e (per l'oracolo) Vc più bassi (30/40). Nel compatto tutti i retriever diversi da BM25 hanno R
+  più basso di 0,05-0,07: da tenere presente nel 3b, dove il confronto si farà sul test set. Report:
+  `data/results/generation/dev_retrievers_analysis/summary.md`; report grafico (non versionato):
+  `data/results/generation/dev_retrievers_review/index.html`.
+- **STOP B**: in attesa dell'utente. Nessuna modifica alla configurazione di lavoro (voce 95).

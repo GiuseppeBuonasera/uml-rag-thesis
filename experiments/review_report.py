@@ -21,7 +21,7 @@ le risposte non valide, come nelle analisi.
 Uso:
     python experiments/review_report.py --runs dev_k__P-G dev_k__C-G --filter k=3 [--name dev_k_k3]
         [--out DIR] [--plantuml-jar .tools/plantuml-old.jar]
-Filtri: k=<int>, rep=<int>, q=<id esercizio> (ripetibili). Uscita: data/results/generation/<nome>_review/index.html
+Filtri: k=<int>, rep=<int>, q=<id esercizio>, cond=<condizione> (ripetibili). Uscita: data/results/generation/<nome>_review/index.html
 (non versionata: .gitignore esclude i file delle cartelle dei risultati salvo summary.md e simili).
 """
 
@@ -50,6 +50,7 @@ import render_pilot2 as rp  # noqa: E402  (CSS, esc)
 import uml_structure as us  # noqa: E402
 from plantuml_format import apollon_to_plantuml  # noqa: E402
 from prompt_builder import cl  # noqa: E402
+import provenance  # noqa: E402  (riga di provenienza, voce 106)
 
 RESULTS = ROOT / "data" / "results" / "generation"
 DEFAULT_JAR = ROOT / ".tools" / "plantuml-old.jar"
@@ -73,8 +74,8 @@ def parse_filters(items: list[str]) -> dict:
     out = {}
     for it in items or []:
         key, _, val = it.partition("=")
-        if key not in ("k", "rep", "q") or not val:
-            raise SystemExit(f"filtro non valido {it!r}: usare k=<int>, rep=<int>, q=<id>")
+        if key not in ("k", "rep", "q", "cond") or not val:
+            raise SystemExit(f"filtro non valido {it!r}: usare k=<int>, rep=<int>, q=<id>, cond=<condizione>")
         out.setdefault(key, set()).add(val)
     return out
 
@@ -82,7 +83,8 @@ def parse_filters(items: list[str]) -> dict:
 def keep(m: dict, filters: dict) -> bool:
     return (("k" not in filters or str(m.get("k")) in filters["k"]) and
             ("rep" not in filters or str(m.get("repetition")) in filters["rep"]) and
-            ("q" not in filters or m.get("query_id") in filters["q"]))
+            ("q" not in filters or m.get("query_id") in filters["q"]) and
+            ("cond" not in filters or m.get("condition") in filters["cond"]))
 
 
 def load_run(run_dir: Path, filters: dict, gt: dict[str, dict]) -> list[dict]:
@@ -100,7 +102,7 @@ def load_run(run_dir: Path, filters: dict, gt: dict[str, dict]) -> list[dict]:
         raw = json.loads((run_dir / "raw" / f"{m['call_id']}.json").read_text(encoding="utf-8"))
         v = (pp.validate_response(raw["text"], raw["finish_reason"]) if fmt == "apollon"
              else ad.validate(fmt, raw["text"], raw["finish_reason"], m["call_id"], version))
-        cond = f"{run_dir.name} k={m.get('k')}"
+        cond = f"{run_dir.name} {m.get('condition')} k={m.get('k')}"  # condizione: piu' retriever nella stessa run (voce 109)
         calls.append({"m": m, "raw": raw, "v": v, "gt": gt[m["query_id"]], "q": m["query_id"], "r": m["repetition"],
                       "format": fmt, "cond": cond, "version": version if fmt == "plantuml" else ""})
     return calls
@@ -224,6 +226,7 @@ def build(calls: list[dict], jar: Path, title: str) -> tuple[str, dict]:
          "grezze; validazione come il runner; rendering: struttura comune → espansore → PlantUML canonico → SVG "
          "(plantuml.jar locale, layout smetana). Metriche per risposta: V, Vc, J, R, M come nelle analisi (0 per le "
          "non valide). Confronto per contenuto, mai per id.</p>",
+         f"<p class=\"note\">{rp.esc(provenance.provenance_line()).replace('`', '')}</p>",
          f"<p class=\"legend\"><span style=\"background:{GREEN}\">classe presente nel GT</span>"
          f"<span style=\"background:{ORANGE}\">classe in più rispetto al GT</span></p>"]
     # indice
@@ -285,7 +288,7 @@ def build(calls: list[dict], jar: Path, title: str) -> tuple[str, dict]:
 def main(argv=None) -> int:
     a = argparse.ArgumentParser()
     a.add_argument("--runs", nargs="+", required=True, help="cartelle in data/results/generation/")
-    a.add_argument("--filter", nargs="*", default=[], help="k=<int> rep=<int> q=<id> (ripetibili)")
+    a.add_argument("--filter", nargs="*", default=[], help="k=<int> rep=<int> q=<id> cond=<condizione> (ripetibili)")
     a.add_argument("--name", help="nome del report (default: unione dei nomi delle run e dei filtri)")
     a.add_argument("--out", help="cartella di output (default: data/results/generation/<nome>_review/)")
     a.add_argument("--plantuml-jar", default=str(DEFAULT_JAR))

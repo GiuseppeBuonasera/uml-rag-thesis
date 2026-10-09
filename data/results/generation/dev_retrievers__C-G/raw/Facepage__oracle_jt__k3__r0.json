@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"User\",\"attributes\":[\"+ UserID : int\",\"+ Name : string\",\"+ Email : string\",\"+ DateOfBirth : date\"]},{\"name\":\"Account\",\"attributes\":[\"+ AccountNumber : int\"]},{\"name\":\"PersonalAccount\",\"methods\":[\"+ sendFriendRequest() : boolean\",\"+ receiveFriendRequest() : boolean\"]},{\"name\":\"BusinessAccount\",\"attributes\":[\"+ CompanyName : string\",\"+ MonthlyFee : double\"]},{\"name\":\"Page\",\"attributes\":[\"+ PageName : string\",\"+ VisitCount : int\"]},{\"name\":\"AdvertisementPage\",\"attributes\":[\"+ BounceRate : float\",\"+ ClickThroughRate : float\",\"+ ConversionRate : float\"]},{\"name\":\"FriendRequest\"}],\"relations\":[{\"type\":\"composition\",\"whole\":\"User\",\"part\":\"Account\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"inheritance\",\"child\":\"PersonalAccount\",\"parent\":\"Account\"},{\"type\":\"inheritance\",\"child\":\"BusinessAccount\",\"parent\":\"Account\"},{\"type\":\"composition\",\"whole\":\"Account\",\"part\":\"Page\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"inheritance\",\"child\":\"AdvertisementPage\",\"parent\":\"Page\"},{\"type\":\"association\",\"source\":\"PersonalAccount\",\"target\":\"PersonalAccount\",\"label\":\"friendship\"},{\"type\":\"association\",\"source\":\"PersonalAccount\",\"target\":\"Page\",\"label\":\"privilege\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"dependency\",\"source\":\"PersonalAccount\",\"target\":\"FriendRequest\"},{\"type\":\"dependency\",\"source\":\"BusinessAccount\",\"target\":\"AdvertisementPage\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 10.314468500000658,
+ "prompt_tokens": 4833,
+ "completion_tokens": 310,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ghhsf81oz3xh4hze0orxn",
+  "object": "chat.completion",
+  "created": 1791566477,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"User\",\"attributes\":[\"+ UserID : int\",\"+ Name : string\",\"+ Email : string\",\"+ DateOfBirth : date\"]},{\"name\":\"Account\",\"attributes\":[\"+ AccountNumber : int\"]},{\"name\":\"PersonalAccount\",\"methods\":[\"+ sendFriendRequest() : boolean\",\"+ receiveFriendRequest() : boolean\"]},{\"name\":\"BusinessAccount\",\"attributes\":[\"+ CompanyName : string\",\"+ MonthlyFee : double\"]},{\"name\":\"Page\",\"attributes\":[\"+ PageName : string\",\"+ VisitCount : int\"]},{\"name\":\"AdvertisementPage\",\"attributes\":[\"+ BounceRate : float\",\"+ ClickThroughRate : float\",\"+ ConversionRate : float\"]},{\"name\":\"FriendRequest\"}],\"relations\":[{\"type\":\"composition\",\"whole\":\"User\",\"part\":\"Account\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"inheritance\",\"child\":\"PersonalAccount\",\"parent\":\"Account\"},{\"type\":\"inheritance\",\"child\":\"BusinessAccount\",\"parent\":\"Account\"},{\"type\":\"composition\",\"whole\":\"Account\",\"part\":\"Page\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"inheritance\",\"child\":\"AdvertisementPage\",\"parent\":\"Page\"},{\"type\":\"association\",\"source\":\"PersonalAccount\",\"target\":\"PersonalAccount\",\"label\":\"friendship\"},{\"type\":\"association\",\"source\":\"PersonalAccount\",\"target\":\"Page\",\"label\":\"privilege\",\"sourceMultiplicity\":\"1..*\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"dependency\",\"source\":\"PersonalAccount\",\"target\":\"FriendRequest\"},{\"type\":\"dependency\",\"source\":\"BusinessAccount\",\"target\":\"AdvertisementPage\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4833,
+   "completion_tokens": 310,
+   "total_tokens": 5143,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

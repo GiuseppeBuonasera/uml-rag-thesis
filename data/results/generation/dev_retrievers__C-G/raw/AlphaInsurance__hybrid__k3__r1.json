@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"InsuranceCompany\",\"attributes\":[\"+ companyName : string\",\"+ headquartersAddress : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ customerId : int\",\"+ name : string\",\"+ email : string\",\"+ phone : string\"]},{\"name\":\"Broker\",\"attributes\":[\"+ brokerId : int\",\"+ name : string\",\"+ licenseNumber : string\"]},{\"name\":\"Contract\",\"attributes\":[\"+ contractId : int\",\"+ signingDate : date\",\"+ billingFrequency : BillingFrequency\",\"+ totalPremium : double\"]},{\"name\":\"Policy\",\"kind\":\"abstract\",\"attributes\":[\"+ policyNumber : string\",\"+ coverageDetails : string\",\"+ premiumAmount : double\"]},{\"name\":\"LifePolicy\",\"attributes\":[\"+ beneficiaryName : string\"]},{\"name\":\"CarPolicy\",\"attributes\":[\"+ vehiclePlate : string\",\"+ vehicleModel : string\"]},{\"name\":\"ClaimCase\",\"attributes\":[\"+ claimId : int\",\"+ status : ClaimStatus\",\"+ incidentDate : date\",\"+ description : string\"]},{\"name\":\"CompensationDecision\",\"attributes\":[\"+ decisionId : int\",\"+ approvedAmount : double\",\"+ eligibleCosts : string\"]},{\"name\":\"Estimator\",\"attributes\":[\"+ estimatorId : int\",\"+ name : string\",\"+ areaOfExpertise : string\"]},{\"name\":\"Report\",\"attributes\":[\"+ reportId : int\",\"+ content : string\",\"+ creationDate : date\"]},{\"name\":\"BillingFrequency\",\"kind\":\"enum\",\"values\":[\"monthly\",\"yearly\"]},{\"name\":\"ClaimStatus\",\"kind\":\"enum\",\"values\":[\"open\",\"under_assessment\",\"approved\",\"rejected\",\"paid\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Customer\",\"label\":\"serves\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Broker\",\"target\":\"Customer\",\"label\":\"manages\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Contract\",\"label\":\"signs\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Contract\",\"part\":\"Policy\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"ClaimCase\",\"label\":\"files\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"ClaimCase\",\"target\":\"CompensationDecision\",\"label\":\"resultsIn\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"Estimator\",\"target\":\"Report\",\"label\":\"writes\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Report\",\"target\":\"ClaimCase\",\"label\":\"evaluates\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"inheritance\",\"child\":\"LifePolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"CarPolicy\",\"parent\":\"Policy\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 13.98357169999872,
+ "prompt_tokens": 3230,
+ "completion_tokens": 583,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-h1l7fl616xemq0a2b5upia",
+  "object": "chat.completion",
+  "created": 1791565846,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"InsuranceCompany\",\"attributes\":[\"+ companyName : string\",\"+ headquartersAddress : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ customerId : int\",\"+ name : string\",\"+ email : string\",\"+ phone : string\"]},{\"name\":\"Broker\",\"attributes\":[\"+ brokerId : int\",\"+ name : string\",\"+ licenseNumber : string\"]},{\"name\":\"Contract\",\"attributes\":[\"+ contractId : int\",\"+ signingDate : date\",\"+ billingFrequency : BillingFrequency\",\"+ totalPremium : double\"]},{\"name\":\"Policy\",\"kind\":\"abstract\",\"attributes\":[\"+ policyNumber : string\",\"+ coverageDetails : string\",\"+ premiumAmount : double\"]},{\"name\":\"LifePolicy\",\"attributes\":[\"+ beneficiaryName : string\"]},{\"name\":\"CarPolicy\",\"attributes\":[\"+ vehiclePlate : string\",\"+ vehicleModel : string\"]},{\"name\":\"ClaimCase\",\"attributes\":[\"+ claimId : int\",\"+ status : ClaimStatus\",\"+ incidentDate : date\",\"+ description : string\"]},{\"name\":\"CompensationDecision\",\"attributes\":[\"+ decisionId : int\",\"+ approvedAmount : double\",\"+ eligibleCosts : string\"]},{\"name\":\"Estimator\",\"attributes\":[\"+ estimatorId : int\",\"+ name : string\",\"+ areaOfExpertise : string\"]},{\"name\":\"Report\",\"attributes\":[\"+ reportId : int\",\"+ content : string\",\"+ creationDate : date\"]},{\"name\":\"BillingFrequency\",\"kind\":\"enum\",\"values\":[\"monthly\",\"yearly\"]},{\"name\":\"ClaimStatus\",\"kind\":\"enum\",\"values\":[\"open\",\"under_assessment\",\"approved\",\"rejected\",\"paid\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"InsuranceCompany\",\"target\":\"Customer\",\"label\":\"serves\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Broker\",\"target\":\"Customer\",\"label\":\"manages\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Contract\",\"label\":\"signs\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Contract\",\"part\":\"Policy\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"ClaimCase\",\"label\":\"files\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"ClaimCase\",\"target\":\"CompensationDecision\",\"label\":\"resultsIn\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"Estimator\",\"target\":\"Report\",\"label\":\"writes\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Report\",\"target\":\"ClaimCase\",\"label\":\"evaluates\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"inheritance\",\"child\":\"LifePolicy\",\"parent\":\"Policy\"},{\"type\":\"inheritance\",\"child\":\"CarPolicy\",\"parent\":\"Policy\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3230,
+   "completion_tokens": 583,
+   "total_tokens": 3813,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

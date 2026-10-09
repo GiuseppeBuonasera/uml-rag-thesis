@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Product\",\"attributes\":[\"+ Name : string\",\"+ Description : string\",\"+ NetPrice : double\"]},{\"name\":\"Country\",\"attributes\":[\"+ Name : string\",\"+ VATRate : float\",\"+ Currency : string\",\"+ ConversionRateToEuro : float\"]},{\"name\":\"Representative\",\"attributes\":[\"+ FirstName : string\",\"+ LastName : string\",\"+ Ssn : int\",\"+ Telephone : string\",\"+ Email : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ Address : string\",\"+ Telephone : string\",\"+ Email : string\"]},{\"name\":\"Order\",\"attributes\":[\"+ OrderID : string\",\"+ Quantity : int\",\"+ OrderDate : date\",\"+ DesiredDeliveryDate : date\"]},{\"name\":\"Manufacturer\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Company\",\"attributes\":[\"+ Name : string\"]],\"relations\":[{\"type\":\"composition\",\"whole\":\"Country\",\"part\":\"Product\",\"label\":\"availableIn\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\"},{\"type\":\"unidirectional\",\"source\":\"Representative\",\"target\":\"Country\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"label\":\"manages\"},{\"type\":\"unidirectional\",\"source\":\"Representative\",\"target\":\"Order\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"places\"},{\"type\":\"unidirectional\",\"source\":\"Customer\",\"target\":\"Country\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"label\":\"resellsIn\"},{\"type\":\"unidirectional\",\"source\":\"Order\",\"target\":\"Customer\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Order\",\"target\":\"Product\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Product\",\"target\":\"Manufacturer\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Manufacturer\",\"target\":\"Company\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 12.409201500002382,
+ "prompt_tokens": 4078,
+ "completion_tokens": 394,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2pnax3qcly40lsios9t1zg",
+  "object": "chat.completion",
+  "created": 1791566064,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Product\",\"attributes\":[\"+ Name : string\",\"+ Description : string\",\"+ NetPrice : double\"]},{\"name\":\"Country\",\"attributes\":[\"+ Name : string\",\"+ VATRate : float\",\"+ Currency : string\",\"+ ConversionRateToEuro : float\"]},{\"name\":\"Representative\",\"attributes\":[\"+ FirstName : string\",\"+ LastName : string\",\"+ Ssn : int\",\"+ Telephone : string\",\"+ Email : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ Address : string\",\"+ Telephone : string\",\"+ Email : string\"]},{\"name\":\"Order\",\"attributes\":[\"+ OrderID : string\",\"+ Quantity : int\",\"+ OrderDate : date\",\"+ DesiredDeliveryDate : date\"]},{\"name\":\"Manufacturer\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Company\",\"attributes\":[\"+ Name : string\"]],\"relations\":[{\"type\":\"composition\",\"whole\":\"Country\",\"part\":\"Product\",\"label\":\"availableIn\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\"},{\"type\":\"unidirectional\",\"source\":\"Representative\",\"target\":\"Country\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"label\":\"manages\"},{\"type\":\"unidirectional\",\"source\":\"Representative\",\"target\":\"Order\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"places\"},{\"type\":\"unidirectional\",\"source\":\"Customer\",\"target\":\"Country\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"label\":\"resellsIn\"},{\"type\":\"unidirectional\",\"source\":\"Order\",\"target\":\"Customer\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Order\",\"target\":\"Product\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Product\",\"target\":\"Manufacturer\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"unidirectional\",\"source\":\"Manufacturer\",\"target\":\"Company\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4078,
+   "completion_tokens": 394,
+   "total_tokens": 4472,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

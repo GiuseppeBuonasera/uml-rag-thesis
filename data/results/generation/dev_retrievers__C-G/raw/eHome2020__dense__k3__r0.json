@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Sensor\",\n      \"attributes\": [\n        \"+ vendorId : string\",\n        \"+ description : string\",\n        \"+ unit : UnitType\",\n        \"+ threshold : double\"\n      ]\n    },\n    {\n      \"name\": \"TemperatureSensor\",\n      \"attributes\": [\n        \"+ minValue : double\",\n        \"+ maxValue : double\"\n      ]\n    },\n    {\n      \"name\": \"PowerSensor\",\n      \"attributes\": [\n        \"+ totalPowerConsumption : double\"\n      ]\n    },\n    {\n      \"name\": \"UnitType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"CELSIUS\",\n        \"WATT\"\n      ]\n    },\n    {\n      \"name\": \"SensorController\",\n      \"attributes\": [\n        \"+ controllerId : string\"\n      ]\n    },\n    {\n      \"name\": \"Apartment\",\n      \"attributes\": [\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ username : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Administrator\",\n      \"attributes\": [\n        \"+ adminRights : boolean\"\n      ]\n    },\n    {\n      \"name\": \"SensorValue\",\n      \"attributes\": [\n        \"+ timestamp : datetime\",\n        \"+ value : double\"\n      ]\n    },\n    {\n      \"name\": \"EMonitor\",\n      \"attributes\": [\n        \"+ systemName : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PowerSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Administrator\",\n      \"parent\": \"Inhabitant\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"Apartment\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"SensorController\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Sensor\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"assignedRoom\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sensor\",\n      \"part\": \"SensorValue\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"EMonitor\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"EMonitor\",\n      \"target\": \"SensorController\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 24.914454699999624,
+ "prompt_tokens": 4748,
+ "completion_tokens": 975,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6wm6tb9905pejsbfaru24k",
+  "object": "chat.completion",
+  "created": 1791566235,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Sensor\",\n      \"attributes\": [\n        \"+ vendorId : string\",\n        \"+ description : string\",\n        \"+ unit : UnitType\",\n        \"+ threshold : double\"\n      ]\n    },\n    {\n      \"name\": \"TemperatureSensor\",\n      \"attributes\": [\n        \"+ minValue : double\",\n        \"+ maxValue : double\"\n      ]\n    },\n    {\n      \"name\": \"PowerSensor\",\n      \"attributes\": [\n        \"+ totalPowerConsumption : double\"\n      ]\n    },\n    {\n      \"name\": \"UnitType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"CELSIUS\",\n        \"WATT\"\n      ]\n    },\n    {\n      \"name\": \"SensorController\",\n      \"attributes\": [\n        \"+ controllerId : string\"\n      ]\n    },\n    {\n      \"name\": \"Apartment\",\n      \"attributes\": [\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"attributes\": [\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"Inhabitant\",\n      \"attributes\": [\n        \"+ username : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Administrator\",\n      \"attributes\": [\n        \"+ adminRights : boolean\"\n      ]\n    },\n    {\n      \"name\": \"SensorValue\",\n      \"attributes\": [\n        \"+ timestamp : datetime\",\n        \"+ value : double\"\n      ]\n    },\n    {\n      \"name\": \"EMonitor\",\n      \"attributes\": [\n        \"+ systemName : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PowerSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Administrator\",\n      \"parent\": \"Inhabitant\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Apartment\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"Apartment\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"SensorController\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Sensor\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"assignedRoom\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sensor\",\n      \"part\": \"SensorValue\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"EMonitor\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"EMonitor\",\n      \"target\": \"SensorController\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4748,
+   "completion_tokens": 975,
+   "total_tokens": 5723,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

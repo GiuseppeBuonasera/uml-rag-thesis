@@ -1,0 +1,51 @@
+# Retriever denso e ibrido (voce 107 di docs/decisions.md, APPROVATA il 2026-10-09).
+# Candidati alla revisione fissata (commit del repository Hugging Face), calcolo su CPU, esecuzione offline dopo il
+# primo download (retrieval/download_dense_models.py), pesi nella cache di Hugging Face dell'utente, MAI in git.
+# Testo indicizzato: `description` (lo stesso di BM25), senza stopword ne' stemming; nessun prefisso; i testi oltre il
+# limite di token del modello si troncano (si contano e si riportano, nessuno spezzettamento).
+# La regola di scelta e' fissata PRIMA dei calcoli: non si cambia dopo aver visto i risultati.
+
+modelli:
+  - nome: sentence-transformers/all-MiniLM-L6-v2
+    revisione: 1110a243fdf4706b3f48f1d95db1a4f5529b4d41
+    licenza: Apache-2.0
+    parametri_milioni: 22.7
+    limite_token: 256
+  - nome: BAAI/bge-small-en-v1.5
+    revisione: 5c38ec7c405ec4b44b94cc5a9bb96e735b38267a
+    licenza: MIT
+    parametri_milioni: 33.4
+    limite_token: 512
+  - nome: Alibaba-NLP/gte-modernbert-base
+    revisione: e7f32e3c00f91d699e8c43b53106206bcc72bb22
+    licenza: Apache-2.0
+    parametri_milioni: 149
+    limite_token: 8192
+
+embedding:
+  device: cpu
+  normalizzati: true
+  similarita: coseno esatto (numpy, prodotto scalare di vettori normalizzati)
+  parita: id crescente (base.rank_results, come BM25)
+  prefisso_query: ""
+  prefisso_documento: ""
+  batch_size: 8
+  cache: data/cache/embeddings/  # fuori da git; nome del file = modello + revisione
+
+ibrido:
+  metodo: reciprocal_rank_fusion
+  costante: 60  # punteggio(d) = 1/(60 + rango_BM25(d)) + 1/(60 + rango_denso(d)), ranghi da 1 sui candidati non esclusi
+  bm25: retrieval/config_bm25.yaml  # congelata
+
+regola_di_scelta:
+  misura: Jt@3  # Jaccard dei token dei nomi di classe (CamelCase, minuscole, Snowball), media dei primi 3, LOO corpus
+  pareggio_entro: 0.01  # modelli entro 0,01 dal migliore: vince il piu' piccolo (parametri_milioni)
+  bootstrap: {ricampionamenti: 1000, seme: 0, livello: 0.95}  # solo descrittivo
+
+# Esito della regola (FASE 3, 2026-10-09, voce 108; run data/results/retrieval/dense_2026-10-09_22f5adf):
+# Jt@3 MiniLM 0.0697, gte-modernbert 0.0685, bge-small 0.0683 -> tutti entro 0.01 -> vince il piu' piccolo.
+esito:
+  scelto: sentence-transformers/all-MiniLM-L6-v2
+  revisione: 1110a243fdf4706b3f48f1d95db1a4f5529b4d41
+  in_parita: [sentence-transformers/all-MiniLM-L6-v2, BAAI/bge-small-en-v1.5, Alibaba-NLP/gte-modernbert-base]
+  run: dense_2026-10-09_22f5adf

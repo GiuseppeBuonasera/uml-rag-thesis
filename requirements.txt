@@ -1,8 +1,9 @@
 # Retrieval
 rank-bm25==0.2.2  # BM25Okapi (retrieval/keyword_retriever.py): versione fissata, score dipende dall'implementazione
 snowballstemmer==3.1.1  # stemming Snowball inglese (retrieval/text_preprocessing.py), Python puro, nessun download
-sentence-transformers
-faiss-cpu
+sentence-transformers==6.1.0  # retriever denso (retrieval/dense_retriever.py, voce 107): versione fissata, su CPU
+transformers==5.19.0  # >= 4.48 per ModernBERT (gte-modernbert-base); installato con torch 2.10.0 invariato
+# faiss-cpu tolto (voce 107): 59 documenti, similarita' coseno esatta con numpy
 
 # LLM / API
 anthropic

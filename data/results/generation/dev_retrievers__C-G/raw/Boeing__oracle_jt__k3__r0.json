@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Boeing\",\"attributes\":[\"+ CompanyName : string\"]},{\"name\":\"Airline\",\"attributes\":[\"+ Name : string\",\"+ RegistrationNumber : string\"]},{\"name\":\"Employee\",\"attributes\":[\"+ Name : string\",\"+ EmployeeID : int\"]},{\"name\":\"Salesperson\",\"attributes\":[\"+ CommissionRate : float\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractID : string\",\"+ DeliveryConditions : string\",\"+ LegalAspects : string\"]},{\"name\":\"Acquisition\",\"attributes\":[\"+ Model : string\",\"+ Price : float\",\"+ Options : string\",\"+ DeliveryDate : date\"]},{\"name\":\"Airplane\",\"attributes\":[\"+ SerialNumber : string\",\"+ ModelType : string\"]},{\"name\":\"SalesAgreement\",\"attributes\":[\"+ AgreementID : string\",\"+ Status : string\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Boeing\",\"target\":\"SalesAgreement\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Boeing\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"SalesAgreement\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"SalesAgreement\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Contract\",\"part\":\"Acquisition\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Salesperson\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"inheritance\",\"child\":\"Salesperson\",\"parent\":\"Employee\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Airline\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"0..1\",\"targetRole\":\"daughter\",\"label\":\"MotherDaughterRelationship\"},{\"type\":\"association\",\"source\":\"Acquisition\",\"target\":\"Airplane\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"targetRole\":\"Buyer\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 12.545033599999442,
+ "prompt_tokens": 3580,
+ "completion_tokens": 429,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ulxy609esk59gc7qiv4p",
+  "object": "chat.completion",
+  "created": 1791565969,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Boeing\",\"attributes\":[\"+ CompanyName : string\"]},{\"name\":\"Airline\",\"attributes\":[\"+ Name : string\",\"+ RegistrationNumber : string\"]},{\"name\":\"Employee\",\"attributes\":[\"+ Name : string\",\"+ EmployeeID : int\"]},{\"name\":\"Salesperson\",\"attributes\":[\"+ CommissionRate : float\"]},{\"name\":\"Contract\",\"attributes\":[\"+ ContractID : string\",\"+ DeliveryConditions : string\",\"+ LegalAspects : string\"]},{\"name\":\"Acquisition\",\"attributes\":[\"+ Model : string\",\"+ Price : float\",\"+ Options : string\",\"+ DeliveryDate : date\"]},{\"name\":\"Airplane\",\"attributes\":[\"+ SerialNumber : string\",\"+ ModelType : string\"]},{\"name\":\"SalesAgreement\",\"attributes\":[\"+ AgreementID : string\",\"+ Status : string\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Boeing\",\"target\":\"SalesAgreement\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"Boeing\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"SalesAgreement\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"association\",\"source\":\"SalesAgreement\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"composition\",\"whole\":\"Contract\",\"part\":\"Acquisition\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Salesperson\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\"},{\"type\":\"inheritance\",\"child\":\"Salesperson\",\"parent\":\"Employee\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Airline\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"0..1\",\"targetRole\":\"daughter\",\"label\":\"MotherDaughterRelationship\"},{\"type\":\"association\",\"source\":\"Acquisition\",\"target\":\"Airplane\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..*\",\"targetRole\":\"Buyer\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3580,
+   "completion_tokens": 429,
+   "total_tokens": 4009,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

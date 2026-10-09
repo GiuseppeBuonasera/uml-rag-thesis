@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"H2SLocation\",\"attributes\":[\"+ CityName : string\"]},{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\"]},{\"name\":\"PickupRequest\",\"attributes\":[\"+ RequestID : int\",\"+ Description : string\",\"+ RequestedDate : date\",\"+ RequestedTime : time\"]},{\"name\":\"Item\",\"attributes\":[\"+ Description : string\",\"+ Weight : float\",\"+ Dimensions : string\",\"+ IsFood : boolean\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ LicensePlate : string\",\"+ StorageCapacity : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ Name : string\",\"+ AvailableDays : string[]\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ RouteID : int\",\"+ Date : date\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ LocationID : int\"]},{\"name\":\"Employee\",\"attributes\":[\"+ EmployeeID : int\",\"+ Name : string\"]},{\"name\":\"Category\",\"kind\":\"enum\",\"values\":[\"BabyClothing\",\"WomensWinterBoots\",\"Fridge\",\"Microwave\"]},{\"name\":\"Article\",\"attributes\":[\"+ RFIDTag : string\",\"+ Category : Category\"]},{\"name\":\"Client\",\"attributes\":[\"+ Name : string\",\"+ HomeAddress : string\",\"+ NeededCategories : Category[]\"]},{\"name\":\"FoodBank\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"Delivery\",\"attributes\":[\"+ DeliveryDate : date\",\"+ Status : string\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"DistributionCenter\",\"partMultiplicity\":\"1\",\"wholeMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"PickupRequest\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"source\":\"PickupRequest\",\"target\":\"Item\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Vehicle\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PickupRoute\",\"target\":\"PickupRequest\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Client\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Article\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"FoodBank\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 17.31715759999861,
+ "prompt_tokens": 4718,
+ "completion_tokens": 621,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-vl1k0leaik077p3808f",
+  "object": "chat.completion",
+  "created": 1791566662,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"H2SLocation\",\"attributes\":[\"+ CityName : string\"]},{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\"]},{\"name\":\"PickupRequest\",\"attributes\":[\"+ RequestID : int\",\"+ Description : string\",\"+ RequestedDate : date\",\"+ RequestedTime : time\"]},{\"name\":\"Item\",\"attributes\":[\"+ Description : string\",\"+ Weight : float\",\"+ Dimensions : string\",\"+ IsFood : boolean\"]},{\"name\":\"Vehicle\",\"attributes\":[\"+ LicensePlate : string\",\"+ StorageCapacity : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ Name : string\",\"+ AvailableDays : string[]\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ RouteID : int\",\"+ Date : date\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ LocationID : int\"]},{\"name\":\"Employee\",\"attributes\":[\"+ EmployeeID : int\",\"+ Name : string\"]},{\"name\":\"Category\",\"kind\":\"enum\",\"values\":[\"BabyClothing\",\"WomensWinterBoots\",\"Fridge\",\"Microwave\"]},{\"name\":\"Article\",\"attributes\":[\"+ RFIDTag : string\",\"+ Category : Category\"]},{\"name\":\"Client\",\"attributes\":[\"+ Name : string\",\"+ HomeAddress : string\",\"+ NeededCategories : Category[]\"]},{\"name\":\"FoodBank\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"Delivery\",\"attributes\":[\"+ DeliveryDate : date\",\"+ Status : string\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"H2SLocation\",\"part\":\"DistributionCenter\",\"partMultiplicity\":\"1\",\"wholeMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"PickupRequest\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"composition\",\"source\":\"PickupRequest\",\"target\":\"Item\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\"},{\"type\":\"association\",\"source\":\"Vehicle\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PickupRoute\",\"target\":\"PickupRequest\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Client\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Article\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"Delivery\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"FoodBank\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"0..1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4718,
+   "completion_tokens": 621,
+   "total_tokens": 5339,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

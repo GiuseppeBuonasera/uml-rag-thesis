@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Product {\n  + Name : string\n  + Description : string\n  + NetPrice : double\n}\n\nclass Country {\n  + Name : string\n  + VATRate : float\n  + Currency : string\n  + ConversionRateToEuro : float\n}\n\nclass Representative {\n  + FirstName : string\n  + LastName : string\n  + SSN : int\n  + Telephone : string\n  + Email : string\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n  + Telephone : string\n  + Email : string\n}\n\nclass Order {\n  + OrderID : string\n  + Quantity : int\n  + OrderDate : date\n  + DesiredDeliveryDate : date\n}\n\nclass Manufacturer {\n  + Name : string\n}\n\nProduct \"*\" -- \"1\" Manufacturer : manufacturedBy\nProduct \"*\" -- \"1\" Country : soldIn\nRepresentative \"1\" -- \"1\" Country : responsibleFor\nRepresentative \"1\" -- \"*\" Order : places\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"*\" -- \"*\" Country : resellsIn\nOrder \"*\" -- \"1\" Product : refersTo\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.250632800001767,
+ "prompt_tokens": 3541,
+ "completion_tokens": 257,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-l25a8qwzvg0xl9jy9m18p",
+  "object": "chat.completion",
+  "created": 1791564951,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Product {\n  + Name : string\n  + Description : string\n  + NetPrice : double\n}\n\nclass Country {\n  + Name : string\n  + VATRate : float\n  + Currency : string\n  + ConversionRateToEuro : float\n}\n\nclass Representative {\n  + FirstName : string\n  + LastName : string\n  + SSN : int\n  + Telephone : string\n  + Email : string\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n  + Telephone : string\n  + Email : string\n}\n\nclass Order {\n  + OrderID : string\n  + Quantity : int\n  + OrderDate : date\n  + DesiredDeliveryDate : date\n}\n\nclass Manufacturer {\n  + Name : string\n}\n\nProduct \"*\" -- \"1\" Manufacturer : manufacturedBy\nProduct \"*\" -- \"1\" Country : soldIn\nRepresentative \"1\" -- \"1\" Country : responsibleFor\nRepresentative \"1\" -- \"*\" Order : places\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"*\" -- \"*\" Country : resellsIn\nOrder \"*\" -- \"1\" Product : refersTo\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3541,
+   "completion_tokens": 257,
+   "total_tokens": 3798,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

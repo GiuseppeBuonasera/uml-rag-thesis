@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Product\",\"attributes\":[\"+ Name : string\",\"+ Description : string\",\"+ NetPrice : double\"]},{\"name\":\"Country\",\"attributes\":[\"+ Name : string\",\"+ VATRate : float\",\"+ Currency : string\",\"+ ConversionRateToEuro : float\"]},{\"name\":\"Representative\",\"attributes\":[\"+ FirstName : string\",\"+ LastName : string\",\"+ SSN : int\",\"+ Telephone : string\",\"+ Email : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ Address : string\",\"+ Telephone : string\",\"+ Email : string\"]},{\"name\":\"Order\",\"attributes\":[\"+ OrderID : string\",\"+ Quantity : int\",\"+ OrderDate : date\",\"+ DesiredDeliveryDate : date\"]},{\"name\":\"Manufacturer\",\"attributes\":[\"+ Name : string\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Product\",\"target\":\"Manufacturer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Product\",\"target\":\"Country\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Representative\",\"target\":\"Country\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Representative\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Country\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Representative\",\"target\":\"Order\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Product\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 9.031092799999897,
+ "prompt_tokens": 4078,
+ "completion_tokens": 328,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wscgxzy7kfzdyu0g4fjte",
+  "object": "chat.completion",
+  "created": 1791566077,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Product\",\"attributes\":[\"+ Name : string\",\"+ Description : string\",\"+ NetPrice : double\"]},{\"name\":\"Country\",\"attributes\":[\"+ Name : string\",\"+ VATRate : float\",\"+ Currency : string\",\"+ ConversionRateToEuro : float\"]},{\"name\":\"Representative\",\"attributes\":[\"+ FirstName : string\",\"+ LastName : string\",\"+ SSN : int\",\"+ Telephone : string\",\"+ Email : string\"]},{\"name\":\"Customer\",\"attributes\":[\"+ Name : string\",\"+ Address : string\",\"+ Telephone : string\",\"+ Email : string\"]},{\"name\":\"Order\",\"attributes\":[\"+ OrderID : string\",\"+ Quantity : int\",\"+ OrderDate : date\",\"+ DesiredDeliveryDate : date\"]},{\"name\":\"Manufacturer\",\"attributes\":[\"+ Name : string\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Product\",\"target\":\"Manufacturer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Product\",\"target\":\"Country\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Representative\",\"target\":\"Country\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Representative\",\"target\":\"Customer\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Customer\",\"target\":\"Country\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Representative\",\"target\":\"Order\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Order\",\"target\":\"Product\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4078,
+   "completion_tokens": 328,
+   "total_tokens": 4406,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

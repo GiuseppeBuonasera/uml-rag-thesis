@@ -50,6 +50,7 @@ import compact_postprocess as cpp  # noqa: E402
 import plantuml_postprocess as ppu  # noqa: E402
 import run_experiment as rx  # noqa: E402
 from prompt_builder import cl  # noqa: E402
+import provenance  # noqa: E402  (riga di provenienza, voce 106)
 
 RESULTS = ROOT / "data" / "results" / "generation"
 CONFIG = ROOT / "experiments" / "configs" / "dev_formats.yaml"
@@ -244,8 +245,7 @@ def report(infos: dict[str, dict], band_of: dict[str, str] | None = None) -> tup
          "dalle risposte grezze. Metriche di sviluppo: le metriche semantiche definitive restano da decidere con i "
          "relatori. Confronto per contenuto, mai per id. Modelli di taglia diversa (Gemma 4 12B QAT, Qwen2.5-Coder 7B, "
          "voce 85).", "",
-         f"Analisi eseguita sul commit `{git('rev-parse', 'HEAD')[:12] or '?'}`"
-         f"{' (con modifiche non committate)' if git('status', '--porcelain') else ''}."]
+         provenance.provenance_line()]  # commit e impronta del GT (voce 106)
     mism = {n: i["level_mismatch"] for n, i in infos.items() if i["level_mismatch"]}
     if mism:
         L.append(f"**ATTENZIONE**: livello ricalcolato diverso dal manifest in {mism} risposte.")

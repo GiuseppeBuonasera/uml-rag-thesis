@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Company\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HeadquartersAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ AccountNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ EmployeeID : int\",\n        \"+ Name : string\",\n        \"+ ExpertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ PolicyNumber : string\",\n        \"+ CoverageDetails : string\"\n      ]\n    },\n    {\n      \"name\": \"Offer\",\n      \"attributes\": [\n        \"+ OfferID : string\",\n        \"+ ExpiryDate : date\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractID : string\",\n        \"+ SigningDate : date\",\n        \"+ BillingFrequency : string\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ CaseNumber : string\",\n        \"+ Status : string\",\n        \"+ DateOpened : date\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ EmployeeID : int\",\n        \"+ Name : string\",\n        \"+ ExpertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"AssessmentReport\",\n      \"attributes\": [\n        \"+ ReportID : string\",\n        \"+ Findings : string\",\n        \"+ CreationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"CompensationDecision\",\n      \"attributes\": [\n        \"+ DecisionID : string\",\n        \"+ TotalAmount : float\",\n        \"+ EligibleCosts : string\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceNumber : string\",\n        \"+ Amount : float\",\n        \"+ DueDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Broker\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Policy\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Offer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Policy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"ClaimCase\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ClaimCase\",\n      \"part\": \"AssessmentReport\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Estimator\",\n      \"target\": \"AssessmentReport\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"CompensationDecision\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Company\",\n      \"part\": \"Broker\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Company\",\n      \"part\": \"Policy\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 25.757943600001454,
+ "prompt_tokens": 4222,
+ "completion_tokens": 1132,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wjtgy3dxxmntmqfbido7zo",
+  "object": "chat.completion",
+  "created": 1791565888,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Company\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HeadquartersAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ AccountNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ EmployeeID : int\",\n        \"+ Name : string\",\n        \"+ ExpertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ PolicyNumber : string\",\n        \"+ CoverageDetails : string\"\n      ]\n    },\n    {\n      \"name\": \"Offer\",\n      \"attributes\": [\n        \"+ OfferID : string\",\n        \"+ ExpiryDate : date\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractID : string\",\n        \"+ SigningDate : date\",\n        \"+ BillingFrequency : string\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ CaseNumber : string\",\n        \"+ Status : string\",\n        \"+ DateOpened : date\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ EmployeeID : int\",\n        \"+ Name : string\",\n        \"+ ExpertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"AssessmentReport\",\n      \"attributes\": [\n        \"+ ReportID : string\",\n        \"+ Findings : string\",\n        \"+ CreationDate : date\"\n      ]\n    },\n    {\n      \"name\": \"CompensationDecision\",\n      \"attributes\": [\n        \"+ DecisionID : string\",\n        \"+ TotalAmount : float\",\n        \"+ EligibleCosts : string\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ InvoiceNumber : string\",\n        \"+ Amount : float\",\n        \"+ DueDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Broker\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Policy\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Offer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Policy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"ClaimCase\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ClaimCase\",\n      \"part\": \"AssessmentReport\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Estimator\",\n      \"target\": \"AssessmentReport\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"CompensationDecision\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Company\",\n      \"part\": \"Broker\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Company\",\n      \"part\": \"Policy\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4222,
+   "completion_tokens": 1132,
+   "total_tokens": 5354,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

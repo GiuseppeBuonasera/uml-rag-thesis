@@ -67,7 +67,8 @@ import compact_postprocess as cpp  # noqa: E402
 import postprocess as pp  # noqa: E402
 from plantuml_format import apollon_to_plantuml  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient  # noqa: E402
-from prompt_builder import BM25_CONFIG, CONDITIONS, PromptBuilder, PromptSpec, cl, serialize_diagram  # noqa: E402
+from prompt_builder import (BM25_CONFIG, CONDITIONS, DENSE_CONFIG, PromptBuilder, PromptSpec, cl,  # noqa: E402
+                            dense_model, serialize_diagram)
 import token_estimate  # noqa: E402
 
 RESULTS = ROOT / "data" / "results" / "generation"
@@ -109,6 +110,9 @@ def provenance() -> dict:
             "testset_tag": "testset-v1", "testset_tag_commit": git("rev-parse", "testset-v1^{commit}"),
             "config_bm25": str(BM25_CONFIG.relative_to(ROOT)).replace("\\", "/"),
             "config_bm25_sha256": hashlib.sha256(BM25_CONFIG.read_bytes()).hexdigest(),
+            "config_dense": str(DENSE_CONFIG.relative_to(ROOT)).replace("\\", "/"),
+            "config_dense_sha256": hashlib.sha256(DENSE_CONFIG.read_bytes()).hexdigest(),
+            "dense_model": "@".join(dense_model()),
             "python": platform.python_version(), "tiktoken": tiktoken.__version__,
             "token_estimate": f"tiktoken {TOKENIZER} (approssimazione)",
             "token_vocab": str(token_estimate.VOCAB_PATH.relative_to(ROOT)).replace("\\", "/"),

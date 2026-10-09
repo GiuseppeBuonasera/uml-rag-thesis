@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"University\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"ResearchGroup\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Researcher\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ employeeId : int\"\n      ]\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ budget : float\"\n      ]\n    },\n    {\n      \"name\": \"WorkPackage\",\n      \"attributes\": [\n        \"+ wpId : int\",\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"Assignment\",\n      \"attributes\": [\n        \"+ startDate : date\",\n        \"+ endDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"University\",\n      \"part\": \"Department\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"ResearchGroup\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"ResearchGroup\",\n      \"target\": \"University\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Researcher\",\n      \"target\": \"ResearchGroup\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"belongsTo\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Project\",\n      \"part\": \"WorkPackage\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WorkPackage\",\n      \"target\": \"ResearchGroup\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"ledBy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Researcher\",\n      \"target\": \"WorkPackage\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"WorkPackage\",\n      \"part\": \"Assignment\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Assignment\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"teamMember\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.492261899998994,
+ "prompt_tokens": 3269,
+ "completion_tokens": 754,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-o9kfhgmuf633qs95u8h4n",
+  "object": "chat.completion",
+  "created": 1791567146,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"University\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Department\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"ResearchGroup\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Researcher\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ employeeId : int\"\n      ]\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ budget : float\"\n      ]\n    },\n    {\n      \"name\": \"WorkPackage\",\n      \"attributes\": [\n        \"+ wpId : int\",\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"Assignment\",\n      \"attributes\": [\n        \"+ startDate : date\",\n        \"+ endDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"University\",\n      \"part\": \"Department\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Department\",\n      \"part\": \"ResearchGroup\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"ResearchGroup\",\n      \"target\": \"University\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Researcher\",\n      \"target\": \"ResearchGroup\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"belongsTo\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Project\",\n      \"part\": \"WorkPackage\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WorkPackage\",\n      \"target\": \"ResearchGroup\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"ledBy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Researcher\",\n      \"target\": \"WorkPackage\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"WorkPackage\",\n      \"part\": \"Assignment\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Assignment\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"teamMember\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3269,
+   "completion_tokens": 754,
+   "total_tokens": 4023,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

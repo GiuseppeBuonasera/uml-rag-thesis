@@ -47,7 +47,9 @@ corpus/                 script della pipeline + annotazioni + report (mappa file
   processed/            corpus.jsonl, testset_debari.jsonl, apollon/, apollon_debari/
   corrections/, description_exclusions/   annotazioni manuali per esercizio
 retrieval/              Passo 2: BM25 (keyword_retriever), random, loader in sola lettura, analisi, test,
-                        config_bm25.yaml congelata; dense_retriever.py e hybrid_retriever.py ancora stub
+                        config_bm25.yaml congelata; dense_retriever.py (sentence-transformers su CPU, cache in
+                        data/cache/embeddings/, fuori da git) e hybrid_retriever.py (RRF, c = 60), config_dense.yaml,
+                        relevance.py (J, Jt, S), analyze_dense.py, download_dense_models.py (voce 107)
 generation/             Passo 3a: templates/ (blocchi del prompt v4), prompt_builder, llm_client, postprocess,
                         sanity_check, test_generation
 experiments/            runner (run_experiment.py), configs/*.yaml, mock_responses/ (sintetiche), smoke_lmstudio.py
@@ -372,6 +374,11 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
   modellazioni alternative (§10); diagrammi talvolta incompleti rispetto al testo (annotati, non completati: es.
   test set 17 Phone/DoubleTransfer isolati).
 - Test set: 215 warning, in gran parte attributi senza tipo nelle immagini (non inventati).
+- **Ambiente Python, conflitto torchaudio (2026-10-09, voce 107)**: torchaudio 2.6.0+cu124 richiede torch 2.6.0, ma
+  l'ambiente ha torch 2.10.0 (+cpu); torchaudio non si carica. Il progetto non usa l'audio; transformers 5.19 però lo
+  importa se è installato, quindi `retrieval/dense_retriever.py` lo dichiara non disponibile SOLO nel proprio processo
+  (`_disable_broken_torchaudio`). Conflitto NON risolto (torch non si tocca); l'installazione di sentence-transformers
+  6.1.0 / transformers 5.19.0 ha lasciato torch invariato e ha portato huggingface_hub da 2.2.0 a 1.33.0.
 
 ## Rendering dei diagrammi (plantuml.jar, non versionato)
 - `.tools/plantuml-old.jar` = **PlantUML 1.2023.0** (GPL), sha256
@@ -528,7 +535,20 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
 ## Prossimi passi
 1. ~~Trascrizione De Bari (20 esercizi, test set)~~ — FATTO il 2026-10-04.
 2. ~~Retriever BM25, analisi LOO, test set~~ — FATTO il 2026-10-05 (configurazione congelata). Il retriever dense e
-   l'hybrid restano da fare (stub), con una misura di pertinenza non basata sui nomi esatti.
+   l'hybrid restano da fare (stub), con una misura di pertinenza non basata sui nomi esatti. **Proposta registrata
+   (voce 107, STOP 1, 2026-10-09)**: candidati all-MiniLM-L6-v2, bge-small-en-v1.5, gte-modernbert-base (CPU, revisione
+   fissata, offline); ibrido RRF con costante 60; pertinenza J, Jt (token dei nomi di classe, principale) e S
+   (profilo strutturale), senza embedding; scelta del denso per Jt@3 (pareggio entro 0,01 → modello più piccolo); solo
+   LOO sul corpus, test set escluso. Riga di provenienza automatica nei report: voce 106.
+   **Implementati e analizzati (voce 108, STOP 2)**: run `data/results/retrieval/dense_2026-10-09_22f5adf/`; la
+   regola sceglie **all-MiniLM-L6-v2** (tre modelli in parità entro 0,0014 di Jt@3, vince il più piccolo); Jt@3
+   BM25 0,083, MiniLM 0,070, ibrido 0,081 (misure lessicali: NON decidono il confronto tra retriever, che va fatto
+   con le generazioni sull'insieme di sviluppo). Comandi: `python retrieval/download_dense_models.py` (una volta),
+   poi `python retrieval/analyze_dense.py` (offline). STOP 2 approvato (MiniLM scelto per spareggio).
+   **Retriever come fattore sperimentale (voci 109-110)**: BM25, MiniLM e ibrido entrano TUTTI nel 3b. Controllo di
+   funzionamento sul dev set (`dev_retrievers`, 240 generazioni, Gemma, k = 3): nessuna esclusione; oracolo Jt:
+   R − R(BM25) +0,017 (PlantUML), −0,065 (compatto) → il retrieval non è il collo di bottiglia. Analisi:
+   `python experiments/analyze_retrievers.py`; controlli: `python experiments/check_dev_retrievers.py`. STOP B.
 3. **Pipeline di generazione**:
    - ~~**3a. Infrastruttura senza chiamate LLM**~~ — FATTO il 2026-10-05 (prompt builder, client LM Studio e
      mock con cache, post-processing L0-L4, runner con dry run). Resta lo smoke test manuale con LM Studio

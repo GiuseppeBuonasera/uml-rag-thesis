@@ -1589,6 +1589,29 @@ def check_run_log(tmp: Path) -> None:
           "registro non scrivibile = solo avviso; runner vero da riga di comando registrato")
 
 
+def check_provenance() -> None:
+    """experiments/provenance.py (voce 106): impronta del GT stabile, indipendente dall'ordine e dagli a capo."""
+    import provenance as pv
+    gt = pv.corpus_gt()
+    d1 = pv.gt_digest(gt)
+    assert d1 == pv.gt_digest(dict(reversed(list(gt.items()))))  # ordine dei record irrilevante
+    changed = json.loads(json.dumps(gt))
+    changed["eHome2020"]["edges"][0]["data"]["label"] += "x"
+    assert pv.gt_digest(changed) != d1  # una modifica del GT cambia l'impronta
+    line = pv.provenance_line(gt)
+    assert line.startswith("Analisi eseguita sul commit `") and d1 in line and f"{len(gt)} diagrammi" in line
+    # l'impronta del contenuto non dipende dagli a capo del file: stessa con corpus.jsonl riletto in CRLF
+    import corpus_loader as clr
+    crlf = ROOT / "corpus" / "processed" / "corpus.jsonl"
+    text = crlf.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\n", "\r\n")
+    tmpf = Path(tempfile.mkdtemp(prefix="prov_")) / "corpus.jsonl"
+    tmpf.write_bytes(text.encode("utf-8"))
+    assert pv.gt_digest({c["id"]: c["diagram_apollon_json"] for c in clr.load_candidates(tmpf)}) == d1
+    shutil.rmtree(tmpf.parent, ignore_errors=True)
+    print(f"  OK  provenienza dei report: impronta del GT ({d1[:12]}…) stabile rispetto a ordine e a capo, sensibile "
+          "a ogni modifica del GT; riga con commit e numero di diagrammi")
+
+
 def us_structure_from(diagram: dict):
     import uml_structure as us
     return us.structure_from_apollon(diagram)
@@ -2029,6 +2052,81 @@ def check_runner(tmp: Path, base_url: str) -> None:
           "server finto con parametri espliciti e ragionamento separato nel raw e nel manifest")
 
 
+def check_retrievers(builder: PromptBuilder) -> None:
+    """Condizioni dense / hybrid / oracle_jt del prompt builder (voce 109) con embedding FINTI (nessun download),
+    config dev_retrievers.yaml contro dev_k.yaml, regola di esclusione e interpretazione dell'oracolo di
+    experiments/analyze_retrievers.py."""
+    import re as _re
+    import numpy as np
+    import yaml
+    import analyze_retrievers as ar
+    import prompt_builder as pb
+    from dense_retriever import DenseRetriever
+    import relevance
+
+    def fake(texts):
+        out = np.zeros((len(texts), 64), dtype=np.float32)
+        for i, s in enumerate(texts):
+            for w in _re.findall(r"[a-z]+", s.lower()):
+                out[i, int(hashlib.sha256(w.encode()).hexdigest(), 16) % 64] += 1
+        return out
+
+    assert {"dense", "hybrid", "oracle_jt"} <= set(pb.CONDITIONS) and "oracle_jt" in pb.ANALYSIS_ONLY
+    assert pb.dense_model() == ("sentence-transformers/all-MiniLM-L6-v2", "1110a243fdf4706b3f48f1d95db1a4f5529b4d41")
+    fb = PromptBuilder(builder.candidates, [], dense=DenseRetriever("finto", "0" * 40, encoder=fake, cache_dir=None))
+    for q in builder.candidates[:12]:
+        pool = {c["id"] for c in fb.pool(q)}
+        assert fb.excluded(q) == {q["id"]}
+        base = fb.build(q, PromptSpec("bm25", k=3, output_format="plantuml"))
+        for cond in ("dense", "hybrid", "oracle_jt"):
+            bp = fb.build(q, PromptSpec(cond, k=3, output_format="plantuml"))
+            assert q["id"] not in bp.example_ids and set(bp.example_ids) <= pool and len(bp.example_ids) == 3
+            assert bp.analysis_only == (cond == "oracle_jt")
+            assert bp.instructions == base.instructions and bp.task == base.task
+            assert bp.text.replace(bp.examples_block, "") == base.text.replace(base.examples_block, "")
+        # il piu' simile per ULTIMO: dense = top-3 del denso (finto) rovesciato; oracle_jt = top-3 per Jt rovesciato
+        top = [r.id for r in fb.dense.retrieve(q["description"], 3, exclude_ids={q["id"]})]
+        assert [e["id"] for e in fb.select(q, PromptSpec("dense", k=3))] == list(reversed(top))
+        qt = relevance.class_tokens(q["diagram_apollon_json"])
+        jt = sorted(pool, key=lambda i: (-cl.jaccard(qt, fb.tokens[i]), i))[:3]
+        assert [e["id"] for e in fb.select(q, PromptSpec("oracle_jt", k=3))] == list(reversed(jt))
+    assert "sentence_transformers" not in sys.modules, "i test non devono caricare sentence-transformers"
+
+    # config: uguale a dev_k salvo condizioni, k = [3], modelli (solo G) e configurazioni (P-G, C-G); 240 generazioni
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_retrievers.yaml").read_text(encoding="utf-8"))
+    dk = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_k.yaml").read_text(encoding="utf-8"))
+    assert cfg["conditions"] == ["dense", "hybrid", "oracle_jt"] and cfg["k"] == [3]
+    assert "instructions_variant" not in cfg["prompt"] and sorted(cfg["configurations"]) == ["C-G", "P-G"]
+    total = 0
+    for name in ("P-G", "C-G"):
+        r, b = rx.resolve_configuration(cfg, name), rx.resolve_configuration(dk, name)
+        for key in ("query_ids", "repetitions", "seed", "generation", "model_metadata", "client", "config_version",
+                    "prompt", "split", "stop_on_reasoning", "plantuml_label_rule"):
+            assert r[key] == b[key], key
+        total += len(rx.plan(r, builder.candidates))
+    assert total == 240, total
+
+    # regola di esclusione (voce 109, con le modifiche): Vc -4 ammesso, -5 escluso; 1 troncamento ammesso (allegato),
+    # 2 esclusi; un prompt oltre il budget escluso
+    B = {"Vc": 34}
+    assert not ar.exclusion(B, {"Vc": 30}, 0, 0)["excluded"]
+    assert ar.exclusion(B, {"Vc": 29}, 0, 0)["excluded"]
+    e1 = ar.exclusion(B, {"Vc": 34}, 1, 0)
+    assert not e1["excluded"] and e1["report_truncated"]
+    assert ar.exclusion(B, {"Vc": 40}, 2, 0)["excluded"]
+    assert ar.exclusion(B, {"Vc": 40}, 0, 1)["excluded"]
+    calls = [{"m": {"call_id": "a", "prompt_tokens_server": 28672}}, {"m": {"call_id": "b", "prompt_tokens_server": 28673}},
+             {"m": {"call_id": "c", "prompt_tokens_est": 30000}}]
+    assert ar.over_budget(calls, 32768, 4096) == ["b", "c"]
+    # oracolo: soglia 0,03 inclusa nel "margine"
+    assert ar.oracle_reading({"plantuml": 0.029, "compact": 0.0}).startswith("la qualità del retrieval non")
+    assert ar.oracle_reading({"plantuml": 0.03, "compact": -0.1}).startswith("un retrieval migliore")
+    assert ar.oracle_reading({"plantuml": 0.0, "compact": 0.05}).startswith("un retrieval migliore")
+    print("  OK  retriever come fattore (voce 109): dense / hybrid / oracle_jt con embedding finti (stessi candidati di "
+          "bm25, query mai tra gli esempi, il piu' simile per ultimo, prompt uguali salvo gli esempi), config uguale a "
+          "dev_k (240 generazioni), regola di esclusione e lettura dell'oracolo sulle soglie")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -2052,8 +2150,10 @@ def main() -> None:
         check_analyze_dev(builder, tmp)
         check_k(builder, tmp)
         check_instructions(builder, tmp)
+        check_retrievers(builder)
         check_review(builder, tmp)
         check_run_log(tmp)
+        check_provenance()
         check_pilot2(tmp)
         check_analyze_pilot2(tmp)
         check_smoke(tmp)

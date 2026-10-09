@@ -1,0 +1,1240 @@
+retriever,query,rank,vicino,score,J,Jt,S
+BM25,AirTravel,1,Boeing,81.2698,0.2,0.1875,0.6324
+BM25,AirTravel,2,Kinepolis,56.6216,0.0455,0.087,0.8113
+BM25,AirTravel,3,TruckLogistics,52.569,0.0,0.0476,0.5065
+BM25,AlphaInsurance,1,InsuranceCompany,139.575,0.1333,0.1765,0.5643
+BM25,AlphaInsurance,2,SellingGoods,85.5576,0.125,0.125,0.9
+BM25,AlphaInsurance,3,Boeing,81.6566,0.0667,0.0588,0.7167
+BM25,BankAccount,1,Facepage,44.0399,0.0714,0.0714,0.6152
+BM25,BankAccount,2,PizzaDeliveryWithEntertainment,38.714,0.0714,0.0714,0.6
+BM25,BankAccount,3,HelpingHands,34.8629,0.0,0.0,0.5423
+BM25,Boeing,1,AirTravel,69.883,0.2,0.1875,0.6324
+BM25,Boeing,2,AlphaInsurance,59.4719,0.0667,0.0588,0.7167
+BM25,Boeing,3,InsuranceCompany,41.454,0.0833,0.0769,0.6429
+BM25,BuildingManagement,1,Facepage,102.4457,0.0526,0.0476,0.5455
+BM25,BuildingManagement,2,Musicmatic,88.7332,0.0526,0.0476,0.5455
+BM25,BuildingManagement,3,PizzaDeliveryWithEntertainment,70.6065,0.0526,0.0476,0.5455
+BM25,BusTransportationManagementSystem,1,Menso,185.2786,0.0,0.0588,0.7727
+BM25,BusTransportationManagementSystem,2,HelpingHands,158.6355,0.0588,0.1,0.5192
+BM25,BusTransportationManagementSystem,3,TransportCompany,127.7218,0.0588,0.1111,0.5962
+BM25,CardGameApp,1,TeamSportsScoutingSystem,72.8751,0.037,0.037,0.5487
+BM25,CardGameApp,2,TileOGame,69.0354,0.1071,0.1538,0.5955
+BM25,CardGameApp,3,DestroyBlockGame,45.3063,0.08,0.0833,0.4906
+BM25,CelO,1,ResearchCenter,117.7589,0.0,0.0,0.625
+BM25,CelO,2,AlphaInsurance,97.3814,0.0,0.0,0.8333
+BM25,CelO,3,SellingGoods,93.1546,0.0,0.0,0.75
+BM25,ClothingCompany,1,SellingGoods,94.3802,0.25,0.3,0.9375
+BM25,ClothingCompany,2,GasStation_KUL,55.7945,0.0,0.0,1.0
+BM25,ClothingCompany,3,TransportCompany,52.0412,0.1176,0.1111,0.6378
+BM25,DestroyBlockGame,1,TileOGame,456.1171,0.0667,0.0667,0.6057
+BM25,DestroyBlockGame,2,CardGameApp,259.8876,0.08,0.0833,0.4906
+BM25,DestroyBlockGame,3,GameArea,224.0389,0.0,0.05,0.312
+BM25,Ebike,1,SmartHomeAutomationSystem,54.0271,0.0,0.0263,0.3273
+BM25,Ebike,2,ElevatorControl,37.4711,0.0,0.0625,0.4
+BM25,Ebike,3,Sober,20.5657,0.0,0.0,0.55
+BM25,eHome2020,1,SmartHomeAutomationSystem,243.2847,0.069,0.0882,0.3545
+BM25,eHome2020,2,BuildingManagement,77.9056,0.0,0.0,0.8727
+BM25,eHome2020,3,GameArea,67.1304,0.0,0.0,0.5048
+BM25,EUScienceConnect,1,University,102.693,0.0,0.1,0.7667
+BM25,EUScienceConnect,2,MilanLibrary,80.9868,0.1304,0.1,0.5614
+BM25,EUScienceConnect,3,HelpingHands,76.1753,0.0526,0.08,0.7026
+BM25,Facepage,1,Musicmatic,139.9871,0.0588,0.125,1.0
+BM25,Facepage,2,PizzaDeliveryWithEntertainment,132.9482,0.0588,0.125,0.9848
+BM25,Facepage,3,BuildingManagement,121.8358,0.0526,0.0476,0.5455
+BM25,FilmSet,1,MilanLibrary,133.3144,0.1111,0.1379,0.7263
+BM25,FilmSet,2,TransportCompany,55.3743,0.0435,0.0417,1.0
+BM25,FilmSet,3,University,47.2804,0.05,0.0476,0.7511
+BM25,FitnessCompanyConan,1,OnlineTutoringSystem,134.0443,0.0,0.0417,0.5167
+BM25,FitnessCompanyConan,2,Musicmatic,65.8979,0.0,0.0,0.904
+BM25,FitnessCompanyConan,3,School,60.1422,0.1333,0.2143,0.8444
+BM25,GameArea,1,DestroyBlockGame,85.7472,0.0,0.05,0.312
+BM25,GameArea,2,TileOGame,78.1529,0.0,0.0417,0.4524
+BM25,GameArea,3,CardGameApp,63.6041,0.0,0.0556,0.4176
+BM25,GasStation_KUL,1,GasStation_TUW,181.2069,0.0909,0.2143,0.7738
+BM25,GasStation_KUL,2,Menso,160.7086,0.125,0.1053,0.8182
+BM25,GasStation_KUL,3,HomeForTheElderly,116.7233,0.1333,0.1111,0.85
+BM25,GasStation_TUW,1,GasStation_KUL,163.8827,0.0909,0.2143,0.7738
+BM25,GasStation_TUW,2,Musicmatic,50.7097,0.0,0.0,0.596
+BM25,GasStation_TUW,3,PizzaDeliveryWithEntertainment,34.6138,0.0,0.0,0.6111
+BM25,HelpingHands,1,TransportCompany,114.8451,0.0435,0.037,0.9231
+BM25,HelpingHands,2,BusTransportationManagementSystem,103.6682,0.0588,0.1,0.5192
+BM25,HelpingHands,3,EUScienceConnect,102.3373,0.0526,0.08,0.7026
+BM25,HomeForTheElderly,1,Menso,155.9542,0.1053,0.1667,0.9545
+BM25,HomeForTheElderly,2,GasStation_KUL,144.3434,0.1333,0.1111,0.85
+BM25,HomeForTheElderly,3,AlphaInsurance,138.6802,0.0526,0.0476,1.0
+BM25,HospitalHouseMD,1,TreatmentPlans,267.0993,0.25,0.25,0.7143
+BM25,HospitalHouseMD,2,LabTracker,105.5727,0.1053,0.0909,0.6167
+BM25,HospitalHouseMD,3,Hospital,80.8142,0.0476,0.0435,0.3819
+BM25,HotelBookingManagementSystem,1,Menso,124.9457,0.0,0.0345,0.4419
+BM25,HotelBookingManagementSystem,2,OnlineTutoringSystem,114.3108,0.0,0.125,0.8428
+BM25,HotelBookingManagementSystem,3,MilanLibrary,109.2825,0.0,0.0526,0.7717
+BM25,House,1,RealEstateAgency,31.6916,0.0625,0.0556,0.4583
+BM25,House,2,ClothingCompany,26.0663,0.0,0.0,0.4917
+BM25,House,3,BuildingManagement,25.6737,0.0,0.0,0.6402
+BM25,Kinepolis,1,AirTravel,95.1491,0.0455,0.087,0.8113
+BM25,Kinepolis,2,Restaurant,86.072,0.0625,0.0556,0.7727
+BM25,Kinepolis,3,Menso,76.6466,0.0476,0.0952,1.0
+BM25,LabTracker,1,TreatmentPlans,252.5803,0.0741,0.1034,0.8833
+BM25,LabTracker,2,Menso,126.0409,0.0,0.0,0.7833
+BM25,LabTracker,3,HospitalHouseMD,115.7885,0.1053,0.0909,0.6167
+BM25,Louvre,1,HelpingHands,54.9453,0.0556,0.0476,0.5609
+BM25,Louvre,2,MilanLibrary,52.7594,0.0417,0.0769,0.4336
+BM25,Louvre,3,TileOGame,43.2023,0.0,0.0,0.2183
+BM25,Menso,1,SellingGoods,138.1798,0.1875,0.2143,0.8636
+BM25,Menso,2,Kinepolis,129.6046,0.0476,0.0952,1.0
+BM25,Menso,3,GasStation_KUL,125.744,0.125,0.1053,0.8182
+BM25,Musicmatic,1,Facepage,110.4243,0.0588,0.125,1.0
+BM25,Musicmatic,2,PizzaDeliveryWithEntertainment,107.252,0.0588,0.125,0.9848
+BM25,Musicmatic,3,MilanLibrary,90.8595,0.08,0.0714,0.6709
+BM25,OnlineTutoringSystem,1,FitnessCompanyConan,134.1347,0.0,0.0417,0.5167
+BM25,OnlineTutoringSystem,2,School,76.9215,0.0435,0.04,0.6
+BM25,OnlineTutoringSystem,3,HotelBookingManagementSystem,67.8602,0.0,0.125,0.8428
+BM25,PizzaDeliveryWithEntertainment,1,EatAtHome,186.7979,0.1667,0.1667,0.6111
+BM25,PizzaDeliveryWithEntertainment,2,SellingGoods,145.9418,0.1333,0.1538,0.7778
+BM25,PizzaDeliveryWithEntertainment,3,Restaurant,119.1112,0.0714,0.0667,0.6667
+BM25,ProjectManagement,1,ResearchCenter,126.5832,0.1538,0.1429,0.6875
+BM25,ProjectManagement,2,University,81.0035,0.0625,0.1176,0.6667
+BM25,ProjectManagement,3,EUScienceConnect,73.5899,0.0,0.05,0.9
+BM25,School,1,CourseManagement,72.4171,0.1875,0.1875,0.8583
+BM25,School,2,OnlineTutoringSystem,68.5461,0.0435,0.04,0.6
+BM25,School,3,Musicmatic,46.4381,0.0,0.0,0.8818
+BM25,SellingGoods,1,ClothingCompany,191.1448,0.25,0.3,0.9375
+BM25,SellingGoods,2,EatAtHome,181.2485,0.1818,0.2222,0.8125
+BM25,SellingGoods,3,PizzaDeliveryWithEntertainment,174.9524,0.1333,0.1538,0.7778
+BM25,Sightseeing,1,Facepage,22.1256,0.0,0.0667,0.8499
+BM25,Sightseeing,2,University,21.1509,0.0,0.0,0.754
+BM25,Sightseeing,3,CourseManagement,19.5027,0.0,0.0,0.7845
+BM25,SmartHomeAutomationSystem,1,eHome2020,169.3286,0.069,0.0882,0.3545
+BM25,SmartHomeAutomationSystem,2,Ebike,79.9093,0.0,0.0263,0.3273
+BM25,SmartHomeAutomationSystem,3,ElevatorControl,57.6628,0.0,0.0323,0.366
+BM25,Sober,1,TruckLogistics,96.1333,0.0,0.0588,0.6667
+BM25,Sober,2,HelpingHands,88.8125,0.0,0.0,0.8365
+BM25,Sober,3,Gym,87.172,0.0526,0.0476,0.786
+BM25,StudentAppointment,1,University,62.9631,0.0714,0.1429,0.5556
+BM25,StudentAppointment,2,UniversityExams,61.465,0.1818,0.1667,0.9286
+BM25,StudentAppointment,3,LabTracker,44.9898,0.05,0.0435,0.6167
+BM25,TeamSportsScoutingSystem,1,TileOGame,114.982,0.0312,0.0303,0.7248
+BM25,TeamSportsScoutingSystem,2,CardGameApp,114.8584,0.037,0.037,0.5487
+BM25,TeamSportsScoutingSystem,3,DestroyBlockGame,110.8689,0.0357,0.0714,0.7948
+BM25,TileOGame,1,DestroyBlockGame,278.2366,0.0667,0.0667,0.6057
+BM25,TileOGame,2,CardGameApp,186.5837,0.1071,0.1538,0.5955
+BM25,TileOGame,3,GameArea,146.7268,0.0,0.0417,0.4524
+BM25,TransportCompany,1,RepairShops,145.149,0.25,0.2222,0.8205
+BM25,TransportCompany,2,TruckLogistics,139.0191,0.1111,0.1,0.5427
+BM25,TransportCompany,3,HelpingHands,115.0248,0.0435,0.037,0.9231
+BM25,TreatmentPlans,1,HospitalHouseMD,177.6644,0.25,0.25,0.7143
+BM25,TreatmentPlans,2,LabTracker,136.3232,0.0741,0.1034,0.8833
+BM25,TreatmentPlans,3,Hospital,97.7098,0.0714,0.0667,0.6319
+BM25,TruckLogistics,1,TransportCompany,119.4736,0.1111,0.1,0.5427
+BM25,TruckLogistics,2,HelpingHands,70.6032,0.0526,0.0435,0.594
+BM25,TruckLogistics,3,RepairShops,58.1127,0.0667,0.0588,0.7222
+BM25,University,1,UniversityExams,61.1857,0.1429,0.125,0.6111
+BM25,University,2,EUScienceConnect,56.8821,0.0,0.1,0.7667
+BM25,University,3,TransportCompany,48.0486,0.05,0.0952,0.7511
+BM25,ApartmentBuilding,1,RealEstateAgency,20.2873,0.125,0.125,0.4
+BM25,ApartmentBuilding,2,eHome2020,19.4996,0.1818,0.1667,0.2722
+BM25,ApartmentBuilding,3,ElevatorControl,9.0227,0.0,0.0,0.4333
+BM25,Bookmaker,1,HomeForTheElderly,21.0276,0.0588,0.0588,0.4
+BM25,Bookmaker,2,University,15.6877,0.0,0.0,0.5944
+BM25,Bookmaker,3,OilWells,15.464,0.0,0.0,0.525
+BM25,CourseManagement,1,School,61.2499,0.1875,0.1875,0.8583
+BM25,CourseManagement,2,UniversityExams,35.7027,0.1333,0.125,0.6417
+BM25,CourseManagement,3,University,34.3154,0.0556,0.1111,0.8806
+BM25,EatAtHome,1,PizzaDeliveryWithEntertainment,107.6749,0.1667,0.1667,0.6111
+BM25,EatAtHome,2,SellingGoods,97.9472,0.1818,0.2222,0.8125
+BM25,EatAtHome,3,Restaurant,86.0509,0.2222,0.2,0.9167
+BM25,ElevatorControl,1,ApartmentBuilding,34.2935,0.0,0.0,0.4333
+BM25,ElevatorControl,2,Louvre,30.5312,0.0,0.0,0.5286
+BM25,ElevatorControl,3,SmartHomeAutomationSystem,29.4498,0.0,0.0323,0.366
+BM25,Gym,1,Sober,49.7245,0.0526,0.0476,0.786
+BM25,Gym,2,Menso,44.9539,0.0476,0.0435,0.9231
+BM25,Gym,3,RepairShops,42.2289,0.0,0.0,0.7739
+BM25,Hospital,1,TreatmentPlans,39.6646,0.0714,0.0667,0.6319
+BM25,Hospital,2,HospitalHouseMD,27.048,0.0476,0.0435,0.3819
+BM25,Hospital,3,Gym,25.8144,0.0,0.0333,0.6151
+BM25,InsuranceCompany,1,AlphaInsurance,39.7131,0.1333,0.1765,0.5643
+BM25,InsuranceCompany,2,Boeing,13.0264,0.0833,0.0769,0.6429
+BM25,InsuranceCompany,3,Sober,9.1144,0.0667,0.1333,0.8032
+BM25,MilanLibrary,1,Louvre,56.6442,0.0417,0.0769,0.4336
+BM25,MilanLibrary,2,FilmSet,53.0794,0.1111,0.1379,0.7263
+BM25,MilanLibrary,3,Musicmatic,45.071,0.08,0.0714,0.6709
+BM25,OilWells,1,RepairShops,72.7774,0.0,0.0,0.8417
+BM25,OilWells,2,ClothingCompany,57.1916,0.0,0.0,0.7286
+BM25,OilWells,3,Restaurant,46.4101,0.0,0.0,0.8
+BM25,RealEstateAgency,1,HotelBookingManagementSystem,37.7976,0.0,0.0,0.2525
+BM25,RealEstateAgency,2,BuildingManagement,37.5497,0.0,0.0,0.4886
+BM25,RealEstateAgency,3,eHome2020,33.4364,0.0769,0.0714,0.5028
+BM25,RepairShops,1,TransportCompany,202.2242,0.25,0.2222,0.8205
+BM25,RepairShops,2,BusTransportationManagementSystem,128.9903,0.0,0.0667,0.7083
+BM25,RepairShops,3,OilWells,104.29,0.0,0.0,0.8417
+BM25,ResearchCenter,1,ProjectManagement,108.5876,0.1538,0.1429,0.6875
+BM25,ResearchCenter,2,TeamSportsScoutingSystem,60.5106,0.0,0.0,0.4686
+BM25,ResearchCenter,3,University,49.5431,0.0667,0.1333,0.7917
+BM25,Restaurant,1,EatAtHome,47.6331,0.2222,0.2,0.9167
+BM25,Restaurant,2,PizzaDeliveryWithEntertainment,41.2133,0.0714,0.0667,0.6667
+BM25,Restaurant,3,RepairShops,35.8082,0.0,0.0,0.7083
+BM25,UniversityExams,1,University,63.7344,0.1429,0.125,0.6111
+BM25,UniversityExams,2,CourseManagement,41.7791,0.1333,0.125,0.6417
+BM25,UniversityExams,3,StudentAppointment,39.5701,0.1818,0.1667,0.9286
+sentence-transformers/all-MiniLM-L6-v2,AirTravel,1,Boeing,0.5797,0.2,0.1875,0.6324
+sentence-transformers/all-MiniLM-L6-v2,AirTravel,2,TransportCompany,0.5431,0.0435,0.04,0.9344
+sentence-transformers/all-MiniLM-L6-v2,AirTravel,3,TruckLogistics,0.501,0.0,0.0476,0.5065
+sentence-transformers/all-MiniLM-L6-v2,AlphaInsurance,1,InsuranceCompany,0.5557,0.1333,0.1765,0.5643
+sentence-transformers/all-MiniLM-L6-v2,AlphaInsurance,2,Boeing,0.3621,0.0667,0.0588,0.7167
+sentence-transformers/all-MiniLM-L6-v2,AlphaInsurance,3,HotelBookingManagementSystem,0.335,0.0,0.0333,0.4141
+sentence-transformers/all-MiniLM-L6-v2,BankAccount,1,SellingGoods,0.4374,0.0769,0.0909,0.475
+sentence-transformers/all-MiniLM-L6-v2,BankAccount,2,Hospital,0.41,0.0,0.0,0.5375
+sentence-transformers/all-MiniLM-L6-v2,BankAccount,3,School,0.3989,0.0,0.0,0.6833
+sentence-transformers/all-MiniLM-L6-v2,Boeing,1,AirTravel,0.5797,0.2,0.1875,0.6324
+sentence-transformers/all-MiniLM-L6-v2,Boeing,2,SellingGoods,0.4486,0.0,0.0,0.7917
+sentence-transformers/all-MiniLM-L6-v2,Boeing,3,FilmSet,0.3796,0.0588,0.0588,0.5962
+sentence-transformers/all-MiniLM-L6-v2,BuildingManagement,1,Facepage,0.5195,0.0526,0.0476,0.5455
+sentence-transformers/all-MiniLM-L6-v2,BuildingManagement,2,eHome2020,0.4669,0.0,0.0,0.8727
+sentence-transformers/all-MiniLM-L6-v2,BuildingManagement,3,TransportCompany,0.4454,0.0,0.04,0.5947
+sentence-transformers/all-MiniLM-L6-v2,BusTransportationManagementSystem,1,TruckLogistics,0.581,0.0769,0.2308,0.4306
+sentence-transformers/all-MiniLM-L6-v2,BusTransportationManagementSystem,2,Menso,0.5047,0.0,0.0588,0.7727
+sentence-transformers/all-MiniLM-L6-v2,BusTransportationManagementSystem,3,TransportCompany,0.4801,0.0588,0.1111,0.5962
+sentence-transformers/all-MiniLM-L6-v2,CardGameApp,1,TileOGame,0.3713,0.1071,0.1538,0.5955
+sentence-transformers/all-MiniLM-L6-v2,CardGameApp,2,Bookmaker,0.3558,0.0,0.0,0.7731
+sentence-transformers/all-MiniLM-L6-v2,CardGameApp,3,DestroyBlockGame,0.3367,0.08,0.0833,0.4906
+sentence-transformers/all-MiniLM-L6-v2,CelO,1,PizzaDeliveryWithEntertainment,0.4207,0.0,0.0,0.7917
+sentence-transformers/all-MiniLM-L6-v2,CelO,2,FitnessCompanyConan,0.3984,0.0526,0.05,0.6944
+sentence-transformers/all-MiniLM-L6-v2,CelO,3,Sightseeing,0.3872,0.0556,0.0526,0.7321
+sentence-transformers/all-MiniLM-L6-v2,ClothingCompany,1,SellingGoods,0.5913,0.25,0.3,0.9375
+sentence-transformers/all-MiniLM-L6-v2,ClothingCompany,2,Restaurant,0.4652,0.0833,0.0769,0.9286
+sentence-transformers/all-MiniLM-L6-v2,ClothingCompany,3,TransportCompany,0.4338,0.1176,0.1111,0.6378
+sentence-transformers/all-MiniLM-L6-v2,DestroyBlockGame,1,TileOGame,0.4726,0.0667,0.0667,0.6057
+sentence-transformers/all-MiniLM-L6-v2,DestroyBlockGame,2,GameArea,0.382,0.0,0.05,0.312
+sentence-transformers/all-MiniLM-L6-v2,DestroyBlockGame,3,BuildingManagement,0.3431,0.0417,0.08,0.4646
+sentence-transformers/all-MiniLM-L6-v2,Ebike,1,SmartHomeAutomationSystem,0.3987,0.0,0.0263,0.3273
+sentence-transformers/all-MiniLM-L6-v2,Ebike,2,eHome2020,0.3603,0.0,0.0476,0.9
+sentence-transformers/all-MiniLM-L6-v2,Ebike,3,SellingGoods,0.3294,0.0,0.0,0.4
+sentence-transformers/all-MiniLM-L6-v2,eHome2020,1,SmartHomeAutomationSystem,0.6359,0.069,0.0882,0.3545
+sentence-transformers/all-MiniLM-L6-v2,eHome2020,2,BuildingManagement,0.4669,0.0,0.0,0.8727
+sentence-transformers/all-MiniLM-L6-v2,eHome2020,3,House,0.4049,0.0,0.0,0.525
+sentence-transformers/all-MiniLM-L6-v2,EUScienceConnect,1,TransportCompany,0.4276,0.0,0.0,0.7795
+sentence-transformers/all-MiniLM-L6-v2,EUScienceConnect,2,BuildingManagement,0.4268,0.0,0.0,0.4636
+sentence-transformers/all-MiniLM-L6-v2,EUScienceConnect,3,University,0.4149,0.0,0.1,0.7667
+sentence-transformers/all-MiniLM-L6-v2,Facepage,1,BuildingManagement,0.5195,0.0526,0.0476,0.5455
+sentence-transformers/all-MiniLM-L6-v2,Facepage,2,PizzaDeliveryWithEntertainment,0.4144,0.0588,0.125,0.9848
+sentence-transformers/all-MiniLM-L6-v2,Facepage,3,HotelBookingManagementSystem,0.3589,0.0,0.0,0.5
+sentence-transformers/all-MiniLM-L6-v2,FilmSet,1,AirTravel,0.4994,0.0435,0.0417,0.9344
+sentence-transformers/all-MiniLM-L6-v2,FilmSet,2,Louvre,0.4132,0.0556,0.0556,0.6378
+sentence-transformers/all-MiniLM-L6-v2,FilmSet,3,EUScienceConnect,0.3916,0.0,0.0435,0.7795
+sentence-transformers/all-MiniLM-L6-v2,FitnessCompanyConan,1,Gym,0.4703,0.0,0.0,0.7183
+sentence-transformers/all-MiniLM-L6-v2,FitnessCompanyConan,2,School,0.4146,0.1333,0.2143,0.8444
+sentence-transformers/all-MiniLM-L6-v2,FitnessCompanyConan,3,Hospital,0.4012,0.0,0.04,0.6389
+sentence-transformers/all-MiniLM-L6-v2,GameArea,1,DestroyBlockGame,0.382,0.0,0.05,0.312
+sentence-transformers/all-MiniLM-L6-v2,GameArea,2,TileOGame,0.3403,0.0,0.0417,0.4524
+sentence-transformers/all-MiniLM-L6-v2,GameArea,3,CardGameApp,0.335,0.0,0.0556,0.4176
+sentence-transformers/all-MiniLM-L6-v2,GasStation_KUL,1,GasStation_TUW,0.4305,0.0909,0.2143,0.7738
+sentence-transformers/all-MiniLM-L6-v2,GasStation_KUL,2,EatAtHome,0.4019,0.0,0.0,0.8571
+sentence-transformers/all-MiniLM-L6-v2,GasStation_KUL,3,Restaurant,0.3453,0.0,0.0,0.9286
+sentence-transformers/all-MiniLM-L6-v2,GasStation_TUW,1,GasStation_KUL,0.4305,0.0909,0.2143,0.7738
+sentence-transformers/all-MiniLM-L6-v2,GasStation_TUW,2,Musicmatic,0.425,0.0,0.0,0.596
+sentence-transformers/all-MiniLM-L6-v2,GasStation_TUW,3,TruckLogistics,0.4223,0.0,0.0,0.4236
+sentence-transformers/all-MiniLM-L6-v2,HelpingHands,1,EatAtHome,0.4725,0.0,0.0,0.4776
+sentence-transformers/all-MiniLM-L6-v2,HelpingHands,2,TruckLogistics,0.4605,0.0526,0.0435,0.594
+sentence-transformers/all-MiniLM-L6-v2,HelpingHands,3,HotelBookingManagementSystem,0.4222,0.0,0.0,0.6218
+sentence-transformers/all-MiniLM-L6-v2,HomeForTheElderly,1,House,0.4042,0.0,0.0,0.6167
+sentence-transformers/all-MiniLM-L6-v2,HomeForTheElderly,2,Hospital,0.4003,0.04,0.0769,0.5069
+sentence-transformers/all-MiniLM-L6-v2,HomeForTheElderly,3,HospitalHouseMD,0.3974,0.0,0.0,0.8
+sentence-transformers/all-MiniLM-L6-v2,HospitalHouseMD,1,TreatmentPlans,0.5327,0.25,0.25,0.7143
+sentence-transformers/all-MiniLM-L6-v2,HospitalHouseMD,2,HomeForTheElderly,0.3974,0.0,0.0,0.8
+sentence-transformers/all-MiniLM-L6-v2,HospitalHouseMD,3,Hospital,0.3537,0.0476,0.0435,0.3819
+sentence-transformers/all-MiniLM-L6-v2,HotelBookingManagementSystem,1,HelpingHands,0.4222,0.0,0.0,0.6218
+sentence-transformers/all-MiniLM-L6-v2,HotelBookingManagementSystem,2,OnlineTutoringSystem,0.4085,0.0,0.125,0.8428
+sentence-transformers/all-MiniLM-L6-v2,HotelBookingManagementSystem,3,EatAtHome,0.4016,0.0,0.0435,0.2753
+sentence-transformers/all-MiniLM-L6-v2,House,1,TransportCompany,0.4903,0.0,0.0385,0.8538
+sentence-transformers/all-MiniLM-L6-v2,House,2,AirTravel,0.4773,0.0,0.0,0.8176
+sentence-transformers/all-MiniLM-L6-v2,House,3,TruckLogistics,0.4315,0.0,0.0,0.6056
+sentence-transformers/all-MiniLM-L6-v2,Kinepolis,1,MilanLibrary,0.4977,0.0,0.0312,0.5447
+sentence-transformers/all-MiniLM-L6-v2,Kinepolis,2,OnlineTutoringSystem,0.3449,0.0,0.0357,0.4917
+sentence-transformers/all-MiniLM-L6-v2,Kinepolis,3,HotelBookingManagementSystem,0.3006,0.0,0.0333,0.4419
+sentence-transformers/all-MiniLM-L6-v2,LabTracker,1,TreatmentPlans,0.5083,0.0741,0.1034,0.8833
+sentence-transformers/all-MiniLM-L6-v2,LabTracker,2,OnlineTutoringSystem,0.3255,0.0,0.0606,0.7083
+sentence-transformers/all-MiniLM-L6-v2,LabTracker,3,StudentAppointment,0.3184,0.05,0.0435,0.6167
+sentence-transformers/all-MiniLM-L6-v2,Louvre,1,Sightseeing,0.4285,0.0,0.0,0.8571
+sentence-transformers/all-MiniLM-L6-v2,Louvre,2,FilmSet,0.4132,0.0556,0.0556,0.6378
+sentence-transformers/all-MiniLM-L6-v2,Louvre,3,MilanLibrary,0.4113,0.0417,0.0769,0.4336
+sentence-transformers/all-MiniLM-L6-v2,Menso,1,BusTransportationManagementSystem,0.5047,0.0,0.0588,0.7727
+sentence-transformers/all-MiniLM-L6-v2,Menso,2,TruckLogistics,0.3829,0.0,0.0,0.4192
+sentence-transformers/all-MiniLM-L6-v2,Menso,3,EatAtHome,0.2974,0.0667,0.0667,0.7273
+sentence-transformers/all-MiniLM-L6-v2,Musicmatic,1,PizzaDeliveryWithEntertainment,0.5107,0.0588,0.125,0.9848
+sentence-transformers/all-MiniLM-L6-v2,Musicmatic,2,GasStation_TUW,0.425,0.0,0.0,0.596
+sentence-transformers/all-MiniLM-L6-v2,Musicmatic,3,BuildingManagement,0.4072,0.0526,0.0476,0.5455
+sentence-transformers/all-MiniLM-L6-v2,OnlineTutoringSystem,1,StudentAppointment,0.6042,0.05,0.0455,0.325
+sentence-transformers/all-MiniLM-L6-v2,OnlineTutoringSystem,2,CourseManagement,0.46,0.0417,0.0385,0.5833
+sentence-transformers/all-MiniLM-L6-v2,OnlineTutoringSystem,3,Gym,0.4224,0.04,0.0345,0.5686
+sentence-transformers/all-MiniLM-L6-v2,PizzaDeliveryWithEntertainment,1,Musicmatic,0.5107,0.0588,0.125,0.9848
+sentence-transformers/all-MiniLM-L6-v2,PizzaDeliveryWithEntertainment,2,SellingGoods,0.451,0.1333,0.1538,0.7778
+sentence-transformers/all-MiniLM-L6-v2,PizzaDeliveryWithEntertainment,3,CelO,0.4207,0.0,0.0,0.7917
+sentence-transformers/all-MiniLM-L6-v2,ProjectManagement,1,ResearchCenter,0.581,0.1538,0.1429,0.6875
+sentence-transformers/all-MiniLM-L6-v2,ProjectManagement,2,University,0.3905,0.0625,0.1176,0.6667
+sentence-transformers/all-MiniLM-L6-v2,ProjectManagement,3,EUScienceConnect,0.3543,0.0,0.05,0.9
+sentence-transformers/all-MiniLM-L6-v2,School,1,CourseManagement,0.5505,0.1875,0.1875,0.8583
+sentence-transformers/all-MiniLM-L6-v2,School,2,StudentAppointment,0.5037,0.0714,0.0714,0.5333
+sentence-transformers/all-MiniLM-L6-v2,School,3,University,0.4968,0.0,0.0,0.9667
+sentence-transformers/all-MiniLM-L6-v2,SellingGoods,1,ClothingCompany,0.5913,0.25,0.3,0.9375
+sentence-transformers/all-MiniLM-L6-v2,SellingGoods,2,TransportCompany,0.4991,0.1111,0.1176,0.6795
+sentence-transformers/all-MiniLM-L6-v2,SellingGoods,3,EatAtHome,0.4761,0.1818,0.2222,0.8125
+sentence-transformers/all-MiniLM-L6-v2,Sightseeing,1,Louvre,0.4285,0.0,0.0,0.8571
+sentence-transformers/all-MiniLM-L6-v2,Sightseeing,2,CelO,0.3872,0.0556,0.0526,0.7321
+sentence-transformers/all-MiniLM-L6-v2,Sightseeing,3,BusTransportationManagementSystem,0.3457,0.0,0.0,0.7857
+sentence-transformers/all-MiniLM-L6-v2,SmartHomeAutomationSystem,1,eHome2020,0.6359,0.069,0.0882,0.3545
+sentence-transformers/all-MiniLM-L6-v2,SmartHomeAutomationSystem,2,Ebike,0.3987,0.0,0.0263,0.3273
+sentence-transformers/all-MiniLM-L6-v2,SmartHomeAutomationSystem,3,ElevatorControl,0.3531,0.0,0.0323,0.366
+sentence-transformers/all-MiniLM-L6-v2,Sober,1,EatAtHome,0.335,0.0769,0.0769,0.5778
+sentence-transformers/all-MiniLM-L6-v2,Sober,2,HelpingHands,0.3204,0.0,0.0,0.8365
+sentence-transformers/all-MiniLM-L6-v2,Sober,3,SmartHomeAutomationSystem,0.3061,0.0,0.0,0.5194
+sentence-transformers/all-MiniLM-L6-v2,StudentAppointment,1,OnlineTutoringSystem,0.6042,0.05,0.0455,0.325
+sentence-transformers/all-MiniLM-L6-v2,StudentAppointment,2,CourseManagement,0.596,0.1429,0.1429,0.5917
+sentence-transformers/all-MiniLM-L6-v2,StudentAppointment,3,University,0.515,0.0714,0.1429,0.5556
+sentence-transformers/all-MiniLM-L6-v2,TeamSportsScoutingSystem,1,Bookmaker,0.3374,0.0455,0.0435,0.3843
+sentence-transformers/all-MiniLM-L6-v2,TeamSportsScoutingSystem,2,FilmSet,0.3343,0.0385,0.037,0.6353
+sentence-transformers/all-MiniLM-L6-v2,TeamSportsScoutingSystem,3,CardGameApp,0.3271,0.037,0.037,0.5487
+sentence-transformers/all-MiniLM-L6-v2,TileOGame,1,DestroyBlockGame,0.4726,0.0667,0.0667,0.6057
+sentence-transformers/all-MiniLM-L6-v2,TileOGame,2,CardGameApp,0.3713,0.1071,0.1538,0.5955
+sentence-transformers/all-MiniLM-L6-v2,TileOGame,3,GameArea,0.3403,0.0,0.0417,0.4524
+sentence-transformers/all-MiniLM-L6-v2,TransportCompany,1,RepairShops,0.6115,0.25,0.2222,0.8205
+sentence-transformers/all-MiniLM-L6-v2,TransportCompany,2,TruckLogistics,0.5768,0.1111,0.1,0.5427
+sentence-transformers/all-MiniLM-L6-v2,TransportCompany,3,AirTravel,0.5431,0.0435,0.04,0.9344
+sentence-transformers/all-MiniLM-L6-v2,TreatmentPlans,1,HospitalHouseMD,0.5327,0.25,0.25,0.7143
+sentence-transformers/all-MiniLM-L6-v2,TreatmentPlans,2,LabTracker,0.5083,0.0741,0.1034,0.8833
+sentence-transformers/all-MiniLM-L6-v2,TreatmentPlans,3,Hospital,0.4309,0.0714,0.0667,0.6319
+sentence-transformers/all-MiniLM-L6-v2,TruckLogistics,1,BusTransportationManagementSystem,0.581,0.0769,0.2308,0.4306
+sentence-transformers/all-MiniLM-L6-v2,TruckLogistics,2,TransportCompany,0.5768,0.1111,0.1,0.5427
+sentence-transformers/all-MiniLM-L6-v2,TruckLogistics,3,AirTravel,0.501,0.0,0.0476,0.5065
+sentence-transformers/all-MiniLM-L6-v2,University,1,UniversityExams,0.5904,0.1429,0.125,0.6111
+sentence-transformers/all-MiniLM-L6-v2,University,2,StudentAppointment,0.515,0.0714,0.1429,0.5556
+sentence-transformers/all-MiniLM-L6-v2,University,3,School,0.4968,0.0,0.0,0.9667
+sentence-transformers/all-MiniLM-L6-v2,ApartmentBuilding,1,School,0.4116,0.1818,0.1818,0.4389
+sentence-transformers/all-MiniLM-L6-v2,ApartmentBuilding,2,House,0.4004,0.0,0.0,0.3833
+sentence-transformers/all-MiniLM-L6-v2,ApartmentBuilding,3,RealEstateAgency,0.3264,0.125,0.125,0.4
+sentence-transformers/all-MiniLM-L6-v2,Bookmaker,1,CardGameApp,0.3558,0.0,0.0,0.7731
+sentence-transformers/all-MiniLM-L6-v2,Bookmaker,2,TeamSportsScoutingSystem,0.3374,0.0455,0.0435,0.3843
+sentence-transformers/all-MiniLM-L6-v2,Bookmaker,3,FitnessCompanyConan,0.3318,0.0667,0.0667,0.65
+sentence-transformers/all-MiniLM-L6-v2,CourseManagement,1,StudentAppointment,0.596,0.1429,0.1429,0.5917
+sentence-transformers/all-MiniLM-L6-v2,CourseManagement,2,School,0.5505,0.1875,0.1875,0.8583
+sentence-transformers/all-MiniLM-L6-v2,CourseManagement,3,OnlineTutoringSystem,0.46,0.0417,0.0385,0.5833
+sentence-transformers/all-MiniLM-L6-v2,EatAtHome,1,Restaurant,0.5685,0.2222,0.2,0.9167
+sentence-transformers/all-MiniLM-L6-v2,EatAtHome,2,SellingGoods,0.4761,0.1818,0.2222,0.8125
+sentence-transformers/all-MiniLM-L6-v2,EatAtHome,3,HelpingHands,0.4725,0.0,0.0,0.4776
+sentence-transformers/all-MiniLM-L6-v2,ElevatorControl,1,SmartHomeAutomationSystem,0.3531,0.0,0.0323,0.366
+sentence-transformers/all-MiniLM-L6-v2,ElevatorControl,2,DestroyBlockGame,0.2867,0.0,0.0,0.3143
+sentence-transformers/all-MiniLM-L6-v2,ElevatorControl,3,HomeForTheElderly,0.2736,0.0,0.0,0.4
+sentence-transformers/all-MiniLM-L6-v2,Gym,1,FitnessCompanyConan,0.4703,0.0,0.0,0.7183
+sentence-transformers/all-MiniLM-L6-v2,Gym,2,OnlineTutoringSystem,0.4224,0.04,0.0345,0.5686
+sentence-transformers/all-MiniLM-L6-v2,Gym,3,SellingGoods,0.3947,0.0556,0.0556,0.7867
+sentence-transformers/all-MiniLM-L6-v2,Hospital,1,TreatmentPlans,0.4309,0.0714,0.0667,0.6319
+sentence-transformers/all-MiniLM-L6-v2,Hospital,2,School,0.4129,0.0,0.0385,0.7701
+sentence-transformers/all-MiniLM-L6-v2,Hospital,3,BankAccount,0.41,0.0,0.0,0.5375
+sentence-transformers/all-MiniLM-L6-v2,InsuranceCompany,1,AlphaInsurance,0.5557,0.1333,0.1765,0.5643
+sentence-transformers/all-MiniLM-L6-v2,InsuranceCompany,2,RepairShops,0.4052,0.0,0.0,0.8185
+sentence-transformers/all-MiniLM-L6-v2,InsuranceCompany,3,TransportCompany,0.3832,0.0556,0.05,0.6598
+sentence-transformers/all-MiniLM-L6-v2,MilanLibrary,1,Kinepolis,0.4977,0.0,0.0312,0.5447
+sentence-transformers/all-MiniLM-L6-v2,MilanLibrary,2,Louvre,0.4113,0.0417,0.0769,0.4336
+sentence-transformers/all-MiniLM-L6-v2,MilanLibrary,3,TransportCompany,0.3588,0.0,0.0,0.7263
+sentence-transformers/all-MiniLM-L6-v2,OilWells,1,GasStation_TUW,0.3833,0.0,0.0,0.7167
+sentence-transformers/all-MiniLM-L6-v2,OilWells,2,Restaurant,0.3674,0.0,0.0,0.8
+sentence-transformers/all-MiniLM-L6-v2,OilWells,3,ClothingCompany,0.3649,0.0,0.0,0.7286
+sentence-transformers/all-MiniLM-L6-v2,RealEstateAgency,1,TransportCompany,0.4322,0.0,0.0,0.3622
+sentence-transformers/all-MiniLM-L6-v2,RealEstateAgency,2,House,0.3488,0.0625,0.0556,0.4583
+sentence-transformers/all-MiniLM-L6-v2,RealEstateAgency,3,ApartmentBuilding,0.3264,0.125,0.125,0.4
+sentence-transformers/all-MiniLM-L6-v2,RepairShops,1,TransportCompany,0.6115,0.25,0.2222,0.8205
+sentence-transformers/all-MiniLM-L6-v2,RepairShops,2,SellingGoods,0.4149,0.0,0.0,0.8333
+sentence-transformers/all-MiniLM-L6-v2,RepairShops,3,InsuranceCompany,0.4052,0.0,0.0,0.8185
+sentence-transformers/all-MiniLM-L6-v2,ResearchCenter,1,ProjectManagement,0.581,0.1538,0.1429,0.6875
+sentence-transformers/all-MiniLM-L6-v2,ResearchCenter,2,University,0.3812,0.0667,0.1333,0.7917
+sentence-transformers/all-MiniLM-L6-v2,ResearchCenter,3,Louvre,0.3418,0.0,0.0,0.75
+sentence-transformers/all-MiniLM-L6-v2,Restaurant,1,EatAtHome,0.5685,0.2222,0.2,0.9167
+sentence-transformers/all-MiniLM-L6-v2,Restaurant,2,ClothingCompany,0.4652,0.0833,0.0769,0.9286
+sentence-transformers/all-MiniLM-L6-v2,Restaurant,3,SellingGoods,0.4432,0.0769,0.0833,0.875
+sentence-transformers/all-MiniLM-L6-v2,UniversityExams,1,University,0.5904,0.1429,0.125,0.6111
+sentence-transformers/all-MiniLM-L6-v2,UniversityExams,2,StudentAppointment,0.4754,0.1818,0.1667,0.9286
+sentence-transformers/all-MiniLM-L6-v2,UniversityExams,3,School,0.4694,0.0667,0.0625,0.5889
+BAAI/bge-small-en-v1.5,AirTravel,1,Boeing,0.7363,0.2,0.1875,0.6324
+BAAI/bge-small-en-v1.5,AirTravel,2,TransportCompany,0.7267,0.0435,0.04,0.9344
+BAAI/bge-small-en-v1.5,AirTravel,3,TruckLogistics,0.7192,0.0,0.0476,0.5065
+BAAI/bge-small-en-v1.5,AlphaInsurance,1,InsuranceCompany,0.7054,0.1333,0.1765,0.5643
+BAAI/bge-small-en-v1.5,AlphaInsurance,2,ClothingCompany,0.6704,0.0625,0.0556,0.85
+BAAI/bge-small-en-v1.5,AlphaInsurance,3,SellingGoods,0.6652,0.125,0.125,0.9
+BAAI/bge-small-en-v1.5,BankAccount,1,Restaurant,0.7244,0.0909,0.0833,0.6
+BAAI/bge-small-en-v1.5,BankAccount,2,School,0.6973,0.0,0.0,0.6833
+BAAI/bge-small-en-v1.5,BankAccount,3,Hospital,0.6916,0.0,0.0,0.5375
+BAAI/bge-small-en-v1.5,Boeing,1,AirTravel,0.7363,0.2,0.1875,0.6324
+BAAI/bge-small-en-v1.5,Boeing,2,ClothingCompany,0.6983,0.0,0.0,0.8452
+BAAI/bge-small-en-v1.5,Boeing,3,TruckLogistics,0.6641,0.0,0.0,0.4861
+BAAI/bge-small-en-v1.5,BuildingManagement,1,eHome2020,0.7349,0.0,0.0,0.8727
+BAAI/bge-small-en-v1.5,BuildingManagement,2,Facepage,0.7176,0.0526,0.0476,0.5455
+BAAI/bge-small-en-v1.5,BuildingManagement,3,Musicmatic,0.7042,0.0526,0.0476,0.5455
+BAAI/bge-small-en-v1.5,BusTransportationManagementSystem,1,TransportCompany,0.7518,0.0588,0.1111,0.5962
+BAAI/bge-small-en-v1.5,BusTransportationManagementSystem,2,TruckLogistics,0.7298,0.0769,0.2308,0.4306
+BAAI/bge-small-en-v1.5,BusTransportationManagementSystem,3,Menso,0.6889,0.0,0.0588,0.7727
+BAAI/bge-small-en-v1.5,CardGameApp,1,GameArea,0.7473,0.0,0.0556,0.4176
+BAAI/bge-small-en-v1.5,CardGameApp,2,TileOGame,0.7376,0.1071,0.1538,0.5955
+BAAI/bge-small-en-v1.5,CardGameApp,3,DestroyBlockGame,0.7207,0.08,0.0833,0.4906
+BAAI/bge-small-en-v1.5,CelO,1,PizzaDeliveryWithEntertainment,0.681,0.0,0.0,0.7917
+BAAI/bge-small-en-v1.5,CelO,2,ResearchCenter,0.6764,0.0,0.0,0.625
+BAAI/bge-small-en-v1.5,CelO,3,Louvre,0.6499,0.0556,0.0526,0.7083
+BAAI/bge-small-en-v1.5,ClothingCompany,1,SellingGoods,0.7873,0.25,0.3,0.9375
+BAAI/bge-small-en-v1.5,ClothingCompany,2,Restaurant,0.7523,0.0833,0.0769,0.9286
+BAAI/bge-small-en-v1.5,ClothingCompany,3,TransportCompany,0.7351,0.1176,0.1111,0.6378
+BAAI/bge-small-en-v1.5,DestroyBlockGame,1,TileOGame,0.7875,0.0667,0.0667,0.6057
+BAAI/bge-small-en-v1.5,DestroyBlockGame,2,GameArea,0.7522,0.0,0.05,0.312
+BAAI/bge-small-en-v1.5,DestroyBlockGame,3,CardGameApp,0.7207,0.08,0.0833,0.4906
+BAAI/bge-small-en-v1.5,Ebike,1,eHome2020,0.6362,0.0,0.0476,0.9
+BAAI/bge-small-en-v1.5,Ebike,2,GasStation_TUW,0.629,0.0,0.0,0.25
+BAAI/bge-small-en-v1.5,Ebike,3,SmartHomeAutomationSystem,0.6279,0.0,0.0263,0.3273
+BAAI/bge-small-en-v1.5,eHome2020,1,SmartHomeAutomationSystem,0.7416,0.069,0.0882,0.3545
+BAAI/bge-small-en-v1.5,eHome2020,2,BuildingManagement,0.7349,0.0,0.0,0.8727
+BAAI/bge-small-en-v1.5,eHome2020,3,RealEstateAgency,0.6765,0.0769,0.0714,0.5028
+BAAI/bge-small-en-v1.5,EUScienceConnect,1,University,0.7007,0.0,0.1,0.7667
+BAAI/bge-small-en-v1.5,EUScienceConnect,2,UniversityExams,0.695,0.0,0.0,0.8375
+BAAI/bge-small-en-v1.5,EUScienceConnect,3,BuildingManagement,0.6915,0.0,0.0,0.4636
+BAAI/bge-small-en-v1.5,Facepage,1,BuildingManagement,0.7176,0.0526,0.0476,0.5455
+BAAI/bge-small-en-v1.5,Facepage,2,Musicmatic,0.7166,0.0588,0.125,1.0
+BAAI/bge-small-en-v1.5,Facepage,3,FitnessCompanyConan,0.6946,0.0,0.0625,0.904
+BAAI/bge-small-en-v1.5,FilmSet,1,Louvre,0.6699,0.0556,0.0556,0.6378
+BAAI/bge-small-en-v1.5,FilmSet,2,University,0.6628,0.05,0.0476,0.7511
+BAAI/bge-small-en-v1.5,FilmSet,3,AirTravel,0.6525,0.0435,0.0417,0.9344
+BAAI/bge-small-en-v1.5,FitnessCompanyConan,1,Gym,0.7439,0.0,0.0,0.7183
+BAAI/bge-small-en-v1.5,FitnessCompanyConan,2,Musicmatic,0.7047,0.0,0.0,0.904
+BAAI/bge-small-en-v1.5,FitnessCompanyConan,3,BuildingManagement,0.6972,0.0,0.05,0.5
+BAAI/bge-small-en-v1.5,GameArea,1,TileOGame,0.7585,0.0,0.0417,0.4524
+BAAI/bge-small-en-v1.5,GameArea,2,DestroyBlockGame,0.7522,0.0,0.05,0.312
+BAAI/bge-small-en-v1.5,GameArea,3,CardGameApp,0.7473,0.0,0.0556,0.4176
+BAAI/bge-small-en-v1.5,GasStation_KUL,1,GasStation_TUW,0.7402,0.0909,0.2143,0.7738
+BAAI/bge-small-en-v1.5,GasStation_KUL,2,SellingGoods,0.6795,0.1538,0.1429,0.9375
+BAAI/bge-small-en-v1.5,GasStation_KUL,3,TruckLogistics,0.6743,0.0,0.0,0.4931
+BAAI/bge-small-en-v1.5,GasStation_TUW,1,GasStation_KUL,0.7402,0.0909,0.2143,0.7738
+BAAI/bge-small-en-v1.5,GasStation_TUW,2,TruckLogistics,0.7174,0.0,0.0,0.4236
+BAAI/bge-small-en-v1.5,GasStation_TUW,3,TransportCompany,0.699,0.0,0.0,0.5545
+BAAI/bge-small-en-v1.5,HelpingHands,1,EatAtHome,0.6957,0.0,0.0,0.4776
+BAAI/bge-small-en-v1.5,HelpingHands,2,TransportCompany,0.6741,0.0435,0.037,0.9231
+BAAI/bge-small-en-v1.5,HelpingHands,3,TruckLogistics,0.6594,0.0526,0.0435,0.594
+BAAI/bge-small-en-v1.5,HomeForTheElderly,1,HotelBookingManagementSystem,0.7416,0.0,0.0357,0.4141
+BAAI/bge-small-en-v1.5,HomeForTheElderly,2,TreatmentPlans,0.7108,0.0,0.0,0.8571
+BAAI/bge-small-en-v1.5,HomeForTheElderly,3,HospitalHouseMD,0.7063,0.0,0.0,0.8
+BAAI/bge-small-en-v1.5,HospitalHouseMD,1,HomeForTheElderly,0.7063,0.0,0.0,0.8
+BAAI/bge-small-en-v1.5,HospitalHouseMD,2,Hospital,0.6992,0.0476,0.0435,0.3819
+BAAI/bge-small-en-v1.5,HospitalHouseMD,3,TreatmentPlans,0.6682,0.25,0.25,0.7143
+BAAI/bge-small-en-v1.5,HotelBookingManagementSystem,1,HomeForTheElderly,0.7416,0.0,0.0357,0.4141
+BAAI/bge-small-en-v1.5,HotelBookingManagementSystem,2,SellingGoods,0.7033,0.0,0.0,0.3586
+BAAI/bge-small-en-v1.5,HotelBookingManagementSystem,3,ClothingCompany,0.6901,0.0,0.0,0.3308
+BAAI/bge-small-en-v1.5,House,1,RealEstateAgency,0.6877,0.0625,0.0556,0.4583
+BAAI/bge-small-en-v1.5,House,2,BuildingManagement,0.6792,0.0,0.0,0.6402
+BAAI/bge-small-en-v1.5,House,3,ApartmentBuilding,0.6684,0.0,0.0,0.3833
+BAAI/bge-small-en-v1.5,Kinepolis,1,Menso,0.661,0.0476,0.0952,1.0
+BAAI/bge-small-en-v1.5,Kinepolis,2,MilanLibrary,0.656,0.0,0.0312,0.5447
+BAAI/bge-small-en-v1.5,Kinepolis,3,HotelBookingManagementSystem,0.6517,0.0,0.0333,0.4419
+BAAI/bge-small-en-v1.5,LabTracker,1,TreatmentPlans,0.7127,0.0741,0.1034,0.8833
+BAAI/bge-small-en-v1.5,LabTracker,2,HomeForTheElderly,0.6718,0.0417,0.037,0.75
+BAAI/bge-small-en-v1.5,LabTracker,3,ClothingCompany,0.6518,0.0,0.0,0.65
+BAAI/bge-small-en-v1.5,Louvre,1,CourseManagement,0.6887,0.0625,0.0625,0.6417
+BAAI/bge-small-en-v1.5,Louvre,2,EUScienceConnect,0.6731,0.0,0.0,0.8375
+BAAI/bge-small-en-v1.5,Louvre,3,FilmSet,0.6699,0.0556,0.0556,0.6378
+BAAI/bge-small-en-v1.5,Menso,1,BusTransportationManagementSystem,0.6889,0.0,0.0588,0.7727
+BAAI/bge-small-en-v1.5,Menso,2,HotelBookingManagementSystem,0.6704,0.0,0.0345,0.4419
+BAAI/bge-small-en-v1.5,Menso,3,Kinepolis,0.661,0.0476,0.0952,1.0
+BAAI/bge-small-en-v1.5,Musicmatic,1,Facepage,0.7166,0.0588,0.125,1.0
+BAAI/bge-small-en-v1.5,Musicmatic,2,FitnessCompanyConan,0.7047,0.0,0.0,0.904
+BAAI/bge-small-en-v1.5,Musicmatic,3,BuildingManagement,0.7042,0.0526,0.0476,0.5455
+BAAI/bge-small-en-v1.5,OnlineTutoringSystem,1,StudentAppointment,0.7384,0.05,0.0455,0.325
+BAAI/bge-small-en-v1.5,OnlineTutoringSystem,2,HomeForTheElderly,0.6674,0.0,0.0,0.4583
+BAAI/bge-small-en-v1.5,OnlineTutoringSystem,3,HotelBookingManagementSystem,0.6548,0.0,0.125,0.8428
+BAAI/bge-small-en-v1.5,PizzaDeliveryWithEntertainment,1,EatAtHome,0.7655,0.1667,0.1667,0.6111
+BAAI/bge-small-en-v1.5,PizzaDeliveryWithEntertainment,2,SellingGoods,0.7319,0.1333,0.1538,0.7778
+BAAI/bge-small-en-v1.5,PizzaDeliveryWithEntertainment,3,Restaurant,0.7179,0.0714,0.0667,0.6667
+BAAI/bge-small-en-v1.5,ProjectManagement,1,ResearchCenter,0.7781,0.1538,0.1429,0.6875
+BAAI/bge-small-en-v1.5,ProjectManagement,2,University,0.7131,0.0625,0.1176,0.6667
+BAAI/bge-small-en-v1.5,ProjectManagement,3,EUScienceConnect,0.6758,0.0,0.05,0.9
+BAAI/bge-small-en-v1.5,School,1,University,0.7614,0.0,0.0,0.9667
+BAAI/bge-small-en-v1.5,School,2,UniversityExams,0.7603,0.0667,0.0625,0.5889
+BAAI/bge-small-en-v1.5,School,3,CourseManagement,0.7339,0.1875,0.1875,0.8583
+BAAI/bge-small-en-v1.5,SellingGoods,1,ClothingCompany,0.7873,0.25,0.3,0.9375
+BAAI/bge-small-en-v1.5,SellingGoods,2,TransportCompany,0.742,0.1111,0.1176,0.6795
+BAAI/bge-small-en-v1.5,SellingGoods,3,EatAtHome,0.7397,0.1818,0.2222,0.8125
+BAAI/bge-small-en-v1.5,Sightseeing,1,HotelBookingManagementSystem,0.6527,0.0,0.0,0.4444
+BAAI/bge-small-en-v1.5,Sightseeing,2,Louvre,0.6475,0.0,0.0,0.8571
+BAAI/bge-small-en-v1.5,Sightseeing,3,School,0.6342,0.0667,0.0667,0.7317
+BAAI/bge-small-en-v1.5,SmartHomeAutomationSystem,1,eHome2020,0.7416,0.069,0.0882,0.3545
+BAAI/bge-small-en-v1.5,SmartHomeAutomationSystem,2,RealEstateAgency,0.6829,0.0,0.0,0.2433
+BAAI/bge-small-en-v1.5,SmartHomeAutomationSystem,3,BuildingManagement,0.6709,0.0312,0.0256,0.4251
+BAAI/bge-small-en-v1.5,Sober,1,TruckLogistics,0.6512,0.0,0.0588,0.6667
+BAAI/bge-small-en-v1.5,Sober,2,GasStation_KUL,0.6365,0.0,0.0,0.6889
+BAAI/bge-small-en-v1.5,Sober,3,PizzaDeliveryWithEntertainment,0.6358,0.0588,0.0588,0.9667
+BAAI/bge-small-en-v1.5,StudentAppointment,1,OnlineTutoringSystem,0.7384,0.05,0.0455,0.325
+BAAI/bge-small-en-v1.5,StudentAppointment,2,School,0.7215,0.0714,0.0714,0.5333
+BAAI/bge-small-en-v1.5,StudentAppointment,3,CourseManagement,0.696,0.1429,0.1429,0.5917
+BAAI/bge-small-en-v1.5,TeamSportsScoutingSystem,1,Bookmaker,0.6565,0.0455,0.0435,0.3843
+BAAI/bge-small-en-v1.5,TeamSportsScoutingSystem,2,ResearchCenter,0.6551,0.0,0.0,0.4686
+BAAI/bge-small-en-v1.5,TeamSportsScoutingSystem,3,CardGameApp,0.6493,0.037,0.037,0.5487
+BAAI/bge-small-en-v1.5,TileOGame,1,DestroyBlockGame,0.7875,0.0667,0.0667,0.6057
+BAAI/bge-small-en-v1.5,TileOGame,2,GameArea,0.7585,0.0,0.0417,0.4524
+BAAI/bge-small-en-v1.5,TileOGame,3,CardGameApp,0.7376,0.1071,0.1538,0.5955
+BAAI/bge-small-en-v1.5,TransportCompany,1,TruckLogistics,0.8223,0.1111,0.1,0.5427
+BAAI/bge-small-en-v1.5,TransportCompany,2,RepairShops,0.7862,0.25,0.2222,0.8205
+BAAI/bge-small-en-v1.5,TransportCompany,3,BusTransportationManagementSystem,0.7518,0.0588,0.1111,0.5962
+BAAI/bge-small-en-v1.5,TreatmentPlans,1,LabTracker,0.7127,0.0741,0.1034,0.8833
+BAAI/bge-small-en-v1.5,TreatmentPlans,2,HomeForTheElderly,0.7108,0.0,0.0,0.8571
+BAAI/bge-small-en-v1.5,TreatmentPlans,3,Hospital,0.6964,0.0714,0.0667,0.6319
+BAAI/bge-small-en-v1.5,TruckLogistics,1,TransportCompany,0.8223,0.1111,0.1,0.5427
+BAAI/bge-small-en-v1.5,TruckLogistics,2,BusTransportationManagementSystem,0.7298,0.0769,0.2308,0.4306
+BAAI/bge-small-en-v1.5,TruckLogistics,3,AirTravel,0.7192,0.0,0.0476,0.5065
+BAAI/bge-small-en-v1.5,University,1,UniversityExams,0.7735,0.1429,0.125,0.6111
+BAAI/bge-small-en-v1.5,University,2,School,0.7614,0.0,0.0,0.9667
+BAAI/bge-small-en-v1.5,University,3,ResearchCenter,0.7137,0.0667,0.1333,0.7917
+BAAI/bge-small-en-v1.5,ApartmentBuilding,1,House,0.6684,0.0,0.0,0.3833
+BAAI/bge-small-en-v1.5,ApartmentBuilding,2,Restaurant,0.6508,0.0,0.0,0.5
+BAAI/bge-small-en-v1.5,ApartmentBuilding,3,RealEstateAgency,0.6495,0.125,0.125,0.4
+BAAI/bge-small-en-v1.5,Bookmaker,1,TeamSportsScoutingSystem,0.6565,0.0455,0.0435,0.3843
+BAAI/bge-small-en-v1.5,Bookmaker,2,Restaurant,0.637,0.0,0.0,0.375
+BAAI/bge-small-en-v1.5,Bookmaker,3,CardGameApp,0.6361,0.0,0.0,0.7731
+BAAI/bge-small-en-v1.5,CourseManagement,1,School,0.7339,0.1875,0.1875,0.8583
+BAAI/bge-small-en-v1.5,CourseManagement,2,UniversityExams,0.7326,0.1333,0.125,0.6417
+BAAI/bge-small-en-v1.5,CourseManagement,3,StudentAppointment,0.696,0.1429,0.1429,0.5917
+BAAI/bge-small-en-v1.5,EatAtHome,1,PizzaDeliveryWithEntertainment,0.7655,0.1667,0.1667,0.6111
+BAAI/bge-small-en-v1.5,EatAtHome,2,Restaurant,0.7652,0.2222,0.2,0.9167
+BAAI/bge-small-en-v1.5,EatAtHome,3,SellingGoods,0.7397,0.1818,0.2222,0.8125
+BAAI/bge-small-en-v1.5,ElevatorControl,1,SmartHomeAutomationSystem,0.6475,0.0,0.0323,0.366
+BAAI/bge-small-en-v1.5,ElevatorControl,2,SellingGoods,0.5906,0.0,0.0,0.475
+BAAI/bge-small-en-v1.5,ElevatorControl,3,TruckLogistics,0.5894,0.0,0.0,0.5972
+BAAI/bge-small-en-v1.5,Gym,1,FitnessCompanyConan,0.7439,0.0,0.0,0.7183
+BAAI/bge-small-en-v1.5,Gym,2,EatAtHome,0.679,0.0667,0.0588,0.6503
+BAAI/bge-small-en-v1.5,Gym,3,SellingGoods,0.6763,0.0556,0.0556,0.7867
+BAAI/bge-small-en-v1.5,Hospital,1,School,0.7194,0.0,0.0385,0.7701
+BAAI/bge-small-en-v1.5,Hospital,2,HomeForTheElderly,0.7046,0.04,0.0769,0.5069
+BAAI/bge-small-en-v1.5,Hospital,3,HospitalHouseMD,0.6992,0.0476,0.0435,0.3819
+BAAI/bge-small-en-v1.5,InsuranceCompany,1,AlphaInsurance,0.7054,0.1333,0.1765,0.5643
+BAAI/bge-small-en-v1.5,InsuranceCompany,2,TruckLogistics,0.6952,0.0,0.0625,0.6597
+BAAI/bge-small-en-v1.5,InsuranceCompany,3,TransportCompany,0.6804,0.0556,0.05,0.6598
+BAAI/bge-small-en-v1.5,MilanLibrary,1,HelpingHands,0.6578,0.0345,0.0909,0.7865
+BAAI/bge-small-en-v1.5,MilanLibrary,2,Kinepolis,0.656,0.0,0.0312,0.5447
+BAAI/bge-small-en-v1.5,MilanLibrary,3,ClothingCompany,0.6523,0.0,0.0,0.4336
+BAAI/bge-small-en-v1.5,OilWells,1,ClothingCompany,0.6734,0.0,0.0,0.7286
+BAAI/bge-small-en-v1.5,OilWells,2,BuildingManagement,0.6722,0.0,0.0,0.4091
+BAAI/bge-small-en-v1.5,OilWells,3,GasStation_TUW,0.6685,0.0,0.0,0.7167
+BAAI/bge-small-en-v1.5,RealEstateAgency,1,BuildingManagement,0.6984,0.0,0.0,0.4886
+BAAI/bge-small-en-v1.5,RealEstateAgency,2,GameArea,0.6938,0.0,0.0,0.7024
+BAAI/bge-small-en-v1.5,RealEstateAgency,3,House,0.6877,0.0625,0.0556,0.4583
+BAAI/bge-small-en-v1.5,RepairShops,1,TransportCompany,0.7862,0.25,0.2222,0.8205
+BAAI/bge-small-en-v1.5,RepairShops,2,ClothingCompany,0.6939,0.0,0.0,0.7708
+BAAI/bge-small-en-v1.5,RepairShops,3,SellingGoods,0.6814,0.0,0.0,0.8333
+BAAI/bge-small-en-v1.5,ResearchCenter,1,ProjectManagement,0.7781,0.1538,0.1429,0.6875
+BAAI/bge-small-en-v1.5,ResearchCenter,2,University,0.7137,0.0667,0.1333,0.7917
+BAAI/bge-small-en-v1.5,ResearchCenter,3,EUScienceConnect,0.6831,0.0,0.0556,0.7875
+BAAI/bge-small-en-v1.5,Restaurant,1,EatAtHome,0.7652,0.2222,0.2,0.9167
+BAAI/bge-small-en-v1.5,Restaurant,2,ClothingCompany,0.7523,0.0833,0.0769,0.9286
+BAAI/bge-small-en-v1.5,Restaurant,3,UniversityExams,0.7453,0.0,0.0,0.9286
+BAAI/bge-small-en-v1.5,UniversityExams,1,University,0.7735,0.1429,0.125,0.6111
+BAAI/bge-small-en-v1.5,UniversityExams,2,School,0.7603,0.0667,0.0625,0.5889
+BAAI/bge-small-en-v1.5,UniversityExams,3,Restaurant,0.7453,0.0,0.0,0.9286
+Alibaba-NLP/gte-modernbert-base,AirTravel,1,FilmSet,0.6756,0.0435,0.0417,0.9344
+Alibaba-NLP/gte-modernbert-base,AirTravel,2,TransportCompany,0.674,0.0435,0.04,0.9344
+Alibaba-NLP/gte-modernbert-base,AirTravel,3,Boeing,0.6386,0.2,0.1875,0.6324
+Alibaba-NLP/gte-modernbert-base,AlphaInsurance,1,InsuranceCompany,0.7152,0.1333,0.1765,0.5643
+Alibaba-NLP/gte-modernbert-base,AlphaInsurance,2,HomeForTheElderly,0.6105,0.0526,0.0476,1.0
+Alibaba-NLP/gte-modernbert-base,AlphaInsurance,3,TransportCompany,0.5907,0.0476,0.0417,0.7628
+Alibaba-NLP/gte-modernbert-base,BankAccount,1,Hospital,0.6095,0.0,0.0,0.5375
+Alibaba-NLP/gte-modernbert-base,BankAccount,2,GasStation_TUW,0.597,0.0,0.0,0.5167
+Alibaba-NLP/gte-modernbert-base,BankAccount,3,Musicmatic,0.5795,0.0,0.0,0.6152
+Alibaba-NLP/gte-modernbert-base,Boeing,1,AirTravel,0.6386,0.2,0.1875,0.6324
+Alibaba-NLP/gte-modernbert-base,Boeing,2,ClothingCompany,0.5716,0.0,0.0,0.8452
+Alibaba-NLP/gte-modernbert-base,Boeing,3,Menso,0.56,0.0,0.0,0.6894
+Alibaba-NLP/gte-modernbert-base,BuildingManagement,1,eHome2020,0.6379,0.0,0.0,0.8727
+Alibaba-NLP/gte-modernbert-base,BuildingManagement,2,Facepage,0.612,0.0526,0.0476,0.5455
+Alibaba-NLP/gte-modernbert-base,BuildingManagement,3,FitnessCompanyConan,0.6054,0.0,0.05,0.5
+Alibaba-NLP/gte-modernbert-base,BusTransportationManagementSystem,1,TransportCompany,0.7306,0.0588,0.1111,0.5962
+Alibaba-NLP/gte-modernbert-base,BusTransportationManagementSystem,2,Menso,0.6939,0.0,0.0588,0.7727
+Alibaba-NLP/gte-modernbert-base,BusTransportationManagementSystem,3,TruckLogistics,0.6865,0.0769,0.2308,0.4306
+Alibaba-NLP/gte-modernbert-base,CardGameApp,1,TileOGame,0.6421,0.1071,0.1538,0.5955
+Alibaba-NLP/gte-modernbert-base,CardGameApp,2,FitnessCompanyConan,0.6336,0.0,0.0,0.4231
+Alibaba-NLP/gte-modernbert-base,CardGameApp,3,DestroyBlockGame,0.6301,0.08,0.0833,0.4906
+Alibaba-NLP/gte-modernbert-base,CelO,1,PizzaDeliveryWithEntertainment,0.6652,0.0,0.0,0.7917
+Alibaba-NLP/gte-modernbert-base,CelO,2,TransportCompany,0.6474,0.0,0.04,0.9295
+Alibaba-NLP/gte-modernbert-base,CelO,3,FitnessCompanyConan,0.6264,0.0526,0.05,0.6944
+Alibaba-NLP/gte-modernbert-base,ClothingCompany,1,TransportCompany,0.7002,0.1176,0.1111,0.6378
+Alibaba-NLP/gte-modernbert-base,ClothingCompany,2,SellingGoods,0.676,0.25,0.3,0.9375
+Alibaba-NLP/gte-modernbert-base,ClothingCompany,3,EatAtHome,0.6688,0.2,0.2,0.8571
+Alibaba-NLP/gte-modernbert-base,DestroyBlockGame,1,TileOGame,0.7361,0.0667,0.0667,0.6057
+Alibaba-NLP/gte-modernbert-base,DestroyBlockGame,2,CardGameApp,0.6301,0.08,0.0833,0.4906
+Alibaba-NLP/gte-modernbert-base,DestroyBlockGame,3,PizzaDeliveryWithEntertainment,0.6121,0.0455,0.0455,0.5846
+Alibaba-NLP/gte-modernbert-base,Ebike,1,GasStation_TUW,0.5627,0.0,0.0,0.25
+Alibaba-NLP/gte-modernbert-base,Ebike,2,CourseManagement,0.5587,0.0,0.0,0.6
+Alibaba-NLP/gte-modernbert-base,Ebike,3,SellingGoods,0.5468,0.0,0.0,0.4
+Alibaba-NLP/gte-modernbert-base,eHome2020,1,SmartHomeAutomationSystem,0.6498,0.069,0.0882,0.3545
+Alibaba-NLP/gte-modernbert-base,eHome2020,2,BuildingManagement,0.6379,0.0,0.0,0.8727
+Alibaba-NLP/gte-modernbert-base,eHome2020,3,HomeForTheElderly,0.6275,0.0556,0.0526,0.45
+Alibaba-NLP/gte-modernbert-base,EUScienceConnect,1,University,0.662,0.0,0.1,0.7667
+Alibaba-NLP/gte-modernbert-base,EUScienceConnect,2,FitnessCompanyConan,0.6279,0.0667,0.0526,0.8778
+Alibaba-NLP/gte-modernbert-base,EUScienceConnect,3,UniversityExams,0.6078,0.0,0.0,0.8375
+Alibaba-NLP/gte-modernbert-base,Facepage,1,PizzaDeliveryWithEntertainment,0.6264,0.0588,0.125,0.9848
+Alibaba-NLP/gte-modernbert-base,Facepage,2,BuildingManagement,0.612,0.0526,0.0476,0.5455
+Alibaba-NLP/gte-modernbert-base,Facepage,3,FitnessCompanyConan,0.5944,0.0,0.0625,0.904
+Alibaba-NLP/gte-modernbert-base,FilmSet,1,University,0.6813,0.05,0.0476,0.7511
+Alibaba-NLP/gte-modernbert-base,FilmSet,2,AirTravel,0.6756,0.0435,0.0417,0.9344
+Alibaba-NLP/gte-modernbert-base,FilmSet,3,School,0.6455,0.0,0.0,0.7288
+Alibaba-NLP/gte-modernbert-base,FitnessCompanyConan,1,TransportCompany,0.7035,0.0,0.0,0.765
+Alibaba-NLP/gte-modernbert-base,FitnessCompanyConan,2,Gym,0.6994,0.0,0.0,0.7183
+Alibaba-NLP/gte-modernbert-base,FitnessCompanyConan,3,CourseManagement,0.6958,0.0588,0.0588,0.8444
+Alibaba-NLP/gte-modernbert-base,GameArea,1,CardGameApp,0.6117,0.0,0.0556,0.4176
+Alibaba-NLP/gte-modernbert-base,GameArea,2,DestroyBlockGame,0.6043,0.0,0.05,0.312
+Alibaba-NLP/gte-modernbert-base,GameArea,3,TileOGame,0.593,0.0,0.0417,0.4524
+Alibaba-NLP/gte-modernbert-base,GasStation_KUL,1,GasStation_TUW,0.6871,0.0909,0.2143,0.7738
+Alibaba-NLP/gte-modernbert-base,GasStation_KUL,2,Menso,0.6804,0.125,0.1053,0.8182
+Alibaba-NLP/gte-modernbert-base,GasStation_KUL,3,TransportCompany,0.6625,0.0,0.0,0.6378
+Alibaba-NLP/gte-modernbert-base,GasStation_TUW,1,GasStation_KUL,0.6871,0.0909,0.2143,0.7738
+Alibaba-NLP/gte-modernbert-base,GasStation_TUW,2,Musicmatic,0.685,0.0,0.0,0.596
+Alibaba-NLP/gte-modernbert-base,GasStation_TUW,3,SellingGoods,0.6217,0.0,0.0,0.7292
+Alibaba-NLP/gte-modernbert-base,HelpingHands,1,EatAtHome,0.6411,0.0,0.0,0.4776
+Alibaba-NLP/gte-modernbert-base,HelpingHands,2,MilanLibrary,0.6386,0.0345,0.0909,0.7865
+Alibaba-NLP/gte-modernbert-base,HelpingHands,3,BusTransportationManagementSystem,0.6353,0.0588,0.1,0.5192
+Alibaba-NLP/gte-modernbert-base,HomeForTheElderly,1,Menso,0.6955,0.1053,0.1667,0.9545
+Alibaba-NLP/gte-modernbert-base,HomeForTheElderly,2,HospitalHouseMD,0.6865,0.0,0.0,0.8
+Alibaba-NLP/gte-modernbert-base,HomeForTheElderly,3,EatAtHome,0.6641,0.0,0.0,0.75
+Alibaba-NLP/gte-modernbert-base,HospitalHouseMD,1,HomeForTheElderly,0.6865,0.0,0.0,0.8
+Alibaba-NLP/gte-modernbert-base,HospitalHouseMD,2,TreatmentPlans,0.6726,0.25,0.25,0.7143
+Alibaba-NLP/gte-modernbert-base,HospitalHouseMD,3,Hospital,0.6352,0.0476,0.0435,0.3819
+Alibaba-NLP/gte-modernbert-base,HotelBookingManagementSystem,1,HomeForTheElderly,0.6635,0.0,0.0357,0.4141
+Alibaba-NLP/gte-modernbert-base,HotelBookingManagementSystem,2,Menso,0.6534,0.0,0.0345,0.4419
+Alibaba-NLP/gte-modernbert-base,HotelBookingManagementSystem,3,Kinepolis,0.6425,0.0,0.0333,0.4419
+Alibaba-NLP/gte-modernbert-base,House,1,TruckLogistics,0.6299,0.0,0.0,0.6056
+Alibaba-NLP/gte-modernbert-base,House,2,FilmSet,0.6142,0.0,0.0,0.8538
+Alibaba-NLP/gte-modernbert-base,House,3,AirTravel,0.6062,0.0,0.0,0.8176
+Alibaba-NLP/gte-modernbert-base,Kinepolis,1,Menso,0.6759,0.0476,0.0952,1.0
+Alibaba-NLP/gte-modernbert-base,Kinepolis,2,MilanLibrary,0.6619,0.0,0.0312,0.5447
+Alibaba-NLP/gte-modernbert-base,Kinepolis,3,HotelBookingManagementSystem,0.6425,0.0,0.0333,0.4419
+Alibaba-NLP/gte-modernbert-base,LabTracker,1,TreatmentPlans,0.7034,0.0741,0.1034,0.8833
+Alibaba-NLP/gte-modernbert-base,LabTracker,2,StudentAppointment,0.6438,0.05,0.0435,0.6167
+Alibaba-NLP/gte-modernbert-base,LabTracker,3,Menso,0.6303,0.0,0.0,0.7833
+Alibaba-NLP/gte-modernbert-base,Louvre,1,CourseManagement,0.6984,0.0625,0.0625,0.6417
+Alibaba-NLP/gte-modernbert-base,Louvre,2,Menso,0.6598,0.0,0.0,0.8182
+Alibaba-NLP/gte-modernbert-base,Louvre,3,FitnessCompanyConan,0.6537,0.0714,0.0714,0.7153
+Alibaba-NLP/gte-modernbert-base,Menso,1,TransportCompany,0.7149,0.0455,0.0435,0.8045
+Alibaba-NLP/gte-modernbert-base,Menso,2,HomeForTheElderly,0.6955,0.1053,0.1667,0.9545
+Alibaba-NLP/gte-modernbert-base,Menso,3,BusTransportationManagementSystem,0.6939,0.0,0.0588,0.7727
+Alibaba-NLP/gte-modernbert-base,Musicmatic,1,PizzaDeliveryWithEntertainment,0.7018,0.0588,0.125,0.9848
+Alibaba-NLP/gte-modernbert-base,Musicmatic,2,GasStation_TUW,0.685,0.0,0.0,0.596
+Alibaba-NLP/gte-modernbert-base,Musicmatic,3,SellingGoods,0.6512,0.0,0.0,0.7626
+Alibaba-NLP/gte-modernbert-base,OnlineTutoringSystem,1,StudentAppointment,0.6791,0.05,0.0455,0.325
+Alibaba-NLP/gte-modernbert-base,OnlineTutoringSystem,2,HomeForTheElderly,0.653,0.0,0.0,0.4583
+Alibaba-NLP/gte-modernbert-base,OnlineTutoringSystem,3,CourseManagement,0.6404,0.0417,0.0385,0.5833
+Alibaba-NLP/gte-modernbert-base,PizzaDeliveryWithEntertainment,1,Musicmatic,0.7018,0.0588,0.125,0.9848
+Alibaba-NLP/gte-modernbert-base,PizzaDeliveryWithEntertainment,2,EatAtHome,0.6935,0.1667,0.1667,0.6111
+Alibaba-NLP/gte-modernbert-base,PizzaDeliveryWithEntertainment,3,TransportCompany,0.6741,0.1053,0.1,0.8622
+Alibaba-NLP/gte-modernbert-base,ProjectManagement,1,ResearchCenter,0.7598,0.1538,0.1429,0.6875
+Alibaba-NLP/gte-modernbert-base,ProjectManagement,2,University,0.6983,0.0625,0.1176,0.6667
+Alibaba-NLP/gte-modernbert-base,ProjectManagement,3,TransportCompany,0.6409,0.0,0.0,0.6795
+Alibaba-NLP/gte-modernbert-base,School,1,University,0.7322,0.0,0.0,0.9667
+Alibaba-NLP/gte-modernbert-base,School,2,CourseManagement,0.724,0.1875,0.1875,0.8583
+Alibaba-NLP/gte-modernbert-base,School,3,StudentAppointment,0.7119,0.0714,0.0714,0.5333
+Alibaba-NLP/gte-modernbert-base,SellingGoods,1,TransportCompany,0.6806,0.1111,0.1176,0.6795
+Alibaba-NLP/gte-modernbert-base,SellingGoods,2,ClothingCompany,0.676,0.25,0.3,0.9375
+Alibaba-NLP/gte-modernbert-base,SellingGoods,3,Menso,0.6684,0.1875,0.2143,0.8636
+Alibaba-NLP/gte-modernbert-base,Sightseeing,1,School,0.6338,0.0667,0.0667,0.7317
+Alibaba-NLP/gte-modernbert-base,Sightseeing,2,StudentAppointment,0.6184,0.0,0.0,0.7857
+Alibaba-NLP/gte-modernbert-base,Sightseeing,3,University,0.6127,0.0,0.0,0.754
+Alibaba-NLP/gte-modernbert-base,SmartHomeAutomationSystem,1,eHome2020,0.6498,0.069,0.0882,0.3545
+Alibaba-NLP/gte-modernbert-base,SmartHomeAutomationSystem,2,HomeForTheElderly,0.6286,0.0323,0.0278,0.4125
+Alibaba-NLP/gte-modernbert-base,SmartHomeAutomationSystem,3,EatAtHome,0.5889,0.0,0.0323,0.2988
+Alibaba-NLP/gte-modernbert-base,Sober,1,TransportCompany,0.6632,0.05,0.1,0.8288
+Alibaba-NLP/gte-modernbert-base,Sober,2,Menso,0.6338,0.0526,0.0526,0.7091
+Alibaba-NLP/gte-modernbert-base,Sober,3,BusTransportationManagementSystem,0.6246,0.0,0.0,0.6333
+Alibaba-NLP/gte-modernbert-base,StudentAppointment,1,School,0.7119,0.0714,0.0714,0.5333
+Alibaba-NLP/gte-modernbert-base,StudentAppointment,2,CourseManagement,0.6842,0.1429,0.1429,0.5917
+Alibaba-NLP/gte-modernbert-base,StudentAppointment,3,OnlineTutoringSystem,0.6791,0.05,0.0455,0.325
+Alibaba-NLP/gte-modernbert-base,TeamSportsScoutingSystem,1,ResearchCenter,0.6088,0.0,0.0,0.4686
+Alibaba-NLP/gte-modernbert-base,TeamSportsScoutingSystem,2,FitnessCompanyConan,0.6001,0.0455,0.0435,0.502
+Alibaba-NLP/gte-modernbert-base,TeamSportsScoutingSystem,3,Louvre,0.5999,0.0,0.0,0.351
+Alibaba-NLP/gte-modernbert-base,TileOGame,1,DestroyBlockGame,0.7361,0.0667,0.0667,0.6057
+Alibaba-NLP/gte-modernbert-base,TileOGame,2,CardGameApp,0.6421,0.1071,0.1538,0.5955
+Alibaba-NLP/gte-modernbert-base,TileOGame,3,Menso,0.5973,0.0,0.0,0.3294
+Alibaba-NLP/gte-modernbert-base,TransportCompany,1,TruckLogistics,0.7518,0.1111,0.1,0.5427
+Alibaba-NLP/gte-modernbert-base,TransportCompany,2,BusTransportationManagementSystem,0.7306,0.0588,0.1111,0.5962
+Alibaba-NLP/gte-modernbert-base,TransportCompany,3,Menso,0.7149,0.0455,0.0435,0.8045
+Alibaba-NLP/gte-modernbert-base,TreatmentPlans,1,LabTracker,0.7034,0.0741,0.1034,0.8833
+Alibaba-NLP/gte-modernbert-base,TreatmentPlans,2,Hospital,0.6733,0.0714,0.0667,0.6319
+Alibaba-NLP/gte-modernbert-base,TreatmentPlans,3,HospitalHouseMD,0.6726,0.25,0.25,0.7143
+Alibaba-NLP/gte-modernbert-base,TruckLogistics,1,TransportCompany,0.7518,0.1111,0.1,0.5427
+Alibaba-NLP/gte-modernbert-base,TruckLogistics,2,BusTransportationManagementSystem,0.6865,0.0769,0.2308,0.4306
+Alibaba-NLP/gte-modernbert-base,TruckLogistics,3,Restaurant,0.6558,0.0769,0.0667,0.4306
+Alibaba-NLP/gte-modernbert-base,University,1,UniversityExams,0.7489,0.1429,0.125,0.6111
+Alibaba-NLP/gte-modernbert-base,University,2,School,0.7322,0.0,0.0,0.9667
+Alibaba-NLP/gte-modernbert-base,University,3,ResearchCenter,0.7042,0.0667,0.1333,0.7917
+Alibaba-NLP/gte-modernbert-base,ApartmentBuilding,1,Hospital,0.6034,0.0,0.0476,0.3472
+Alibaba-NLP/gte-modernbert-base,ApartmentBuilding,2,School,0.5852,0.1818,0.1818,0.4389
+Alibaba-NLP/gte-modernbert-base,ApartmentBuilding,3,House,0.5678,0.0,0.0,0.3833
+Alibaba-NLP/gte-modernbert-base,Bookmaker,1,Restaurant,0.6293,0.0,0.0,0.375
+Alibaba-NLP/gte-modernbert-base,Bookmaker,2,Menso,0.6059,0.0,0.0,0.3636
+Alibaba-NLP/gte-modernbert-base,Bookmaker,3,TransportCompany,0.5873,0.0,0.0,0.4833
+Alibaba-NLP/gte-modernbert-base,CourseManagement,1,School,0.724,0.1875,0.1875,0.8583
+Alibaba-NLP/gte-modernbert-base,CourseManagement,2,Louvre,0.6984,0.0625,0.0625,0.6417
+Alibaba-NLP/gte-modernbert-base,CourseManagement,3,FitnessCompanyConan,0.6958,0.0588,0.0588,0.8444
+Alibaba-NLP/gte-modernbert-base,EatAtHome,1,PizzaDeliveryWithEntertainment,0.6935,0.1667,0.1667,0.6111
+Alibaba-NLP/gte-modernbert-base,EatAtHome,2,TransportCompany,0.6916,0.1333,0.125,0.5545
+Alibaba-NLP/gte-modernbert-base,EatAtHome,3,Restaurant,0.6887,0.2222,0.2,0.9167
+Alibaba-NLP/gte-modernbert-base,ElevatorControl,1,TileOGame,0.5706,0.0,0.0,0.381
+Alibaba-NLP/gte-modernbert-base,ElevatorControl,2,DestroyBlockGame,0.5679,0.0,0.0,0.3143
+Alibaba-NLP/gte-modernbert-base,ElevatorControl,3,Louvre,0.5667,0.0,0.0,0.5286
+Alibaba-NLP/gte-modernbert-base,Gym,1,FitnessCompanyConan,0.6994,0.0,0.0,0.7183
+Alibaba-NLP/gte-modernbert-base,Gym,2,EatAtHome,0.6546,0.0667,0.0588,0.6503
+Alibaba-NLP/gte-modernbert-base,Gym,3,SellingGoods,0.643,0.0556,0.0556,0.7867
+Alibaba-NLP/gte-modernbert-base,Hospital,1,School,0.6851,0.0,0.0385,0.7701
+Alibaba-NLP/gte-modernbert-base,Hospital,2,TreatmentPlans,0.6733,0.0714,0.0667,0.6319
+Alibaba-NLP/gte-modernbert-base,Hospital,3,HomeForTheElderly,0.6447,0.04,0.0769,0.5069
+Alibaba-NLP/gte-modernbert-base,InsuranceCompany,1,AlphaInsurance,0.7152,0.1333,0.1765,0.5643
+Alibaba-NLP/gte-modernbert-base,InsuranceCompany,2,TruckLogistics,0.6389,0.0,0.0625,0.6597
+Alibaba-NLP/gte-modernbert-base,InsuranceCompany,3,TransportCompany,0.6381,0.0556,0.05,0.6598
+Alibaba-NLP/gte-modernbert-base,MilanLibrary,1,Kinepolis,0.6619,0.0,0.0312,0.5447
+Alibaba-NLP/gte-modernbert-base,MilanLibrary,2,Menso,0.6611,0.0,0.0,0.5447
+Alibaba-NLP/gte-modernbert-base,MilanLibrary,3,PizzaDeliveryWithEntertainment,0.6434,0.0385,0.0345,0.6558
+Alibaba-NLP/gte-modernbert-base,OilWells,1,ClothingCompany,0.6606,0.0,0.0,0.7286
+Alibaba-NLP/gte-modernbert-base,OilWells,2,BuildingManagement,0.5901,0.0,0.0,0.4091
+Alibaba-NLP/gte-modernbert-base,OilWells,3,GasStation_KUL,0.5779,0.0,0.0,0.7286
+Alibaba-NLP/gte-modernbert-base,RealEstateAgency,1,House,0.6026,0.0625,0.0556,0.4583
+Alibaba-NLP/gte-modernbert-base,RealEstateAgency,2,HomeForTheElderly,0.5516,0.0,0.0,0.25
+Alibaba-NLP/gte-modernbert-base,RealEstateAgency,3,TruckLogistics,0.543,0.0,0.0,0.6042
+Alibaba-NLP/gte-modernbert-base,RepairShops,1,TransportCompany,0.7013,0.25,0.2222,0.8205
+Alibaba-NLP/gte-modernbert-base,RepairShops,2,Restaurant,0.6421,0.0,0.0,0.7083
+Alibaba-NLP/gte-modernbert-base,RepairShops,3,TruckLogistics,0.6248,0.0667,0.0588,0.7222
+Alibaba-NLP/gte-modernbert-base,ResearchCenter,1,ProjectManagement,0.7598,0.1538,0.1429,0.6875
+Alibaba-NLP/gte-modernbert-base,ResearchCenter,2,University,0.7042,0.0667,0.1333,0.7917
+Alibaba-NLP/gte-modernbert-base,ResearchCenter,3,Louvre,0.6313,0.0,0.0,0.75
+Alibaba-NLP/gte-modernbert-base,Restaurant,1,EatAtHome,0.6887,0.2222,0.2,0.9167
+Alibaba-NLP/gte-modernbert-base,Restaurant,2,PizzaDeliveryWithEntertainment,0.6595,0.0714,0.0667,0.6667
+Alibaba-NLP/gte-modernbert-base,Restaurant,3,TruckLogistics,0.6558,0.0769,0.0667,0.4306
+Alibaba-NLP/gte-modernbert-base,UniversityExams,1,University,0.7489,0.1429,0.125,0.6111
+Alibaba-NLP/gte-modernbert-base,UniversityExams,2,School,0.6683,0.0667,0.0625,0.5889
+Alibaba-NLP/gte-modernbert-base,UniversityExams,3,StudentAppointment,0.6518,0.1818,0.1667,0.9286
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),AirTravel,1,Boeing,0.0328,0.2,0.1875,0.6324
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),AirTravel,2,TruckLogistics,0.0317,0.0,0.0476,0.5065
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),AirTravel,3,TransportCompany,0.0315,0.0435,0.04,0.9344
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),AlphaInsurance,1,InsuranceCompany,0.0328,0.1333,0.1765,0.5643
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),AlphaInsurance,2,Boeing,0.032,0.0667,0.0588,0.7167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),AlphaInsurance,3,EatAtHome,0.031,0.0714,0.0625,0.75
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BankAccount,1,Facepage,0.0311,0.0714,0.0714,0.6152
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BankAccount,2,SellingGoods,0.0307,0.0769,0.0909,0.475
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BankAccount,3,GameArea,0.0291,0.0,0.0,0.9429
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Boeing,1,AirTravel,0.0328,0.2,0.1875,0.6324
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Boeing,2,SellingGoods,0.0318,0.0,0.0,0.7917
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Boeing,3,AlphaInsurance,0.0315,0.0667,0.0588,0.7167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BuildingManagement,1,Facepage,0.0328,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BuildingManagement,2,eHome2020,0.0318,0.0,0.0,0.8727
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BuildingManagement,3,Musicmatic,0.0313,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BusTransportationManagementSystem,1,Menso,0.0325,0.0,0.0588,0.7727
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BusTransportationManagementSystem,2,TruckLogistics,0.032,0.0769,0.2308,0.4306
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),BusTransportationManagementSystem,3,TransportCompany,0.0317,0.0588,0.1111,0.5962
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CardGameApp,1,TileOGame,0.0325,0.1071,0.1538,0.5955
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CardGameApp,2,TeamSportsScoutingSystem,0.0318,0.037,0.037,0.5487
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CardGameApp,3,DestroyBlockGame,0.0317,0.08,0.0833,0.4906
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CelO,1,PizzaDeliveryWithEntertainment,0.0318,0.0,0.0,0.7917
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CelO,2,ResearchCenter,0.0305,0.0,0.0,0.625
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CelO,3,TransportCompany,0.0294,0.0,0.04,0.9295
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ClothingCompany,1,SellingGoods,0.0328,0.25,0.3,0.9375
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ClothingCompany,2,TransportCompany,0.0317,0.1176,0.1111,0.6378
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ClothingCompany,3,EatAtHome,0.0305,0.2,0.2,0.8571
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),DestroyBlockGame,1,TileOGame,0.0328,0.0667,0.0667,0.6057
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),DestroyBlockGame,2,GameArea,0.032,0.0,0.05,0.312
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),DestroyBlockGame,3,CardGameApp,0.0318,0.08,0.0833,0.4906
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Ebike,1,SmartHomeAutomationSystem,0.0328,0.0,0.0263,0.3273
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Ebike,2,eHome2020,0.0315,0.0,0.0476,0.9
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Ebike,3,EatAtHome,0.0296,0.0,0.0,0.25
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),eHome2020,1,SmartHomeAutomationSystem,0.0328,0.069,0.0882,0.3545
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),eHome2020,2,BuildingManagement,0.0323,0.0,0.0,0.8727
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),eHome2020,3,EatAtHome,0.0306,0.0,0.0,0.2778
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),EUScienceConnect,1,University,0.0323,0.0,0.1,0.7667
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),EUScienceConnect,2,UniversityExams,0.0306,0.0,0.0,0.8375
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),EUScienceConnect,3,FilmSet,0.0305,0.0,0.0435,0.7795
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Facepage,1,BuildingManagement,0.0323,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Facepage,2,PizzaDeliveryWithEntertainment,0.0323,0.0588,0.125,0.9848
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Facepage,3,Musicmatic,0.0318,0.0588,0.125,1.0
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),FilmSet,1,EUScienceConnect,0.0313,0.0,0.0435,0.7795
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),FilmSet,2,University,0.0308,0.05,0.0476,0.7511
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),FilmSet,3,TransportCompany,0.0302,0.0435,0.0417,1.0
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),FitnessCompanyConan,1,School,0.032,0.1333,0.2143,0.8444
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),FitnessCompanyConan,2,Musicmatic,0.0311,0.0,0.0,0.904
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),FitnessCompanyConan,3,OnlineTutoringSystem,0.0307,0.0,0.0417,0.5167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GameArea,1,DestroyBlockGame,0.0328,0.0,0.05,0.312
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GameArea,2,TileOGame,0.0323,0.0,0.0417,0.4524
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GameArea,3,CardGameApp,0.0317,0.0,0.0556,0.4176
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GasStation_KUL,1,GasStation_TUW,0.0328,0.0909,0.2143,0.7738
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GasStation_KUL,2,EatAtHome,0.0311,0.0,0.0,0.8571
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GasStation_KUL,3,SellingGoods,0.0306,0.1538,0.1429,0.9375
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GasStation_TUW,1,GasStation_KUL,0.0328,0.0909,0.2143,0.7738
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GasStation_TUW,2,Musicmatic,0.0323,0.0,0.0,0.596
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),GasStation_TUW,3,OilWells,0.0299,0.0,0.0,0.7167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HelpingHands,1,TransportCompany,0.0318,0.0435,0.037,0.9231
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HelpingHands,2,BusTransportationManagementSystem,0.0313,0.0588,0.1,0.5192
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HelpingHands,3,EatAtHome,0.0307,0.0,0.0,0.4776
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HomeForTheElderly,1,HotelBookingManagementSystem,0.031,0.0,0.0357,0.4141
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HomeForTheElderly,2,EatAtHome,0.0292,0.0,0.0,0.75
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HomeForTheElderly,3,Gym,0.0287,0.0,0.0,0.8776
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HospitalHouseMD,1,TreatmentPlans,0.0328,0.25,0.25,0.7143
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HospitalHouseMD,2,LabTracker,0.0318,0.1053,0.0909,0.6167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HospitalHouseMD,3,Hospital,0.0317,0.0476,0.0435,0.3819
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HotelBookingManagementSystem,1,OnlineTutoringSystem,0.0323,0.0,0.125,0.8428
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HotelBookingManagementSystem,2,Facepage,0.0299,0.0,0.0,0.5
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),HotelBookingManagementSystem,3,EatAtHome,0.0296,0.0,0.0435,0.2753
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),House,1,BuildingManagement,0.0315,0.0,0.0,0.6402
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),House,2,TransportCompany,0.0311,0.0,0.0385,0.8538
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),House,3,AirTravel,0.0311,0.0,0.0,0.8176
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Kinepolis,1,HotelBookingManagementSystem,0.0315,0.0,0.0333,0.4419
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Kinepolis,2,MilanLibrary,0.0313,0.0,0.0312,0.5447
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Kinepolis,3,OnlineTutoringSystem,0.0313,0.0,0.0357,0.4917
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),LabTracker,1,TreatmentPlans,0.0328,0.0741,0.1034,0.8833
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),LabTracker,2,StudentAppointment,0.0315,0.05,0.0435,0.6167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),LabTracker,3,OnlineTutoringSystem,0.0308,0.0,0.0606,0.7083
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Louvre,1,MilanLibrary,0.032,0.0417,0.0769,0.4336
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Louvre,2,FilmSet,0.0298,0.0556,0.0556,0.6378
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Louvre,3,CelO,0.0295,0.0556,0.0526,0.7083
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Menso,1,BusTransportationManagementSystem,0.032,0.0,0.0588,0.7727
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Menso,2,Kinepolis,0.0315,0.0476,0.0952,1.0
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Menso,3,GasStation_KUL,0.031,0.125,0.1053,0.8182
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Musicmatic,1,PizzaDeliveryWithEntertainment,0.0325,0.0588,0.125,0.9848
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Musicmatic,2,BuildingManagement,0.0315,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Musicmatic,3,Facepage,0.0313,0.0588,0.125,1.0
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),OnlineTutoringSystem,1,StudentAppointment,0.032,0.05,0.0455,0.325
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),OnlineTutoringSystem,2,School,0.0313,0.0435,0.04,0.6
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),OnlineTutoringSystem,3,HotelBookingManagementSystem,0.0313,0.0,0.125,0.8428
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),PizzaDeliveryWithEntertainment,1,SellingGoods,0.0323,0.1333,0.1538,0.7778
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),PizzaDeliveryWithEntertainment,2,EatAtHome,0.032,0.1667,0.1667,0.6111
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),PizzaDeliveryWithEntertainment,3,Musicmatic,0.0318,0.0588,0.125,0.9848
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ProjectManagement,1,ResearchCenter,0.0328,0.1538,0.1429,0.6875
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ProjectManagement,2,University,0.0323,0.0625,0.1176,0.6667
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ProjectManagement,3,EUScienceConnect,0.0317,0.0,0.05,0.9
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),School,1,CourseManagement,0.0328,0.1875,0.1875,0.8583
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),School,2,StudentAppointment,0.0318,0.0714,0.0714,0.5333
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),School,3,UniversityExams,0.031,0.0667,0.0625,0.5889
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),SellingGoods,1,ClothingCompany,0.0328,0.25,0.3,0.9375
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),SellingGoods,2,EatAtHome,0.032,0.1818,0.2222,0.8125
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),SellingGoods,3,TransportCompany,0.0315,0.1111,0.1176,0.6795
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Sightseeing,1,BusTransportationManagementSystem,0.03,0.0,0.0,0.7857
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Sightseeing,2,FitnessCompanyConan,0.0292,0.0714,0.0714,0.8581
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Sightseeing,3,CourseManagement,0.029,0.0,0.0,0.7845
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),SmartHomeAutomationSystem,1,eHome2020,0.0328,0.069,0.0882,0.3545
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),SmartHomeAutomationSystem,2,Ebike,0.0323,0.0,0.0263,0.3273
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),SmartHomeAutomationSystem,3,ElevatorControl,0.0317,0.0,0.0323,0.366
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Sober,1,HelpingHands,0.0323,0.0,0.0,0.8365
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Sober,2,EatAtHome,0.032,0.0769,0.0769,0.5778
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Sober,3,TruckLogistics,0.0318,0.0,0.0588,0.6667
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),StudentAppointment,1,University,0.0323,0.0714,0.1429,0.5556
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),StudentAppointment,2,CourseManagement,0.0315,0.1429,0.1429,0.5917
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),StudentAppointment,3,UniversityExams,0.0315,0.1818,0.1667,0.9286
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TeamSportsScoutingSystem,1,CardGameApp,0.032,0.037,0.037,0.5487
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TeamSportsScoutingSystem,2,ResearchCenter,0.0308,0.0,0.0,0.4686
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TeamSportsScoutingSystem,3,FilmSet,0.0306,0.0385,0.037,0.6353
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TileOGame,1,DestroyBlockGame,0.0328,0.0667,0.0667,0.6057
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TileOGame,2,CardGameApp,0.0323,0.1071,0.1538,0.5955
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TileOGame,3,GameArea,0.0317,0.0,0.0417,0.4524
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TransportCompany,1,RepairShops,0.0328,0.25,0.2222,0.8205
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TransportCompany,2,TruckLogistics,0.0323,0.1111,0.1,0.5427
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TransportCompany,3,SellingGoods,0.0312,0.1111,0.1176,0.6795
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TreatmentPlans,1,HospitalHouseMD,0.0328,0.25,0.25,0.7143
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TreatmentPlans,2,LabTracker,0.0323,0.0741,0.1034,0.8833
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TreatmentPlans,3,Hospital,0.0317,0.0714,0.0667,0.6319
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TruckLogistics,1,TransportCompany,0.0325,0.1111,0.1,0.5427
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TruckLogistics,2,BusTransportationManagementSystem,0.032,0.0769,0.2308,0.4306
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),TruckLogistics,3,HelpingHands,0.0318,0.0526,0.0435,0.594
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),University,1,UniversityExams,0.0328,0.1429,0.125,0.6111
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),University,2,EUScienceConnect,0.0315,0.0,0.1,0.7667
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),University,3,School,0.0306,0.0,0.0,0.9667
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ApartmentBuilding,1,RealEstateAgency,0.0323,0.125,0.125,0.4
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ApartmentBuilding,2,ElevatorControl,0.031,0.0,0.0,0.4333
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ApartmentBuilding,3,eHome2020,0.0306,0.1818,0.1667,0.2722
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Bookmaker,1,FitnessCompanyConan,0.031,0.0667,0.0667,0.65
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Bookmaker,2,CelO,0.0301,0.0526,0.05,0.4167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Bookmaker,3,CourseManagement,0.0294,0.0,0.0,0.55
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CourseManagement,1,School,0.0325,0.1875,0.1875,0.8583
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CourseManagement,2,StudentAppointment,0.0318,0.1429,0.1429,0.5917
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),CourseManagement,3,UniversityExams,0.0318,0.1333,0.125,0.6417
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),EatAtHome,1,Restaurant,0.0323,0.2222,0.2,0.9167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),EatAtHome,2,SellingGoods,0.0323,0.1818,0.2222,0.8125
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),EatAtHome,3,PizzaDeliveryWithEntertainment,0.032,0.1667,0.1667,0.6111
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ElevatorControl,1,SmartHomeAutomationSystem,0.0323,0.0,0.0323,0.366
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ElevatorControl,2,ApartmentBuilding,0.032,0.0,0.0,0.4333
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ElevatorControl,3,HomeForTheElderly,0.031,0.0,0.0,0.4
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Gym,1,EatAtHome,0.031,0.0667,0.0588,0.6503
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Gym,2,HomeForTheElderly,0.0299,0.0,0.0,0.8776
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Gym,3,SellingGoods,0.0298,0.0556,0.0556,0.7867
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Hospital,1,TreatmentPlans,0.0328,0.0714,0.0667,0.6319
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Hospital,2,HospitalHouseMD,0.0306,0.0476,0.0435,0.3819
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Hospital,3,TransportCompany,0.0301,0.0,0.0333,0.7233
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),InsuranceCompany,1,AlphaInsurance,0.0328,0.1333,0.1765,0.5643
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),InsuranceCompany,2,Boeing,0.0318,0.0833,0.0769,0.6429
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),InsuranceCompany,3,TransportCompany,0.031,0.0556,0.05,0.6598
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),MilanLibrary,1,Louvre,0.0325,0.0417,0.0769,0.4336
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),MilanLibrary,2,Kinepolis,0.032,0.0,0.0312,0.5447
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),MilanLibrary,3,Musicmatic,0.031,0.08,0.0714,0.6709
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),OilWells,1,RepairShops,0.032,0.0,0.0,0.8417
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),OilWells,2,ClothingCompany,0.032,0.0,0.0,0.7286
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),OilWells,3,Restaurant,0.032,0.0,0.0,0.8
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),RealEstateAgency,1,House,0.0315,0.0625,0.0556,0.4583
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),RealEstateAgency,2,ApartmentBuilding,0.0308,0.125,0.125,0.4
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),RealEstateAgency,3,OilWells,0.0303,0.0,0.0,0.6167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),RepairShops,1,TransportCompany,0.0328,0.25,0.2222,0.8205
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),RepairShops,2,OilWells,0.0308,0.0,0.0,0.8417
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),RepairShops,3,BusTransportationManagementSystem,0.0306,0.0,0.0667,0.7083
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ResearchCenter,1,ProjectManagement,0.0328,0.1538,0.1429,0.6875
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ResearchCenter,2,University,0.032,0.0667,0.1333,0.7917
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),ResearchCenter,3,TeamSportsScoutingSystem,0.0313,0.0,0.0,0.4686
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Restaurant,1,EatAtHome,0.0328,0.2222,0.2,0.9167
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Restaurant,2,PizzaDeliveryWithEntertainment,0.0304,0.0714,0.0667,0.6667
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Restaurant,3,OilWells,0.0303,0.0,0.0,0.8
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),UniversityExams,1,University,0.0328,0.1429,0.125,0.6111
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),UniversityExams,2,StudentAppointment,0.032,0.1818,0.1667,0.9286
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),UniversityExams,3,CourseManagement,0.0318,0.1333,0.125,0.6417
+Ibrido RRF (BM25 + bge-small-en-v1.5),AirTravel,1,Boeing,0.0328,0.2,0.1875,0.6324
+Ibrido RRF (BM25 + bge-small-en-v1.5),AirTravel,2,TruckLogistics,0.0317,0.0,0.0476,0.5065
+Ibrido RRF (BM25 + bge-small-en-v1.5),AirTravel,3,TransportCompany,0.0315,0.0435,0.04,0.9344
+Ibrido RRF (BM25 + bge-small-en-v1.5),AlphaInsurance,1,InsuranceCompany,0.0328,0.1333,0.1765,0.5643
+Ibrido RRF (BM25 + bge-small-en-v1.5),AlphaInsurance,2,SellingGoods,0.032,0.125,0.125,0.9
+Ibrido RRF (BM25 + bge-small-en-v1.5),AlphaInsurance,3,Boeing,0.0306,0.0667,0.0588,0.7167
+Ibrido RRF (BM25 + bge-small-en-v1.5),BankAccount,1,Facepage,0.0315,0.0714,0.0714,0.6152
+Ibrido RRF (BM25 + bge-small-en-v1.5),BankAccount,2,ClothingCompany,0.0293,0.0833,0.0833,0.5286
+Ibrido RRF (BM25 + bge-small-en-v1.5),BankAccount,3,TransportCompany,0.0293,0.0588,0.0556,0.5038
+Ibrido RRF (BM25 + bge-small-en-v1.5),Boeing,1,AirTravel,0.0328,0.2,0.1875,0.6324
+Ibrido RRF (BM25 + bge-small-en-v1.5),Boeing,2,SellingGoods,0.0312,0.0,0.0,0.7917
+Ibrido RRF (BM25 + bge-small-en-v1.5),Boeing,3,InsuranceCompany,0.0308,0.0833,0.0769,0.6429
+Ibrido RRF (BM25 + bge-small-en-v1.5),BuildingManagement,1,Facepage,0.0325,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + bge-small-en-v1.5),BuildingManagement,2,eHome2020,0.032,0.0,0.0,0.8727
+Ibrido RRF (BM25 + bge-small-en-v1.5),BuildingManagement,3,Musicmatic,0.032,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + bge-small-en-v1.5),BusTransportationManagementSystem,1,Menso,0.0323,0.0,0.0588,0.7727
+Ibrido RRF (BM25 + bge-small-en-v1.5),BusTransportationManagementSystem,2,TransportCompany,0.0323,0.0588,0.1111,0.5962
+Ibrido RRF (BM25 + bge-small-en-v1.5),BusTransportationManagementSystem,3,TruckLogistics,0.0318,0.0769,0.2308,0.4306
+Ibrido RRF (BM25 + bge-small-en-v1.5),CardGameApp,1,TileOGame,0.0323,0.1071,0.1538,0.5955
+Ibrido RRF (BM25 + bge-small-en-v1.5),CardGameApp,2,GameArea,0.0318,0.0,0.0556,0.4176
+Ibrido RRF (BM25 + bge-small-en-v1.5),CardGameApp,3,TeamSportsScoutingSystem,0.0318,0.037,0.037,0.5487
+Ibrido RRF (BM25 + bge-small-en-v1.5),CelO,1,ResearchCenter,0.0325,0.0,0.0,0.625
+Ibrido RRF (BM25 + bge-small-en-v1.5),CelO,2,PizzaDeliveryWithEntertainment,0.0318,0.0,0.0,0.7917
+Ibrido RRF (BM25 + bge-small-en-v1.5),CelO,3,CourseManagement,0.0299,0.0,0.0,0.7917
+Ibrido RRF (BM25 + bge-small-en-v1.5),ClothingCompany,1,SellingGoods,0.0328,0.25,0.3,0.9375
+Ibrido RRF (BM25 + bge-small-en-v1.5),ClothingCompany,2,TransportCompany,0.0317,0.1176,0.1111,0.6378
+Ibrido RRF (BM25 + bge-small-en-v1.5),ClothingCompany,3,EatAtHome,0.031,0.2,0.2,0.8571
+Ibrido RRF (BM25 + bge-small-en-v1.5),DestroyBlockGame,1,TileOGame,0.0328,0.0667,0.0667,0.6057
+Ibrido RRF (BM25 + bge-small-en-v1.5),DestroyBlockGame,2,CardGameApp,0.032,0.08,0.0833,0.4906
+Ibrido RRF (BM25 + bge-small-en-v1.5),DestroyBlockGame,3,GameArea,0.032,0.0,0.05,0.312
+Ibrido RRF (BM25 + bge-small-en-v1.5),Ebike,1,SmartHomeAutomationSystem,0.0323,0.0,0.0263,0.3273
+Ibrido RRF (BM25 + bge-small-en-v1.5),Ebike,2,eHome2020,0.0318,0.0,0.0476,0.9
+Ibrido RRF (BM25 + bge-small-en-v1.5),Ebike,3,ElevatorControl,0.0296,0.0,0.0625,0.4
+Ibrido RRF (BM25 + bge-small-en-v1.5),eHome2020,1,SmartHomeAutomationSystem,0.0328,0.069,0.0882,0.3545
+Ibrido RRF (BM25 + bge-small-en-v1.5),eHome2020,2,BuildingManagement,0.0323,0.0,0.0,0.8727
+Ibrido RRF (BM25 + bge-small-en-v1.5),eHome2020,3,RealEstateAgency,0.0313,0.0769,0.0714,0.5028
+Ibrido RRF (BM25 + bge-small-en-v1.5),EUScienceConnect,1,University,0.0328,0.0,0.1,0.7667
+Ibrido RRF (BM25 + bge-small-en-v1.5),EUScienceConnect,2,UniversityExams,0.0311,0.0,0.0,0.8375
+Ibrido RRF (BM25 + bge-small-en-v1.5),EUScienceConnect,3,ProjectManagement,0.0308,0.0,0.05,0.9
+Ibrido RRF (BM25 + bge-small-en-v1.5),Facepage,1,Musicmatic,0.0325,0.0588,0.125,1.0
+Ibrido RRF (BM25 + bge-small-en-v1.5),Facepage,2,BuildingManagement,0.0323,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + bge-small-en-v1.5),Facepage,3,PizzaDeliveryWithEntertainment,0.0311,0.0588,0.125,0.9848
+Ibrido RRF (BM25 + bge-small-en-v1.5),FilmSet,1,University,0.032,0.05,0.0476,0.7511
+Ibrido RRF (BM25 + bge-small-en-v1.5),FilmSet,2,TransportCompany,0.0315,0.0435,0.0417,1.0
+Ibrido RRF (BM25 + bge-small-en-v1.5),FilmSet,3,MilanLibrary,0.0303,0.1111,0.1379,0.7263
+Ibrido RRF (BM25 + bge-small-en-v1.5),FitnessCompanyConan,1,Musicmatic,0.0323,0.0,0.0,0.904
+Ibrido RRF (BM25 + bge-small-en-v1.5),FitnessCompanyConan,2,School,0.031,0.1333,0.2143,0.8444
+Ibrido RRF (BM25 + bge-small-en-v1.5),FitnessCompanyConan,3,HotelBookingManagementSystem,0.0301,0.0,0.0385,0.4722
+Ibrido RRF (BM25 + bge-small-en-v1.5),GameArea,1,DestroyBlockGame,0.0325,0.0,0.05,0.312
+Ibrido RRF (BM25 + bge-small-en-v1.5),GameArea,2,TileOGame,0.0325,0.0,0.0417,0.4524
+Ibrido RRF (BM25 + bge-small-en-v1.5),GameArea,3,CardGameApp,0.0317,0.0,0.0556,0.4176
+Ibrido RRF (BM25 + bge-small-en-v1.5),GasStation_KUL,1,GasStation_TUW,0.0328,0.0909,0.2143,0.7738
+Ibrido RRF (BM25 + bge-small-en-v1.5),GasStation_KUL,2,SellingGoods,0.0318,0.1538,0.1429,0.9375
+Ibrido RRF (BM25 + bge-small-en-v1.5),GasStation_KUL,3,Menso,0.0311,0.125,0.1053,0.8182
+Ibrido RRF (BM25 + bge-small-en-v1.5),GasStation_TUW,1,GasStation_KUL,0.0328,0.0909,0.2143,0.7738
+Ibrido RRF (BM25 + bge-small-en-v1.5),GasStation_TUW,2,Musicmatic,0.0308,0.0,0.0,0.596
+Ibrido RRF (BM25 + bge-small-en-v1.5),GasStation_TUW,3,ClothingCompany,0.0308,0.0,0.0,0.7738
+Ibrido RRF (BM25 + bge-small-en-v1.5),HelpingHands,1,TransportCompany,0.0325,0.0435,0.037,0.9231
+Ibrido RRF (BM25 + bge-small-en-v1.5),HelpingHands,2,BusTransportationManagementSystem,0.0311,0.0588,0.1,0.5192
+Ibrido RRF (BM25 + bge-small-en-v1.5),HelpingHands,3,EatAtHome,0.0307,0.0,0.0,0.4776
+Ibrido RRF (BM25 + bge-small-en-v1.5),HomeForTheElderly,1,HotelBookingManagementSystem,0.032,0.0,0.0357,0.4141
+Ibrido RRF (BM25 + bge-small-en-v1.5),HomeForTheElderly,2,EatAtHome,0.029,0.0,0.0,0.75
+Ibrido RRF (BM25 + bge-small-en-v1.5),HomeForTheElderly,3,SellingGoods,0.0285,0.125,0.1429,0.9
+Ibrido RRF (BM25 + bge-small-en-v1.5),HospitalHouseMD,1,TreatmentPlans,0.0323,0.25,0.25,0.7143
+Ibrido RRF (BM25 + bge-small-en-v1.5),HospitalHouseMD,2,Hospital,0.032,0.0476,0.0435,0.3819
+Ibrido RRF (BM25 + bge-small-en-v1.5),HospitalHouseMD,3,LabTracker,0.0315,0.1053,0.0909,0.6167
+Ibrido RRF (BM25 + bge-small-en-v1.5),HotelBookingManagementSystem,1,HomeForTheElderly,0.0311,0.0,0.0357,0.4141
+Ibrido RRF (BM25 + bge-small-en-v1.5),HotelBookingManagementSystem,2,Menso,0.0311,0.0,0.0345,0.4419
+Ibrido RRF (BM25 + bge-small-en-v1.5),HotelBookingManagementSystem,3,SellingGoods,0.0304,0.0,0.0,0.3586
+Ibrido RRF (BM25 + bge-small-en-v1.5),House,1,RealEstateAgency,0.0328,0.0625,0.0556,0.4583
+Ibrido RRF (BM25 + bge-small-en-v1.5),House,2,BuildingManagement,0.032,0.0,0.0,0.6402
+Ibrido RRF (BM25 + bge-small-en-v1.5),House,3,ClothingCompany,0.0302,0.0,0.0,0.4917
+Ibrido RRF (BM25 + bge-small-en-v1.5),Kinepolis,1,Menso,0.0323,0.0476,0.0952,1.0
+Ibrido RRF (BM25 + bge-small-en-v1.5),Kinepolis,2,HotelBookingManagementSystem,0.0315,0.0,0.0333,0.4419
+Ibrido RRF (BM25 + bge-small-en-v1.5),Kinepolis,3,MilanLibrary,0.0311,0.0,0.0312,0.5447
+Ibrido RRF (BM25 + bge-small-en-v1.5),LabTracker,1,TreatmentPlans,0.0328,0.0741,0.1034,0.8833
+Ibrido RRF (BM25 + bge-small-en-v1.5),LabTracker,2,StudentAppointment,0.031,0.05,0.0435,0.6167
+Ibrido RRF (BM25 + bge-small-en-v1.5),LabTracker,3,OnlineTutoringSystem,0.0303,0.0,0.0606,0.7083
+Ibrido RRF (BM25 + bge-small-en-v1.5),Louvre,1,ClothingCompany,0.0306,0.0,0.0,1.0
+Ibrido RRF (BM25 + bge-small-en-v1.5),Louvre,2,MilanLibrary,0.03,0.0417,0.0769,0.4336
+Ibrido RRF (BM25 + bge-small-en-v1.5),Louvre,3,TransportCompany,0.0297,0.0556,0.0526,0.6378
+Ibrido RRF (BM25 + bge-small-en-v1.5),Menso,1,BusTransportationManagementSystem,0.032,0.0,0.0588,0.7727
+Ibrido RRF (BM25 + bge-small-en-v1.5),Menso,2,SellingGoods,0.032,0.1875,0.2143,0.8636
+Ibrido RRF (BM25 + bge-small-en-v1.5),Menso,3,Kinepolis,0.032,0.0476,0.0952,1.0
+Ibrido RRF (BM25 + bge-small-en-v1.5),Musicmatic,1,Facepage,0.0328,0.0588,0.125,1.0
+Ibrido RRF (BM25 + bge-small-en-v1.5),Musicmatic,2,PizzaDeliveryWithEntertainment,0.0318,0.0588,0.125,0.9848
+Ibrido RRF (BM25 + bge-small-en-v1.5),Musicmatic,3,BuildingManagement,0.0315,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + bge-small-en-v1.5),OnlineTutoringSystem,1,StudentAppointment,0.032,0.05,0.0455,0.325
+Ibrido RRF (BM25 + bge-small-en-v1.5),OnlineTutoringSystem,2,School,0.0318,0.0435,0.04,0.6
+Ibrido RRF (BM25 + bge-small-en-v1.5),OnlineTutoringSystem,3,HotelBookingManagementSystem,0.0317,0.0,0.125,0.8428
+Ibrido RRF (BM25 + bge-small-en-v1.5),PizzaDeliveryWithEntertainment,1,EatAtHome,0.0328,0.1667,0.1667,0.6111
+Ibrido RRF (BM25 + bge-small-en-v1.5),PizzaDeliveryWithEntertainment,2,SellingGoods,0.0323,0.1333,0.1538,0.7778
+Ibrido RRF (BM25 + bge-small-en-v1.5),PizzaDeliveryWithEntertainment,3,Restaurant,0.0317,0.0714,0.0667,0.6667
+Ibrido RRF (BM25 + bge-small-en-v1.5),ProjectManagement,1,ResearchCenter,0.0328,0.1538,0.1429,0.6875
+Ibrido RRF (BM25 + bge-small-en-v1.5),ProjectManagement,2,University,0.0323,0.0625,0.1176,0.6667
+Ibrido RRF (BM25 + bge-small-en-v1.5),ProjectManagement,3,EUScienceConnect,0.0317,0.0,0.05,0.9
+Ibrido RRF (BM25 + bge-small-en-v1.5),School,1,CourseManagement,0.0323,0.1875,0.1875,0.8583
+Ibrido RRF (BM25 + bge-small-en-v1.5),School,2,UniversityExams,0.0315,0.0667,0.0625,0.5889
+Ibrido RRF (BM25 + bge-small-en-v1.5),School,3,StudentAppointment,0.0312,0.0714,0.0714,0.5333
+Ibrido RRF (BM25 + bge-small-en-v1.5),SellingGoods,1,ClothingCompany,0.0328,0.25,0.3,0.9375
+Ibrido RRF (BM25 + bge-small-en-v1.5),SellingGoods,2,EatAtHome,0.032,0.1818,0.2222,0.8125
+Ibrido RRF (BM25 + bge-small-en-v1.5),SellingGoods,3,TransportCompany,0.0315,0.1111,0.1176,0.6795
+Ibrido RRF (BM25 + bge-small-en-v1.5),Sightseeing,1,Facepage,0.0311,0.0,0.0667,0.8499
+Ibrido RRF (BM25 + bge-small-en-v1.5),Sightseeing,2,School,0.0308,0.0667,0.0667,0.7317
+Ibrido RRF (BM25 + bge-small-en-v1.5),Sightseeing,3,TruckLogistics,0.0295,0.0,0.0,0.6359
+Ibrido RRF (BM25 + bge-small-en-v1.5),SmartHomeAutomationSystem,1,eHome2020,0.0328,0.069,0.0882,0.3545
+Ibrido RRF (BM25 + bge-small-en-v1.5),SmartHomeAutomationSystem,2,ElevatorControl,0.0313,0.0,0.0323,0.366
+Ibrido RRF (BM25 + bge-small-en-v1.5),SmartHomeAutomationSystem,3,Ebike,0.0311,0.0,0.0263,0.3273
+Ibrido RRF (BM25 + bge-small-en-v1.5),Sober,1,TruckLogistics,0.0328,0.0,0.0588,0.6667
+Ibrido RRF (BM25 + bge-small-en-v1.5),Sober,2,HelpingHands,0.0315,0.0,0.0,0.8365
+Ibrido RRF (BM25 + bge-small-en-v1.5),Sober,3,GasStation_KUL,0.0313,0.0,0.0,0.6889
+Ibrido RRF (BM25 + bge-small-en-v1.5),StudentAppointment,1,University,0.0318,0.0714,0.1429,0.5556
+Ibrido RRF (BM25 + bge-small-en-v1.5),StudentAppointment,2,School,0.0318,0.0714,0.0714,0.5333
+Ibrido RRF (BM25 + bge-small-en-v1.5),StudentAppointment,3,UniversityExams,0.0318,0.1818,0.1667,0.9286
+Ibrido RRF (BM25 + bge-small-en-v1.5),TeamSportsScoutingSystem,1,CardGameApp,0.032,0.037,0.037,0.5487
+Ibrido RRF (BM25 + bge-small-en-v1.5),TeamSportsScoutingSystem,2,ResearchCenter,0.0315,0.0,0.0,0.4686
+Ibrido RRF (BM25 + bge-small-en-v1.5),TeamSportsScoutingSystem,3,DestroyBlockGame,0.0313,0.0357,0.0714,0.7948
+Ibrido RRF (BM25 + bge-small-en-v1.5),TileOGame,1,DestroyBlockGame,0.0328,0.0667,0.0667,0.6057
+Ibrido RRF (BM25 + bge-small-en-v1.5),TileOGame,2,CardGameApp,0.032,0.1071,0.1538,0.5955
+Ibrido RRF (BM25 + bge-small-en-v1.5),TileOGame,3,GameArea,0.032,0.0,0.0417,0.4524
+Ibrido RRF (BM25 + bge-small-en-v1.5),TransportCompany,1,RepairShops,0.0325,0.25,0.2222,0.8205
+Ibrido RRF (BM25 + bge-small-en-v1.5),TransportCompany,2,TruckLogistics,0.0325,0.1111,0.1,0.5427
+Ibrido RRF (BM25 + bge-small-en-v1.5),TransportCompany,3,BusTransportationManagementSystem,0.0313,0.0588,0.1111,0.5962
+Ibrido RRF (BM25 + bge-small-en-v1.5),TreatmentPlans,1,LabTracker,0.0325,0.0741,0.1034,0.8833
+Ibrido RRF (BM25 + bge-small-en-v1.5),TreatmentPlans,2,HospitalHouseMD,0.032,0.25,0.25,0.7143
+Ibrido RRF (BM25 + bge-small-en-v1.5),TreatmentPlans,3,Hospital,0.0317,0.0714,0.0667,0.6319
+Ibrido RRF (BM25 + bge-small-en-v1.5),TruckLogistics,1,TransportCompany,0.0328,0.1111,0.1,0.5427
+Ibrido RRF (BM25 + bge-small-en-v1.5),TruckLogistics,2,BusTransportationManagementSystem,0.0318,0.0769,0.2308,0.4306
+Ibrido RRF (BM25 + bge-small-en-v1.5),TruckLogistics,3,AirTravel,0.0302,0.0,0.0476,0.5065
+Ibrido RRF (BM25 + bge-small-en-v1.5),University,1,UniversityExams,0.0328,0.1429,0.125,0.6111
+Ibrido RRF (BM25 + bge-small-en-v1.5),University,2,EUScienceConnect,0.0315,0.0,0.1,0.7667
+Ibrido RRF (BM25 + bge-small-en-v1.5),University,3,ResearchCenter,0.031,0.0667,0.1333,0.7917
+Ibrido RRF (BM25 + bge-small-en-v1.5),ApartmentBuilding,1,RealEstateAgency,0.0323,0.125,0.125,0.4
+Ibrido RRF (BM25 + bge-small-en-v1.5),ApartmentBuilding,2,Restaurant,0.0308,0.0,0.0,0.5
+Ibrido RRF (BM25 + bge-small-en-v1.5),ApartmentBuilding,3,School,0.0288,0.1818,0.1818,0.4389
+Ibrido RRF (BM25 + bge-small-en-v1.5),Bookmaker,1,OilWells,0.0308,0.0,0.0,0.525
+Ibrido RRF (BM25 + bge-small-en-v1.5),Bookmaker,2,FitnessCompanyConan,0.0308,0.0667,0.0667,0.65
+Ibrido RRF (BM25 + bge-small-en-v1.5),Bookmaker,3,CelO,0.0299,0.0526,0.05,0.4167
+Ibrido RRF (BM25 + bge-small-en-v1.5),CourseManagement,1,School,0.0328,0.1875,0.1875,0.8583
+Ibrido RRF (BM25 + bge-small-en-v1.5),CourseManagement,2,UniversityExams,0.0323,0.1333,0.125,0.6417
+Ibrido RRF (BM25 + bge-small-en-v1.5),CourseManagement,3,StudentAppointment,0.0313,0.1429,0.1429,0.5917
+Ibrido RRF (BM25 + bge-small-en-v1.5),EatAtHome,1,PizzaDeliveryWithEntertainment,0.0328,0.1667,0.1667,0.6111
+Ibrido RRF (BM25 + bge-small-en-v1.5),EatAtHome,2,Restaurant,0.032,0.2222,0.2,0.9167
+Ibrido RRF (BM25 + bge-small-en-v1.5),EatAtHome,3,SellingGoods,0.032,0.1818,0.2222,0.8125
+Ibrido RRF (BM25 + bge-small-en-v1.5),ElevatorControl,1,SmartHomeAutomationSystem,0.0323,0.0,0.0323,0.366
+Ibrido RRF (BM25 + bge-small-en-v1.5),ElevatorControl,2,ApartmentBuilding,0.0313,0.0,0.0,0.4333
+Ibrido RRF (BM25 + bge-small-en-v1.5),ElevatorControl,3,RealEstateAgency,0.0305,0.0,0.0,0.6167
+Ibrido RRF (BM25 + bge-small-en-v1.5),Gym,1,EatAtHome,0.0315,0.0667,0.0588,0.6503
+Ibrido RRF (BM25 + bge-small-en-v1.5),Gym,2,HomeForTheElderly,0.0305,0.0,0.0,0.8776
+Ibrido RRF (BM25 + bge-small-en-v1.5),Gym,3,SellingGoods,0.0298,0.0556,0.0556,0.7867
+Ibrido RRF (BM25 + bge-small-en-v1.5),Hospital,1,TreatmentPlans,0.032,0.0714,0.0667,0.6319
+Ibrido RRF (BM25 + bge-small-en-v1.5),Hospital,2,HospitalHouseMD,0.032,0.0476,0.0435,0.3819
+Ibrido RRF (BM25 + bge-small-en-v1.5),Hospital,3,School,0.0301,0.0,0.0385,0.7701
+Ibrido RRF (BM25 + bge-small-en-v1.5),InsuranceCompany,1,AlphaInsurance,0.0328,0.1333,0.1765,0.5643
+Ibrido RRF (BM25 + bge-small-en-v1.5),InsuranceCompany,2,Boeing,0.0315,0.0833,0.0769,0.6429
+Ibrido RRF (BM25 + bge-small-en-v1.5),InsuranceCompany,3,TransportCompany,0.031,0.0556,0.05,0.6598
+Ibrido RRF (BM25 + bge-small-en-v1.5),MilanLibrary,1,Louvre,0.032,0.0417,0.0769,0.4336
+Ibrido RRF (BM25 + bge-small-en-v1.5),MilanLibrary,2,HelpingHands,0.0318,0.0345,0.0909,0.7865
+Ibrido RRF (BM25 + bge-small-en-v1.5),MilanLibrary,3,Kinepolis,0.0318,0.0,0.0312,0.5447
+Ibrido RRF (BM25 + bge-small-en-v1.5),OilWells,1,ClothingCompany,0.0325,0.0,0.0,0.7286
+Ibrido RRF (BM25 + bge-small-en-v1.5),OilWells,2,RepairShops,0.0313,0.0,0.0,0.8417
+Ibrido RRF (BM25 + bge-small-en-v1.5),OilWells,3,Restaurant,0.0306,0.0,0.0,0.8
+Ibrido RRF (BM25 + bge-small-en-v1.5),RealEstateAgency,1,BuildingManagement,0.0325,0.0,0.0,0.4886
+Ibrido RRF (BM25 + bge-small-en-v1.5),RealEstateAgency,2,House,0.0313,0.0625,0.0556,0.4583
+Ibrido RRF (BM25 + bge-small-en-v1.5),RealEstateAgency,3,eHome2020,0.031,0.0769,0.0714,0.5028
+Ibrido RRF (BM25 + bge-small-en-v1.5),RepairShops,1,TransportCompany,0.0328,0.25,0.2222,0.8205
+Ibrido RRF (BM25 + bge-small-en-v1.5),RepairShops,2,BusTransportationManagementSystem,0.0315,0.0,0.0667,0.7083
+Ibrido RRF (BM25 + bge-small-en-v1.5),RepairShops,3,Restaurant,0.0308,0.0,0.0,0.7083
+Ibrido RRF (BM25 + bge-small-en-v1.5),ResearchCenter,1,ProjectManagement,0.0328,0.1538,0.1429,0.6875
+Ibrido RRF (BM25 + bge-small-en-v1.5),ResearchCenter,2,University,0.032,0.0667,0.1333,0.7917
+Ibrido RRF (BM25 + bge-small-en-v1.5),ResearchCenter,3,EUScienceConnect,0.0315,0.0,0.0556,0.7875
+Ibrido RRF (BM25 + bge-small-en-v1.5),Restaurant,1,EatAtHome,0.0328,0.2222,0.2,0.9167
+Ibrido RRF (BM25 + bge-small-en-v1.5),Restaurant,2,PizzaDeliveryWithEntertainment,0.0315,0.0714,0.0667,0.6667
+Ibrido RRF (BM25 + bge-small-en-v1.5),Restaurant,3,UniversityExams,0.0308,0.0,0.0,0.9286
+Ibrido RRF (BM25 + bge-small-en-v1.5),UniversityExams,1,University,0.0328,0.1429,0.125,0.6111
+Ibrido RRF (BM25 + bge-small-en-v1.5),UniversityExams,2,CourseManagement,0.0318,0.1333,0.125,0.6417
+Ibrido RRF (BM25 + bge-small-en-v1.5),UniversityExams,3,School,0.0311,0.0667,0.0625,0.5889
+Ibrido RRF (BM25 + gte-modernbert-base),AirTravel,1,Boeing,0.0323,0.2,0.1875,0.6324
+Ibrido RRF (BM25 + gte-modernbert-base),AirTravel,2,TransportCompany,0.0315,0.0435,0.04,0.9344
+Ibrido RRF (BM25 + gte-modernbert-base),AirTravel,3,TruckLogistics,0.0315,0.0,0.0476,0.5065
+Ibrido RRF (BM25 + gte-modernbert-base),AlphaInsurance,1,InsuranceCompany,0.0328,0.1333,0.1765,0.5643
+Ibrido RRF (BM25 + gte-modernbert-base),AlphaInsurance,2,HomeForTheElderly,0.0313,0.0526,0.0476,1.0
+Ibrido RRF (BM25 + gte-modernbert-base),AlphaInsurance,3,Menso,0.0312,0.1053,0.0952,0.9545
+Ibrido RRF (BM25 + gte-modernbert-base),BankAccount,1,PizzaDeliveryWithEntertainment,0.0306,0.0714,0.0714,0.6
+Ibrido RRF (BM25 + gte-modernbert-base),BankAccount,2,Facepage,0.0305,0.0714,0.0714,0.6152
+Ibrido RRF (BM25 + gte-modernbert-base),BankAccount,3,SellingGoods,0.0299,0.0769,0.0909,0.475
+Ibrido RRF (BM25 + gte-modernbert-base),Boeing,1,AirTravel,0.0328,0.2,0.1875,0.6324
+Ibrido RRF (BM25 + gte-modernbert-base),Boeing,2,ClothingCompany,0.0306,0.0,0.0,0.8452
+Ibrido RRF (BM25 + gte-modernbert-base),Boeing,3,InsuranceCompany,0.0306,0.0833,0.0769,0.6429
+Ibrido RRF (BM25 + gte-modernbert-base),BuildingManagement,1,Facepage,0.0325,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + gte-modernbert-base),BuildingManagement,2,eHome2020,0.032,0.0,0.0,0.8727
+Ibrido RRF (BM25 + gte-modernbert-base),BuildingManagement,3,DestroyBlockGame,0.0303,0.0417,0.08,0.4646
+Ibrido RRF (BM25 + gte-modernbert-base),BusTransportationManagementSystem,1,Menso,0.0325,0.0,0.0588,0.7727
+Ibrido RRF (BM25 + gte-modernbert-base),BusTransportationManagementSystem,2,TransportCompany,0.0323,0.0588,0.1111,0.5962
+Ibrido RRF (BM25 + gte-modernbert-base),BusTransportationManagementSystem,3,HelpingHands,0.0318,0.0588,0.1,0.5192
+Ibrido RRF (BM25 + gte-modernbert-base),CardGameApp,1,TileOGame,0.0325,0.1071,0.1538,0.5955
+Ibrido RRF (BM25 + gte-modernbert-base),CardGameApp,2,DestroyBlockGame,0.0317,0.08,0.0833,0.4906
+Ibrido RRF (BM25 + gte-modernbert-base),CardGameApp,3,GameArea,0.031,0.0,0.0556,0.4176
+Ibrido RRF (BM25 + gte-modernbert-base),CelO,1,PizzaDeliveryWithEntertainment,0.0318,0.0,0.0,0.7917
+Ibrido RRF (BM25 + gte-modernbert-base),CelO,2,TransportCompany,0.0308,0.0,0.04,0.9295
+Ibrido RRF (BM25 + gte-modernbert-base),CelO,3,CourseManagement,0.0305,0.0,0.0,0.7917
+Ibrido RRF (BM25 + gte-modernbert-base),ClothingCompany,1,SellingGoods,0.0325,0.25,0.3,0.9375
+Ibrido RRF (BM25 + gte-modernbert-base),ClothingCompany,2,TransportCompany,0.0323,0.1176,0.1111,0.6378
+Ibrido RRF (BM25 + gte-modernbert-base),ClothingCompany,3,EatAtHome,0.0313,0.2,0.2,0.8571
+Ibrido RRF (BM25 + gte-modernbert-base),DestroyBlockGame,1,TileOGame,0.0328,0.0667,0.0667,0.6057
+Ibrido RRF (BM25 + gte-modernbert-base),DestroyBlockGame,2,CardGameApp,0.0323,0.08,0.0833,0.4906
+Ibrido RRF (BM25 + gte-modernbert-base),DestroyBlockGame,3,GameArea,0.0315,0.0,0.05,0.312
+Ibrido RRF (BM25 + gte-modernbert-base),Ebike,1,eHome2020,0.0305,0.0,0.0476,0.9
+Ibrido RRF (BM25 + gte-modernbert-base),Ebike,2,SmartHomeAutomationSystem,0.0294,0.0,0.0263,0.3273
+Ibrido RRF (BM25 + gte-modernbert-base),Ebike,3,GameArea,0.0292,0.0,0.0,0.4714
+Ibrido RRF (BM25 + gte-modernbert-base),eHome2020,1,SmartHomeAutomationSystem,0.0328,0.069,0.0882,0.3545
+Ibrido RRF (BM25 + gte-modernbert-base),eHome2020,2,BuildingManagement,0.0323,0.0,0.0,0.8727
+Ibrido RRF (BM25 + gte-modernbert-base),eHome2020,3,HomeForTheElderly,0.0315,0.0556,0.0526,0.45
+Ibrido RRF (BM25 + gte-modernbert-base),EUScienceConnect,1,University,0.0328,0.0,0.1,0.7667
+Ibrido RRF (BM25 + gte-modernbert-base),EUScienceConnect,2,MilanLibrary,0.0313,0.1304,0.1,0.5614
+Ibrido RRF (BM25 + gte-modernbert-base),EUScienceConnect,3,UniversityExams,0.0308,0.0,0.0,0.8375
+Ibrido RRF (BM25 + gte-modernbert-base),Facepage,1,PizzaDeliveryWithEntertainment,0.0325,0.0588,0.125,0.9848
+Ibrido RRF (BM25 + gte-modernbert-base),Facepage,2,BuildingManagement,0.032,0.0526,0.0476,0.5455
+Ibrido RRF (BM25 + gte-modernbert-base),Facepage,3,Menso,0.0303,0.0,0.0,0.7273
+Ibrido RRF (BM25 + gte-modernbert-base),FilmSet,1,University,0.0323,0.05,0.0476,0.7511
+Ibrido RRF (BM25 + gte-modernbert-base),FilmSet,2,TransportCompany,0.0315,0.0435,0.0417,1.0
+Ibrido RRF (BM25 + gte-modernbert-base),FilmSet,3,TeamSportsScoutingSystem,0.0303,0.0385,0.037,0.6353
+Ibrido RRF (BM25 + gte-modernbert-base),FitnessCompanyConan,1,School,0.0315,0.1333,0.2143,0.8444
+Ibrido RRF (BM25 + gte-modernbert-base),FitnessCompanyConan,2,CourseManagement,0.0308,0.0588,0.0588,0.8444
+Ibrido RRF (BM25 + gte-modernbert-base),FitnessCompanyConan,3,Musicmatic,0.0291,0.0,0.0,0.904
+Ibrido RRF (BM25 + gte-modernbert-base),GameArea,1,DestroyBlockGame,0.0325,0.0,0.05,0.312
+Ibrido RRF (BM25 + gte-modernbert-base),GameArea,2,CardGameApp,0.0323,0.0,0.0556,0.4176
+Ibrido RRF (BM25 + gte-modernbert-base),GameArea,3,TileOGame,0.032,0.0,0.0417,0.4524
+Ibrido RRF (BM25 + gte-modernbert-base),GasStation_KUL,1,GasStation_TUW,0.0328,0.0909,0.2143,0.7738
+Ibrido RRF (BM25 + gte-modernbert-base),GasStation_KUL,2,Menso,0.0323,0.125,0.1053,0.8182
+Ibrido RRF (BM25 + gte-modernbert-base),GasStation_KUL,3,HomeForTheElderly,0.0315,0.1333,0.1111,0.85
+Ibrido RRF (BM25 + gte-modernbert-base),GasStation_TUW,1,GasStation_KUL,0.0328,0.0909,0.2143,0.7738
+Ibrido RRF (BM25 + gte-modernbert-base),GasStation_TUW,2,Musicmatic,0.0323,0.0,0.0,0.596
+Ibrido RRF (BM25 + gte-modernbert-base),GasStation_TUW,3,PizzaDeliveryWithEntertainment,0.031,0.0,0.0,0.6111
+Ibrido RRF (BM25 + gte-modernbert-base),HelpingHands,1,BusTransportationManagementSystem,0.032,0.0588,0.1,0.5192
+Ibrido RRF (BM25 + gte-modernbert-base),HelpingHands,2,TransportCompany,0.0311,0.0435,0.037,0.9231
+Ibrido RRF (BM25 + gte-modernbert-base),HelpingHands,3,HomeForTheElderly,0.031,0.0476,0.1364,0.6859
+Ibrido RRF (BM25 + gte-modernbert-base),HomeForTheElderly,1,Menso,0.0328,0.1053,0.1667,0.9545
+Ibrido RRF (BM25 + gte-modernbert-base),HomeForTheElderly,2,GasStation_KUL,0.0315,0.1333,0.1111,0.85
+Ibrido RRF (BM25 + gte-modernbert-base),HomeForTheElderly,3,HotelBookingManagementSystem,0.0312,0.0,0.0357,0.4141
+Ibrido RRF (BM25 + gte-modernbert-base),HospitalHouseMD,1,TreatmentPlans,0.0325,0.25,0.25,0.7143
+Ibrido RRF (BM25 + gte-modernbert-base),HospitalHouseMD,2,Hospital,0.0317,0.0476,0.0435,0.3819
+Ibrido RRF (BM25 + gte-modernbert-base),HospitalHouseMD,3,LabTracker,0.0315,0.1053,0.0909,0.6167
+Ibrido RRF (BM25 + gte-modernbert-base),HotelBookingManagementSystem,1,Menso,0.0325,0.0,0.0345,0.4419
+Ibrido RRF (BM25 + gte-modernbert-base),HotelBookingManagementSystem,2,OnlineTutoringSystem,0.0315,0.0,0.125,0.8428
+Ibrido RRF (BM25 + gte-modernbert-base),HotelBookingManagementSystem,3,Kinepolis,0.0313,0.0,0.0333,0.4419
+Ibrido RRF (BM25 + gte-modernbert-base),House,1,RealEstateAgency,0.032,0.0625,0.0556,0.4583
+Ibrido RRF (BM25 + gte-modernbert-base),House,2,AirTravel,0.0308,0.0,0.0,0.8176
+Ibrido RRF (BM25 + gte-modernbert-base),House,3,FilmSet,0.0304,0.0,0.0,0.8538
+Ibrido RRF (BM25 + gte-modernbert-base),Kinepolis,1,Menso,0.0323,0.0476,0.0952,1.0
+Ibrido RRF (BM25 + gte-modernbert-base),Kinepolis,2,HotelBookingManagementSystem,0.0315,0.0,0.0333,0.4419
+Ibrido RRF (BM25 + gte-modernbert-base),Kinepolis,3,AirTravel,0.0311,0.0455,0.087,0.8113
+Ibrido RRF (BM25 + gte-modernbert-base),LabTracker,1,TreatmentPlans,0.0328,0.0741,0.1034,0.8833
+Ibrido RRF (BM25 + gte-modernbert-base),LabTracker,2,Menso,0.032,0.0,0.0,0.7833
+Ibrido RRF (BM25 + gte-modernbert-base),LabTracker,3,StudentAppointment,0.0318,0.05,0.0435,0.6167
+Ibrido RRF (BM25 + gte-modernbert-base),Louvre,1,MilanLibrary,0.0318,0.0417,0.0769,0.4336
+Ibrido RRF (BM25 + gte-modernbert-base),Louvre,2,TransportCompany,0.0292,0.0556,0.0526,0.6378
+Ibrido RRF (BM25 + gte-modernbert-base),Louvre,3,HomeForTheElderly,0.029,0.0625,0.1333,0.85
+Ibrido RRF (BM25 + gte-modernbert-base),Menso,1,HomeForTheElderly,0.0315,0.1053,0.1667,0.9545
+Ibrido RRF (BM25 + gte-modernbert-base),Menso,2,Kinepolis,0.0315,0.0476,0.0952,1.0
+Ibrido RRF (BM25 + gte-modernbert-base),Menso,3,BusTransportationManagementSystem,0.0315,0.0,0.0588,0.7727
+Ibrido RRF (BM25 + gte-modernbert-base),Musicmatic,1,PizzaDeliveryWithEntertainment,0.0325,0.0588,0.125,0.9848
+Ibrido RRF (BM25 + gte-modernbert-base),Musicmatic,2,Menso,0.031,0.0,0.0,0.7273
+Ibrido RRF (BM25 + gte-modernbert-base),Musicmatic,3,MilanLibrary,0.0306,0.08,0.0714,0.6709
+Ibrido RRF (BM25 + gte-modernbert-base),OnlineTutoringSystem,1,StudentAppointment,0.032,0.05,0.0455,0.325
+Ibrido RRF (BM25 + gte-modernbert-base),OnlineTutoringSystem,2,FitnessCompanyConan,0.0315,0.0,0.0417,0.5167
+Ibrido RRF (BM25 + gte-modernbert-base),OnlineTutoringSystem,3,HotelBookingManagementSystem,0.0313,0.0,0.125,0.8428
+Ibrido RRF (BM25 + gte-modernbert-base),PizzaDeliveryWithEntertainment,1,EatAtHome,0.0325,0.1667,0.1667,0.6111
+Ibrido RRF (BM25 + gte-modernbert-base),PizzaDeliveryWithEntertainment,2,Musicmatic,0.0318,0.0588,0.125,0.9848
+Ibrido RRF (BM25 + gte-modernbert-base),PizzaDeliveryWithEntertainment,3,TransportCompany,0.0315,0.1053,0.1,0.8622
+Ibrido RRF (BM25 + gte-modernbert-base),ProjectManagement,1,ResearchCenter,0.0328,0.1538,0.1429,0.6875
+Ibrido RRF (BM25 + gte-modernbert-base),ProjectManagement,2,University,0.0323,0.0625,0.1176,0.6667
+Ibrido RRF (BM25 + gte-modernbert-base),ProjectManagement,3,EUScienceConnect,0.0304,0.0,0.05,0.9
+Ibrido RRF (BM25 + gte-modernbert-base),School,1,CourseManagement,0.0325,0.1875,0.1875,0.8583
+Ibrido RRF (BM25 + gte-modernbert-base),School,2,StudentAppointment,0.0315,0.0714,0.0714,0.5333
+Ibrido RRF (BM25 + gte-modernbert-base),School,3,University,0.0309,0.0,0.0,0.9667
+Ibrido RRF (BM25 + gte-modernbert-base),SellingGoods,1,ClothingCompany,0.0325,0.25,0.3,0.9375
+Ibrido RRF (BM25 + gte-modernbert-base),SellingGoods,2,TransportCompany,0.0318,0.1111,0.1176,0.6795
+Ibrido RRF (BM25 + gte-modernbert-base),SellingGoods,3,Menso,0.0315,0.1875,0.2143,0.8636
+Ibrido RRF (BM25 + gte-modernbert-base),Sightseeing,1,University,0.032,0.0,0.0,0.754
+Ibrido RRF (BM25 + gte-modernbert-base),Sightseeing,2,School,0.0313,0.0667,0.0667,0.7317
+Ibrido RRF (BM25 + gte-modernbert-base),Sightseeing,3,Menso,0.0299,0.0,0.0,0.6753
+Ibrido RRF (BM25 + gte-modernbert-base),SmartHomeAutomationSystem,1,eHome2020,0.0328,0.069,0.0882,0.3545
+Ibrido RRF (BM25 + gte-modernbert-base),SmartHomeAutomationSystem,2,HomeForTheElderly,0.0318,0.0323,0.0278,0.4125
+Ibrido RRF (BM25 + gte-modernbert-base),SmartHomeAutomationSystem,3,FitnessCompanyConan,0.0301,0.0345,0.0294,0.4966
+Ibrido RRF (BM25 + gte-modernbert-base),Sober,1,TruckLogistics,0.032,0.0,0.0588,0.6667
+Ibrido RRF (BM25 + gte-modernbert-base),Sober,2,PizzaDeliveryWithEntertainment,0.0308,0.0588,0.0588,0.9667
+Ibrido RRF (BM25 + gte-modernbert-base),Sober,3,TransportCompany,0.0307,0.05,0.1,0.8288
+Ibrido RRF (BM25 + gte-modernbert-base),StudentAppointment,1,School,0.032,0.0714,0.0714,0.5333
+Ibrido RRF (BM25 + gte-modernbert-base),StudentAppointment,2,University,0.032,0.0714,0.1429,0.5556
+Ibrido RRF (BM25 + gte-modernbert-base),StudentAppointment,3,CourseManagement,0.0315,0.1429,0.1429,0.5917
+Ibrido RRF (BM25 + gte-modernbert-base),TeamSportsScoutingSystem,1,ResearchCenter,0.0318,0.0,0.0,0.4686
+Ibrido RRF (BM25 + gte-modernbert-base),TeamSportsScoutingSystem,2,CardGameApp,0.0311,0.037,0.037,0.5487
+Ibrido RRF (BM25 + gte-modernbert-base),TeamSportsScoutingSystem,3,Louvre,0.0308,0.0,0.0,0.351
+Ibrido RRF (BM25 + gte-modernbert-base),TileOGame,1,DestroyBlockGame,0.0328,0.0667,0.0667,0.6057
+Ibrido RRF (BM25 + gte-modernbert-base),TileOGame,2,CardGameApp,0.0323,0.1071,0.1538,0.5955
+Ibrido RRF (BM25 + gte-modernbert-base),TileOGame,3,GameArea,0.0313,0.0,0.0417,0.4524
+Ibrido RRF (BM25 + gte-modernbert-base),TransportCompany,1,TruckLogistics,0.0325,0.1111,0.1,0.5427
+Ibrido RRF (BM25 + gte-modernbert-base),TransportCompany,2,RepairShops,0.0318,0.25,0.2222,0.8205
+Ibrido RRF (BM25 + gte-modernbert-base),TransportCompany,3,BusTransportationManagementSystem,0.0315,0.0588,0.1111,0.5962
+Ibrido RRF (BM25 + gte-modernbert-base),TreatmentPlans,1,LabTracker,0.0325,0.0741,0.1034,0.8833
+Ibrido RRF (BM25 + gte-modernbert-base),TreatmentPlans,2,HospitalHouseMD,0.0323,0.25,0.25,0.7143
+Ibrido RRF (BM25 + gte-modernbert-base),TreatmentPlans,3,Hospital,0.032,0.0714,0.0667,0.6319
+Ibrido RRF (BM25 + gte-modernbert-base),TruckLogistics,1,TransportCompany,0.0328,0.1111,0.1,0.5427
+Ibrido RRF (BM25 + gte-modernbert-base),TruckLogistics,2,BusTransportationManagementSystem,0.0318,0.0769,0.2308,0.4306
+Ibrido RRF (BM25 + gte-modernbert-base),TruckLogistics,3,Restaurant,0.031,0.0769,0.0667,0.4306
+Ibrido RRF (BM25 + gte-modernbert-base),University,1,UniversityExams,0.0328,0.1429,0.125,0.6111
+Ibrido RRF (BM25 + gte-modernbert-base),University,2,ResearchCenter,0.031,0.0667,0.1333,0.7917
+Ibrido RRF (BM25 + gte-modernbert-base),University,3,FilmSet,0.031,0.05,0.0476,0.7511
+Ibrido RRF (BM25 + gte-modernbert-base),ApartmentBuilding,1,RealEstateAgency,0.0315,0.125,0.125,0.4
+Ibrido RRF (BM25 + gte-modernbert-base),ApartmentBuilding,2,ElevatorControl,0.0302,0.0,0.0,0.4333
+Ibrido RRF (BM25 + gte-modernbert-base),ApartmentBuilding,3,School,0.03,0.1818,0.1818,0.4389
+Ibrido RRF (BM25 + gte-modernbert-base),Bookmaker,1,HomeForTheElderly,0.0311,0.0588,0.0588,0.4
+Ibrido RRF (BM25 + gte-modernbert-base),Bookmaker,2,FitnessCompanyConan,0.0308,0.0667,0.0667,0.65
+Ibrido RRF (BM25 + gte-modernbert-base),Bookmaker,3,CelO,0.0301,0.0526,0.05,0.4167
+Ibrido RRF (BM25 + gte-modernbert-base),CourseManagement,1,School,0.0328,0.1875,0.1875,0.8583
+Ibrido RRF (BM25 + gte-modernbert-base),CourseManagement,2,University,0.0313,0.0556,0.1111,0.8806
+Ibrido RRF (BM25 + gte-modernbert-base),CourseManagement,3,StudentAppointment,0.031,0.1429,0.1429,0.5917
+Ibrido RRF (BM25 + gte-modernbert-base),EatAtHome,1,PizzaDeliveryWithEntertainment,0.0328,0.1667,0.1667,0.6111
+Ibrido RRF (BM25 + gte-modernbert-base),EatAtHome,2,TransportCompany,0.0318,0.1333,0.125,0.5545
+Ibrido RRF (BM25 + gte-modernbert-base),EatAtHome,3,Restaurant,0.0317,0.2222,0.2,0.9167
+Ibrido RRF (BM25 + gte-modernbert-base),ElevatorControl,1,Louvre,0.032,0.0,0.0,0.5286
+Ibrido RRF (BM25 + gte-modernbert-base),ElevatorControl,2,TileOGame,0.0311,0.0,0.0,0.381
+Ibrido RRF (BM25 + gte-modernbert-base),ElevatorControl,3,SmartHomeAutomationSystem,0.0304,0.0,0.0323,0.366
+Ibrido RRF (BM25 + gte-modernbert-base),Gym,1,EatAtHome,0.0315,0.0667,0.0588,0.6503
+Ibrido RRF (BM25 + gte-modernbert-base),Gym,2,Menso,0.0313,0.0476,0.0435,0.9231
+Ibrido RRF (BM25 + gte-modernbert-base),Gym,3,SellingGoods,0.0298,0.0556,0.0556,0.7867
+Ibrido RRF (BM25 + gte-modernbert-base),Hospital,1,TreatmentPlans,0.0325,0.0714,0.0667,0.6319
+Ibrido RRF (BM25 + gte-modernbert-base),Hospital,2,HospitalHouseMD,0.0315,0.0476,0.0435,0.3819
+Ibrido RRF (BM25 + gte-modernbert-base),Hospital,3,School,0.0301,0.0,0.0385,0.7701
+Ibrido RRF (BM25 + gte-modernbert-base),InsuranceCompany,1,AlphaInsurance,0.0328,0.1333,0.1765,0.5643
+Ibrido RRF (BM25 + gte-modernbert-base),InsuranceCompany,2,Sober,0.031,0.0667,0.1333,0.8032
+Ibrido RRF (BM25 + gte-modernbert-base),InsuranceCompany,3,TransportCompany,0.031,0.0556,0.05,0.6598
+Ibrido RRF (BM25 + gte-modernbert-base),MilanLibrary,1,Kinepolis,0.032,0.0,0.0312,0.5447
+Ibrido RRF (BM25 + gte-modernbert-base),MilanLibrary,2,Louvre,0.0318,0.0417,0.0769,0.4336
+Ibrido RRF (BM25 + gte-modernbert-base),MilanLibrary,3,HelpingHands,0.0303,0.0345,0.0909,0.7865
+Ibrido RRF (BM25 + gte-modernbert-base),OilWells,1,ClothingCompany,0.0325,0.0,0.0,0.7286
+Ibrido RRF (BM25 + gte-modernbert-base),OilWells,2,RepairShops,0.032,0.0,0.0,0.8417
+Ibrido RRF (BM25 + gte-modernbert-base),OilWells,3,GasStation_KUL,0.0313,0.0,0.0,0.7286
+Ibrido RRF (BM25 + gte-modernbert-base),RealEstateAgency,1,House,0.0318,0.0625,0.0556,0.4583
+Ibrido RRF (BM25 + gte-modernbert-base),RealEstateAgency,2,eHome2020,0.0313,0.0769,0.0714,0.5028
+Ibrido RRF (BM25 + gte-modernbert-base),RealEstateAgency,3,OilWells,0.0303,0.0,0.0,0.6167
+Ibrido RRF (BM25 + gte-modernbert-base),RepairShops,1,TransportCompany,0.0328,0.25,0.2222,0.8205
+Ibrido RRF (BM25 + gte-modernbert-base),RepairShops,2,BusTransportationManagementSystem,0.0318,0.0,0.0667,0.7083
+Ibrido RRF (BM25 + gte-modernbert-base),RepairShops,3,Restaurant,0.0318,0.0,0.0,0.7083
+Ibrido RRF (BM25 + gte-modernbert-base),ResearchCenter,1,ProjectManagement,0.0328,0.1538,0.1429,0.6875
+Ibrido RRF (BM25 + gte-modernbert-base),ResearchCenter,2,University,0.032,0.0667,0.1333,0.7917
+Ibrido RRF (BM25 + gte-modernbert-base),ResearchCenter,3,TeamSportsScoutingSystem,0.0315,0.0,0.0,0.4686
+Ibrido RRF (BM25 + gte-modernbert-base),Restaurant,1,EatAtHome,0.0328,0.2222,0.2,0.9167
+Ibrido RRF (BM25 + gte-modernbert-base),Restaurant,2,PizzaDeliveryWithEntertainment,0.0323,0.0714,0.0667,0.6667
+Ibrido RRF (BM25 + gte-modernbert-base),Restaurant,3,RepairShops,0.0308,0.0,0.0,0.7083
+Ibrido RRF (BM25 + gte-modernbert-base),UniversityExams,1,University,0.0328,0.1429,0.125,0.6111
+Ibrido RRF (BM25 + gte-modernbert-base),UniversityExams,2,StudentAppointment,0.0317,0.1818,0.1667,0.9286
+Ibrido RRF (BM25 + gte-modernbert-base),UniversityExams,3,CourseManagement,0.0315,0.1333,0.125,0.6417

@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ UserID : int\",\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ Birthday : date\"\n      ]\n    },\n    {\n      \"name\": \"BusinessOwner\",\n      \"attributes\": [\n        \"+ LinkedInAccount : string\"\n      ]\n    },\n    {\n      \"name\": \"HungryCustomer\",\n      \"attributes\": [\n        \"+ DeliveryAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Entertainer\",\n      \"attributes\": [\n        \"+ StageName : string\",\n        \"+ Bio : string\",\n        \"+ PricePer30Min : float\"\n      ]\n    },\n    {\n      \"name\": \"Restaurant\",\n      \"attributes\": [\n        \"+ ZipCode : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Website : string\",\n        \"+ OpeningHours : string\"\n      ]\n    },\n    {\n      \"name\": \"Pizza\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ CrustStructure : string\",\n        \"+ Price : float\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderID : int\",\n        \"+ OrderDateTime : datetime\",\n        \"+ LatestDeliveryTime : time\",\n        \"+ NumberOfPeople : int\"\n      ]\n    },\n    {\n      \"name\": \"EntertainmentOrder\",\n      \"attributes\": [\n        \"+ EntertainmentType : string\",\n        \"+ Duration : int\"\n      ]\n    },\n    {\n      \"name\": \"Availability\",\n      \"attributes\": [\n        \"+ Day : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessOwner\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HungryCustomer\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Entertainer\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"BusinessOwner\",\n      \"part\": \"Restaurant\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Restaurant\",\n      \"part\": \"Pizza\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"HungryCustomer\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Order\",\n      \"part\": \"Pizza\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EntertainmentOrder\",\n      \"parent\": \"Order\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"EntertainmentOrder\",\n      \"target\": \"Entertainer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Entertainer\",\n      \"part\": \"Restaurant\",\n      \"wholeRole\": \"worksWith\",\n      \"partRole\": \"employer\",\n      \"wholeMultiplicity\": \"1..*\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Entertainer\",\n      \"part\": \"Availability\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 24.101544699999067,
+ "prompt_tokens": 4984,
+ "completion_tokens": 940,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hplvx3hauz8s1irx2rp0q",
+  "object": "chat.completion",
+  "created": 1791567017,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ UserID : int\",\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ Birthday : date\"\n      ]\n    },\n    {\n      \"name\": \"BusinessOwner\",\n      \"attributes\": [\n        \"+ LinkedInAccount : string\"\n      ]\n    },\n    {\n      \"name\": \"HungryCustomer\",\n      \"attributes\": [\n        \"+ DeliveryAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Entertainer\",\n      \"attributes\": [\n        \"+ StageName : string\",\n        \"+ Bio : string\",\n        \"+ PricePer30Min : float\"\n      ]\n    },\n    {\n      \"name\": \"Restaurant\",\n      \"attributes\": [\n        \"+ ZipCode : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Website : string\",\n        \"+ OpeningHours : string\"\n      ]\n    },\n    {\n      \"name\": \"Pizza\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ CrustStructure : string\",\n        \"+ Price : float\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderID : int\",\n        \"+ OrderDateTime : datetime\",\n        \"+ LatestDeliveryTime : time\",\n        \"+ NumberOfPeople : int\"\n      ]\n    },\n    {\n      \"name\": \"EntertainmentOrder\",\n      \"attributes\": [\n        \"+ EntertainmentType : string\",\n        \"+ Duration : int\"\n      ]\n    },\n    {\n      \"name\": \"Availability\",\n      \"attributes\": [\n        \"+ Day : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessOwner\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HungryCustomer\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Entertainer\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"BusinessOwner\",\n      \"part\": \"Restaurant\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Restaurant\",\n      \"part\": \"Pizza\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"HungryCustomer\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Order\",\n      \"part\": \"Pizza\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EntertainmentOrder\",\n      \"parent\": \"Order\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"EntertainmentOrder\",\n      \"target\": \"Entertainer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Entertainer\",\n      \"part\": \"Restaurant\",\n      \"wholeRole\": \"worksWith\",\n      \"partRole\": \"employer\",\n      \"wholeMultiplicity\": \"1..*\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Entertainer\",\n      \"part\": \"Availability\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4984,
+   "completion_tokens": 940,
+   "total_tokens": 5924,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

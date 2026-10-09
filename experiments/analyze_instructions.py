@@ -50,6 +50,7 @@ import analyze_pilot as ap  # noqa: E402  (edges, class_names, norm_mult)
 import plantuml_postprocess as ppu  # noqa: E402
 import run_experiment as rx  # noqa: E402
 from prompt_builder import cl  # noqa: E402
+import provenance  # noqa: E402  (riga di provenienza, voce 106)
 
 RESULTS = ROOT / "data" / "results" / "generation"
 CONFIG = ROOT / "experiments" / "configs" / "dev_instructions.yaml"
@@ -251,8 +252,7 @@ def report(pairs: dict[str, tuple[dict, dict]]) -> tuple[str, dict]:
          "prompt salvo il blocco congelato della voce 98). Regola registrata PRIMA della run (voce 98) e applicata cosi' "
          "com'e' da `experiments/analyze_instructions.py`; ground truth attuale del corpus (eHome2020 corretto, voce 99). "
          "Confronto per contenuto, mai per id.", "",
-         f"Analisi eseguita sul commit `{ad.git('rev-parse', 'HEAD')[:12] or '?'}`"
-         f"{' (con modifiche non committate)' if ad.git('status', '--porcelain') else ''}."]
+         provenance.provenance_line()]  # commit e impronta del GT (voce 106)
     mism = {x["name"]: x["level_mismatch"] for p in pairs.values() for x in p if x["level_mismatch"]}
     if mism:
         L.append(f"**ATTENZIONE**: livello ricalcolato diverso dal manifest in {mism} risposte.")

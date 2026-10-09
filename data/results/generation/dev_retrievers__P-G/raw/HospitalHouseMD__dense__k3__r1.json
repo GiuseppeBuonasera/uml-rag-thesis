@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass HospitalHouseMD {\n  + name : string\n}\n\nclass Patient {\n  + name : string\n  + symptoms : string\n}\n\nclass Doctor {\n  + name : string\n  + specialty : string\n}\n\nclass Diagnosis {\n  + description : string\n  + date : date\n}\n\nclass Treatment {\n  + name : string\n  + description : string\n  + currentStage : int\n}\n\nclass TreatmentStage {\n  + stageLevel : int\n}\n\nclass ConsentForm {\n  + signatureDate : date\n  + isRetracted : boolean\n}\n\nclass Illness {\n  + name : string\n  + priorityScore : PriorityScore\n}\n\nenum PriorityScore {\n  HIGH\n  LOW\n}\n\nclass TreatmentDatabase {\n  + entryCount : int\n}\n\nclass Nurse {\n  + name : string\n}\n\nHospitalHouseMD \"1\" o-- \"1..*\" Patient\nHospitalHouseMD \"1\" o-- \"1..*\" Doctor\nHospitalHouseMD \"1\" o-- \"1\" TreatmentDatabase\nPatient \"1\" -- \"1..*\" Doctor\nDoctor \"1\" -- \"0..*\" Diagnosis\nPatient \"1\" -- \"0..*\" Diagnosis\nDiagnosis \"1\" -- \"1..*\" Treatment\nIllness \"1\" -- \"0..*\" Diagnosis\nIllness \"1\" -- \"0..*\" Treatment\nTreatment \"1\" *-- \"1\" TreatmentStage\nPatient \"1\" -- \"0..*\" ConsentForm\nConsentForm \"1\" -- \"0..*\" Treatment\nDoctor \"1\" -- \"0..*\" Treatment\nNurse \"1\" -- \"0..*\" Treatment\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 9.692848499998945,
+ "prompt_tokens": 3839,
+ "completion_tokens": 364,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-dty6k081acwlmmkf0ww7b",
+  "object": "chat.completion",
+  "created": 1791565411,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass HospitalHouseMD {\n  + name : string\n}\n\nclass Patient {\n  + name : string\n  + symptoms : string\n}\n\nclass Doctor {\n  + name : string\n  + specialty : string\n}\n\nclass Diagnosis {\n  + description : string\n  + date : date\n}\n\nclass Treatment {\n  + name : string\n  + description : string\n  + currentStage : int\n}\n\nclass TreatmentStage {\n  + stageLevel : int\n}\n\nclass ConsentForm {\n  + signatureDate : date\n  + isRetracted : boolean\n}\n\nclass Illness {\n  + name : string\n  + priorityScore : PriorityScore\n}\n\nenum PriorityScore {\n  HIGH\n  LOW\n}\n\nclass TreatmentDatabase {\n  + entryCount : int\n}\n\nclass Nurse {\n  + name : string\n}\n\nHospitalHouseMD \"1\" o-- \"1..*\" Patient\nHospitalHouseMD \"1\" o-- \"1..*\" Doctor\nHospitalHouseMD \"1\" o-- \"1\" TreatmentDatabase\nPatient \"1\" -- \"1..*\" Doctor\nDoctor \"1\" -- \"0..*\" Diagnosis\nPatient \"1\" -- \"0..*\" Diagnosis\nDiagnosis \"1\" -- \"1..*\" Treatment\nIllness \"1\" -- \"0..*\" Diagnosis\nIllness \"1\" -- \"0..*\" Treatment\nTreatment \"1\" *-- \"1\" TreatmentStage\nPatient \"1\" -- \"0..*\" ConsentForm\nConsentForm \"1\" -- \"0..*\" Treatment\nDoctor \"1\" -- \"0..*\" Treatment\nNurse \"1\" -- \"0..*\" Treatment\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3839,
+   "completion_tokens": 364,
+   "total_tokens": 4203,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

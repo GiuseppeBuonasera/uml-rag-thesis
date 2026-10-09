@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"SensorController\",\"attributes\":[\"+ systemName : string\",\"+ location : string\"]},{\"name\":\"Sensor\",\"kind\":\"abstract\",\"attributes\":[\"+ vendorId : string\",\"+ description : string\",\"+ unit : Unit\"]},{\"name\":\"TemperatureSensor\",\"attributes\":[\"+ minValue : float\",\"+ maxValue : float\"]},{\"name\":\"PowerSensor\",\"attributes\":[\"+ totalPowerConsumption : float\"]},{\"name\":\"Unit\",\"kind\":\"enum\",\"values\":[\"CELSIUS\",\"WATT\"]},{\"name\":\"Inhabitant\",\"attributes\":[\"+ username : string\",\"+ password : string\"]},{\"name\":\"Apartment\",\"attributes\":[\"+ address : string\"]},{\"name\":\"Room\",\"attributes\":[\"+ description : string\"]},{\"name\":\"SensorValue\",\"attributes\":[\"+ value : float\",\"+ timestamp : datetime\"]},{\"name\":\"AlertMessage\",\"attributes\":[\"+ content : string\"]},{\"name\":\"EMonitor\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"AdminInhabitant\",\"attributes\":[\"+ adminRights : boolean\"]},{\"name\":\"EHome2020\",\"attributes\":[\"+ version : string\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"EHome2020\",\"part\":\"SensorController\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"controller\"},{\"type\":\"composition\",\"whole\":\"SensorController\",\"part\":\"Apartment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"monitoredApartment\"},{\"type\":\"composition\",\"whole\":\"Apartment\",\"part\":\"Room\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2..*\",\"partRole\":\"rooms\"},{\"type\":\"composition\",\"whole\":\"Room\",\"part\":\"Sensor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\",\"partRole\":\"installedSensors\"},{\"type\":\"inheritance\",\"child\":\"TemperatureSensor\",\"parent\":\"Sensor\"},{\"type\":\"inheritance\",\"child\":\"PowerSensor\",\"parent\":\"Sensor\"},{\"type\":\"composition\",\"whole\":\"Sensor\",\"part\":\"SensorValue\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\",\"partRole\":\"history\"},{\"type\":\"unidirectional\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"queries\"},{\"type\":\"unidirectional\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"setsThreshold\"},{\"type\":\"unidirectional\",\"source\":\"Inhabitant\",\"target\":\"SensorController\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"label\":\"logsOn\"},{\"type\":\"unidirectional\",\"source\":\"Apartment\",\"target\":\"Inhabitant\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\",\"label\":\"hasInhabitants\"},{\"type\":\"inheritance\",\"child\":\"AdminInhabitant\",\"parent\":\"Inhabitant\"},{\"type\":\"unidirectional\",\"source\":\"AdminInhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"configures\"},{\"type\":\"dependency\",\"source\":\"EMonitor\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"dependency\",\"source\":\"EMonitor\",\"target\":\"AlertMessage\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"EHome2020\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"label\":\"attachedTo\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 18.59641349999947,
+ "prompt_tokens": 4693,
+ "completion_tokens": 680,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-e6yr6xy3x1op3ry5nydmi",
+  "object": "chat.completion",
+  "created": 1791566275,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"SensorController\",\"attributes\":[\"+ systemName : string\",\"+ location : string\"]},{\"name\":\"Sensor\",\"kind\":\"abstract\",\"attributes\":[\"+ vendorId : string\",\"+ description : string\",\"+ unit : Unit\"]},{\"name\":\"TemperatureSensor\",\"attributes\":[\"+ minValue : float\",\"+ maxValue : float\"]},{\"name\":\"PowerSensor\",\"attributes\":[\"+ totalPowerConsumption : float\"]},{\"name\":\"Unit\",\"kind\":\"enum\",\"values\":[\"CELSIUS\",\"WATT\"]},{\"name\":\"Inhabitant\",\"attributes\":[\"+ username : string\",\"+ password : string\"]},{\"name\":\"Apartment\",\"attributes\":[\"+ address : string\"]},{\"name\":\"Room\",\"attributes\":[\"+ description : string\"]},{\"name\":\"SensorValue\",\"attributes\":[\"+ value : float\",\"+ timestamp : datetime\"]},{\"name\":\"AlertMessage\",\"attributes\":[\"+ content : string\"]},{\"name\":\"EMonitor\",\"attributes\":[\"+ systemName : string\"]},{\"name\":\"AdminInhabitant\",\"attributes\":[\"+ adminRights : boolean\"]},{\"name\":\"EHome2020\",\"attributes\":[\"+ version : string\"]}],\"relations\":[{\"type\":\"composition\",\"whole\":\"EHome2020\",\"part\":\"SensorController\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"controller\"},{\"type\":\"composition\",\"whole\":\"SensorController\",\"part\":\"Apartment\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1\",\"partRole\":\"monitoredApartment\"},{\"type\":\"composition\",\"whole\":\"Apartment\",\"part\":\"Room\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"2..*\",\"partRole\":\"rooms\"},{\"type\":\"composition\",\"whole\":\"Room\",\"part\":\"Sensor\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"1..*\",\"partRole\":\"installedSensors\"},{\"type\":\"inheritance\",\"child\":\"TemperatureSensor\",\"parent\":\"Sensor\"},{\"type\":\"inheritance\",\"child\":\"PowerSensor\",\"parent\":\"Sensor\"},{\"type\":\"composition\",\"whole\":\"Sensor\",\"part\":\"SensorValue\",\"wholeMultiplicity\":\"1\",\"partMultiplicity\":\"0..*\",\"partRole\":\"history\"},{\"type\":\"unidirectional\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"queries\"},{\"type\":\"unidirectional\",\"source\":\"Inhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"setsThreshold\"},{\"type\":\"unidirectional\",\"source\":\"Inhabitant\",\"target\":\"SensorController\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"label\":\"logsOn\"},{\"type\":\"unidirectional\",\"source\":\"Apartment\",\"target\":\"Inhabitant\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1..*\",\"label\":\"hasInhabitants\"},{\"type\":\"inheritance\",\"child\":\"AdminInhabitant\",\"parent\":\"Inhabitant\"},{\"type\":\"unidirectional\",\"source\":\"AdminInhabitant\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\",\"label\":\"configures\"},{\"type\":\"dependency\",\"source\":\"EMonitor\",\"target\":\"Sensor\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"dependency\",\"source\":\"EMonitor\",\"target\":\"AlertMessage\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"unidirectional\",\"source\":\"EMonitor\",\"target\":\"EHome2020\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\",\"label\":\"attachedTo\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4693,
+   "completion_tokens": 680,
+   "total_tokens": 5373,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

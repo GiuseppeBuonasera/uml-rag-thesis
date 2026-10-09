@@ -1,0 +1,82 @@
+retriever,misura,k,valore
+BM25,J,1,0.0961
+BM25,J,2,0.0777
+BM25,J,3,0.0671
+BM25,Jt,1,0.1159
+BM25,Jt,2,0.0949
+BM25,Jt,3,0.0834
+BM25,S,1,0.6601
+BM25,S,2,0.6721
+BM25,S,3,0.6729
+sentence-transformers/all-MiniLM-L6-v2,J,1,0.0872
+sentence-transformers/all-MiniLM-L6-v2,J,2,0.0662
+sentence-transformers/all-MiniLM-L6-v2,J,3,0.0539
+sentence-transformers/all-MiniLM-L6-v2,Jt,1,0.1051
+sentence-transformers/all-MiniLM-L6-v2,Jt,2,0.0831
+sentence-transformers/all-MiniLM-L6-v2,Jt,3,0.0697
+sentence-transformers/all-MiniLM-L6-v2,S,1,0.6473
+sentence-transformers/all-MiniLM-L6-v2,S,2,0.662
+sentence-transformers/all-MiniLM-L6-v2,S,3,0.646
+BAAI/bge-small-en-v1.5,J,1,0.0727
+BAAI/bge-small-en-v1.5,J,2,0.0556
+BAAI/bge-small-en-v1.5,J,3,0.0531
+BAAI/bge-small-en-v1.5,Jt,1,0.0909
+BAAI/bge-small-en-v1.5,Jt,2,0.0713
+BAAI/bge-small-en-v1.5,Jt,3,0.0683
+BAAI/bge-small-en-v1.5,S,1,0.6444
+BAAI/bge-small-en-v1.5,S,2,0.6496
+BAAI/bge-small-en-v1.5,S,3,0.6467
+Alibaba-NLP/gte-modernbert-base,J,1,0.0667
+Alibaba-NLP/gte-modernbert-base,J,2,0.0603
+Alibaba-NLP/gte-modernbert-base,J,3,0.0554
+Alibaba-NLP/gte-modernbert-base,Jt,1,0.0843
+Alibaba-NLP/gte-modernbert-base,Jt,2,0.0756
+Alibaba-NLP/gte-modernbert-base,Jt,3,0.0685
+Alibaba-NLP/gte-modernbert-base,S,1,0.6663
+Alibaba-NLP/gte-modernbert-base,S,2,0.6617
+Alibaba-NLP/gte-modernbert-base,S,3,0.653
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),J,1,0.0933
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),J,2,0.072
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),J,3,0.0632
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Jt,1,0.1134
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Jt,2,0.0912
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),Jt,3,0.0809
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),S,1,0.6608
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),S,2,0.656
+Ibrido RRF (BM25 + all-MiniLM-L6-v2),S,3,0.6619
+Ibrido RRF (BM25 + bge-small-en-v1.5),J,1,0.0876
+Ibrido RRF (BM25 + bge-small-en-v1.5),J,2,0.0725
+Ibrido RRF (BM25 + bge-small-en-v1.5),J,3,0.0645
+Ibrido RRF (BM25 + bge-small-en-v1.5),Jt,1,0.1076
+Ibrido RRF (BM25 + bge-small-en-v1.5),Jt,2,0.0917
+Ibrido RRF (BM25 + bge-small-en-v1.5),Jt,3,0.0839
+Ibrido RRF (BM25 + bge-small-en-v1.5),S,1,0.6648
+Ibrido RRF (BM25 + bge-small-en-v1.5),S,2,0.6626
+Ibrido RRF (BM25 + bge-small-en-v1.5),S,3,0.6592
+Ibrido RRF (BM25 + gte-modernbert-base),J,1,0.0928
+Ibrido RRF (BM25 + gte-modernbert-base),J,2,0.0754
+Ibrido RRF (BM25 + gte-modernbert-base),J,3,0.0663
+Ibrido RRF (BM25 + gte-modernbert-base),Jt,1,0.1135
+Ibrido RRF (BM25 + gte-modernbert-base),Jt,2,0.0942
+Ibrido RRF (BM25 + gte-modernbert-base),Jt,3,0.0842
+Ibrido RRF (BM25 + gte-modernbert-base),S,1,0.6657
+Ibrido RRF (BM25 + gte-modernbert-base),S,2,0.6772
+Ibrido RRF (BM25 + gte-modernbert-base),S,3,0.6687
+"casuale (20 seed, media)",J,1,0.013
+"casuale (20 seed, media)",J,2,0.0139
+"casuale (20 seed, media)",J,3,0.013
+"casuale (20 seed, media)",Jt,1,0.0178
+"casuale (20 seed, media)",Jt,2,0.0188
+"casuale (20 seed, media)",Jt,3,0.0177
+"casuale (20 seed, media)",S,1,0.6076
+"casuale (20 seed, media)",S,2,0.6053
+"casuale (20 seed, media)",S,3,0.6067
+oracolo,J,1,0.1321
+oracolo,J,2,0.1105
+oracolo,J,3,0.099
+oracolo,Jt,1,0.1551
+oracolo,Jt,2,0.1334
+oracolo,Jt,3,0.1198
+oracolo,S,1,0.9294
+oracolo,S,2,0.9135
+oracolo,S,3,0.903

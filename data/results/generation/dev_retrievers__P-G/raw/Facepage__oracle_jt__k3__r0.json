@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + userID : int\n  + name : string\n  + email : string\n  + dateOfBirth : date\n}\n\nclass Account {\n  + accountNumber : int\n}\n\nclass PersonalAccount {\n}\n\nclass BusinessAccount {\n  + companyName : string\n  + monthlyFee : double\n}\n\nclass Page {\n  + pageName : string\n  + visitCount : int\n}\n\nclass AdvertisementPage {\n  + bounceRate : float\n  + clickThroughRate : float\n  + conversionRate : float\n}\n\nclass FriendRequest {\n}\n\nUser \"1\" -- \"1\" Account\nAccount --|> PersonalAccount\nAccount --|> BusinessAccount\nPersonalAccount --|> Account\nBusinessAccount --|> Account\n\nAccount \"1\" -- \"*\" Page : creates\nPersonalAccount \"1\" -- \"*\" FriendRequest : sends\nPersonalAccount \"1\" -- \"*\" FriendRequest : receives\nPersonalAccount \"0..*\" -- \"*\" Page : has privileges\n\nPage --|> AdvertisementPage\nBusinessAccount \"1\" -- \"*\" AdvertisementPage : creates",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.010169199998927,
+ "prompt_tokens": 4115,
+ "completion_tokens": 231,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-egysjd1o5urr1ko2zcm6",
+  "object": "chat.completion",
+  "created": 1791565194,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + userID : int\n  + name : string\n  + email : string\n  + dateOfBirth : date\n}\n\nclass Account {\n  + accountNumber : int\n}\n\nclass PersonalAccount {\n}\n\nclass BusinessAccount {\n  + companyName : string\n  + monthlyFee : double\n}\n\nclass Page {\n  + pageName : string\n  + visitCount : int\n}\n\nclass AdvertisementPage {\n  + bounceRate : float\n  + clickThroughRate : float\n  + conversionRate : float\n}\n\nclass FriendRequest {\n}\n\nUser \"1\" -- \"1\" Account\nAccount --|> PersonalAccount\nAccount --|> BusinessAccount\nPersonalAccount --|> Account\nBusinessAccount --|> Account\n\nAccount \"1\" -- \"*\" Page : creates\nPersonalAccount \"1\" -- \"*\" FriendRequest : sends\nPersonalAccount \"1\" -- \"*\" FriendRequest : receives\nPersonalAccount \"0..*\" -- \"*\" Page : has privileges\n\nPage --|> AdvertisementPage\nBusinessAccount \"1\" -- \"*\" AdvertisementPage : creates",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4115,
+   "completion_tokens": 231,
+   "total_tokens": 4346,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

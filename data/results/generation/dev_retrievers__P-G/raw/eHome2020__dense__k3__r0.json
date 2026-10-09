@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass SensorController {\n  + systemName : string\n}\n\nclass Apartment {\n  + address : string\n}\n\nclass Inhabitant {\n  + username : string\n  + password : string\n}\n\nclass Room {\n  + description : string\n}\n\nabstract class Sensor {\n  + vendorId : string\n  + description : string\n  + unit : Unit\n}\n\nclass TemperatureSensor {\n  + minValue : double\n  + maxValue : double\n}\n\nclass PowerSensor {\n  + totalPowerConsumption : double\n}\n\nclass SensorValue {\n  + timestamp : datetime\n  + value : double\n}\n\nenum Unit {\n  CELSIUS\n  WATT\n}\n\nclass EMonitor {\n  + systemName : string\n}\n\nclass AlertMessage {\n  + content : string\n}\n\nclass SensorController \"1\" *-- \"1\" Apartment\nApartment \"1\" *-- \"2..*\" Room\nRoom \"1\" *-- \"1..*\" Sensor\nInhabitant \"*\" -- \"1\" SensorController\nInhabitant \"1\" -- \"0..*\" Sensor\nInhabitant \"1\" -- \"0..*\" Room\nSensor \"1\" *-- \"0..*\" SensorValue\nSensor \"1\" -- \"0..1\" lastValue : SensorValue\nSensorController \"1\" -- \"0..1\" EMonitor\nEMonitor \"1\" -- \"*\" Sensor\nEMonitor \"1\" -- \"0..1\" AlertMessage\nApartment \"1\" -- \"0..1\" emailAddress : string\nSensorController \"1\" -- \"0..1\" emailAddress : string\n\nTemperatureSensor --|> Sensor\nPowerSensor --|> Sensor\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 11.214136700000381,
+ "prompt_tokens": 3886,
+ "completion_tokens": 374,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-z4zj2oh8d5rjym99aluz6",
+  "object": "chat.completion",
+  "created": 1791565052,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass SensorController {\n  + systemName : string\n}\n\nclass Apartment {\n  + address : string\n}\n\nclass Inhabitant {\n  + username : string\n  + password : string\n}\n\nclass Room {\n  + description : string\n}\n\nabstract class Sensor {\n  + vendorId : string\n  + description : string\n  + unit : Unit\n}\n\nclass TemperatureSensor {\n  + minValue : double\n  + maxValue : double\n}\n\nclass PowerSensor {\n  + totalPowerConsumption : double\n}\n\nclass SensorValue {\n  + timestamp : datetime\n  + value : double\n}\n\nenum Unit {\n  CELSIUS\n  WATT\n}\n\nclass EMonitor {\n  + systemName : string\n}\n\nclass AlertMessage {\n  + content : string\n}\n\nclass SensorController \"1\" *-- \"1\" Apartment\nApartment \"1\" *-- \"2..*\" Room\nRoom \"1\" *-- \"1..*\" Sensor\nInhabitant \"*\" -- \"1\" SensorController\nInhabitant \"1\" -- \"0..*\" Sensor\nInhabitant \"1\" -- \"0..*\" Room\nSensor \"1\" *-- \"0..*\" SensorValue\nSensor \"1\" -- \"0..1\" lastValue : SensorValue\nSensorController \"1\" -- \"0..1\" EMonitor\nEMonitor \"1\" -- \"*\" Sensor\nEMonitor \"1\" -- \"0..1\" AlertMessage\nApartment \"1\" -- \"0..1\" emailAddress : string\nSensorController \"1\" -- \"0..1\" emailAddress : string\n\nTemperatureSensor --|> Sensor\nPowerSensor --|> Sensor\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3886,
+   "completion_tokens": 374,
+   "total_tokens": 4260,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}
