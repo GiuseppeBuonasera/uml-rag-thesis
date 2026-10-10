@@ -55,7 +55,9 @@ import apollon_convert as ac
 # plantuml_it.txt, quindi applicarle non ha effetti collaterali.
 IDENTIFIER_RE = re.compile(r"^\w+( \w+)*$")
 QUOTED_RE = re.compile(r'"([^"]*)"')
-SHARED_GLOSSARY_PATH = Path(__file__).parent / "raw" / "translated_it" / "glossary_shared.json"
+import paths  # noqa: E402  (percorsi condivisi, voce 116)
+
+SHARED_GLOSSARY_PATH = paths.RAW_TRANSLATED_DIR / "glossary_shared.json"
 
 
 def normalize_multiplicity_token(mult: str) -> str:

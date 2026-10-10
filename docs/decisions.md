@@ -124,6 +124,7 @@ non sono state modificate.
 113. 2026-10-10 — Insieme unico dei 79 esercizi: leave-one-out su tutti, valutazione principale sui 53 mai usati per decidere — DECISIONE, piano PROPOSTO
 114. 2026-10-10 — Cruise recuperato: associazione ternaria riscritta con tre associazioni binarie (opzione b)
 115. 2026-10-10 — Pool unico: per ogni query (sviluppo e valutazione) tutti gli altri 79 esercizi
+116. 2026-10-10 — Pulizia del codice del corpus: percorsi condivisi e classificazione delle etichette come dati
 
 ## Formato
 
@@ -4173,3 +4174,26 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - **Da rivedere nella fase del retrieval** (non toccato ora): gli script di analisi del retrieval sul solo corpus
   (`analyze_retrieval.py`, `analyze_dense.py`) e `run_testset.py` usano ancora i loro pool (60 del corpus; 79 per il
   test set); le run di riferimento versionate restano quelle già fatte.
+
+### [2026-10-10] Pulizia del codice del corpus: percorsi condivisi e classificazione delle etichette come dati
+- **A. `corpus/paths.py`** (nuovo, modulo leggero): cartelle raw/ per fonte, file processati (`corpus.jsonl`,
+  `testset_debari.jsonl`, `apollon/`, `apollon_debari/`), `SPLITS`, `DEBARI_ID_RE` e `read_jsonl`. Usato da
+  `build_manifest`, `apollon_convert`, `diff_report`, `leakage_check`, `generate_label_classification`,
+  `check_translated`, `apply_glossary`, `retrieval/corpus_loader`, `experiments/provenance` e dai controlli di sanità
+  PlantUML e compatto. Toglie le copie dei percorsi (corpus.jsonl era scritto in 7 file), i due `SPLITS`, la copia
+  della regex degli id De Bari e 6 letture JSONL duplicate; i nomi dei moduli (`OUT_PATH`, `CORPUS_JSONL`, …)
+  restano come alias. **Corretta una fragilità**: `generate_label_classification.py` leggeva e scriveva con percorsi
+  relativi alla cartella di lancio (funzionava solo dalla radice); ora funziona da qualunque cartella (provato).
+- **B. `corpus/label_classification.yaml`** (nuovo): le 207 classificazioni approvate, prima dizionario
+  `CLASSIFICATION` di 483 righe dentro il generatore (ora 214 righe invece di 677); stesso contenuto, stesso ordine,
+  commenti di gruppo conservati; voce ripetuta → errore. Coerente con correzioni ed esclusioni, già in YAML. Emerse 4
+  voci approvate non più usate (Boeing "part of" ×2, TruckLogistics "driver" ×2: etichette tolte o cambiate dalle
+  correzioni di contenuto), innocue: il generatore le ignora; lasciate come storico.
+- **Verifica (tutto identico)**: pipeline rieseguita per intero; sha256 identici per gli 80 JSON Apollon,
+  `corpus.jsonl`, `testset_debari.jsonl`, `label_classification.json` / `.md` e `check_debari_report.md`; output di
+  `leakage_check` e `check_translated` (--all, --debari) identici; `diff_report.md` identico tra lo script vecchio e il
+  nuovo (cambia solo rispetto al commit precedente, perché ora contiene le correzioni di Cruise, voce 114, che non
+  era stato rigenerato). Nuovo test `check_paths_and_label_yaml`; suite di corpus, retrieval e generazione e controlli
+  di sanità verdi.
+- **Non fatto (scelta)**: nessuna divisione di `apollon_convert.py` (1.355 righe, cuore congelato del Passo 1); tolte
+  solo importazioni rimaste inutilizzate.

@@ -23,7 +23,6 @@ Uso:
 
 from __future__ import annotations
 
-import json
 import re
 import sys
 from pathlib import Path
@@ -32,10 +31,13 @@ from pypdf import PdfReader
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(Path(__file__).parent))
+import paths  # noqa: E402  (percorsi condivisi, voce 116)
+
+ROOT = paths.ROOT
 THRESHOLD = 0.4
 PROMPT_PATH = ROOT / "docs/dati/apollon_format_reference/prompt_template_v4.txt"
-TESTSET_PATH = ROOT / "corpus/processed/testset_debari.jsonl"
+TESTSET_PATH = paths.TESTSET_JSONL
 
 
 def load_debari() -> dict[str, str]:
@@ -50,8 +52,7 @@ def load_debari() -> dict[str, str]:
 def load_debari_test() -> dict[str, str]:
     if not TESTSET_PATH.exists():
         raise SystemExit(f"{TESTSET_PATH} non trovato: esegui build_manifest.py --split debari_test")
-    records = [json.loads(l) for l in TESTSET_PATH.read_text(encoding="utf-8").splitlines() if l.strip()]
-    return {r["id"]: r["description"] for r in records}
+    return {r["id"]: r["description"] for r in paths.read_jsonl(TESTSET_PATH)}
 
 
 def load_prompt_examples() -> dict[str, str]:
@@ -78,8 +79,7 @@ def main() -> None:
     all_debari = "--all-debari" in args
     targets = [a for a in args if a not in ("--debari-test", "--prompt", "--all-debari")]
 
-    records = [json.loads(l) for l in (ROOT / "corpus/processed/corpus.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
-    corpus = {r["id"]: r["description"] for r in records}
+    corpus = {r["id"]: r["description"] for r in paths.read_jsonl(paths.CORPUS_JSONL)}
     debari = load_debari_test() if debari_test else load_debari()
     prompt = load_prompt_examples() if with_prompt else {}
     if all_debari:

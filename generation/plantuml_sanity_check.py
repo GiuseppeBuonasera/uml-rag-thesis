@@ -17,7 +17,6 @@ Uso:  python generation/plantuml_sanity_check.py [--details]
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from collections import Counter
 from pathlib import Path
@@ -28,7 +27,10 @@ import plantuml_postprocess as ppu  # noqa: E402
 from plantuml_format import apollon_to_plantuml  # noqa: E402
 
 ROOT = HERE.parent
-JSONL = (ROOT / "corpus" / "processed" / "corpus.jsonl", ROOT / "corpus" / "processed" / "testset_debari.jsonl")
+sys.path.insert(0, str(ROOT / "corpus"))
+import paths  # noqa: E402  (percorsi condivisi, voce 116)
+
+JSONL = (paths.CORPUS_JSONL, paths.TESTSET_JSONL)
 
 
 def node_sig(d: dict) -> dict:
@@ -79,7 +81,7 @@ def classify_edge_diff(d: dict) -> Counter:
 
 def run(details: bool = False) -> dict:
     """Esegue le due varianti e restituisce i riepiloghi (usato anche dai test)."""
-    records = [json.loads(x) for p in JSONL for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
+    records = [r for p in JSONL for r in paths.read_jsonl(p)]
     records = [r for r in records if r.get("diagram_apollon_json")]
     summary = {}
     for variant in ("A", "B"):

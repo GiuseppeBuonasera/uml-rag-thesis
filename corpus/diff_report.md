@@ -2,7 +2,7 @@
 
 Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa: la prima sezione confronta il PlantUML VERAMENTE originale (`corpus/raw/`) col PlantUML corretto (`corpus.jsonl.diagram_plantuml`, dopo `corpus/corrections/<id>.yaml`); tutte le altre confrontano il PlantUML corretto col JSON Apollon finale, prodotte da `corpus/apollon_convert.py`.
 
-## Correzioni di contenuto — errori (corpus/corrections/<id>.yaml) (32)
+## Correzioni di contenuto — errori (corpus/corrections/<id>.yaml) (39)
 
 - **AirTravel** — [correzione_errore] rename_token: 'Nmae' -> 'Name' (refuso di 'Name' nell'attributo Employee.Nmae.)
 - **AirTravel** — [correzione_errore] rename_token: 'Enterainment' -> 'Entertainment' (refuso di 'Entertainment' nell'attributo SeatCategory.Enterainment — description.md: "whether or not it offers an entertainment program".)
@@ -14,6 +14,13 @@ Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa:
 - **AlphaInsurance** — [correzione_errore] rename_token: 'calculateCompenstationSum' -> 'calculateCompensationSum' (refuso di 'Compensation' nel nome del metodo (compensazione dovuta).)
 - **Boeing** — [correzione_errore] rename_token: 'AirPlaneId' -> 'AirplaneId' (refuso di capitalizzazione: la classe si chiama 'Airplane' (una parola sola), non 'AirPlane'.)
 - **Boeing** — [correzione_errore] rename_token: 'NegotiatedPice' -> 'NegotiatedPrice' (refuso di 'Price' nell'attributo Acquisition.NegotiatedPice.)
+- **Cruise** — [rappresentabilita_apollon] remove_line: '<> diamond' rimossa (diamante n-ario di PlantUML senza equivalente in Apollon v4; la ternaria e' riscritta con due binarie (sotto).)
+- **Cruise** — [rappresentabilita_apollon] remove_line: 'diamond --"0..1" Guest' rimossa (estremo Guest della ternaria, sostituito da Ticket - Guest.)
+- **Cruise** — [rappresentabilita_apollon] remove_line: 'diamond --"0..1" Ticket' rimossa (estremo Ticket della ternaria, Ticket diventa il centro delle due binarie.)
+- **Cruise** — [rappresentabilita_apollon] remove_line: 'diamond --"0..1" Cruise' rimossa (estremo Cruise della ternaria, sostituito da Ticket - Cruise.)
+- **Cruise** — [rappresentabilita_apollon] add_line: 'Ticket "*" -- "1" Cruise' aggiunta (description.md: "Several tickets are issued for each cruise. A ticket belongs to exactly one cruise." -> Ticket *, Cruise 1.)
+- **Cruise** — [rappresentabilita_apollon] add_line: 'Ticket "*" -- "0..1" Guest' aggiunta (description.md: "A guest can have any number of tickets" -> Ticket *; lato Guest 0..1 dall'estremo Guest della ternaria originale (0..1 ospiti per coppia ticket - crociera, e un ticket ha una sola crociera).)
+- **Cruise** — [rappresentabilita_apollon] add_line: 'Guest "*" -- "*" Cruise' aggiunta (description.md: "A cruise has several guests, and each guest can participate in several cruises" -> Guest *, Cruise *. Associazione presente nel testo ma NON disegnata dagli autori (nell'originale passava per la ternaria): aggiunta per decisione dell'utente (opzione b, voce 114).)
 - **eHome2020** — [correzione_errore] replace_line: 'Room "2..*" *-- "1" Apartment' -> 'Apartment "1" *-- "2..*" Room' (lato del rombo della composizione invertito nella trascrizione: nell'immagine originale il rombo pieno sta su Wohnung (Apartment) e la molteplicita' 2..* sul lato Raum (Room); description.md: "An apartment has an address and consists of at least two rooms". Molteplicita' invariate (Apartment 1, Room 2..*), cambia solo il tutto della composizione (Apartment invece di Room).)
 - **Facepage** — [correzione_errore] rename_token: 'CoversionRate' -> 'ConversionRate' (refuso di 'ConversionRate' nell'attributo AdvertisementPage.CoversionRate.)
 - **FilmSet** — [correzione_errore] rename_token: 'AssistentName' -> 'AssistantName' (refuso di 'Assistant' nell'attributo Director.AssistentName — description.md: "the name of the director's assistant is stored".)
@@ -50,7 +57,7 @@ Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa:
 - **EatAtHome** — [chiarimento_modellazione] replace_line: 'status : enum{placed, in preparation, in delivery, delivered, canceled}' -> '  status : OrderStatus' (enum inline non rappresentabile in Apollon: convenzione 'enum inline -> enumerazione separata <Classe><Attributo>'.)
 - **EatAtHome** — [chiarimento_modellazione] add_block: dichiarazione 'OrderStatus' aggiunta (enumerazione separata OrderStatus con i valori originali dell'enum inline di Order.status.)
 
-## Normalizzazione tipi primitivi negli attributi (430)
+## Normalizzazione tipi primitivi negli attributi (452)
 
 - **AirTravel** — `Airline.Name` : `String` -> `string`
 - **AirTravel** — `Employee.Name` : `String` -> `string`
@@ -156,6 +163,28 @@ Generato da `corpus/diff_report.py` (FASE 4, 2026-09-28). Raggruppato per causa:
 - **ClothingCompany** — `Customer.Address` : `String` -> `string`
 - **ClothingCompany** — `Customer.PhoneNumber` : `String` -> `string`
 - **ClothingCompany** — `Customer.Email` : `String` -> `string`
+- **Cruise** — `TravelAgency.Name` : `String` -> `string`
+- **Cruise** — `TravelAgency.Address` : `String` -> `string`
+- **Cruise** — `Ticket.BookingNumber` : `Int` -> `int`
+- **Cruise** — `Ticket.BookingDate` : `Date` -> `date`
+- **Cruise** — `Guest.Name` : `String` -> `string`
+- **Cruise** — `Guest.VIP` : `Boolean` -> `boolean`
+- **Cruise** — `Employee.Name` : `String` -> `string`
+- **Cruise** — `Employee.Ssn` : `Int` -> `int`
+- **Cruise** — `Cruise.CruiseNumber` : `Int` -> `int`
+- **Cruise** — `Cruise.Name` : `String` -> `string`
+- **Cruise** — `Cruise.StartDate` : `Date` -> `date`
+- **Cruise** — `Cruise.EndDate` : `Date` -> `date`
+- **Cruise** — `ProviderCompany.Name` : `String` -> `string`
+- **Cruise** — `ProviderCompany.Location` : `String` -> `string`
+- **Cruise** — `Ship.Name` : `String` -> `string`
+- **Cruise** — `Ship.DeckCount` : `Int` -> `int`
+- **Cruise** — `Ship.lenght` : `Float` -> `float`
+- **Cruise** — `Ship.PassengerCount` : `Int` -> `int`
+- **Cruise** — `Show.Title` : `String` -> `string`
+- **Cruise** — `Show.Duration` : `Int` -> `int`
+- **Cruise** — `Destination.Name` : `String` -> `string`
+- **Cruise** — `Destination.Sea` : `String` -> `string`
 - **eHome2020** — `Sensor.id` : `Integer` -> `int`
 - **eHome2020** — `Sensor.description` : `String` -> `string`
 - **eHome2020** — `Sensor.threshold` : `Double` -> `double`

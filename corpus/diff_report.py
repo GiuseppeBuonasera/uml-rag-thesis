@@ -33,13 +33,13 @@ Uso:
 
 from __future__ import annotations
 
-import json
 import re
 from pathlib import Path
 
 import apollon_convert as ac
+import paths
 
-CORPUS_JSONL = Path(__file__).parent / "processed" / "corpus.jsonl"
+CORPUS_JSONL = paths.CORPUS_JSONL
 OUT_PATH = Path(__file__).parent / "diff_report.md"
 
 CAUSES = [
@@ -56,7 +56,7 @@ CAUSES = [
 
 
 def main() -> None:
-    records = [json.loads(line) for line in CORPUS_JSONL.read_text(encoding="utf-8").splitlines() if line.strip()]
+    records = paths.read_jsonl(CORPUS_JSONL)
     classification = ac.load_label_classification()
 
     causes: dict[str, list[str]] = {c: [] for c in CAUSES}

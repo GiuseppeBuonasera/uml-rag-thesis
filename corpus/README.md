@@ -21,7 +21,8 @@ decisioni: [`docs/decisions.md`](../docs/decisions.md).
 |---|---|---|
 | `build_manifest.py` | script di pipeline | raw → `processed/*.jsonl` per uno split (`--split corpus\|debari_test`) |
 | `apollon_convert.py` | script di pipeline | PlantUML → Apollon v4 JSON + verifiche (schema, integrità, round-trip, stile) |
-| `generate_label_classification.py` | script di pipeline | `CLASSIFICATION` (etichette approvate) → `label_classification.json` / `.md` |
+| `paths.py` | modulo condiviso | percorsi di raw/ e processed/, split, formato degli id De Bari, `read_jsonl` (usato anche da retrieval/, experiments/, generation/) |
+| `generate_label_classification.py` | script di pipeline | `label_classification.yaml` (etichette approvate) → `label_classification.json` / `.md` |
 | `apply_corrections.py` | modulo di pipeline | applica `corrections/<id>.yaml` (usato da build_manifest) |
 | `clean_description.py` | modulo di pipeline | applica `description_exclusions/<id>.yaml` (usato da build_manifest) |
 | `apply_glossary.py` | script di pipeline | esercizi tradotti: `plantuml_it.txt` + glossari → `plantuml.txt` |
@@ -32,6 +33,7 @@ decisioni: [`docs/decisions.md`](../docs/decisions.md).
 | `diff_report.py` | controllo | differenze PlantUML → JSON del corpus; scrive `diff_report.md` |
 | `leakage_check.py` | controllo | similarità TF-IDF (tradotti e test set contro corpus e prompt statico) |
 | `test_apollon_convert.py` | test | test della pipeline (script, non pytest) |
+| `label_classification.yaml` | annotazione manuale | classificazione approvata di ogni etichetta (associazione / ruolo / vincolo …), letta dal generatore |
 | `known_issues.yaml` | annotazione manuale | problemi noti per esercizio → campo `known_issues` |
 | `ambiguities.yaml` | annotazione manuale | ambiguità di lettura (test set) → campo `ambiguities` |
 | `check_debari_justifications.yaml` | annotazione manuale | classificazione delle discrepanze contro Analysis.xlsx |

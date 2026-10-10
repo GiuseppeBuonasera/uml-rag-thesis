@@ -37,8 +37,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 import apollon_convert as ac
 import apply_glossary as ag
+import paths  # percorsi condivisi (voce 116)
 
-TRANSLATED_IT_DIR = Path(__file__).parent / "raw" / "translated_it"
+TRANSLATED_IT_DIR = paths.RAW_TRANSLATED_DIR
 
 PRIMITIVE_TYPES = {
     "string", "int", "integer", "float", "double", "bool", "boolean",
@@ -229,8 +230,8 @@ def check_no_residual_italian_in_apollon_json(folder: Path, glossary: dict[str, 
     davvero nella pipeline/nei pochi-shot — non solo plantuml.txt: un bug nella
     conversione potrebbe lasciar passare un termine italiano anche se
     plantuml.txt e' pulito."""
-    apollon_dir = "apollon_debari" if folder.parent.name == "debari_test" else "apollon"
-    apollon_path = Path(__file__).parent / "processed" / apollon_dir / f"{folder.name}.json"
+    apollon_dir = paths.APOLLON_DEBARI_DIR if folder.parent.name == "debari_test" else paths.APOLLON_DIR
+    apollon_path = apollon_dir / f"{folder.name}.json"
     if not apollon_path.exists():
         return [f"{apollon_path.name}: non trovato — esegui prima corpus/apollon_convert.py"]
     diagram = json.loads(apollon_path.read_text(encoding="utf-8"))
@@ -296,7 +297,7 @@ def main() -> None:
     if sys.argv[1] == "--all":
         folders = sorted(p for p in TRANSLATED_IT_DIR.iterdir() if p.is_dir() and not p.name.startswith("_"))
     elif sys.argv[1] == "--debari":
-        debari_dir = Path(__file__).parent / "raw" / "debari_test"
+        debari_dir = paths.RAW_DEBARI_DIR
         folders = sorted(p for p in debari_dir.iterdir()
                          if p.is_dir() and not p.name.startswith("_") and (p / "plantuml_it.txt").exists())
     else:

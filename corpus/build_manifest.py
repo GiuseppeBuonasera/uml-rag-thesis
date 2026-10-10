@@ -66,6 +66,7 @@ import yaml
 
 import apply_corrections as ac_corr
 import clean_description as cd
+import paths  # percorsi condivisi (voce 116)
 
 RAW_DIRS = [
     # Rinominata da "models" a "models_original" (2026-09-25, cambio fatto
@@ -74,15 +75,14 @@ RAW_DIRS = [
     # nessuno script deve MAI scrivere qui, solo leggere. Le correzioni passano dal
     # convertitore (corpus/apollon_convert.py) o da corpus/corrections/, vedi
     # docs/decisions.md.
-    Path(__file__).parent / "raw" / "models_original",
-    Path(__file__).parent / "raw" / "translated_it",
+    *paths.SPLITS["corpus"][0],
 ]
-OUT_PATH = Path(__file__).parent / "processed" / "corpus.jsonl"
+OUT_PATH = paths.CORPUS_JSONL
 
-# Test set De Bari (2026-10-02): mai nel corpus di retrieval, vedi SPLITS e check_split_separation.
-DEBARI_RAW_DIR = Path(__file__).parent / "raw" / "debari_test"
-DEBARI_OUT_PATH = Path(__file__).parent / "processed" / "testset_debari.jsonl"
-DEBARI_ID_RE = re.compile(r"^DB(\d{2})_[A-Z][A-Za-z0-9]*$")
+# Test set De Bari (2026-10-02): file e cartelle separati dal corpus, vedi SPLITS e check_split_separation.
+DEBARI_RAW_DIR = paths.RAW_DEBARI_DIR
+DEBARI_OUT_PATH = paths.TESTSET_JSONL
+DEBARI_ID_RE = paths.DEBARI_ID_RE
 
 REQUIRED_METADATA_FIELDS = ["name", "language", "tags", "domain", "source", "citation", "contact"]
 REQUIRED_FILES = ["description.md", "metadata.txt", "plantuml.txt"]
@@ -290,7 +290,7 @@ def split_ids(split: str) -> set[str]:
     raw_dirs, out_path, _ = SPLITS[split]
     ids = {d.name for d in list_model_dirs(raw_dirs, required=False)}
     if out_path.exists():
-        ids |= {json.loads(l)["id"] for l in out_path.read_text(encoding="utf-8").splitlines() if l.strip()}
+        ids |= {r["id"] for r in paths.read_jsonl(out_path)}
     return ids
 
 
@@ -342,8 +342,7 @@ def main() -> None:
 
     other = "debari_test" if split == "corpus" else "corpus"
     check_split_separation(split, records, split_ids(other))
-    processed = Path(__file__).parent / "processed"
-    check_apollon_dir_separation(processed / "apollon", processed / "apollon_debari")
+    check_apollon_dir_separation(paths.APOLLON_DIR, paths.APOLLON_DEBARI_DIR)
 
     # known_issues.yaml copre entrambi gli split: gli id si validano sull'unione
     known_issues = load_known_issues(split_ids(other) | {r["id"] for r in records})

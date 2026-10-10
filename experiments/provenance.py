@@ -19,7 +19,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "retrieval"))
-CORPUS_JSONL = ROOT / "corpus" / "processed" / "corpus.jsonl"
+sys.path.insert(0, str(ROOT / "corpus"))
+import paths  # noqa: E402  (percorsi condivisi, voce 116)
+
+CORPUS_JSONL = paths.CORPUS_JSONL
 
 
 def git(*args: str) -> str:

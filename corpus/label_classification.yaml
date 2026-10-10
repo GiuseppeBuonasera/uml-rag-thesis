@@ -1,0 +1,1772 @@
+# Classificazione delle etichette delle relazioni (associazione, ruolo, ruolo_doppio, vincolo, qualificatore,
+# dubbio): DATI approvati dall'utente, letti da corpus/generate_label_classification.py, che genera
+# label_classification.json (letto dal convertitore) e label_classification.md. Spostati qui dal dizionario
+# CLASSIFICATION del generatore il 2026-10-10 (voce 116), stesso contenuto e stesso ordine.
+# Chiave: esercizio, sorgente, operatore, destinazione, etichetta (come nel PlantUML). estremo: null, il nome di una
+# classe o 'source' / 'target', {estremo, testo} per un ruolo con testo diverso dall'etichetta, lista per
+# ruolo_doppio. Nuove voci solo dopo la conferma dell'utente.
+
+- esercizio: AirTravel
+  sorgente: Airport
+  operatore: --
+  destinazione: Flight
+  etichetta: Source
+  classificazione: ruolo
+  estremo: Airport
+  motivazione: 'Nome di ruolo: descrive cosa E'' l''Airport per questo Flight (l''aeroporto di partenza), non un
+    verbo che lega le due classi. Coppia con ''Destination'' sotto: due relazioni distinte Airport-Flight, distinte
+    dal ruolo dell''Airport in ciascuna.'
+- esercizio: AirTravel
+  sorgente: Airport
+  operatore: --
+  destinazione: Flight
+  etichetta: Destination
+  classificazione: ruolo
+  estremo: Airport
+  motivazione: Come 'Source' sopra, ma per l'aeroporto di arrivo.
+- esercizio: AirTravel
+  sorgente: FlightExecution
+  operatore: '-'
+  destinazione: Pilot
+  etichetta: Captain
+  classificazione: ruolo
+  estremo: Pilot
+  motivazione: 'Nome di ruolo esplicitamente dato come esempio dall''utente: descrive cosa E'' il Pilot in questa
+    relazione (il comandante), non un verbo.'
+- esercizio: AirTravel
+  sorgente: FlightExecution
+  operatore: '-'
+  destinazione: Pilot
+  etichetta: Co-pilot
+  classificazione: ruolo
+  estremo: Pilot
+  motivazione: Come 'Captain' sopra, per il secondo pilota.
+- esercizio: Boeing
+  sorgente: Airplane
+  operatore: --
+  destinazione: Acquisition
+  etichetta: part of
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale che descrive il legame ('e' parte di'), leggibile come frase sull'intera relazione,
+    non un nome che qualifica una delle due classi.
+- esercizio: Boeing
+  sorgente: Acquisition
+  operatore: --
+  destinazione: Contract
+  etichetta: part of
+  classificazione: associazione
+  estremo: null
+  motivazione: Come sopra.
+- esercizio: BuildingManagement
+  sorgente: WebPortal
+  operatore: -->
+  destinazione: Entry
+  etichetta: id
+  classificazione: ruolo
+  estremo: target
+  motivazione: 'RICLASSIFICATO (2026-09-29, decisione utente — categoria ''qualificatore'' abbandonata, era una
+    lettura UML non necessaria): ''id'' non e'' un qualificatore, e'' il nome della proprieta'' di navigazione (stessa
+    convenzione di ''profilePicture'', ''wheel'', ecc. — nomi comuni, non frasi verbali) — targetRole ''id'' sull''estremo
+    Entry, label vuoto. Storico: NON piu'' spostato su Building (quella correzione ''chiarimento_modellazione''
+    e'' stata annullata, BuildingManagement resta fedele all''originale, vedi docs/decisions.md) — il limite (Entry
+    non ha mai un ID esplicito in description.md, solo Building) resta annotato ma non corretto.'
+- esercizio: BuildingManagement
+  sorgente: WebPortal
+  operatore: -->
+  destinazione: User
+  etichetta: username
+  classificazione: ruolo
+  estremo: target
+  motivazione: 'RICLASSIFICATO (2026-09-29, stessa motivazione di ''id'' sopra): targetRole ''username'' sull''estremo
+    User, label vuoto.'
+- esercizio: BuildingManagement
+  sorgente: User
+  operatore: -->
+  destinazione: Building
+  etichetta: owner
+  classificazione: ruolo
+  estremo: User
+  motivazione: 'Nome di ruolo esplicitamente dato come esempio dall''utente: descrive cosa E'' lo User per quel
+    Building.'
+- esercizio: BuildingManagement
+  sorgente: User
+  operatore: -->
+  destinazione: Building
+  etichetta: author
+  classificazione: ruolo
+  estremo: User
+  motivazione: 'Come ''owner'': relazione distinta (Building ha sia un owner sia un author, entrambi User ma ruoli
+    diversi).'
+- esercizio: BuildingManagement
+  sorgente: Building
+  operatore: -->
+  destinazione: Image
+  etichetta: profilePicture
+  classificazione: ruolo
+  estremo: Image
+  motivazione: Descrive cosa E' l'Image per quel Building (la sua immagine profilo).
+- esercizio: ClothingCompany
+  sorgente: Product
+  operatore: --
+  destinazione: Order
+  etichetta: contains
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo che descrive il legame.
+- esercizio: ClothingCompany
+  sorgente: Category
+  operatore: --
+  destinazione: Product
+  etichetta: belongsTo
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo (forma passiva).
+- esercizio: ClothingCompany
+  sorgente: Representative
+  operatore: --
+  destinazione: Order
+  etichetta: placedBy
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo (forma passiva).
+- esercizio: ClothingCompany
+  sorgente: Product
+  operatore: --
+  destinazione: Country
+  etichetta: soldIn
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: ClothingCompany
+  sorgente: Representative
+  operatore: '-'
+  destinazione: Country
+  etichetta: responsibleFor
+  classificazione: associazione
+  estremo: null
+  motivazione: 'Frase verbale (''e'' responsabile di''), leggibile come frase sull''intera relazione. Confermato
+    dall''utente (STOP 1) nonostante il confine con l''esempio di ruolo ''responsible'': qui e'' un verbo composto
+    (''responsible-FOR''), non il nome nudo di un ruolo.'
+- esercizio: ClothingCompany
+  sorgente: Order
+  operatore: '-'
+  destinazione: Customer
+  etichetta: orders
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: ClothingCompany
+  sorgente: Country
+  operatore: --
+  destinazione: Customer
+  etichetta: resell
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DestroyBlockGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: Block
+  etichetta: blocks
+  classificazione: ruolo
+  estremo: Block
+  motivazione: 'Il testo coincide col nome della classe target (plurale): nomina la collezione di Block dal punto
+    di vista di Game.'
+- esercizio: DestroyBlockGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: Paddle
+  etichetta: paddle
+  classificazione: ruolo
+  estremo: Paddle
+  motivazione: Coincide col nome della classe target.
+- esercizio: DestroyBlockGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: Ball
+  etichetta: ball
+  classificazione: ruolo
+  estremo: Ball
+  motivazione: Coincide col nome della classe target.
+- esercizio: DestroyBlockGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: Level
+  etichetta: levels
+  classificazione: ruolo
+  estremo: Level
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: DestroyBlockGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: BlockAssignment
+  etichetta: blockAssignments
+  classificazione: ruolo
+  estremo: BlockAssignment
+  motivazione: Coincide col nome della classe target (plurale, camelCase).
+- esercizio: DestroyBlockGame
+  sorgente: Game
+  operatore: -->
+  destinazione: HallOfFameEntry
+  etichetta: mostRecentEntry
+  classificazione: ruolo
+  estremo: HallOfFameEntry
+  motivazione: Descrive cosa E' quella HallOfFameEntry per Game (la piu' recente).
+- esercizio: DestroyBlockGame
+  sorgente: Game
+  operatore: --
+  destinazione: PlayedGame
+  etichetta: game
+  classificazione: ruolo
+  estremo: Game
+  motivazione: 'Il testo coincide col nome della classe SOURCE, non del target: si legge ''PlayedGame.game -> il
+    Game di riferimento'', quindi il ruolo qualifica l''estremo Game (il lato source di questa riga), non PlayedGame.'
+- esercizio: DestroyBlockGame
+  sorgente: Level
+  operatore: --
+  destinazione: BlockAssignment
+  etichetta: level
+  classificazione: ruolo
+  estremo: Level
+  motivazione: 'Coincide col nome della classe source: ''BlockAssignment.level -> il Level''.'
+- esercizio: DestroyBlockGame
+  sorgente: PlayedGame
+  operatore: '*--'
+  destinazione: PlayedBlockAssignment
+  etichetta: blocks
+  classificazione: ruolo
+  estremo: PlayedBlockAssignment
+  motivazione: Collezione di PlayedBlockAssignment vista da PlayedGame (target).
+- esercizio: DestroyBlockGame
+  sorgente: Player
+  operatore: --
+  destinazione: User
+  etichetta: player
+  classificazione: ruolo
+  estremo: Player
+  motivazione: 'Coincide col nome della classe source: ''User.player -> il Player legato a quell''account''.'
+- esercizio: DestroyBlockGame
+  sorgente: Player
+  operatore: --
+  destinazione: PlayedGame
+  etichetta: player
+  classificazione: ruolo
+  estremo: Player
+  motivazione: 'Come sopra: ''PlayedGame.player -> il Player che ha giocato''.'
+- esercizio: DestroyBlockGame
+  sorgente: Player
+  operatore: --
+  destinazione: HallOfFameEntry
+  etichetta: player
+  classificazione: ruolo
+  estremo: Player
+  motivazione: 'Come sopra: ''HallOfFameEntry.player -> il Player''.'
+- esercizio: DestroyBlockGame
+  sorgente: Admin
+  operatore: --
+  destinazione: User
+  etichetta: admin
+  classificazione: ruolo
+  estremo: Admin
+  motivazione: 'Coincide col nome della classe source: ''User.admin -> l''Admin''.'
+- esercizio: DestroyBlockGame
+  sorgente: Admin
+  operatore: --
+  destinazione: Game
+  etichetta: admin
+  classificazione: ruolo
+  estremo: Admin
+  motivazione: 'Come sopra: ''Game.admin -> l''Admin che lo amministra''.'
+- esercizio: DestroyBlockGame
+  sorgente: Block
+  operatore: --
+  destinazione: PlayedBlockAssignment
+  etichetta: block
+  classificazione: ruolo
+  estremo: Block
+  motivazione: 'Coincide col nome della classe source: ''PlayedBlockAssignment.block -> il Block''.'
+- esercizio: Ebike
+  sorgente: EBike
+  operatore: -->
+  destinazione: Wheel
+  etichetta: wheel
+  classificazione: ruolo
+  estremo: Wheel
+  motivazione: Coincide col nome della classe target.
+- esercizio: Ebike
+  sorgente: EBike
+  operatore: -->
+  destinazione: Battery
+  etichetta: battery
+  classificazione: ruolo
+  estremo: Battery
+  motivazione: Coincide col nome della classe target.
+- esercizio: Ebike
+  sorgente: EBike
+  operatore: -->
+  destinazione: Frame
+  etichetta: frame
+  classificazione: ruolo
+  estremo: Frame
+  motivazione: Coincide col nome della classe target.
+- esercizio: Ebike
+  sorgente: EBike
+  operatore: -->
+  destinazione: DriveSystem
+  etichetta: driveSystem
+  classificazione: ruolo
+  estremo: DriveSystem
+  motivazione: Coincide col nome della classe target.
+- esercizio: Ebike
+  sorgente: EBike
+  operatore: -->
+  destinazione: Controller
+  etichetta: controller
+  classificazione: ruolo
+  estremo: Controller
+  motivazione: Coincide col nome della classe target.
+- esercizio: Ebike
+  sorgente: DriveSystem
+  operatore: -->
+  destinazione: Motor
+  etichetta: motor
+  classificazione: ruolo
+  estremo: Motor
+  motivazione: Coincide col nome della classe target.
+- esercizio: Ebike
+  sorgente: Controller
+  operatore: -->
+  destinazione: Battery
+  etichetta: battery
+  classificazione: ruolo
+  estremo: Battery
+  motivazione: Coincide col nome della classe target.
+- esercizio: Ebike
+  sorgente: Controller
+  operatore: -->
+  destinazione: State
+  etichetta: currentState
+  classificazione: ruolo
+  estremo: State
+  motivazione: Descrive cosa E' quello State (lo stato corrente).
+- esercizio: eHome2020
+  sorgente: Sensor
+  operatore: -->
+  destinazione: Measurement
+  etichetta: lastValue
+  classificazione: ruolo
+  estremo: Measurement
+  motivazione: Descrive cosa E' quella Measurement (l'ultimo valore).
+- esercizio: EUScienceConnect
+  sorgente: TechnicalReport
+  operatore: --|>
+  destinazione: Article
+  etichetta: '{total; disjoint}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: 'Non e'' un''etichetta di associazione: e'' un vincolo UML standard ({disjoint,complete} in notazione
+    OCL/UML) su un insieme di generalizzazione, catturato genericamente dal parser come '': label'' perche'' segue
+    la stessa sintassi testuale. Va gestito come vincolo, non spostato in label ne'' in un ruolo.'
+- esercizio: EUScienceConnect
+  sorgente: ResearchInstitution
+  operatore: --
+  destinazione: Person
+  etichetta: worksFor
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: EUScienceConnect
+  sorgente: Person
+  operatore: --
+  destinazione: PeerReviewedPaper
+  etichetta: reviews
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: EUScienceConnect
+  sorgente: ResearchInstitution
+  operatore: --
+  destinazione: Journal
+  etichetta: subscribesTo
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: EUScienceConnect
+  sorgente: Publisher
+  operatore: --
+  destinazione: Journal
+  etichetta: publishes
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: EUScienceConnect
+  sorgente: ResearchInstitution
+  operatore: --
+  destinazione: TechnicalReport
+  etichetta: publishes
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: Facepage
+  sorgente: PersonalAccount
+  operatore: --
+  destinazione: PersonalPage
+  etichetta: administrator
+  classificazione: ruolo
+  estremo: PersonalAccount
+  motivazione: Descrive cosa E' il PersonalAccount per quella Page (chi la amministra).
+- esercizio: Facepage
+  sorgente: FriendRequest
+  operatore: '-'
+  destinazione: PersonalAccount
+  etichetta: sender
+  classificazione: ruolo
+  estremo: PersonalAccount
+  motivazione: Nome di ruolo esplicitamente dato come esempio dall'utente.
+- esercizio: Facepage
+  sorgente: FriendRequest
+  operatore: '-'
+  destinazione: PersonalAccount
+  etichetta: receiver
+  classificazione: ruolo
+  estremo: PersonalAccount
+  motivazione: Come 'sender', relazione distinta (destinatario invece che mittente).
+- esercizio: FilmSet
+  sorgente: Director
+  operatore: --
+  destinazione: Screenplay
+  etichetta: implements
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: FilmSet
+  sorgente: Actor
+  operatore: --
+  destinazione: Screenplay
+  etichetta: reads
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: FilmSet
+  sorgente: Film
+  operatore: --
+  destinazione: ScreenplayAuthor
+  etichetta: MostSuccessful
+  classificazione: ruolo
+  estremo: Film
+  motivazione: 'CORRETTO (2026-09-28, revisione utente di roles_to_review.md): l''estremo giusto e'' Film, non ScreenplayAuthor.
+    description.md: ''The name and most successful film of a screenwriter are stored'' — e'' il FILM ad essere ''il
+    piu'' di successo'' (di quello screenwriter), non l''autore ad essere ''il piu'' di successo''. Lettura corretta:
+    ''Film e'' il MostSuccessful di ScreenplayAuthor''.'
+- esercizio: FilmSet
+  sorgente: ScreenplayAuthor
+  operatore: --
+  destinazione: Screenplay
+  etichetta: creates
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: FitnessCompanyConan
+  sorgente: Session
+  operatore: <|--
+  destinazione: GroupSession
+  etichetta: '{total; disjoint}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo UML su generalizzazione, come EUScienceConnect sopra.
+- esercizio: FitnessCompanyConan
+  sorgente: Person
+  operatore: <|--
+  destinazione: Member
+  etichetta: '{partial; overlap}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo UML su generalizzazione.
+- esercizio: GameArea
+  sorgente: Shape
+  operatore: --
+  destinazione: Shape
+  etichetta: is_connected_with
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo (auto-relazione).
+- esercizio: GameArea
+  sorgente: GameArea
+  operatore: -->
+  destinazione: Enemy
+  etichetta: finalBoss
+  classificazione: ruolo
+  estremo: Enemy
+  motivazione: Descrive cosa E' quel Enemy per quella GameArea.
+- esercizio: HelpingHands
+  sorgente: Volunteer
+  operatore: '*->'
+  destinazione: Date
+  etichetta: availableDates
+  classificazione: ruolo
+  estremo: Date
+  motivazione: Descrive cosa sono quelle Date per quel Volunteer (le date disponibili).
+- esercizio: HelpingHands
+  sorgente: Route
+  operatore: '-'
+  destinazione: Item
+  etichetta: pickupRoute
+  classificazione: ruolo
+  estremo: Route
+  motivazione: 'Coincide (parzialmente) col nome della classe source: ''Item.pickupRoute -> la Route''.'
+- esercizio: HelpingHands
+  sorgente: Route
+  operatore: --
+  destinazione: SecondHandArticle
+  etichetta: dropOffRoute
+  classificazione: ruolo
+  estremo: Route
+  motivazione: Come sopra, relazione distinta (route di consegna anziche' di ritiro).
+- esercizio: HotelBookingManagementSystem
+  sorgente: SpecialOffer
+  operatore: --
+  destinazione: BookingInfo
+  etichetta: specialOffers
+  classificazione: ruolo
+  estremo: SpecialOffer
+  motivazione: Coincide col nome della classe source (plurale).
+- esercizio: HotelBookingManagementSystem
+  sorgente: BookingInfo
+  operatore: --
+  destinazione: SpecialOffer
+  etichetta: bestOffers
+  classificazione: ruolo
+  estremo: SpecialOffer
+  motivazione: 'Coincide (parzialmente) col nome della classe target: le offerte migliori.'
+- esercizio: Louvre
+  sorgente: Employee
+  operatore: --
+  destinazione: Exhibition
+  etichetta: Coordinator
+  classificazione: ruolo
+  estremo: Employee
+  motivazione: Descrive cosa E' quell'Employee per quella Exhibition.
+- esercizio: Louvre
+  sorgente: Exhibition
+  operatore: --
+  destinazione: Location
+  etichetta: AssignedLocation
+  classificazione: ruolo
+  estremo: Location
+  motivazione: Coincide (parzialmente) col nome della classe target.
+- esercizio: Louvre
+  sorgente: Location
+  operatore: --
+  destinazione: Room
+  etichetta: RoomLocationAssignment
+  classificazione: associazione
+  estremo: null
+  motivazione: 'Decisione utente (2026-09-27): nome dell''associazione (non un ruolo di una delle due classi), nonostante
+    concateni entrambi i nomi di classe. Resta in ''label''.'
+- esercizio: Louvre
+  sorgente: Employee
+  operatore: --
+  destinazione: Employee
+  etichetta: hasCoach
+  classificazione: ruolo
+  estremo:
+    estremo: target
+    testo: coach
+  motivazione: 'RICLASSIFICATO (2026-09-29, decisione utente): auto-relazione Employee-Employee — senza un ruolo
+    esplicito i due estremi non si distinguono. Ruolo ''coach'' (il sostantivo, non la frase verbale ''hasCoach''
+    usata come etichetta) sull''estremo con molteplicita'' 0..1 (il dipendente che fa da coach, presente 0 o 1 volta),
+    posizione ''target'' nella riga PlantUML (il simbolo finale ''>'', gia'' rimosso dall''etichetta da apollon_convert.py::strip_reading_direction,
+    era solo un marcatore di verso di lettura, non parte del nome).'
+- esercizio: Musicmatic
+  sorgente: Song
+  operatore: <|--
+  destinazione: Hit
+  etichetta: '{total; disjoint}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo UML su generalizzazione.
+- esercizio: Musicmatic
+  sorgente: BusinessUser
+  operatore: --|>
+  destinazione: User
+  etichetta: '{total; overlap}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo UML su generalizzazione.
+- esercizio: Musicmatic
+  sorgente: RegularUser
+  operatore: --
+  destinazione: Album
+  etichetta: compose
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: Musicmatic
+  sorgente: RegularUser
+  operatore: --
+  destinazione: Album
+  etichetta: suggestion
+  classificazione: ruolo
+  estremo: Album
+  motivazione: 'Decisione utente (2026-09-27): descrive cosa E'' quell''Album per l''altro RegularUser (un suggerimento),
+    coerente con description.md (''the album of regular users can be turned into a suggestion to other regular users'').
+    Nota per il report: ''Album'' e'' una classe implicita in questo esercizio — mai dichiarata con ''class Album
+    {...}'' nel plantuml.txt sorgente, creata come nodo senza attributi (dichiarazione implicita legale in PlantUML,
+    vedi warning gia'' emesso da apollon_convert.py).'
+- esercizio: OnlineTutoringSystem
+  sorgente: User
+  operatore: '*--'
+  destinazione: TutoringRole
+  etichetta: roles
+  classificazione: ruolo
+  estremo: TutoringRole
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: OnlineTutoringSystem
+  sorgente: TutoringRequest
+  operatore: '*--'
+  destinazione: TutoringSession
+  etichetta: allSessions
+  classificazione: ruolo
+  estremo: TutoringSession
+  motivazione: Coincide (parzialmente) col nome della classe target.
+- esercizio: OnlineTutoringSystem
+  sorgente: TutoringSession
+  operatore: -->
+  destinazione: TutoringSession
+  etichetta: nextSession
+  classificazione: ruolo
+  estremo: target
+  motivazione: 'Auto-relazione (decisione utente 2026-09-28): il nome della classe non puo'' disambiguare quale
+    delle due occorrenze porta il ruolo — ''estremo'' e'' quindi la POSIZIONE letterale nella riga PlantUML (''target''
+    = lato destro della riga sorgente), non un nome di classe. Descrive il ruolo del target (la sessione successiva).'
+- esercizio: OnlineTutoringSystem
+  sorgente: TutoringRequest
+  operatore: -->
+  destinazione: TutoringSession
+  etichetta: firstSession
+  classificazione: ruolo
+  estremo: TutoringSession
+  motivazione: Descrive il ruolo del target (la prima sessione).
+- esercizio: School
+  sorgente: Teacher
+  operatore: '-'
+  destinazione: School
+  etichetta: Principal
+  classificazione: ruolo
+  estremo: Teacher
+  motivazione: Descrive cosa E' quel Teacher per quella School (il preside).
+- esercizio: SmartHomeAutomationSystem
+  sorgente: SmartHome
+  operatore: '*--'
+  destinazione: Address
+  etichetta: address
+  classificazione: ruolo
+  estremo: Address
+  motivazione: Coincide col nome della classe target.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: SmartHome
+  operatore: '*--'
+  destinazione: Room
+  etichetta: rooms
+  classificazione: ruolo
+  estremo: Room
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: SmartHomeAutomationSystem
+  sorgente: SmartHome
+  operatore: '*--'
+  destinazione: ActivityLog
+  etichetta: log
+  classificazione: ruolo
+  estremo: ActivityLog
+  motivazione: Coincide (parzialmente) col nome della classe target.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: User
+  operatore: --
+  destinazione: SmartHome
+  etichetta: owners
+  classificazione: ruolo
+  estremo: User
+  motivazione: 'Coincide col nome-concetto della classe source (plurale): gli User che possiedono la casa.'
+- esercizio: SmartHomeAutomationSystem
+  sorgente: Room
+  operatore: '*--'
+  destinazione: Sensor
+  etichetta: sensors
+  classificazione: ruolo
+  estremo: Sensor
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: SmartHomeAutomationSystem
+  sorgente: Room
+  operatore: '*--'
+  destinazione: Actuator
+  etichetta: actuators
+  classificazione: ruolo
+  estremo: Actuator
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: SmartHomeAutomationSystem
+  sorgente: ActivityLog
+  operatore: '*--'
+  destinazione: SensorReading
+  etichetta: recordedReadings
+  classificazione: ruolo
+  estremo: SensorReading
+  motivazione: Coincide (parzialmente) col nome della classe target.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: ActivityLog
+  operatore: '*--'
+  destinazione: ControlCommand
+  etichetta: recordedCommands
+  classificazione: ruolo
+  estremo: ControlCommand
+  motivazione: Coincide (parzialmente) col nome della classe target.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: CommandSequence
+  operatore: --
+  destinazione: CommandSequence
+  etichetta: nextCommand
+  classificazione: ruolo
+  estremo: target
+  motivazione: 'Auto-relazione (decisione utente 2026-09-28): ''estremo'' e'' la posizione letterale (''target''
+    = lato destro della riga sorgente), non un nome di classe — vedi nota su OnlineTutoringSystem/nextSession. Descrive
+    il ruolo del target (il comando successivo).'
+- esercizio: SmartHomeAutomationSystem
+  sorgente: CommandSequence
+  operatore: '*--'
+  destinazione: ControlCommand
+  etichetta: command
+  classificazione: ruolo
+  estremo: ControlCommand
+  motivazione: Coincide (parzialmente) col nome della classe target.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: SensorReading
+  operatore: --
+  destinazione: Sensor
+  etichetta: sensor
+  classificazione: ruolo
+  estremo: Sensor
+  motivazione: Coincide col nome della classe target.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: ControlCommand
+  operatore: --
+  destinazione: Actuator
+  etichetta: actuator
+  classificazione: ruolo
+  estremo: Actuator
+  motivazione: Coincide col nome della classe target.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: AlertRule
+  operatore: '*--'
+  destinazione: BooleanExpression
+  etichetta: precondition
+  classificazione: ruolo
+  estremo: BooleanExpression
+  motivazione: Descrive cosa E' quella Expression per quella AlertRule.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: AlertRule
+  operatore: '*--'
+  destinazione: CommandSequence
+  etichetta: actions
+  classificazione: ruolo
+  estremo: CommandSequence
+  motivazione: Descrive cosa sono quelle CommandSequence per quella AlertRule.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: NotExpression
+  operatore: --
+  destinazione: BooleanExpression
+  etichetta: expression
+  classificazione: ruolo
+  estremo: BooleanExpression
+  motivazione: Coincide col nome-concetto della classe target.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: BinaryExpression
+  operatore: --
+  destinazione: BooleanExpression
+  etichetta: leftExpr
+  classificazione: ruolo
+  estremo: BooleanExpression
+  motivazione: Qualifica QUALE operando (sinistro) tra due relazioni identiche altrimenti.
+- esercizio: SmartHomeAutomationSystem
+  sorgente: BinaryExpression
+  operatore: --
+  destinazione: BooleanExpression
+  etichetta: rightExpr
+  classificazione: ruolo
+  estremo: BooleanExpression
+  motivazione: Come sopra, operando destro.
+- esercizio: Sober
+  sorgente: Ride
+  operatore: <|--
+  destinazione: RideHailing
+  etichetta: '{total; disjoint}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo UML su generalizzazione.
+- esercizio: Sober
+  sorgente: RideHailing
+  operatore: --
+  destinazione: Customer
+  etichetta: LeadCustomer
+  classificazione: ruolo
+  estremo: Customer
+  motivazione: Descrive cosa E' quel Customer per quella corsa (il cliente principale).
+- esercizio: Sober
+  sorgente: RideSharing
+  operatore: --
+  destinazione: Customer
+  etichetta: Book
+  classificazione: associazione
+  estremo: null
+  motivazione: 'Decisione utente (2026-09-27): verbo (''prenotare''), coerente con description.md (''a customer
+    who books 20 uses of the Sober ride-sharing service''). Testo invariato in ''label''.'
+- esercizio: Sober
+  sorgente: Ride
+  operatore: '-'
+  destinazione: Car
+  etichetta: OperatedBy
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale passiva.
+- esercizio: Sober
+  sorgente: Car
+  operatore: <|--
+  destinazione: SoberCar
+  etichetta: '{total; disjoint}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo UML su generalizzazione.
+- esercizio: Sober
+  sorgente: OtherCar
+  operatore: --
+  destinazione: Customer
+  etichetta: Owns
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: TeamSportsScoutingSystem
+  sorgente: ScoutReport
+  operatore: <-->
+  destinazione: ScoutReport
+  etichetta: nextReport
+  classificazione: ruolo
+  estremo: target
+  motivazione: 'Auto-relazione (decisione utente 2026-09-28): ''estremo'' e'' la posizione letterale (''target''
+    = lato destro della riga sorgente), non un nome di classe — vedi nota su OnlineTutoringSystem/nextSession. Descrive
+    il ruolo del target (il report successivo).'
+- esercizio: TileOGame
+  sorgente: TileO
+  operatore: '*--'
+  destinazione: Game
+  etichetta: games
+  classificazione: ruolo
+  estremo: Game
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: TileOGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: Tile
+  etichetta: tiles
+  classificazione: ruolo
+  estremo: Tile
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: TileOGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: Connection
+  etichetta: connections
+  classificazione: ruolo
+  estremo: Connection
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: TileOGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: Die
+  etichetta: die
+  classificazione: ruolo
+  estremo: Die
+  motivazione: Coincide col nome della classe target.
+- esercizio: TileOGame
+  sorgente: Game
+  operatore: '*-'
+  destinazione: Deck
+  etichetta: deck
+  classificazione: ruolo
+  estremo: Deck
+  motivazione: Coincide col nome della classe target.
+- esercizio: TileOGame
+  sorgente: Game
+  operatore: -->
+  destinazione: Player
+  etichetta: currentPlayer
+  classificazione: ruolo
+  estremo: Player
+  motivazione: Descrive cosa E' quel Player per quel Game (il giocatore corrente).
+- esercizio: TileOGame
+  sorgente: Game
+  operatore: '*--'
+  destinazione: Player
+  etichetta: players
+  classificazione: ruolo
+  estremo: Player
+  motivazione: Coincide col nome della classe target (plurale).
+- esercizio: TileOGame
+  sorgente: Deck
+  operatore: '*--'
+  destinazione: ActionCard
+  etichetta: cards
+  classificazione: ruolo
+  estremo: ActionCard
+  motivazione: Coincide (genericamente) col concetto della classe target.
+- esercizio: TileOGame
+  sorgente: Game
+  operatore: -->
+  destinazione: WinTile
+  etichetta: winTile
+  classificazione: ruolo
+  estremo: WinTile
+  motivazione: Coincide col nome della classe target.
+- esercizio: TileOGame
+  sorgente: Tile
+  operatore: --
+  destinazione: Connection
+  etichetta: connections/tiles
+  classificazione: ruolo_doppio
+  estremo:
+  - testo: tiles
+    estremo: Tile
+  - testo: connections
+    estremo: Connection
+  motivazione: 'Decisione utente (2026-09-27): caso unico nel corpus — l''etichetta impacchetta due nomi di ruolo
+    distinti, uno per estremo, invece di uno solo. ''tiles'' coincide col nome della classe Tile, ''connections''
+    col nome della classe Connection — stessa convenzione gia'' usata altrove (es. ''Game *-- Tile : tiles'' e ''Game
+    *-- Connection : connections'', righe 69-70 dello stesso file). Label vuoto: non e'' un''etichetta di associazione,
+    sono due ruoli.'
+- esercizio: TileOGame
+  sorgente: Player
+  operatore: -->
+  destinazione: Tile
+  etichetta: startingTile
+  classificazione: ruolo
+  estremo: Tile
+  motivazione: Descrive cosa E' quel Tile per quel Player (la casella di partenza).
+- esercizio: TileOGame
+  sorgente: Player
+  operatore: -->
+  destinazione: Tile
+  etichetta: currentTile
+  classificazione: ruolo
+  estremo: Tile
+  motivazione: Descrive cosa E' quel Tile per quel Player (la casella corrente).
+- esercizio: TileOGame
+  sorgente: Deck
+  operatore: -->
+  destinazione: ActionCard
+  etichetta: currentCard
+  classificazione: ruolo
+  estremo: ActionCard
+  motivazione: Descrive cosa E' quella ActionCard per quel Deck (la carta corrente).
+- esercizio: TransportCompany
+  sorgente: Planner
+  operatore: --
+  destinazione: Order
+  etichetta: creates
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: TruckLogistics
+  sorgente: Assignment
+  operatore: -->
+  destinazione: Driver
+  etichetta: executes
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: TruckLogistics
+  sorgente: Assignment
+  operatore: -->
+  destinazione: Location
+  etichetta: from
+  classificazione: ruolo
+  estremo: Location
+  motivazione: 'Nome di ruolo classico (preposizione sostantivata): l''origine.'
+- esercizio: TruckLogistics
+  sorgente: Assignment
+  operatore: -->
+  destinazione: Location
+  etichetta: to
+  classificazione: ruolo
+  estremo: Location
+  motivazione: 'Come ''from'': la destinazione (relazione distinta).'
+- esercizio: TruckLogistics
+  sorgente: Driver
+  operatore: -->
+  destinazione: Vehicle
+  etichetta: driver
+  classificazione: ruolo
+  estremo: Driver
+  motivazione: 'Coincide col nome della classe source: ''Vehicle.driver -> il Driver che lo guida''.'
+- esercizio: TruckLogistics
+  sorgente: Vehicle
+  operatore: -->
+  destinazione: Driver
+  etichetta: driver
+  classificazione: ruolo
+  estremo: Driver
+  motivazione: Coincide col nome della classe target in questa riga (relazione inversa rispetto alla precedente).
+- esercizio: TruckLogistics
+  sorgente: Vehicle
+  operatore: -->
+  destinazione: VehicleStatus
+  etichetta: status
+  classificazione: ruolo
+  estremo: VehicleStatus
+  motivazione: Coincide (parzialmente) col nome della classe target.
+- esercizio: University
+  sorgente: Employee
+  operatore: --
+  destinazione: Faculty
+  etichetta: leads
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale ('guida'); il simbolo '>' che seguiva l'etichetta nel sorgente e' un marcatore di verso
+    di lettura di PlantUML, non parte del testo — rimosso da apollon_convert.py::strip_reading_direction (2026-09-29),
+    quindi anche dalla chiave di classificazione qui.
+- esercizio: University
+  sorgente: Lecturer
+  operatore: --
+  destinazione: Course
+  etichetta: teaches
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale ('insegna'); stessa nota sul marcatore '>' sopra.
+- esercizio: CourseManagement
+  sorgente: Course
+  operatore: --
+  destinazione: Teacher
+  etichetta: Preallocation
+  classificazione: associazione
+  estremo: null
+  motivazione: Nome di associazione (sostantivo che descrive il legame nel suo complesso), non un ruolo di una delle
+    due classi.
+- esercizio: CourseManagement
+  sorgente: Teacher
+  operatore: --
+  destinazione: Lesson
+  etichetta: Allocation
+  classificazione: associazione
+  estremo: null
+  motivazione: 'Come ''Preallocation'': nome dell''associazione.'
+- esercizio: CourseManagement
+  sorgente: Course
+  operatore: --
+  destinazione: Participant
+  etichetta: Enrolled
+  classificazione: associazione
+  estremo: null
+  motivazione: 'Come ''Preallocation''/''Allocation'' nello stesso esercizio: nome dell''associazione, non un ruolo.'
+
+# --- Gruppo A traduzione (es. 2-5), proposte APPROVATE dall'utente (2026-09-30), chiavi in inglese ---
+- esercizio: ResearchCenter
+  sorgente: Researcher
+  operatore: --
+  destinazione: Area
+  etichetta: Belongs to
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale ('appartiene a'), non un nome di ruolo.
+- esercizio: ResearchCenter
+  sorgente: SeniorResearcher
+  operatore: --
+  destinazione: Team
+  etichetta: Leads
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale ('guida'); 'Guidato da' sull'altro estremo e' solo la forma passiva, scartata in trascrizione.
+- esercizio: ResearchCenter
+  sorgente: Team
+  operatore: --
+  destinazione: Project
+  etichetta: Carries out
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale ('svolge').
+- esercizio: MilanLibrary
+  sorgente: Library
+  operatore: --
+  destinazione: ItemTransferRequest
+  etichetta: request destination
+  classificazione: ruolo
+  estremo: Library
+  motivazione: 'Approvato dall''utente: ruolo della biblioteca nella richiesta (destinataria), nonostante il testo
+    centrato sulla linea.'
+- esercizio: MilanLibrary
+  sorgente: Library
+  operatore: --
+  destinazione: ItemTransferRequest
+  etichetta: request source
+  classificazione: ruolo
+  estremo: Library
+  motivazione: Come 'request destination' (biblioteca mittente).
+- esercizio: MilanLibrary
+  sorgente: Library
+  operatore: o--
+  destinazione: User
+  etichetta: Has
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale ('possiede').
+- esercizio: Bookmaker
+  sorgente: Bet
+  operatore: -->
+  destinazione: Race
+  etichetta: race
+  classificazione: ruolo
+  estremo: Race
+  motivazione: Nome di campo Java = nome della proprieta' di navigazione (stessa convenzione di profilePicture).
+- esercizio: Bookmaker
+  sorgente: Bet
+  operatore: -->
+  destinazione: Runner
+  etichetta: runner
+  classificazione: ruolo
+  estremo: Runner
+  motivazione: Come 'race'.
+- esercizio: Bookmaker
+  sorgente: Race
+  operatore: -->
+  destinazione: Runner
+  etichetta: winner
+  classificazione: ruolo
+  estremo: Runner
+  motivazione: Come 'race'.
+- esercizio: Bookmaker
+  sorgente: Runner
+  operatore: -->
+  destinazione: Jockey
+  etichetta: jockey
+  classificazione: ruolo
+  estremo: Jockey
+  motivazione: Come 'race'.
+- esercizio: Bookmaker
+  sorgente: Runner
+  operatore: -->
+  destinazione: Horse
+  etichetta: horse
+  classificazione: ruolo
+  estremo: Horse
+  motivazione: Come 'race'.
+
+# --- Gruppo B traduzione (es. 6-9), APPROVATE dall'utente (2026-09-30): tutte associazione ---
+- esercizio: UniversityExams
+  sorgente: Student
+  operatore: --
+  destinazione: Place
+  etichetta: Student_born_in
+  classificazione: associazione
+  estremo: null
+  motivazione: Nome dell'associazione ('nato a'), centrato sulla linea.
+- esercizio: UniversityExams
+  sorgente: Professor
+  operatore: --
+  destinazione: Place
+  etichetta: Prof_born_in
+  classificazione: associazione
+  estremo: null
+  motivazione: Come 'Student_born_in'.
+- esercizio: UniversityExams
+  sorgente: Faculty
+  operatore: --
+  destinazione: Course
+  etichetta: BelongsTo
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale ('< Appartenente'; il '<' e' verso di lettura, rimosso).
+- esercizio: UniversityExams
+  sorgente: Professor
+  operatore: --
+  destinazione: Course
+  etichetta: Teaches
+  classificazione: associazione
+  estremo: null
+  motivazione: Frase verbale ('< Insegna').
+- esercizio: Restaurant
+  sorgente: Customer
+  operatore: --
+  destinazione: Assignment
+  etichetta: books
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('prenota').
+- esercizio: Restaurant
+  sorgente: Assignment
+  operatore: --
+  destinazione: Table
+  etichetta: includes
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('include').
+- esercizio: Restaurant
+  sorgente: Assignment
+  operatore: --
+  destinazione: Waiter
+  etichetta: serves
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('serve').
+- esercizio: ElevatorControl
+  sorgente: ElevatorController
+  operatore: ..>
+  destinazione: Elevator
+  etichetta: controls
+  classificazione: associazione
+  estremo: null
+  motivazione: 'Verbo (''controlla''), su dipendenza (tratteggiata: verifica visiva dell''autore 2026-10-01, prima
+    trascritta -->).'
+- esercizio: ElevatorControl
+  sorgente: ElevatorController
+  operatore: ..>
+  destinazione: Door
+  etichetta: controls
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('controlla'), su dipendenza.
+- esercizio: ElevatorControl
+  sorgente: ElevatorController
+  operatore: --
+  destinazione: Button
+  etichetta: communicates
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('comunica'), in corsivo al centro della linea.
+
+# --- Gruppo C traduzione (es. 10-11), APPROVATE dall'utente (2026-10-01) ---
+- esercizio: OilWells
+  sorgente: OnshoreWell
+  operatore: --|>
+  destinazione: Well
+  etichetta: '{disjoint, complete}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo UML sull'insieme di generalizzazione (scritto una volta sul tronco comune).
+- esercizio: OilWells
+  sorgente: OffshoreWell
+  operatore: --|>
+  destinazione: Well
+  etichetta: '{disjoint, complete}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Come sopra.
+- esercizio: OilWells
+  sorgente: OffshoreWell
+  operatore: --
+  destinazione: Area
+  etichetta: location
+  classificazione: ruolo
+  estremo: Area
+  motivazione: 'Decisione utente: ''luogo'' e'' un sostantivo -> ruolo sull''estremo Area, anche se scritto al centro
+    della linea (la posizione non conta).'
+- esercizio: RepairShops
+  sorgente: RepairShop
+  operatore: --
+  destinazione: Employee
+  etichetta: WorksAt
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('<Lavora'; '<' = verso di lettura).
+- esercizio: RepairShops
+  sorgente: RepairShop
+  operatore: --
+  destinazione: Director
+  etichetta: manages
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('<dirige').
+- esercizio: RepairShops
+  sorgente: RepairShop
+  operatore: --
+  destinazione: Repair
+  etichetta: performs
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('effettua>').
+- esercizio: RepairShops
+  sorgente: Vehicle
+  operatore: --
+  destinazione: Owner
+  etichetta: belongsTo
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('appartiene>').
+
+# --- Gym (es. 12), APPROVATE dall'utente (2026-10-01) ---
+- esercizio: Gym
+  sorgente: Subscription
+  operatore: --
+  destinazione: Service
+  etichetta: AdditionalServices
+  classificazione: ruolo
+  estremo: Service
+  motivazione: 'Sostantivo (''ServiziAggiuntivi''): regola ''sostantivo = ruolo, la posizione non conta''.'
+- esercizio: Gym
+  sorgente: Subscription
+  operatore: --
+  destinazione: Service
+  etichetta: BaseServices
+  classificazione: ruolo
+  estremo: Service
+  motivazione: Come 'AdditionalServices' ('ServiziBase').
+
+# --- Gruppo D traduzione (es. 13-15), APPROVATE dall'utente (2026-10-01): tutte associazione ---
+- esercizio: EatAtHome
+  sorgente: Customer
+  operatore: --
+  destinazione: Order
+  etichetta: makes
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('makes ►', diagramma gia' in inglese).
+- esercizio: EatAtHome
+  sorgente: Order
+  operatore: --
+  destinazione: Dish
+  etichetta: contains
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('contains ►').
+- esercizio: EatAtHome
+  sorgente: Dish
+  operatore: --
+  destinazione: Ingredient
+  etichetta: contains
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('contains ►').
+- esercizio: ApartmentBuilding
+  sorgente: Apartment
+  operatore: --
+  destinazione: Person
+  etichetta: isOwnedBy
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo ('è posseduto'), al centro della linea.
+
+# --- Test set De Bari, Gruppo DB-A (es. 1-5), APPROVATE dall'utente (2026-10-03) ---
+- esercizio: DB01_ProjectManagementSystem
+  sorgente: Project
+  operatore: --
+  destinazione: Requirement
+  etichetta: Input
+  classificazione: associazione
+  estremo: null
+  motivazione: 'Decisione utente: nome di ASSOCIAZIONE, non ruolo, perche'' ha il triangolo pieno del verso di lettura
+    (◄), che i nomi di ruolo non hanno (anche se ''Input'' e'' anche un sostantivo).'
+- esercizio: DB01_ProjectManagementSystem
+  sorgente: Project
+  operatore: --
+  destinazione: System
+  etichetta: Output
+  classificazione: associazione
+  estremo: null
+  motivazione: 'Come ''Input'': triangolo pieno di verso di lettura (►), quindi nome di associazione.'
+- esercizio: DB01_ProjectManagementSystem
+  sorgente: Manager
+  operatore: --
+  destinazione: Project
+  etichetta: Manage
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo con triangolo pieno di verso di lettura (►).
+- esercizio: DB01_ProjectManagementSystem
+  sorgente: Team
+  operatore: --
+  destinazione: Project
+  etichetta: Execute
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo con triangolo pieno di verso di lettura (◄).
+- esercizio: DB01_ProjectManagementSystem
+  sorgente: Manager
+  operatore: --
+  destinazione: Team
+  etichetta: Lead
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo al centro della linea.
+- esercizio: DB02_HollywoodApproach
+  sorgente: Take
+  operatore: --
+  destinazione: Setup
+  etichetta: tk_of_stp
+  classificazione: associazione
+  estremo: null
+  motivazione: Nome di relazione al centro della linea ('take of setup').
+- esercizio: DB02_HollywoodApproach
+  sorgente: Scene
+  operatore: --
+  destinazione: Setup
+  etichetta: stp_for_scn
+  classificazione: associazione
+  estremo: null
+  motivazione: Nome di relazione al centro della linea ('setup for scene').
+- esercizio: DB02_HollywoodApproach
+  sorgente: External
+  operatore: --
+  destinazione: Location
+  etichetta: located
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo (participio) al centro della linea.
+- esercizio: DB02_HollywoodApproach
+  sorgente: Internal
+  operatore: --|>
+  destinazione: Scene
+  etichetta: '{complete, disjoint}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo UML sull'insieme di generalizzazione Internal/External.
+- esercizio: DB02_HollywoodApproach
+  sorgente: External
+  operatore: --|>
+  destinazione: Scene
+  etichetta: '{complete, disjoint}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Come sopra.
+- esercizio: DB04_PatientRecordAndSchedulingSystem
+  sorgente: FamilyInsured
+  operatore: --
+  destinazione: Doctor
+  etichetta: hasPrimaryCare
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB05_MovieShop
+  sorgente: User
+  operatore: -->
+  destinazione: MovieShop
+  etichetta: uses
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB05_MovieShop
+  sorgente: MovieShop
+  operatore: --
+  destinazione: Card
+  etichetta: make
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB05_MovieShop
+  sorgente: MovieShop
+  operatore: -->
+  destinazione: Order
+  etichetta: make
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB05_MovieShop
+  sorgente: Subscriber
+  operatore: -->
+  destinazione: Card
+  etichetta: has
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB05_MovieShop
+  sorgente: Order
+  operatore: --
+  destinazione: MovieBuy
+  etichetta: related to
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB05_MovieShop
+  sorgente: Subscriber
+  operatore: -->
+  destinazione: MovieRent
+  etichetta: hire
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+
+# --- Test set De Bari, Gruppo DB-B (es. 6-10), APPROVATE dall'utente (2026-10-03) ---
+- esercizio: DB06_Flights
+  sorgente: Airline
+  operatore: --
+  destinazione: Flight
+  etichetta: offers
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB06_Flights
+  sorgente: Airline
+  operatore: --
+  destinazione: Aircraft
+  etichetta: owns
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB06_Flights
+  sorgente: Flight
+  operatore: --
+  destinazione: Airport
+  etichetta: arrives to
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB06_Flights
+  sorgente: Flight
+  operatore: --
+  destinazione: Airport
+  etichetta: departs from
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB06_Flights
+  sorgente: Aircraft
+  operatore: --
+  destinazione: Flight
+  etichetta: uses
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB06_Flights
+  sorgente: Flight
+  operatore: --
+  destinazione: Pilot
+  etichetta: Driven by
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo (passivo).
+- esercizio: DB06_Flights
+  sorgente: Aircraft
+  operatore: --
+  destinazione: AircraftType
+  etichetta: is of
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo.
+- esercizio: DB06_Flights
+  sorgente: AircraftType
+  operatore: --
+  destinazione: Pilot
+  etichetta: Navigator of
+  classificazione: ruolo
+  estremo:
+    estremo: Pilot
+    testo: Navigator
+  motivazione: 'Decisione utente (2026-10-03): ''X of'' = sostantivo + preposizione, senza triangolo di verso di
+    lettura -> RUOLO sull''estremo Pilot, testo = il sostantivo con la maiuscola come scritto (precedente Louvre
+    hasCoach -> coach).'
+- esercizio: DB06_Flights
+  sorgente: AircraftType
+  operatore: --
+  destinazione: Pilot
+  etichetta: Copilot of
+  classificazione: ruolo
+  estremo:
+    estremo: Pilot
+    testo: Copilot
+  motivazione: 'Decisione utente (2026-10-03): ''X of'' = sostantivo + preposizione, senza triangolo di verso di
+    lettura -> RUOLO sull''estremo Pilot, testo = il sostantivo con la maiuscola come scritto (precedente Louvre
+    hasCoach -> coach).'
+- esercizio: DB06_Flights
+  sorgente: AircraftType
+  operatore: --
+  destinazione: Pilot3
+  etichetta: Captain of
+  classificazione: ruolo
+  estremo:
+    estremo: Pilot3
+    testo: Captain
+  motivazione: 'Decisione utente (2026-10-03): ''X of'' = sostantivo + preposizione, senza triangolo di verso di
+    lettura -> RUOLO sull''estremo Pilot3, testo = il sostantivo con la maiuscola come scritto (precedente Louvre
+    hasCoach -> coach).'
+- esercizio: DB08_VeterinaryClinic
+  sorgente: Owner
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{DISJOINT, COMPLETE}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo sull'insieme di generalizzazione.
+- esercizio: DB08_VeterinaryClinic
+  sorgente: Physician
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{DISJOINT, COMPLETE}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Come sopra.
+- esercizio: DB09_AutoRepair
+  sorgente: Employee
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{Disjoint, Complete}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo sull'insieme di generalizzazione (scritto a mano; classi dopo la correzione 'maiuscolo tipografico').
+- esercizio: DB09_AutoRepair
+  sorgente: Owner
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{Disjoint, Complete}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Come sopra.
+- esercizio: DB10_Restaurant
+  sorgente: Client
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{OVERLAPPING, COMPLETE}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo sull'insieme di generalizzazione.
+- esercizio: DB10_Restaurant
+  sorgente: Waiter
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{OVERLAPPING, COMPLETE}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Come sopra.
+
+# --- Test set De Bari, Gruppo DB-C (es. 11-15), APPROVATE dall'utente (2026-10-03) ---
+- esercizio: DB11_Deliveries
+  sorgente: CUSTOMER
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{DISJOINT, COMPLETE}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo sull'insieme di generalizzazione.
+- esercizio: DB11_Deliveries
+  sorgente: COURIER
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{DISJOINT, COMPLETE}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Come sopra.
+- esercizio: DB11_Deliveries
+  sorgente: CUSTOMER
+  operatore: --
+  destinazione: Package
+  etichetta: Sender
+  classificazione: ruolo
+  estremo:
+    estremo: CUSTOMER
+    testo: Sender
+  motivazione: 'Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull''estremo CUSTOMER, testo
+    come scritto.'
+- esercizio: DB11_Deliveries
+  sorgente: CUSTOMER
+  operatore: --
+  destinazione: Package
+  etichetta: Recipient
+  classificazione: ruolo
+  estremo:
+    estremo: CUSTOMER
+    testo: Recipient
+  motivazione: 'Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull''estremo CUSTOMER, testo
+    come scritto.'
+- esercizio: DB11_Deliveries
+  sorgente: Package
+  operatore: --
+  destinazione: DeliveryCenter
+  etichetta: Dropoff point
+  classificazione: ruolo
+  estremo:
+    estremo: DeliveryCenter
+    testo: Dropoff point
+  motivazione: 'Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull''estremo DeliveryCenter,
+    testo come scritto.'
+- esercizio: DB13_Factory
+  sorgente: CLIENT
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{DISJOINT, COMPLETE}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Vincolo sull'insieme di generalizzazione.
+- esercizio: DB13_Factory
+  sorgente: WORKER
+  operatore: --|>
+  destinazione: Person
+  etichetta: '{DISJOINT, COMPLETE}'
+  classificazione: vincolo
+  estremo: null
+  motivazione: Come sopra.
+- esercizio: DB13_Factory
+  sorgente: CLIENT
+  operatore: --
+  destinazione: PURCHASEORDER
+  etichetta: Issuer
+  classificazione: ruolo
+  estremo:
+    estremo: CLIENT
+    testo: Issuer
+  motivazione: 'Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull''estremo CLIENT, testo come
+    scritto.'
+- esercizio: DB14_BicycleRental
+  sorgente: Reservation
+  operatore: --
+  destinazione: Bicycle
+  etichetta: Actual Rented bike
+  classificazione: ruolo
+  estremo:
+    estremo: Bicycle
+    testo: Actual Rented bike
+  motivazione: 'Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull''estremo Bicycle, testo
+    come scritto.'
+- esercizio: DB14_BicycleRental
+  sorgente: Reservation
+  operatore: --
+  destinazione: BicycleModel
+  etichetta: Desired Model
+  classificazione: ruolo
+  estremo:
+    estremo: BicycleModel
+    testo: Desired Model
+  motivazione: 'Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull''estremo BicycleModel, testo
+    come scritto.'
+
+# --- Test set De Bari, Gruppo DB-D (es. 16-20), APPROVATE dall'utente (2026-10-03) ---
+- esercizio: DB16_OOBank
+  sorgente: OrganizationalUnit
+  operatore: --
+  destinazione: Employee
+  etichetta: worksFor
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo al centro della linea.
+- esercizio: DB16_OOBank
+  sorgente: Employee
+  operatore: --
+  destinazione: Customer
+  etichetta: personalBanker
+  classificazione: ruolo
+  estremo:
+    estremo: Employee
+    testo: personalBanker
+  motivazione: 'Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull''estremo Employee, testo
+    come scritto.'
+- esercizio: DB16_OOBank
+  sorgente: Customer
+  operatore: --
+  destinazione: Account
+  etichetta: accountHolder
+  classificazione: ruolo
+  estremo:
+    estremo: Customer
+    testo: accountHolder
+  motivazione: 'Decisione utente (2026-10-03): sostantivo senza triangolo -> RUOLO sull''estremo Customer, testo
+    come scritto.'
+- esercizio: DB18_LibrarySystem
+  sorgente: User
+  operatore: --
+  destinazione: Book
+  etichetta: borrow
+  classificazione: associazione
+  estremo: null
+  motivazione: Verbo al centro della linea.

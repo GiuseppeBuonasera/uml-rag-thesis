@@ -100,16 +100,15 @@ from pathlib import Path
 
 NAMESPACE = uuid.UUID("a5f3d2b0-6b8e-4e6a-9b1f-9b7f6f6b0a11")  # namespace fisso per id riproducibili
 
-CORPUS_JSONL = Path(__file__).parent / "processed" / "corpus.jsonl"
-APOLLON_OUT_DIR = Path(__file__).parent / "processed" / "apollon"
+import paths  # noqa: E402  (percorsi condivisi, voce 116; corpus/ e' gia' nel path di chi importa)
+
+CORPUS_JSONL = paths.CORPUS_JSONL
+APOLLON_OUT_DIR = paths.APOLLON_DIR
 # Split (2026-10-02, vedi docs/decisions.md): "corpus" = corpus di retrieval
 # (comportamento storico), "debari_test" = test set De Bari, tenuto fuori dal retrieval.
 SPLITS = {
     "corpus": (CORPUS_JSONL, APOLLON_OUT_DIR),
-    "debari_test": (
-        Path(__file__).parent / "processed" / "testset_debari.jsonl",
-        Path(__file__).parent / "processed" / "apollon_debari",
-    ),
+    "debari_test": (paths.TESTSET_JSONL, paths.APOLLON_DEBARI_DIR),
 }
 SCHEMA_PATH = Path(__file__).parent.parent / "evaluation" / "uml-model-4.schema.json"
 
@@ -1235,7 +1234,7 @@ def convert_split(jsonl_path: Path, out_dir: Path) -> None:
         raise SystemExit(f"{SCHEMA_PATH} non trovato: scarica uml-model-4.schema.json da @tumaet/apollon")
 
     label_classification = load_label_classification()
-    records = [json.loads(line) for line in jsonl_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    records = paths.read_jsonl(jsonl_path)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     total_warnings = 0

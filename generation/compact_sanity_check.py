@@ -38,7 +38,10 @@ from prompt_builder import serialize_diagram  # noqa: E402
 from token_estimate import count_tokens  # noqa: E402
 
 ROOT = HERE.parent
-JSONL = (ROOT / "corpus" / "processed" / "corpus.jsonl", ROOT / "corpus" / "processed" / "testset_debari.jsonl")
+sys.path.insert(0, str(ROOT / "corpus"))
+import paths  # noqa: E402  (percorsi condivisi, voce 116)
+
+JSONL = (paths.CORPUS_JSONL, paths.TESTSET_JSONL)
 
 
 def compact_text(data: dict) -> str:
@@ -78,7 +81,7 @@ def classify(rid: str, diffs: list[str], out: dict, key: str) -> None:
 
 
 def load_records() -> list[dict]:
-    recs = [json.loads(x) for p in JSONL for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
+    recs = [r for p in JSONL for r in paths.read_jsonl(p)]
     return [r for r in recs if r.get("diagram_apollon_json")]
 
 

@@ -899,6 +899,42 @@ def check_interface_stereotype() -> None:
     print("  OK  interface: stereotype \"interface\" nel JSON, attributi conservati, ..|> = ClassRealization")
 
 
+def check_paths_and_label_yaml() -> None:
+    """corpus/paths.py (voce 116): percorsi coerenti con gli split dei due script della pipeline, read_jsonl uguale alla
+    lettura riga per riga, formato degli id De Bari; label_classification.yaml (dati del generatore) = json generato."""
+    import json
+    import build_manifest as bm
+    import generate_label_classification as glc
+    import paths
+    assert paths.SPLITS["corpus"][1:] == (ac.CORPUS_JSONL, ac.APOLLON_OUT_DIR) == (bm.OUT_PATH, paths.APOLLON_DIR)
+    assert ac.SPLITS["debari_test"] == paths.SPLITS["debari_test"][1:]
+    assert bm.RAW_DIRS == list(paths.SPLITS["corpus"][0]) and bm.DEBARI_RAW_DIR == paths.RAW_DEBARI_DIR
+    assert bm.DEBARI_ID_RE is paths.DEBARI_ID_RE and paths.DEBARI_ID_RE.match("DB06_Flights")
+    assert not paths.DEBARI_ID_RE.match("DB6_Flights") and not paths.DEBARI_ID_RE.match("Flights")
+    lines = [line for line in paths.CORPUS_JSONL.read_text(encoding="utf-8").splitlines() if line.strip()]
+    assert paths.read_jsonl(paths.CORPUS_JSONL) == [json.loads(line) for line in lines]
+    data = glc.load_classification()
+    assert data == glc.CLASSIFICATION and len(data) == 207
+    entries = json.loads((paths.CORPUS_DIR / "label_classification.json").read_text(encoding="utf-8"))
+    used = {(e["esercizio"], e["source"], e["op"], e["target"], e["label"]) for e in entries}
+    assert used <= set(data), "etichette del json senza voce nel YAML: rigenerare label_classification.json"
+    # 4 voci approvate non piu' usate: etichette tolte o cambiate dalle correzioni di contenuto (Boeing 'part of',
+    # TruckLogistics 'driver'); innocue, il generatore le ignora
+    assert len(set(data) - used) == 4, sorted(set(data) - used)
+    import tempfile
+    import yaml
+    dup = paths.Path(tempfile.mkdtemp()) / "dup.yaml"
+    first = yaml.safe_load((paths.CORPUS_DIR / "label_classification.yaml").read_text(encoding="utf-8"))[0]
+    dup.write_text(yaml.safe_dump([first, first], allow_unicode=True), encoding="utf-8")
+    try:
+        glc.load_classification(dup)
+        raise AssertionError("voce ripetuta nel YAML non rifiutata")
+    except ValueError:
+        pass
+    print("  OK  paths.py coerente con build_manifest / apollon_convert, read_jsonl, id De Bari; "
+          f"label_classification.yaml = {len(data)} voci ({len(used)} usate nel json), voce ripetuta rifiutata")
+
+
 def main() -> None:
     print("Split corpus / test set De Bari:")
     check_split_separation()
@@ -926,6 +962,7 @@ def main() -> None:
     print("Classificazione etichette (label_classification.json):")
     check_label_classification_auto_association()
     check_label_classification_ruolo_doppio_and_missing()
+    check_paths_and_label_yaml()
     print()
     print("FASE 3 — modificatori/const/default attributi e notazione Tipo[]:")
     check_attribute_modifiers_const_default()

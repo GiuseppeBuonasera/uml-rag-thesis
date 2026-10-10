@@ -12,15 +12,17 @@ Nulla viene mai scritto in corpus/.
 
 from __future__ import annotations
 
-import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CORPUS_JSONL = ROOT / "corpus" / "processed" / "corpus.jsonl"
-TESTSET_JSONL = ROOT / "corpus" / "processed" / "testset_debari.jsonl"
-# stesso formato di corpus/build_manifest.DEBARI_ID_RE (non importato per non caricare la pipeline del Passo 1)
-DEBARI_ID_RE = re.compile(r"^DB(\d{2})_[A-Z][A-Za-z0-9]*$")
+sys.path.insert(0, str(ROOT / "corpus"))
+import paths  # noqa: E402  (percorsi condivisi, voce 116; modulo leggero, non carica la pipeline del Passo 1)
+
+CORPUS_JSONL = paths.CORPUS_JSONL
+TESTSET_JSONL = paths.TESTSET_JSONL
+DEBARI_ID_RE = paths.DEBARI_ID_RE
 
 # campi esposti all'analisi (il diagramma serve SOLO a misurare la pertinenza, mai al ranking)
 FIELDS = ("id", "name", "domain", "description", "diagram_apollon_json", "known_issues")
@@ -30,13 +32,13 @@ TEST_FIELDS = FIELDS + ("debari_number", "debari_title", "gt_counts", "debari_ed
 def _read_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         raise SystemExit(f"{path} non trovato: esegui prima la pipeline del Passo 1 (vedi corpus/README.md)")
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    return paths.read_jsonl(path)
 
 
 def check_disjoint(candidates: list[dict], queries: list[dict]) -> None:
-    """Hard-fail se un esercizio del test set compare in corpus.jsonl. Dal 2026-10-10 (voce 112) il test set entra nel
-    retrieval SOLO in leave-one-out per le query del test set (pool costruito a runtime da generation/prompt_builder.py:
-    corpus + gli altri 19); il file del corpus resta senza esercizi del test set."""
+    """Hard-fail se un esercizio del test set compare in corpus.jsonl. Il test set entra nel retrieval solo a runtime
+    (pool unico della voce 115, costruito da generation/prompt_builder.py); il file del corpus resta senza esercizi del
+    test set."""
     query_ids = {q["id"] for q in queries}
     leaked = sorted(c["id"] for c in candidates
                     if c["id"] in query_ids or DEBARI_ID_RE.match(c["id"]) or c.get("split") == "debari_test")
