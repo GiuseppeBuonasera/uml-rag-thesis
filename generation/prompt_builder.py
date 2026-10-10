@@ -27,10 +27,10 @@ stesso protocollo di retrieval/analyze_retrieval.py: bm25 su un indice RIFITTATO
 entra nelle statistiche IDF / avgdl), random e oracle sugli altri 58; static con la query AirTravel e' rifiutata
 (l'esempio 2 coinciderebbe con la query). In ogni caso build() fallisce se la query compare tra i propri esempi.
 
-Query del TEST SET (2026-10-10, voce 112): leave-one-out sui 20 esercizi De Bari. I candidati di una query del test set
-sono i 59 del corpus PIU' gli altri 19 esercizi De Bari (78), mai la query stessa; bm25 rifittato su quei 78, dense /
-hybrid / random / oracle sugli stessi 78. Le query del CORPUS (insieme di sviluppo) restano con i soli 58 candidati
-del corpus: un esercizio De Bari non e' MAI un esempio per una query del corpus (build() fallisce).
+POOL UNICO (2026-10-10, voce 115, supera la voce 112): leave-one-out su TUTTI gli esercizi (corpus + test set De
+Bari, 80): per OGNI query i candidati sono tutti gli altri (79), mai la query stessa; bm25 rifittato su quel pool,
+dense / hybrid / random / oracle sullo stesso pool. Le run di sviluppo fatte prima del 2026-10-10 usavano i soli 58
+candidati del corpus (protocollo storico, documentato nelle voci delle run).
 
 Formato di uscita (secondo pilota, 2026-10-07): output_format "apollon" (istruzioni v4, esempi JSON) oppure
 "plantuml" (istruzioni templates/v4_plantuml_instructions.txt, che cambiano SOLO la parte sul formato; esempi in
@@ -191,7 +191,9 @@ class PromptBuilder:
         if candidates is None:
             candidates, queries = cl.load_all()
         else:
-            cl.check_disjoint(candidates, queries or [])  # corpus.jsonl senza esercizi del test set (invariato)
+            if queries is None:  # pool unico (voce 115): il test set entra sempre tra i candidati
+                queries = cl.load_queries()
+            cl.check_disjoint(candidates, queries)  # corpus.jsonl senza esercizi del test set (invariato)
         self.candidates = candidates
         self.by_id = {c["id"]: c for c in candidates}  # SOLO il corpus (is_corpus_query, esempi statici)
         self.test_queries = list(queries or [])
@@ -235,14 +237,11 @@ class PromptBuilder:
         return query["id"] in self.by_id
 
     def pool(self, query: dict) -> list[dict]:
-        """Candidati ammessi (leave-one-out): per una query del corpus gli altri 58 del corpus; per una query del test
-        set i 59 del corpus piu' gli altri 19 esercizi De Bari (voce 112). Mai la query stessa."""
-        if self.is_corpus_query(query):
-            return [c for c in self.candidates if c["id"] != query["id"]]
-        if query["id"] not in self.test_ids:
-            raise ValueError(f"query {query['id']} ne' del corpus ne' del test set del builder: pool non definito "
-                             "(costruire PromptBuilder con le query del test set)")
-        return self.candidates + [q for q in self.test_queries if q["id"] != query["id"]]
+        """Candidati ammessi (leave-one-out sul pool unico, voce 115): tutti gli esercizi (corpus + test set) tranne la
+        query stessa."""
+        if query["id"] not in self.all_by_id:
+            raise ValueError(f"query {query['id']} non presente tra gli esercizi del builder: pool non definito")
+        return [c for c in self.candidates + self.test_queries if c["id"] != query["id"]]
 
     def bm25_for(self, query: dict) -> KeywordRetriever:
         """Indice RIFITTATO su pool(query) (la query non entra nelle statistiche IDF / avgdl), per il corpus come in
@@ -297,10 +296,6 @@ class PromptBuilder:
 
     def build(self, query: dict, spec: PromptSpec) -> BuiltPrompt:
         examples = self.select(query, spec)
-        if self.is_corpus_query(query):  # insieme di sviluppo: mai un esercizio del test set come esempio (voce 112)
-            leaked = [e["id"] for e in examples if e["id"] in self.test_ids or cl.DEBARI_ID_RE.match(e["id"])]
-            if leaked:
-                raise AssertionError(f"esercizi del test set tra gli esempi di una query del corpus: {leaked}")
         if query["id"] in {e["id"] for e in examples}:
             raise AssertionError(f"la query {query['id']} compare tra i propri esempi")
         item = _template(ITEM_TEMPLATES[spec.output_format])

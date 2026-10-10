@@ -30,10 +30,10 @@ zero-shot, specialmente per certe tipologie di esercizio.
 
 ## Stato (aggiornato al 2026-10-05; dettagli in `docs/STATUS.md`)
 
-- **Passo 1 chiuso**: corpus di retrieval con 60 esercizi (45 originali + 15 tradotti dall'italiano), 59 convertiti in
-  Apollon v4; test set De Bari con 20 esercizi trascritti dalle immagini, congelato nel tag `testset-v1`; dal
-  2026-10-10 (voce 112) in leave-one-out: per ogni esercizio del test set i candidati del retrieval sono i 59 del
-  corpus più gli altri 19 De Bari (mai sé stesso); le query del corpus non vedono mai esercizi De Bari.
+- **Passo 1 chiuso**: corpus di retrieval con 60 esercizi (45 originali + 15 tradotti dall'italiano), tutti
+  convertiti in Apollon v4 (Cruise recuperato il 2026-10-10, voce 114); test set De Bari con 20 esercizi trascritti
+  dalle immagini, congelato nel tag `testset-v1`. **Pool unico** (voce 115): per ogni query, di sviluppo o di
+  valutazione, i candidati del retrieval sono tutti gli altri 79 esercizi (mai sé stessa).
 - **Passo 2 chiuso** (BM25): configurazione congelata in `retrieval/config_bm25.yaml`, analizzata sul leave-one-out
   del corpus e applicata una volta al test set; dense e hybrid ancora da fare.
 - **Passo 3a chiuso** (2026-10-05): infrastruttura di generazione per modelli locali via LM Studio (prompt builder,

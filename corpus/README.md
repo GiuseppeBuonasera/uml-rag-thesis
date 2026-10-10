@@ -46,6 +46,7 @@ decisioni: [`docs/decisions.md`](../docs/decisions.md).
 | data | esercizio | correzione | voce di docs/decisions.md |
 |---|---|---|---|
 | 2026-10-09 | eHome2020 | lato del rombo della composizione: `Room "2..*" *-- "1" Apartment` → `Apartment "1" *-- "2..*" Room` (verificato sull'immagine originale) | 99 |
+| 2026-10-10 | Cruise | associazione ternaria `<> diamond` (Guest / Ticket / Cruise) riscritta con `Ticket "*" -- "1" Cruise`, `Ticket "*" -- "0..1" Guest` e `Guest "*" -- "*" Cruise` (quest'ultima dal testo, non disegnata dagli autori); Cruise passa da escluso a convertito (60/60) | 114 |
 
 ## Ordine dei comandi
 Dalla radice del repository:

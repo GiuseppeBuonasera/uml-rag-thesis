@@ -1,4 +1,6 @@
 """
+STORICO dal 2026-10-10 (voce 115, pool unico): non piu' eseguibile, esito nella voce 110.
+
 Controlli PRIMA delle run del controllo di funzionamento dei retriever (voce 109). Nessuna chiamata a un LLM; il test set
 non si legge (split corpus, PromptBuilder senza query del test set).
 
@@ -56,6 +58,9 @@ def spec_for(cfg: dict, conf: dict, cond: str, k: int) -> PromptSpec:
 
 
 def main() -> None:
+    raise SystemExit("STORICO (voce 115): controlli prima delle run di dev_retrievers (voce 109) con il pool di 58 candidati "
+                     "del corpus; con il pool unico (tutti gli altri 79 esercizi) i prompt di dev_k non si riproducono piu'. "
+                     "Esito registrato nella voce 110.")
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default=str(ROOT / "experiments" / "configs" / "dev_retrievers.yaml"))

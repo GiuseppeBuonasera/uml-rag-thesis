@@ -1,13 +1,9 @@
-# ISTRUZIONI v5 (2026-10-10, voce 111): insieme di sviluppo (20 esercizi del corpus, voce 92, leave-one-out), MAI il
-# test set. Solo Gemma 4 12B QAT, versione di configurazione 2, bm25 k = 3, formati PlantUML e JSON compatto, istruzioni
-# v5 riscritte da zero (templates/v5_<formato>_instructions.txt, traccia v5_task.txt con la riga finale, esempi
-# PlantUML nel canonico v5). Pool unico (voce 115): per ogni query gli altri 79 esercizi. Baseline = dev_v5base.yaml
-# (istruzioni v4, stesso pool, stessi parametri ed esercizi; sostituisce dev_k come baseline, voce 115): i prompt
-# differiscono SOLO per istruzioni, blocco esempi, riga finale della traccia e (PlantUML) righe di ereditarieta' degli
-# esempi. Regola di adozione registrata PRIMA della run (voce 111), in experiments/analyze_v5.py.
-#   python experiments/run_experiment.py experiments/configs/dev_v5.yaml --configuration P-G [--resume]
+# BASELINE v4 DELLA LEVA v5 (2026-10-10, voce 115): come dev_v5.yaml ma con le istruzioni v4, con il pool unico (per
+# ogni query gli altri 79 esercizi). Sostituisce dev_k (pool storico di 58 candidati) come baseline della regola della
+# voce 111. Insieme di sviluppo (20 esercizi), MAI il test set.
+#   python experiments/run_experiment.py experiments/configs/dev_v5base.yaml --configuration P-G [--resume]
 # Totale: 2 formati x 20 esercizi x 2 ripetizioni = 80 generazioni.
-run_id: dev_v5
+run_id: dev_v5base
 config_version: 2           # contesto 32768, max_tokens 4096 (voce 93), come la baseline dev_k
 split: corpus
 query_ids:   # insieme di sviluppo della voce 92, identico a dev_k.yaml
@@ -36,7 +32,7 @@ k: [3]
 repetitions: 2
 seed: 0
 stop_on_reasoning: true
-prompt: {serialization: compact, layout: user_only, drop_interactive: true, instructions_version: v5}
+prompt: {serialization: compact, layout: user_only, drop_interactive: true, instructions_version: v4}
 generation:
   temperature: 0.3
   top_p: 0.95

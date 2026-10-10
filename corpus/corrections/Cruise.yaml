@@ -1,0 +1,42 @@
+# Correzione del 2026-10-10 (voce 114 di docs/decisions.md): l'associazione ternaria Guest / Ticket / Cruise (diamante
+# n-ario "<> diamond", non rappresentabile in Apollon v4, motivo dell'esclusione di Cruise dal Passo 1) e' sostituita
+# da due associazioni binarie con la classe Ticket come centro. Molteplicita' dal diagramma originale e dalla
+# description.md, nessuna inventata. Opzione (b) dell'utente: aggiunta anche l'associazione diretta Guest - Cruise,
+# scritta nel testo ma NON disegnata dagli autori (dichiarato qui e in docs/decisions.md). Perso il vincolo "un solo
+# ticket per ospite per crociera" (annotato in known_issues.yaml).
+- type: remove_line
+  match: '<> diamond'
+  category: rappresentabilita_apollon
+  reason: >-
+    diamante n-ario di PlantUML senza equivalente in Apollon v4; la ternaria e' riscritta con due binarie (sotto).
+- type: remove_line
+  match: 'diamond --"0..1" Guest'
+  category: rappresentabilita_apollon
+  reason: estremo Guest della ternaria, sostituito da Ticket - Guest.
+- type: remove_line
+  match: 'diamond --"0..1" Ticket'
+  category: rappresentabilita_apollon
+  reason: estremo Ticket della ternaria, Ticket diventa il centro delle due binarie.
+- type: remove_line
+  match: 'diamond --"0..1" Cruise'
+  category: rappresentabilita_apollon
+  reason: estremo Cruise della ternaria, sostituito da Ticket - Cruise.
+- type: add_line
+  line: 'Ticket "*" -- "1" Cruise'
+  category: rappresentabilita_apollon
+  reason: >-
+    description.md: "Several tickets are issued for each cruise. A ticket belongs to exactly one cruise." -> Ticket *,
+    Cruise 1.
+- type: add_line
+  line: 'Ticket "*" -- "0..1" Guest'
+  category: rappresentabilita_apollon
+  reason: >-
+    description.md: "A guest can have any number of tickets" -> Ticket *; lato Guest 0..1 dall'estremo Guest della
+    ternaria originale (0..1 ospiti per coppia ticket - crociera, e un ticket ha una sola crociera).
+- type: add_line
+  line: 'Guest "*" -- "*" Cruise'
+  category: rappresentabilita_apollon
+  reason: >-
+    description.md: "A cruise has several guests, and each guest can participate in several cruises" -> Guest *, Cruise
+    *. Associazione presente nel testo ma NON disegnata dagli autori (nell'originale passava per la ternaria): aggiunta
+    per decisione dell'utente (opzione b, voce 114).

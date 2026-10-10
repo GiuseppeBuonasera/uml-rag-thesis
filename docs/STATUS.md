@@ -17,14 +17,16 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
 ## Stato
 - **Corpus di retrieval** (`corpus/processed/corpus.jsonl`, 60 record): 45 esercizi originali
   (`corpus/raw/models_original/`, Golden UML Modelset) + 15 esercizi italiani tradotti (`corpus/raw/translated_it/`,
-  tag `translated_it`). 59/60 convertiti in Apollon v4 (Cruise escluso: diamante n-ario). **Byte-identico** agli
-  sha256 salvati prima del Passo 1 (corpus.jsonl, 59 JSON in `processed/apollon/`, `example_2_airtravel_v4.json`).
+  tag `translated_it`). **60/60 convertiti** in Apollon v4: Cruise recuperato il 2026-10-10 (voce 114, ternaria
+  riscritta con tre binarie, `corpus/corrections/Cruise.yaml`); prima 59/60. Gli altri 59 record sono byte-identici a
+  prima della correzione.
 - **Test set De Bari** (`corpus/processed/testset_debari.jsonl`, 20 record, split `debari_test`, MAI nel
   retrieval): i 20 esercizi di `docs/dati/debari/Exercises.pdf`, trascritti dalle immagini "Reference Solution"
   (`corpus/raw/debari_test/`), 20/20 convertiti (`corpus/processed/apollon_debari/`). Ground truth con cui De Bari
-  et al. hanno valutato (Analysis.xlsx). **Dal 2026-10-10 (voce 112) in leave-one-out**: per ogni esercizio del test set
-  i candidati sono i 59 del corpus + gli altri 19 (78); le query del corpus (sviluppo) non vedono mai esercizi De Bari.
-  Run di retrieval di riferimento: `data/results/retrieval/testset_2026-10-10_loo/`.
+  et al. hanno valutato (Analysis.xlsx). **Pool unico dal 2026-10-10 (voce 115)**: per ogni query (80 esercizi,
+  sviluppo e valutazione) i candidati sono tutti gli altri 79. Le run di sviluppo precedenti usavano 58 candidati del
+  corpus (storico). Run di retrieval sul test set: `data/results/retrieval/testset_2026-10-10_loo/` (78 candidati,
+  prima del recupero di Cruise).
 - Pipeline **verde su entrambi gli split, 0 errori** (2026-10-04): schema / integrità / round-trip / stile, 0 righe
   PlantUML non riconosciute, 0 etichette non classificate; test OK; check_translated 15/15 + 1/1 (--debari);
   check_debari OK; separazione degli split verificata (hard-fail). **2026-10-09**: corretto il GT di eHome2020 (lato

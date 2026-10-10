@@ -40,9 +40,9 @@ def snapshot_corpus() -> dict[str, str]:
 
 
 def check_loader(candidates, queries) -> None:
-    assert len(candidates) == 59, len(candidates)
+    assert len(candidates) == 60, len(candidates)  # Cruise recuperato (voce 114)
     assert all(c["diagram_apollon_json"] is not None for c in candidates)
-    assert "Cruise" not in {c["id"] for c in candidates}
+    assert "Cruise" in {c["id"] for c in candidates}
     assert len(queries) == 20 and all(cl.DEBARI_ID_RE.match(q["id"]) for q in queries)
     assert all(q["gt_counts"] and q["debari_ed_avg"] is not None for q in queries)
     for leak in ({"id": queries[0]["id"]}, {"id": "Shop", "split": "debari_test"}, {"id": "DB99_X"}):
@@ -51,7 +51,7 @@ def check_loader(candidates, queries) -> None:
             assert False, f"doveva fallire: {leak}"
         except AssertionError as e:
             assert "test set" in str(e), e
-    print("  OK  loader: 59 candidati convertiti (no Cruise), 20 query; un id del test set tra i candidati -> hard-fail")
+    print("  OK  loader: 60 candidati convertiti (Cruise compreso, voce 114), 20 query; un id del test set tra i candidati -> hard-fail")
 
 
 def check_tokenize() -> None:

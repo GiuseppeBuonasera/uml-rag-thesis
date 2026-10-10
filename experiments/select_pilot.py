@@ -57,13 +57,25 @@ def size(diagram: dict) -> int:
     return sum(counts[k] for k in SIZE_KEYS)
 
 
+# Selezione STORICA (pilota 2026-10-06, insieme di sviluppo voce 92): si riproduce con il protocollo del Passo 2, cioe'
+# i 59 candidati di allora (Cruise recuperato dopo, voce 114) e il LOO sugli altri 58 del corpus, non con il pool unico
+# delle run nuove (voce 115).
+HISTORICAL_EXCLUDED = frozenset({"Cruise"})
+
+
+def historical_top1(builder: PromptBuilder, c: dict):
+    from keyword_retriever import KeywordRetriever
+    pool = [x for x in builder.candidates if x["id"] != c["id"] and x["id"] not in HISTORICAL_EXCLUDED]
+    return KeywordRetriever(**builder._bm25_args).fit(pool).retrieve(c["description"], 1)[0]
+
+
 def table(builder: PromptBuilder) -> list[dict]:
-    """Una riga per candidato (59): fascia LOO, score_norm del top-1, dimensione, esclusione."""
+    """Una riga per candidato storico (59): fascia LOO, score_norm del top-1, dimensione, esclusione."""
     tax = yaml.safe_load(BM25_CONFIG.read_text(encoding="utf-8"))["tassonomia_score_norm_top1"]
     limit = testset_max_gt_tokens()
     rows = []
-    for c in builder.candidates:
-        top1 = builder.bm25_for(c).retrieve(c["description"], 1)[0]
+    for c in [x for x in builder.candidates if x["id"] not in HISTORICAL_EXCLUDED]:
+        top1 = historical_top1(builder, c)
         tokens = gt_tokens(c["diagram_apollon_json"])
         rows.append({"id": c["id"], "top1": top1.id, "score_norm": top1.score_norm,
                      "band": band(top1.score_norm, tax), "size": size(c["diagram_apollon_json"]),

@@ -11,6 +11,12 @@ EatAtHome:
   # class"); mantenute entrambe per fedeltà all'immagine (scelta consapevole dell'autore).
   - two_alternative_models
 
+Cruise:
+  # 2026-10-10 (voce 114): l'associazione ternaria Guest / Ticket / Cruise e' riscritta con due binarie
+  # (corrections/Cruise.yaml); si perde il vincolo "only one ticket per cruise" per ospite, non esprimibile con
+  # relazioni binarie in Apollon v4.
+  - ternary_association_decomposed
+
 DB06_Flights:
   # Test set De Bari es. 6 (decisione utente STOP B, 2026-10-04, opzione a): resta nel test set e resta
   # candidato del retrieval; marcato per riportare ogni metrica su 20 e su 19 esercizi.

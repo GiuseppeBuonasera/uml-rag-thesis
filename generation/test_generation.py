@@ -94,20 +94,22 @@ def check_prompts(builder: PromptBuilder, queries: list[dict]) -> None:
     except (AssertionError, SystemExit, ValueError):
         rejected = True
     assert rejected, "candidato del test set non rifiutato"
-    # leave-one-out sul test set (voce 112): 78 candidati = 59 del corpus + gli altri 19, mai la query
-    for q in queries:
+    # pool unico (voce 115): per OGNI query (corpus e test set) tutti gli altri esercizi, mai la query
+    every = {c["id"] for c in builder.candidates} | builder.test_ids
+    assert len(every) == len(builder.candidates) + len(builder.test_ids) == 80
+    for q in list(queries) + builder.candidates:
         pool = [c["id"] for c in builder.pool(q)]
-        assert len(pool) == len(set(pool)) == 78 and q["id"] not in pool
-        assert set(pool) == {c["id"] for c in builder.candidates} | (builder.test_ids - {q["id"]})
+        assert len(pool) == len(set(pool)) == 79 and set(pool) == every - {q["id"]}, q["id"]
         assert set(builder.bm25_for(q).ids) == set(pool) and builder.excluded(q) == {q["id"]}
+    assert PromptBuilder(builder.candidates).test_ids == builder.test_ids  # senza query esplicite carica il test set
     try:
-        PromptBuilder(builder.candidates, []).pool(dict(queries[0]))  # builder senza test set: pool non definito
-        raise AssertionError("query del test set accettata da un builder senza test set")
+        builder.pool({"id": "Inesistente", "description": "x"})
+        raise AssertionError("query sconosciuta accettata")
     except ValueError:
         pass
     print(f"  OK  {n} prompt: deterministici, istruzioni v4 identiche, solo il blocco esempi cambia, la query mai tra "
-          "i propri esempi; test set in leave-one-out (78 candidati: corpus + gli altri 19, indice bm25 rifittato); "
-          "default compact / user_only / drop_interactive")
+          "i propri esempi; pool unico (voce 115): per ognuna delle 80 query gli altri 79 esercizi, indice bm25 "
+          "rifittato sullo stesso insieme; default compact / user_only / drop_interactive")
 
 
 # --- client e cache -------------------------------------------------------------------------------------------------
@@ -523,29 +525,24 @@ def check_corpus_loo(builder: PromptBuilder) -> None:
     ref: dict[str, list[dict]] = {}
     for row in csv.DictReader(loo_csv.open(encoding="utf-8")):
         ref.setdefault(row["query"], []).append(row)
+    from keyword_retriever import KeywordRetriever
     n = 0
     for c in builder.candidates:
         for cond, k in (("zero_shot", 0), ("random", 3), ("bm25", 1), ("bm25", 2), ("bm25", 3), ("oracle", 3)):
             bp = builder.build(c, PromptSpec(cond, k=k))
             assert c["id"] not in bp.example_ids, (c["id"], cond)
-            assert not any(e in builder.test_ids or cl.DEBARI_ID_RE.match(e) for e in bp.example_ids)
             n += 1
-        hits = builder.bm25_for(c).retrieve(c["description"], 3)  # stesso protocollo di analyze_retrieval.loo
-        rows = sorted(ref[c["id"]], key=lambda r: int(r["rank"]))
-        assert [h.id for h in hits] == [r["neighbor"] for r in rows], c["id"]
-        assert all(abs(h.score_norm - float(r["score_norm"])) < 6e-5 for h, r in zip(hits, rows)), c["id"]
-        assert c["id"] not in builder.bm25_for(c).ids and len(builder.bm25_for(c).ids) == 58
-        assert builder.excluded(c) == {c["id"]} | builder.test_ids  # query del corpus: mai un esercizio De Bari
-    # un esempio De Bari per una query del corpus fa fallire build() (voce 112)
-    orig = builder.select
-    builder.select = lambda q, s: [builder.all_by_id[next(iter(sorted(builder.test_ids)))]]
-    try:
-        builder.build(builder.by_id["Louvre"], PromptSpec("bm25", k=1))
-        raise AssertionError("esempio del test set per una query del corpus non rifiutato")
-    except AssertionError as e:
-        assert "test set" in str(e), e
-    finally:
-        builder.select = orig
+        assert c["id"] not in builder.bm25_for(c).ids and len(builder.bm25_for(c).ids) == 79  # pool unico (voce 115)
+        assert builder.excluded(c) == {c["id"]}
+        # il retriever e' quello del Passo 2: sul pool storico (i 59 del corpus senza Cruise, senza test set) riproduce
+        # loo_top3.csv; il pool delle run nuove e' piu' grande (voce 115)
+        if c["id"] in ref:
+            old_pool = [x for x in builder.candidates if x["id"] not in (c["id"], "Cruise")]
+            hits = KeywordRetriever(**builder._bm25_args).fit(old_pool).retrieve(c["description"], 3)
+            rows = sorted(ref[c["id"]], key=lambda r: int(r["rank"]))
+            assert [h.id for h in hits] == [r["neighbor"] for r in rows], c["id"]
+            assert all(abs(h.score_norm - float(r["score_norm"])) < 6e-5 for h, r in zip(hits, rows)), c["id"]
+    assert len(ref) == 59 and set(ref) == {c["id"] for c in builder.candidates} - {"Cruise"}
     try:
         builder.build(builder.by_id["AirTravel"], PromptSpec("static"))
         raise AssertionError("static con la query AirTravel non rifiutata")
@@ -553,9 +550,8 @@ def check_corpus_loo(builder: PromptBuilder) -> None:
         pass
     assert builder.build(builder.by_id["Louvre"], PromptSpec("static")).example_ids == [
         "STATIC_example_1_bank_loans", "AirTravel"]
-    print(f"  OK  query dal corpus: {n} prompt senza la query tra i propri esempi e senza id del test set; bm25 LOO "
-          "identico a loo_top3.csv del Passo 2 per le 59 query (indice rifittato senza la query); static con "
-          "AirTravel rifiutata")
+    print(f"  OK  query dal corpus: {n} prompt senza la query tra i propri esempi; indice bm25 sui 79 altri esercizi; "
+          "sul pool storico del Passo 2 bm25 riproduce loo_top3.csv per le 59 query; static con AirTravel rifiutata")
 
 
 def check_pilot(builder: PromptBuilder, tmp: Path) -> None:
@@ -832,12 +828,12 @@ Person "1" -- "0..*" Employee
         pass
     import plantuml_sanity_check
     summ = plantuml_sanity_check.run()
-    assert all(summ[x]["levels"] == {4: 79} for x in "AB") and summ["B"]["n_diff"] == 0
+    assert all(summ[x]["levels"] == {4: 80} for x in "AB")  # 80 con Cruise (voce 114) and summ["B"]["n_diff"] == 0
     assert summ["A"]["kinds"] == {"ruolo del Passo 1 rimasto come nome di associazione (testo dopo i due punti)": 106}
     print("  OK  strada 1 (PlantUML): P0 / P1 / P1b / L2-L4, righe scartate contate, troncamento, diamante "
           "n-ario, post-processing v2 (extends / implements anche con corpo sulla riga, blocco senza @enduml) con "
           "pilot2_v1 invariata, regola automatica delle etichette, prompt PlantUML con esempi canonici e stessi esempi del formato "
-          "JSON; 79 diagrammi a L4 (canonico identico al Passo 1, diagram_plantuml grezzo: 106 ruoli come etichette)")
+          "JSON; 80 diagrammi a L4 (canonico identico al Passo 1, diagram_plantuml grezzo: 106 ruoli come etichette)")
 
 
 def check_uml_structure() -> None:
@@ -923,14 +919,14 @@ def check_uml_structure() -> None:
     for b in blocks:
         v = pp.check_l2_l4(pp.Validation(L0_extracted=True, L1_json=True, level=1), us.compact_to_apollon(b, "doc")[0])
         assert v.level == 4, (v.failure, v.errors)
-    s = cs.run()  # 79 diagrammi: identici salvo gli id dei metodi (firma grezza del Passo 1)
+    s = cs.run()  # 80 diagrammi (Cruise, voce 114): identici salvo gli id dei metodi (firma grezza del Passo 1)
     for k in "ab":
-        assert s[f"{k}_identical"] == 57 and s[f"{k}_method_ids_only"] == 22 and not s[f"{k}_other"]
+        assert s[f"{k}_identical"] == 58 and s[f"{k}_method_ids_only"] == 22 and not s[f"{k}_other"]
         assert s[f"{k}_method_ids"] == 148
-    assert sorted(s["tokens_compact"])[len(s["tokens_compact"]) // 2] == 338 and max(s["tokens_compact"]) == 960
+    assert sorted(s["tokens_compact"])[len(s["tokens_compact"]) // 2] == 341 and max(s["tokens_compact"]) == 960
     print("  OK  struttura comune ed espansore unico: Apollon <-> struttura <-> JSON compatto, chiavi vuote omesse, "
-          "compatto non valido rifiutato, vincoli da PlantUML conservati, esempi della specifica a L4; 79 diagrammi "
-          "identici al Passo 1 nei percorsi PlantUML e compatto (57) o salvo gli id dei metodi (22, 148 id)")
+          "compatto non valido rifiutato, vincoli da PlantUML conservati, esempi della specifica a L4; 80 diagrammi "
+          "identici al Passo 1 nei percorsi PlantUML e compatto (58) o salvo gli id dei metodi (22, 148 id)")
 
 
 def check_compact(builder: PromptBuilder, tmp: Path) -> None:
@@ -2235,19 +2231,24 @@ def check_v5(builder: PromptBuilder) -> None:
         raise AssertionError("generalizzazione con etichetta accettata in v5")
     except ValueError:
         pass
-    # config: uguale a dev_k (Gemma, k = 3) salvo la versione delle istruzioni
+    # config: dev_v5 (v5) e dev_v5base (v4, baseline col pool unico, voce 115) uguali tra loro e a dev_k (Gemma, k = 3)
+    # salvo la versione delle istruzioni
     cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_v5.yaml").read_text(encoding="utf-8"))
+    base_cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_v5base.yaml").read_text(encoding="utf-8"))
     dk = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_k.yaml").read_text(encoding="utf-8"))
+    assert (cfg["run_id"], base_cfg["run_id"]) == ("dev_v5", "dev_v5base") and av.BASELINE_PREFIX == "dev_v5base"
     total = 0
     for name in ("P-G", "C-G"):
-        r, b = rx.resolve_configuration(cfg, name), rx.resolve_configuration(dk, name)
+        r, rb, b = (rx.resolve_configuration(c, name) for c in (cfg, base_cfg, dk))
         for key in ("query_ids", "repetitions", "seed", "generation", "model_metadata", "client", "config_version"):
-            assert r[key] == b[key], key
+            assert r[key] == rb[key] == b[key], key
         assert r["prompt"] == {**b["prompt"], "instructions_version": "v5"} and r["conditions"] == ["bm25"]
-        plan = rx.plan(r, builder.candidates)
-        assert all(s.instructions_version == "v5" and s.k == 3 for _, s, _, _ in plan)
-        total += len(plan)
-    assert total == 80
+        assert rb["prompt"] == {**b["prompt"], "instructions_version": "v4"} and rb["conditions"] == ["bm25"]
+        for c, version in ((r, "v5"), (rb, "v4")):
+            plan = rx.plan(c, builder.candidates)
+            assert all(s.instructions_version == version and s.k == 3 for _, s, _, _ in plan)
+            total += len(plan)
+    assert total == 160
     # R_fam e regola di adozione (soglie incluse)
     m = {"relations": _C({"same_type": 10, "type ClassBidirectional -> ClassUnidirectional": 2,
                           "type ClassUnidirectional -> ClassBidirectional": 1, "type ClassBidirectional -> ClassComposition": 5}),
@@ -2269,8 +2270,8 @@ def check_v5(builder: PromptBuilder) -> None:
     assert not av.adopt(M(), M(R=0.40, M1=0.249), "plantuml")["adopt"]  # M -0,031
     assert av.adopt(M(), M(R=0.40, M1=0.25), "plantuml")["adopt"]  # M -0,03 ammesso
     print("  OK  istruzioni v5 (voce 111): template congelati, v4 invariata, prompt v5 diversi solo per istruzioni, riga "
-          "finale ed ereditarieta' negli esempi PlantUML; canonico v5 con round-trip identico sui 59 diagrammi; "
-          "extends / implements / interface extends e righe --|> miste; config dev_v5 (80); R_fam e regola sulle soglie")
+          "finale ed ereditarieta' negli esempi PlantUML; canonico v5 con round-trip identico sui 60 diagrammi del corpus; "
+          "extends / implements / interface extends e righe --|> miste; config dev_v5 + dev_v5base (160); R_fam e regola sulle soglie")
 
 
 def main() -> None:

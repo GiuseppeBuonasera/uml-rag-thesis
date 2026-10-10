@@ -108,6 +108,8 @@ KNOWN_ISSUE_CODES = {
     # sovrapposizione di dominio con un esempio del prompt statico che e' anche nel corpus di retrieval
     # (test set De Bari es. 6 vs AirTravel, decisione utente STOP B 2026-10-04)
     "domain_overlap_static_example",
+    # associazione ternaria riscritta con relazioni binarie (Cruise, voce 114): si perde il vincolo di unicita'
+    "ternary_association_decomposed",
 }
 
 

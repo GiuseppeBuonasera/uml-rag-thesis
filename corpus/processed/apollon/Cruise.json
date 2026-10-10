@@ -1,0 +1,508 @@
+{
+  "version": "4.2.0",
+  "id": "Cruise",
+  "title": "Cruise",
+  "type": "ClassDiagram",
+  "nodes": [
+    {
+      "id": "439fe4f5-5789-5620-93a5-4fcfdbb99944",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "TravelAgency",
+        "attributes": [
+          {
+            "id": "e638dd59-a2e1-59ec-aec1-a67ccb76215a",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "2565e66b-28ce-58cc-8519-5f8144af5387",
+            "name": "+ Address : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "80f3e9b7-2a06-565c-8439-c54b9eb0b772",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Ticket",
+        "attributes": [
+          {
+            "id": "4efa9aa4-c9a3-5597-a0e2-30b1668f890a",
+            "name": "+ BookingNumber : int"
+          },
+          {
+            "id": "03ea95a8-572e-5fa6-bb89-d9dc53fc5f4f",
+            "name": "+ BookingDate : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "983f1525-6503-5b38-8723-0ebcda26784a",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 40
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Guest",
+        "attributes": [
+          {
+            "id": "2c3ab09c-d820-5f22-928a-6f9403acfeff",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "c5e9ed3c-24fb-5d9b-bc86-38c4e899de55",
+            "name": "+ VIP : boolean"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "cca83a28-4edd-57af-a501-e6ccfb3b0b6a",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Employee",
+        "attributes": [
+          {
+            "id": "3738d5f1-3329-5e15-9c9a-d164c557fb53",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "c85ce49a-61d7-5a5e-8da0-39e0d9ef8d40",
+            "name": "+ Ssn : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "0805cd0f-5fcd-55c2-af11-6f2c38663111",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 200
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Cruise",
+        "attributes": [
+          {
+            "id": "f25085ce-1bf4-577a-b070-9af9ebd3211b",
+            "name": "+ CruiseNumber : int"
+          },
+          {
+            "id": "9d1571f5-cf42-5b51-922c-b38bf1ba62a5",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "3bb9350b-3bc7-5952-938a-a5726714b747",
+            "name": "+ StartDate : date"
+          },
+          {
+            "id": "621922bc-9088-521e-846b-93053127b586",
+            "name": "+ EndDate : date"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "ceafd94e-9aaa-5c8e-8563-d64eac43bb05",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 200
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "ProviderCompany",
+        "attributes": [
+          {
+            "id": "41217ffd-33f5-540d-8b92-7d85faa4b99c",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "84ce0aed-40f3-59d1-8207-1c2f265237d0",
+            "name": "+ Location : string"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "16ecc371-d6a3-540f-881e-6f6169aae3f0",
+      "type": "class",
+      "position": {
+        "x": 40,
+        "y": 420
+      },
+      "width": 220,
+      "height": 160,
+      "measured": {
+        "width": 220,
+        "height": 160
+      },
+      "data": {
+        "name": "Ship",
+        "attributes": [
+          {
+            "id": "ca7f54ab-4c7b-51f0-9ba4-d0ad932028a6",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "990aa982-2f11-5bb0-becb-1de21bad4e14",
+            "name": "+ DeckCount : int"
+          },
+          {
+            "id": "e2feda04-ec1a-56f0-bfb0-0298a89271b8",
+            "name": "+ lenght : float"
+          },
+          {
+            "id": "b89a973b-6dd8-56c7-aac2-b2971a7e0da4",
+            "name": "+ PassengerCount : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "b968c746-913c-555e-bb6f-fbbc775214cc",
+      "type": "class",
+      "position": {
+        "x": 320,
+        "y": 420
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Show",
+        "attributes": [
+          {
+            "id": "bbf6c5e5-9b00-548d-ba94-f3aa4b4789c8",
+            "name": "+ Title : string"
+          },
+          {
+            "id": "72e76ecf-9869-5a95-8d7f-86533874cb3e",
+            "name": "+ Duration : int"
+          }
+        ],
+        "methods": []
+      }
+    },
+    {
+      "id": "a26e1aba-1cc2-5fe7-9e8a-e5e7a32f86bf",
+      "type": "class",
+      "position": {
+        "x": 600,
+        "y": 420
+      },
+      "width": 220,
+      "height": 100,
+      "measured": {
+        "width": 220,
+        "height": 100
+      },
+      "data": {
+        "name": "Destination",
+        "attributes": [
+          {
+            "id": "7264a81f-d5d1-5d5a-8867-78c2e98a9018",
+            "name": "+ Name : string"
+          },
+          {
+            "id": "9a5dae6b-43fa-5fa3-a93f-f2e591db17c9",
+            "name": "+ Sea : string"
+          }
+        ],
+        "methods": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "2b3ca567-50f3-53c7-bea4-7de95998856a",
+      "source": "0805cd0f-5fcd-55c2-af11-6f2c38663111",
+      "target": "ceafd94e-9aaa-5c8e-8563-d64eac43bb05",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 600,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "731a352d-2db4-596c-a869-4d0c71038fb0",
+      "source": "0805cd0f-5fcd-55c2-af11-6f2c38663111",
+      "target": "cca83a28-4edd-57af-a501-e6ccfb3b0b6a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 280.0
+          },
+          {
+            "x": 260,
+            "y": 250.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "f72c2cc2-4104-59ed-8218-fc32f2cc2f8b",
+      "source": "0805cd0f-5fcd-55c2-af11-6f2c38663111",
+      "target": "16ecc371-d6a3-540f-881e-6f6169aae3f0",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 320,
+            "y": 280.0
+          },
+          {
+            "x": 260,
+            "y": 500.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "23562e19-0c2e-52e8-a3c5-2fc0eaaee6c5",
+      "source": "439fe4f5-5789-5620-93a5-4fcfdbb99944",
+      "target": "80f3e9b7-2a06-565c-8439-c54b9eb0b772",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 260,
+            "y": 90.0
+          },
+          {
+            "x": 320,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "1..1",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "2e7a227a-eba2-5e14-aa3a-ada6b46c22e9",
+      "source": "0805cd0f-5fcd-55c2-af11-6f2c38663111",
+      "target": "a26e1aba-1cc2-5fe7-9e8a-e5e7a32f86bf",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 280.0
+          },
+          {
+            "x": 600,
+            "y": 470.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "64c5c30f-f0be-5a1d-9edf-8991b067c19f",
+      "source": "0805cd0f-5fcd-55c2-af11-6f2c38663111",
+      "target": "b968c746-913c-555e-bb6f-fbbc775214cc",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 360
+          },
+          {
+            "x": 430.0,
+            "y": 420
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "0..*",
+        "targetMultiplicity": "0..*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "fd0b2ec2-4daf-5bf2-b42f-65f4124d8da0",
+      "source": "80f3e9b7-2a06-565c-8439-c54b9eb0b772",
+      "target": "0805cd0f-5fcd-55c2-af11-6f2c38663111",
+      "type": "ClassBidirectional",
+      "sourceHandle": "bottom",
+      "targetHandle": "top",
+      "data": {
+        "points": [
+          {
+            "x": 430.0,
+            "y": 140
+          },
+          {
+            "x": 430.0,
+            "y": 200
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "bd9a3842-22b3-50c0-984c-7ebee05e2eb3",
+      "source": "80f3e9b7-2a06-565c-8439-c54b9eb0b772",
+      "target": "983f1525-6503-5b38-8723-0ebcda26784a",
+      "type": "ClassBidirectional",
+      "sourceHandle": "right",
+      "targetHandle": "left",
+      "data": {
+        "points": [
+          {
+            "x": 540,
+            "y": 90.0
+          },
+          {
+            "x": 600,
+            "y": 90.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "0..1",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    },
+    {
+      "id": "a48253e9-097e-5475-b67a-5982170e0b50",
+      "source": "983f1525-6503-5b38-8723-0ebcda26784a",
+      "target": "0805cd0f-5fcd-55c2-af11-6f2c38663111",
+      "type": "ClassBidirectional",
+      "sourceHandle": "left",
+      "targetHandle": "right",
+      "data": {
+        "points": [
+          {
+            "x": 600,
+            "y": 90.0
+          },
+          {
+            "x": 540,
+            "y": 280.0
+          }
+        ],
+        "label": "",
+        "sourceMultiplicity": "*",
+        "targetMultiplicity": "*",
+        "sourceRole": "",
+        "targetRole": ""
+      }
+    }
+  ],
+  "assessments": {},
+  "interactive": {
+    "elements": {},
+    "relationships": {}
+  }
+}

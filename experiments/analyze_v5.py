@@ -4,7 +4,7 @@ Analisi delle istruzioni v5 sull'insieme di sviluppo (docs/decisions.md, voce 11
 metriche R_fam e generalizzazioni invertite non si modificano senza una nuova voce.
 
 Nessuna chiamata a un LLM. Per formato confronta la BASELINE v4 (Gemma 4 12B QAT, bm25 k = 3 di
-data/results/generation/dev_k__P-G e __C-G) con il TRATTAMENTO v5 (dev_v5__P-G e __C-G: stessi parametri, esercizi ed
+data/results/generation/dev_v5base__P-G e __C-G, pool unico della voce 115; prima: dev_k) con il TRATTAMENTO v5 (dev_v5__P-G e __C-G: stessi parametri, esercizi ed
 esempi, istruzioni v5). Validazione e metriche di experiments/analyze_instructions.py (V, Vc, J, R su TUTTE le risposte,
 0 per le non valide; M primaria con le molteplicita' normalizzate di analyze_pilot.norm_mult, '1..1' = '1' dalla voce
 111), ground truth ATTUALE del corpus. Scrive solo data/results/generation/dev_v5_analysis/summary.md.
@@ -50,7 +50,7 @@ import provenance  # noqa: E402
 
 RESULTS = ROOT / "data" / "results" / "generation"
 CONFIG = ROOT / "experiments" / "configs" / "dev_v5.yaml"
-BASELINE_PREFIX, TREATMENT_PREFIX, K = "dev_k", "dev_v5", 3
+BASELINE_PREFIX, TREATMENT_PREFIX, K = "dev_v5base", "dev_v5", 3  # voce 115
 OUT_NAME = "dev_v5_analysis"
 CONFIGURATIONS = {"P-G": "plantuml", "C-G": "compact"}
 FORMAT_NAME = ad.FORMAT_NAME
@@ -130,9 +130,9 @@ def fmt(x, nd=3) -> str:
 
 def report(pairs: dict[str, tuple[dict, dict]]) -> tuple[str, dict]:
     res = outcome(pairs)
-    L = ["# Insieme di sviluppo — istruzioni v5 (`dev_v5` contro `dev_k` v4, k = 3)", "",
+    L = ["# Insieme di sviluppo — istruzioni v5 (`dev_v5` contro `dev_v5base` v4, k = 3)", "",
          "Esperimento di SVILUPPO sul corpus (20 esercizi, leave-one-out), mai sul test set. Gemma 4 12B QAT, versione di "
-         "configurazione 2, bm25 k = 3. Baseline: risposte a k = 3 di `dev_k` (istruzioni v4); trattamento: `dev_v5` "
+         "configurazione 2, bm25 k = 3, pool unico (voce 115). Baseline: `dev_v5base` (istruzioni v4); trattamento: `dev_v5` "
          "(istruzioni v5, riga finale della traccia, esempi PlantUML con l'ereditarietà nell'intestazione). Regola "
          "registrata PRIMA della run (voce 111) e applicata così com'è da `experiments/analyze_v5.py`; ground truth "
          "attuale del corpus; molteplicità normalizzate ('1..1' = '1'). Confronto per contenuto, mai per id.", "",

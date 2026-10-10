@@ -121,6 +121,9 @@ non sono state modificate.
 110. 2026-10-09 — Controllo di funzionamento dei retriever e run oracolo: esecuzione ed esito (STOP B)
 111. 2026-10-10 — Istruzioni v5 riscritte da zero, metriche corrette e regola di adozione — STOP A (prima della run)
 112. 2026-10-10 — Test set De Bari in leave-one-out: ogni esercizio usa gli altri 19 come candidati — DECISIONE e implementazione
+113. 2026-10-10 — Insieme unico dei 79 esercizi: leave-one-out su tutti, valutazione principale sui 53 mai usati per decidere — DECISIONE, piano PROPOSTO
+114. 2026-10-10 — Cruise recuperato: associazione ternaria riscritta con tre associazioni binarie (opzione b)
+115. 2026-10-10 — Pool unico: per ogni query (sviluppo e valutazione) tutti gli altri 79 esercizi
 
 ## Formato
 
@@ -4090,3 +4093,83 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   Fasce di score_norm del top-1: basso 4, medio 7, alto 9 (prima 5 / 8 / 7). Solo descrittivo.
 - **Da fare al prossimo commit**: tag `testset-v2` sul commit che introduce il protocollo (il contenuto del test set non
   cambia; `testset-v1` resta il riferimento del contenuto).
+
+### [2026-10-10] Insieme unico dei 79 esercizi: leave-one-out su tutti, valutazione principale sui 53 mai usati per decidere — DECISIONE, piano PROPOSTO
+- **Decisione dell'utente** (sostituisce l'impostazione della voce 112 per il Passo 3b): un solo insieme di 79 esercizi
+  (59 del corpus + 20 De Bari). Per ogni query i candidati del retrieval sono **tutti gli altri 78** (leave-one-out;
+  il retrieval non ha parametri da imparare, quindi il LOO equivale alla cross-validation con il pool più grande).
+  Scartata l'estrazione casuale di 10 esercizi a ogni giro (più rumore, semi da fissare, nessun vantaggio sul LOO).
+- **Ruoli** (campo `role`):
+  - `sviluppo` = i **26** esercizi su cui il modello ha già generato e su cui sono state prese decisioni: i 20
+    dell'insieme di sviluppo (voce 92) e i 6 dei piloti (ApartmentBuilding, CardGameApp, FilmSet, Louvre, Sober,
+    StudentAppointment);
+  - `valutazione` = i **53** mai usati come query di generazione (33 del corpus + 20 De Bari): valutazione PRINCIPALE.
+  Analisi secondarie: i 20 De Bari a parte (confronto con De Bari et al. sul loro GT); i 26 di sviluppo riportati a
+  parte come esplorativi. Tutti i 79 possono fare da ESEMPIO (candidati) per qualunque query.
+- **Campo `source`**: `golden` (Golden UML Modelset, 44), `translated_it` (15), `debari` (20).
+- **Piano di implementazione (PROPOSTA)**:
+  1. `corpus/build_exercises.py` (nuovo): genera `corpus/processed/exercises.jsonl` (79 record) dai due file del Passo 1
+     (`corpus.jsonl`, `testset_debari.jsonl`), che restano INVARIATI come uscite della pipeline e come base delle
+     analisi già fatte; campi comuni + `source` + `role` (+ i campi De Bari dove esistono). Le cartelle `raw/` restano
+     separate (fonti e licenze diverse, percorsi citati dalle note e dal tag `testset-v1`).
+  2. `retrieval/corpus_loader.load_exercises()`; nel prompt builder un parametro di protocollo del pool: `all` (78
+     candidati per ogni query, per il Passo 3b) e `corpus` (protocollo delle run di sviluppo: 58 candidati del corpus
+     per le query del corpus), così le run di sviluppo restano riproducibili e la run v5 si confronta con `dev_k` alle
+     stesse condizioni. Nei config: `pool: all | corpus` (default `corpus` per i config esistenti).
+  3. Test: 79 record, id unici, 26 + 53, ogni query ha 78 candidati con `pool: all`, mai sé stessa; con `pool: corpus`
+     i prompt di sviluppo sono identici a quelli di `dev_k` (sha256).
+  4. Congelamento: tag `evalset-v1` sul commit che introduce `exercises.jsonl` (contenuto dei 53 da non modificare
+     dopo aver visto risultati di generazione).
+  5. Documenti: CLAUDE.md, STATUS (domande 3 e 4 da riformulare per i relatori), corpus/README.md.
+
+### [2026-10-10] Cruise recuperato: associazione ternaria riscritta con tre associazioni binarie (opzione b)
+- **Decisione dell'utente**: l'associazione ternaria Guest / Ticket / Cruise (diamante `<> diamond`, senza equivalente
+  in Apollon v4, motivo dell'esclusione di Cruise dal Passo 1) è sostituita da due associazioni binarie con Ticket
+  come centro: `Ticket "*" -- "1" Cruise` ("Several tickets are issued for each cruise. A ticket belongs to exactly one
+  cruise") e `Ticket "*" -- "0..1" Guest` ("A guest can have any number of tickets"; lato Guest 0..1 dall'estremo
+  Guest della ternaria originale), più `Guest "*" -- "*" Cruise` ("A cruise has several guests, and each guest can
+  participate in several cruises"). **Opzione (b)** dell'utente (dopo una prima scelta (a) senza l'associazione
+  diretta): l'associazione Guest - Cruise è nel testo ma **gli autori non l'hanno disegnata** (nell'originale passava
+  per la ternaria); dichiarato nella correzione. Perso il vincolo "only one ticket per cruise" per ospite: annotato in
+  `known_issues.yaml` (`ternary_association_decomposed`, nuovo codice in `build_manifest.KNOWN_ISSUE_CODES`).
+- **Implementazione**: `corpus/corrections/Cruise.yaml` (4 `remove_line` del diamante, 3 `add_line`; `corpus/raw/`
+  intatto). Pipeline rieseguita: `build_manifest.py` (60 record) e `apollon_convert.py`: **60/60 convertiti**, 0
+  etichette non classificate, 0 violazioni di schema, 0 discrepanze di round-trip, 0 violazioni di stile;
+  `test_apollon_convert.py` verde. **Solo il record Cruise e `processed/apollon/Cruise.json` cambiano** (gli altri 59
+  record di `corpus.jsonl`, i 59 JSON Apollon e tutto il test set sono identici byte per byte, verificato).
+- **Effetto sul retrieval (da decidere)**: Cruise entra nel pool dei candidati e cambia le statistiche IDF di BM25.
+  Cruise non compare mai tra gli esempi recuperati per le 20 query di sviluppo, ma l'ordine o un esempio cambiano in
+  1 esercizio con k = 2, 3, 5 (Bookmaker a k = 3: OilWells, University, HomeForTheElderly → University, OilWells,
+  HomeForTheElderly) e in 3 con k = 8; nel LOO del corpus 3 query su 59 hanno un top-3 diverso dal Passo 2. Le run di
+  sviluppo non sono quindi più riproducibili byte per byte con il pool a 60. **Deciso nella voce 115** (pool unico).
+
+### [2026-10-10] Pool unico: per ogni query (sviluppo e valutazione) tutti gli altri 79 esercizi
+- **Decisione dell'utente** (supera il pool della voce 112 e l'opzione `pool: corpus` della voce 113; scartato anche il
+  pool di sviluppo congelato a 59 proposto dopo la voce 114): con il leave-one-out ogni query vede già tutti gli
+  esercizi tranne sé stessa, quindi un solo protocollo per tutto: **80 esercizi** (60 del corpus, Cruise compreso, +
+  20 De Bari) e per **ogni** query i candidati sono **gli altri 79**. Vale per lo sviluppo e per il Passo 3b.
+- **Conseguenze dichiarate**:
+  - le run di sviluppo fatte fino al 2026-10-09 (piloti, `dev_formats`, `dev_k`, `dev_instructions`,
+    `dev_retrievers`) usavano i 58 candidati del corpus: restano valide come storico, con il loro protocollo, ma non sono
+    più riproducibili con il codice attuale (`experiments/check_dev_retrievers.py` segnato come STORICO);
+  - con il pool unico gli esempi bm25 k = 3 cambiano in **12 dei 20** esercizi di sviluppo (11 hanno almeno un esempio
+    De Bari, 13 esempi De Bari su 60; Cruise mai);
+  - negli esperimenti di sviluppo compaiono come esempi anche esercizi di valutazione: accettato (nel 3b fanno da
+    esempi comunque; la valutazione guarda solo le risposte alle query).
+- **Leva v5 (modifica della regola della voce 111)**: la baseline non è più `dev_k` ma una **v4 rigenerata con il pool
+  unico**: `experiments/configs/dev_v5base.yaml` (run `dev_v5base__P-G` / `__C-G`, 80 generazioni), uguale a
+  `dev_v5.yaml` salvo `instructions_version: v4`; `experiments/analyze_v5.py` confronta `dev_v5` con `dev_v5base`
+  (regola e soglie invariate). Totale 160 generazioni. La run `dev_v5__P-G` interrotta (1 risposta, pool da 58) è stata
+  tolta dai risultati (copia nello scratchpad della sessione). Budget: prompt più lungo stimato 5.149 token reali
+  (v4, compatto) contro 28.672.
+- **Codice**: `generation/prompt_builder.py`: `pool(query)` = tutti gli esercizi (corpus + test set) tranne la query; il
+  test set si carica sempre (anche quando non è passato); tolto il divieto di esempi De Bari per le query del corpus.
+  `experiments/select_pilot.py` (e quindi `select_dev.py`): la selezione storica si riproduce con il protocollo del Passo
+  2 (59 candidati senza Cruise, LOO sugli altri 58), `HISTORICAL_EXCLUDED`. `experiments/context_budget.py --config`
+  usa il pool unico. Test: ogni query (80) ha esattamente 79 candidati, mai sé stessa, indice bm25 sullo stesso insieme;
+  sul pool storico bm25 riproduce `loo_top3.csv` del Passo 2; controlli di sanità PlantUML e compatto su 80 diagrammi
+  (Cruise a L4, identico al Passo 1 nei due percorsi); loader con 60 candidati. Suite di corpus, retrieval e generazione
+  verdi.
+- **Da rivedere nella fase del retrieval** (non toccato ora): gli script di analisi del retrieval sul solo corpus
+  (`analyze_retrieval.py`, `analyze_dense.py`) e `run_testset.py` usano ancora i loro pool (60 del corpus; 79 per il
+  test set); le run di riferimento versionate restano quelle già fatte.
