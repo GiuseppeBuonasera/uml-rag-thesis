@@ -27,6 +27,11 @@ stesso protocollo di retrieval/analyze_retrieval.py: bm25 su un indice RIFITTATO
 entra nelle statistiche IDF / avgdl), random e oracle sugli altri 58; static con la query AirTravel e' rifiutata
 (l'esempio 2 coinciderebbe con la query). In ogni caso build() fallisce se la query compare tra i propri esempi.
 
+Query del TEST SET (2026-10-10, voce 112): leave-one-out sui 20 esercizi De Bari. I candidati di una query del test set
+sono i 59 del corpus PIU' gli altri 19 esercizi De Bari (78), mai la query stessa; bm25 rifittato su quei 78, dense /
+hybrid / random / oracle sugli stessi 78. Le query del CORPUS (insieme di sviluppo) restano con i soli 58 candidati
+del corpus: un esercizio De Bari non e' MAI un esempio per una query del corpus (build() fallisce).
+
 Formato di uscita (secondo pilota, 2026-10-07): output_format "apollon" (istruzioni v4, esempi JSON) oppure
 "plantuml" (istruzioni templates/v4_plantuml_instructions.txt, che cambiano SOLO la parte sul formato; esempi in
 PlantUML CANONICO ricavato dal JSON Apollon del Passo 1, generation/plantuml_format.py) oppure "compact" (2026-10-08,
@@ -76,6 +81,16 @@ ITEM_TEMPLATES = {"apollon": "v4_example_item.txt", "plantuml": "v4_plantuml_exa
 # del verso da templates/targeted_rules_direction.yaml) inserito subito prima dell'ultimo paragrafo ("Your output must
 # be ..."), separato da una riga vuota. Nessuna riga esistente cambia.
 INSTRUCTION_VARIANTS = ("base", "targeted")
+# Versione delle istruzioni (voce 111): "v4" = template v4 (tutte le run fino al 2026-10-09, default finche' la regola
+# della voce 111 non adotta v5); "v5" = istruzioni riscritte da zero (templates/v5_<formato>_instructions.txt), traccia
+# templates/v5_task.txt con una riga finale per formato, blocco esempi templates/v5_examples_block.txt (frase sugli
+# esempi prima di "Examples to follow:", assente in zero-shot), esempi PlantUML nel canonico v5 (ereditarieta' e realizzazione
+# nell'intestazione, plantuml_format.apollon_to_plantuml(version="v5")). Solo per PlantUML e compatto. Il blocco esempi e
+# le voci degli esempi sono quelli della v4.
+INSTRUCTION_VERSIONS = ("v4", "v5")
+V5_INSTRUCTION_TEMPLATES = {"plantuml": "v5_plantuml_instructions.txt", "compact": "v5_compact_instructions.txt"}
+V5_FINAL_LINE = {"plantuml": "Now write the PlantUML diagram for this system only.",
+                 "compact": "Now write the compact JSON diagram for this system only."}
 TARGETED_FORMATS = ("plantuml", "compact")
 LAYOUTS = ("user_only", "system_user")  # system_user disponibile, ma non si usa senza decisione (decisions.md, voce 64)
 
@@ -90,6 +105,7 @@ class PromptSpec:
     drop_interactive: bool = True  # toglie la chiave di primo livello "interactive" dagli esempi serializzati
     output_format: str = "apollon"  # "apollon" (JSON) | "plantuml" (convertito in Apollon nel post-processing)
     instructions_variant: str = "base"  # "base" | "targeted" (voce 98)
+    instructions_version: str = "v4"  # "v4" | "v5" (voce 111)
 
     def __post_init__(self):
         if self.condition not in CONDITIONS:
@@ -100,6 +116,12 @@ class PromptSpec:
             raise ValueError(f"variante delle istruzioni sconosciuta: {self.instructions_variant}")
         if self.instructions_variant == "targeted" and self.output_format not in TARGETED_FORMATS:
             raise ValueError(f"istruzioni mirate solo per {TARGETED_FORMATS}, non per {self.output_format}")
+        if self.instructions_version not in INSTRUCTION_VERSIONS:
+            raise ValueError(f"versione delle istruzioni sconosciuta: {self.instructions_version}")
+        if self.instructions_version == "v5" and self.output_format not in V5_INSTRUCTION_TEMPLATES:
+            raise ValueError(f"istruzioni v5 solo per {tuple(V5_INSTRUCTION_TEMPLATES)}, non per {self.output_format}")
+        if self.instructions_version == "v5" and self.instructions_variant != "base":
+            raise ValueError("istruzioni v5: il blocco mirato della voce 98 vale solo per le v4")
         if self.serialization not in SERIALIZATIONS or self.layout not in LAYOUTS:
             raise ValueError(f"serializzazione o layout non validi: {self.serialization}, {self.layout}")
 
@@ -169,28 +191,30 @@ class PromptBuilder:
         if candidates is None:
             candidates, queries = cl.load_all()
         else:
-            cl.check_disjoint(candidates, queries or [])
+            cl.check_disjoint(candidates, queries or [])  # corpus.jsonl senza esercizi del test set (invariato)
         self.candidates = candidates
-        self.by_id = {c["id"]: c for c in candidates}
-        self.test_ids = {q["id"] for q in (queries or [])}
+        self.by_id = {c["id"]: c for c in candidates}  # SOLO il corpus (is_corpus_query, esempi statici)
+        self.test_queries = list(queries or [])
+        self.test_ids = {q["id"] for q in self.test_queries}
+        self.all_by_id = {**self.by_id, **{q["id"]: q for q in self.test_queries}}  # esempi: corpus + test set (voce 112)
         cfg = yaml.safe_load(BM25_CONFIG.read_text(encoding="utf-8"))
         if not cfg.get("frozen"):
             raise SystemExit("retrieval/config_bm25.yaml non congelata")
         r, p = cfg["retriever"], cfg["preprocessing"]
         self._bm25_args = {"k1": r["k1"], "b": r["b"], "preprocess": PreprocessConfig(p["stopwords"], p["stemming"])}
-        self.bm25 = KeywordRetriever(**self._bm25_args).fit(candidates)
-        self._loo_bm25: dict[str, KeywordRetriever] = {}
+        self._loo_bm25: dict[str, KeywordRetriever] = {}  # indice rifittato per query (LOO), corpus e test set
         self.static = static_examples(self.by_id)
         self.instructions = _template("v4_instructions.txt")  # formato apollon (identiche al template v4)
         self.instructions_by_format = {f: _template(t) for f, t in INSTRUCTION_TEMPLATES.items()}
-        self.names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in candidates}
-        self.tokens = {c["id"]: relevance.class_tokens(c["diagram_apollon_json"]) for c in candidates}
+        self.instructions_v5 = {f: _template(t) for f, t in V5_INSTRUCTION_TEMPLATES.items()}
+        self.names = {i: cl.class_names(c["diagram_apollon_json"]) for i, c in self.all_by_id.items()}
+        self.tokens = {i: relevance.class_tokens(c["diagram_apollon_json"]) for i, c in self.all_by_id.items()}
         self._dense = dense
         self._dense_fitted = False
 
     @property
     def dense(self):
-        """Retriever denso indicizzato su TUTTI i candidati (l'embedding di un documento non dipende dagli altri); le
+        """Retriever denso indicizzato su corpus + test set (l'embedding di un documento non dipende dagli altri); le
         esclusioni si applicano in retrieve() con excluded(query), cosi' i candidati coincidono con pool(query)."""
         if self._dense is None:
             import os
@@ -198,27 +222,31 @@ class PromptBuilder:
             from dense_retriever import DenseRetriever
             self._dense = DenseRetriever(*dense_model())
         if not self._dense_fitted:
-            self._dense.fit(self.candidates)
+            self._dense.fit(self.candidates + self.test_queries)
             self._dense_fitted = True
         return self._dense
 
     def excluded(self, query: dict) -> set[str]:
         """Candidati NON ammessi per la query: il complemento di pool(query)."""
         allowed = {c["id"] for c in self.pool(query)}
-        return {c["id"] for c in self.candidates if c["id"] not in allowed}
+        return {i for i in self.all_by_id if i not in allowed}
 
     def is_corpus_query(self, query: dict) -> bool:
         return query["id"] in self.by_id
 
     def pool(self, query: dict) -> list[dict]:
-        """Candidati ammessi per la query: tutti per il test set, gli altri 58 per una query del corpus (LOO)."""
-        return [c for c in self.candidates if c["id"] != query["id"]]
+        """Candidati ammessi (leave-one-out): per una query del corpus gli altri 58 del corpus; per una query del test
+        set i 59 del corpus piu' gli altri 19 esercizi De Bari (voce 112). Mai la query stessa."""
+        if self.is_corpus_query(query):
+            return [c for c in self.candidates if c["id"] != query["id"]]
+        if query["id"] not in self.test_ids:
+            raise ValueError(f"query {query['id']} ne' del corpus ne' del test set del builder: pool non definito "
+                             "(costruire PromptBuilder con le query del test set)")
+        return self.candidates + [q for q in self.test_queries if q["id"] != query["id"]]
 
     def bm25_for(self, query: dict) -> KeywordRetriever:
-        """Indice congelato sui 59 candidati per il test set; indice RIFITTATO senza la query per il corpus (LOO,
-        come retrieval/analyze_retrieval.loo)."""
-        if not self.is_corpus_query(query):
-            return self.bm25
+        """Indice RIFITTATO su pool(query) (la query non entra nelle statistiche IDF / avgdl), per il corpus come in
+        retrieval/analyze_retrieval.loo e per il test set in leave-one-out (voce 112)."""
         if query["id"] not in self._loo_bm25:
             self._loo_bm25[query["id"]] = KeywordRetriever(**self._bm25_args).fit(self.pool(query))
         return self._loo_bm25[query["id"]]
@@ -234,18 +262,18 @@ class PromptBuilder:
             return list(self.static)
         if c == "random":
             hits = RandomRetriever(seed=spec.seed).fit(self.pool(query)).retrieve(query["description"], spec.k)
-            return [self.by_id[h.id] for h in hits]  # ordine di estrazione
+            return [self.all_by_id[h.id] for h in hits]  # ordine di estrazione
         if c == "bm25":
             hits = self.bm25_for(query).retrieve(query["description"], spec.k)
-            return [self.by_id[h.id] for h in reversed(hits)]  # il piu' simile per ultimo
+            return [self.all_by_id[h.id] for h in reversed(hits)]  # il piu' simile per ultimo
         if c == "dense":
             hits = self.dense.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
-            return [self.by_id[h.id] for h in reversed(hits)]
+            return [self.all_by_id[h.id] for h in reversed(hits)]
         if c == "hybrid":
             from hybrid_retriever import HybridRetriever
             h = HybridRetriever.prefitted(self.bm25_for(query), self.dense, [x["id"] for x in self.pool(query)])
             hits = h.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
-            return [self.by_id[x.id] for x in reversed(hits)]
+            return [self.all_by_id[x.id] for x in reversed(hits)]
         if c == "oracle_jt":
             qt = relevance.class_tokens(query["diagram_apollon_json"])
             ranked = sorted(self.pool(query), key=lambda x: (-cl.jaccard(qt, self.tokens[x["id"]]), x["id"]))[:spec.k]
@@ -259,7 +287,7 @@ class PromptBuilder:
     def render_example(example: dict, spec: PromptSpec) -> str:
         if spec.output_format == "plantuml":
             from plantuml_format import apollon_to_plantuml
-            return apollon_to_plantuml(example["diagram_apollon_json"])
+            return apollon_to_plantuml(example["diagram_apollon_json"], version=spec.instructions_version)
         if spec.output_format == "compact":  # stessa serializzazione dell'Apollon (su una riga con "compact")
             from uml_structure import apollon_to_compact
             data = apollon_to_compact(example["diagram_apollon_json"])
@@ -269,18 +297,25 @@ class PromptBuilder:
 
     def build(self, query: dict, spec: PromptSpec) -> BuiltPrompt:
         examples = self.select(query, spec)
-        leaked = [e["id"] for e in examples if e["id"] in self.test_ids or cl.DEBARI_ID_RE.match(e["id"])]
-        if leaked:
-            raise AssertionError(f"esercizi del test set tra gli esempi: {leaked}")
+        if self.is_corpus_query(query):  # insieme di sviluppo: mai un esercizio del test set come esempio (voce 112)
+            leaked = [e["id"] for e in examples if e["id"] in self.test_ids or cl.DEBARI_ID_RE.match(e["id"])]
+            if leaked:
+                raise AssertionError(f"esercizi del test set tra gli esempi di una query del corpus: {leaked}")
         if query["id"] in {e["id"] for e in examples}:
             raise AssertionError(f"la query {query['id']} compare tra i propri esempi")
         item = _template(ITEM_TEMPLATES[spec.output_format])
         items = [item.format(n=i, description=e["description"].strip(), diagram_json=self.render_example(e, spec))
                  for i, e in enumerate(examples, start=1)]
-        examples_block = _template("v4_examples_block.txt").format(examples="\n".join(items)) if items else ""
-        task = _template("v4_task.txt").format(description=query["description"].strip())
+        block = "v5_examples_block.txt" if spec.instructions_version == "v5" else "v4_examples_block.txt"  # voce 111
+        examples_block = _template(block).format(examples="\n".join(items)) if items else ""
+        if spec.instructions_version == "v5":
+            task = _template("v5_task.txt").format(description=query["description"].strip(),
+                                                   final_line=V5_FINAL_LINE[spec.output_format])
+        else:
+            task = _template("v4_task.txt").format(description=query["description"].strip())
         user = (examples_block + "\n" if examples_block else "") + task
-        instructions = self.instructions_by_format[spec.output_format]
+        instructions = (self.instructions_v5[spec.output_format] if spec.instructions_version == "v5"
+                        else self.instructions_by_format[spec.output_format])
         if spec.instructions_variant == "targeted":
             instructions = targeted_instructions(instructions, spec.output_format)
         text = instructions + "\n" + user

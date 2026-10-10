@@ -218,7 +218,8 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
                                   serialization=p.get("serialization", "compact"),
                                   layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True),
                                   output_format=p.get("output_format", "apollon"),
-                                  instructions_variant=p.get("instructions_variant", "base"))
+                                  instructions_variant=p.get("instructions_variant", "base"),
+                                  instructions_version=p.get("instructions_version", "v4"))
                 for t in temperatures(cfg):
                     for r in range(cfg.get("repetitions", 1)):
                         out.append((q, spec, r, t))

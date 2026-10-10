@@ -1,0 +1,44 @@
+# Caricamento del modello per dev_v5 (voce 111), 2026-10-10T03:43:45+02:00
+$ lms load google/gemma-4-12b-qat --context-length 32768 --gpu max -y
+[?25l
+[K[?25hModel loaded successfully in 11.47s.
+(6.66 GiB)
+To use the model in the API/SDK, use the identifier "google/gemma-4-12b-qat".
+
+$ lms ps --json
+[{"type":"llm","modelKey":"google/gemma-4-12b-qat","format":"gguf","displayName":"Gemma 4 12B QAT","publisher":"google","path":"google/gemma-4-12b-qat","sizeBytes":7151066820,"indexedModelIdentifier":"google/gemma-4-12b-qat","deviceIdentifier":null,"paramsString":"12B","architecture":"gemma4","quantization":{"name":"Q4_0","bits":4},"variants":["google/gemma-4-12b-qat@q4_0"],"selectedVariant":"google/gemma-4-12b-qat@q4_0","identifier":"google/gemma-4-12b-qat","ttlMs":null,"lastUsedTime":1791596637439,"vision":true,"trainedForToolUse":true,"maxContextLength":262144,"contextLength":32768,"status":"idle","queued":0,"parallel":4}]
+
+# impostazioni salvate di LM Studio per il modello (user-concrete-model-default-config)
+{
+  "preset": "",
+  "operation": {
+    "fields": [
+      {
+        "key": "ext.virtualModel.customField.google.gemma412bQat.enableThinking",
+        "value": false
+      }
+    ]
+  },
+  "load": {
+    "fields": [
+      {
+        "key": "llm.load.contextLength",
+        "value": 32768
+      },
+      {
+        "key": "llm.load.llama.vCacheQuantizationType",
+        "value": {
+          "checked": true,
+          "value": "f16"
+        }
+      },
+      {
+        "key": "llm.load.llama.kCacheQuantizationType",
+        "value": {
+          "checked": true,
+          "value": "f16"
+        }
+      }
+    ]
+  }
+}

@@ -2,7 +2,7 @@
 
 **Esperimento PRELIMINARE** sul corpus (split `corpus`, selezione leave-one-out), mai sul test set: da dichiarare come tale in tesi. Regola di decisione registrata PRIMA delle run (docs/decisions.md, voce 78, approvata nella voce 79) e applicata cosi' com'e' da `experiments/analyze_pilot2.py` (voce 82), ricalcolando tutto dalle risposte grezze (`raw/`).
 
-Analisi eseguita sul commit `22f5adfbe6ce` (con modifiche non committate). GT del corpus: 59 diagrammi, sha256 del contenuto `b400d1dd7954e8a97c88ff604bc47f294e7eca2cb17d9cd7dd680542fd5db5fd` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `01ef9a52fa255f07…`.
+Analisi eseguita sul commit `366ed7a1e7af` (con modifiche non committate). GT del corpus: 59 diagrammi, sha256 del contenuto `b400d1dd7954e8a97c88ff604bc47f294e7eca2cb17d9cd7dd680542fd5db5fd` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `01ef9a52fa255f07…`.
 
 Esercizi: Louvre, Sober, StudentAppointment, CardGameApp, ApartmentBuilding, FilmSet; bm25 k=2; 2 ripetizioni; temperature 0.3, top_p 0.95, top_k 64, max_tokens 12288.
 

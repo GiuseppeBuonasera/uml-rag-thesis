@@ -2,7 +2,7 @@
 
 Esperimento di SVILUPPO sul corpus (20 esercizi, leave-one-out), mai sul test set. Regola registrata PRIMA delle run (docs/decisions.md, voce 92) e applicata cosi' com'e' da `experiments/analyze_dev.py`, ricalcolando tutto dalle risposte grezze. Metriche di sviluppo: le metriche semantiche definitive restano da decidere con i relatori. Confronto per contenuto, mai per id. Modelli di taglia diversa (Gemma 4 12B QAT, Qwen2.5-Coder 7B, voce 85).
 
-Analisi eseguita sul commit `22f5adfbe6ce` (con modifiche non committate). GT del corpus: 59 diagrammi, sha256 del contenuto `b400d1dd7954e8a97c88ff604bc47f294e7eca2cb17d9cd7dd680542fd5db5fd` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `01ef9a52fa255f07…`.
+Analisi eseguita sul commit `366ed7a1e7af` (con modifiche non committate). GT del corpus: 59 diagrammi, sha256 del contenuto `b400d1dd7954e8a97c88ff604bc47f294e7eca2cb17d9cd7dd680542fd5db5fd` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `01ef9a52fa255f07…`.
 Post-processing PlantUML: v2.
 
 ## Regola di confronto (voce 92), applicata cosi' com'e'

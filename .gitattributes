@@ -11,3 +11,8 @@ generation/templates/targeted_rules_direction.yaml -text
 *.ipynb filter=nbstripout
 *.zpln filter=nbstripout
 *.ipynb diff=ipynb
+# istruzioni e traccia v5, congelate con lo sha256 nella voce 111
+generation/templates/v5_compact_instructions.txt -text
+generation/templates/v5_plantuml_instructions.txt -text
+generation/templates/v5_task.txt -text
+generation/templates/v5_examples_block.txt -text

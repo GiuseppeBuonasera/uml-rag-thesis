@@ -34,7 +34,9 @@ def _read_jsonl(path: Path) -> list[dict]:
 
 
 def check_disjoint(candidates: list[dict], queries: list[dict]) -> None:
-    """Hard-fail se un esercizio del test set compare tra i candidati."""
+    """Hard-fail se un esercizio del test set compare in corpus.jsonl. Dal 2026-10-10 (voce 112) il test set entra nel
+    retrieval SOLO in leave-one-out per le query del test set (pool costruito a runtime da generation/prompt_builder.py:
+    corpus + gli altri 19); il file del corpus resta senza esercizi del test set."""
     query_ids = {q["id"] for q in queries}
     leaked = sorted(c["id"] for c in candidates
                     if c["id"] in query_ids or DEBARI_ID_RE.match(c["id"]) or c.get("split") == "debari_test")

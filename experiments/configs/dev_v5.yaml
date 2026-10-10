@@ -1,0 +1,72 @@
+# ISTRUZIONI v5 (2026-10-10, voce 111): insieme di sviluppo (20 esercizi del corpus, voce 92, leave-one-out), MAI il
+# test set. Solo Gemma 4 12B QAT, versione di configurazione 2, bm25 k = 3, formati PlantUML e JSON compatto, istruzioni
+# v5 riscritte da zero (templates/v5_<formato>_instructions.txt, traccia v5_task.txt con la riga finale, esempi
+# PlantUML nel canonico v5). Baseline = run di Gemma a k = 3 di dev_k.yaml (istruzioni v4, stessi parametri, esercizi
+# ed esempi): i prompt differiscono SOLO per istruzioni, riga finale della traccia e (PlantUML) righe di ereditarieta'
+# degli esempi. Regola di adozione registrata PRIMA della run (voce 111), in experiments/analyze_v5.py.
+#   python experiments/run_experiment.py experiments/configs/dev_v5.yaml --configuration P-G [--resume]
+# Totale: 2 formati x 20 esercizi x 2 ripetizioni = 80 generazioni.
+run_id: dev_v5
+config_version: 2           # contesto 32768, max_tokens 4096 (voce 93), come la baseline dev_k
+split: corpus
+query_ids:   # insieme di sviluppo della voce 92, identico a dev_k.yaml
+  - Boeing
+  - OilWells
+  - Restaurant
+  - EUScienceConnect
+  - HomeForTheElderly
+  - HelpingHands
+  - Bookmaker
+  - BusTransportationManagementSystem
+  - FitnessCompanyConan
+  - Facepage
+  - Musicmatic
+  - AlphaInsurance
+  - ClothingCompany
+  - PizzaDeliveryWithEntertainment
+  - ProjectManagement
+  - HospitalHouseMD
+  - InsuranceCompany
+  - TruckLogistics
+  - Ebike
+  - eHome2020
+conditions: [bm25]
+k: [3]
+repetitions: 2
+seed: 0
+stop_on_reasoning: true
+prompt: {serialization: compact, layout: user_only, drop_interactive: true, instructions_version: v5}
+generation:
+  temperature: 0.3
+  top_p: 0.95
+  top_k: 64
+  max_tokens: 4096
+  seed: 42
+plantuml_label_rule: auto_v1
+models:
+  G:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-12b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-12b-qat
+      quantization: QAT (q4_0)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: false
+      kv_cache_quant: F16            # K e V F16 (non quantizzata), come nel primo pilota (voce 87)
+      flash_attention: true          # come nel primo pilota (voce 87)
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: "9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente in VRAM (smoke test 2026-10-06)"
+configurations:
+  P-G: {model: G, output_format: plantuml}
+  C-G: {model: G, output_format: compact}

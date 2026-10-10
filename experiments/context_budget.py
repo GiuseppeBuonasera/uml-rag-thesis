@@ -130,7 +130,8 @@ def report_config(config: Path, manifests: list[Path]) -> str:
                 spec = PromptSpec(cond, k=k, serialization=p.get("serialization", "compact"),
                                   layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True),
                                   output_format=conf["output_format"],
-                                  instructions_variant=p.get("instructions_variant", "base"))
+                                  instructions_variant=p.get("instructions_variant", "base"),
+                                  instructions_version=p.get("instructions_version", "v4"))
                 real = {q["id"]: round(count_tokens(builder.build(q, spec).text) * factor) for q in queries}
                 wid = max(real, key=lambda i: (real[i], i))
                 worst_all = max(worst_all, real[wid])

@@ -119,6 +119,8 @@ non sono state modificate.
 108. 2026-10-09 — Retriever denso e ibrido: implementazione, analisi LOO sul corpus ed esito della regola (FASE 2-3, STOP 2)
 109. 2026-10-09 — Retriever come fattore sperimentale: controllo di funzionamento sul dev set e run oracolo — APPROVATA (STOP A)
 110. 2026-10-09 — Controllo di funzionamento dei retriever e run oracolo: esecuzione ed esito (STOP B)
+111. 2026-10-10 — Istruzioni v5 riscritte da zero, metriche corrette e regola di adozione — STOP A (prima della run)
+112. 2026-10-10 — Test set De Bari in leave-one-out: ogni esercizio usa gli altri 19 come candidati — DECISIONE e implementazione
 
 ## Formato
 
@@ -3956,3 +3958,135 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   `data/results/generation/dev_retrievers_analysis/summary.md`; report grafico (non versionato):
   `data/results/generation/dev_retrievers_review/index.html`.
 - **STOP B**: in attesa dell'utente. Nessuna modifica alla configurazione di lavoro (voce 95).
+
+### [2026-10-10] Istruzioni v5 riscritte da zero, metriche corrette e regola di adozione — STOP A (prima della run)
+- **Decisione**: il prompt NON è vincolato a replicare lo studio 2025. Le istruzioni si possono riscrivere liberamente;
+  la condizione static diventa "istruzioni correnti + 2 esempi fissi". **La domanda 9 è superata.** I file v4 restano
+  nel repo come storico (e restano il default finché la regola sotto non adotta v5).
+- **FASE 0 (verifica dei dati, corpus, 59 diagrammi)**: tipi di relazione associazione 354, ereditarietà 142,
+  composizione 66, unidirezionale 54, aggregazione 14, dipendenza 2 (realizzazione 0); molteplicità sui 980 estremi
+  delle relazioni non di generalizzazione: '1' 390, '*' 171, '0..*' 165, vuote 77, '0..1' 74, '1..*' 56, '1..1' 19, più
+  27 valori rari; attributi per classe: mediana 1. **"215 classi su 575 senza attributi" vale nel formato compatto**:
+  le 35 enumerazioni hanno `values` e non `attributes`; sui diagrammi Apollon le classi senza attributi sono 180
+  (180 + 35 = 215). Semantica delle molteplicità del compatto **confermata** (non opposta): in Boeing AirplaneModel
+  (source) "1" / Airplane (target) "0..*" = ogni aereo ha un modello, un modello ha molti aerei;
+  `sourceMultiplicity` = quanti oggetti della classe source per UN oggetto della target.
+- **File nuovi**: `generation/templates/v5_compact_instructions.txt` e `v5_plantuml_instructions.txt` (testo esatto
+  dell'utente, LF), `v5_task.txt` (traccia v4 + riga finale per formato: "Now write the PlantUML diagram for this system
+  only." / "Now write the compact JSON diagram for this system only."), congelati con lo sha256 (`check_v5`) e `-text`
+  in `.gitattributes`: compatto `613140dd…71f2`, PlantUML `7eb1038c…de9a`, traccia `3b774b1a…34f2`.
+  `generation/plantuml_format.apollon_to_plantuml(version="v5")`: generalizzazione e realizzazione SOLO
+  nell'intestazione ("class X extends Y implements A, B", anche abstract class / interface), mai come righe;
+  composizione / aggregazione con il tutto a sinistra (come già nella v4); il canonico v4 resta invariato (default).
+  `PromptSpec.instructions_version` "v4" (default) | "v5" (solo PlantUML e compatto, non combinabile con il blocco
+  mirato della voce 98); `prompt.instructions_version` nei config; `experiments/configs/dev_v5.yaml` (Gemma, bm25
+  k = 3, P-G e C-G, 2 ripetizioni, 80 generazioni, uguale a `dev_k` salvo la versione delle istruzioni);
+  `experiments/analyze_v5.py` (regola sotto).
+- **Post-processing**: il v2 basta, nessuna v3. Legge `extends` / `implements` (anche `abstract class`, `interface X
+  extends Y`, più genitori separati da virgola, corpo sulla stessa riga) con il verso giusto e continua ad accettare le
+  righe `--|>` / `..|>` (anche miste alle intestazioni). **Round-trip** Apollon → PlantUML v5 → Apollon sui 59
+  diagrammi del corpus: 59/59 a L4, contenuto identico, 142 `extends` riletti (nessuna generalizzazione del corpus ha
+  etichette, molteplicità o ruoli, né più di un genitore; nessuna realizzazione); casi sintetici con implements,
+  interface extends e righe miste: identici.
+- **Metriche (nessuna generazione)**: `analyze_pilot.norm_mult`: '1..1' → '1' ('0..n' → '*' era già coperto).
+  **M della baseline dev_k Gemma k = 3 prima / dopo: invariata** (PlantUML 137/486 = 0,282; compatto 104/486 = 0,214):
+  i 6 estremi '1..1' dei GT del dev set (ProjectManagement 2 relazioni, Restaurant 1) stanno in relazioni mai ritrovate
+  dalle risposte. Rigenerati i 7 report di analisi (`pilot_temperature`, `pilot2_formats_analysis` e `_v2`,
+  `dev_formats`, `dev_k`, `dev_instructions`, `dev_retrievers`): **identici salvo la riga di provenienza** (nuovo
+  commit `366ed7a`): nessun esito di regole passate cambia. **R_fam** (secondaria, riportata): come R, con associazione
+  e unidirezionale nello stesso tipo. **Generalizzazioni invertite** riportate a parte (generalizzazioni del GT
+  accoppiate con figlia e madre scambiate). Baseline v4: R_fam PlantUML 0,344, compatto 0,347; generalizzazioni
+  invertite PlantUML 12/27, compatto 0/40.
+- **REGOLA DI ADOZIONE (registrata PRIMA della run)**, per formato, delta = v5 − v4 (baseline dev_k Gemma k = 3, GT
+  corretto, metriche corrette), 40 risposte per parte: **adottare v5 se [dR ≥ +0,03 OPPURE dR_fam ≥ +0,03 OPPURE (solo
+  PlantUML) generalizzazioni invertite ridotte almeno della metà] E dVc ≥ −2 E dM_primaria ≥ −0,03.** Dimezzate = v5 ≤
+  v4 / 2 con v4 > 0 (baseline 12 → soglia 6). Controllo preliminare come voce 98 (40 risposte, niente ragionamento,
+  modello del config). Riportati fuori regola: classi, generalizzazioni e composizioni in più, token di output,
+  latenza, scarti, tabelle di confusione. **Se v5 è adottata in un formato, diventa la configurazione di lavoro per
+  TUTTE le condizioni di quel formato** (zero-shot, static, random, bm25, dense, hybrid).
+- **Controlli (STOP A)**: prompt v5 di ProjectManagement per entrambi i formati consegnati interi all'utente; diff con
+  la v4 su tutti i 20 esercizi: cambiano solo istruzioni, riga finale della traccia e, in PlantUML, le intestazioni
+  degli esempi con le generalizzazioni (158 intestazioni, 158 righe `--|>` tolte, 37 righe vuote spostate); esempi del
+  compatto identici; prompt v4 ancora identici a quelli di `dev_k` (20/20 per formato). Token stimati (cl100k) v4 → v5:
+  PlantUML mediana 3.563 → 3.275 (−258), massimo 4.365 → 4.143; compatto 4.168 → 3.824 (−345), massimo 4.931 → 4.586;
+  istruzioni da sole: PlantUML 1.192 → 958, compatto 1.378 → 1.022. Script di analisi testato sulla baseline. Suite
+  verdi.
+- **Punti del testo da segnalare (NON modificati)**: (1) l'ultima frase delle istruzioni ("The examples below show ...")
+  resta anche in zero-shot, dove non ci sono esempi; (2) nel compatto la regola 4 chiede le molteplicità per ogni
+  relazione salvo inheritance e realization, quindi anche per dependency, ma l'elenco delle chiavi di "dependency" non
+  le prevede (il parser le accetta comunque); nel PlantUML la dipendenza è esclusa dalla regola 4. Nessun punto è
+  incompatibile con il parser o con il formato compatto.
+- **STOP A**: proposta e controlli consegnati prima della run.
+- **STOP A APPROVATO (2026-10-10) con tre correzioni ai testi v5**, applicate e ricongelate PRIMA della run:
+  1. la frase "The examples below show the format and the modeling style. They describe other systems: do not copy
+     their classes." passa dalle istruzioni al nuovo `generation/templates/v5_examples_block.txt`, subito prima di
+     "Examples to follow:" (riga vuota in mezzo); in zero-shot non compare (il blocco esempi v4 resta invariato);
+  2. compatto, regola 4: "(every relation except inheritance, realization and dependency)";
+  3. entrambi i formati, regola 1: "A simple value (a name, a date, an amount) is an attribute, not a class."
+  Nuovi sha256 (`check_v5`, `-text`): compatto `ae014366…dfaa`, PlantUML `1e7421b8…a6e`, blocco esempi `11107dff…66ff`,
+  traccia invariata `3b774b1a…34f2`. **Controlli rapidi ripetuti, tutti passati**: diff v4 → v5 sui 20 esercizi =
+  istruzioni, frase del blocco esempi (+1 riga e +1 riga vuota per prompt), riga finale della traccia e, in PlantUML,
+  158 intestazioni con 158 righe `--|>` tolte (righe vuote spostate); prompt v4 ancora identici a `dev_k` (20/20 per
+  formato); round-trip v5 invariato (59/59); zero-shot v5 senza la frase. Token stimati v5: PlantUML mediana 3.272,
+  massimo 4.140; compatto mediana 3.823, massimo 4.585. Segnalazione (1) e (2) dello STOP A risolte dalle correzioni.
+- **Limite noto**: gli esempi del corpus (GT) a volte non rispettano le regole v5 (attributi senza tipo, etichette con
+  spazi, aggregazioni dove la regola 3 indicherebbe associazione); restano come sono perché sono il GT con cui si
+  valuta.
+- **Run avviata e INTERROTTA su richiesta dell'utente (2026-10-10)**: modello caricato con `lms load
+  google/gemma-4-12b-qat --context-length 32768 --gpu max -y`, verificato con `lms ps` (contesto 32768), comando e
+  uscita in `data/results/generation/dev_v5_model_load.log`; `dev_v5__P-G` fermata dopo 1 risposta su 40, `dev_v5__C-G`
+  non avviata. Il registro delle esecuzioni ha una riga di inizio senza fine (processo terminato). Da riprendere con
+  `--resume` (P-G), poi C-G, analisi e report grafico.
+
+### [2026-10-10] Test set De Bari in leave-one-out: ogni esercizio usa gli altri 19 come candidati — DECISIONE e implementazione
+- **Decisione dell'utente**: i 20 esercizi De Bari restano TUTTI il test set (20 esercizi valutati), ma per ciascuna
+  query del test set i candidati del retrieval sono i 59 esercizi del corpus **più gli altri 19 esercizi De Bari**
+  (78 candidati), mai la query stessa: lo stesso protocollo leave-one-out già usato per il corpus. Risponde alla
+  domanda 3 per i relatori. Scartati: split fisso 10/10 (10 soli esercizi valutati: potenza troppo bassa) e due metà
+  alternate (20 valutati ma 69 candidati invece di 78).
+- **Motivazione**: gli esercizi De Bari hanno lo stile e la fonte del test set; con il LOO entrano nel retrieval senza
+  perdere esercizi valutati. Il test set è ancora "pulito": nessuna generazione fatta, solo la run di retrieval BM25
+  `testset_2026-10-04_stop2` (che con il nuovo protocollo diventa storica).
+- **Controllo di quasi-duplicati tra i 20 (fatto, solo lettura)**: TF-IDF delle descrizioni (idf comune a corpus e test
+  set) sulle 190 coppie: massimo 0,219 (DB12_Furniture - DB13_Factory), poi 0,214 (DB07_BankSystem - DB16_OOBank);
+  nessuna coppia ≥ 0,25 (soglia dei quasi-duplicati del Passo 2), mediana 0,028. Jaccard dei nomi di classe del GT:
+  massimo 0,25 (DB04_PatientRecordAndSchedulingSystem - DB19_MyDoctor). **Nessuna esclusione necessaria.** Da notare:
+  il vicino più simile di un esercizio De Bari è in mediana PIÙ simile nel corpus (TF-IDF 0,151) che tra gli altri De
+  Bari (0,121): il vantaggio "stesso stile" non è lessicale.
+- **Piano di implementazione (PROPOSTA, da approvare prima del codice)**:
+  1. `retrieval/corpus_loader.py`: l'invariante passa da "nessun esercizio De Bari tra i candidati" a "la query non è
+     mai tra i propri candidati"; `corpus.jsonl` resta senza esercizi De Bari (controllo invariato sul file); il pool
+     di una query del test set si costruisce a runtime (59 + 19).
+  2. `generation/prompt_builder.py`: `pool(query)` per una query del test set = corpus + gli altri 19; bm25 RIFITTATO
+     su quel pool (come per il corpus); dense indicizzato su 79 con esclusione della query; hybrid e random sullo
+     stesso pool. **Le query del corpus (insieme di sviluppo) restano con i soli 58 candidati del corpus**: le scelte
+     già fatte restano confrontabili e il GT del test set non entra nelle run di sviluppo.
+  3. Test: i controlli "nessun id del test set restituito" diventano "la query non restituisce mai se stessa; una query
+     del corpus non restituisce mai un esercizio De Bari"; nuovo controllo che ogni query De Bari abbia esattamente 78
+     candidati.
+  4. Invariati: BM25 congelato (i parametri non dipendono dall'indice), formati, k, retriever, regole già registrate.
+     Nuovo tag `testset-v2` sul commit che introduce il protocollo (contenuto del test set invariato).
+  5. Da aggiornare: CLAUDE.md e STATUS.md ("test set mai nel retrieval" → "test set in LOO"), domanda 3 risolta,
+     domanda 4 (DB06_Flights / AirTravel) resta. Una nuova run descrittiva di retrieval sul test set con il protocollo
+     LOO sostituirà `testset_2026-10-04_stop2` come riferimento.
+- **Piano APPROVATO e implementato (2026-10-10)**:
+  - `generation/prompt_builder.py`: `pool(query)` = gli altri 58 del corpus per una query del corpus; 59 + gli altri
+    19 per una query del test set (errore se il builder non ha le query del test set); bm25 sempre RIFITTATO su
+    `pool(query)` (tolto l'indice fisso sui 59); dense indicizzato su corpus + test set con le esclusioni di
+    `excluded(query)`; esempi cercati in `all_by_id` (corpus + test set); il divieto di esempi del test set vale ora
+    solo per le query del corpus (build() fallisce). `corpus_loader.check_disjoint` invariato: `corpus.jsonl` resta senza
+    esercizi del test set.
+  - `retrieval/run_testset.py`: `--protocol loo` (default, voce 112) | `fixed59` (originale). Verificato che `fixed59`
+    riproduce byte per byte `testset_2026-10-04_stop2` (`testset_top3.csv` e `summary.csv`; run temporanea cancellata).
+  - Test: ogni query del test set ha esattamente 78 candidati (corpus + gli altri 19), mai sé stessa, indice bm25 sullo
+    stesso insieme; una query del corpus esclude tutti gli esercizi De Bari e un esempio De Bari per una query del
+    corpus fa fallire build(); un builder senza test set rifiuta una query del test set. Suite della generazione e del
+    retrieval verdi; `check_dev_retrievers.py`: prompt dell'insieme di sviluppo INVARIATI (bm25 identico a `dev_k`
+    20/20 per formato; bm25 / dense / hybrid identici ai top-3 del LOO della voce 108).
+- **Run descrittiva di retrieval sul test set con il nuovo protocollo**: `data/results/retrieval/testset_2026-10-10_loo/`
+  (sostituisce `testset_2026-10-04_stop2` come riferimento; quella resta come storico). Vicini dal test set nei top-3:
+  17/60, al rango 1: 5/20; top-1 cambiato rispetto al protocollo a 59 candidati in 5 esercizi su 20. BM25 J@1 0,106
+  (prima 0,113), J@3 0,085 (prima 0,077); oracolo J@1 0,159 (prima 0,148), J@3 0,121 (prima 0,105); random J@3 0,015.
+  Fasce di score_norm del top-1: basso 4, medio 7, alto 9 (prima 5 / 8 / 7). Solo descrittivo.
+- **Da fare al prossimo commit**: tag `testset-v2` sul commit che introduce il protocollo (il contenuto del test set non
+  cambia; `testset-v1` resta il riferimento del contenuto).

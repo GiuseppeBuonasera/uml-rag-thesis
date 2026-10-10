@@ -12,6 +12,7 @@ import contextlib
 import hashlib
 import io
 import json
+import math
 import os
 import shutil
 import socket
@@ -74,7 +75,9 @@ def check_prompts(builder: PromptBuilder, queries: list[dict]) -> None:
                 s = PromptSpec(cond, k=k)
                 a, b = builder.build(q, s), builder.build(q, s)
                 assert a.text == b.text and a.messages == b.messages and a.example_ids == b.example_ids, "non determ."
-                assert not any(e in builder.test_ids or cl.DEBARI_ID_RE.match(e) for e in a.example_ids)
+                # voce 112: test set in leave-one-out -> mai la query stessa; gli altri esercizi De Bari ammessi
+                assert q["id"] not in a.example_ids
+                assert set(a.example_ids) - {"STATIC_example_1_bank_loans"} <= {c["id"] for c in builder.pool(q)}
                 assert a.messages == [{"role": "user", "content": a.text}]
                 assert a.text == a.instructions + "\n" + (a.examples_block + "\n" if a.examples_block else "") + a.task
                 assert '"interactive"' not in a.examples_block
@@ -91,8 +94,20 @@ def check_prompts(builder: PromptBuilder, queries: list[dict]) -> None:
     except (AssertionError, SystemExit, ValueError):
         rejected = True
     assert rejected, "candidato del test set non rifiutato"
-    print(f"  OK  {n} prompt: deterministici, istruzioni v4 identiche, solo il blocco esempi cambia, nessun id del "
-          "test set tra gli esempi, default compact / user_only / drop_interactive")
+    # leave-one-out sul test set (voce 112): 78 candidati = 59 del corpus + gli altri 19, mai la query
+    for q in queries:
+        pool = [c["id"] for c in builder.pool(q)]
+        assert len(pool) == len(set(pool)) == 78 and q["id"] not in pool
+        assert set(pool) == {c["id"] for c in builder.candidates} | (builder.test_ids - {q["id"]})
+        assert set(builder.bm25_for(q).ids) == set(pool) and builder.excluded(q) == {q["id"]}
+    try:
+        PromptBuilder(builder.candidates, []).pool(dict(queries[0]))  # builder senza test set: pool non definito
+        raise AssertionError("query del test set accettata da un builder senza test set")
+    except ValueError:
+        pass
+    print(f"  OK  {n} prompt: deterministici, istruzioni v4 identiche, solo il blocco esempi cambia, la query mai tra "
+          "i propri esempi; test set in leave-one-out (78 candidati: corpus + gli altri 19, indice bm25 rifittato); "
+          "default compact / user_only / drop_interactive")
 
 
 # --- client e cache -------------------------------------------------------------------------------------------------
@@ -519,9 +534,18 @@ def check_corpus_loo(builder: PromptBuilder) -> None:
         rows = sorted(ref[c["id"]], key=lambda r: int(r["rank"]))
         assert [h.id for h in hits] == [r["neighbor"] for r in rows], c["id"]
         assert all(abs(h.score_norm - float(r["score_norm"])) < 6e-5 for h, r in zip(hits, rows)), c["id"]
-        assert builder.bm25_for(c) is not builder.bm25 and c["id"] not in builder.bm25_for(c).ids
-    for q in [dict(x) for x in cl.load_queries()]:  # il test set usa l'indice congelato sui 59 candidati
-        assert builder.bm25_for(q) is builder.bm25
+        assert c["id"] not in builder.bm25_for(c).ids and len(builder.bm25_for(c).ids) == 58
+        assert builder.excluded(c) == {c["id"]} | builder.test_ids  # query del corpus: mai un esercizio De Bari
+    # un esempio De Bari per una query del corpus fa fallire build() (voce 112)
+    orig = builder.select
+    builder.select = lambda q, s: [builder.all_by_id[next(iter(sorted(builder.test_ids)))]]
+    try:
+        builder.build(builder.by_id["Louvre"], PromptSpec("bm25", k=1))
+        raise AssertionError("esempio del test set per una query del corpus non rifiutato")
+    except AssertionError as e:
+        assert "test set" in str(e), e
+    finally:
+        builder.select = orig
     try:
         builder.build(builder.by_id["AirTravel"], PromptSpec("static"))
         raise AssertionError("static con la query AirTravel non rifiutata")
@@ -690,8 +714,8 @@ def check_analyze_pilot() -> None:
     assert ap.decision(ok, True)["outcome"].startswith("STOP")  # run fermata per ragionamento
     assert ap.decision([call(0.0, 0)] * 18 + [call(0.3, 4)] * 18, False)["outcome"].startswith("STOP")  # J indefinito
 
-    assert [ap.norm_mult(m) for m in ("1..n", "0..*", "n", " 1 ", "", None, "0..1")] == [
-        "1..*", "*", "*", "1", "", "", "0..1"]
+    assert [ap.norm_mult(m) for m in ("1..n", "0..*", "n", " 1 ", "", None, "0..1", "1..1", "0..n", "1..2")] == [
+        "1..*", "*", "*", "1", "", "", "0..1", "1", "*", "1..2"]
 
     def diagram(edges):
         nodes = [{"id": i, "data": {"name": n}} for i, n in (("b", "Building"), ("a", "Apartment"), ("o", "Owner"))]
@@ -2127,6 +2151,128 @@ def check_retrievers(builder: PromptBuilder) -> None:
           "dev_k (240 generazioni), regola di esclusione e lettura dell'oracolo sulle soglie")
 
 
+def check_v5(builder: PromptBuilder) -> None:
+    """Istruzioni v5 (voce 111): template congelati, v4 invariata (default), prompt v5 diversi dalla v4 solo per istruzioni,
+    riga finale della traccia ed ereditarieta' negli esempi PlantUML; PlantUML canonico v5 con round-trip sui 59
+    diagrammi del corpus; post-processing v2 su extends / implements / interface extends e righe --|> miste; config
+    dev_v5; R_fam e regola di adozione di experiments/analyze_v5.py sulle soglie."""
+    import difflib
+    import re as _re
+    from collections import Counter as _C
+    import yaml
+    import analyze_v5 as av
+    import plantuml_postprocess as _ppu
+    import plantuml_sanity_check as sc
+    import prompt_builder as pb
+    from plantuml_format import apollon_to_plantuml
+
+    tpl = HERE / "templates"
+    for name, digest in (("v5_compact_instructions.txt", "ae0143660a313bd2133fac351d0fefb8c15bdb2f10ecc0f92f9f063fa186dfaa"),
+                         ("v5_plantuml_instructions.txt", "1e7421b81a132ca9755ca15f867463b5060dd7e70b226ec64e0d4d138befba6e"),
+                         ("v5_task.txt", "3b774b1abd08e6377c38d715046a7be52854fdf6c553bd5cfba48f0ace1e34f2"),
+                         ("v5_examples_block.txt", "11107dff991f682c256f8dbf20e4bc29d57fe1d3f6af4fa21b2848045f1666ff")):
+        assert hashlib.sha256((tpl / name).read_bytes()).hexdigest() == digest, name
+    for bad in ({"output_format": "apollon", "instructions_version": "v5"}, {"output_format": "plantuml",
+                "instructions_version": "v6"}, {"output_format": "compact", "instructions_version": "v5",
+                                                "instructions_variant": "targeted"}):
+        try:
+            PromptSpec("bm25", **bad)
+            raise AssertionError(f"spec non ammessa accettata: {bad}")
+        except ValueError:
+            pass
+    head = _re.compile(r"^(abstract class|class|interface|enum) \w+")
+    sentence = ("The examples below show the format and the modeling style. They describe other systems: do not copy their "
+                "classes.\n")
+    for fmt in ("plantuml", "compact"):  # la frase sugli esempi sta nel blocco esempi: assente in zero-shot
+        assert sentence.strip() not in (tpl / pb.V5_INSTRUCTION_TEMPLATES[fmt]).read_text(encoding="utf-8")
+        z = builder.build(builder.by_id["Boeing"], PromptSpec("zero_shot", output_format=fmt, instructions_version="v5"))
+        assert z.examples_block == "" and sentence.strip() not in z.text and z.text.endswith(pb.V5_FINAL_LINE[fmt] + "\n")
+    for fmt in ("plantuml", "compact"):
+        for q in ("Boeing", "ProjectManagement", "FitnessCompanyConan"):
+            p4 = builder.build(builder.by_id[q], PromptSpec("bm25", k=3, output_format=fmt))
+            assert p4.text == builder.build(builder.by_id[q], PromptSpec("bm25", k=3, output_format=fmt,
+                                                                          instructions_version="v4")).text
+            p5 = builder.build(builder.by_id[q], PromptSpec("bm25", k=3, output_format=fmt, instructions_version="v5"))
+            assert p5.instructions == (tpl / pb.V5_INSTRUCTION_TEMPLATES[fmt]).read_text(encoding="utf-8")
+            assert p5.task == p4.task + pb.V5_FINAL_LINE[fmt] + "\n" and p5.example_ids == p4.example_ids
+            assert p5.examples_block.startswith(sentence + "\nExamples to follow:\n")
+            if fmt == "compact":
+                assert p5.examples_block == sentence + "\n" + p4.examples_block
+            else:
+                d = [x for x in difflib.unified_diff(p4.examples_block.splitlines(),
+                                                     p5.examples_block[len(sentence) + 1:].splitlines(), lineterm="", n=0)
+                     if x[:1] in "+-" and not x.startswith(("+++", "---"))]
+                assert d and all(("--|>" in x or "..|>" in x or not x[1:].strip() or head.match(x[1:])) if x[0] == "-"
+                                 else (not x[1:].strip() or head.match(x[1:])) for x in d), d
+                assert "--|>" not in p5.examples_block and " extends " in p5.examples_block
+    # round-trip del canonico v5 su tutti i 59 diagrammi del corpus
+    for c in builder.candidates:
+        text = apollon_to_plantuml(c["diagram_apollon_json"], version="v5")
+        assert "--|>" not in text and "..|>" not in text
+        v = _ppu.validate_plantuml_response(text, "stop", c["id"])
+        assert v.level == 4 and not v.discarded_lines and not any(sc.diff(v.diagram, c["diagram_apollon_json"]).values()), c["id"]
+    # implements, interface extends, piu' genitori, corpo sulla stessa riga, righe --|> ancora accettate
+    def node(i, n, st=None, ab=False):
+        return {"id": i, "data": {"name": n, "stereotype": st, "isAbstract": ab, "attributes": [], "methods": []}}
+    ref = {"nodes": [node("a", "Car"), node("b", "Vehicle", ab=True), node("c", "Printable", "interface"),
+                     node("d", "Named", "interface")],
+           "edges": [{"id": "1", "source": "a", "target": "b", "type": "ClassInheritance", "data": {}},
+                     {"id": "2", "source": "a", "target": "c", "type": "ClassRealization", "data": {}},
+                     {"id": "3", "source": "a", "target": "d", "type": "ClassRealization", "data": {}},
+                     {"id": "4", "source": "c", "target": "d", "type": "ClassInheritance", "data": {}}]}
+    text = apollon_to_plantuml(ref, version="v5")
+    assert "class Car extends Vehicle implements Printable, Named {}" in text and "interface Printable extends Named {}" in text
+    v = _ppu.validate_plantuml_response(text, "stop", "x")
+    assert v.level == 4 and not any(sc.diff(v.diagram, ref).values()) and v.syntax_rewrites["implements"] == 2
+    mixed = text.replace("class Car extends Vehicle implements Printable, Named {}", "class Car {}").replace(
+        "@enduml", "Car --|> Vehicle\nCar ..|> Printable\nCar ..|> Named\n@enduml")
+    assert not any(sc.diff(_ppu.validate_plantuml_response(mixed, "stop", "x").diagram, ref).values())
+    inline = _ppu.validate_plantuml_response("@startuml\nabstract class Shape {}\nclass Circle extends Shape { + r : float }"
+                                             "\n@enduml", "stop", "y")
+    assert inline.level == 4 and [e["type"] for e in inline.diagram["edges"]] == ["ClassInheritance"]
+    try:
+        apollon_to_plantuml({"nodes": ref["nodes"], "edges": [{**ref["edges"][0], "data": {"label": "x"}}]}, version="v5")
+        raise AssertionError("generalizzazione con etichetta accettata in v5")
+    except ValueError:
+        pass
+    # config: uguale a dev_k (Gemma, k = 3) salvo la versione delle istruzioni
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_v5.yaml").read_text(encoding="utf-8"))
+    dk = yaml.safe_load((ROOT / "experiments" / "configs" / "dev_k.yaml").read_text(encoding="utf-8"))
+    total = 0
+    for name in ("P-G", "C-G"):
+        r, b = rx.resolve_configuration(cfg, name), rx.resolve_configuration(dk, name)
+        for key in ("query_ids", "repetitions", "seed", "generation", "model_metadata", "client", "config_version"):
+            assert r[key] == b[key], key
+        assert r["prompt"] == {**b["prompt"], "instructions_version": "v5"} and r["conditions"] == ["bm25"]
+        plan = rx.plan(r, builder.candidates)
+        assert all(s.instructions_version == "v5" and s.k == 3 for _, s, _, _ in plan)
+        total += len(plan)
+    assert total == 80
+    # R_fam e regola di adozione (soglie incluse)
+    m = {"relations": _C({"same_type": 10, "type ClassBidirectional -> ClassUnidirectional": 2,
+                          "type ClassUnidirectional -> ClassBidirectional": 1, "type ClassBidirectional -> ClassComposition": 5}),
+         "gt_edges_all": 40}
+    assert math.isclose(av.r_fam(m), 13 / 40)
+
+    def M(R=0.30, R_fam=0.34, M1=0.28, Vc=40, inv=12):
+        return {"R": R, "R_fam": R_fam, "M1": M1, "Vc": Vc, "inv_gen": inv}
+
+    assert av.adopt(M(), M(R=0.33), "plantuml")["adopt"]  # dR 0,03 incluso
+    assert not av.adopt(M(), M(R=0.329, R_fam=0.369), "plantuml")["adopt"]  # sotto entrambe le soglie
+    assert av.adopt(M(), M(R_fam=0.37), "compact")["adopt"]  # dR_fam 0,03
+    assert av.adopt(M(), M(inv=6), "plantuml")["adopt"]  # invertite dimezzate (12 -> 6)
+    assert not av.adopt(M(), M(inv=7), "plantuml")["adopt"]
+    assert not av.adopt(M(inv=12), M(inv=0), "compact")["adopt"]  # criterio solo PlantUML
+    assert not av.adopt(M(inv=0), M(inv=0), "plantuml")["adopt"]  # nessuna invertita nella baseline: nessun guadagno
+    assert not av.adopt(M(), M(R=0.40, Vc=37), "plantuml")["adopt"]  # Vc -3
+    assert av.adopt(M(), M(R=0.40, Vc=38), "plantuml")["adopt"]  # Vc -2 ammesso
+    assert not av.adopt(M(), M(R=0.40, M1=0.249), "plantuml")["adopt"]  # M -0,031
+    assert av.adopt(M(), M(R=0.40, M1=0.25), "plantuml")["adopt"]  # M -0,03 ammesso
+    print("  OK  istruzioni v5 (voce 111): template congelati, v4 invariata, prompt v5 diversi solo per istruzioni, riga "
+          "finale ed ereditarieta' negli esempi PlantUML; canonico v5 con round-trip identico sui 59 diagrammi; "
+          "extends / implements / interface extends e righe --|> miste; config dev_v5 (80); R_fam e regola sulle soglie")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -2151,6 +2297,7 @@ def main() -> None:
         check_k(builder, tmp)
         check_instructions(builder, tmp)
         check_retrievers(builder)
+        check_v5(builder)
         check_review(builder, tmp)
         check_run_log(tmp)
         check_provenance()

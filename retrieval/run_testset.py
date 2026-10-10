@@ -10,8 +10,14 @@ Hard-fail prima di guardare il test set: config non congelata, lista di stopword
 modificato rispetto al tag, cartella di output gia' esistente (il test set si guarda una volta sola: per rifare la run
 serve un run-id nuovo e una motivazione in docs/decisions.md).
 
+PROTOCOLLO (2026-10-10, voce 112): `--protocol loo` (default) = leave-one-out sui 20 esercizi De Bari: per ogni
+esercizio i candidati sono i 59 del corpus piu' gli altri 19 esercizi De Bari (78), indice BM25 RIFITTATO su quel pool
+(stessa configurazione congelata), random e oracolo sullo stesso pool; si conta quanti vicini vengono dal test set.
+`--protocol fixed59` = protocollo originale (indice congelato sui 59 candidati del corpus, run testset_2026-10-04_stop2).
+Le fasce di score_norm usano i cut-off congelati sul LOO del corpus (58 candidati): con 78 candidati sono descrittive.
+
 Uso:
-    python retrieval/run_testset.py [--run-id ID] [--seeds 20]
+    python retrieval/run_testset.py [--run-id ID] [--seeds 20] [--protocol loo|fixed59]
 """
 
 from __future__ import annotations
@@ -70,6 +76,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--seeds", type=int, default=20)
+    ap.add_argument("--protocol", choices=("loo", "fixed59"), default="loo")
     args = ap.parse_args()
 
     cfg = load_frozen_config()
@@ -79,20 +86,34 @@ def main() -> None:
         raise SystemExit(f"{out} esiste gia': il test set si guarda una volta sola (usa un run-id nuovo e motivalo)")
 
     candidates, queries = cl.load_all()
-    names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in candidates}
     qnames = {q["id"]: cl.class_names(q["diagram_apollon_json"]) for q in queries}
+    names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in candidates} | qnames
+    test_ids = set(qnames)
     r_cfg, p_cfg, tax = cfg["retriever"], cfg["preprocessing"], cfg["tassonomia_score_norm_top1"]
     frozen = {"stopwords": p_cfg["stopwords"], "stem": p_cfg["stemming"], "k1": r_cfg["k1"], "b": r_cfg["b"]}
-    bm25 = KeywordRetriever(k1=frozen["k1"], b=frozen["b"],
-                            preprocess=PreprocessConfig(frozen["stopwords"], frozen["stem"])).fit(candidates)
 
+    def make_bm25():
+        return KeywordRetriever(k1=frozen["k1"], b=frozen["b"], preprocess=PreprocessConfig(frozen["stopwords"],
+                                                                                           frozen["stem"]))
+
+    def pool(q):
+        """Candidati della query: voce 112 (LOO: corpus + gli altri 19) o protocollo originale (59 del corpus)."""
+        if args.protocol == "fixed59":
+            return candidates
+        out_pool = candidates + [x for x in queries if x["id"] != q["id"]]
+        assert q["id"] not in {c["id"] for c in out_pool} and len(out_pool) == len(candidates) + len(queries) - 1
+        return out_pool
+
+    fixed = make_bm25().fit(candidates) if args.protocol == "fixed59" else None
     rows = []
     for q in sorted(queries, key=lambda q: q["debari_number"]):
-        top = bm25.retrieve(q["description"], TOP_K)
+        cand = pool(q)
+        top = (fixed or make_bm25().fit(cand)).retrieve(q["description"], TOP_K)
         jac = [cl.jaccard(qnames[q["id"]], names[r.id]) for r in top]
-        oracle = sorted((cl.jaccard(qnames[q["id"]], names[c["id"]]) for c in candidates), reverse=True)[:TOP_K]
+        oracle = sorted((cl.jaccard(qnames[q["id"]], names[c["id"]]) for c in cand), reverse=True)[:TOP_K]
         rows.append({"q": q, "top": top, "jac": jac, "oracle": oracle, "band": band(top[0].score_norm, tax),
-                     "issues": [i["tipo"] if isinstance(i, dict) else i for i in q["known_issues"] or []]})
+                     "issues": [i["tipo"] if isinstance(i, dict) else i for i in q["known_issues"] or []],
+                     "from_test": sum(r.id in test_ids for r in top)})
 
     def means(sel):
         return (statistics.mean(r["jac"][0] for r in sel), statistics.mean(statistics.mean(r["jac"]) for r in sel),
@@ -101,10 +122,9 @@ def main() -> None:
     def random_means(sel):
         per_seed = []
         for s in range(args.seeds):
-            rnd = RandomRetriever(seed=s).fit(candidates)
             j1, j3 = [], []
             for r in sel:
-                top = rnd.retrieve(r["q"]["description"], TOP_K)
+                top = RandomRetriever(seed=s).fit(pool(r["q"])).retrieve(r["q"]["description"], TOP_K)
                 js = [cl.jaccard(qnames[r["q"]["id"]], names[t.id]) for t in top]
                 j1.append(js[0]); j3.append(statistics.mean(js))
             per_seed.append((statistics.mean(j1), statistics.mean(j3)))
@@ -134,7 +154,8 @@ def main() -> None:
 
     out.mkdir(parents=True)
     meta = ar.run_metadata({"config": str(CONFIG_PATH.relative_to(ROOT)), "frozen": frozen, "top_k": TOP_K,
-                            "random_seeds": args.seeds, "tassonomia": tax})
+                            "random_seeds": args.seeds, "tassonomia": tax, "protocol": args.protocol,
+                            "candidati_per_query": len(pool(queries[0]))})
     (out / "config.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     def write_csv(name, data, fields):
@@ -145,16 +166,23 @@ def main() -> None:
                 w.writerow({k: (round(v, 4) if isinstance(v, float) else v) for k, v in d.items()})
 
     top_rows = [{"esercizio": r["q"]["id"], "rank": t.rank, "vicino": t.id, "score": t.score, "score_norm": t.score_norm,
-                 "jaccard_gt": j, "fascia_top1": r["band"], "known_issues": ";".join(r["issues"])}
+                 "jaccard_gt": j, "fascia_top1": r["band"], "known_issues": ";".join(r["issues"]),
+                 "vicino_dal_test_set": t.id in test_ids}
                 for r in rows for t, j in zip(r["top"], r["jac"])]
     write_csv("testset_top3.csv", top_rows, list(top_rows[0]))
     write_csv("summary.csv", summary_rows, list(summary_rows[0]))
     write_csv("comparison_loo.csv", comparison, list(comparison[0]))
 
+    n_from_test = sum(r["from_test"] for r in rows)
+    proto = ("leave-one-out (voce 112): candidati = 59 del corpus + gli altri 19 esercizi De Bari (78), indice BM25 "
+             f"rifittato per ogni esercizio; vicini dal test set nei top-{TOP_K}: {n_from_test}/{TOP_K * len(rows)}, "
+             f"al rango 1: {sum(r['top'][0].id in test_ids for r in rows)}/{len(rows)}"
+             if args.protocol == "loo" else "indice congelato sui 59 candidati del corpus (protocollo originale)")
     L = [f"# Retrieval BM25 sul test set De Bari ({run_id})", "",
          f"Configurazione congelata `{CONFIG_PATH.name}`: {frozen}. Commit `{meta['commit'][:7]}` (working tree "
          f"{'modificato' if meta['working_tree_dirty'] else 'pulito'}), test set `{meta['testset_tag']}` invariato: "
          f"{meta['testset_unchanged_since_tag']}. Jaccard con il ground truth SOLO descrittivo.", "",
+         f"Protocollo: {proto}.", "",
          f"Fasce di score_norm del top-1 (cut-off congelati sul LOO): basso < {tax['cutoff_basso_medio']:.4f} <= medio < "
          f"{tax['cutoff_medio_alto']:.4f} <= alto.", "",
          "## Per esercizio", "",

@@ -122,10 +122,11 @@ def decision(calls: list[dict], stopped_for_reasoning: bool) -> dict:
 
 
 def norm_mult(m) -> str:
-    """Esplorativo: minuscole, senza spazi; 'n' -> '*' (anche '1..n' -> '1..*'); '0..*' equivalente a '*'."""
+    """Minuscole, senza spazi; 'n' -> '*' (anche '1..n' -> '1..*', '0..n' -> '*'); '0..*' equivalente a '*';
+    '1..1' equivalente a '1' (2026-10-10, voce 111: correzione delle metriche, 19 estremi del GT del corpus)."""
     s = re.sub(r"\s+", "", str(m or "")).lower()
     s = "*" if s == "n" else re.sub(r"\.\.n$", "..*", s)
-    return "*" if s == "0..*" else s
+    return "*" if s == "0..*" else "1" if s == "1..1" else s
 
 
 def edges(diagram: dict) -> list[dict]:

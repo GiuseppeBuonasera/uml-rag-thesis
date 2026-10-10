@@ -2,7 +2,7 @@
 
 **Esperimento PRELIMINARE** sul corpus (split `corpus`, selezione leave-one-out), mai sul test set: da dichiarare come tale in tesi. Regola di decisione registrata PRIMA della run (docs/decisions.md, voce 75) e applicata cosi' com'e'. Generato da `experiments/analyze_pilot.py` dalle risposte grezze (`raw/`).
 
-Analisi eseguita sul commit `22f5adfbe6ce` (con modifiche non committate). GT del corpus: 59 diagrammi, sha256 del contenuto `b400d1dd7954e8a97c88ff604bc47f294e7eca2cb17d9cd7dd680542fd5db5fd` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `01ef9a52fa255f07…`.
+Analisi eseguita sul commit `366ed7a1e7af` (con modifiche non committate). GT del corpus: 59 diagrammi, sha256 del contenuto `b400d1dd7954e8a97c88ff604bc47f294e7eca2cb17d9cd7dd680542fd5db5fd` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `01ef9a52fa255f07…`.
 
 Modello `google/gemma-4-12b-qat` (QAT (q4_0)), contesto 32768, enable_thinking False; bm25 k=2; top_p 0.95, top_k 64, max_tokens 12288; 36 risposte (6 esercizi × 2 temperature × 3 ripetizioni). Ragionamento nelle risposte: no.
 

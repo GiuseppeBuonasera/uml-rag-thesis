@@ -11,7 +11,7 @@ decisioni: [`docs/decisions.md`](../docs/decisions.md).
 |---|---|
 | `raw/models_original/` | 45 esercizi originali (Golden UML Modelset, vedi `SOURCE.md`): sorgente immutabile |
 | `raw/translated_it/` | 15 esercizi italiani tradotti (non versionata: licenza da verificare) |
-| `raw/debari_test/` | 20 esercizi De Bari, TEST SET (mai nel retrieval), congelato nel tag `testset-v1` |
+| `raw/debari_test/` | 20 esercizi De Bari, TEST SET (tag `testset-v1`); nel retrieval solo in leave-one-out per le altre query del test set (voce 112) |
 | `processed/` | output generati: `corpus.jsonl`, `testset_debari.jsonl`, `apollon/`, `apollon_debari/` |
 | `corrections/` | annotazioni manuali: correzioni di contenuto per esercizio (`<id>.yaml`) |
 | `description_exclusions/` | annotazioni manuali: paragrafi esclusi dalle descrizioni (`<id>.yaml`) |

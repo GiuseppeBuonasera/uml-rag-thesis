@@ -22,7 +22,9 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
 - **Test set De Bari** (`corpus/processed/testset_debari.jsonl`, 20 record, split `debari_test`, MAI nel
   retrieval): i 20 esercizi di `docs/dati/debari/Exercises.pdf`, trascritti dalle immagini "Reference Solution"
   (`corpus/raw/debari_test/`), 20/20 convertiti (`corpus/processed/apollon_debari/`). Ground truth con cui De Bari
-  et al. hanno valutato (Analysis.xlsx).
+  et al. hanno valutato (Analysis.xlsx). **Dal 2026-10-10 (voce 112) in leave-one-out**: per ogni esercizio del test set
+  i candidati sono i 59 del corpus + gli altri 19 (78); le query del corpus (sviluppo) non vedono mai esercizi De Bari.
+  Run di retrieval di riferimento: `data/results/retrieval/testset_2026-10-10_loo/`.
 - Pipeline **verde su entrambi gli split, 0 errori** (2026-10-04): schema / integrità / round-trip / stile, 0 righe
   PlantUML non riconosciute, 0 etichette non classificate; test OK; check_translated 15/15 + 1/1 (--debari);
   check_debari OK; separazione degli split verificata (hard-fail). **2026-10-09**: corretto il GT di eHome2020 (lato
@@ -409,7 +411,8 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    nel corpus di retrieval e di ridistribuirne le traduzioni; licenza dell'item figshare da verificare con gli autori.
 2. **Dove conservare `corpus/raw/translated_it/`** se la licenza non ne permette la pubblicazione: repository
    privato / archivio separato / solo i file derivati necessari alla pipeline (oggi la cartella è esclusa da git).
-3. **Ruolo dei 20 esercizi De Bari**: confermare la scelta attuale (test set tenuto fuori dal retrieval, congelato in
+3. **RISOLTA (2026-10-10, voce 112)**: test set in leave-one-out (candidati = 59 del corpus + gli altri 19 De Bari).
+   Testo originale: **Ruolo dei 20 esercizi De Bari**: confermare la scelta attuale (test set tenuto fuori dal retrieval, congelato in
    `testset-v1`) e se adottare in aggiunta un leave-one-out (gli altri 19 come candidati del retrieval).
 4. **Es. 6 Flights** (TF-IDF 0.418 vs AirTravel, che è anche l'esempio 2 del prompt statico): confermare la scelta di
    tenerlo nel test set e nel retrieval, riportando ogni metrica su 20 e su 19 esercizi.
@@ -494,7 +497,8 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
      sottoinsieme ripetuto (stesse chiamate rieseguite, differenze misurate e riportate);
    - (b) temperature bassa (es. 0.2-0.3) con 3 o più ripetizioni per cella: costo triplo (o più), variabilità
      misurata in tutte le celle.
-9. **Baseline few-shot statica**: la baseline few-shot statica deriva dal prompt v3 dello studio 2025 (Garaccione et
+9. **SUPERATA (2026-10-10, voce 111)**: il prompt non è vincolato a replicare lo studio 2025; static = istruzioni
+   correnti + 2 esempi fissi. Testo originale: **Baseline few-shot statica**: la baseline few-shot statica deriva dal prompt v3 dello studio 2025 (Garaccione et
    al.), adattato ad Apollon v4 con l'esempio dell'orologio (diagramma a stati) sostituito da AirTravel. Va bene come
    baseline ufficiale, considerando che De Bari et al. usavano PlantUML e un prompt diverso? (Il prompt v3 originale e
    i suoi esempi sono in `docs/dati/studio2025_it/`.) **Aggiunta 2026-10-05**: l'esempio 1 della baseline (bank
@@ -549,6 +553,9 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    funzionamento sul dev set (`dev_retrievers`, 240 generazioni, Gemma, k = 3): nessuna esclusione; oracolo Jt:
    R − R(BM25) +0,017 (PlantUML), −0,065 (compatto) → il retrieval non è il collo di bottiglia. Analisi:
    `python experiments/analyze_retrievers.py`; controlli: `python experiments/check_dev_retrievers.py`. STOP B.
+   **Istruzioni v5 (voce 111, STOP A)**: template v5 riscritti da zero (default resta v4), canonico PlantUML v5,
+   `norm_mult` con '1..1' = '1' (nessun esito passato cambia), R_fam e generalizzazioni invertite; regola di
+   adozione registrata; config `dev_v5.yaml` (80 generazioni) e `experiments/analyze_v5.py` pronti. Run non eseguita.
 3. **Pipeline di generazione**:
    - ~~**3a. Infrastruttura senza chiamate LLM**~~ — FATTO il 2026-10-05 (prompt builder, client LM Studio e
      mock con cache, post-processing L0-L4, runner con dry run). Resta lo smoke test manuale con LM Studio
