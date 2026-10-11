@@ -191,7 +191,10 @@ def dense_model() -> tuple[str, str]:
 
 
 class PromptBuilder:
-    def __init__(self, candidates: list[dict] | None = None, queries: list[dict] | None = None, dense=None):
+    POOLS = ("all", "corpus60")
+
+    def __init__(self, candidates: list[dict] | None = None, queries: list[dict] | None = None, dense=None,
+                 pool: str = "all"):
         """dense: retriever denso gia' costruito (i test passano embedding finti); None = quello di config_dense.yaml,
         caricato solo alla prima condizione dense / hybrid."""
         if candidates is None:
@@ -200,6 +203,11 @@ class PromptBuilder:
             if queries is None:  # pool unico (voce 115): il test set entra sempre tra i candidati
                 queries = cl.load_queries()
             cl.check_disjoint(candidates, queries)  # corpus.jsonl senza esercizi del test set (invariato)
+        if pool not in self.POOLS:
+            raise ValueError(f"pool sconosciuto: {pool} (ammessi: {self.POOLS})")
+        # pool (voce 123): "all" = pool unico della voce 115 (default); "corpus60" = solo gli esercizi del corpus come
+        # candidati, per QUALUNQUE query (anche De Bari), leave-one-out sulle query del corpus
+        self.pool_mode = pool
         self.candidates = candidates
         self.by_id = {c["id"]: c for c in candidates}  # SOLO il corpus (is_corpus_query, esempi statici)
         self.test_queries = list(queries or [])
@@ -247,6 +255,8 @@ class PromptBuilder:
         query stessa."""
         if query["id"] not in self.all_by_id:
             raise ValueError(f"query {query['id']} non presente tra gli esercizi del builder: pool non definito")
+        if self.pool_mode == "corpus60":  # voce 123: solo i 60 del corpus, mai la query
+            return [c for c in self.candidates if c["id"] != query["id"]]
         return [c for c in self.candidates + self.test_queries if c["id"] != query["id"]]
 
     def structure_for(self, query: dict, condition: str):

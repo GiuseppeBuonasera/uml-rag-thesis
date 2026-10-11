@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass City {\n  + Name : string\n}\n\nclass H2SLocation {\n  + Name : string\n}\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n}\n\nclass ScheduledPickup {\n  + Description : string\n  + RequestedDay : date\n  + RequestedTime : time\n}\n\nclass Vehicle {\n  + StorageSpace : float\n}\n\nclass VolunteerDriver {\n  + AvailableDays : date[]\n}\n\nclass PickupRoute {\n  + Date : date\n}\n\nclass Item {\n  + Dimensions : string\n  + Weight : float\n}\n\nclass SecondHandArticle {\n  + RFIDTag : string\n  + Category : string\n}\n\nclass NonPerishableFood {}\n\nclass DistributionCenter {\n}\n\nclass H2SEmployee {\n}\n\nclass Client {\n  + HomeAddress : string\n  + NeededCategories : string[]\n}\n\nclass FoodBank {\n}\n\nH2SLocation \"1\" *-- \"1\" DistributionCenter\nH2SLocation \"1\" *-- \"*\" H2SEmployee\nCity \"1\" -- \"*\" H2SLocation\n\nResident \"1\" -- \"*\" ScheduledPickup\nScheduledPickup \"*\" -- \"1\" Item\nScheduledPickup \"*\" -- \"1\" Resident\n\nVehicle \"1\" -- \"*\" PickupRoute\nVolunteerDriver \"1\" -- \"*\" PickupRoute\nPickupRoute \"1\" -- \"*\" ScheduledPickup\n\nItem \"1\" -- \"0..1\" SecondHandArticle\nItem \"1\" -- \"0..1\" NonPerishableFood\n\nSecondHandArticle \"*\" -- \"1\" DistributionCenter\nNonPerishableFood \"*\" -- \"1\" FoodBank\n\nH2SEmployee \"1\" -- \"*\" SecondHandArticle : examines\nH2SEmployee \"1\" -- \"*\" Client : calls\nH2SEmployee \"1\" -- \"*\" SecondHandArticle : assignsDelivery\n\nClient \"1\" -- \"*\" SecondHandArticle : receives\nVolunteerDriver \"1\" -- \"*\" SecondHandArticle : delivers\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 11.632834999999886,
+ "prompt_tokens": 3534,
+ "completion_tokens": 442,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-pfbesl59rs8miqxijlywf",
+  "object": "chat.completion",
+  "created": 1791733487,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass City {\n  + Name : string\n}\n\nclass H2SLocation {\n  + Name : string\n}\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n}\n\nclass ScheduledPickup {\n  + Description : string\n  + RequestedDay : date\n  + RequestedTime : time\n}\n\nclass Vehicle {\n  + StorageSpace : float\n}\n\nclass VolunteerDriver {\n  + AvailableDays : date[]\n}\n\nclass PickupRoute {\n  + Date : date\n}\n\nclass Item {\n  + Dimensions : string\n  + Weight : float\n}\n\nclass SecondHandArticle {\n  + RFIDTag : string\n  + Category : string\n}\n\nclass NonPerishableFood {}\n\nclass DistributionCenter {\n}\n\nclass H2SEmployee {\n}\n\nclass Client {\n  + HomeAddress : string\n  + NeededCategories : string[]\n}\n\nclass FoodBank {\n}\n\nH2SLocation \"1\" *-- \"1\" DistributionCenter\nH2SLocation \"1\" *-- \"*\" H2SEmployee\nCity \"1\" -- \"*\" H2SLocation\n\nResident \"1\" -- \"*\" ScheduledPickup\nScheduledPickup \"*\" -- \"1\" Item\nScheduledPickup \"*\" -- \"1\" Resident\n\nVehicle \"1\" -- \"*\" PickupRoute\nVolunteerDriver \"1\" -- \"*\" PickupRoute\nPickupRoute \"1\" -- \"*\" ScheduledPickup\n\nItem \"1\" -- \"0..1\" SecondHandArticle\nItem \"1\" -- \"0..1\" NonPerishableFood\n\nSecondHandArticle \"*\" -- \"1\" DistributionCenter\nNonPerishableFood \"*\" -- \"1\" FoodBank\n\nH2SEmployee \"1\" -- \"*\" SecondHandArticle : examines\nH2SEmployee \"1\" -- \"*\" Client : calls\nH2SEmployee \"1\" -- \"*\" SecondHandArticle : assignsDelivery\n\nClient \"1\" -- \"*\" SecondHandArticle : receives\nVolunteerDriver \"1\" -- \"*\" SecondHandArticle : delivers\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3534,
+   "completion_tokens": 442,
+   "total_tokens": 3976,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

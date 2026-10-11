@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"AlphaInsurance\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ AccountNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ BrokerId : int\"\n      ]\n    },\n    {\n      \"name\": \"InsurancePolicy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ PolicyType : string\"\n      ]\n    },\n    {\n      \"name\": \"Offer\",\n      \"attributes\": [\n        \"+ OfferId : int\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractId : int\",\n        \"+ BillingFrequency : string\",\n        \"+ Price : float\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ CaseId : int\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ ExpertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"EstimatorReport\",\n      \"attributes\": [\n        \"+ ReportDate : date\",\n        \"+ Content : string\"\n      ]\n    },\n    {\n      \"name\": \"CompensationDecision\",\n      \"attributes\": [\n        \"+ IsApproved : boolean\",\n        \"+ EligibleCosts : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Broker\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"InsurancePolicy\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Broker\",\n      \"target\": \"Offer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"InsurancePolicy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"ClaimCase\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"Estimator\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Estimator\",\n      \"target\": \"EstimatorReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"EstimatorReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"CompensationDecision\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 23.764348199999972,
+ "prompt_tokens": 4262,
+ "completion_tokens": 948,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gghysbnipz57f5145eb9g",
+  "object": "chat.completion",
+  "created": 1791731714,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"AlphaInsurance\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ AccountNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Broker\",\n      \"attributes\": [\n        \"+ BrokerId : int\"\n      ]\n    },\n    {\n      \"name\": \"InsurancePolicy\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ PolicyType : string\"\n      ]\n    },\n    {\n      \"name\": \"Offer\",\n      \"attributes\": [\n        \"+ OfferId : int\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractId : int\",\n        \"+ BillingFrequency : string\",\n        \"+ Price : float\"\n      ]\n    },\n    {\n      \"name\": \"ClaimCase\",\n      \"attributes\": [\n        \"+ CaseId : int\",\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"Estimator\",\n      \"attributes\": [\n        \"+ ExpertiseArea : string\"\n      ]\n    },\n    {\n      \"name\": \"EstimatorReport\",\n      \"attributes\": [\n        \"+ ReportDate : date\",\n        \"+ Content : string\"\n      ]\n    },\n    {\n      \"name\": \"CompensationDecision\",\n      \"attributes\": [\n        \"+ IsApproved : boolean\",\n        \"+ EligibleCosts : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Broker\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"InsurancePolicy\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Broker\",\n      \"target\": \"Offer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"InsurancePolicy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"ClaimCase\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"Estimator\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Estimator\",\n      \"target\": \"EstimatorReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"EstimatorReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClaimCase\",\n      \"target\": \"CompensationDecision\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4262,
+   "completion_tokens": 948,
+   "total_tokens": 5210,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

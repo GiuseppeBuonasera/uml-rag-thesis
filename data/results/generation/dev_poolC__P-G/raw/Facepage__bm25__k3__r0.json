@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass User {\n  + ID : int\n  + name : string\n  + email : string\n  + dateOfBirth : date\n}\n\nclass Account {\n  + accountNumber : int\n}\n\nclass BusinessAccount extends Account {\n  + companyName : string\n  + monthlyFee : float\n}\n\nclass PersonalAccount extends Account {\n}\n\nclass Page {\n  + pageName : string\n  + numberOfVisits : int\n}\n\nclass AdvertisementPage extends Page {\n  + bounceRate : float\n  + clickThroughRate : float\n  + conversionRate : float\n}\n\nUser \"1\" -- \"1\" Account\nAccount \"1\" -- \"*\" Page\nPersonalAccount \"1\" -- \"*\" Page : has privilege\nPersonalAccount \"1\" -- \"*\" PersonalAccount : friend request\nBusinessAccount \"1\" -- \"*\" AdvertisementPage : creates",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 8.023108300000331,
+ "prompt_tokens": 3749,
+ "completion_tokens": 188,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-k7dik2ii0hoaws1adn8fnm",
+  "object": "chat.completion",
+  "created": 1791733444,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + ID : int\n  + name : string\n  + email : string\n  + dateOfBirth : date\n}\n\nclass Account {\n  + accountNumber : int\n}\n\nclass BusinessAccount extends Account {\n  + companyName : string\n  + monthlyFee : float\n}\n\nclass PersonalAccount extends Account {\n}\n\nclass Page {\n  + pageName : string\n  + numberOfVisits : int\n}\n\nclass AdvertisementPage extends Page {\n  + bounceRate : float\n  + clickThroughRate : float\n  + conversionRate : float\n}\n\nUser \"1\" -- \"1\" Account\nAccount \"1\" -- \"*\" Page\nPersonalAccount \"1\" -- \"*\" Page : has privilege\nPersonalAccount \"1\" -- \"*\" PersonalAccount : friend request\nBusinessAccount \"1\" -- \"*\" AdvertisementPage : creates",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3749,
+   "completion_tokens": 188,
+   "total_tokens": 3937,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

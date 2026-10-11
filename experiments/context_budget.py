@@ -112,7 +112,7 @@ def report_config(config: Path, manifests: list[Path]) -> str:
     fs = [correction_factors(m) for m in manifests]
     factor = max(f["max"] for f in fs)
     candidates = cl.load_candidates()
-    builder = PromptBuilder(candidates)  # pool unico (voce 115): corpus + test set
+    builder = PromptBuilder(candidates, pool=cfg.get("pool", "all"))  # pool del config (voci 115, 123)
     queries = [c for c in candidates if c["id"] in set(cfg["query_ids"])]
     assert len(queries) == len(cfg["query_ids"])
     p = cfg.get("prompt", {})

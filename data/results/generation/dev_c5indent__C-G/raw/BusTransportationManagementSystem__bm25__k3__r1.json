@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\": [\n  {\n    \"name\": \"Driver\",\n    \"attributes\": [\n      \"+ Name : string\",\n      \"+ ID : int\",\n      \"+ IsSickLeave : boolean\"\n    ]\n  },\n  {\n    \"name\": \"Bus\",\n    \"attributes\": [\n      \"+ LicensePlate : string\",\n      \"+ IsInRepairShop : boolean\"\n    ]\n  },\n  {\n    \"name\": \"BusRoute\",\n    \"attributes\": [\n      \"+ RouteNumber : int\"\n    ]\n  },\n  {\n    \"name\": \"Shift\",\n    \"attributes\": [\n      \"+ ShiftType : ShiftType\"\n    ]\n  },\n  {\n    \"name\": \"Schedule\",\n    \"attributes\": [\n      \"+ Date : date\"\n    ]\n  },\n  {\n    \"name\": \"ShiftType\",\n    \"kind\": \"enum\",\n    \"values\": [\n      \"Morning\",\n      \"Afternoon\",\n      \"Night\"\n    ]\n  }\n], \"relations\": [\n  {\n    \"type\": \"association\",\n    \"source\": \"BusRoute\",\n    \"target\": \"Bus\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  },\n  {\n    \"type\": \"association\",\n    \"source\": \"Schedule\",\n    \"target\": \"BusRoute\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  },\n  {\n    \"type\": \"association\",\n    \"source\": \"Schedule\",\n    \"target\": \"Bus\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  },\n  {\n    \"type\": \"association\",\n    \"source\": \"Schedule\",\n    \"target\": \"Driver\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  },\n  {\n    \"type\": \"association\",\n    \"source\": \"Schedule\",\n    \"target\": \"Shift\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  }\n]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 12.309236800000008,
+ "prompt_tokens": 6126,
+ "completion_tokens": 484,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-108zmfyjihij1106524nh6ji",
+  "object": "chat.completion",
+  "created": 1791731817,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [\n  {\n    \"name\": \"Driver\",\n    \"attributes\": [\n      \"+ Name : string\",\n      \"+ ID : int\",\n      \"+ IsSickLeave : boolean\"\n    ]\n  },\n  {\n    \"name\": \"Bus\",\n    \"attributes\": [\n      \"+ LicensePlate : string\",\n      \"+ IsInRepairShop : boolean\"\n    ]\n  },\n  {\n    \"name\": \"BusRoute\",\n    \"attributes\": [\n      \"+ RouteNumber : int\"\n    ]\n  },\n  {\n    \"name\": \"Shift\",\n    \"attributes\": [\n      \"+ ShiftType : ShiftType\"\n    ]\n  },\n  {\n    \"name\": \"Schedule\",\n    \"attributes\": [\n      \"+ Date : date\"\n    ]\n  },\n  {\n    \"name\": \"ShiftType\",\n    \"kind\": \"enum\",\n    \"values\": [\n      \"Morning\",\n      \"Afternoon\",\n      \"Night\"\n    ]\n  }\n], \"relations\": [\n  {\n    \"type\": \"association\",\n    \"source\": \"BusRoute\",\n    \"target\": \"Bus\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  },\n  {\n    \"type\": \"association\",\n    \"source\": \"Schedule\",\n    \"target\": \"BusRoute\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  },\n  {\n    \"type\": \"association\",\n    \"source\": \"Schedule\",\n    \"target\": \"Bus\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  },\n  {\n    \"type\": \"association\",\n    \"source\": \"Schedule\",\n    \"target\": \"Driver\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  },\n  {\n    \"type\": \"association\",\n    \"source\": \"Schedule\",\n    \"target\": \"Shift\",\n    \"sourceMultiplicity\": \"1\",\n    \"targetMultiplicity\": \"*\"\n  }\n]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6126,
+   "completion_tokens": 484,
+   "total_tokens": 6610,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

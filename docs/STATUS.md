@@ -9,9 +9,9 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
 - **Versione di configurazione 2** (voce 93): contesto 32768, max_tokens 4096.
 - Campionamento: temperature 0.3, top_p 0.95, top_k 64 (valori di lavoro; domanda 8 aperta).
 - Retrieval: bm25, **k = 3** (per il Passo 3b anche k = 2, per il confronto con la baseline statica a parità di esempi).
-- **Istruzioni (voci 118, 121)**: PlantUML usa le **v5**; il JSON compatto le **v4 con gli esempi indentati**
+- **Istruzioni (voci 118, 121, 124)**: PlantUML usa le **v5**; il JSON compatto le **v5 con gli esempi indentati**
   (`serialization: indent2`; con la generazione vincolata, "both", se la domanda 14 sarà positiva). Pool unico di 79
-  candidati per query (voce 115).
+  candidati per query (voce 115, confermato dalla voce 124). Retriever del 3b: bm25, MiniLM, ibrido.
 - Prompt: istruzioni dei formati **senza** il blocco di "istruzioni mirate" (non adottato, voci 101 e 103; i file del
   blocco restano congelati solo come documentazione; nessuna iterazione sullo stesso insieme di sviluppo).
 - Formati: **PlantUML** (post-processing v2) e **JSON compatto** (docs/compact_format.md), entrambi espansi in Apollon

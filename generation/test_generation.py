@@ -2379,6 +2379,55 @@ def check_struct_lever(builder: PromptBuilder) -> None:
           "generazioni), condizioni struct / construct / struct_construct, regola sulle soglie e sulla parita'")
 
 
+
+def check_pool_lever(builder: PromptBuilder) -> None:
+    """Verifiche prima del 3b (voce 123): opzione `pool: all | corpus60`, prompt per configurazione, config uguali alle
+    baseline salvo le chiavi volute, regole A e B di experiments/analyze_pool.py."""
+    import yaml
+    import analyze_pool as apo
+    cands, tq = builder.candidates, builder.test_queries
+    b60 = PromptBuilder(cands, tq, pool="corpus60")
+    try:
+        PromptBuilder(cands, tq, pool="tutto")
+        raise AssertionError("pool sconosciuto accettato")
+    except ValueError:
+        pass
+    corpus_ids = {c["id"] for c in cands}
+    for q in [builder.by_id["Boeing"], builder.all_by_id["DB06_Flights"]]:
+        pool = {c["id"] for c in b60.pool(q)}
+        assert pool == corpus_ids - {q["id"]} and b60.excluded(q) == builder.test_ids | {q["id"]}
+        hits = b60.select(q, PromptSpec("bm25", k=3))
+        assert {e["id"] for e in hits} <= pool
+    assert len(builder.pool(builder.by_id["Boeing"])) == 79  # default invariato: pool unico
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    # prompt per configurazione (dev_poolC): P-G con v5, C-G con v4 + esempi indentati, pool corpus60
+    for conf, base_name in (("P-G", "dev_v5"), ("C-G", "dev_cindent")):
+        r, b = rx.resolve_configuration(load("dev_poolC"), conf), rx.resolve_configuration(load(base_name), conf)
+        assert r["prompt"] == b["prompt"] and r["pool"] == "corpus60" and b.get("pool", "all") == "all"
+        for key in ("query_ids", "repetitions", "seed", "generation", "model_metadata", "client", "config_version",
+                    "conditions", "k"):
+            assert r[key] == b[key], (conf, key)
+    r, b = rx.resolve_configuration(load("dev_c5indent"), "C-G"), rx.resolve_configuration(load("dev_cindent"), "C-G")
+    assert r["prompt"] == {**b["prompt"], "instructions_version": "v5"} and r.get("pool", "all") == "all"
+    # regola A (soglie incluse)
+    B = {"R": 0.26, "R_fam": 0.30, "Vc": 38, "M1": 0.21}
+    T = lambda **kw: {**B, **kw}  # noqa: E731
+    assert apo.rule_a(B, T(R=0.29))["adopt"] and apo.rule_a(B, T(R_fam=0.33))["adopt"]
+    assert not apo.rule_a(B, T(R=0.289, R_fam=0.329))["adopt"]
+    assert not apo.rule_a(B, T(R=0.40, Vc=35))["adopt"] and apo.rule_a(B, T(R=0.40, Vc=36))["adopt"]
+    assert not apo.rule_a(B, T(R=0.40, M1=0.179))["adopt"] and apo.rule_a(B, T(R=0.40, M1=0.18))["adopt"]
+    # regola B
+    base = {"compact": {"R": 0.26, "Vc": 38}, "plantuml": {"R": 0.36, "Vc": 38}}
+    tr = lambda cr, pr, cvc=38, pvc=38: {"compact": {"R": cr, "Vc": cvc}, "plantuml": {"R": pr, "Vc": pvc}}  # noqa: E731
+    assert apo.rule_b(base, tr(0.31, 0.33))["use_corpus60"]  # +0,05 compatto, -0,03 PlantUML: limiti inclusi
+    assert not apo.rule_b(base, tr(0.309, 0.36))["use_corpus60"]
+    assert not apo.rule_b(base, tr(0.40, 0.329))["use_corpus60"]
+    assert not apo.rule_b(base, tr(0.40, 0.36, cvc=35))["use_corpus60"] and apo.rule_b(base, tr(0.40, 0.36, cvc=36))["use_corpus60"]
+    assert not apo.rule_b(base, tr(0.40, 0.36, pvc=35))["use_corpus60"]
+    print("  OK  verifiche prima del 3b (voce 123): pool corpus60 (60 candidati, mai De Bari, default invariato), prompt "
+          "per configurazione, config uguali alle baseline salvo le chiavi volute, regole A e B sulle soglie")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -2406,6 +2455,7 @@ def main() -> None:
         check_v5(builder)
         check_compact_lever(builder)
         check_struct_lever(builder)
+        check_pool_lever(builder)
         check_review(builder, tmp)
         check_run_log(tmp)
         check_provenance()

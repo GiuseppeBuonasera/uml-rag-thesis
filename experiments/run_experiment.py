@@ -249,7 +249,8 @@ def resolve_configuration(cfg: dict, name: str | None) -> dict:
     out["configuration"] = name
     out["client"] = dict(model["client"])
     out["model_metadata"] = dict(model["model_metadata"])
-    out["prompt"] = {**cfg.get("prompt", {}), "output_format": conf["output_format"]}
+    # voce 123: una configurazione puo' precisare le proprie chiavi di prompt (es. istruzioni diverse per formato)
+    out["prompt"] = {**cfg.get("prompt", {}), **(conf.get("prompt") or {}), "output_format": conf["output_format"]}
     out["generation"] = {**cfg.get("generation", {}), "structured_output": bool(conf.get("structured_output"))}
     if conf.get("structured_output"):
         out["client"]["response_schema"] = conf["response_schema"]
@@ -554,7 +555,7 @@ def main(argv: list[str] | None = None) -> int:
     if split not in SPLITS:
         raise SystemExit(f"split non supportato: {split} (ammessi: {SPLITS})")
     candidates, test_queries = cl.load_all()
-    builder = PromptBuilder(candidates, test_queries)
+    builder = PromptBuilder(candidates, test_queries, pool=cfg.get("pool", "all"))  # voce 123
     # corpus: le query sono i 59 candidati (selezione LOO nel prompt builder); il test set non viene usato
     queries = test_queries if split == "testset" else candidates
     root = Path(a.results_dir)

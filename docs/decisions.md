@@ -131,6 +131,8 @@ non sono state modificate.
 120. 2026-10-10 — Varianti del retriever che usano il diagramma dei candidati: piano e parametri fissati prima
 121. 2026-10-10 — Compatto con esempi indentati e passo 4 delle varianti del retriever (regola prima della run)
 122. 2026-10-10 — Varianti del retriever, passo 4: esito (nessuna entra nel 3b)
+123. 2026-10-11 — Verifiche prima del 3b: compatto v5 + indent e pool dei soli 60 (regole prima delle run)
+124. 2026-10-11 — Verifiche prima del 3b: esito (v5 adottata per il compatto, resta il pool unico)
 
 ## Formato
 
@@ -4413,7 +4415,8 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - **Run**: `dev_structP__P-G` e `dev_structC__C-G`, 240 generazioni, tutte `stop`, nessun troncamento; Gemma ricaricato con
   il comando fisso (log in `dev_v5_model_load.log`). Analisi `experiments/analyze_struct.py`,
   `data/results/generation/dev_struct_analysis/summary.md`; report grafico (non versionato) `dev_struct_review/index.html`.
-- **Esito della regola della voce 121 (meccanico)**: **nessuna variante entra nel Passo 3b**; nel 3b restano bm25 e MiniLM.
+- **Esito della regola della voce 121 (meccanico)**: **nessuna variante entra nel Passo 3b**; nel 3b restano bm25 e MiniLM
+  (**correzione, voce 123**: e l'ibrido, ammesso dalla voce 110).
 
   | formato | retriever | V | Vc | R | M primaria |
   |---|---|---|---|---|---|
@@ -4432,3 +4435,56 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   costrutti (v4) la migliora poco (0,912 contro 0,877) e non si traduce in un guadagno misurabile.
 - **Per la tesi**: usare il diagramma dei candidati (nomi di classe, costrutti) non migliora le generazioni rispetto a
   bm25 su questo corpus e con questo modello: risultato negativo da riportare. Il codice resta nel repository.
+
+### [2026-10-11] Due verifiche prima del Passo 3b: compatto v5 + esempi indentati e pool dei soli 60 del corpus — regole registrate PRIMA delle run
+- **Run** (Gemma 4 12B QAT, config v2, bm25 k = 3, 2 ripetizioni, 20 esercizi di sviluppo; 120 generazioni):
+  1. `dev_c5indent__C-G` (`dev_c5indent.yaml`): compatto con istruzioni **v5 + esempi indentati**, pool unico.
+     Baseline `dev_cindent__C-G` (v4 + esempi indentati, stesso pool).
+  2. `dev_poolC__C-G` e 3. `dev_poolC__P-G` (`dev_poolC.yaml`): configurazione di lavoro di ciascun formato (compatto v4
+     + indent; PlantUML v5) con il **pool dei soli 60 del corpus** (nessun esempio De Bari; LOO sulle query del corpus).
+     Baseline `dev_cindent__C-G` e `dev_v5__P-G` (pool unico).
+- **Codice**: opzione di config `pool: all | corpus60` (default `all`, invariato), `PromptBuilder(pool=...)`: con
+  `corpus60` i candidati di qualunque query sono i 60 del corpus meno la query (59 per una query del corpus, 60 per una De
+  Bari); una configurazione può precisare le proprie chiavi di prompt (`configurations.<nome>.prompt`, usato da
+  `dev_poolC` per avere v5 in P-G e v4 + indent in C-G). Test `check_pool_lever`.
+- **Controlli prima delle run**: baseline riprodotte dal codice attuale (sha256, 20/20 per ciascuna); run 1: esempi
+  identici alla baseline 20/20, differenze solo nelle istruzioni, nella frase del blocco esempi e nella riga finale della
+  traccia (20/20); run 2 e 3: prompt identici alla baseline fuori dagli esempi (20/20), nessun esempio De Bari e mai la
+  query tra i propri esempi; esempi diversi in **12 esercizi** (Boeing, Bookmaker, ClothingCompany, EUScienceConnect,
+  Ebike, Facepage, FitnessCompanyConan, HelpingHands, HospitalHouseMD, InsuranceCompany, OilWells, Restaurant), gli
+  stessi 12 cambiati dal pool unico rispetto a `dev_k`; 8 invariati.
+- **REGOLA A** (compatto v5): adottare v5 per il compatto se **(dR ≥ +0,03 OPPURE dR_fam ≥ +0,03) E dVc ≥ −2 E
+  dM_primaria ≥ −0,03**. Se adottata diventa la configurazione di lavoro del compatto, e "both" diventa v5 + indent +
+  schema (sempre subordinato alla domanda 14).
+- **REGOLA B** (pool): il Passo 3b usa il pool dei soli 60 del corpus se **nel compatto dR(corpus60 − all) ≥ +0,05 E in
+  PlantUML dR ≥ −0,03 E in nessuno dei due formati dVc < −2**; altrimenti resta il pool unico. Si riporta anche R
+  separato per i 12 esercizi con esempi cambiati e per gli 8 invariati.
+- **Interazione**: se A e B cambiano entrambi la configurazione, la combinazione (v5 del compatto con il pool dei 60)
+  NON si testa qui: si registra come combinazione per il 3b e si dichiara.
+- **Se vince il pool dei 60 (conseguenze da registrare)**: per le query De Bari i candidati sono i 60 del corpus (nessun
+  altro De Bari); sparisce la contaminazione 3 della voce 117 per quanto riguarda gli esempi De Bari nelle run di
+  sviluppo, e l'analisi sui 20 De Bari torna alla pari con De Bari et al. (contaminazione 4); le run di sviluppo fatte
+  con il pool unico restano valide come storico.
+- **Ibrido nel 3b (chiarimento)**: l'ibrido **NON è escluso**. La voce 110 lo ammette al 3b (nessuna esclusione dalla
+  regola) e nessuna decisione successiva lo ha tolto; nella voce 122 la frase "nel 3b restano bm25 e MiniLM" è
+  un'imprecisione di chi scrive: va letta "nel 3b restano bm25, MiniLM e l'ibrido (voce 110); nessuna delle varianti della
+  voce 120 si aggiunge". Una sua eventuale esclusione è una decisione da prendere esplicitamente.
+- **GPU**: le run si eseguono con la GPU libera (nessun altro programma), annotato nel log di caricamento.
+
+### [2026-10-11] Verifiche prima del 3b: esito delle regole A e B
+- **Run**: `dev_c5indent__C-G`, `dev_poolC__C-G`, `dev_poolC__P-G`, 120 generazioni, tutte `stop`, nessuna dalla cache,
+  **GPU libera** (annotato in `dev_v5_model_load.log`). Analisi `experiments/analyze_pool.py`,
+  `data/results/generation/dev_pool_analysis/summary.md`; report grafico (non versionato) `dev_pool_review/index.html`.
+- **REGOLA A (meccanica): v5 ADOTTATA per il compatto** — dR +0,043, dR_fam +0,037, dVc −1, dM_primaria +0,049 (v4 + indent:
+  R 0,264, Vc 38/40; v5 + indent: R 0,307, Vc 37/40, V 39/40). **Nuova configurazione di lavoro del compatto: istruzioni
+  v5 + esempi indentati**; "both" diventa v5 + indent + schema (subordinato alla domanda 14).
+- **REGOLA B (meccanica): resta il POOL UNICO** — compatto dR(corpus60 − all) +0,020 (< +0,05) e dVc −3 (< −2);
+  PlantUML dR −0,009, dVc 0. Per i 12 esercizi con esempi diversi tra i due pool: PlantUML R 0,393 (unico) contro 0,376
+  (60); compatto 0,278 contro 0,321; per gli 8 invariati R identico nei due pool (stessi prompt: 0,299 e 0,233).
+  Le conseguenze previste per il pool dei 60 NON si applicano: restano le contaminazioni 3 e 4 della voce 117.
+- **Da notare**: con gli esempi indentati l'effetto del pool sul compatto è piccolo (+0,043 sui 12 esercizi cambiati),
+  molto lontano dal −0,159 osservato con gli esempi su una riga (voce 118): quel calo era legato soprattutto alla
+  fragilità del compatto su una riga, non agli esempi De Bari in sé.
+- **Configurazione di lavoro per il 3b**: PlantUML istruzioni v5; compatto istruzioni v5 + esempi indentati (con lo schema,
+  "both", se la domanda 14 sarà positiva); pool unico (79 candidati per query); retriever bm25, MiniLM e ibrido (voce
+  110; correzione della voce 123); Gemma 4 12B QAT, config v2, k = 3.

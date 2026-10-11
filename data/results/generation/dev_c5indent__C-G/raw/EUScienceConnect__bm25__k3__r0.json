@@ -1,0 +1,59 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ personID : int\",\n        \"+ phoneNumber : string\",\n        \"+ keywords : string[]\"\n      ]\n    },\n    {\n      \"name\": \"ResearchInstitution\",\n      \"attributes\": [\n        \"+ institutionCode : string\"\n      ]\n    },\n    {\n      \"name\": \"ScientificArticle\",\n      \"attributes\": [\n        \"+ DOI : string\",\n        \"+ title : string\"\n      ]\n    },\n    {\n      \"name\": \"PeerReviewedPaper\",\n      \"attributes\": [\n        \"+ citationCount : int\"\n      ]\n    },\n    {\n      \"name\": \"TechnicalReport\"\n    },\n    {\n      \"name\": \"Publisher\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Journal\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ impactFactor : float\"\n      ]\n    },\n    {\n      \"name\": \"AuthorPosition\",\n      \"attributes\": [\n        \"+ position : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"ResearchInstitution\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"works for\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"ScientificArticle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"author\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ScientificArticle\",\n      \"part\": \"AuthorPosition\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AuthorPosition\",\n      \"target\": \"Person\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PeerReviewedPaper\",\n      \"parent\": \"ScientificArticle\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TechnicalReport\",\n      \"parent\": \"ScientificArticle\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PeerReviewedPaper\",\n      \"target\": \"Person\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"reviewed by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TechnicalReport\",\n      \"target\": \"ResearchInstitution\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"published by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Publisher\",\n      \"target\": \"Journal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchInstitution\",\n      \"target\": \"Journal\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PeerReviewedPaper\",\n      \"target\": \"Journal\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 21.851047600000015,
+ "prompt_tokens": 5102,
+ "completion_tokens": 835,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ewmyu76ar9qn28mezmg96p",
+  "object": "chat.completion",
+  "created": 1791731956,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ personID : int\",\n        \"+ phoneNumber : string\",\n        \"+ keywords : string[]\"\n      ]\n    },\n    {\n      \"name\": \"ResearchInstitution\",\n      \"attributes\": [\n        \"+ institutionCode : string\"\n      ]\n    },\n    {\n      \"name\": \"ScientificArticle\",\n      \"attributes\": [\n        \"+ DOI : string\",\n        \"+ title : string\"\n      ]\n    },\n    {\n      \"name\": \"PeerReviewedPaper\",\n      \"attributes\": [\n        \"+ citationCount : int\"\n      ]\n    },\n    {\n      \"name\": \"TechnicalReport\"\n    },\n    {\n      \"name\": \"Publisher\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Journal\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ impactFactor : float\"\n      ]\n    },\n    {\n      \"name\": \"AuthorPosition\",\n      \"attributes\": [\n        \"+ position : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"ResearchInstitution\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"works for\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Person\",\n      \"target\": \"ScientificArticle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"author\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ScientificArticle\",\n      \"part\": \"AuthorPosition\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AuthorPosition\",\n      \"target\": \"Person\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PeerReviewedPaper\",\n      \"parent\": \"ScientificArticle\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TechnicalReport\",\n      \"parent\": \"ScientificArticle\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PeerReviewedPaper\",\n      \"target\": \"Person\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"reviewed by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TechnicalReport\",\n      \"target\": \"ResearchInstitution\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"published by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Publisher\",\n      \"target\": \"Journal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchInstitution\",\n      \"target\": \"Journal\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PeerReviewedPaper\",\n      \"target\": \"Journal\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5102,
+   "completion_tokens": 835,
+   "total_tokens": 5937,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}
