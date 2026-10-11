@@ -5,14 +5,21 @@ tocca la configurazione congelata).
 
 Scrive <run test set>/hubness.csv e aggiunge (o sostituisce) la sezione "## Hubness" in <run test set>/summary.md.
 
+PROTOCOLLO DI POOL (voce 129): l'elenco dei candidati si ricava dal config.json delle due run: `params.pool` per le run
+di analyze_retrieval.py, `params.protocol` per quelle di run_testset.py (all80 -> pool unico di 80 esercizi; loo e
+fixed59 -> corpus59); senza chiave (run storiche) -> corpus59, i 59 candidati del corpus senza Cruise. Le due run devono
+avere lo stesso pool. `--pool` forza il valore.
+
 Uso:
     python retrieval/hubness_report.py [--loo loo_2026-10-04_stop1] [--test testset_2026-10-04_stop2]
+                                       [--pool all80|corpus59] [--results-dir DIR]
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
+import json
 import sys
 from collections import Counter
 from pathlib import Path
@@ -31,20 +38,35 @@ def counts(path: Path, query_col: str, neighbor_col: str) -> tuple[Counter, Coun
     return rank1, top3, len({r[query_col] for r in rows})
 
 
-def main() -> None:
+def run_pool(run_dir: Path) -> str:
+    """Pool di una run dal suo config.json: params.pool, params.protocol (all80 / loo / fixed59), altrimenti corpus59."""
+    params = json.loads((run_dir / "config.json").read_text(encoding="utf-8")).get("params", {})
+    if "pool" in params:
+        return params["pool"]
+    return "all80" if params.get("protocol") == "all80" else "corpus59"
+
+
+def main(argv=None) -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--loo", default="loo_2026-10-04_stop1")
     ap.add_argument("--test", default="testset_2026-10-04_stop2")
-    args = ap.parse_args()
+    ap.add_argument("--pool", choices=cl.POOLS, default=None, help="default: dal config.json delle run")
+    ap.add_argument("--results-dir", default=str(RESULTS_DIR))
+    args = ap.parse_args(argv)
+    results = Path(args.results_dir)
 
-    loo1, loo3, n_loo = counts(RESULTS_DIR / args.loo / "loo_top3.csv", "query", "neighbor")
-    tst1, tst3, n_tst = counts(RESULTS_DIR / args.test / "testset_top3.csv", "esercizio", "vicino")
-    ids = sorted(c["id"] for c in cl.load_candidates())
+    pools = {run_pool(results / args.loo), run_pool(results / args.test)}
+    if args.pool is None and len(pools) > 1:
+        raise SystemExit(f"le due run hanno pool diversi ({sorted(pools)}): indicare --pool")
+    pool = args.pool or pools.pop()
+    loo1, loo3, n_loo = counts(results / args.loo / "loo_top3.csv", "query", "neighbor")
+    tst1, tst3, n_tst = counts(results / args.test / "testset_top3.csv", "esercizio", "vicino")
+    ids = sorted(c["id"] for c in cl.load_pool(pool))
 
     rows = [{"candidato": i, "loo_rank1": loo1[i], "loo_top3": loo3[i], "test_rank1": tst1[i], "test_top3": tst3[i]}
             for i in ids]
     rows.sort(key=lambda r: (-(r["loo_top3"] + r["test_top3"]), -(r["loo_rank1"] + r["test_rank1"]), r["candidato"]))
-    out = RESULTS_DIR / args.test
+    out = results / args.test
     with (out / "hubness.csv").open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0]), lineterminator="\n")
         w.writeheader()
@@ -55,7 +77,8 @@ def main() -> None:
 
     L = [SECTION, "",
          f"Solo descrittivo (da `{args.loo}/loo_top3.csv` e `{args.test}/testset_top3.csv`; tabella completa in "
-         "`hubness.csv`). Nessuna modifica alla configurazione congelata.", "",
+         "`hubness.csv`). Nessuna modifica alla configurazione congelata." +
+         ("" if pool == "corpus59" else f" Pool {pool} (voce 129): {len(ids)} candidati."), "",
          f"- Candidati distinti al rank 1: LOO {len(loo1)} su {len(ids)} ({n_loo} query); test set {len(tst1)} su "
          f"{len(ids)} ({n_tst} query).",
          f"- Candidati distinti nei top-3: LOO {len(loo3)}; test set {len(tst3)}.",

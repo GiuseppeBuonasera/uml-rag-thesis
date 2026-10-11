@@ -16,8 +16,12 @@ query piu' divergenti, testi troncati, tempi di calcolo degli embedding.
 Esecuzione offline (HF_HUB_OFFLINE=1, impostato qui): i modelli vanno scaricati prima con
 retrieval/download_dense_models.py.
 
+PROTOCOLLO DI POOL (voce 129, corpus_loader.POOLS): `--pool all80` (default delle run nuove) = pool unico della voce
+115 (80 esercizi, 79 candidati per query; pertinenza SOLO sulle 26 query di sviluppo, gli esercizi di valutazione sono
+solo candidati); `--pool corpus59` = protocollo storico descritto sopra (riproduce dense_2026-10-09_22f5adf).
+
 Uso:
-    python retrieval/analyze_dense.py [--run-id ID] [--seeds 20]
+    python retrieval/analyze_dense.py [--run-id ID] [--seeds 20] [--pool all80|corpus59] [--out-dir DIR]
 """
 
 from __future__ import annotations
@@ -120,18 +124,19 @@ def bm25_factory():
     return lambda: KeywordRetriever(k1=r["k1"], b=r["b"], preprocess=PreprocessConfig(p["stopwords"], p["stemming"]))
 
 
-def loo_rows(candidates, make_retriever, k=TOP_K) -> list[dict]:
+def loo_rows(candidates, make_retriever, k=TOP_K, queries=None) -> list[dict]:
+    """queries: None = ogni candidato e' anche query (protocollo storico); altrimenti solo queste (pool all80)."""
     rows = []
-    for q in candidates:
+    for q in (candidates if queries is None else queries):
         pool = [c for c in candidates if c["id"] != q["id"]]
         top = make_retriever().fit(pool).retrieve(q["description"], k)
         rows.append({"query": q["id"], "top": [r.id for r in top], "scores": [r.score for r in top]})
     return rows
 
 
-def dense_rows(candidates, dense: DenseRetriever, k=TOP_K) -> list[dict]:
+def dense_rows(candidates, dense: DenseRetriever, k=TOP_K, queries=None) -> list[dict]:
     rows = []
-    for q in candidates:
+    for q in (candidates if queries is None else queries):
         top = dense.retrieve(q["description"], k, exclude_ids={q["id"]})
         rows.append({"query": q["id"], "top": [r.id for r in top], "scores": [r.score for r in top]})
     return rows
@@ -150,9 +155,9 @@ class _Fitted:
         return self.inner.retrieve(query_text, k, exclude_ids)
 
 
-def hybrid_rows(candidates, dense: DenseRetriever, make_bm25) -> list[dict]:
+def hybrid_rows(candidates, dense: DenseRetriever, make_bm25, queries=None) -> list[dict]:
     rows = []
-    for q in candidates:
+    for q in (candidates if queries is None else queries):
         pool = [c for c in candidates if c["id"] != q["id"]]
         h = HybridRetriever(make_bm25(), _Fitted(dense))
         h.fit(pool)
@@ -161,11 +166,11 @@ def hybrid_rows(candidates, dense: DenseRetriever, make_bm25) -> list[dict]:
     return rows
 
 
-def oracle(candidates, rel: Relevance) -> dict[str, dict[int, float]]:
+def oracle(candidates, rel: Relevance, queries=None) -> dict[str, dict[int, float]]:
     out = {m: {} for m in MEASURES}
     for m in MEASURES:
         best = [sorted((rel.measure(q["id"], c["id"])[m] for c in candidates if c["id"] != q["id"]), reverse=True)
-                for q in candidates]
+                for q in (candidates if queries is None else queries)]
         for k in KS:
             out[m][k] = statistics.mean(statistics.mean(b[:k]) for b in best)
     return out
@@ -194,27 +199,32 @@ def fmt(x: float) -> str:
     return f"{x:.3f}"
 
 
-def main() -> None:
+def main(argv=None) -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--seeds", type=int, default=20)
-    args = ap.parse_args()
+    ap.add_argument("--pool", choices=cl.POOLS, default="all80")
+    ap.add_argument("--out-dir", default=str(RESULTS_DIR), help="cartella che contiene la run (default data/results/retrieval)")
+    args = ap.parse_args(argv)
     assert os.environ.get("HF_HUB_OFFLINE") == "1", "l'analisi gira offline (HF_HUB_OFFLINE=1)"
 
     cfg = yaml.safe_load(CONFIG_DENSE.read_text(encoding="utf-8"))
     rule, boot = cfg["regola_di_scelta"], cfg["regola_di_scelta"]["bootstrap"]
-    candidates = cl.load_candidates()  # SOLO il corpus: il test set non si legge
-    leaked = [c["id"] for c in candidates if cl.DEBARI_ID_RE.match(c["id"]) or c.get("split") == "debari_test"]
-    assert not leaked, leaked
+    candidates = cl.load_pool(args.pool)  # corpus59: SOLO il corpus (test set non letto); all80: 80 esercizi
+    if args.pool == "corpus59":
+        leaked = [c["id"] for c in candidates if cl.DEBARI_ID_RE.match(c["id"]) or c.get("split") == "debari_test"]
+        assert not leaked, leaked
+    queries = None if args.pool == "corpus59" else cl.pool_queries(args.pool, candidates)
+    Q = candidates if queries is None else queries  # query su cui si misura la pertinenza
     ids = sorted(c["id"] for c in candidates)
     title = {c["id"]: c["name"] for c in candidates}
     rel = Relevance(candidates)
     run_id = args.run_id or f"dense_{dt.date.today().isoformat()}_{git('rev-parse', '--short', 'HEAD')}"
-    out = RESULTS_DIR / run_id
+    out = Path(args.out_dir) / run_id
     out.mkdir(parents=True, exist_ok=True)
 
     make_bm25 = bm25_factory()
-    rows = {"BM25": loo_rows(candidates, make_bm25)}
+    rows = {"BM25": loo_rows(candidates, make_bm25, queries=queries)}
     models, timing, trunc, snaps = {}, {}, {}, {}
     descriptions = [c["description"] for c in candidates]
     for m in cfg["modelli"]:
@@ -233,10 +243,10 @@ def main() -> None:
         counts = d.token_counts(descriptions)
         trunc[name] = {"troncati": sum(1 for n in counts if n > d.max_seq_length), "limite": d.max_seq_length,
                        "mediana_token": statistics.median(counts), "max_token": max(counts)}
-        timing[name] = {"caricamento_s": round(t_load, 2), "embedding_59_s": round(t_enc, 2),
+        timing[name] = {"caricamento_s": round(t_load, 2), f"embedding_{len(candidates)}_s": round(t_enc, 2),
                         "ms_per_testo": round(1000 * t_enc / len(descriptions), 1), "dimensione": int(fresh.shape[1])}
         models[name] = d
-        rows[name] = dense_rows(candidates, d)
+        rows[name] = dense_rows(candidates, d, queries=queries)
         print(f"{name}: {timing[name]} troncati {trunc[name]['troncati']}", flush=True)
 
     # --- regola di scelta (Jt@3, voce 107 1f) ---
@@ -251,27 +261,32 @@ def main() -> None:
 
     # --- ibrido: ufficiale con il denso scelto, descrittivo con gli altri ---
     for name, d in models.items():
-        rows[f"Ibrido RRF (BM25 + {name.split('/')[-1]})"] = hybrid_rows(candidates, d, make_bm25)
+        rows[f"Ibrido RRF (BM25 + {name.split('/')[-1]})"] = hybrid_rows(candidates, d, make_bm25, queries)
     hybrid_official = f"Ibrido RRF (BM25 + {chosen.split('/')[-1]})"
     rel_at.update({r: measures_at_k(v, rel) for r, v in rows.items() if r not in rel_at})
 
     # --- casuale e oracolo ---
-    rnd = [measures_at_k(loo_rows(candidates, lambda s=s: RandomRetriever(seed=s)), rel) for s in range(args.seeds)]
+    rnd = [measures_at_k(loo_rows(candidates, lambda s=s: RandomRetriever(seed=s), queries=queries), rel)
+           for s in range(args.seeds)]
     rnd_mean = {m: {k: statistics.mean(x[m][k] for x in rnd) for k in KS} for m in MEASURES}
     rnd_sd = {m: {k: statistics.stdev(x[m][k] for x in rnd) for k in KS} for m in MEASURES}
-    orc = oracle(candidates, rel)
+    orc = oracle(candidates, rel, queries)
 
     # --- sovrapposizione, hubness, query divergenti ---
     ovl = {name: overlap(rows["BM25"], rows[name]) for name in models}
     hub = {r: hubness(v, ids) for r, v in rows.items()}
     inter = ovl[chosen][2]
-    divergent = sorted(range(len(candidates)), key=lambda i: (inter[i], rows["BM25"][i]["query"]))[:3]
+    divergent = sorted(range(len(Q)), key=lambda i: (inter[i], rows["BM25"][i]["query"]))[:3]
 
     # --- file ---
     meta = {"run_id": run_id, "commit": git("rev-parse", "HEAD"), "working_tree_dirty": bool(git("status", "--porcelain")),
             "created_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "versions": versions(), "config_dense": cfg, "snapshot": snaps, "tempi": timing, "troncamenti": trunc,
-            "random_seeds": args.seeds, "loo": "58 candidati per query (esclusa solo la query); BM25 rifittato senza q",
+            "random_seeds": args.seeds,
+            "loo": ("58 candidati per query (esclusa solo la query); BM25 rifittato senza q" if queries is None else
+                    f"pool all80 (voce 129): {len(candidates) - 1} candidati per query (esclusa solo la query), "
+                    f"BM25 rifittato senza q; pertinenza sulle {len(Q)} query di sviluppo"),
+            **({"pool": args.pool, "query": [q["id"] for q in Q]} if queries is not None else {}),
             "esito_regola": {"Jt@3": jt3, "scelto": chosen, "in_parita": tied,
                              "bootstrap_top2": {"modelli": ranked[:2], "media": ci_top2[0], "ic95": ci_top2[1:]},
                              "bootstrap_scelto_vs_bm25": {"media": ci_bm25[0], "ic95": ci_bm25[1:]}},
@@ -299,14 +314,18 @@ def main() -> None:
     short = {n: n.split("/")[-1] for n in params}
     order = ["BM25", *params, hybrid_official]
     L = [f"# Retriever denso e ibrido — leave-one-out sul corpus ({run_id})", "",
-         "Voce 107 di `docs/decisions.md`. SOLO retrieval, nessuna generazione; test set NON letto. "
-         f"{len(candidates)} query, 58 candidati ciascuna (esclusa solo la query, come BM25). Generato da "
-         "`retrieval/analyze_dense.py`.", "",
+         ("Voce 107 di `docs/decisions.md`. SOLO retrieval, nessuna generazione; test set NON letto. "
+          f"{len(candidates)} query, 58 candidati ciascuna (esclusa solo la query, come BM25). Generato da "
+          "`retrieval/analyze_dense.py`." if queries is None else
+          "Voci 107 e 129 di `docs/decisions.md`. SOLO retrieval, nessuna generazione. Pool unico all80: "
+          f"{len(candidates)} esercizi, {len(candidates) - 1} candidati per query (esclusa solo la query); pertinenza "
+          f"sulle {len(Q)} query di SVILUPPO (gli esercizi di valutazione sono solo candidati). Generato da "
+          "`retrieval/analyze_dense.py`."), "",
          _provenance_line(candidates), "",
          "**Le misure servono SOLO a scegliere il modello denso.** J e Jt sono lessicali sui nomi del GT e favoriscono "
          "BM25 per costruzione: il confronto BM25 / denso / ibrido si decide con le generazioni sull'insieme di "
          "sviluppo (voce 107, precisazione 1).", "",
-         "## Pertinenza (media sulle 59 query della media dei primi k)", "",
+         f"## Pertinenza (media sulle {len(Q)} query della media dei primi k)", "",
          "| Retriever | J@1 | J@2 | J@3 | Jt@1 | Jt@2 | Jt@3 | S@1 | S@2 | S@3 |", "|---|---|---|---|---|---|---|---|---|---|"]
     L.append(f"| casuale ({args.seeds} seed: media ± sd) | "
              + " | ".join(f"{rnd_mean[m][k]:.3f} ± {rnd_sd[m][k]:.3f}" for m in MEASURES for k in KS) + " |")
@@ -332,8 +351,8 @@ def main() -> None:
           "| Denso | media di \\|∩\\| / 3 | stesso top-1 | query con ∩ = 0 / 1 / 2 / 3 |", "|---|---|---|---|"]
     for name in params:
         c = Counter(ovl[name][2])
-        L.append(f"| {short[name]} | {ovl[name][0]:.3f} | {ovl[name][1]:.0%} ({round(ovl[name][1] * len(candidates))}"
-                 f"/{len(candidates)}) | {c[0]} / {c[1]} / {c[2]} / {c[3]} |")
+        L.append(f"| {short[name]} | {ovl[name][0]:.3f} | {ovl[name][1]:.0%} ({round(ovl[name][1] * len(Q))}"
+                 f"/{len(Q)}) | {c[0]} / {c[1]} / {c[2]} / {c[3]} |")
     L += ["", "## Hubness", "",
           "| Retriever | distinti al rango 1 | distinti nei top-3 | mai nei top-3 | max al rango 1 | max nei top-3 |",
           "|---|---|---|---|---|---|"]
@@ -341,25 +360,25 @@ def main() -> None:
         h = hub[r]
         L.append(f"| {short.get(r, r)} | {h['distinti_rank1']} | {h['distinti_top3']} | {h['mai_top3']} | "
                  f"{h['max_rank1']} ({h['max_rank1_id']}) | {h['max_top3']} ({h['max_top3_id']}) |")
-    L += ["", f"Atteso con distribuzione uniforme nei top-3: {3 * len(candidates) / len(candidates):.1f} per candidato.",
+    L += ["", f"Atteso con distribuzione uniforme nei top-3: {3 * len(Q) / len(candidates):.1f} per candidato.",
           "", f"## Le 3 query più divergenti tra BM25 e {short[chosen]}", "",
           "Ordinate per intersezione dei top-3 crescente, poi per id. Titoli = campo `name` del corpus; tra "
           "parentesi Jt con la query.", ""]
     by_q = {r: {row["query"]: row["top"] for row in v} for r, v in rows.items()}
     for i in divergent:
-        q = candidates[i]["id"]
+        q = Q[i]["id"]
         L.append(f"- **{q}** ({title[q]}), ∩ = {inter[i]}")
         for r in ("BM25", chosen, hybrid_official):
             L.append(f"  - {short.get(r, r)}: " + "; ".join(
                 f"{d} ({title[d]}, Jt {rel.measure(q, d)['Jt']:.2f})" for d in by_q[r][q]))
     L += ["", "## Modelli, troncamenti, tempi (CPU)", "",
-          "| Modello | revisione | limite | testi troncati | mediana / max token | dim. | caricamento | embedding 59 testi |",
+          f"| Modello | revisione | limite | testi troncati | mediana / max token | dim. | caricamento | embedding {len(candidates)} testi |",
           "|---|---|---|---|---|---|---|---|"]
     for m in cfg["modelli"]:
         n, t, tr = m["nome"], timing[m["nome"]], trunc[m["nome"]]
         L.append(f"| {n} | `{m['revisione'][:12]}` | {tr['limite']} | {tr['troncati']}/{len(candidates)} | "
                  f"{tr['mediana_token']:.0f} / {tr['max_token']} | {t['dimensione']} | {t['caricamento_s']} s | "
-                 f"{t['embedding_59_s']} s ({t['ms_per_testo']} ms/testo) |")
+                 f"{t[f'embedding_{len(candidates)}_s']} s ({t['ms_per_testo']} ms/testo) |")
     v = meta["versions"]
     L += ["", "Versioni: " + ", ".join(f"{k} {val}" for k, val in v.items()) + ".", ""]
     (out / "summary.md").write_text("\n".join(L) + "\n", encoding="utf-8")

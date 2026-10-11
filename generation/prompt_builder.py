@@ -39,6 +39,13 @@ voce 91: istruzioni templates/v4_compact_instructions.txt, che cambiano SOLO la 
 JSON compatto ricavato dal JSON del Passo 1, generation/uml_structure.py, docs/compact_format.md). Il blocco esempi resta
 l'unica parte che cambia tra le condizioni dello stesso formato.
 
+FONTE DEL RETRIEVAL (2026-10-11, voce 129): retrieval_source "live" (default) = i retriever girano qui;
+"frozen" = bm25, dense, hybrid e random si leggono da data/retrieval_frozen/retrievals_3b.jsonl (prodotto da
+retrieval/freeze_retrievals.py con lo STESSO codice, PromptBuilder.hits), con il controllo dello sha256 registrato nel
+file .meta.json accanto. Il protocollo del Passo 3b usa "frozen": gli esempi non dipendono piu' dalla macchina (pareggi,
+embedding su CPU). Le altre condizioni (zero_shot, static, oracle, oracle_jt) non usano un retriever e sono invariate;
+le varianti struct / construct non sono congelate e in modalita' frozen sono rifiutate.
+
 Ogni esempio = description + JSON Apollon, serializzati allo stesso modo in tutte le condizioni. corpus/ e
 config_bm25.yaml sono letti e mai scritti. Determinismo: stessa spec + stessa query -> stesso prompt byte per byte.
 """
@@ -57,6 +64,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "retrieval"))
 import corpus_loader as cl  # noqa: E402
 from keyword_retriever import KeywordRetriever  # noqa: E402
+from base import RetrievalResult  # noqa: E402
 from random_retriever import RandomRetriever  # noqa: E402
 from text_preprocessing import PreprocessConfig  # noqa: E402
 import relevance  # noqa: E402  (Jt per oracle_jt, voce 109)
@@ -74,6 +82,20 @@ CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle", "dense", "hybri
 #   construct         v4: bm25 con la spinta ai candidati che mostrano i costrutti segnalati dalla traccia
 #   struct_construct  v2 + v4: la spinta dei costrutti applicata a v2
 STRUCTURE_CONDITIONS = ("struct", "construct", "struct_construct")
+# voce 129: retriever congelati per il Passo 3b (data/retrieval_frozen/retrievals_3b.jsonl)
+FROZEN_CONDITIONS = ("bm25", "dense", "hybrid", "random")
+RETRIEVAL_SOURCES = ("live", "frozen")
+FROZEN_PATH = ROOT / "data" / "retrieval_frozen" / "retrievals_3b.jsonl"
+# voce 130: seme della condizione random. "config" = il `seed` del config per tutte le ripetizioni (run storiche);
+# "per_esercizio_ripetizione" = random_seed(id dell'esercizio, indice di ripetizione) (Passo 3b)
+RANDOM_SEED_MODES = ("config", "per_esercizio_ripetizione")
+
+
+def random_seed(query_id: str, repetition: int) -> int:
+    """Seme della condizione random per esercizio E ripetizione (voce 130): intero a 32 bit dai primi 8 caratteri
+    esadecimali di sha256("random|<id>|<r>"). Deterministico, indipendente dalla macchina e dall'ordine delle run."""
+    import hashlib
+    return int(hashlib.sha256(f"random|{query_id}|{repetition}".encode("utf-8")).hexdigest()[:8], 16)
 ANALYSIS_ONLY = {"oracle", "oracle_jt"}
 SERIALIZATIONS = ("indent2", "compact")
 OUTPUT_FORMATS = ("apollon", "plantuml", "compact")
@@ -93,7 +115,14 @@ INSTRUCTION_VARIANTS = ("base", "targeted")
 # esempi prima di "Examples to follow:", assente in zero-shot), esempi PlantUML nel canonico v5 (ereditarieta' e realizzazione
 # nell'intestazione, plantuml_format.apollon_to_plantuml(version="v5")). Solo per PlantUML e compatto. Il blocco esempi e
 # le voci degli esempi sono quelli della v4.
-INSTRUCTION_VERSIONS = ("v4", "v5")
+INSTRUCTION_VERSIONS = ("v4", "v5", "v5plan")
+# v5plan (voce 126): v5 con la risposta in due parti, PLAN (al piu' 15 righe, citazioni brevi dal testo) e DIAGRAM;
+# istruzioni templates/v5plan_<formato>_instructions.txt (v5 con il solo paragrafo OUTPUT FORMAT cambiato), stesso
+# blocco esempi e stessi esempi della v5 (che mostrano SOLO diagrammi), riga finale della traccia per il piano
+V5PLAN_INSTRUCTION_TEMPLATES = {"plantuml": "v5plan_plantuml_instructions.txt",
+                                "compact": "v5plan_compact_instructions.txt"}
+V5PLAN_FINAL_LINE = "Now write the PLAN and then the DIAGRAM for this system only."
+V5_FAMILY = ("v5", "v5plan")
 V5_INSTRUCTION_TEMPLATES = {"plantuml": "v5_plantuml_instructions.txt", "compact": "v5_compact_instructions.txt"}
 V5_FINAL_LINE = {"plantuml": "Now write the PlantUML diagram for this system only.",
                  "compact": "Now write the compact JSON diagram for this system only."}
@@ -124,9 +153,9 @@ class PromptSpec:
             raise ValueError(f"istruzioni mirate solo per {TARGETED_FORMATS}, non per {self.output_format}")
         if self.instructions_version not in INSTRUCTION_VERSIONS:
             raise ValueError(f"versione delle istruzioni sconosciuta: {self.instructions_version}")
-        if self.instructions_version == "v5" and self.output_format not in V5_INSTRUCTION_TEMPLATES:
+        if self.instructions_version in V5_FAMILY and self.output_format not in V5_INSTRUCTION_TEMPLATES:
             raise ValueError(f"istruzioni v5 solo per {tuple(V5_INSTRUCTION_TEMPLATES)}, non per {self.output_format}")
-        if self.instructions_version == "v5" and self.instructions_variant != "base":
+        if self.instructions_version in V5_FAMILY and self.instructions_variant != "base":
             raise ValueError("istruzioni v5: il blocco mirato della voce 98 vale solo per le v4")
         if self.serialization not in SERIALIZATIONS or self.layout not in LAYOUTS:
             raise ValueError(f"serializzazione o layout non validi: {self.serialization}, {self.layout}")
@@ -184,6 +213,29 @@ def static_examples(candidates_by_id: dict[str, dict]) -> list[dict]:
             {"id": "AirTravel", "description": air["description"], "diagram_apollon_json": air["diagram_apollon_json"]}]
 
 
+def load_frozen(path: Path) -> tuple[dict[tuple, list[RetrievalResult]], str]:
+    """Legge il file congelato (voce 129) dopo aver verificato lo sha256 registrato nel .meta.json accanto."""
+    import hashlib
+    meta_path = path.with_suffix(".meta.json")
+    if not path.exists() or not meta_path.exists():
+        raise SystemExit(f"file congelato o metadati mancanti: {path} (retrieval/freeze_retrievals.py)")
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    if digest != meta["sha256"]:
+        raise SystemExit(f"{path.name}: sha256 {digest} diverso da quello registrato ({meta['sha256']})")
+    out = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        key = PromptBuilder.frozen_key(r["query"], r["retriever"], r["k"], r["seed"])
+        if key in out:
+            raise ValueError(f"riga ripetuta nel file congelato: {key}")
+        out[key] = [RetrievalResult(id=i, rank=n, score=s, score_norm=sn)
+                    for n, (i, s, sn) in enumerate(zip(r["ids"], r["scores"], r["score_norm"]), start=1)]
+    return out, digest
+
+
 def dense_model() -> tuple[str, str]:
     """(modello, revisione) scelti dalla regola della voce 107 (esito in config_dense.yaml, voce 108)."""
     esito = yaml.safe_load(DENSE_CONFIG.read_text(encoding="utf-8"))["esito"]
@@ -194,9 +246,9 @@ class PromptBuilder:
     POOLS = ("all", "corpus60")
 
     def __init__(self, candidates: list[dict] | None = None, queries: list[dict] | None = None, dense=None,
-                 pool: str = "all"):
+                 pool: str = "all", retrieval_source: str = "live", frozen_path: Path | None = None):
         """dense: retriever denso gia' costruito (i test passano embedding finti); None = quello di config_dense.yaml,
-        caricato solo alla prima condizione dense / hybrid."""
+        caricato solo alla prima condizione dense / hybrid. retrieval_source: "live" | "frozen" (voce 129)."""
         if candidates is None:
             candidates, queries = cl.load_all()
         else:
@@ -223,10 +275,20 @@ class PromptBuilder:
         self.instructions = _template("v4_instructions.txt")  # formato apollon (identiche al template v4)
         self.instructions_by_format = {f: _template(t) for f, t in INSTRUCTION_TEMPLATES.items()}
         self.instructions_v5 = {f: _template(t) for f, t in V5_INSTRUCTION_TEMPLATES.items()}
+        self.instructions_v5plan = {f: _template(t) for f, t in V5PLAN_INSTRUCTION_TEMPLATES.items()}
         self.names = {i: cl.class_names(c["diagram_apollon_json"]) for i, c in self.all_by_id.items()}
         self.tokens = {i: relevance.class_tokens(c["diagram_apollon_json"]) for i, c in self.all_by_id.items()}
         self._dense = dense
         self._dense_fitted = False
+        if retrieval_source not in RETRIEVAL_SOURCES:
+            raise ValueError(f"fonte del retrieval sconosciuta: {retrieval_source} (ammesse: {RETRIEVAL_SOURCES})")
+        self.retrieval_source = retrieval_source
+        self.frozen: dict[tuple, list[RetrievalResult]] = {}
+        self.frozen_sha256: str | None = None
+        if retrieval_source == "frozen":
+            if pool != "all":
+                raise ValueError("il file congelato e' costruito sul pool unico (pool: all)")
+            self.frozen, self.frozen_sha256 = load_frozen(frozen_path or FROZEN_PATH)
 
     @property
     def dense(self):
@@ -279,6 +341,36 @@ class PromptBuilder:
             self._loo_bm25[query["id"]] = KeywordRetriever(**self._bm25_args).fit(self.pool(query))
         return self._loo_bm25[query["id"]]
 
+    @staticmethod
+    def frozen_key(query_id: str, condition: str, k: int, seed: int) -> tuple:
+        """Chiave del file congelato: il seme conta solo per random."""
+        return (query_id, condition, k, seed if condition == "random" else None)
+
+    def hits(self, query: dict, spec: PromptSpec) -> list[RetrievalResult]:
+        """Risultati del retriever della condizione, nell'ordine del retriever (rango 1 = il piu' simile; random:
+        ordine di estrazione). Unica fonte sia per select() sia per retrieval/freeze_retrievals.py (voce 129)."""
+        c = spec.condition
+        if self.retrieval_source == "frozen":
+            if c not in FROZEN_CONDITIONS:
+                raise ValueError(f"condizione {c} non congelata: retrieval_source frozen vale solo per {FROZEN_CONDITIONS}")
+            key = self.frozen_key(query["id"], c, spec.k, spec.seed)
+            if key not in self.frozen:
+                raise KeyError(f"nel file congelato manca {key}")
+            return self.frozen[key]
+        if c == "random":
+            return RandomRetriever(seed=spec.seed).fit(self.pool(query)).retrieve(query["description"], spec.k)
+        if c == "bm25":
+            return self.bm25_for(query).retrieve(query["description"], spec.k)
+        if c == "dense":
+            return self.dense.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
+        if c == "hybrid":
+            from hybrid_retriever import HybridRetriever
+            h = HybridRetriever.prefitted(self.bm25_for(query), self.dense, [x["id"] for x in self.pool(query)])
+            return h.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
+        if c in STRUCTURE_CONDITIONS:
+            return self.structure_for(query, c).retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
+        raise ValueError(f"la condizione {c} non usa un retriever")
+
     def select(self, query: dict, spec: PromptSpec) -> list[dict]:
         """Esempi nell'ordine in cui compaiono nel prompt."""
         c = spec.condition
@@ -289,22 +381,9 @@ class PromptBuilder:
                 raise ValueError(f"condizione static con la query {query['id']}: coincide con un esempio statico")
             return list(self.static)
         if c == "random":
-            hits = RandomRetriever(seed=spec.seed).fit(self.pool(query)).retrieve(query["description"], spec.k)
-            return [self.all_by_id[h.id] for h in hits]  # ordine di estrazione
-        if c == "bm25":
-            hits = self.bm25_for(query).retrieve(query["description"], spec.k)
-            return [self.all_by_id[h.id] for h in reversed(hits)]  # il piu' simile per ultimo
-        if c == "dense":
-            hits = self.dense.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
-            return [self.all_by_id[h.id] for h in reversed(hits)]
-        if c == "hybrid":
-            from hybrid_retriever import HybridRetriever
-            h = HybridRetriever.prefitted(self.bm25_for(query), self.dense, [x["id"] for x in self.pool(query)])
-            hits = h.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
-            return [self.all_by_id[x.id] for x in reversed(hits)]
-        if c in STRUCTURE_CONDITIONS:
-            hits = self.structure_for(query, c).retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
-            return [self.all_by_id[h.id] for h in reversed(hits)]
+            return [self.all_by_id[h.id] for h in self.hits(query, spec)]  # ordine di estrazione
+        if c in ("bm25", "dense", "hybrid") or c in STRUCTURE_CONDITIONS:
+            return [self.all_by_id[h.id] for h in reversed(self.hits(query, spec))]  # il piu' simile per ultimo
         if c == "oracle_jt":
             qt = relevance.class_tokens(query["diagram_apollon_json"])
             ranked = sorted(self.pool(query), key=lambda x: (-cl.jaccard(qt, self.tokens[x["id"]]), x["id"]))[:spec.k]
@@ -318,7 +397,8 @@ class PromptBuilder:
     def render_example(example: dict, spec: PromptSpec) -> str:
         if spec.output_format == "plantuml":
             from plantuml_format import apollon_to_plantuml
-            return apollon_to_plantuml(example["diagram_apollon_json"], version=spec.instructions_version)
+            canonical = "v5" if spec.instructions_version in V5_FAMILY else spec.instructions_version
+            return apollon_to_plantuml(example["diagram_apollon_json"], version=canonical)
         if spec.output_format == "compact":  # stessa serializzazione dell'Apollon (su una riga con "compact")
             from uml_structure import apollon_to_compact
             data = apollon_to_compact(example["diagram_apollon_json"])
@@ -333,15 +413,16 @@ class PromptBuilder:
         item = _template(ITEM_TEMPLATES[spec.output_format])
         items = [item.format(n=i, description=e["description"].strip(), diagram_json=self.render_example(e, spec))
                  for i, e in enumerate(examples, start=1)]
-        block = "v5_examples_block.txt" if spec.instructions_version == "v5" else "v4_examples_block.txt"  # voce 111
+        block = "v5_examples_block.txt" if spec.instructions_version in V5_FAMILY else "v4_examples_block.txt"  # voce 111
         examples_block = _template(block).format(examples="\n".join(items)) if items else ""
-        if spec.instructions_version == "v5":
-            task = _template("v5_task.txt").format(description=query["description"].strip(),
-                                                   final_line=V5_FINAL_LINE[spec.output_format])
+        if spec.instructions_version in V5_FAMILY:
+            final = V5PLAN_FINAL_LINE if spec.instructions_version == "v5plan" else V5_FINAL_LINE[spec.output_format]
+            task = _template("v5_task.txt").format(description=query["description"].strip(), final_line=final)
         else:
             task = _template("v4_task.txt").format(description=query["description"].strip())
         user = (examples_block + "\n" if examples_block else "") + task
         instructions = (self.instructions_v5[spec.output_format] if spec.instructions_version == "v5"
+                        else self.instructions_v5plan[spec.output_format] if spec.instructions_version == "v5plan"
                         else self.instructions_by_format[spec.output_format])
         if spec.instructions_variant == "targeted":
             instructions = targeted_instructions(instructions, spec.output_format)

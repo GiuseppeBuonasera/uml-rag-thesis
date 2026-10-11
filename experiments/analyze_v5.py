@@ -43,10 +43,11 @@ sys.path.insert(0, str(ROOT / "generation"))
 sys.path.insert(0, str(ROOT / "experiments"))
 import analyze_dev as ad  # noqa: E402
 import analyze_instructions as ai  # noqa: E402  (caricamento, metriche, confusione: riuso, nessuna modifica)
-import analyze_pilot as ap  # noqa: E402
 import run_experiment as rx  # noqa: E402
 from prompt_builder import cl  # noqa: E402
 import provenance  # noqa: E402
+sys.path.insert(0, str(ROOT))
+from evaluation import metrics as em  # noqa: E402  (metriche congelate per il 3b, voce 127)
 
 RESULTS = ROOT / "data" / "results" / "generation"
 CONFIG = ROOT / "experiments" / "configs" / "dev_v5.yaml"
@@ -54,7 +55,7 @@ BASELINE_PREFIX, TREATMENT_PREFIX, K = "dev_v5base", "dev_v5", 3  # voce 115
 OUT_NAME = "dev_v5_analysis"
 CONFIGURATIONS = {"P-G": "plantuml", "C-G": "compact"}
 FORMAT_NAME = ad.FORMAT_NAME
-FAMILY_SWAPS = ("type ClassBidirectional -> ClassUnidirectional", "type ClassUnidirectional -> ClassBidirectional")
+FAMILY_SWAPS = em.FAMILY_SWAPS  # spostata in evaluation/metrics.py (voce 127)
 # --- regola (voce 111): non si modifica senza una nuova voce in docs/decisions.md ---
 ADOPT_R = 0.03
 ADOPT_R_FAM = 0.03
@@ -67,29 +68,8 @@ EPS = 1e-9
 # --- metriche -------------------------------------------------------------------------------------------------------
 
 
-def r_fam(m: dict) -> float | None:
-    rel = m["relations"]
-    return ((rel["same_type"] + sum(rel[k] for k in FAMILY_SWAPS)) / m["gt_edges_all"]) if m["gt_edges_all"] else None
-
-
-def extra_compositions(calls: list[dict]) -> int:
-    """Composizioni della risposta (valide) la cui coppia di classi non e' una composizione nel GT."""
-    n = 0
-    for c in calls:
-        if c["v"].level < 3:
-            continue
-        gt_comp = {e["pair"] for e in ap.edges(c["gt"]) if e["type"] == "ClassComposition"}
-        n += sum(e["pair"] not in gt_comp for e in ap.edges(c["v"].diagram) if e["type"] == "ClassComposition")
-    return n
-
-
-def all_metrics(calls: list[dict]) -> dict:
-    m = ai.metrics(calls)
-    conf = ai.confusion(calls)
-    m.update({"R_fam": r_fam(m), "inv_gen": conf["inv"]["generalizzazione"],
-              "inv_gen_tot": conf["inv_tot"]["generalizzazione"], "extra_cls": conf["extra_cls"],
-              "extra_gen": conf["extra_gen"], "extra_comp": extra_compositions(calls), "conf": conf})
-    return m
+# spostate in evaluation/metrics.py senza modifiche (voce 127), riesportate con gli stessi nomi
+r_fam, extra_compositions, all_metrics = em.r_fam, em.extra_compositions, em.all_metrics
 
 
 # --- regola ---------------------------------------------------------------------------------------------------------

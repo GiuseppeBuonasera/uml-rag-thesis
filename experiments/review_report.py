@@ -100,8 +100,12 @@ def load_run(run_dir: Path, filters: dict, gt: dict[str, dict]) -> list[dict]:
         if not keep(m, filters):
             continue
         raw = json.loads((run_dir / "raw" / f"{m['call_id']}.json").read_text(encoding="utf-8"))
-        v = (pp.validate_response(raw["text"], raw["finish_reason"]) if fmt == "apollon"
-             else ad.validate(fmt, raw["text"], raw["finish_reason"], m["call_id"], version))
+        text = raw["text"]
+        if (cfg.get("prompt") or {}).get("instructions_version") == "v5plan":  # voce 126: solo il diagramma
+            from plan_split import split_plan
+            text = split_plan(text)[1]
+        v = (pp.validate_response(text, raw["finish_reason"]) if fmt == "apollon"
+             else ad.validate(fmt, text, raw["finish_reason"], m["call_id"], version))
         cond = f"{run_dir.name} {m.get('condition')} k={m.get('k')}"  # condizione: piu' retriever nella stessa run (voce 109)
         calls.append({"m": m, "raw": raw, "v": v, "gt": gt[m["query_id"]], "q": m["query_id"], "r": m["repetition"],
                       "format": fmt, "cond": cond, "version": version if fmt == "plantuml" else ""})

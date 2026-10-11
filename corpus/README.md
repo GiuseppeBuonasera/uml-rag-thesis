@@ -10,11 +10,19 @@ decisioni: [`docs/decisions.md`](../docs/decisions.md).
 | Cartella | Ruolo |
 |---|---|
 | `raw/models_original/` | 45 esercizi originali (Golden UML Modelset, vedi `SOURCE.md`): sorgente immutabile |
-| `raw/translated_it/` | 15 esercizi italiani tradotti (non versionata: licenza da verificare) |
+| `raw/translated_it/` | 15 esercizi italiani tradotti (non versionata: licenza da verificare; vedi sotto) |
 | `raw/debari_test/` | 20 esercizi De Bari, TEST SET (tag `testset-v1`); nel retrieval solo in leave-one-out per le altre query del test set (voce 112) |
 | `processed/` | output generati: `corpus.jsonl`, `testset_debari.jsonl`, `apollon/`, `apollon_debari/` |
 | `corrections/` | annotazioni manuali: correzioni di contenuto per esercizio (`<id>.yaml`) |
 | `description_exclusions/` | annotazioni manuali: paragrafi esclusi dalle descrizioni (`<id>.yaml`) |
+
+### Clone senza `raw/translated_it/` (voce 127)
+La cartella non è nel repo pubblico: su un clone mancano i 15 esercizi tradotti grezzi. `processed/corpus.jsonl` e
+`processed/apollon/` (versionati) li contengono già convertiti, quindi retrieval, generazione e valutazione funzionano.
+Non si possono invece rigenerare quei 15 record (`build_manifest.py`, `apply_glossary.py`, `check_translated.py`,
+`generate_relations_table.py` sui tradotti). In `test_apollon_convert.py` i test che leggono la cartella (oggi solo
+`check_shared_type_glossary`) vengono SALTATI con un messaggio; tutti gli altri girano. Backup della cartella:
+docs/STATUS.md, sezione "Backup di `corpus/raw/translated_it/`".
 
 ## File
 | File | Tipo | Ruolo |

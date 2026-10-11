@@ -12,12 +12,22 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
 - **Istruzioni (voci 118, 121, 124)**: PlantUML usa le **v5**; il JSON compatto le **v5 con gli esempi indentati**
   (`serialization: indent2`; con la generazione vincolata, "both", se la domanda 14 sarà positiva). Pool unico di 79
   candidati per query (voce 115, confermato dalla voce 124). Retriever del 3b: bm25, MiniLM, ibrido.
+- **Ragionamento (voce 125)**: SPENTO. Provato per richiesta (`reasoning_effort`): a temperatura 0,3 cicli di
+  autoverifica e contenuto vuoto; con `low` e temperatura 1,0 risposte valide ma ripetizioni oltre il criterio e costo
+  (5-7 mila token, 2-3 minuti a generazione) incompatibile con il 3b. Leva chiusa.
 - Prompt: istruzioni dei formati **senza** il blocco di "istruzioni mirate" (non adottato, voci 101 e 103; i file del
   blocco restano congelati solo come documentazione; nessuna iterazione sullo stesso insieme di sviluppo).
 - Formati: **PlantUML** (post-processing v2) e **JSON compatto** (docs/compact_format.md), entrambi espansi in Apollon
   dall'espansore unico.
 
 ## Stato
+- **Retrieval pronto per il 3b (2026-10-11, voce 129)**: esempi CONGELATI in `data/retrieval_frozen/retrievals_3b.jsonl`
+  (80 query × bm25 k = 2 / 3, dense k = 3, hybrid k = 3, random k = 3 in 3 ripetizioni con seme per esercizio e
+  ripetizione, voce 130; sha256 e provenienza nel `.meta.json`); il 3b usa `retrieval_source: frozen` e
+  `random_seed: per_esercizio_ripetizione` (obbligatori con `passo: 3b`, già nei template). Prompt dal file = dal vivo
+  (364/364) e = run dev sul pool unico (200/200). Script del Passo 2 con `--pool all80` (default) e protocollo storico
+  `corpus59` (run versionate riprodotte byte per byte). Analisi descrittiva sui 26 di sviluppo:
+  `data/results/retrieval/dev80_2026-10-11_ec59fb4/` (pertinenza, sovrapposizione, hubness, Jt@3 contro R con scatter).
 - **Corpus di retrieval** (`corpus/processed/corpus.jsonl`, 60 record): 45 esercizi originali
   (`corpus/raw/models_original/`, Golden UML Modelset) + 15 esercizi italiani tradotti (`corpus/raw/translated_it/`,
   tag `translated_it`). **60/60 convertiti** in Apollon v4: Cruise recuperato il 2026-10-10 (voce 114, ternaria
@@ -105,9 +115,16 @@ python retrieval/test_retrieval.py                   # test (determinismo, no te
 python retrieval/analyze_retrieval.py [--run-id ID]  # LOO sul corpus + sensibilita' (NON guarda il test set)
 python retrieval/run_testset.py [--run-id ID]        # test set con la config congelata; rifiuta run gia' esistenti
 python retrieval/hubness_report.py                   # hubness dai CSV delle due run (solo descrittivo)
+# pool (voce 129): --pool all80 (default, pertinenza sui 26 di sviluppo) | corpus59 (storico); run_testset --protocol all80
+#   solo con --consenti-valutazione (dopo il 3b)
+python retrieval/freeze_retrievals.py                # UNA volta: esempi congelati del 3b (rifiuta di sovrascrivere senza --force)
+python generation/check_frozen.py                    # file congelato = dal vivo e = run dev (denso reale)
+python retrieval/check_protocols.py                  # protocolli storici riprodotti byte per byte (circa 8 minuti)
+python retrieval/analyze_dev80.py                    # analisi descrittiva sui 26 di sviluppo (pool unico, file congelato)
 
 # --- generazione (Passo 3a): corpus/ e config_bm25.yaml in sola lettura; nessun LLM reale nei test ---
 python generation/test_generation.py                 # prompt, cache, client su server HTTP finto, estrazione, L0-L4, runner
+python evaluation/test_metrics.py                    # metriche congelate (voce 127): ricalcola le analisi di sviluppo versionate
 python generation/sanity_check.py                    # 20 GT + 59 corpus + 2 statici attraverso il post-processing
 python experiments/run_experiment.py experiments/configs/dryrun_testset.yaml --dry-run   # lunghezze, finestre di contesto
 python experiments/run_experiment.py experiments/configs/mock_e2e.yaml   # prova end-to-end con MockClient
@@ -174,6 +191,14 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
 | Candidati distinti al rank 1 (hubness) | 39 su 59 | 17 su 20 query | — |
 
 ## Requisiti per la fase di valutazione
+- **Pertinenza degli esempi e qualità (voci 129-130), nel protocollo del 3b**: (1) TRA esercizi: per formato e
+  condizione, Spearman tra Jt@3 degli esempi e R medio delle ripetizioni, un punto per esercizio (54; a parte 34 del
+  corpus, 20 e 19 De Bari); (2) ENTRO esercizio: per ogni esercizio e formato, scarti di Jt@3 e di R dalla media
+  dell'esercizio tra le condizioni di retrieval (bm25 k = 3, dense, hybrid, random; bm25 k = 2 a parte), poi Spearman
+  sugli scarti. Nel testo: la correlazione TRA esercizi può riflettere la difficoltà dell'esercizio e non l'effetto del
+  retrieval; quella ENTRO esercizio toglie questa componente. Solo descrittive.
+- **Condizione random (voce 130)**: un'estrazione per esercizio E ripetizione (seme = funzione deterministica di id e
+  ripetizione): stima l'effetto atteso di esempi casuali. Le run di sviluppo restano storiche (seme unico).
 - **Le metriche confrontano gli elementi SEMPRE per contenuto (nomi, firme, tipi, estremi delle relazioni per nome),
   MAI per id** (condizione dell'eccezione sugli id dei metodi approvata allo STOP 1 del formato compatto, voce 90: gli
   id sono etichette interne, e nel percorso struttura → espansore gli id dei metodi differiscono da quelli del Passo 1).
@@ -387,6 +412,37 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
   (`_disable_broken_torchaudio`). Conflitto NON risolto (torch non si tocca); l'installazione di sentence-transformers
   6.1.0 / transformers 5.19.0 ha lasciato torch invariato e ha portato huggingface_hub da 2.2.0 a 1.33.0.
 
+## Ambiente della tesi (voce 127)
+Fino al 2026-10-11 tutte le run sono state eseguite con il Python 3.12.10 di Microsoft Store, pacchetti nel sito utente
+(nessun ambiente virtuale): `requirements-lock.txt` ne è il `pip freeze` completo (torchaudio commentato, vedi
+intestazione). **Dal Passo 3b si lavora in un ambiente virtuale dedicato**, creato dal lock:
+```
+cd C:\Progetti\uml-rag-thesis
+python -m venv .venv                                   # Python 3.12.10, 64 bit (.venv/ è in .gitignore)
+.venv\Scripts\activate                                 # da qui "python" è quello dell'ambiente
+python -m pip install -r requirements-lock.txt         # stesse versioni delle run (torch 2.10.0 CPU)
+python -m nltk.downloader wordnet                      # OPZIONALE: solo variante 2s del retriever (voce 120)
+python retrieval/download_dense_models.py              # una volta: MiniLM ecc. alla revisione fissata (cache HF utente)
+python -m nbstripout --install --attributes .gitattributes   # filtro git del runbook (voce 102)
+python corpus/test_apollon_convert.py ; python retrieval/test_retrieval.py
+python generation/test_generation.py ; python evaluation/test_metrics.py
+```
+Su un clone pulito basta `requirements.txt` (dipendenze dirette, nltk escluso): le quattro suite girano; senza
+`corpus/raw/translated_it/` (non versionata) il test del glossario condiviso viene SALTATO con un messaggio, senza
+nltk / dati WordNet i test della variante 2s vengono SALTATI con un messaggio (nessun download a runtime). Verificato il
+2026-10-11 su un clone fresco da GitHub con un ambiente nuovo (voce 127). Il registro delle esecuzioni
+(`run_log.jsonl`) non registra l'ambiente: le run del 3b vanno lanciate con `.venv` attivo.
+
+## Backup di `corpus/raw/translated_it/` (promemoria per l'utente)
+La cartella NON è versionata (licenza da verificare, "In sospeso" punto 1) ed esiste solo su questo PC: **salvarne una
+copia in un luogo PRIVATO** (disco esterno o cloud personale), **mai in questo repo pubblico**. Cosa salvare: l'intera
+cartella `corpus/raw/translated_it/` (circa 4,3 MB), cioè: le 15 cartelle degli esercizi, ognuna con i FILE ORIGINALI
+ITALIANI (`description_it.md`, `plantuml_it.txt`, `render_it.png`), la traduzione (`description.md`, `plantuml.txt`,
+`render_en.png`), il glossario dell'esercizio (`glossary.json`), `relations_table.md`, `metadata.txt` e
+`transcription_notes.md`; il glossario condiviso `glossary_shared.json`; le immagini sorgente `_images/es01.png` …
+`es15.png`. Senza la cartella `corpus.jsonl` (versionato) resta
+utilizzabile, ma non si possono rigenerare i 15 record né rieseguire `check_translated.py`.
+
 ## Rendering dei diagrammi (plantuml.jar, non versionato)
 - `.tools/plantuml-old.jar` = **PlantUML 1.2023.0** (GPL), sha256
   `0404edcf0af28e5b409bc17aa59ad8b05051f47347377749c46c8018135d0dec`; richiede Java 8 o superiore (qui 1.8.0_421).
@@ -406,6 +462,7 @@ python experiments/render_pilot2.py                  # pagina autonoma con tracc
 ## In sospeso
 1. `.gitignore` riga 10 (`corpus/raw/*`) esclude ancora `corpus/raw/translated_it/`: le 15 cartelle tradotte non sono
    versionate (`models_original/` e `debari_test/` sì). Dipende dalla licenza: vedi "Domande per i relatori", punti 1-2.
+   Nel frattempo: copia di backup PRIVATA della cartella (sezione "Backup di `corpus/raw/translated_it/`").
 2. **SOURCE.md**: `corpus/raw/models_original/SOURCE.md` creato (DOI Zenodo da verificare: versione o concept);
    `corpus/raw/translated_it/SOURCE.md` mancante (licenza da verificare con gli autori). Per `debari_test/` la
    provenienza è in metadata.txt (fonte originale di ogni esercizio + citazione De Bari et al.).
@@ -427,6 +484,19 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    retrieval, nonostante la sovrapposizione con AirTravel (TF-IDF 0.418), che è anche l'esempio 2 del prompt statico e
    ora a sua volta esercizio di valutazione; ogni metrica sui De Bari si riporta su 20 e su 19 esercizi (senza
    Flights).
+   **Aggiornamento (2026-10-11, voce 129), stato**: TF-IDF 0,418 (unico caso sopra la soglia 0,4), 4 classi condivise,
+   Jaccard dei nomi 0,24; AirTravel è l'esempio 2 del prompt statico. Nel file congelato i due esercizi (ENTRAMBI di
+   valutazione) sono l'uno il top-1 dell'altro per bm25, dense e hybrid; quindi per DB06_Flights il quasi-duplicato è
+   nel prompt in TUTTE le condizioni con esempi tranne random (static compresa), e per AirTravel la condizione static
+   non è definita (l'esempio coinciderebbe con la query).
+   **Proposta per l'analisi del 3b, ADOTTATA dall'utente come proposta da portare ai relatori (voce 130)**: (a)
+   nessuna esclusione (come deciso il 2026-10-04); (b) ogni
+   confronto riportato sui 54 di valutazione e sui 52 senza la coppia DB06_Flights / AirTravel, e sui De Bari su 20 e
+   19; se una conclusione cambia togliendo la coppia, lo si dichiara; (c) confronti appaiati static contro retrieval su
+   53 esercizi (AirTravel non ha la cella static) e, come controllo, su 52; per DB06_Flights la differenza static contro
+   retrieval non misura il retrieval (l'analogo è in entrambi i prompt); (d) la coppia come caso di studio
+   qualitativo del meccanismo (il retrieval trova l'esercizio analogo), non come prova. Alternativa da chiedere:
+   escludere la coppia dalle analisi principali e riportarla solo a parte.
 5. **Formato e convenzioni**: confermare Apollon JSON v4 come target (non PlantUML, a differenza di De Bari et al.) e
    le convenzioni di trascrizione/traduzione (tabella di coerenza sopra), in particolare quelle senza precedenti
    esterni (maiuscolo/minuscolo tipografico, tipi di dominio, completamento dei token tagliati da Analysis.xlsx).

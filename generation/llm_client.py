@@ -55,6 +55,9 @@ class GenerationParams:
     seed: int | None = None
     top_k: int | None = None  # obbligatorio (non None) con LM Studio: vedi SAMPLING_PARAMS
     structured_output: bool = False  # response_format json_schema (schema Apollon v4): DISATTIVATO di default
+    # ragionamento per richiesta (voce 125): "high" accende il ragionamento di Gemma tramite il parametro
+    # `reasoning_effort` di LM Studio; None = non inviato (comportamento e chiavi di cache delle run precedenti invariati)
+    reasoning_effort: str | None = None
 
 
 @dataclass
@@ -87,7 +90,10 @@ class LLMClient:
 
 
 def cache_key(messages: list[dict], model: str, params: GenerationParams, repetition: int) -> str:
-    payload = {"messages": messages, "model": model, "params": asdict(params), "repetition": repetition}
+    p = asdict(params)
+    if p.get("reasoning_effort") is None:  # voce 125: senza ragionamento la chiave resta quella di prima
+        p.pop("reasoning_effort", None)
+    payload = {"messages": messages, "model": model, "params": p, "repetition": repetition}
     return hashlib.sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
 
@@ -196,6 +202,8 @@ class LMStudioClient(LLMClient):
     def request_body(self, messages: list[dict], params: GenerationParams) -> dict:
         body: dict[str, Any] = {"model": self.model, "messages": messages, **self.sampling_params(params),
                                 "stream": False}
+        if params.reasoning_effort is not None:  # voce 125: ragionamento acceso per questa richiesta
+            body["reasoning_effort"] = params.reasoning_effort
         if params.structured_output:
             body["response_format"] = {"type": "json_schema", "json_schema": {
                 "name": "apollon_v4_class_diagram", "strict": True,

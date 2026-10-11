@@ -1,0 +1,113 @@
+{
+  "file": "data/retrieval_frozen/retrievals_3b.jsonl",
+  "sha256": "2e08b93a69200e0f4e0d48a19aef9fbb05713cc3bef948b3fafddb3621c3f63d",
+  "righe": 560,
+  "voce": 130,
+  "created_utc": "2026-10-11T20:16:45Z",
+  "commit": "ec59fb4a4f2644f6f9ed707ee49bd2360a297d15",
+  "working_tree_dirty": true,
+  "piano": [
+    {
+      "retriever": "bm25",
+      "k": 2
+    },
+    {
+      "retriever": "bm25",
+      "k": 3
+    },
+    {
+      "retriever": "dense",
+      "k": 3
+    },
+    {
+      "retriever": "hybrid",
+      "k": 3
+    },
+    {
+      "retriever": "random",
+      "k": 3
+    }
+  ],
+  "nota_random": "voce 130: un'estrazione per esercizio e ripetizione r = 0..2, seme = int(sha256('random|<id>|<r>')[:8], 16) (prompt_builder.random_seed); l'estrazione dipende da sha256(seme, traccia) sul pool ordinato per id; il runner la usa con random_seed: per_esercizio_ripetizione",
+  "ordine": "ids nell'ordine del retriever (rango 1 = il piu' simile; random = ordine di estrazione); nel prompt bm25 / dense / hybrid si invertono (il piu' simile per ultimo), random no",
+  "pool": "unico (voce 115): 80 esercizi, per ogni query gli altri 79",
+  "query": {
+    "totale": 80,
+    "sviluppo": 26,
+    "valutazione": 54
+  },
+  "denso": {
+    "modello": "sentence-transformers/all-MiniLM-L6-v2",
+    "revisione": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "dispositivo": "cpu",
+    "cache_embedding": "data/cache/embeddings/sentence-transformers__all-MiniLM-L6-v2@1110a243fdf4.npz",
+    "embedding_sha256_contenuto": "e54800c144d8f5abf60893b93557bcb2d7f7bd3b7d4ec2da64efe5008e65589e",
+    "nota": "sha256 dei vettori (float32) degli 80 testi, chiave = sha256 del testo; il file .npz si riscrive a ogni ricalcolo, quindi il suo sha256 non e' un'impronta stabile"
+  },
+  "versioni": {
+    "python": "3.12.10",
+    "numpy": "2.2.6",
+    "rank-bm25": "0.2.2",
+    "snowballstemmer": "3.1.1",
+    "sentence-transformers": "6.1.0",
+    "transformers": "5.19.0",
+    "torch": "2.10.0",
+    "tokenizers": "0.23.3",
+    "huggingface-hub": "1.33.0"
+  },
+  "sha256_input": {
+    "config_bm25": "d6dfa7228ee4eee2c07c913917e2b096d6727a88bb818f7d51ed37036f5f76ab",
+    "config_dense": "2ec55d27663fe1d5b5b88a059969ff901217e3e683deae42772b1cbf8d460b66",
+    "corpus_jsonl": "87f56f95414607b905e5d2a4e6f93ce62f1d9254aabdffc1275ced4a55dcb670",
+    "testset_jsonl": "96118be45f5e6d04071fe4c6cdf5f63fc61deb9ded0242b8da624d422735621d",
+    "roles_yaml": "f034c4f90376cde91c5a66a6e22468e87e38317f6e36dc09fa88d2f20b9977c8",
+    "gt_80": "db5c04002ae13f82e688adae5edac1fdbcbcf3101632a332b25a87a4df9a3d94"
+  },
+  "pareggi": {
+    "bm25@2": {
+      "query_con_pareggi_nei_top_k": 0,
+      "query_con_pareggio_al_confine": 0,
+      "esercizi_nei_top_k": [],
+      "esercizi_al_confine": []
+    },
+    "bm25@3": {
+      "query_con_pareggi_nei_top_k": 0,
+      "query_con_pareggio_al_confine": 0,
+      "esercizi_nei_top_k": [],
+      "esercizi_al_confine": []
+    },
+    "dense@3": {
+      "query_con_pareggi_nei_top_k": 0,
+      "query_con_pareggio_al_confine": 0,
+      "esercizi_nei_top_k": [],
+      "esercizi_al_confine": []
+    },
+    "hybrid@3": {
+      "query_con_pareggi_nei_top_k": 9,
+      "query_con_pareggio_al_confine": 2,
+      "esercizi_nei_top_k": [
+        "AirTravel",
+        "Boeing",
+        "DB07_BankSystem",
+        "DB09_AutoRepair",
+        "GasStation_TUW",
+        "LabTracker",
+        "RealEstateAgency",
+        "RepairShops",
+        "TransportCompany"
+      ],
+      "esercizi_al_confine": [
+        "DB10_Restaurant",
+        "SellingGoods"
+      ]
+    }
+  },
+  "random_ripetizioni": 3,
+  "storia": [
+    {
+      "sha256": "6857259af6263cf69b81151f5424a371f5450397778e15e57c9235c1c0625bd5",
+      "voce": 129,
+      "nota": "versione precedente; voce 130: rigenerate SOLO le righe random (seme per esercizio e ripetizione), righe bm25 / dense / hybrid identiche byte per byte"
+    }
+  ]
+}

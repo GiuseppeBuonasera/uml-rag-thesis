@@ -2001,8 +2001,9 @@ def check_runner(tmp: Path, base_url: str) -> None:
     man = [json.loads(x) for x in (out / "manifest.jsonl").read_text(encoding="utf-8").splitlines()]
     assert len(man) == 4 and [m["cached"] for m in man] == [False, False, True, True]
 
-    real = dict(cfg, run_id="t2", client={"kind": "lmstudio", "model": "fake-model", "base_url": base_url,
-                                          "retries": 0, "timeout_s": 5})
+    # solo zero_shot: un config 3b reale con bm25 richiede il file congelato (voce 129), qui si provano gli altri rifiuti
+    real = dict(cfg, run_id="t2", conditions=["zero_shot"],
+                client={"kind": "lmstudio", "model": "fake-model", "base_url": base_url, "retries": 0, "timeout_s": 5})
     cfg_path.write_text(yaml.safe_dump(real), encoding="utf-8")
     try:
         rx.main([str(cfg_path), "--results-dir", str(res)])
@@ -2428,6 +2429,277 @@ def check_pool_lever(builder: PromptBuilder) -> None:
           "per configurazione, config uguali alle baseline salvo le chiavi volute, regole A e B sulle soglie")
 
 
+
+def check_thinking() -> None:
+    """Leva del ragionamento (voce 125): reasoning_effort inviato solo con `thinking: true`, chiavi di cache delle run
+    precedenti invariate, stop_on_reasoning disattivato solo per i config con il ragionamento, config dev_think uguale
+    alla configurazione di lavoro salvo ragionamento e max_tokens, regola di experiments/analyze_think.py."""
+    from dataclasses import asdict
+    from types import SimpleNamespace
+    import yaml
+    import analyze_think as ath
+    from llm_client import GenerationParams, LMStudioClient, cache_key
+    p = GenerationParams(temperature=0.3, top_p=0.95, max_tokens=4096, seed=42, top_k=64)
+    msgs = [{"role": "user", "content": "x"}]
+    legacy = {k: v for k, v in asdict(p).items() if k != "reasoning_effort"}
+    old = hashlib.sha256(json.dumps({"messages": msgs, "model": "m", "params": legacy, "repetition": 0},
+                                    ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+    assert cache_key(msgs, "m", p, 0) == old  # senza ragionamento: chiave identica a prima della voce 125
+    pt = GenerationParams(**{**asdict(p), "reasoning_effort": "high"})
+    assert cache_key(msgs, "m", pt, 0) != old
+    cli = LMStudioClient(model="m")
+    assert "reasoning_effort" not in cli.request_body(msgs, p) and cli.request_body(msgs, pt)["reasoning_effort"] == "high"
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    for conf, base in (("P-G", "dev_v5"), ("C-G", "dev_c5indent")):
+        r, b = rx.resolve_configuration(load("dev_think"), conf), rx.resolve_configuration(load(base), conf)
+        c = rx.resolve_configuration(load("dev_temp1"), conf)  # controllo: 1,0 senza ragionamento
+        assert r["thinking"] == "low" and r["config_version"] == c["config_version"] == 3
+        assert rx.params_for(r, 0).reasoning_effort == "low" and rx.params_for(c, 0).reasoning_effort is None
+        assert rx.params_for(b, 0).reasoning_effort is None and not c.get("thinking")
+        assert rx.params_for({"thinking": True, "generation": b["generation"]}, 0).reasoning_effort == "high"
+        for key in ("query_ids", "repetitions", "seed", "model_metadata", "client", "conditions", "k", "prompt"):
+            assert r[key] == b[key] == c[key], (conf, key)
+        assert r["generation"] == c["generation"] == {**b["generation"], "max_tokens": 8192, "temperature": 1.0}
+        assert r.get("pool", "all") == b.get("pool", "all") == c.get("pool", "all")
+    res = SimpleNamespace(reasoning_field="reasoning_content", text="@startuml\nclass A {}\n@enduml")
+    assert rx.should_stop_on_reasoning({"stop_on_reasoning": True}, res)  # config normali: si ferma come prima
+    assert not rx.should_stop_on_reasoning({"stop_on_reasoning": True, "thinking": True}, res)
+    assert not rx.should_stop_on_reasoning({"stop_on_reasoning": True}, SimpleNamespace(reasoning_field=None, text="x"))
+    # regola (soglie incluse)
+    B = {"R": 0.30, "R_fam": 0.33, "Vc": 38, "M1": 0.30}
+    T = lambda **kw: {**B, **kw}  # noqa: E731
+    assert ath.adopt(B, T(R=0.33), 0, 0)["adopt"] and ath.adopt(B, T(R_fam=0.36), 0, 0)["adopt"]
+    assert not ath.adopt(B, T(R=0.329, R_fam=0.359), 0, 0)["adopt"]
+    assert not ath.adopt(B, T(R=0.40, Vc=35), 0, 0)["adopt"] and ath.adopt(B, T(R=0.40, Vc=36), 0, 0)["adopt"]
+    assert not ath.adopt(B, T(R=0.40, M1=0.269), 0, 0)["adopt"]
+    assert ath.adopt(B, T(R=0.40), 1, 1)["adopt"] and not ath.adopt(B, T(R=0.40), 2, 0)["adopt"]
+    assert not ath.adopt(B, T(R=0.40), 0, 2)["adopt"]
+    assert math.isclose(ath.hours_3b([10.0, 20.0, 30.0], 360), 2.0)
+    # ciclo evidente (sotto-voce della voce 125): distinte / totali < 0,6 oppure una riga >= 20 caratteri ripetuta >= 5 volte
+    nl = chr(10)
+    loop = nl.join(["*Wait, the contract has one salesperson.*"] * 5 + [f"riga {i}" for i in range(20)])
+    assert ath.cycle(loop)["cycle"] and ath.cycle(loop)["max_repeat"] == 5
+    assert not ath.cycle(nl.join([f"riga diversa numero {i}" for i in range(30)] + ["*Wait*"] * 8))["cycle"]
+    assert ath.cycle(nl.join(["a b c d e"] * 8 + ["x"] * 2))["cycle"]  # 2 distinte su 10
+    print("  OK  leva del ragionamento (voce 125): reasoning_effort solo con thinking, chiavi di cache invariate senza, "
+          "stop_on_reasoning disattivato solo con thinking, config uguale alla configurazione di lavoro salvo "
+          "ragionamento e max_tokens, regola sulle soglie, stima delle ore")
+
+
+
+def check_plan(builder: PromptBuilder, tmp: Path) -> None:
+    """Leva del piano breve (voce 126): template v5plan congelati, divisione PLAN / DIAGRAM, runner che valida SOLO il
+    diagramma e salva il piano a parte, config senza v5plan invariati, regola di experiments/analyze_plan.py."""
+    import yaml
+    import analyze_plan as apl
+    import prompt_builder as pb
+    from plan_split import split_plan
+    tpl = HERE / "templates"
+    for name, digest in (("v5plan_plantuml_instructions.txt", "7292452a16e860c46e3469ec25ccb1ad5a6c409d5407910c4b8641751c6476f9"),
+                         ("v5plan_compact_instructions.txt", "5238a996684fa6b8b3c84def6ea498f5de5afdad3a55c9cf9d31dc80527170d7")):
+        assert hashlib.sha256((tpl / name).read_bytes()).hexdigest() == digest, name
+    for f in ("plantuml", "compact"):  # v5plan = v5 salvo il paragrafo OUTPUT FORMAT
+        a = (tpl / pb.V5_INSTRUCTION_TEMPLATES[f]).read_text(encoding="utf-8").split("\n")
+        b = (tpl / pb.V5PLAN_INSTRUCTION_TEMPLATES[f]).read_text(encoding="utf-8").split("\n")
+        assert a[:3] == b[:3] and a[-30:] == b[-30:] and "PLAN: a short plan, at most 15 lines" in "\n".join(b)
+    nl = chr(10)
+    text = nl.join(["PLAN:", "- Customer: \"customers place orders\"", "- Relationship Customer - Order: association, 1, *: \"places\"",
+                    "DIAGRAM:", "@startuml", "class Customer {}", "class Order {}", "Customer \"1\" -- \"*\" Order", "@enduml"])
+    plan, diagram, found = split_plan(text)
+    assert found and diagram.startswith("@startuml") and plan.startswith("- Customer") and "DIAGRAM" not in plan
+    assert split_plan("**DIAGRAM:** @startuml" + nl + "@enduml")[1].startswith("@startuml")
+    assert split_plan("@startuml" + nl + "@enduml") == ("", "@startuml" + nl + "@enduml", False)
+    assert apl.plan_classes(plan) == {"customer"}
+    # runner con il client finto: v5plan valida solo il diagramma e salva il piano; v5 senza campi del piano
+    resp = tmp / "plan_resp"
+    resp.mkdir()
+    (resp / "Boeing.txt").write_text(text, encoding="utf-8")
+    for version in ("v5plan", "v5"):
+        cfg = {"run_id": f"plan_{version}", "split": "corpus", "query_ids": ["Boeing"], "conditions": ["bm25"], "k": [3],
+               "repetitions": 1, "seed": 0, "prompt": {"output_format": "plantuml", "instructions_version": version},
+               "client": {"kind": "mock", "responses_dir": str(resp)}, "plantuml_label_rule": "auto_v1",
+               "generation": {"temperature": 0.3, "top_p": 0.95, "top_k": 64, "max_tokens": 4096, "seed": 42}}
+        cp = tmp / f"plan_{version}.yaml"
+        cp.write_text(yaml.safe_dump(cfg), encoding="utf-8")
+        assert rx.main([str(cp), "--results-dir", str(tmp / "plan_res")]) == 0
+        m = json.loads((tmp / "plan_res" / f"plan_{version}" / "manifest.jsonl").read_text(encoding="utf-8").splitlines()[0])
+        if version == "v5plan":
+            assert m["plan_marker_found"] is True and m["plan_lines"] == 2 and m["level"] == 4, m
+            assert (tmp / "plan_res" / "plan_v5plan" / "plans" / "Boeing__bm25__k3__r0.txt").read_text(encoding="utf-8") == plan
+        else:
+            assert "plan_marker_found" not in m and not (tmp / "plan_res" / "plan_v5" / "plans").exists()
+    # prompt: v5plan diverso da v5 solo nelle istruzioni e nella riga finale
+    q = builder.by_id["Boeing"]
+    for f in ("plantuml", "compact"):
+        p5 = builder.build(q, PromptSpec("bm25", k=3, output_format=f, instructions_version="v5"))
+        pp_ = builder.build(q, PromptSpec("bm25", k=3, output_format=f, instructions_version="v5plan"))
+        assert pp_.examples_block == p5.examples_block and pp_.example_ids == p5.example_ids
+        assert pp_.task == p5.task.replace(pb.V5_FINAL_LINE[f], pb.V5PLAN_FINAL_LINE) and pp_.instructions != p5.instructions
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    for conf, base in (("P-G", "dev_v5"), ("C-G", "dev_c5indent")):
+        r, b = rx.resolve_configuration(load("dev_plan"), conf), rx.resolve_configuration(load(base), conf)
+        assert r["prompt"] == {**b["prompt"], "instructions_version": "v5plan"}
+        assert {k: v for k, v in r.items() if k not in ("prompt", "run_id")} == {k: v for k, v in b.items() if k not in ("prompt", "run_id")}
+    # regola (soglie incluse)
+    B = {"R": 0.30, "R_fam": 0.33, "Vc": 38, "M1": 0.30}
+    T = lambda **kw: {**B, **kw}  # noqa: E731
+    assert apl.adopt(B, T(R=0.33), 0, 2.5)["adopt"] and not apl.adopt(B, T(R=0.33), 0, 2.51)["adopt"]
+    assert apl.adopt(B, T(R_fam=0.36), 1, 1.0)["adopt"] and not apl.adopt(B, T(R=0.40), 2, 1.0)["adopt"]
+    assert not apl.adopt(B, T(R=0.329, R_fam=0.359), 0, 1.0)["adopt"]
+    assert not apl.adopt(B, T(R=0.40, Vc=35), 0, 1.0)["adopt"] and not apl.adopt(B, T(R=0.40, M1=0.269), 0, 1.0)["adopt"]
+    print("  OK  piano breve (voce 126): template v5plan congelati (= v5 salvo OUTPUT FORMAT), PLAN / DIAGRAM divisi "
+          "(anche senza marcatore), runner che valida solo il diagramma e salva il piano, v5 invariata, config uguali "
+          "alle baseline salvo le istruzioni, regola sulle soglie")
+
+
+def check_frozen(builder: PromptBuilder, tmp: Path) -> None:
+    """File congelato degli esempi (voce 129): 1) con embedding FINTI, freeze_rows -> file + metadati -> builder
+    "frozen": prompt identici al vivo per bm25 / dense / hybrid / random; 2) il file VERSIONATO: sha256 verificato,
+    bm25 e random identici al vivo per i 26 esercizi di sviluppo (senza caricare il denso) e ai prompt dei manifest di
+    dev_v5 / dev_c5indent / dev_v5base (bm25 k = 3); 3) rifiuti (sha256 alterato, condizione non congelata, pool diverso
+    da quello unico, chiave mancante); 4) runner con retrieval_source frozen: sha256 del file nella provenienza. Il
+    confronto dense / hybrid con il denso REALE e' in generation/check_frozen.py."""
+    import re as _re
+    import numpy as np
+    import yaml
+    import freeze_retrievals as fr
+    import prompt_builder as pb
+    from dense_retriever import DenseRetriever
+
+    def fake(texts):
+        out = np.zeros((len(texts), 64), dtype=np.float32)
+        for i, s in enumerate(texts):
+            for w in _re.findall(r"[a-z]+", s.lower()):
+                out[i, int(hashlib.sha256(w.encode()).hexdigest(), 16) % 64] += 1
+        return out
+
+    sha = lambda bp: hashlib.sha256(json.dumps(bp.messages, ensure_ascii=False).encode()).hexdigest()  # noqa: E731
+    def specs(qid, f, ser, v="v5"):  # random: una spec per ripetizione con il seme della voce 130
+        return [PromptSpec(c, k=k, seed=s, output_format=f, serialization=ser, instructions_version=v)
+                for c, k in fr.PLAN
+                for s in ([pb.random_seed(qid, r) for r in range(fr.RANDOM_REPETITIONS)] if c == "random" else [0])]
+    # 1) giro completo con il denso finto, su 6 query (corpus e De Bari)
+    live = PromptBuilder(builder.candidates, builder.test_queries,
+                         dense=DenseRetriever("finto", "0" * 40, encoder=fake, cache_dir=None))
+    qs = [live.all_by_id[i] for i in ("Boeing", "Restaurant", "AirTravel", "DB06_Flights", "DB10_Restaurant", "Cruise")]
+    rows = fr.freeze_rows(live, qs)
+    assert len(rows) == 6 * 7 and [r["query"] for r in rows[::7]] == sorted(q["id"] for q in qs)
+    rnd = [r for r in rows if r["retriever"] == "random"]  # voce 130: un'estrazione per esercizio e ripetizione
+    assert [r["repetition"] for r in rnd] == [0, 1, 2] * 6 and len({r["seed"] for r in rnd}) == 18
+    assert all(r["seed"] == pb.random_seed(r["query"], r["repetition"]) for r in rnd)
+    path = tmp / "frozen" / "r.jsonl"
+    path.parent.mkdir()
+    path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8", newline="\n")
+    path.with_suffix(".meta.json").write_text(json.dumps({"sha256": hashlib.sha256(path.read_bytes()).hexdigest()}),
+                                              encoding="utf-8")
+    fz = PromptBuilder(builder.candidates, builder.test_queries, retrieval_source="frozen", frozen_path=path)
+    for q in qs:
+        for s in specs(q["id"], "plantuml", "compact") + specs(q["id"], "compact", "indent2"):
+            a, b = live.build(q, s), fz.build(q, s)
+            assert a.example_ids == b.example_ids and sha(a) == sha(b), (q["id"], s)
+    ties = fr.tie_report(live, qs)
+    assert set(ties) == {"bm25@2", "bm25@3", "dense@3", "hybrid@3"}
+    # 2) file versionato: sha256, bm25 / random identici al vivo per i 26 di sviluppo, prompt dei manifest
+    real = PromptBuilder(builder.candidates, builder.test_queries, retrieval_source="frozen")
+    meta = json.loads(pb.FROZEN_PATH.with_suffix(".meta.json").read_text(encoding="utf-8"))
+    assert real.frozen_sha256 == meta["sha256"] and len(real.frozen) == meta["righe"] == 80 * 7
+    assert meta["random_ripetizioni"] == 3 and meta["storia"][-1]["voce"] == 129
+    dev = sorted(cl.development_ids())
+    assert len(dev) == 26
+    for i in dev:
+        for s in specs(i, "plantuml", "compact") + specs(i, "compact", "indent2"):
+            if s.condition in ("bm25", "random"):
+                a, b = builder.build(builder.all_by_id[i], s), real.build(real.all_by_id[i], s)
+                assert sha(a) == sha(b), (i, s)
+    n = 0
+    for run, conf, v, ser in (("dev_v5", "P-G", "v5", "compact"), ("dev_v5", "C-G", "v5", "compact"),
+                              ("dev_c5indent", "C-G", "v5", "indent2"), ("dev_v5base", "P-G", "v4", "compact")):
+        fmt = "plantuml" if conf == "P-G" else "compact"
+        man = ROOT / "data" / "results" / "generation" / f"{run}__{conf}" / "manifest.jsonl"
+        for m in (json.loads(x) for x in man.read_text(encoding="utf-8").splitlines() if x):
+            bp = real.build(real.all_by_id[m["query_id"]], PromptSpec("bm25", k=3, output_format=fmt, serialization=ser,
+                                                                      instructions_version=v))
+            assert sha(bp) == m["prompt_sha256"], (run, conf, m["call_id"])
+            n += 1
+    assert n == 160
+    # 3) rifiuti
+    bad = tmp / "frozen" / "bad.jsonl"
+    bad.write_bytes(path.read_bytes().replace(b'"Boeing"', b'"Boeing "', 1))
+    shutil.copy(path.with_suffix(".meta.json"), bad.with_suffix(".meta.json"))
+    for make, exc in ((lambda: PromptBuilder(builder.candidates, builder.test_queries, retrieval_source="frozen",
+                                             frozen_path=bad), SystemExit),
+                      (lambda: real.build(real.all_by_id["Boeing"], PromptSpec("struct", k=3)), ValueError),
+                      (lambda: real.build(real.all_by_id["Boeing"], PromptSpec("bm25", k=5)), KeyError),
+                      (lambda: real.build(real.all_by_id["Boeing"], PromptSpec("random", k=3, seed=1)), KeyError),
+                      (lambda: PromptBuilder(builder.candidates, builder.test_queries, pool="corpus60",
+                                             retrieval_source="frozen"), ValueError),
+                      (lambda: PromptBuilder(builder.candidates, builder.test_queries, retrieval_source="x"), ValueError)):
+        try:
+            make()
+            raise AssertionError("doveva fallire")
+        except exc:
+            pass
+    assert [e["id"] for e in real.select(real.all_by_id["Boeing"], PromptSpec("zero_shot"))] == []
+    # 4) runner: retrieval_source frozen -> provenienza con lo sha256 del file
+    resp = tmp / "frozen_resp"
+    resp.mkdir()
+    (resp / "Boeing.txt").write_text("@startuml\nclass A {}\n@enduml\n", encoding="utf-8")
+    cfg = {"run_id": "frozen_run", "split": "corpus", "query_ids": ["Boeing"], "conditions": ["bm25"], "k": [3],
+           "repetitions": 1, "seed": 0, "retrieval_source": "frozen", "plantuml_label_rule": "auto_v1",
+           "prompt": {"output_format": "plantuml", "instructions_version": "v5"},
+           "client": {"kind": "mock", "responses_dir": str(resp)},
+           "generation": {"temperature": 0.3, "top_p": 0.95, "top_k": 64, "max_tokens": 4096, "seed": 42}}
+    cp = tmp / "frozen_run.yaml"
+    cp.write_text(yaml.safe_dump(cfg), encoding="utf-8")
+    assert rx.main([str(cp), "--results-dir", str(tmp / "frozen_res")]) == 0
+    prov = json.loads((tmp / "frozen_res" / "frozen_run" / "config.json").read_text(encoding="utf-8"))["provenance"]
+    assert prov["retrieval_frozen_sha256"] == meta["sha256"] and prov["retrieval_frozen"].endswith("retrievals_3b.jsonl")
+    # guardia del Passo 3b: condizioni di retrieval solo dal file congelato
+    rx.check_retrieval_source({"passo": "3b", "conditions": ["zero_shot", "static"]})
+    rx.check_retrieval_source({"passo": "3b", "conditions": ["bm25"], "retrieval_source": "frozen"})
+    rx.check_retrieval_source({"conditions": ["bm25"]})  # run di sviluppo: dal vivo, invariate
+    rx.check_retrieval_source({"passo": "3b", "conditions": ["bm25"], "client": {"kind": "mock"}})  # prove del runner
+    # voce 130: seme di random per esercizio e ripetizione nel runner; obbligatorio nel Passo 3b
+    assert pb.random_seed("Boeing", 0) == int(hashlib.sha256(b"random|Boeing|0").hexdigest()[:8], 16)
+    assert len({pb.random_seed(q, r) for q in ("Boeing", "AirTravel") for r in range(3)}) == 6
+    qb = [builder.all_by_id["Boeing"]]
+    base_cfg = {"conditions": ["random", "bm25"], "k": [3], "repetitions": 3, "seed": 7}
+    hist = rx.plan(base_cfg, qb)
+    assert [s.seed for _, s, _, _ in hist] == [7] * 6  # storico: il seed del config per tutte le ripetizioni
+    new = rx.plan(dict(base_cfg, random_seed="per_esercizio_ripetizione"), qb)
+    assert [(s.condition, s.seed, r) for _, s, r, _ in new][:3] == [("random", pb.random_seed("Boeing", r), r)
+                                                                     for r in range(3)]
+    assert [s.seed for _, s, _, _ in new][3:] == [7, 7, 7]  # bm25 invariato
+    for bad, msg in (({"random_seed": "x"}, "random_seed sconosciuto"),):
+        try:
+            rx.plan(dict(base_cfg, **bad), qb)
+            raise AssertionError("modalita' sconosciuta accettata")
+        except SystemExit as e:
+            assert msg in str(e)
+    rx.check_retrieval_source({"passo": "3b", "conditions": ["random"], "retrieval_source": "frozen",
+                               "random_seed": "per_esercizio_ripetizione"})
+    try:
+        rx.check_retrieval_source({"passo": "3b", "conditions": ["random"], "retrieval_source": "frozen"})
+        raise AssertionError("config 3b con random a seme unico accettato")
+    except SystemExit as e:
+        assert "per_esercizio_ripetizione" in str(e)
+    for c in (["bm25"], ["random", "zero_shot"], ["dense"], ["hybrid"]):
+        try:
+            rx.check_retrieval_source({"passo": "3b", "conditions": c})
+            raise AssertionError(f"config 3b dal vivo accettato: {c}")
+        except SystemExit as e:
+            assert "frozen" in str(e)
+    for name in ("gemma4_12b_qat_template.yaml", "lmstudio_template.yaml"):
+        tpl = yaml.safe_load((ROOT / "experiments" / "configs" / name).read_text(encoding="utf-8"))
+        assert tpl["retrieval_source"] == "frozen" and tpl["random_seed"] == "per_esercizio_ripetizione", name
+    assert "sentence_transformers" not in sys.modules, "i test non devono caricare sentence-transformers"
+    print("  OK  file congelato (voce 129): congelato = dal vivo (denso finto, 4 retriever, 2 formati); file versionato "
+          "con sha256 verificato, bm25 / random = dal vivo per i 26 di sviluppo, 160 prompt dei manifest dev_v5 / "
+          "dev_c5indent / dev_v5base riprodotti; rifiuti (sha256, struct, k o seme non congelati, pool); provenienza "
+          "del runner; config del Passo 3b rifiutati senza retrieval_source frozen; random con seme per esercizio e "
+          "ripetizione (voce 130): seme, piano del runner, guardia del 3b, template")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -2456,6 +2728,9 @@ def main() -> None:
         check_compact_lever(builder)
         check_struct_lever(builder)
         check_pool_lever(builder)
+        check_thinking()
+        check_plan(builder, tmp)
+        check_frozen(builder, tmp)
         check_review(builder, tmp)
         check_run_log(tmp)
         check_provenance()

@@ -14,6 +14,21 @@ from __future__ import annotations
 
 import apollon_convert as ac
 import apply_corrections as ac_corr
+import paths
+
+SKIPPED: list[str] = []
+
+
+def needs_translated(check):
+    """I 15 esercizi tradotti dall'italiano (corpus/raw/translated_it/) NON sono versionati (licenza, voce 127): su un
+    clone senza la cartella i test che la leggono vengono SALTATI con un messaggio; gli altri girano."""
+    def run(*args, **kwargs):
+        if not paths.RAW_TRANSLATED_DIR.is_dir():
+            SKIPPED.append(check.__name__)
+            print(f"  SALTATO  {check.__name__}: manca corpus/raw/translated_it/ (non versionata, corpus/README.md)")
+            return None
+        return check(*args, **kwargs)
+    return run
 
 
 def make_diagram(op: str, source_mult: str, target_mult: str):
@@ -158,6 +173,7 @@ def check_multiplicity_normalization() -> None:
     print("  OK  molteplicita' normalizzate (n->*, 0..n->0..*, 1..n->1..*, 1...*->1..* con warning)")
 
 
+@needs_translated
 def check_shared_type_glossary() -> None:
     """Regole globali dei tipi non standard nel glossario condiviso (Number->int,
     Calendar->datetime approvati per MilanLibrary; currency->double approvato per
@@ -1032,7 +1048,8 @@ def main() -> None:
     assert edge["data"]["sourceMultiplicity"] == "1" and edge["data"]["targetMultiplicity"] == "*"
     print(f'  OK  Order "1" --* "*" Line  ->  source=Order(1) target=Line(*)  [ClassComposition]')
 
-    print("\nTutti i test sono passati.")
+    print("\nTutti i test sono passati." + (f" Saltati {len(SKIPPED)} (manca corpus/raw/translated_it/): "
+                                            + ", ".join(SKIPPED) if SKIPPED else ""))
 
 
 if __name__ == "__main__":

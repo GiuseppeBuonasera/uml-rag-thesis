@@ -34,7 +34,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import statistics
 import subprocess
 import sys
 from collections import Counter
@@ -51,6 +50,8 @@ import plantuml_postprocess as ppu  # noqa: E402
 import run_experiment as rx  # noqa: E402
 from prompt_builder import cl  # noqa: E402
 import provenance  # noqa: E402  (riga di provenienza, voce 106)
+sys.path.insert(0, str(ROOT))
+from evaluation import metrics as em  # noqa: E402  (metriche congelate per il 3b, voce 127)
 
 RESULTS = ROOT / "data" / "results" / "generation"
 CONFIG = ROOT / "experiments" / "configs" / "dev_formats.yaml"
@@ -126,35 +127,8 @@ def load_configuration(results: Path, name: str, gt: dict[str, dict], expected_m
 # --- metriche -------------------------------------------------------------------------------------------------------
 
 
-def is_valid(c: dict) -> bool:
-    return c["v"].level >= 3
-
-
-def is_clean(c: dict) -> bool:
-    v = c["v"]
-    return is_valid(c) and (v.P1_clean if c["format"] == "plantuml" else v.C2_clean)
-
-
-def metrics(calls: list[dict]) -> dict:
-    """Metriche della regola e secondarie su un insieme di risposte (una configurazione, un formato, un modello)."""
-    n = len(calls)
-    valid = [c for c in calls if is_valid(c)]
-    jac = {id(c): cl.jaccard(ap.class_names(c["v"].diagram), ap.class_names(c["gt"])) for c in valid}
-    rel = Counter()
-    for c in valid:
-        rel += ap.compare_relations(c["v"].diagram, c["gt"])
-    gt_edges_all = sum(len(c["gt"]["edges"]) for c in calls)
-    lat = [c["m"]["latency_s"] for c in calls if c["m"].get("latency_s") is not None]
-    return {
-        "n": n, "V": len(valid), "Vc": sum(is_clean(c) for c in calls),
-        "J": sum(jac.values()) / n if n else None,  # 0 per le non valide
-        "R": rel["same_type"] / gt_edges_all if gt_edges_all else None,  # 0 ritrovate per le non valide
-        "J_valid": statistics.mean(jac.values()) if valid else None,
-        "R_valid": rel["same_type"] / rel["gt_edges"] if rel["gt_edges"] else None,
-        "truncated": sum(bool(c["v"].truncated) for c in calls),
-        "relations": rel, "gt_edges_all": gt_edges_all,
-        "latency_median": statistics.median(lat) if lat else None,
-    }
+# spostate in evaluation/metrics.py senza modifiche (voce 127), riesportate con gli stessi nomi
+is_valid, is_clean, metrics = em.is_valid, em.is_clean, em.core_metrics
 
 
 # --- regola (voce 92) -----------------------------------------------------------------------------------------------

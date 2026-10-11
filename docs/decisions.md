@@ -133,6 +133,12 @@ non sono state modificate.
 122. 2026-10-10 — Varianti del retriever, passo 4: esito (nessuna entra nel 3b)
 123. 2026-10-11 — Verifiche prima del 3b: compatto v5 + indent e pool dei soli 60 (regole prima delle run)
 124. 2026-10-11 — Verifiche prima del 3b: esito (v5 adottata per il compatto, resta il pool unico)
+125. 2026-10-11 — Leva "thinking" di Gemma sul dev set: chiusa (cicli di autoverifica allo smoke test)
+126. 2026-10-11 — Leva "piano breve" (istruzioni v5plan) sul dev set: regola e config registrate prima della run
+127. 2026-10-11 — Riproducibilità prima del 3b: clone pulito, ambiente dedicato, metriche congelate in evaluation/metrics.py
+128. 2026-10-11 — Qualità del ground truth per sorgente (solo descrittivo, limiti da citare in tesi)
+129. 2026-10-11 — Retrieval pronto per il 3b: pool unico negli script, esempi congelati, analisi descrittiva sui 26 di sviluppo, domanda 4
+130. 2026-10-11 — Seme della condizione random per esercizio e ripetizione; proposta sulla domanda 4; analisi pertinenza-qualità entro esercizio nel piano del 3b
 
 ## Formato
 
@@ -4488,3 +4494,322 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - **Configurazione di lavoro per il 3b**: PlantUML istruzioni v5; compatto istruzioni v5 + esempi indentati (con lo schema,
   "both", se la domanda 14 sarà positiva); pool unico (79 candidati per query); retriever bm25, MiniLM e ibrido (voce
   110; correzione della voce 123); Gemma 4 12B QAT, config v2, k = 3.
+
+### [2026-10-11] Leva "thinking" di Gemma sul dev set — regola e config registrate PRIMA delle generazioni
+- **Obiettivo**: misurare se accendere il ragionamento nativo di Gemma 4 12B QAT (stesso modello e quantizzazione, finora
+  SPENTO, voce 87 e domanda 15) migliora i diagrammi. Test set ed esercizi di valutazione non toccati.
+- **Meccanismo (FASE 1, verificato prima di questa voce con richieste di prova su un prompt banale, nessun esercizio)**:
+  il parametro per richiesta **`reasoning_effort`** dell'API di LM Studio accende il ragionamento: testo in
+  `reasoning_content`, separato dal contenuto, `usage.completion_tokens_details.reasoning_tokens` dal server. I livelli
+  `low` / `medium` / `high` si comportano allo stesso modo (356-357 token di ragionamento sullo stesso prompt; è un
+  interruttore), `none` lo spegne. Ignorati: `chat_template_kwargs.enable_thinking`, `enable_thinking`, `reasoning`.
+  **L'impostazione salvata del modello (`enableThinking: false`) NON si tocca**: nessun ripristino necessario.
+  Si usa `reasoning_effort: "high"` (equivalente agli altri livelli, scelto come valore esplicito).
+- **Config `dev_think.yaml`**: identica alla configurazione di lavoro salvo il ragionamento: P-G istruzioni v5, C-G
+  istruzioni v5 + esempi indentati (voce 124), bm25 k = 3, pool unico, 20 esercizi di sviluppo × 2 ripetizioni × 2
+  formati = **80 generazioni**; temperatura 0,3, top_p 0,95, top_k 64, seme invariati; `thinking: true`;
+  **max_tokens 8192** (ragionamento + risposta) → **versione di configurazione 3** (contesto 32768, max_tokens 8192), perché
+  il runner impone contesto e max_tokens uguali tra run dello stesso modello e della stessa versione. Baseline:
+  `dev_v5__P-G` e `dev_c5indent__C-G` (versione 2, max_tokens 4096: nessuna loro risposta è stata troncata, quindi il
+  limite più basso non le ha penalizzate).
+- **REGOLA**, per formato (delta = thinking − baseline, 40 risposte): **adottare il thinking se (dR ≥ +0,03 OPPURE dR_fam ≥
+  +0,03) E dVc ≥ −2 E dM_primaria ≥ −0,03 E meno di 2 troncamenti E meno di 2 risposte con contenuto vuoto.**
+  **Costo** (fuori dalla regola, obbligatorio nel report): mediana e massimo dei token di ragionamento, latenza mediana
+  thinking contro baseline, stima delle ore del Passo 3b con il thinking (circa 2.300 generazioni). **Se la leva è
+  adottata e la stima supera 30 ore, non si decide da soli**: si propone ai relatori su quali condizioni del 3b usarla.
+- **Implementazione (prima delle generazioni)**: `GenerationParams.reasoning_effort` (inviato solo se impostato; chiave di
+  cache invariata senza, verificato), `thinking: true` nel config → `reasoning_effort: "high"` (`THINKING_EFFORT`),
+  `should_stop_on_reasoning` (stop disattivato SOLO con `thinking: true`; config normali invariati); ragionamento salvato
+  nel raw (`reasoning_text`, `reasoning_tokens`), validazione solo sul contenuto; `analyze_instructions.load_run` accetta
+  la versione di configurazione attesa (default 2, invariato); `experiments/analyze_think.py`; config `dev_think.yaml`
+  (budget: prompt più lungo stimato 5.556 token + 8.192 contro un contesto di 32.768). Test `check_thinking`.
+- **SMOKE TEST (FASE 1): FALLITO → STOP** (2 chiamate, Boeing P-G e Restaurant C-G, risultati fuori da data/results, nella
+  cartella di lavoro della sessione): in entrambi il ragionamento consuma **tutti gli 8.192 token** (8.189 di
+  ragionamento), **contenuto vuoto**, finish_reason `length`, circa 210-225 s per chiamata. Il ragionamento è separato
+  correttamente (`reasoning_content`, nessun marcatore nel contenuto), ma **entra in un ciclo di autoverifica**
+  ("*Wait, …*" ripetuto): Boeing 411 righe di cui 110 distinte (la stessa relazione ripetuta 40 volte), Restaurant 469
+  righe di cui 395 distinte, con lo stesso schema di ricontrollo. Le 80 generazioni NON sono state lanciate.
+  L'impostazione salvata del modello non è stata toccata (ragionamento spento per tutte le altre run).
+- **Sotto-voce (2026-10-11, decisione dell'utente dopo lo smoke test fallito): UN SOLO tentativo, poi chiusura se
+  fallisce.** La regola di adozione resta invariata per il resto.
+  - **Trattamento**: ragionamento acceso con `reasoning_effort: "low"` (accettato da LM Studio: nello smoke del meccanismo
+    `low` funzionava come gli altri livelli) **e temperatura 1,0**; altri parametri invariati (top_p 0,95, top_k 64, seme),
+    max_tokens 8192, versione di configurazione 3. Config `dev_think.yaml` aggiornato (`thinking: low`, temperatura 1,0).
+  - **Controllo nuovo**: temperatura 1,0 SENZA ragionamento, stessi config (versione 3, max_tokens 8192): `dev_temp1.yaml`,
+    per separare l'effetto della temperatura da quello del ragionamento.
+  - La **regola di adozione** si applica al trattamento contro la baseline attuale (temperatura 0,3, nessun ragionamento:
+    `dev_v5__P-G`, `dev_c5indent__C-G`). Nel report: (a) trattamento contro baseline, (b) controllo contro baseline,
+    (c) trattamento contro controllo = effetto del solo ragionamento. **Se il trattamento è adottato, la nuova
+    configurazione cambia SIA il ragionamento SIA la temperatura**: va dichiarato.
+  - **Smoke test**: 4 chiamate (Boeing e Restaurant, PlantUML e compatto) con il trattamento. **Criterio fissato ora**: la
+    leva si CHIUDE (opzione 4: ragionamento spento in tutta la pipeline, risultato negativo registrato, nessuna run da 80)
+    se anche UNA risposta ha contenuto vuoto, finish_reason `length` o un **ciclo evidente** nel ragionamento, definito
+    come: righe distinte / righe totali < 0,6 OPPURE una stessa riga di almeno 20 caratteri ripetuta 5 o più volte (righe
+    non vuote, spazi ai bordi tolti). Se passa: 80 generazioni del trattamento + 80 del controllo.
+- **SMOKE TEST DEL TRATTAMENTO (low + temperatura 1,0): criterio violato → LEVA CHIUSA (opzione 4).** 4 chiamate (Boeing
+  e Restaurant, PlantUML e compatto; risultati nella cartella di lavoro della sessione, non in data/results; eseguito con
+  la GPU CONDIVISA con un altro programma, che pesa solo sulla latenza, non sui criteri):
+
+  | chiamata | finish | livello | ragionamento (token) | righe distinte / totali | riga più ripetuta (n) | latenza |
+  |---|---|---|---|---|---|---|
+  | C-G Boeing | stop | 4 | 6.288 | 284 / 304 (0,93) | `- sourceMultiplicity: "1", targetMultiplicity: "*"` (**5**) | 194 s |
+  | C-G Restaurant | stop | 4 | 6.760 | 370 / 387 (0,96) | 3 | 199 s |
+  | P-G Boeing | stop | 4 | 5.198 | 249 / 272 (0,92) | 3 | 132 s |
+  | P-G Restaurant | stop | 4 | 7.169 | 401 / 444 (0,90) | `Waiter "1" -- "*" Customer : serves` (**8**) | 204 s |
+
+  Due risposte su quattro violano la clausola "una riga di almeno 20 caratteri ripetuta 5 o più volte": criterio
+  applicato meccanicamente, la leva si chiude. **Da notare (non cambia l'esito)**: con temperatura 1,0 e `low` il ciclo
+  grave del primo smoke test sparisce (tutte e quattro le risposte finiscono, `stop`, a L4, rapporto di righe distinte
+  0,90-0,96); le ripetizioni rimaste sono righe di bozza riprese più volte durante l'autoverifica. **Costo**: 5.200-7.200
+  token di ragionamento e 130-200 s per generazione (con la GPU condivisa; anche a velocità piena circa 40 token/s, cioè
+  2-3 minuti): il Passo 3b (circa 2.300 generazioni) richiederebbe **oltre 80 ore**, molto oltre la soglia di 30.
+- **Conseguenze**: **ragionamento SPENTO in tutta la pipeline** (nessun config attivo ha `thinking`; l'impostazione salvata
+  di LM Studio non è mai stata toccata); la risposta sperimentale alla domanda 15 è "spento". Le run da 80 (trattamento e
+  controllo) NON sono state lanciate; `dev_think.yaml` e `dev_temp1.yaml` restano come documentazione, insieme al codice
+  (`reasoning_effort`, `thinking`, `analyze_think.py`), che non cambia nulla per i config senza `thinking`.
+
+### [2026-10-11] Leva "piano breve" (istruzioni v5plan) sul dev set — regola e config registrate PRIMA delle generazioni
+- **Obiettivo**: misurare se chiedere al modello un piano breve, ancorato al testo, PRIMA del diagramma migliora i
+  diagrammi (ragionamento esplicito nel contenuto, a costo contenuto, dopo la chiusura della leva thinking, voce 125).
+  **Un solo tentativo**: nessuna iterazione sul testo delle istruzioni dopo aver visto i risultati. Test set ed esercizi di
+  valutazione non toccati.
+- **Testi (congelati, sha256 nel test `check_plan`)**: `generation/templates/v5plan_plantuml_instructions.txt` e
+  `v5plan_compact_instructions.txt` = istruzioni v5 del formato con il **solo paragrafo OUTPUT FORMAT sostituito**: la
+  risposta ha esattamente due parti, `PLAN:` (al più 15 righe, una per classe `- Name: citazione breve` e una per
+  relazione `- Relationship A - B: tipo, molteplicità in A, molteplicità in B: citazione breve`, citazioni di al più 10
+  parole; solo ciò che il testo sostiene) e `DIAGRAM:`. **Adattamento dichiarato**: la frase del DIAGRAM riprende quella
+  della v5 di ciascun formato (PlantUML: un solo blocco da @startuml a @enduml, solo dichiarazioni di classe e relazioni;
+  compatto: un solo oggetto JSON nel formato indicato), senza recinti Markdown e niente dopo. Riga finale della traccia:
+  "Now write the PLAN and then the DIAGRAM for this system only." Blocco esempi ed esempi recuperati **identici alla
+  v5**: gli esempi mostrano **SOLO diagrammi** (nessun piano di esempio).
+- **Post-processing** (`generation/plan_split.py`): si valida e si misura **solo la parte dopo il marcatore `DIAGRAM`**
+  (prima riga che inizia con DIAGRAM, con eventuale `**` o `#`); il piano si salva a parte (`plans/<call_id>.txt`), nel
+  manifest `plan_marker_found`, `plan_lines`, `plan_chars`. Senza marcatore si valida l'intera risposta e il caso si conta.
+  Le run non v5plan sono invariate (verificato nel test).
+- **Config `dev_plan.yaml`**: identico alle baseline salvo `prompt.instructions_version: v5plan` (verificato: config
+  risolti uguali in tutto il resto; prompt diversi solo nelle istruzioni e nella riga finale, 20/20 per formato). P-G
+  PlantUML, C-G compatto con esempi indentati, bm25 k = 3, pool unico, temperatura 0,3, top_p 0,95, top_k 64, seme 42,
+  max_tokens 4096, **versione di configurazione 2**, ragionamento spento; 20 esercizi di sviluppo × 2 ripetizioni × 2
+  formati = **80 generazioni**. Baseline: `dev_v5__P-G` e `dev_c5indent__C-G`.
+- **REGOLA**, per formato (delta = piano − baseline, 40 risposte; metriche sul solo diagramma): **adottare v5plan se (dR ≥
+  +0,03 OPPURE dR_fam ≥ +0,03) E dVc ≥ −2 E dM_primaria ≥ −0,03 E meno di 2 troncamenti E latenza mediana ≤ 2,5 × quella
+  della baseline**, latenza **misurata con la GPU libera**. **Se adottata in un formato, v5plan diventa la configurazione
+  di lavoro di quel formato per TUTTE le condizioni del 3b.** Nel report, fuori dalla regola: marcatore mancante, token di
+  output, stima delle ore del 3b (circa 2.300 generazioni), coerenza piano-diagramma, 3 esempi in cui il piano migliora R
+  e 3 in cui peggiora. Implementazione: `experiments/analyze_plan.py` (costanti e `adopt`, testati prima della run).
+- **SMOKE TEST (FASE 1): superato** (2 chiamate, Boeing P-G e Restaurant C-G, risultati nella cartella di lavoro della
+  sessione, non in data/results; GPU CONDIVISA con un altro programma, latenze non rappresentative): entrambe `stop`,
+  livello 4, marcatore trovato (P-G "DIAGRAM" senza i due punti, gestito), piano di 11 righe (522 e 589 caratteri),
+  diagramma valido senza testo dopo. **Osservazioni (non cambiano i testi, un solo tentativo)**: il modello copia
+  letteralmente il segnaposto `- Class Name: …`; in P-G le righe di relazione del piano omettono tipo e molteplicità.
+  Il primo fatto rompe il conteggio delle classi del piano in `analyze_plan.plan_classes` (metrica di coerenza, fuori
+  dalla regola): restituisce "name" → correzione del solo parser da approvare prima della FASE 2.
+
+### [2026-10-11] Riproducibilità prima del Passo 3b — nessuna modifica a dati, GT o configurazione
+- **Clone pulito**: le suite devono girare su un clone fresco da GitHub, dove mancano le parti non versionate.
+  - **nltk / WordNet**: usato SOLO dalla variante 2s del retriever (`retrieval/structure_retrievers.py`, voce 120, non
+    entrata nel 3b, voce 122). L'import era già pigro (dentro `wordnet_expand`); aggiunti `wordnet_missing()` (nltk non
+    installato oppure dati WordNet non scaricati) e un errore chiaro con le istruzioni in `wordnet_expand`. In
+    `retrieval/test_retrieval.py` i due controlli della 2s vengono SALTATI con un messaggio se manca qualcosa; nessun
+    download a runtime. `requirements.txt`: `nltk==3.10.3` come riga commentata, dipendenza OPZIONALE documentata
+    (installazione e `python -m nltk.downloader wordnet` a mano).
+  - **`corpus/raw/translated_it/`** (non versionata, licenza): in `corpus/test_apollon_convert.py` il decoratore
+    `needs_translated` SALTA con un messaggio i test che la leggono (oggi solo `check_shared_type_glossary`, l'unico
+    che falliva sul clone); tutti gli altri girano. Documentato in `corpus/README.md`.
+  - **Prova eseguita** (2026-10-11): clone da GitHub (`ec59fb4`, l'ultimo commit pubblicato) con sopra le modifiche
+    NON committate del working tree (file modificati e nuovi non ignorati: lo stato che il repo avrà dopo il commit),
+    in una cartella temporanea; ambiente virtuale NUOVO (Python 3.12.10) da `requirements.txt`. Esito: **quattro suite
+    verdi** (corpus, retrieval, generazione e la nuova delle metriche), con i due salti attesi (glossario condiviso;
+    variante 2s, nltk non installato). Senza versioni fissate pip ha installato versioni più recenti di quelle delle
+    run (torch 2.14.1, numpy 2.5.4, pandas 3.0.6, scikit-learn 1.9.1, openai 3.29.0, …): le suite passano lo stesso,
+    comprese le 12 analisi ricalcolate identiche. Seconda prova con un altro ambiente nuovo da `requirements-lock.txt`
+    sullo stesso clone: installazione senza errori, quattro suite verdi (la 2s qui gira: nltk è nel lock e i dati
+    WordNet sono nella cartella utente di nltk di questo PC). I modelli densi non servono alle suite (i test non
+    caricano sentence-transformers).
+- **Ambiente**: tutte le run fino a oggi usavano il Python 3.12.10 di Microsoft Store con i pacchetti nel sito utente
+  (nessun ambiente virtuale). `requirements-lock.txt` = `pip freeze` di quell'ambiente (131 pacchetti attivi), con una sola
+  modifica a mano dichiarata nell'intestazione: `torchaudio==2.6.0+cu124` commentato (build CUDA non su PyPI, mai
+  importato, incompatibile con torch 2.10.0: conflitto già nei "Limiti noti"). Il lock contiene anche pacchetti di
+  altri progetti presenti nel sito utente (es. ultralytics, wandb, opencv): lasciati, perché il lock descrive
+  l'ambiente reale delle run. **Il 3b si esegue in un ambiente virtuale dedicato `.venv` creato dal lock**: procedura
+  in docs/STATUS.md, sezione "Ambiente della tesi".
+- **Metriche congelate per il 3b**: `evaluation/metrics.py` (prima conteneva solo funzioni segnaposto mai usate) ora
+  contiene, SPOSTATE senza modifiche, le funzioni di `analyze_pilot.py` (norm, class_names, norm_mult, edges,
+  compare_relations), `analyze_dev.py` (is_valid, is_clean, metrics → `core_metrics`: V, Vc, J, R),
+  `analyze_instructions.py` (match, gt_ends, resp_mult, multiplicity_counts, metrics → `multiplicity_metrics`: M
+  primaria e secondaria, verso; confusion: generalizzazioni invertite, classi e generalizzazioni in più) e
+  `analyze_v5.py` (r_fam, extra_compositions, all_metrics), con le costanti. Gli script storici le **riesportano con
+  gli stessi nomi** (stessi oggetti, non copie), quindi tutti i chiamanti (`ap.edges`, `ad.metrics`, `ai.confusion`,
+  `av.all_metrics`, …) restano invariati. Jaccard resta in `retrieval/corpus_loader.py`, riesportato.
+  **Test** `evaluation/test_metrics.py`: riesportazioni; un esempio calcolato a mano; ricalcolo delle **12 analisi
+  versionate** (pilota, pilota 2 e la sua v2, formati, k, istruzioni, v5, compatto, pool, retriever, struttura,
+  esempi) su una copia temporanea dei soli file versionati delle run: ogni summary.md rigenerato è **identico riga per
+  riga** a quello versionato, salvo la riga di provenienza. Verificato anche prima dello spostamento: con il codice
+  precedente le stesse 12 analisi erano già identiche, e prima e dopo coincidono. La valutazione semantica (livello 2)
+  andrà nello stesso pacchetto, in un compito separato.
+- **Backup**: promemoria per l'utente in docs/STATUS.md (copia PRIVATA di `corpus/raw/translated_it/`, mai nel repo).
+
+### [2026-10-11] Qualità del ground truth per sorgente — SOLO DESCRITTIVO (nessuna modifica a dati, GT o configurazione)
+- **Scopo**: documentare, da citare come limiti in tesi, quanto il GT delle tre sorgenti è disomogeneo. Nessun dato è
+  stato cambiato; i numeri sono calcolati sui `diagram_apollon_json` e sulle `description` attuali di
+  `corpus/processed/corpus.jsonl` e `testset_debari.jsonl` (80 esercizi), sorgente da `corpus/roles.yaml`.
+- **Definizioni**: attributi = attributi delle classi non enumerazione, "senza tipo" se non contengono `:`; estremi =
+  i due estremi delle relazioni che non sono generalizzazione o realizzazione, "vuoto" se la molteplicità è vuota;
+  associazioni = bidirezionali e unidirezionali, "senza nome" se l'etichetta è vuota.
+
+  | sorgente | esercizi | attributi senza tipo | estremi con molteplicità vuota | associazioni senza nome | ... e senza ruoli | tracce con indicazioni per lo studente |
+  |---|---|---|---|---|---|---|
+  | Golden UML Modelset (`golden`) | 45 | 2 / 586 (0,3%), 2 esercizi | 39 / 812 (4,8%), 4 esercizi | 314 / 339 (92,6%) | 251 / 339 (74,0%) | 6 (+1 dubbia) |
+  | tradotti dall'italiano (`translated_it`) | 15 | 3 / 167 (1,8%), 2 esercizi | 38 / 186 (20,4%), 6 esercizi | 57 / 78 (73,1%) | 46 / 78 (59,0%) | 0 |
+  | test set De Bari (`debari`) | 20 | 187 / 264 (70,8%), 13 esercizi | 44 / 252 (17,5%), 9 esercizi | 79 / 103 (76,7%) | 65 / 103 (63,1%) | 1 |
+
+- **Tracce con indicazioni per lo studente** (ricerca per parole chiave, poi lettura delle frasi trovate: NON
+  esaustiva; esclusi i domini in cui "student" è un concetto del sistema, es. School, OnlineTutoringSystem):
+  golden: FitnessCompanyConan ("you can consider address as atomic", "You can assume that…", sviluppo), GameArea
+  ("Ignore the visibilities.", valutazione), GasStation_TUW ("Model the following situation using a UML class
+  diagram…", valutazione), Musicmatic ("asked you to create a UML class diagram", "You can assume…", sviluppo),
+  PizzaDeliveryWithEntertainment ("asks you to design the UML class diagram", sviluppo), SellingGoods (esercizio a
+  passi: "This exercise teaches you…", "create a class diagram for the use case described in STEP 1…", "revise your
+  model", valutazione); dubbia Menso ("For the sake of this case, we assume that…", ipotesi di modellazione, valutazione);
+  De Bari: DB18_LibrarySystem ("The exercise id to design a class structure…", valutazione). Le uniche esclusioni di
+  testo già applicate restano quelle di BuildingManagement e InsuranceCompany (`corpus/description_exclusions/`).
+- **Lettura** (per la tesi): (1) il test set De Bari ha in gran parte attributi SENZA tipo (trascritti dalle immagini
+  così come sono, non inventati; già nei "Limiti noti"), mentre il corpus li ha quasi sempre: un modello che segue gli
+  esempi del corpus scrive tipi che il GT del test set non ha (le metriche J, R, M non guardano gli attributi, una
+  futura metrica sugli attributi sì); (2) molteplicità vuote in circa un estremo su cinque nei tradotti e nel test set
+  contro il 5% del golden: M primaria conta solo gli estremi espliciti, M secondaria anche quelli vuoti (voce 98), e
+  gli esempi recuperati da sorgenti diverse insegnano abitudini diverse; (3) le associazioni sono quasi tutte senza
+  nome in tutte le sorgenti (il golden ancora di più): i nomi di associazione non sono un criterio affidabile per una
+  metrica; (4) poche tracce contengono istruzioni rivolte allo studente, che entrano nel prompt come parte della
+  traccia della query o degli esempi; sono lasciate come sono (nessuna modifica dopo il congelamento).
+
+### [2026-10-11] Retrieval pronto per il Passo 3b — nessuna nuova scelta, nessuna generazione
+- **Premessa**: le scelte del retrieval sono chiuse (voci 105-110, 115, 122, 124): bm25 congelato, dense = MiniLM alla
+  revisione fissata, hybrid = RRF c = 60, k = 3 (+ bm25 k = 2), pool unico (80 esercizi, 79 candidati per query). Qui si
+  allinea il codice, si congela l'output e si descrive. Gli esercizi di valutazione sono usati SOLO come candidati e per
+  costruire il file congelato: nessuna misura di pertinenza con uno di loro come query.
+- **1. Pool unico negli script del Passo 2** (`corpus_loader.POOLS`, `load_pool`, `pool_queries`):
+  - `analyze_retrieval.py`, `analyze_dense.py`: `--pool all80` (default) = 80 esercizi, 79 candidati per query,
+    pertinenza SOLO sulle 26 query di sviluppo (quasi-duplicati solo per coppie con un esercizio di sviluppo);
+    `--pool corpus59` = protocollo storico (59 candidati del corpus, Cruise escluso perché allora non convertito).
+  - `run_testset.py`: `--protocol all80` (default: 60 + gli altri 19 De Bari) che si **rifiuta senza
+    `--consenti-valutazione`** (i 20 De Bari sono di valutazione: si esegue dopo il 3b); `loo` (78) e `fixed59` restano
+    i protocolli storici sui 59 senza Cruise. Non eseguito.
+  - `hubness_report.py`: pool ricavato dal config.json delle run (storiche → corpus59), `--pool` per forzarlo.
+  - **Riproduzione byte per byte** (`retrieval/check_protocols.py`, lento): loo_2026-10-04_stop1 (4 CSV identici,
+    summary.md salvo run id, commit e riga di provenienza), dense_2026-10-09_22f5adf (3 CSV identici, summary.md salvo
+    run id, provenienza e tempi), hubness di testset_2026-10-04_stop2 (CSV e summary.md identici). Nella suite
+    (`check_pool_protocols`, secondi): top-3 di loo_stop1, testset_2026-10-04_stop2 (fixed59) e testset_2026-10-10_loo
+    (loo) riprodotti (solo id e punteggi, nessuna pertinenza ricalcolata sul test set). Run versionate invariate.
+- **2. File congelato degli esempi** (`retrieval/freeze_retrievals.py`): `data/retrieval_frozen/retrievals_3b.jsonl`
+  (versionato, 400 righe = 80 query × {bm25 k = 2, bm25 k = 3, dense k = 3, hybrid k = 3, random k = 3}), sha256
+  `6857259af6263cf69b81151f5424a371f5450397778e15e57c9235c1c0625bd5`; accanto `retrievals_3b.meta.json` con sha256 del
+  file, commit, modello e revisione del denso (all-MiniLM-L6-v2 @ 1110a243…, CPU), versioni dei pacchetti, sha256 del
+  CONTENUTO della cache degli embedding (vettori float32 degli 80 testi), dei config, di corpus.jsonl /
+  testset_debari.jsonl / roles.yaml e del GT degli 80. Prodotto con lo STESSO codice del prompt builder
+  (`PromptBuilder.hits`, estratto da `select()` senza cambiarne l'esito); con la stessa cache, due esecuzioni → stesso
+  file byte per byte.
+  - **Deriva osservata del denso (il motivo del file congelato)**: la prima versione del file (sha256 `b547aa63…`) e
+    quella finale hanno gli STESSI esempi in tutte le 400 righe, ma 34 righe dense differiscono nel punteggio di al più
+    1,2e-7 (un'unità in float32): nel frattempo le verifiche dei protocolli storici avevano ricalcolato gli embedding
+    in lotti diversi e riscritto la cache. Il margine minimo del denso tra il 3° e il 4° candidato è 3,9e-4
+    (GasStation_KUL; 4 query sotto 1e-3), dentro i top-3 4,7e-5 (ClothingCompany): migliaia di volte la deriva vista,
+    quindi esempi stabili su questa macchina; su un'altra (CPU, librerie) la deriva può essere maggiore, ed è per questo
+    che il 3b legge il file. Lo sha256 del file .npz della cache non è un'impronta stabile (l'archivio si riscrive):
+    nei metadati c'è lo sha256 del contenuto.
+  - **Random**: seme 0, quello dei config. Il runner passa a PromptSpec il `seed` del config, **uguale per tutte le
+    ripetizioni**: gli esempi casuali cambiano tra esercizi (sha256 di seme e traccia) ma NON tra ripetizioni. Si
+    congela il comportamento attuale; esempi casuali diversi per ripetizione sarebbero una scelta nuova (da decidere con
+    la domanda 8 sulle ripetizioni).
+  - **Prompt builder**: `retrieval_source: frozen` (bm25 / dense / hybrid / random dal file, sha256 verificato,
+    chiave mancante → errore; struct / construct non congelate → rifiutate; solo con il pool unico). Runner: chiave di
+    config `retrieval_source`, sha256 del file nella provenienza; **un config `passo: 3b` con condizioni di retrieval
+    è rifiutato senza `retrieval_source: frozen`** (client finti esclusi, come per i ruoli); i template
+    `gemma4_12b_qat_template.yaml` e `lmstudio_template.yaml` hanno `retrieval_source: frozen`.
+  - **Identità dei prompt** (`generation/check_frozen.py`, denso reale; rieseguita sul file finale): 26 esercizi di sviluppo × 2 configurazioni
+    di lavoro (P-G v5; C-G v5 + esempi indentati) × 5 condizioni = **260/260 prompt congelato = dal vivo** (sha256 dei
+    messaggi come nel runner); **200/200 prompt dei manifest** di dev_v5 (P-G, C-G), dev_c5indent (C-G), dev_v5base (P-G,
+    C-G) riprodotti dal file. dev_retrievers, dev_k e dev_instructions NON sono confrontabili: pool storico di 58 (i
+    loro esempi coincidono con il file solo in 8-16 risposte su 40). Nella suite (`check_frozen`, senza denso reale):
+    giro completo con embedding finti, bm25 / random dal file = dal vivo per i 26, 160 prompt dei manifest, rifiuti,
+    provenienza, guardia del 3b.
+  - **Pareggi esatti di punteggio** (ordinamento per id, come sempre): bm25 k = 2 e 3 e dense k = 3: **nessuno**;
+    hybrid k = 3: **9 query con un pareggio dentro i top-3** (cambia solo l'ordine nel prompt: AirTravel, Boeing,
+    DB07_BankSystem, DB09_AutoRepair, GasStation_TUW, LabTracker, RealEstateAgency, RepairShops, TransportCompany) e
+    **2 al confine 3/4** (cambia l'esempio scelto: DB10_Restaurant, SellingGoods). Sono pareggi STRUTTURALI della RRF
+    (ranghi scambiati, es. 1+2 contro 2+1: somme identiche), risolti per id in modo deterministico; tra macchine diverse
+    il punto fragile resta il denso (coseno in float32 su CPU), da cui dipendono anche i ranghi dell'ibrido. Il file
+    congelato toglie questa dipendenza dal 3b.
+- **3. Analisi descrittiva sui 26 di sviluppo** (`retrieval/analyze_dev80.py`, run
+  `data/results/retrieval/dev80_2026-10-11_ec59fb4/`, esempi dal file congelato):
+  - Jt@3: bm25 0,092, hybrid 0,084, dense 0,070, random (seme 0) 0,023, random 20 semi 0,018 ± 0,004, oracolo 0,134
+    (J@3: 0,077 / 0,066 / 0,055 / 0,018 / 0,014 / 0,112). Misure lessicali che favoriscono bm25 (voce 107).
+    analyze_dense.py con `--pool all80` dà gli stessi valori (controllo incrociato).
+  - Sovrapposizione dei top-3 (media |∩| / 3): bm25-dense 0,36, bm25-hybrid 0,58, dense-hybrid 0,62; con random ≤ 0,08.
+  - Hubness (78 posti): candidati distinti 48 (bm25), 52 (dense), 48 (hybrid), 51 (random); massimo 4 (MilanLibrary),
+    6 (DB14_BicycleRental), 5 (EatAtHome), 4.
+  - Esempi De Bari tra i recuperati: 15 / 25 / 20 / 19 su 78 (bm25 / dense / hybrid / random), in 13 / 18 / 15 / 14
+    query su 26; esempi di valutazione: 56 / 62 / 58 / 48 su 78 (contaminazione dichiarata nella voce 117).
+  - Pertinenza contro qualità (26 gruppi di generazioni esistenti di Gemma a k = 3, run × configurazione ×
+    condizione, 20 esercizi, Spearman tra Jt@3 degli esempi usati e R medio): **PlantUML rho da +0,23 a +0,50, mediana
+    +0,33, positivi 10/10**; **JSON compatto da −0,01 a +0,29, mediana +0,13, positivi 13/14** (oracle_jt, diagnostica,
+    a parte). Solo descrittivo: n = 20, gruppi non indipendenti, difficoltà dell'esercizio come confondente. Scatter
+    `scatter_plantuml.png` e `scatter_compact.png` (versionati: eccezione aggiunta in .gitignore).
+  - **PREVISTA, dopo il 3b** (non ora): la stessa analisi sui 54 di valutazione con gli esempi del file congelato e le
+    run del 3b (n = 54; a parte 34 del corpus e 20 De Bari, e 19 senza DB06_Flights); `analyze_dev80.py --insieme
+    valutazione` si rifiuta senza `--dopo-3b`.
+- **4. Domanda 4 (DB06_Flights / AirTravel), stato e proposta per i relatori**: vedi docs/STATUS.md, domanda 4
+  (aggiornata). Fatti nuovi dal file congelato: i due esercizi, ENTRAMBI di valutazione, sono l'uno il top-1
+  dell'altro per bm25 (score_norm 0,645 e 0,544), dense e hybrid (in hybrid per AirTravel a pari punteggio con Boeing);
+  AirTravel è anche l'esempio 2 del prompt statico, quindi per DB06_Flights il quasi-duplicato è presente in TUTTE le
+  condizioni con esempi tranne random, e per AirTravel la condizione static non è definita (l'esempio coinciderebbe con
+  la query: il builder la rifiuta).
+
+### [2026-10-11] Decisioni dopo il report della voce 129 (approvato) — registrate PRIMA di qualsiasi run del Passo 3b
+- **1. Condizione random: seme diverso per esercizio E ripetizione** (decisione dell'utente). Motivo: la condizione
+  stima l'effetto ATTESO di esempi casuali; con lo stesso seme le ripetizioni misurerebbero sempre lo stesso sorteggio
+  (voce 129: il runner passava a tutte le ripetizioni il `seed` del config).
+  - **Funzione** (`generation/prompt_builder.random_seed`): `seme(id, r) = int(sha256("random|<id esercizio>|<r>")
+    [primi 8 caratteri esadecimali], 16)`, cioè un intero a 32 bit deterministico, con r = indice di ripetizione (0, 1,
+    2, …). Il RandomRetriever resta invariato: l'estrazione dipende da sha256(seme, traccia della query) sul pool
+    ordinato per id.
+  - **Runner**: chiave di config `random_seed` = `config` (default, comportamento storico: il `seed` del config per
+    tutte le ripetizioni) | `per_esercizio_ripetizione` (seme(id, r) per la ripetizione r). Un config `passo: 3b` con la
+    condizione random deve usare `per_esercizio_ripetizione` (rifiutato altrimenti; client finti esclusi, come per le
+    altre guardie); i template del 3b lo impostano.
+  - **File congelato**: si rigenera SOLO la parte random di `data/retrieval_frozen/retrievals_3b.jsonl` (80 esercizi ×
+    ripetizioni 0, 1, 2 con il seme(id, r); le ripetizioni sono 3 come indicato dall'utente: se il 3b ne usera' di piu',
+    vanno aggiunte, e una chiave mancante e' un errore, mai un'estrazione dal vivo); bm25 / dense / hybrid devono restare
+    byte per byte identici (verificato, sotto). Nuovo sha256 nel `.meta.json`.
+  - **Run di sviluppo**: restano storiche con il seme unico del config (seme 0 per tutte le ripetizioni); nessuna run di
+    sviluppo usava la condizione random con generazioni, quindi nessun risultato esistente cambia.
+- **2. Domanda 4 (DB06_Flights / AirTravel)**: adottata come PROPOSTA da portare ai relatori quella del report della
+  voce 129: nessuna esclusione; risultati sui 54 di valutazione e sui 52 senza la coppia (De Bari su 20 e 19);
+  confronto appaiato static contro retrieval su 53 (AirTravel non ha la cella static), con controllo su 52; la coppia
+  come caso di studio qualitativo. Testo in docs/STATUS.md, domanda 4.
+- **3. Piano di analisi del 3b: relazione pertinenza–qualità anche ENTRO esercizio** (da riportare nel protocollo):
+  - TRA esercizi (già prevista, voce 129): per condizione e formato, Spearman tra Jt@3 degli esempi e R medio delle
+    ripetizioni, un punto per esercizio;
+  - ENTRO esercizio (nuova): per ogni esercizio e formato, scarti di Jt@3 e di R dalla media DELL'ESERCIZIO tra le
+    condizioni di retrieval (bm25 k = 3, dense, hybrid, random; bm25 k = 2 a parte), poi correlazione (Spearman) sugli
+    scarti messi insieme (un punto per esercizio × condizione); si riportano anche n, il numero di esercizi in cui le
+    condizioni recuperano esempi con Jt@3 diverso (quelli che danno informazione) e lo scatter degli scarti.
+  - **Nel testo della tesi**: la correlazione TRA esercizi può riflettere la DIFFICOLTA' dell'esercizio (esercizi con
+    analoghi nel pool tendono ad avere GT più convenzionali e risposte migliori qualunque esempio si mostri) e non
+    l'effetto del retrieval; quella ENTRO esercizio toglie questa componente, perché confronta esempi diversi per lo
+    stesso esercizio. Entrambe restano descrittive (nessuna inferenza causale).
+- **Esecuzione (2026-10-11)**:
+  - `prompt_builder.random_seed`, `RANDOM_SEED_MODES`; runner: `random_seed` nel config, piano con il seme per
+    ripetizione, guardia `check_retrieval_source` estesa a random; template del 3b con `random_seed:
+    per_esercizio_ripetizione` (e il `seed` del config annotato: non usato da random).
+  - `retrieval/freeze_retrievals.py --solo-random`: righe bm25 / dense / hybrid copiate TALI E QUALI (nessun ricalcolo
+    del denso) e verificate byte per byte (320 righe identiche, controllo anche indipendente su una copia del file
+    precedente); 240 righe random (80 × 3, campo `repetition`), 240 semi distinti, in tutti gli 80 esercizi le 3
+    estrazioni sono diverse. Nuovo sha256 `2e08b93a69200e0f4e0d48a19aef9fbb05713cc3bef948b3fafddb3621c3f63d` (560
+    righe); il precedente (`6857259a…`, voce 129) è nel campo `storia` del `.meta.json`; metadati del denso, delle
+    versioni e dei pareggi invariati (si riferiscono alle righe non random).
+  - `generation/check_frozen.py`: 364/364 prompt dal file = dal vivo (26 × 2 configurazioni × (4 condizioni + random
+    nelle 3 ripetizioni)); 200/200 prompt dei manifest di sviluppo invariati. `analyze_dev80.py`: random = media delle 3
+    estrazioni (Jt@3 0,018, come la media su 20 semi 0,018 ± 0,004; il seme 0 dava 0,023); sovrapposizione, hubness e
+    provenienza di random sulla ripetizione 0; nel piano PREVISTO l'analisi entro esercizio. Test `check_frozen`
+    aggiornato (seme, piano del runner con le due modalità, guardia, template).

@@ -67,8 +67,10 @@ import compact_postprocess as cpp  # noqa: E402
 import postprocess as pp  # noqa: E402
 from plantuml_format import apollon_to_plantuml  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient  # noqa: E402
-from prompt_builder import (BM25_CONFIG, CONDITIONS, DENSE_CONFIG, PromptBuilder, PromptSpec, cl,  # noqa: E402
-                            dense_model, serialize_diagram)
+from plan_split import plan_lines, split_plan  # noqa: E402  (voce 126)
+from prompt_builder import (BM25_CONFIG, CONDITIONS, DENSE_CONFIG, FROZEN_CONDITIONS, FROZEN_PATH,  # noqa: E402
+                            RANDOM_SEED_MODES, PromptBuilder, PromptSpec, cl, dense_model, random_seed,
+                            serialize_diagram)
 import token_estimate  # noqa: E402
 
 RESULTS = ROOT / "data" / "results" / "generation"
@@ -207,6 +209,9 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
     if ids and len(sel) != len(ids):
         raise SystemExit(f"query_ids non trovati nello split {cfg.get('split', 'testset')}: "
                          f"{sorted(set(ids) - {q['id'] for q in sel})}")
+    mode = cfg.get("random_seed", "config")  # voce 130
+    if mode not in RANDOM_SEED_MODES:
+        raise SystemExit(f"random_seed sconosciuto: {mode} (ammessi: {RANDOM_SEED_MODES})")
     out = []
     for q in sel:
         for cond in cfg["conditions"]:
@@ -222,7 +227,10 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
                                   instructions_version=p.get("instructions_version", "v4"))
                 for t in temperatures(cfg):
                     for r in range(cfg.get("repetitions", 1)):
-                        out.append((q, spec, r, t))
+                        if cond == "random" and mode == "per_esercizio_ripetizione":  # voce 130
+                            out.append((q, replace(spec, seed=random_seed(q["id"], r)), r, t))
+                        else:
+                            out.append((q, spec, r, t))
     return out
 
 
@@ -270,10 +278,25 @@ def call_id(qid: str, spec: PromptSpec, r: int, temperature: float | None = None
     return f"{qid}__{spec.condition}__k{spec.k}{t}__r{r}"
 
 
+def should_stop_on_reasoning(cfg: dict, res) -> bool:
+    """stop_on_reasoning: ferma la run se c'e' ragionamento (campo separato o marcatori nel contenuto). Con `thinking:
+    true` (voce 125) il ragionamento e' atteso e salvato a parte nel raw: non ferma; i marcatori NEL CONTENUTO pero' si
+    registrano nel manifest e invalidano l'analisi (il diagramma deve essere pulito)."""
+    if not cfg.get("stop_on_reasoning") or cfg.get("thinking"):
+        return False
+    return bool(res.reasoning_field or pp.reasoning_markers(res.text))
+
+
+THINKING_EFFORT = "high"  # voce 125: low / medium / high si comportano allo stesso modo con Gemma 4 (interruttore)
+
+
 def params_for(cfg: dict, r: int, temperature: float | None = None) -> GenerationParams:
     g = dict(cfg.get("generation", {}))
     if temperature is not None:
         g["temperature"] = temperature
+    if cfg.get("thinking"):  # voce 125: ragionamento acceso per richiesta (reasoning_effort di LM Studio)
+        level = cfg["thinking"]
+        g["reasoning_effort"] = level if isinstance(level, str) else THINKING_EFFORT  # `thinking: low` = livello
     params = GenerationParams(**g)
     return replace(params, seed=params.seed + r) if params.seed is not None else params
 
@@ -442,6 +465,9 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
             prov["plantuml_postprocess_version"] = ppu.DEFAULT_VERSION  # v2 dal 2026-10-08 (voce 89)
         if (cfg.get("prompt") or {}).get("output_format") == "compact":
             prov["compact_format_spec"] = "docs/compact_format.md"  # voci 90-91
+        if builder.retrieval_source == "frozen":  # voce 129: esempi dal file congelato
+            prov["retrieval_frozen"] = str(FROZEN_PATH.relative_to(ROOT)).replace("\\", "/")
+            prov["retrieval_frozen_sha256"] = builder.frozen_sha256
         if (cfg.get("prompt") or {}).get("instructions_variant", "base") == "targeted":  # voce 98: blocco congelato
             from prompt_builder import targeted_block
             block = targeted_block(cfg["prompt"]["output_format"])
@@ -474,12 +500,17 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
         counts["from_cache"] += res.cached
         (out_dir / "raw" / f"{cid}.json").write_text(json.dumps(asdict(res), ensure_ascii=False, indent=1),
                                                      encoding="utf-8")
+        text, plan_text, marker = res.text, "", None
+        if spec.instructions_version == "v5plan":  # voce 126: si valida SOLO il diagramma, il piano a parte
+            plan_text, text, marker = split_plan(res.text)
+            (out_dir / "plans").mkdir(exist_ok=True)
+            (out_dir / "plans" / f"{cid}.txt").write_text(plan_text, encoding="utf-8")
         if spec.output_format == "plantuml":
-            v = ppu.validate_plantuml_response(res.text, res.finish_reason, cid)
+            v = ppu.validate_plantuml_response(text, res.finish_reason, cid)
         elif spec.output_format == "compact":  # JSON compatto -> struttura -> espansore unico (voce 91)
-            v = cpp.validate_compact_response(res.text, res.finish_reason, cid)
+            v = cpp.validate_compact_response(text, res.finish_reason, cid)
         else:
-            v = pp.validate_response(res.text, res.finish_reason)
+            v = pp.validate_response(text, res.finish_reason)
         if v.diagram is not None:
             (out_dir / "parsed" / f"{cid}.json").write_text(json.dumps(v.diagram, ensure_ascii=False, indent=1),
                                                             encoding="utf-8")
@@ -509,10 +540,13 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
                  "reasoning_tokens": res.reasoning_tokens, "reasoning_tokens_source": res.reasoning_tokens_source,
                  "reasoning_markers_in_content": pp.reasoning_markers(res.text),
                  "content_empty": not res.text.strip(),
+                 **({"plan_marker_found": marker, "plan_lines": len(plan_lines(plan_text)),
+                     "plan_chars": len(plan_text)}
+                    if spec.instructions_version == "v5plan" else {}),
                  "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")}
         with manifest_path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
-        if cfg.get("stop_on_reasoning") and (res.reasoning_field or pp.reasoning_markers(res.text)):
+        if should_stop_on_reasoning(cfg, res):
             raise SystemExit(f"ragionamento nella risposta {cid} (campo {res.reasoning_field}, marcatori "
                              f"{pp.reasoning_markers(res.text)}): run FERMATA (stop_on_reasoning). Disattiva Enable "
                              "Thinking in LM Studio; la chiamata e' salvata in raw/ e nel manifest")
@@ -537,6 +571,20 @@ def check_query_roles(cfg: dict, queries: list[dict]) -> None:
                          "`passo: 3b` possono usarli")
 
 
+def check_retrieval_source(cfg: dict) -> None:
+    """Voce 129: nel Passo 3b (`passo: 3b`) gli esempi di bm25 / dense / hybrid / random vengono SOLO dal file congelato
+    (`retrieval_source: frozen`), cosi' non dipendono dalla macchina. Come per i ruoli, i client finti (prove del
+    runner) non producono risposte di un modello e non sono bloccati."""
+    used = sorted(set(cfg.get("conditions") or []) & set(FROZEN_CONDITIONS))
+    mock = (cfg.get("client") or {}).get("kind") == "mock"
+    if cfg.get("passo") == "3b" and used and cfg.get("retrieval_source") != "frozen" and not mock:
+        raise SystemExit(f"config del Passo 3b con le condizioni {used}: serve `retrieval_source: frozen` (voce 129)")
+    if (cfg.get("passo") == "3b" and "random" in (cfg.get("conditions") or []) and not mock
+            and cfg.get("random_seed") != "per_esercizio_ripetizione"):
+        raise SystemExit("config del Passo 3b con la condizione random: serve `random_seed: per_esercizio_ripetizione` "
+                         "(voce 130)")
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("config")
@@ -555,7 +603,8 @@ def main(argv: list[str] | None = None) -> int:
     if split not in SPLITS:
         raise SystemExit(f"split non supportato: {split} (ammessi: {SPLITS})")
     candidates, test_queries = cl.load_all()
-    builder = PromptBuilder(candidates, test_queries, pool=cfg.get("pool", "all"))  # voce 123
+    builder = PromptBuilder(candidates, test_queries, pool=cfg.get("pool", "all"),  # voce 123
+                            retrieval_source=cfg.get("retrieval_source", "live"))  # voce 129: "frozen" nel 3b
     # corpus: le query sono i 59 candidati (selezione LOO nel prompt builder); il test set non viene usato
     queries = test_queries if split == "testset" else candidates
     root = Path(a.results_dir)
@@ -568,6 +617,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"scritto in {out}")
         return 0
     check_query_roles(cfg, queries)
+    check_retrieval_source(cfg)
     _set_output(root / cfg["run_id"])
     counts = run(cfg, builder, queries, root / cfg["run_id"], a.resume, a.accept_unverified_context)
     print(f"run {cfg['run_id']}: {counts}")

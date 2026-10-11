@@ -4,9 +4,11 @@
 run_id: TODO_modello_data
 split: testset
 conditions: [zero_shot, static, random, bm25]
+retrieval_source: frozen  # voce 129: esempi da data/retrieval_frozen/retrievals_3b.jsonl (obbligatorio con passo: 3b)
+random_seed: per_esercizio_ripetizione  # voce 130: seme di random = f(id esercizio, ripetizione) (obbligatorio con passo: 3b)
 k: [3]
 repetitions: 1
-seed: 0
+seed: 0  # con random_seed: per_esercizio_ripetizione la condizione random non lo usa (voce 130)
 prompt: {serialization: compact, layout: user_only, drop_interactive: true}
 client:
   kind: lmstudio

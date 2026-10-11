@@ -37,14 +37,14 @@ from prompt_builder import cl, serialize_diagram  # noqa: E402
 from token_estimate import count_tokens  # noqa: E402
 sys.path.insert(0, str(ROOT / "experiments"))
 import provenance  # noqa: E402  (riga di provenienza, voce 106)
+sys.path.insert(0, str(ROOT))
+from evaluation import metrics as em  # noqa: E402  (metriche congelate per il 3b, voce 127)
 
 DEFAULT_RUN = ROOT / "data" / "results" / "generation" / "pilot_temperature_gemma4-12b-qat"
 TEMPERATURES = (0.0, 0.3)
 MAX_TRUNCATED = 1  # voce 75: piu' di 1 troncamento su 18 per temperatura -> fermarsi prima di decidere
 JACCARD_TOLERANCE = 0.05  # voce 75: J(0) >= J(0.3) - 0.05
-DIRECTIONAL = {"ClassInheritance", "ClassRealization", "ClassComposition", "ClassAggregation", "ClassUnidirectional",
-               "ClassDependency"}
-PART_WHOLE = {"ClassComposition", "ClassAggregation"}
+DIRECTIONAL, PART_WHOLE = em.DIRECTIONAL, em.PART_WHOLE  # spostate in evaluation/metrics.py (voce 127)
 UUID_SHAPE = re.compile(r"^[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{12}$")
 HEX_UUID = re.compile(r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 TEMPLATE_FRAGMENT = re.compile(r"-4890-81h2-", re.I)  # dal template v4: "a1b2c3d4-e5f6-4890-81h2-i3j4k5l6m7n8"
@@ -53,16 +53,8 @@ NODE_NAME_RE = re.compile(r'"data"\s*:\s*\{\s*"name"\s*:\s*"([^"]+)"')
 EDGE_PAIR_RE = re.compile(r'"source"\s*:\s*"([^"]+)"\s*,\s*"target"\s*:\s*"([^"]+)"')
 
 
-def norm(name) -> str:
-    """Normalizzazione dei nomi come corpus_loader.class_names (minuscole, solo alfanumerici)."""
-    return re.sub(r"[^0-9a-z]", "", str(name).lower())
-
-
-def class_names(diagram: dict) -> set[str]:
-    try:
-        return {norm(n["data"]["name"]) for n in diagram.get("nodes", []) if isinstance(n, dict)}
-    except (KeyError, TypeError, AttributeError):
-        return set()
+# spostate in evaluation/metrics.py senza modifiche (voce 127), riesportate con gli stessi nomi
+norm, class_names = em.norm, em.class_names
 
 
 def fmt(x, nd=3) -> str:
@@ -121,64 +113,7 @@ def decision(calls: list[dict], stopped_for_reasoning: bool) -> dict:
 # --- esplorativo: relazioni -----------------------------------------------------------------------------------------
 
 
-def norm_mult(m) -> str:
-    """Minuscole, senza spazi; 'n' -> '*' (anche '1..n' -> '1..*', '0..n' -> '*'); '0..*' equivalente a '*';
-    '1..1' equivalente a '1' (2026-10-10, voce 111: correzione delle metriche, 19 estremi del GT del corpus)."""
-    s = re.sub(r"\s+", "", str(m or "")).lower()
-    s = "*" if s == "n" else re.sub(r"\.\.n$", "..*", s)
-    return "*" if s == "0..*" else "1" if s == "1..1" else s
-
-
-def edges(diagram: dict) -> list[dict]:
-    """Relazioni con i nomi normalizzati delle classi agli estremi (scarta quelle con estremi non risolvibili)."""
-    try:
-        names = {n["id"]: norm(n["data"]["name"]) for n in diagram.get("nodes", [])}
-    except (KeyError, TypeError, AttributeError):
-        return []
-    out = []
-    for e in diagram.get("edges", []) or []:
-        try:
-            s, t, d = names[e["source"]], names[e["target"]], e.get("data") or {}
-        except (KeyError, TypeError):
-            continue
-        out.append({"src": s, "tgt": t, "type": e.get("type"), "pair": frozenset((s, t)),
-                    "mult": {s: norm_mult(d.get("sourceMultiplicity")), t: norm_mult(d.get("targetMultiplicity"))}
-                    if s != t else {"_self": (norm_mult(d.get("sourceMultiplicity")),
-                                              norm_mult(d.get("targetMultiplicity")))}})
-    return out
-
-
-def compare_relations(resp: dict, gt: dict) -> Counter:
-    """Accoppiamento 1:1 per coppia di classi (non ordinata): prima le relazioni dello stesso tipo, poi le altre."""
-    r_edges, g_edges = edges(resp), edges(gt)
-    c = Counter(resp_edges=len(r_edges), gt_edges=len(g_edges))
-    for pair in {e["pair"] for e in r_edges} & {e["pair"] for e in g_edges}:
-        rs = [e for e in r_edges if e["pair"] == pair]
-        gs = [e for e in g_edges if e["pair"] == pair]
-        matches = []
-        for same_type in (True, False):
-            for r in list(rs):
-                g = next((g for g in gs if (g["type"] == r["type"]) == same_type), None)
-                if g is not None:
-                    matches.append((r, g))
-                    rs.remove(r)
-                    gs.remove(g)
-        for r, g in matches:
-            c["same_pair"] += 1
-            if r["type"] == g["type"]:
-                c["same_type"] += 1
-                if r["type"] in DIRECTIONAL:
-                    c["directional_same_type"] += 1
-                    c["same_direction"] += (r["src"], r["tgt"]) == (g["src"], g["tgt"])
-                if r["type"] in PART_WHOLE:
-                    c["part_whole_same_type"] += 1
-                    c["part_whole_same_direction"] += (r["src"], r["tgt"]) == (g["src"], g["tgt"])
-            else:
-                c[f"type {g['type']} -> {r['type']}"] += 1
-            if g["type"] not in ("ClassInheritance", "ClassRealization"):
-                c["mult_compared"] += 1
-                c["same_mult"] += r["mult"] == g["mult"]
-    return c
+norm_mult, edges, compare_relations = em.norm_mult, em.edges, em.compare_relations  # voce 127
 
 
 # --- esplorativo: id del template -----------------------------------------------------------------------------------

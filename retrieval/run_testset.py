@@ -16,8 +16,14 @@ esercizio i candidati sono i 59 del corpus piu' gli altri 19 esercizi De Bari (7
 `--protocol fixed59` = protocollo originale (indice congelato sui 59 candidati del corpus, run testset_2026-10-04_stop2).
 Le fasce di score_norm usano i cut-off congelati sul LOO del corpus (58 candidati): con 78 candidati sono descrittive.
 
+PROTOCOLLO all80 (voce 129, default delle run nuove): pool unico della voce 115, per ogni esercizio De Bari i candidati
+sono gli altri 79 (60 del corpus con Cruise + gli altri 19 De Bari). `loo` e `fixed59` restano i protocolli STORICI e
+usano i 59 candidati del corpus senza Cruise (allora non convertito, voce 114), per riprodurre le run versionate. I 20
+De Bari sono esercizi di VALUTAZIONE (voce 117): con all80 lo script calcola la pertinenza su di loro, quindi parte solo
+con `--consenti-valutazione` (dopo le run del Passo 3b, voce 129).
+
 Uso:
-    python retrieval/run_testset.py [--run-id ID] [--seeds 20] [--protocol loo|fixed59]
+    python retrieval/run_testset.py [--run-id ID] [--seeds 20] [--protocol all80|loo|fixed59] [--consenti-valutazione]
 """
 
 from __future__ import annotations
@@ -72,20 +78,28 @@ def describe(values: list[float]) -> dict:
             "mediana": float(np.median(a)), "q3": float(np.percentile(a, 75)), "max": float(a.max())}
 
 
-def main() -> None:
+def main(argv=None) -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--seeds", type=int, default=20)
-    ap.add_argument("--protocol", choices=("loo", "fixed59"), default="loo")
-    args = ap.parse_args()
+    ap.add_argument("--protocol", choices=("all80", "loo", "fixed59"), default="all80")
+    ap.add_argument("--consenti-valutazione", action="store_true",
+                    help="all80: pertinenza sui 20 De Bari (esercizi di valutazione), solo dopo il Passo 3b (voce 129)")
+    ap.add_argument("--out-dir", default=str(ar.RESULTS_DIR), help="cartella che contiene la run")
+    args = ap.parse_args(argv)
+    if args.protocol == "all80" and not args.consenti_valutazione:
+        raise SystemExit("protocollo all80: i 20 De Bari sono esercizi di valutazione (voce 117); la loro pertinenza "
+                         "si calcola solo dopo le run del Passo 3b, con --consenti-valutazione (voce 129)")
 
     cfg = load_frozen_config()
     run_id = args.run_id or f"testset_{dt.date.today().isoformat()}_{ar.git('rev-parse', '--short', 'HEAD')}"
-    out = ar.RESULTS_DIR / run_id
+    out = Path(args.out_dir) / run_id
     if out.exists():
         raise SystemExit(f"{out} esiste gia': il test set si guarda una volta sola (usa un run-id nuovo e motivalo)")
 
     candidates, queries = cl.load_all()
+    if args.protocol != "all80":  # protocolli storici: i 59 candidati del corpus senza Cruise (voce 129)
+        candidates = cl.load_pool("corpus59")
     qnames = {q["id"]: cl.class_names(q["diagram_apollon_json"]) for q in queries}
     names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in candidates} | qnames
     test_ids = set(qnames)
@@ -97,7 +111,8 @@ def main() -> None:
                                                                                            frozen["stem"]))
 
     def pool(q):
-        """Candidati della query: voce 112 (LOO: corpus + gli altri 19) o protocollo originale (59 del corpus)."""
+        """Candidati della query: all80 (voce 129: 60 del corpus + gli altri 19), voce 112 (LOO storico: 59 del corpus +
+        gli altri 19) o protocollo originale (59 del corpus)."""
         if args.protocol == "fixed59":
             return candidates
         out_pool = candidates + [x for x in queries if x["id"] != q["id"]]
@@ -142,8 +157,12 @@ def main() -> None:
                              "random_j3_mean": statistics.mean(r3), "random_j3_sd": statistics.stdev(r3),
                              "oracolo_j1": o1, "oracolo_j3": o3, "spearman_rho": float(rho), "spearman_p": float(p)})
 
-    # confronto con il LOO del corpus (stessa configurazione congelata)
-    loo_rows = ar.loo(candidates, names, ar.bm25_factory(frozen))
+    # confronto con il LOO del corpus (stessa configurazione congelata); all80: LOO sul pool unico, query di sviluppo
+    if args.protocol == "all80":
+        universe = cl.load_pool("all80")
+        loo_rows = ar.loo(universe, names, ar.bm25_factory(frozen), queries=cl.pool_queries("all80", universe))
+    else:
+        loo_rows = ar.loo(candidates, names, ar.bm25_factory(frozen))
     comparison = []
     for label, vals in (("score_norm top-1 LOO", [r["top"][0][2] for r in loo_rows]),
                         ("score_norm top-1 test set", [r["top"][0].score_norm for r in rows]),
@@ -177,7 +196,11 @@ def main() -> None:
     proto = ("leave-one-out (voce 112): candidati = 59 del corpus + gli altri 19 esercizi De Bari (78), indice BM25 "
              f"rifittato per ogni esercizio; vicini dal test set nei top-{TOP_K}: {n_from_test}/{TOP_K * len(rows)}, "
              f"al rango 1: {sum(r['top'][0].id in test_ids for r in rows)}/{len(rows)}"
-             if args.protocol == "loo" else "indice congelato sui 59 candidati del corpus (protocollo originale)")
+             if args.protocol == "loo" else
+             "pool unico all80 (voce 129): candidati = 60 del corpus + gli altri 19 esercizi De Bari (79), indice BM25 "
+             f"rifittato per ogni esercizio; vicini dal test set nei top-{TOP_K}: {n_from_test}/{TOP_K * len(rows)}; "
+             "confronto con il LOO sulle 26 query di sviluppo dello stesso pool"
+             if args.protocol == "all80" else "indice congelato sui 59 candidati del corpus (protocollo originale)")
     L = [f"# Retrieval BM25 sul test set De Bari ({run_id})", "",
          f"Configurazione congelata `{CONFIG_PATH.name}`: {frozen}. Commit `{meta['commit'][:7]}` (working tree "
          f"{'modificato' if meta['working_tree_dirty'] else 'pulito'}), test set `{meta['testset_tag']}` invariato: "

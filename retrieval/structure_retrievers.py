@@ -50,8 +50,29 @@ def class_name_words(diagram: dict) -> list[str]:
     return [w for n in diagram["nodes"] for w in rv.name_tokens(n["data"]["name"])]
 
 
+WORDNET_HELP = ("la variante 2s richiede nltk (dipendenza opzionale, requirements.txt) e i dati WordNet: "
+                "pip install nltk==3.10.3, poi python -m nltk.downloader wordnet (docs/STATUS.md, sezione 'Ambiente della tesi')")
+
+
+def wordnet_missing() -> str | None:
+    """None se nltk e i dati WordNet sono disponibili, altrimenti il motivo. Import pigro: nltk serve SOLO alla
+    variante 2s (voce 120, non entrata nel 3b, voce 122); nessun download a runtime."""
+    try:
+        from nltk.corpus import wordnet as wn
+    except ImportError:
+        return "nltk non installato"
+    try:
+        wn.ensure_loaded()
+    except LookupError:
+        return "dati WordNet di nltk non scaricati"
+    return None
+
+
 def wordnet_expand(words: Sequence[str]) -> list[str]:
     """Ogni parola + i lemmi del suo PRIMO significato nominale in WordNet (parole composte spezzate)."""
+    missing = wordnet_missing()
+    if missing:
+        raise RuntimeError(f"{missing}: {WORDNET_HELP}")
     from nltk.corpus import wordnet as wn
     out = []
     for w in words:

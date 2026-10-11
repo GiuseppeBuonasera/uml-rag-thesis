@@ -67,6 +67,47 @@ def load_all() -> tuple[list[dict], list[dict]]:
     return candidates, queries
 
 
+# --- protocolli di pool (voce 129) ---------------------------------------------------------------------------------
+# all80    = pool unico della voce 115 (default delle run nuove): 80 esercizi (60 del corpus + 20 De Bari); per ogni
+#            query i candidati sono gli altri 79. Le query su cui si misura la pertinenza sono i 26 esercizi di SVILUPPO
+#            (corpus/roles.yaml): quelli di valutazione entrano solo come candidati (voce 117).
+# corpus59 = protocollo STORICO delle run del 2026-10-04 .. 2026-10-09 (loo_2026-10-04_stop1, dense_2026-10-09_22f5adf,
+#            testset_*): i candidati del corpus SENZA Cruise, che allora non era convertito (recuperato il 2026-10-10,
+#            voce 114). Serve solo a riprodurre le run versionate.
+POOLS = ("all80", "corpus59")
+CORPUS59_EXCLUDED = ("Cruise",)
+
+
+def load_pool(pool: str) -> list[dict]:
+    """Universo del protocollo: corpus59 = candidati del corpus senza Cruise; all80 = corpus (60) + test set (20)."""
+    if pool not in POOLS:
+        raise ValueError(f"pool sconosciuto: {pool} (ammessi: {POOLS})")
+    candidates = load_candidates()
+    if pool == "corpus59":
+        return [c for c in candidates if c["id"] not in CORPUS59_EXCLUDED]
+    queries = load_queries()
+    check_disjoint(candidates, queries)
+    universe = candidates + queries
+    if len(universe) != 80:
+        raise AssertionError(f"pool unico: attesi 80 esercizi, trovati {len(universe)}")
+    return universe
+
+
+def development_ids() -> set[str]:
+    """I 26 esercizi di sviluppo (corpus/roles.yaml, voce 117)."""
+    return {i for i, r in paths.load_roles().items() if r["role"] == "sviluppo"}
+
+
+def pool_queries(pool: str, universe: list[dict]) -> list[dict]:
+    """Query su cui si misura la pertinenza: corpus59 = tutte (protocollo storico); all80 = SOLO le 26 di sviluppo."""
+    if pool == "corpus59":
+        return list(universe)
+    dev = development_ids()
+    out = [r for r in universe if r["id"] in dev]
+    assert len(out) == len(dev) == 26, (len(out), len(dev))
+    return out
+
+
 def class_names(diagram: dict) -> set[str]:
     """Nomi dei nodi del diagramma Apollon (classi, interfacce, enumerazioni), normalizzati come in
     corpus/check_debari.py: minuscole, solo caratteri alfanumerici (confronto case-insensitive)."""

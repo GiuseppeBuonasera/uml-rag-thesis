@@ -37,7 +37,6 @@ import argparse
 import json
 import statistics
 import sys
-from collections import Counter
 from pathlib import Path
 
 import yaml
@@ -46,11 +45,12 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generation"))
 sys.path.insert(0, str(ROOT / "experiments"))
 import analyze_dev as ad  # noqa: E402  (validazione e metriche della voce 92, non modificate)
-import analyze_pilot as ap  # noqa: E402  (edges, class_names, norm_mult)
 import plantuml_postprocess as ppu  # noqa: E402
 import run_experiment as rx  # noqa: E402
 from prompt_builder import cl  # noqa: E402
 import provenance  # noqa: E402  (riga di provenienza, voce 106)
+sys.path.insert(0, str(ROOT))
+from evaluation import metrics as em  # noqa: E402  (metriche congelate per il 3b, voce 127)
 
 RESULTS = ROOT / "data" / "results" / "generation"
 CONFIG = ROOT / "experiments" / "configs" / "dev_instructions.yaml"
@@ -58,12 +58,7 @@ BASELINE_PREFIX, TREATMENT_PREFIX, BASELINE_K = "dev_k", "dev_instructions", 3
 OUT_NAME = "dev_instructions_analysis"
 CONFIGURATIONS = {"P-G": "plantuml", "C-G": "compact"}
 FORMAT_NAME = ad.FORMAT_NAME
-NO_MULT = ("ClassInheritance", "ClassRealization")
-ORIENTED = ("ClassInheritance", "ClassRealization", "ClassComposition", "ClassAggregation", "ClassUnidirectional",
-            "ClassDependency")
-SHORT = {"ClassBidirectional": "associazione", "ClassUnidirectional": "unidirezionale", "ClassInheritance":
-         "generalizzazione", "ClassRealization": "realizzazione", "ClassAggregation": "aggregazione",
-         "ClassComposition": "composizione", "ClassDependency": "dipendenza"}
+NO_MULT, ORIENTED, SHORT = em.NO_MULT, em.ORIENTED, em.SHORT  # spostate in evaluation/metrics.py (voce 127)
 # --- regola (voce 98): non si modifica senza una nuova voce in docs/decisions.md ---
 ADOPT_M = 0.05  # dM_primaria >= 0,05 ...
 ADOPT_R = 0.03  # ... oppure dR >= 0,03
@@ -75,8 +70,10 @@ EPS = 1e-9
 # --- caricamento ----------------------------------------------------------------------------------------------------
 
 
-def load_run(results: Path, prefix: str, name: str, gt: dict[str, dict], model_id: str, k: int | None = None) -> dict:
-    """Una run (baseline o trattamento) ristretta al k indicato; stato: esclusa o no, con il motivo."""
+def load_run(results: Path, prefix: str, name: str, gt: dict[str, dict], model_id: str, k: int | None = None,
+             config_version: int = 2) -> dict:
+    """Una run (baseline o trattamento) ristretta al k indicato; stato: esclusa o no, con il motivo. config_version:
+    versione attesa (2 per tutte le analisi fino alla voce 124; 3 per la leva del ragionamento, voce 125)."""
     fmt = CONFIGURATIONS[name]
     run_dir = results / f"{prefix}__{name}"
     info = {"name": f"{prefix}__{name}", "format": fmt, "calls": [], "excluded": None, "level_mismatch": 0}
@@ -88,8 +85,8 @@ def load_run(results: Path, prefix: str, name: str, gt: dict[str, dict], model_i
     if (cfg.get("model_metadata") or {}).get("model_id") != model_id:
         info["excluded"] = f"run di {(cfg.get('model_metadata') or {}).get('model_id')}, non di {model_id}"
         return info
-    if rx.config_version(cfg) != 2:
-        info["excluded"] = f"versione di configurazione {rx.config_version(cfg)}, attesa 2"
+    if rx.config_version(cfg) != config_version:
+        info["excluded"] = f"versione di configurazione {rx.config_version(cfg)}, attesa {config_version}"
         return info
     version = prov.get("plantuml_postprocess_version", ppu.DEFAULT_VERSION)
     mpath = run_dir / "manifest.jsonl"
@@ -98,7 +95,11 @@ def load_run(results: Path, prefix: str, name: str, gt: dict[str, dict], model_i
     expected = len(cfg["query_ids"]) * cfg.get("repetitions", 1)
     for m in manifest:
         raw = json.loads((run_dir / "raw" / f"{m['call_id']}.json").read_text(encoding="utf-8"))
-        v = ad.validate(fmt, raw["text"], raw["finish_reason"], m["call_id"], version)
+        text = raw["text"]
+        if (cfg.get("prompt") or {}).get("instructions_version") == "v5plan":  # voce 126: solo il diagramma
+            from plan_split import split_plan
+            text = split_plan(text)[1]
+        v = ad.validate(fmt, text, raw["finish_reason"], m["call_id"], version)
         info["level_mismatch"] += v.level != m.get("level")
         info["calls"].append({"m": m, "raw": raw, "v": v, "gt": gt[m["query_id"]], "q": m["query_id"],
                               "r": m["repetition"], "format": fmt, "model": "G"})
@@ -112,72 +113,9 @@ def load_run(results: Path, prefix: str, name: str, gt: dict[str, dict], model_i
 # --- metriche -------------------------------------------------------------------------------------------------------
 
 
-def match(resp: dict, gt: dict) -> tuple[list, list, list]:
-    """Accoppiamento 1:1 per coppia di classi come analyze_pilot.compare_relations (prima lo stesso tipo).
-    Ritorna (coppie (risposta, GT), relazioni del GT non accoppiate, relazioni della risposta non accoppiate)."""
-    r_edges, g_edges = ap.edges(resp), ap.edges(gt)
-    pairs = []
-    for pair in sorted({e["pair"] for e in r_edges} & {e["pair"] for e in g_edges}, key=sorted):
-        rs = [e for e in r_edges if e["pair"] == pair]
-        gs = [e for e in g_edges if e["pair"] == pair]
-        for same_type in (True, False):
-            for r in list(rs):
-                g = next((g for g in gs if (g["type"] == r["type"]) == same_type), None)
-                if g is not None:
-                    pairs.append((r, g))
-                    rs.remove(r)
-                    gs.remove(g)
-    mg, mr = {id(g) for _, g in pairs}, {id(r) for r, _ in pairs}
-    return pairs, [g for g in g_edges if id(g) not in mg], [r for r in r_edges if id(r) not in mr]
-
-
-def gt_ends(g: dict) -> list[tuple[str, str]]:
-    """Estremi (chiave, molteplicita' normalizzata) di una relazione del GT; vuoto per generalizzazione / realizzazione."""
-    if g["type"] in NO_MULT:
-        return []
-    if "_self" in g["mult"]:
-        return [("_src", g["mult"]["_self"][0]), ("_tgt", g["mult"]["_self"][1])]
-    return [(g["src"], g["mult"][g["src"]]), (g["tgt"], g["mult"][g["tgt"]])]
-
-
-def resp_mult(r: dict, key: str) -> str:
-    if "_self" in r["mult"]:
-        return r["mult"]["_self"][0 if key == "_src" else 1]
-    return r["mult"].get(key, "")
-
-
-def multiplicity_counts(c: dict) -> Counter:
-    """Per una risposta: estremi del GT (espliciti e tutti) e quanti hanno la stessa molteplicita' nella risposta."""
-    out = Counter()
-    if c["v"].level >= 3:  # le relazioni del GT sono gli STESSI oggetti dell'accoppiamento (accoppiate + non accoppiate)
-        pairs, missing, _ = match(c["v"].diagram, c["gt"])
-        gt_edges = [(g, r) for r, g in pairs] + [(g, None) for g in missing]
-    else:
-        gt_edges = [(g, None) for g in ap.edges(c["gt"])]
-    for g, r in gt_edges:
-        for key, gm in gt_ends(g):
-            same = r is not None and resp_mult(r, key) == gm
-            out["all"] += 1
-            out["all_same"] += same
-            if gm:
-                out["explicit"] += 1
-                out["explicit_same"] += same
-    return out
-
-
-def metrics(calls: list[dict]) -> dict:
-    m = ad.metrics(calls)
-    mc = Counter()
-    for c in calls:
-        mc += multiplicity_counts(c)
-    rel = m["relations"]
-    m.update({"M1": mc["explicit_same"] / mc["explicit"] if mc["explicit"] else None,
-              "M2": mc["all_same"] / mc["all"] if mc["all"] else None, "mult_counts": mc,
-              "type_rate": rel["same_type"] / rel["same_pair"] if rel["same_pair"] else None,
-              "dir": f"{rel['same_direction']}/{rel['directional_same_type']}",
-              "discards": sum(len(getattr(c["v"], "discarded_lines", [])) + len(getattr(c["v"], "compact_issues", []))
-                              for c in calls)})
-    return m
+# spostate in evaluation/metrics.py senza modifiche (voce 127), riesportate con gli stessi nomi
+match, gt_ends, resp_mult = em.match, em.gt_ends, em.resp_mult
+multiplicity_counts, metrics = em.multiplicity_counts, em.multiplicity_metrics
 
 
 # --- regola ---------------------------------------------------------------------------------------------------------
@@ -216,28 +154,7 @@ def outcome(pairs: dict[str, tuple[dict, dict]]) -> dict:
 # --- report ---------------------------------------------------------------------------------------------------------
 
 
-def confusion(calls: list[dict]) -> dict:
-    """Tabelle di confusione (solo risposte valide): molteplicita' per estremo, tipi, verso; classi e generalizzazioni
-    in piu' rispetto al GT."""
-    mult, types, inv, inv_tot = Counter(), Counter(), Counter(), Counter()
-    extra_cls = extra_gen = 0
-    for c in calls:
-        if c["v"].level < 3:
-            continue
-        pairs, _, _ = match(c["v"].diagram, c["gt"])
-        for r, g in pairs:
-            types[(SHORT[g["type"]], SHORT[r["type"]])] += 1
-            if g["type"] not in NO_MULT and r["type"] not in NO_MULT:
-                for key, gm in gt_ends(g):
-                    mult[(gm or "(vuoto)", resp_mult(r, key) or "(vuoto)")] += 1
-            if r["type"] == g["type"] and g["type"] in ORIENTED:
-                inv_tot[SHORT[g["type"]]] += 1
-                inv[SHORT[g["type"]]] += (r["src"], r["tgt"]) != (g["src"], g["tgt"])
-        extra_cls += len(ap.class_names(c["v"].diagram) - ap.class_names(c["gt"]))
-        g_inh = {(e["src"], e["tgt"]) for e in ap.edges(c["gt"]) if e["type"] == "ClassInheritance"}
-        extra_gen += sum((e["src"], e["tgt"]) not in g_inh for e in ap.edges(c["v"].diagram)
-                         if e["type"] == "ClassInheritance")
-    return {"mult": mult, "types": types, "inv": inv, "inv_tot": inv_tot, "extra_cls": extra_cls, "extra_gen": extra_gen}
+confusion = em.confusion  # spostata in evaluation/metrics.py (voce 127)
 
 
 def fmt(x, nd=3) -> str:

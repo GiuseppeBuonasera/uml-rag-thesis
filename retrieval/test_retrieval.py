@@ -297,9 +297,13 @@ def check_structure_retrievers() -> None:
     top = sr.StructureBM25().fit(recs).retrieve("Each customer places a purchase order", 2)
     assert top[0].id == "shop", top
     assert sr.StructureBM25().fit(recs).retrieve("customer order", 4, exclude_ids={"shop"})[0].id != "shop"
-    # 2s: sinonimi WordNet del primo significato nominale (customer -> client)
-    assert "client" in sr.wordnet_expand(["customer"]) and sr.wordnet_expand(["xyzzyq"]) == ["xyzzyq"]
-    assert sr.StructureBM25(synonyms=True).fit(recs).retrieve("every client buys things", 1)[0].id == "shop"
+    # 2s: sinonimi WordNet del primo significato nominale (customer -> client); SALTATO senza nltk / dati WordNet
+    missing = sr.wordnet_missing()
+    if missing:
+        print(f"  SALTATO  variante 2s (sinonimi WordNet): {missing}. {sr.WORDNET_HELP}")
+    else:
+        assert "client" in sr.wordnet_expand(["customer"]) and sr.wordnet_expand(["xyzzyq"]) == ["xyzzyq"]
+        assert sr.StructureBM25(synonyms=True).fit(recs).retrieve("every client buys things", 1)[0].id == "shop"
     # 2d: testo dei nomi di classe e retrieval denso (embedding finti)
     assert sr.StructureDense.document(recs[0]) == "customer, purchase order"
     sd = sr.StructureDense(DenseRetriever("f", "0" * 40, encoder=FakeEncoder(), cache_dir=None)).fit(recs)
@@ -356,6 +360,62 @@ def check_structure_retrievers() -> None:
           "MMR (diversita'), costrutti (segnali e spinta), qualita' del GT, MiniLM a pezzi con cache separata")
 
 
+def check_pool_protocols() -> None:
+    """Protocolli di pool (voce 129): corpus59 = 59 del corpus senza Cruise, all80 = 80 esercizi con le 26 query di
+    sviluppo; i top-3 storici si riproducono (loo_2026-10-04_stop1 e i due protocolli di run_testset, SOLO id e
+    punteggi: nessuna pertinenza ricalcolata sul test set); all80 di run_testset rifiutato senza il flag;
+    hubness_report ricava il pool dai config.json. La riproduzione completa e byte per byte degli script (lenta) e' in
+    retrieval/check_protocols.py."""
+    import csv
+    import json
+    import analyze_retrieval as ar
+    import hubness_report as hr
+    import run_testset as rt
+    c59, u80 = cl.load_pool("corpus59"), cl.load_pool("all80")
+    assert len(c59) == 59 and "Cruise" not in {c["id"] for c in c59} and len(u80) == 80
+    dev = cl.pool_queries("all80", u80)
+    assert len(dev) == 26 and {q["id"] for q in dev} == cl.development_ids() and cl.pool_queries("corpus59", c59) == c59
+    try:
+        cl.load_pool("corpus60")
+        raise AssertionError("pool sconosciuto accettato")
+    except ValueError:
+        pass
+    cfg = yaml.safe_load((ROOT / "retrieval" / "config_bm25.yaml").read_text(encoding="utf-8"))
+    frozen = {"stopwords": cfg["preprocessing"]["stopwords"], "stem": cfg["preprocessing"]["stemming"],
+              "k1": cfg["retriever"]["k1"], "b": cfg["retriever"]["b"]}
+    make = lambda: KeywordRetriever(k1=frozen["k1"], b=frozen["b"],  # noqa: E731
+                                    preprocess=PreprocessConfig(frozen["stopwords"], frozen["stem"]))
+    names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in u80}
+    rows = ar.loo(c59, names, ar.bm25_factory(frozen))
+    got = [[r["query"], str(i), t[0], str(round(t[1], 4)), str(round(t[2], 4)), str(round(t[3], 4))]
+           for r in rows for i, t in enumerate(r["top"], start=1)]
+    ref = list(csv.reader((ROOT / "data/results/retrieval/loo_2026-10-04_stop1/loo_top3.csv").open(encoding="utf-8")))
+    assert got == ref[1:], "loo_top3 storico non riprodotto con corpus59"
+    _, queries = cl.load_all()
+    for run, protocol in (("testset_2026-10-04_stop2", "fixed59"), ("testset_2026-10-10_loo", "loo")):
+        ref = list(csv.DictReader((ROOT / "data/results/retrieval" / run / "testset_top3.csv").open(encoding="utf-8")))
+        got = []
+        fixed = make().fit(c59)
+        for q in sorted(queries, key=lambda x: x["debari_number"]):
+            pool = c59 if protocol == "fixed59" else c59 + [x for x in queries if x["id"] != q["id"]]
+            for h in (fixed if protocol == "fixed59" else make().fit(pool)).retrieve(q["description"], 3):
+                got.append({"esercizio": q["id"], "rank": str(h.rank), "vicino": h.id, "score": str(round(h.score, 4)),
+                            "score_norm": str(round(h.score_norm, 4))})
+        assert got == [{k: r[k] for k in ("esercizio", "rank", "vicino", "score", "score_norm")} for r in ref], run
+        params = json.loads((ROOT / "data/results/retrieval" / run / "config.json").read_text(encoding="utf-8"))["params"]
+        assert params.get("protocol", "fixed59") == protocol and hr.run_pool(ROOT / "data/results/retrieval" / run) == "corpus59"
+    assert hr.run_pool(ROOT / "data/results/retrieval/loo_2026-10-04_stop1") == "corpus59"
+    try:
+        rt.main(["--protocol", "all80", "--run-id", "_mai_creata"])
+        raise AssertionError("run_testset all80 partito senza --consenti-valutazione")
+    except SystemExit as e:
+        assert "valutazione" in str(e)
+    assert not (ROOT / "data/results/retrieval/_mai_creata").exists()
+    print("  OK  protocolli di pool (voce 129): corpus59 (59, senza Cruise) riproduce i top-3 di loo_2026-10-04_stop1, "
+          "testset_2026-10-04_stop2 (fixed59) e testset_2026-10-10_loo (loo, 78); all80 = 80 esercizi, pertinenza sulle "
+          "26 query di sviluppo; run_testset all80 rifiutato senza --consenti-valutazione; pool dei config storici")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -373,6 +433,7 @@ def main() -> None:
     check_relevance_measures(candidates)
     check_dense_analysis_helpers()
     check_structure_retrievers()
+    check_pool_protocols()
     assert snapshot_corpus() == before, "il codice del retrieval ha scritto in corpus/"
     print(f"  OK  nessuna scrittura in corpus/ ({len(before)} file, sha256 invariati)")
     print("\nTutti i test del retrieval sono passati.")

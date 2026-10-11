@@ -4,6 +4,11 @@ snowballstemmer==3.1.1  # stemming Snowball inglese (retrieval/text_preprocessin
 sentence-transformers==6.1.0  # retriever denso (retrieval/dense_retriever.py, voce 107): versione fissata, su CPU
 transformers==5.19.0  # >= 4.48 per ModernBERT (gte-modernbert-base); installato con torch 2.10.0 invariato
 # faiss-cpu tolto (voce 107): 59 documenti, similarita' coseno esatta con numpy
+# OPZIONALE (voce 127), non installato di default: serve SOLO alla variante 2s del retriever (sinonimi WordNet,
+# retrieval/structure_retrievers.py, voce 120, non entrata nel 3b, voce 122). Senza, i test di quella variante vengono
+# SALTATI con un messaggio. Per installarlo: pip install nltk==3.10.3, poi python -m nltk.downloader wordnet (dati
+# WordNet scaricati UNA volta, a mano: nessun download a runtime).
+# nltk==3.10.3
 
 # LLM / API
 anthropic

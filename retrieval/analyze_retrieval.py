@@ -15,8 +15,14 @@ Il test set NON viene mai letto qui, a parte il controllo di disgiunzione del lo
 Output in data/results/retrieval/<run_id>/: config.json (commit, tag del test set, parametri), summary.md,
 sensitivity.csv, variants.csv, near_duplicates.csv, loo_top3.csv.
 
+PROTOCOLLO DI POOL (voce 129, corpus_loader.POOLS): `--pool all80` (default delle run nuove) = pool unico della voce
+115: 80 esercizi, per ogni query gli altri 79 come candidati; la pertinenza si misura SOLO sulle 26 query di sviluppo
+(gli esercizi di valutazione sono solo candidati); quasi-duplicati solo per le coppie con almeno un esercizio di
+sviluppo. `--pool corpus59` = protocollo storico (59 candidati del corpus, Cruise escluso): riproduce byte per byte i CSV
+di loo_2026-10-04_stop1 (test in retrieval/test_retrieval.py).
+
 Uso:
-    python retrieval/analyze_retrieval.py [--run-id ID] [--seeds 20]
+    python retrieval/analyze_retrieval.py [--run-id ID] [--seeds 20] [--pool all80|corpus59] [--out-dir DIR]
 """
 
 from __future__ import annotations
@@ -81,14 +87,17 @@ def run_metadata(params: dict) -> dict:
     }
 
 
-def near_duplicate_pairs(candidates: list[dict], names: dict[str, set[str]]) -> list[dict]:
-    """Coppie candidate a quasi-duplicato (NON una decisione: domanda 10 per i relatori)."""
+def near_duplicate_pairs(candidates: list[dict], names: dict[str, set[str]], only: set[str] | None = None) -> list[dict]:
+    """Coppie candidate a quasi-duplicato (NON una decisione: domanda 10 per i relatori). only: se indicato, solo le
+    coppie con almeno un esercizio in only (pool all80: gli esercizi di sviluppo)."""
     ids = [c["id"] for c in candidates]
     tfidf = TfidfVectorizer(stop_words="english", sublinear_tf=True).fit_transform([c["description"] for c in candidates])
     sim = cosine_similarity(tfidf)
     out = []
     for i, j in itertools.combinations(range(len(ids)), 2):
         a, b = ids[i], ids[j]
+        if only is not None and a not in only and b not in only:
+            continue
         jac = cl.jaccard(names[a], names[b])
         same_case = a.split("_")[0] == b.split("_")[0]
         reasons = [r for r, ok in (("stesso caso (nome)", same_case), (f"Jaccard >= {NEAR_DUP_JACCARD}", jac >= NEAR_DUP_JACCARD),
@@ -107,12 +116,13 @@ def partners(pairs: list[dict]) -> dict[str, set[str]]:
     return out
 
 
-def loo(candidates, names, make_retriever, exclude=None, drop=frozenset()):
-    """Righe per query: top-3 (id, score, score_norm, jaccard) e Jaccard dell'oracolo, indice rifittato senza q."""
+def loo(candidates, names, make_retriever, exclude=None, drop=frozenset(), queries=None):
+    """Righe per query: top-3 (id, score, score_norm, jaccard) e Jaccard dell'oracolo, indice rifittato senza q.
+    queries: None = ogni candidato e' anche query (protocollo storico); altrimenti solo queste (pool all80)."""
     exclude = exclude or {}
     pool_all = [c for c in candidates if c["id"] not in drop]
     rows = []
-    for q in pool_all:
+    for q in (pool_all if queries is None else [x for x in queries if x["id"] not in drop]):
         pool = [c for c in pool_all if c["id"] != q["id"]]
         excl = exclude.get(q["id"], set())
         retriever = make_retriever().fit(pool)
@@ -134,8 +144,9 @@ def summarize(rows) -> dict:
             "oracle3": statistics.mean(statistics.mean(r["oracle"]) for r in rows), "_j1": j1, "_j3": j3}
 
 
-def random_summary(candidates, names, seeds, exclude=None, drop=frozenset()) -> dict:
-    per_seed = [summarize(loo(candidates, names, lambda s=s: RandomRetriever(seed=s), exclude, drop)) for s in range(seeds)]
+def random_summary(candidates, names, seeds, exclude=None, drop=frozenset(), queries=None) -> dict:
+    per_seed = [summarize(loo(candidates, names, lambda s=s: RandomRetriever(seed=s), exclude, drop, queries))
+                for s in range(seeds)]
     return {"j1_mean": statistics.mean(x["j1"] for x in per_seed), "j1_sd": statistics.stdev(x["j1"] for x in per_seed),
             "j3_mean": statistics.mean(x["j3"] for x in per_seed), "j3_sd": statistics.stdev(x["j3"] for x in per_seed)}
 
@@ -156,16 +167,21 @@ def _provenance_line(candidates) -> str:
     return provenance.provenance_line({c["id"]: c["diagram_apollon_json"] for c in candidates})
 
 
-def main() -> None:
+def main(argv=None) -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--seeds", type=int, default=20)
-    args = ap.parse_args()
+    ap.add_argument("--pool", choices=cl.POOLS, default="all80")
+    ap.add_argument("--out-dir", default=str(RESULTS_DIR), help="cartella che contiene la run (default data/results/retrieval)")
+    args = ap.parse_args(argv)
 
-    candidates, _queries = cl.load_all()  # le query del test set servono solo al controllo di disgiunzione
+    cl.load_all()  # controllo di disgiunzione corpus / test set
+    candidates = cl.load_pool(args.pool)  # universo del protocollo (corpus59: 59 del corpus; all80: 80 esercizi)
+    queries = None if args.pool == "corpus59" else cl.pool_queries(args.pool, candidates)
+    dev = None if queries is None else {q["id"] for q in queries}
     names = {c["id"]: cl.class_names(c["diagram_apollon_json"]) for c in candidates}
     run_id = args.run_id or f"loo_{dt.date.today().isoformat()}_{git('rev-parse', '--short', 'HEAD')}"
-    out = RESULTS_DIR / run_id
+    out = Path(args.out_dir) / run_id
     out.mkdir(parents=True, exist_ok=True)
 
     # --- sensibilita' (variante base) ---
@@ -173,7 +189,7 @@ def main() -> None:
             for s, t, k1, b in itertools.product((True, False), (True, False), K1_GRID, B_GRID)]
     results = {}
     for cfg in grid:
-        results[tuple(cfg.values())] = summarize(loo(candidates, names, bm25_factory(cfg)))
+        results[tuple(cfg.values())] = summarize(loo(candidates, names, bm25_factory(cfg), queries=queries))
     base = results[tuple(DEFAULT.values())]
     sens_rows = []
     for cfg in grid:
@@ -187,7 +203,7 @@ def main() -> None:
     proposal = DEFAULT if not better else {k: max(better, key=lambda s: (s["j1"], s["j3"]))[k] for k in DEFAULT}
 
     # --- varianti (configurazione proposta) ---
-    pairs = near_duplicate_pairs(candidates, names)
+    pairs = near_duplicate_pairs(candidates, names, dev)
     gas = [p for p in pairs if "stesso caso" in p["motivo"]]
     variants = {
         "base": {},
@@ -197,9 +213,9 @@ def main() -> None:
     }
     var_rows = []
     for label, opt in variants.items():
-        rows = loo(candidates, names, bm25_factory(proposal), opt.get("exclude"), opt.get("drop", frozenset()))
+        rows = loo(candidates, names, bm25_factory(proposal), opt.get("exclude"), opt.get("drop", frozenset()), queries)
         s = summarize(rows)
-        rnd = random_summary(candidates, names, args.seeds, opt.get("exclude"), opt.get("drop", frozenset()))
+        rnd = random_summary(candidates, names, args.seeds, opt.get("exclude"), opt.get("drop", frozenset()), queries)
         var_rows.append({"variante": label, "n_query": s["n"], "bm25_j1": s["j1"], "bm25_j3": s["j3"],
                          "random_j1_mean": rnd["j1_mean"], "random_j1_sd": rnd["j1_sd"],
                          "random_j3_mean": rnd["j3_mean"], "random_j3_sd": rnd["j3_sd"],
@@ -213,7 +229,8 @@ def main() -> None:
                          "griglia": {"stopwords": [True, False], "stem": [True, False], "k1": K1_GRID, "b": B_GRID},
                          "near_dup_soglie": {"jaccard": NEAR_DUP_JACCARD, "tfidf": NEAR_DUP_TFIDF},
                          "loo": "indice rifittato senza la query; exclude_ids solo per le varianti",
-                         "pertinenza": "Jaccard dei nomi di nodo Apollon normalizzati (minuscole, alfanumerici)"})
+                         "pertinenza": "Jaccard dei nomi di nodo Apollon normalizzati (minuscole, alfanumerici)",
+                         **({"pool": args.pool, "query": sorted(dev)} if dev is not None else {})})
     (out / "config.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     def write_csv(name, rows, fields):
@@ -233,8 +250,11 @@ def main() -> None:
     # --- summary.md ---
     L = [f"# Retrieval BM25 — leave-one-out sul corpus ({run_id})", "",
          f"Commit `{meta['commit'][:7]}` (working tree {'modificato' if meta['working_tree_dirty'] else 'pulito'}), "
-         f"test set `{TESTSET_TAG}` (invariato dal tag: {meta['testset_unchanged_since_tag']}). "
-         f"{len(candidates)} candidati, top-{TOP_K}, random su {args.seeds} seed. Pertinenza = Jaccard dei nomi di classe.", "",
+         f"test set `{TESTSET_TAG}` (invariato dal tag: {meta['testset_unchanged_since_tag']}). " +
+         (f"{len(candidates)} candidati" if dev is None else
+          f"pool unico all80 (voce 129): {len(candidates)} esercizi, {len(candidates) - 1} candidati per query, "
+          f"pertinenza sulle {len(dev)} query di sviluppo") +
+         f", top-{TOP_K}, random su {args.seeds} seed. Pertinenza = Jaccard dei nomi di classe.", "",
          _provenance_line(candidates), "",
          f"Configurazione di default: {DEFAULT}. Proposta: {proposal}.", "",
          "## Varianti (configurazione proposta)", "",
