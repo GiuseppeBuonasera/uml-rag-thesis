@@ -36,6 +36,9 @@ SPLITS = {
     "debari_test": ((RAW_DEBARI_DIR,), TESTSET_JSONL, APOLLON_DEBARI_DIR),
 }
 
+# ruoli degli 80 esercizi (sviluppo / valutazione), generato da corpus/build_roles.py (voce 117)
+ROLES_YAML = CORPUS_DIR / "roles.yaml"
+
 # id degli esercizi De Bari: DBNN_NomeInCamelCase
 DEBARI_ID_RE = re.compile(r"^DB(\d{2})_[A-Z][A-Za-z0-9]*$")
 
@@ -43,3 +46,10 @@ DEBARI_ID_RE = re.compile(r"^DB(\d{2})_[A-Z][A-Za-z0-9]*$")
 def read_jsonl(path: Path) -> list[dict]:
     """Record di un file JSONL, una riga per record; le righe vuote si ignorano."""
     return [json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def load_roles() -> dict[str, dict]:
+    """id -> {"source": golden | translated_it | debari, "role": sviluppo | valutazione} (corpus/roles.yaml)."""
+    import yaml
+    return {r["id"]: {"source": r["source"], "role": r["role"]}
+            for r in yaml.safe_load(ROLES_YAML.read_text(encoding="utf-8"))}

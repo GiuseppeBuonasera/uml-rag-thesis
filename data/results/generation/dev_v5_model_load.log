@@ -42,3 +42,35 @@ $ lms ps --json
     ]
   }
 }
+# Caricamento per dev_v5base + dev_v5 (voce 115), 2026-10-10T15:30:32+02:00
+$ lms ps --json (prima)
+[]
+
+$ lms load google/gemma-4-12b-qat --context-length 32768 --gpu max -y
+[?25l
+[K[?25hModel loaded successfully in 10.34s.
+(6.66 GiB)
+To use the model in the API/SDK, use the identifier "google/gemma-4-12b-qat".
+$ lms ps --json
+[{"type":"llm","modelKey":"google/gemma-4-12b-qat","format":"gguf","displayName":"Gemma 4 12B QAT","publisher":"google","path":"google/gemma-4-12b-qat","sizeBytes":7151066820,"indexedModelIdentifier":"google/gemma-4-12b-qat","deviceIdentifier":null,"paramsString":"12B","architecture":"gemma4","quantization":{"name":"Q4_0","bits":4},"variants":["google/gemma-4-12b-qat@q4_0"],"selectedVariant":"google/gemma-4-12b-qat@q4_0","identifier":"google/gemma-4-12b-qat","ttlMs":null,"lastUsedTime":1791639043192,"vision":true,"trainedForToolUse":true,"maxContextLength":262144,"contextLength":32768,"status":"idle","queued":0,"parallel":4}]
+
+
+# Caricamento per la leva della validita' del compatto (voce 119), 2026-10-10T17:30:33+02:00
+$ lms load google/gemma-4-12b-qat --context-length 32768 --gpu max -y
+[?25l
+[K[?25hModel loaded successfully in 5.80s.
+(6.66 GiB)
+To use the model in the API/SDK, use the identifier "google/gemma-4-12b-qat".
+$ lms ps --json
+[{"type":"llm","modelKey":"google/gemma-4-12b-qat","format":"gguf","displayName":"Gemma 4 12B QAT","publisher":"google","path":"google/gemma-4-12b-qat","sizeBytes":7151066820,"indexedModelIdentifier":"google/gemma-4-12b-qat","deviceIdentifier":null,"paramsString":"12B","architecture":"gemma4","quantization":{"name":"Q4_0","bits":4},"variants":["google/gemma-4-12b-qat@q4_0"],"selectedVariant":"google/gemma-4-12b-qat@q4_0","identifier":"google/gemma-4-12b-qat","ttlMs":null,"lastUsedTime":1791646240005,"vision":true,"trainedForToolUse":true,"maxContextLength":262144,"contextLength":32768,"status":"idle","queued":0,"parallel":4}]
+
+
+# Caricamento per il passo 4 delle varianti del retriever (voce 121), 2026-10-10T19:17:20+02:00
+$ lms load google/gemma-4-12b-qat --context-length 32768 --gpu max -y
+[?25l
+[K[?25hModel loaded successfully in 5.79s.
+(6.66 GiB)
+To use the model in the API/SDK, use the identifier "google/gemma-4-12b-qat".
+$ lms ps --json
+[{"type":"llm","modelKey":"google/gemma-4-12b-qat","format":"gguf","displayName":"Gemma 4 12B QAT","publisher":"google","path":"google/gemma-4-12b-qat","sizeBytes":7151066820,"indexedModelIdentifier":"google/gemma-4-12b-qat","deviceIdentifier":null,"paramsString":"12B","architecture":"gemma4","quantization":{"name":"Q4_0","bits":4},"variants":["google/gemma-4-12b-qat@q4_0"],"selectedVariant":"google/gemma-4-12b-qat@q4_0","identifier":"google/gemma-4-12b-qat","ttlMs":null,"lastUsedTime":1791652646968,"vision":true,"trainedForToolUse":true,"maxContextLength":262144,"contextLength":32768,"status":"idle","queued":0,"parallel":4}]
+

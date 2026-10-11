@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\",\"+ ItemDescription : string\"]},{\"name\":\"PickupVehicle\",\"attributes\":[\"+ StorageSpace : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ AvailableDays : string[]\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ Day : date\"]},{\"name\":\"ScheduledPickup\",\"attributes\":[\"+ Time : time\",\"+ Dimensions : float\",\"+ Weight : float\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"H2SEmployee\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"SecondHandArticle\",\"attributes\":[\"+ RFID : string\",\"+ Description : string\",\"+ Category : Category\"]},{\"name\":\"NonPerishableFood\"},{\"name\":\"FoodBank\"},{\"name\":\"Client\",\"attributes\":[\"+ HomeAddress : string\",\"+ NeededCategories : Category[]\"]},{\"name\":\"Category\",\"kind\":\"enum\",\"values\":[\"BabyClothing\",\"WomensWinterBoots\",\"Fridge\",\"Microwave\"] অতিরিক্ত 130টি more...]}],\"relations\":[{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"ScheduledPickup\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"ScheduledPickup\",\"target\":\"PickupVehicle\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PickupRoute\",\"target\":\"PickupVehicle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"PickupVehicle\",\"target\":\"ScheduledPickup\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"SecondHandArticle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"SecondHandArticle\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Client\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Client\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"NonPerishableFood\",\"target\":\"FoodBank\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 15.735431999999491,
+ "prompt_tokens": 3965,
+ "completion_tokens": 506,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-vpd2vrjf8xb0xugvqql5g",
+  "object": "chat.completion",
+  "created": 1791642305,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\",\"+ ItemDescription : string\"]},{\"name\":\"PickupVehicle\",\"attributes\":[\"+ StorageSpace : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ AvailableDays : string[]\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ Day : date\"]},{\"name\":\"ScheduledPickup\",\"attributes\":[\"+ Time : time\",\"+ Dimensions : float\",\"+ Weight : float\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"H2SEmployee\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"SecondHandArticle\",\"attributes\":[\"+ RFID : string\",\"+ Description : string\",\"+ Category : Category\"]},{\"name\":\"NonPerishableFood\"},{\"name\":\"FoodBank\"},{\"name\":\"Client\",\"attributes\":[\"+ HomeAddress : string\",\"+ NeededCategories : Category[]\"]},{\"name\":\"Category\",\"kind\":\"enum\",\"values\":[\"BabyClothing\",\"WomensWinterBoots\",\"Fridge\",\"Microwave\"] অতিরিক্ত 130টি more...]}],\"relations\":[{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"ScheduledPickup\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"ScheduledPickup\",\"target\":\"PickupVehicle\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PickupRoute\",\"target\":\"PickupVehicle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"PickupVehicle\",\"target\":\"ScheduledPickup\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"SecondHandArticle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"SecondHandArticle\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Client\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Client\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"NonPerishableFood\",\"target\":\"FoodBank\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3965,
+   "completion_tokens": 506,
+   "total_tokens": 4471,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

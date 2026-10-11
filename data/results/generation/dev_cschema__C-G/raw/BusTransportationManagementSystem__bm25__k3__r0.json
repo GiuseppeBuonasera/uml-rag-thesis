@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ DriverID : int\",\n        \"+ Name : string\",\n        \"+ IsOnSickLeave : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ LicensePlate : string\",\n        \"+ IsInRepairShop : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Route\",\n      \"attributes\": [\n        \"+ RouteNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Shift\",\n      \"attributes\": [\n        \"+ ShiftType : ShiftType\"\n      ]\n    },\n    {\n      \"name\": \"Schedule\",\n      \"attributes\": [\n        \"+ ScheduleDate : date\"\n      ]\n    },\n    {\n      \"name\": \"ShiftType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Morning\",\n        \"Afternoon\",\n        \"Night\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Route\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"routeShifts\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Schedule\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"scheduledShifts\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Route\",\n      \"target\": \"Bus\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"assignedBuses\",\n      \"targetRole\": \"assignedRoute\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Shift\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"assignedTo\",\n      \"targetRole\": \"assignedDriver\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Shift\",\n      \"target\": \"Bus\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"assignedToBus\",\n      \"targetRole\": \"busWithShifts\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Route\",\n      \"target\": \"Bus\",\n      \"label\": \"assignment\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": true
+ },
+ "repetition": 0,
+ "latency_s": 20.00025839999944,
+ "prompt_tokens": 4918,
+ "completion_tokens": 608,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-an9et050poah9n86zl3uiu",
+  "object": "chat.completion",
+  "created": 1791647201,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ DriverID : int\",\n        \"+ Name : string\",\n        \"+ IsOnSickLeave : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ LicensePlate : string\",\n        \"+ IsInRepairShop : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Route\",\n      \"attributes\": [\n        \"+ RouteNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Shift\",\n      \"attributes\": [\n        \"+ ShiftType : ShiftType\"\n      ]\n    },\n    {\n      \"name\": \"Schedule\",\n      \"attributes\": [\n        \"+ ScheduleDate : date\"\n      ]\n    },\n    {\n      \"name\": \"ShiftType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Morning\",\n        \"Afternoon\",\n        \"Night\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Route\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"routeShifts\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Schedule\",\n      \"part\": \"Shift\",\n      \"partMultiplicity\": \"*\",\n      \"partRole\": \"scheduledShifts\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Route\",\n      \"target\": \"Bus\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..*\",\n      \"sourceRole\": \"assignedBuses\",\n      \"targetRole\": \"assignedRoute\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Shift\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"assignedTo\",\n      \"targetRole\": \"assignedDriver\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Shift\",\n      \"target\": \"Bus\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"sourceRole\": \"assignedToBus\",\n      \"targetRole\": \"busWithShifts\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Route\",\n      \"target\": \"Bus\",\n      \"label\": \"assignment\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4918,
+   "completion_tokens": 608,
+   "total_tokens": 5526,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

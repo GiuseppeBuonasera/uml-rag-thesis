@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Well {\n  + code : string\n}\n\nabstract class WellCategory {}\n\nclass OnshoreWell extends Well {\n  + surfaceExtension : float\n}\n\nclass OffshoreWell extends Well {\n  + yearOfInstallation : int\n}\n\nclass OilCompany {\n  + taxCode : string\n  + numberOfEmployees : int\n}\n\nclass GeographicalArea {\n  + code : string\n  + environmentalImportance : int\n}\n\nclass Extraction {\n  + quantity : float\n}\n\nclass OnshoreWellCategory extends WellCategory {}\nclass OffshoreWellCategory extends WellCategory {}\n\nWell \"*\" -- \"1\" WellCategory\nOnshoreWell \"1\" -- \"1\" OnshoreWellCategory\nOffshoreWell \"1\" -- \"1\" OffshoreWellCategory\n\nWell \"*\" -- \"*\" OilCompany : extracts\nExtraction \"*\" -- \"1\" Well\nExtraction \"*\" -- \"1\" OilCompany\n\nOffshoreWell \"0..1\" -- \"0..1\" GeographicalArea : locatedIn\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.194642499998736,
+ "prompt_tokens": 2968,
+ "completion_tokens": 216,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kb06ufvptxel7x18u98fq",
+  "object": "chat.completion",
+  "created": 1791653365,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Well {\n  + code : string\n}\n\nabstract class WellCategory {}\n\nclass OnshoreWell extends Well {\n  + surfaceExtension : float\n}\n\nclass OffshoreWell extends Well {\n  + yearOfInstallation : int\n}\n\nclass OilCompany {\n  + taxCode : string\n  + numberOfEmployees : int\n}\n\nclass GeographicalArea {\n  + code : string\n  + environmentalImportance : int\n}\n\nclass Extraction {\n  + quantity : float\n}\n\nclass OnshoreWellCategory extends WellCategory {}\nclass OffshoreWellCategory extends WellCategory {}\n\nWell \"*\" -- \"1\" WellCategory\nOnshoreWell \"1\" -- \"1\" OnshoreWellCategory\nOffshoreWell \"1\" -- \"1\" OffshoreWellCategory\n\nWell \"*\" -- \"*\" OilCompany : extracts\nExtraction \"*\" -- \"1\" Well\nExtraction \"*\" -- \"1\" OilCompany\n\nOffshoreWell \"0..1\" -- \"0..1\" GeographicalArea : locatedIn\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2968,
+   "completion_tokens": 216,
+   "total_tokens": 3184,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

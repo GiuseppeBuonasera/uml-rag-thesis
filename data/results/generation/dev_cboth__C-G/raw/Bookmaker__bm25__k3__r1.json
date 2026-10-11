@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Bookmaker\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ bettorId : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ raceId : string\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ runnerId : int\",\n        \"+ horseName : string\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ licenseNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ betId : int\",\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Bookmaker\",\n      \"target\": \"Bettor\",\n      \"label\": \"manages\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Race\",\n      \"part\": \"Runner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Jockey\",\n      \"target\": \"Runner\",\n      \"label\": \"rides\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Runner\",\n      \"label\": \"hasWinner\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Bet\",\n      \"part\": \"Race\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Bet\",\n      \"part\": \"Runner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Bookmaker\",\n      \"target\": \"Bet\",\n      \"label\": \"accepts\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": true
+ },
+ "repetition": 1,
+ "latency_s": 23.974964299999556,
+ "prompt_tokens": 5020,
+ "completion_tokens": 696,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2x9f4fh0z9ckc65zg2ho3h",
+  "object": "chat.completion",
+  "created": 1791649020,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Bookmaker\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Bettor\",\n      \"attributes\": [\n        \"+ bettorId : int\",\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Race\",\n      \"attributes\": [\n        \"+ raceId : string\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Runner\",\n      \"attributes\": [\n        \"+ runnerId : int\",\n        \"+ horseName : string\"\n      ]\n    },\n    {\n      \"name\": \"Jockey\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ licenseNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Bet\",\n      \"attributes\": [\n        \"+ betId : int\",\n        \"+ amount : double\",\n        \"+ odds : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Bookmaker\",\n      \"target\": \"Bettor\",\n      \"label\": \"manages\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Bettor\",\n      \"target\": \"Bet\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Race\",\n      \"part\": \"Runner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Jockey\",\n      \"target\": \"Runner\",\n      \"label\": \"rides\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Race\",\n      \"target\": \"Runner\",\n      \"label\": \"hasWinner\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Bet\",\n      \"part\": \"Race\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Bet\",\n      \"part\": \"Runner\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Bookmaker\",\n      \"target\": \"Bet\",\n      \"label\": \"accepts\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5020,
+   "completion_tokens": 696,
+   "total_tokens": 5716,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

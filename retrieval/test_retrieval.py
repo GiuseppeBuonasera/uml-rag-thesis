@@ -269,6 +269,93 @@ def check_dense_analysis_helpers() -> None:
           "hubness, config_dense.yaml")
 
 
+
+def _diagram(names, edges=(), attrs=None):
+    """Diagramma minimo: nodi con nomi (e attributi), relazioni (tipo, i, j, molt. sorgente, molt. destinazione)."""
+    nodes = [{"id": f"n{i}", "data": {"name": n, "attributes": [{"name": a} for a in (attrs or {}).get(n, [])]}}
+             for i, n in enumerate(names)]
+    return {"nodes": nodes, "edges": [{"type": t, "source": f"n{a}", "target": f"n{b}",
+                                       "data": {"sourceMultiplicity": sm, "targetMultiplicity": tm}}
+                                      for t, a, b, sm, tm in edges]}
+
+
+def check_structure_retrievers() -> None:
+    """Varianti della voce 120 su dati finti (nessun download): struttura BM25 (+ sinonimi WordNet), struttura densa,
+    RRF, MMR, costrutti, qualita', MiniLM a pezzi."""
+    import structure_retrievers as sr
+    recs = [
+        {"id": "shop", "description": "a store sells goods", "diagram_apollon_json": _diagram(
+            ["Customer", "PurchaseOrder"], [("ClassBidirectional", 0, 1, "1", "*")], {"Customer": ["+ name : string"]})},
+        {"id": "zoo", "description": "animals live in cages", "diagram_apollon_json": _diagram(
+            ["Animal", "Cage"], [("ClassBidirectional", 0, 1, "", "")], {"Animal": ["+ name"]})},
+        {"id": "fleet", "description": "vehicles are owned by companies", "diagram_apollon_json": _diagram(
+            ["Vehicle", "Car", "Truck"], [("ClassInheritance", 1, 0, "", ""), ("ClassInheritance", 2, 0, "", "")])},
+        {"id": "plant", "description": "a factory is organised in departments", "diagram_apollon_json": _diagram(
+            ["Factory", "Department"], [("ClassComposition", 1, 0, "*", "1")])},
+    ]
+    # 2: la traccia si confronta con i NOMI DI CLASSE dei candidati, non con la loro descrizione
+    top = sr.StructureBM25().fit(recs).retrieve("Each customer places a purchase order", 2)
+    assert top[0].id == "shop", top
+    assert sr.StructureBM25().fit(recs).retrieve("customer order", 4, exclude_ids={"shop"})[0].id != "shop"
+    # 2s: sinonimi WordNet del primo significato nominale (customer -> client)
+    assert "client" in sr.wordnet_expand(["customer"]) and sr.wordnet_expand(["xyzzyq"]) == ["xyzzyq"]
+    assert sr.StructureBM25(synonyms=True).fit(recs).retrieve("every client buys things", 1)[0].id == "shop"
+    # 2d: testo dei nomi di classe e retrieval denso (embedding finti)
+    assert sr.StructureDense.document(recs[0]) == "customer, purchase order"
+    sd = sr.StructureDense(DenseRetriever("f", "0" * 40, encoder=FakeEncoder(), cache_dir=None)).fit(recs)
+    assert sd.retrieve("purchase order of a customer", 1)[0].id == "shop"
+    # RRF: due retriever fissi
+    rrf = sr.RRF(_Fixed(["a", "b", "c"]), _Fixed(["b", "c", "a"])).fit([{"id": i} for i in "abc"])
+    assert [r.id for r in rrf.retrieve("q", 3)] == ["b", "a", "c"]
+    # 3: MMR; lam = 1 -> l'ordine della base; lam < 1 -> evita il quasi-doppione
+    dup = [{"id": "a", "description": "x", "diagram_apollon_json": _diagram(["Customer", "Order"])},
+           {"id": "b", "description": "x", "diagram_apollon_json": _diagram(["Customer", "Order", "Item"])},
+           {"id": "c", "description": "x", "diagram_apollon_json": _diagram(["Plane", "Pilot"])},
+           {"id": "d", "description": "x", "diagram_apollon_json": _diagram(["Ship", "Port"])}]
+
+    class _Scored(_Fixed):
+        def retrieve(self, query_text, k, exclude_ids=()):
+            sc = {"a": 3.0, "b": 2.9, "c": 2.8, "d": 1.0}
+            kept = [i for i in self.order if i not in set(exclude_ids)]
+            return [RetrievalResult(i, r, sc[i], sc[i]) for r, i in enumerate(kept[:k], start=1)]
+
+    # rilevanza min-max: a 1, b 0,95, c 0,9, d 0; al secondo passo b paga la somiglianza con a (Jt 2/3)
+    assert [r.id for r in sr.MMR(_Scored(list("abcd")), lam=1.0).fit(dup).retrieve("q", 3)] == ["a", "b", "c"]
+    assert [r.id for r in sr.MMR(_Scored(list("abcd"))).fit(dup).retrieve("q", 3)] == ["a", "c", "b"]
+    assert "a" not in [r.id for r in sr.MMR(_Scored(list("abcd"))).fit(dup).retrieve("q", 3, exclude_ids={"a"})]
+    # 4: segnali dei costrutti e spinta ai candidati che li mostrano
+    assert sr.cued_constructs("A vehicle can be either a car or a truck.") == {"inheritance"}
+    assert sr.cued_constructs("An order consists of several lines") == {"part"}
+    assert sr.cued_constructs("Customers buy products.") == set()
+    assert sr.has_constructs(recs[2]["diagram_apollon_json"]) == {"inheritance"}
+    assert sr.has_constructs(recs[3]["diagram_apollon_json"]) == {"part"}
+    base_order = ["shop", "zoo", "plant", "fleet"]
+    cb = sr.ConstructBoost(_Fixed(base_order)).fit(recs)
+    assert [r.id for r in cb.retrieve("Customers buy products.", 4)] == base_order  # nessun segnale: la base
+    boosted = [r.id for r in cb.retrieve("A vehicle can be either a car or a truck.", 4)]
+    assert boosted.index("fleet") < base_order.index("fleet"), boosted
+    # 5: qualita' del GT e pesatura
+    assert sr.gt_quality(recs[0]["diagram_apollon_json"]) == 1.0
+    assert sr.gt_quality(recs[1]["diagram_apollon_json"]) == 0.0  # molteplicita' mancanti e attributo senza tipo
+    qw = sr.QualityWeighted(_Scored(["a", "b", "c"]))
+    qrec = [{"id": "a", "description": "x", "diagram_apollon_json": recs[1]["diagram_apollon_json"]},
+            {"id": "b", "description": "x", "diagram_apollon_json": recs[0]["diagram_apollon_json"]},
+            {"id": "c", "description": "x", "diagram_apollon_json": recs[0]["diagram_apollon_json"]}]
+    assert [r.id for r in qw.fit(qrec).retrieve("q", 3)][0] == "b"
+    # 6: MiniLM a pezzi (embedding finti: pezzi di parole), cache separata
+    with tempfile.TemporaryDirectory() as tmp:
+        ch = DenseRetriever("org/m", "a" * 40, encoder=FakeEncoder(), cache_dir=Path(tmp), chunk_tokens=3)
+        assert ch.split_text("one two three four five") == ["one two three", "four five"]
+        assert ch.cache.path.name == "org__m@aaaaaaaaaaaa_chunk3.npz"
+        v = ch.encode(["one two three four five"])[0]
+        a, b = FakeEncoder()(["one two three"])[0], FakeEncoder()(["four five"])[0]
+        m = a / np.linalg.norm(a) + b / np.linalg.norm(b)
+        assert np.allclose(v, m / np.linalg.norm(m), atol=1e-6)
+    assert "sentence_transformers" not in sys.modules
+    print("  OK  varianti della voce 120 su dati finti: struttura BM25 (+ sinonimi WordNet), struttura densa, RRF, "
+          "MMR (diversita'), costrutti (segnali e spinta), qualita' del GT, MiniLM a pezzi con cache separata")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -285,6 +372,7 @@ def main() -> None:
     check_hybrid_rrf(candidates)
     check_relevance_measures(candidates)
     check_dense_analysis_helpers()
+    check_structure_retrievers()
     assert snapshot_corpus() == before, "il codice del retrieval ha scritto in corpus/"
     print(f"  OK  nessuna scrittura in corpus/ ({len(before)} file, sha256 invariati)")
     print("\nTutti i test del retrieval sono passati.")

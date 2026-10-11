@@ -36,9 +36,11 @@ def text_key(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def cache_path(model_name: str, revision: str, cache_dir: Path = CACHE_DIR) -> Path:
-    """Nome del file con modello e revisione, es. BAAI__bge-small-en-v1.5@5c38ec7c405e.npz."""
-    return cache_dir / f"{re.sub(r'[^A-Za-z0-9._-]', '_', model_name.replace('/', '__'))}@{revision[:12]}.npz"
+def cache_path(model_name: str, revision: str, cache_dir: Path = CACHE_DIR, chunk_tokens: int | None = None) -> Path:
+    """Nome del file con modello e revisione, es. BAAI__bge-small-en-v1.5@5c38ec7c405e.npz; con i pezzi (variante 6,
+    voce 120) un file a parte, es. ...@1110a243fdf4_chunk256.npz."""
+    suffix = f"_chunk{chunk_tokens}" if chunk_tokens else ""
+    return cache_dir / f"{re.sub(r'[^A-Za-z0-9._-]', '_', model_name.replace('/', '__'))}@{revision[:12]}{suffix}.npz"
 
 
 def _disable_broken_torchaudio() -> None:
@@ -78,11 +80,16 @@ class EmbeddingCache:
 
 class DenseRetriever(Retriever):
     def __init__(self, model_name: str, revision: str, encoder: Encoder | None = None,
-                 cache_dir: Path | None = CACHE_DIR, batch_size: int = 8):
+                 cache_dir: Path | None = CACHE_DIR, batch_size: int = 8, chunk_tokens: int | None = None):
+        """chunk_tokens (variante 6, voce 120): testi piu' lunghi divisi in pezzi di al piu' chunk_tokens token del
+        tokenizer del modello (token speciali compresi, senza sovrapposizione); embedding = media dei pezzi
+        normalizzati, rinormalizzata. None = comportamento della voce 107 (troncamento del modello)."""
         self.model_name, self.revision, self.batch_size = model_name, revision, batch_size
+        self.chunk_tokens = chunk_tokens
         self._encoder = encoder
         self._model = None
-        self.cache = EmbeddingCache(cache_path(model_name, revision, cache_dir) if cache_dir is not None else None)
+        self.cache = EmbeddingCache(cache_path(model_name, revision, cache_dir, chunk_tokens)
+                                    if cache_dir is not None else None)
         self.ids: list[str] = []
         self.matrix: np.ndarray | None = None
         self.encoded_texts = 0  # testi effettivamente passati all'encoder (non trovati in cache)
@@ -95,7 +102,9 @@ class DenseRetriever(Retriever):
         return self._model
 
     def _encode_raw(self, texts: list[str]) -> np.ndarray:
-        if self._encoder is not None:
+        if self.chunk_tokens:
+            out = self._encode_chunked(texts)
+        elif self._encoder is not None:
             out = np.asarray(self._encoder(texts), dtype=np.float32)
         else:
             out = self.model.encode(texts, batch_size=self.batch_size, convert_to_numpy=True,
@@ -104,6 +113,31 @@ class DenseRetriever(Retriever):
         if np.any(norms == 0):
             raise ValueError("embedding nullo: coseno non definito")
         return out / norms
+
+    def split_text(self, text: str) -> list[str]:
+        """Pezzi di al piu' chunk_tokens token (2 riservati ai token speciali), ricostruiti come testo."""
+        if self._encoder is not None:  # test: pezzi di chunk_tokens parole
+            words = text.split()
+            return [" ".join(words[i:i + self.chunk_tokens]) for i in range(0, len(words), self.chunk_tokens)] or [""]
+        tok = self.model.tokenizer
+        ids = tok(text, add_special_tokens=False, truncation=False)["input_ids"]
+        size = self.chunk_tokens - 2
+        return [tok.decode(ids[i:i + size]) for i in range(0, len(ids), size)] or [""]
+
+    def _encode_chunked(self, texts: list[str]) -> np.ndarray:
+        pieces = [self.split_text(t) for t in texts]
+        flat = [p for ps in pieces for p in ps]
+        if self._encoder is not None:
+            vec = np.asarray(self._encoder(flat), dtype=np.float32)
+        else:
+            vec = self.model.encode(flat, batch_size=self.batch_size, convert_to_numpy=True,
+                                    normalize_embeddings=True, show_progress_bar=False).astype(np.float32)
+        vec = vec / np.linalg.norm(vec, axis=1, keepdims=True)
+        out, i = [], 0
+        for ps in pieces:
+            out.append(vec[i:i + len(ps)].mean(axis=0))
+            i += len(ps)
+        return np.stack(out)
 
     def encode(self, texts: Sequence[str], use_cache: bool = True) -> np.ndarray:
         """Embedding normalizzati, dalla cache quando possibile."""

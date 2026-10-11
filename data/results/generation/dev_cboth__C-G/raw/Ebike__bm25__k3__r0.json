@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"EBike\"\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ]\n    },\n    {\n      \"name\": \"DriveSystem\"\n    },\n    {\n      \"name\": \"Motor\"\n    },\n    {\n      \"name\": \"Controller\",\n      \"attributes\": [\n        \"+ state : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ controlBattery()\",\n        \"+ commandDriveSystem()\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\"\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"attributes\": [\n        \"+ nextInspectionDate : date\"\n      ],\n      \"methods\": [\n        \"+ estimateNextInspectionDate() : date\"\n      ]\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ storedEnergyWh : float\"\n      ]\n    },\n    {\n      \"name\": \"Wheel\"\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Controller\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Frame\",\n      \"part\": \"Wheel\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DriveSystem\",\n      \"part\": \"Motor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"EBike\",\n      \"part\": \"Battery\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\",\n      \"partRole\": \"removableBattery\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvancedController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Controller\",\n      \"target\": \"Battery\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Controller\",\n      \"target\": \"DriveSystem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": true
+ },
+ "repetition": 0,
+ "latency_s": 27.762021799997456,
+ "prompt_tokens": 5481,
+ "completion_tokens": 802,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-psn5a6u67rarbigeqknp2b",
+  "object": "chat.completion",
+  "created": 1791648287,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"EBike\"\n    },\n    {\n      \"name\": \"Frame\",\n      \"attributes\": [\n        \"+ material : string\"\n      ]\n    },\n    {\n      \"name\": \"DriveSystem\"\n    },\n    {\n      \"name\": \"Motor\"\n    },\n    {\n      \"name\": \"Controller\",\n      \"attributes\": [\n        \"+ state : ControllerState\"\n      ],\n      \"methods\": [\n        \"+ controlBattery()\",\n        \"+ commandDriveSystem()\"\n      ]\n    },\n    {\n      \"name\": \"BasicController\"\n    },\n    {\n      \"name\": \"AdvancedController\",\n      \"attributes\": [\n        \"+ nextInspectionDate : date\"\n      ],\n      \"methods\": [\n        \"+ estimateNextInspectionDate() : date\"\n      ]\n    },\n    {\n      \"name\": \"Battery\",\n      \"attributes\": [\n        \"+ storedEnergyWh : float\"\n      ]\n    },\n    {\n      \"name\": \"Wheel\"\n    },\n    {\n      \"name\": \"ControllerState\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"On\",\n        \"Off\",\n        \"Charging\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Frame\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"DriveSystem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"EBike\",\n      \"part\": \"Controller\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Frame\",\n      \"part\": \"Wheel\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DriveSystem\",\n      \"part\": \"Motor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"EBike\",\n      \"part\": \"Battery\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\",\n      \"partRole\": \"removableBattery\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BasicController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvancedController\",\n      \"parent\": \"Controller\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Controller\",\n      \"target\": \"Battery\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Controller\",\n      \"target\": \"DriveSystem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5481,
+   "completion_tokens": 802,
+   "total_tokens": 6283,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Boeing\",\"attributes\":[]},{\"name\":\"Aircraft\",\"attributes\":[\"+ Model\",\"+ Options\",\"+ Customizations\"]},{\"name\":\"Airline\",\"attributes\":[\"+ Name\"]},{\"name\":\"SalesAgreement\",\"attributes\":[]},{\"name\":\"Contract\",\"attributes\":[\"+ DeliveryConditions\",\"+ LegalAspects\"]},{\"name\":\"Acquisition\",\"attributes\":[\"+ Price\",\"+ DeliveryDate\"]},{\"name\":\"Employee\",\"attributes\":[\"+ Name\"]},{\"name\":\"Salesperson\",\"attributes\":[]}],\"relations\":[{\"type\":\"association\",\"source\":\"Boeing\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Acquisition\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"SalesAgreement\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"SalesAgreement\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Salesperson\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Salesperson\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Acquisition\",\"target\":\"Aircraft\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Airline\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"0..*\",\"label\":\"mother-daughter\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 10.896601599999485,
+ "prompt_tokens": 3806,
+ "completion_tokens": 331,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9t3e9kh18d6c1izsmu4vua",
+  "object": "chat.completion",
+  "created": 1791642104,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Boeing\",\"attributes\":[]},{\"name\":\"Aircraft\",\"attributes\":[\"+ Model\",\"+ Options\",\"+ Customizations\"]},{\"name\":\"Airline\",\"attributes\":[\"+ Name\"]},{\"name\":\"SalesAgreement\",\"attributes\":[]},{\"name\":\"Contract\",\"attributes\":[\"+ DeliveryConditions\",\"+ LegalAspects\"]},{\"name\":\"Acquisition\",\"attributes\":[\"+ Price\",\"+ DeliveryDate\"]},{\"name\":\"Employee\",\"attributes\":[\"+ Name\"]},{\"name\":\"Salesperson\",\"attributes\":[]}],\"relations\":[{\"type\":\"association\",\"source\":\"Boeing\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Contract\",\"target\":\"Acquisition\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"SalesAgreement\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"SalesAgreement\",\"target\":\"Airline\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Salesperson\",\"target\":\"Contract\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Employee\",\"target\":\"Salesperson\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Acquisition\",\"target\":\"Aircraft\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Airline\",\"target\":\"Airline\",\"sourceMultiplicity\":\"0..*\",\"targetMultiplicity\":\"0..*\",\"label\":\"mother-daughter\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3806,
+   "completion_tokens": 331,
+   "total_tokens": 4137,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

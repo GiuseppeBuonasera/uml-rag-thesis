@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"HospitalHouseMD\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : string\",\n        \"+ Symptoms : string\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Specialization : string\",\n        \"+ ID : string\"\n      ]\n    },\n    {\n      \"name\": \"HeadDoctor\",\n      \"attributes\": [\n        \"+ AuthorityLevel : int\"\n      ]\n    },\n    {\n      \"name\": \"Nurse\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : string\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"PriorityScore\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"High\",\n        \"Low\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ TreatmentName : string\",\n        \"+ Description : string\",\n        \"+ CurrentStage : int\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ DiagnosisDetails : string\",\n        \"+ DateMade : date\"\n      ]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ SignatureDate : date\",\n        \"+ IsRetracted : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadDoctor\",\n      \"parent\": \"Doctor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HeadDoctor\",\n      \"target\": \"Diagnosis\",\n      \"label\": \"approves\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"PriorityScore\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Patient\",\n      \"part\": \"ConsentForm\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Nurse\",\n      \"target\": \"Treatment\",\n      \"label\": \"monitors\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Treatment\",\n      \"label\": \"managesStage\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": true
+ },
+ "repetition": 0,
+ "latency_s": 33.4712154000008,
+ "prompt_tokens": 5316,
+ "completion_tokens": 996,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-pdro79o9re8rcgafd97dpn",
+  "object": "chat.completion",
+  "created": 1791648714,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"HospitalHouseMD\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : string\",\n        \"+ Symptoms : string\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Specialization : string\",\n        \"+ ID : string\"\n      ]\n    },\n    {\n      \"name\": \"HeadDoctor\",\n      \"attributes\": [\n        \"+ AuthorityLevel : int\"\n      ]\n    },\n    {\n      \"name\": \"Nurse\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ ID : string\"\n      ]\n    },\n    {\n      \"name\": \"Illness\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"PriorityScore\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"High\",\n        \"Low\"\n      ]\n    },\n    {\n      \"name\": \"Treatment\",\n      \"attributes\": [\n        \"+ TreatmentName : string\",\n        \"+ Description : string\",\n        \"+ CurrentStage : int\"\n      ]\n    },\n    {\n      \"name\": \"Diagnosis\",\n      \"attributes\": [\n        \"+ DiagnosisDetails : string\",\n        \"+ DateMade : date\"\n      ]\n    },\n    {\n      \"name\": \"ConsentForm\",\n      \"attributes\": [\n        \"+ SignatureDate : date\",\n        \"+ IsRetracted : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadDoctor\",\n      \"parent\": \"Doctor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HeadDoctor\",\n      \"target\": \"Diagnosis\",\n      \"label\": \"approves\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"PriorityScore\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Illness\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Patient\",\n      \"part\": \"ConsentForm\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Treatment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Nurse\",\n      \"target\": \"Treatment\",\n      \"label\": \"monitors\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Treatment\",\n      \"label\": \"managesStage\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5316,
+   "completion_tokens": 996,
+   "total_tokens": 6312,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

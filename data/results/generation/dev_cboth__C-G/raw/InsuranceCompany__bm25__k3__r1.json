@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"InsuranceCompany\",\n      \"attributes\": [\n        \"+ CompanyName : string\",\n        \"+ RegistrationNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"PolicyType\",\n      \"attributes\": [\n        \"+ TypeName : string\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"attributes\": [\n        \"+ PolicyNumber : string\",\n        \"+ IssueDate : date\",\n        \"+ PremiumAmount : double\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ CustomerId : int\",\n        \"+ Name : string\",\n        \"+ ContactNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractId : int\",\n        \"+ SigningDate : date\",\n        \"+ Status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"InsuranceCompany\",\n      \"part\": \"Policy\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Policy\",\n      \"target\": \"PolicyType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"Policy\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": true
+ },
+ "repetition": 1,
+ "latency_s": 15.701132800000778,
+ "prompt_tokens": 4443,
+ "completion_tokens": 450,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ac8bvuwpcewybsbza0rbg",
+  "object": "chat.completion",
+  "created": 1791649061,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"InsuranceCompany\",\n      \"attributes\": [\n        \"+ CompanyName : string\",\n        \"+ RegistrationNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"PolicyType\",\n      \"attributes\": [\n        \"+ TypeName : string\",\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Policy\",\n      \"attributes\": [\n        \"+ PolicyNumber : string\",\n        \"+ IssueDate : date\",\n        \"+ PremiumAmount : double\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ CustomerId : int\",\n        \"+ Name : string\",\n        \"+ ContactNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Contract\",\n      \"attributes\": [\n        \"+ ContractId : int\",\n        \"+ SigningDate : date\",\n        \"+ Status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"InsuranceCompany\",\n      \"part\": \"Policy\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Policy\",\n      \"target\": \"PolicyType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Contract\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Contract\",\n      \"part\": \"Policy\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4443,
+   "completion_tokens": 450,
+   "total_tokens": 4893,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

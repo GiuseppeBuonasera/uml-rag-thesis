@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass InsuranceCompany {}\n\nclass Policy {\n  + policyType : string\n}\n\nclass CarLiabilityPolicy extends Policy {}\nclass LifePolicy extends Policy {}\nclass RiskPolicy extends Policy {}\n\nclass Customer {}\n\nclass Contract {}\n\nInsuranceCompany \"1\" -- \"*\" Policy\nCustomer \"1\" -- \"*\" Contract\nContract \"*\" -- \"1\" Policy\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 4.103881099999853,
+ "prompt_tokens": 3019,
+ "completion_tokens": 81,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-c3avpx48re1l3xo8nh75",
+  "object": "chat.completion",
+  "created": 1791653338,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass InsuranceCompany {}\n\nclass Policy {\n  + policyType : string\n}\n\nclass CarLiabilityPolicy extends Policy {}\nclass LifePolicy extends Policy {}\nclass RiskPolicy extends Policy {}\n\nclass Customer {}\n\nclass Contract {}\n\nInsuranceCompany \"1\" -- \"*\" Policy\nCustomer \"1\" -- \"*\" Contract\nContract \"*\" -- \"1\" Policy\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3019,
+   "completion_tokens": 81,
+   "total_tokens": 3100,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

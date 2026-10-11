@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Well\",\n      \"attributes\": [\n        \"+ code : string\"\n      ],\n      \"methods\": [\n        \"+ calculatePollutionRate() : float\"\n      ]\n    },\n    {\n      \"name\": \"OnshoreWell\",\n      \"attributes\": [\n        \"+ surfaceExtension : float\"\n      ]\n    },\n    {\n      \"name\": \"OffshoreWell\",\n      \"attributes\": [\n        \"+ installationYear : int\",\n        \"+ geographicalArea : GeographicalArea\"\n      ]\n    },\n    {\n      \"name\": \"OilCompany\",\n      \"attributes\": [\n        \"+ taxCode : string\",\n        \"+ numberOfEmployees : int\"\n      ]\n    },\n    {\n      \"name\": \"GeographicalArea\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ environmentalImportance : int\"\n      ]\n    },\n    {\n      \"name\": \"Extraction\",\n      \"attributes\": [\n        \"+ quantityPerYear : float\"\n      ]\n    },\n    {\n      \"name\": \"WellCategory\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Onshore\",\n        \"Offshore\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OnshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OffshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Well\",\n      \"target\": \"OilCompany\",\n      \"label\": \"extracts\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Well\",\n      \"part\": \"Extraction\",\n      \"label\": \"extractionDetails\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"OilCompany\",\n      \"part\": \"Extraction\",\n      \"label\": \"companyExtraction\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Well\",\n      \"target\": \"WellCategory\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"OffshoreWell\",\n      \"target\": \"GeographicalArea\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 17.5305309999967,
+ "prompt_tokens": 4980,
+ "completion_tokens": 627,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4igpedppwihkr7md062dxm",
+  "object": "chat.completion",
+  "created": 1791655444,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Well\",\n      \"attributes\": [\n        \"+ code : string\"\n      ],\n      \"methods\": [\n        \"+ calculatePollutionRate() : float\"\n      ]\n    },\n    {\n      \"name\": \"OnshoreWell\",\n      \"attributes\": [\n        \"+ surfaceExtension : float\"\n      ]\n    },\n    {\n      \"name\": \"OffshoreWell\",\n      \"attributes\": [\n        \"+ installationYear : int\",\n        \"+ geographicalArea : GeographicalArea\"\n      ]\n    },\n    {\n      \"name\": \"OilCompany\",\n      \"attributes\": [\n        \"+ taxCode : string\",\n        \"+ numberOfEmployees : int\"\n      ]\n    },\n    {\n      \"name\": \"GeographicalArea\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ environmentalImportance : int\"\n      ]\n    },\n    {\n      \"name\": \"Extraction\",\n      \"attributes\": [\n        \"+ quantityPerYear : float\"\n      ]\n    },\n    {\n      \"name\": \"WellCategory\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Onshore\",\n        \"Offshore\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OnshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OffshoreWell\",\n      \"parent\": \"Well\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Well\",\n      \"target\": \"OilCompany\",\n      \"label\": \"extracts\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Well\",\n      \"part\": \"Extraction\",\n      \"label\": \"extractionDetails\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"OilCompany\",\n      \"part\": \"Extraction\",\n      \"label\": \"companyExtraction\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"dependency\",\n      \"source\": \"Well\",\n      \"target\": \"WellCategory\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"OffshoreWell\",\n      \"target\": \"GeographicalArea\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4980,
+   "completion_tokens": 627,
+   "total_tokens": 5607,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

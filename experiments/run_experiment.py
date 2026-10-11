@@ -518,6 +518,24 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
     return counts
 
 
+def check_query_roles(cfg: dict, queries: list[dict]) -> None:
+    """Voce 117: una run REALE (client non finto) di sviluppo non puo' usare come query un esercizio di valutazione
+    (corpus/roles.yaml); ammesso solo nei config del Passo 3b marcati `passo: 3b`. Dry run e client finti non producono
+    risposte di un modello, quindi non contaminano e non sono bloccati."""
+    if cfg.get("passo") == "3b" or (cfg.get("client") or {}).get("kind") == "mock":
+        return
+    sys.path.insert(0, str(ROOT / "corpus"))
+    import paths
+    roles = paths.load_roles()
+    ids = cfg.get("query_ids")
+    selected = [q["id"] for q in queries if not ids or q["id"] in ids]
+    blocked = sorted(i for i in selected if roles.get(i, {}).get("role") != "sviluppo")
+    if blocked:
+        raise SystemExit(f"esercizi di VALUTAZIONE come query in una run di sviluppo (voce 117): {blocked[:10]}"
+                         f"{' ...' if len(blocked) > 10 else ''} ({len(blocked)}); solo i config del Passo 3b con "
+                         "`passo: 3b` possono usarli")
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("config")
@@ -548,6 +566,7 @@ def main(argv: list[str] | None = None) -> int:
         print(dry_run(cfg, builder, queries, out))
         print(f"scritto in {out}")
         return 0
+    check_query_roles(cfg, queries)
     _set_output(root / cfg["run_id"])
     counts = run(cfg, builder, queries, root / cfg["run_id"], a.resume, a.accept_unverified_context)
     print(f"run {cfg['run_id']}: {counts}")

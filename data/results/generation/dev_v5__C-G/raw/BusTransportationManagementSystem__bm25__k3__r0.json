@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Driver\",\"attributes\":[\"+ ID : string\",\"+ Name : string\",\"+ IsSickLeave : boolean\"]},{\"name\":\"Bus\",\"attributes\":[\"+ LicensePlate : string\",\"+ InRepairShop : boolean\"]},{\"name\":\"Route\",\"attributes\":[\"+ RouteNumber : int\"]},{\"name\":\"Shift\",\"attributes\":[\"+ ShiftType : ShiftType\"]},{\"name\":\"Schedule\",\"attributes\":[\"+ Date : date\"]},{\"name\":\"CityStaff\"}],\"relations\":[{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Route\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Bus\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Route\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"assignedTo\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Shift\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Shift\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Shift\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"}],\"enums\":[{\"name\":\"ShiftType\",\"values\":[\"Morning\",\"Afternoon\",\"Night\"]}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 10.735304699999688,
+ "prompt_tokens": 4560,
+ "completion_tokens": 308,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-t8k0tlfwhwxsw8m05iual",
+  "object": "chat.completion",
+  "created": 1791642123,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Driver\",\"attributes\":[\"+ ID : string\",\"+ Name : string\",\"+ IsSickLeave : boolean\"]},{\"name\":\"Bus\",\"attributes\":[\"+ LicensePlate : string\",\"+ InRepairShop : boolean\"]},{\"name\":\"Route\",\"attributes\":[\"+ RouteNumber : int\"]},{\"name\":\"Shift\",\"attributes\":[\"+ ShiftType : ShiftType\"]},{\"name\":\"Schedule\",\"attributes\":[\"+ Date : date\"]},{\"name\":\"CityStaff\"}],\"relations\":[{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Route\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Bus\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"CityStaff\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Route\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"assignedTo\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Driver\",\"target\":\"Shift\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Bus\",\"target\":\"Shift\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Shift\",\"target\":\"Schedule\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"}],\"enums\":[{\"name\":\"ShiftType\",\"values\":[\"Morning\",\"Afternoon\",\"Night\"]}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4560,
+   "completion_tokens": 308,
+   "total_tokens": 4868,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

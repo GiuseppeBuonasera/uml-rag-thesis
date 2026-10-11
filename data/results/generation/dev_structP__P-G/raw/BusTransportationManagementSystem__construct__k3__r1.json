@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Driver {\n  + ID : string\n  + Name : string\n  + IsSickLeave : boolean\n}\n\nclass Bus {\n  + LicencePlate : string\n  + InRepairShop : boolean\n}\n\nclass Route {\n  + RouteNumber : int\n}\n\nclass Shift {\n  + ShiftType : string\n}\n\nclass Schedule {\n  + Date : date\n}\n\nclass Assignment {\n  + Date : date\n}\n\nclass RouteAssignment {\n  + Date : date\n}\n\nRoute \"1\" *-- \"*\" RouteAssignment\nBus \"1\" *-- \"*\" RouteAssignment\nRouteAssignment \"*\" -- \"1\" Route\n\nBus \"1\" *-- \"*\" Assignment\nDriver \"1\" *-- \"*\" Assignment\nShift \"1\" *-- \"*\" Assignment\n\nclass RouteShift {\n  + Morning : boolean\n  + Afternoon : boolean\n  + Night : boolean\n}\n\nRoute \"1\" *-- \"*\" RouteShift\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 7.1199110000015935,
+ "prompt_tokens": 4004,
+ "completion_tokens": 209,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0p0pzmn30fhf1cw2nhvouk",
+  "object": "chat.completion",
+  "created": 1791652744,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Driver {\n  + ID : string\n  + Name : string\n  + IsSickLeave : boolean\n}\n\nclass Bus {\n  + LicencePlate : string\n  + InRepairShop : boolean\n}\n\nclass Route {\n  + RouteNumber : int\n}\n\nclass Shift {\n  + ShiftType : string\n}\n\nclass Schedule {\n  + Date : date\n}\n\nclass Assignment {\n  + Date : date\n}\n\nclass RouteAssignment {\n  + Date : date\n}\n\nRoute \"1\" *-- \"*\" RouteAssignment\nBus \"1\" *-- \"*\" RouteAssignment\nRouteAssignment \"*\" -- \"1\" Route\n\nBus \"1\" *-- \"*\" Assignment\nDriver \"1\" *-- \"*\" Assignment\nShift \"1\" *-- \"*\" Assignment\n\nclass RouteShift {\n  + Morning : boolean\n  + Afternoon : boolean\n  + Night : boolean\n}\n\nRoute \"1\" *-- \"*\" RouteShift\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4004,
+   "completion_tokens": 209,
+   "total_tokens": 4213,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

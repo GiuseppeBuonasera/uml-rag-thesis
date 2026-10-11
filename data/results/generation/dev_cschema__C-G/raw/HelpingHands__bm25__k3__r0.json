@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\",\n        \"+ ItemDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ StorageSpace : float\",\n        \"+ VehicleID : string\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteDate : date\"\n      ]\n    },\n    {\n      \"name\": \"ScheduledPickup\",\n      \"attributes\": [\n        \"+ PickupTime : time\",\n        \"+ Dimensions : string\",\n        \"+ Weight : float\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      \"attributes\": [\n        \"+ LocationName : string\"\n      ]\n    },\n    {\n      \"name\": \"H2SEmployee\",\n      \"attributes\": [\n        \"+ EmployeeID : string\",\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"attributes\": [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : string\"\n      ]\n    },\n    {\n      \"name\": \"FoodItem\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : string[]\"\n      ]\n    },\n    {\n      \"name\": \"City\",\n      \"attributes\": [\n        \"+ CityName : string\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"BabyClothing\",\n        \"WomensWinterBoots\",\n        \"Fridge\",\n        \"Microwave\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DistributionCenter\",\n      \"part\": \"H2SEmployee\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DistributionCenter\",\n      \"part\": \"PickupVehicle\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"City\",\n      \"part\": \"DistributionCenter\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"ScheduledPickup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScheduledPickup\",\n      \"target\": \"PickupVehicle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRoute\",\n      \"target\": \"PickupVehicle\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRoute\",\n      \"target\": \"ScheduledPickup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Article\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"Article\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupVehicle\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": true
+ },
+ "repetition": 0,
+ "latency_s": 35.487134299997706,
+ "prompt_tokens": 4323,
+ "completion_tokens": 1188,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hhcgd1olta4vqko3osoja",
+  "object": "chat.completion",
+  "created": 1791647526,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Resident\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StreetAddress : string\",\n        \"+ PhoneNumber : string\",\n        \"+ Email : string\",\n        \"+ ItemDescription : string\"\n      ]\n    },\n    {\n      \"name\": \"PickupVehicle\",\n      \"attributes\": [\n        \"+ StorageSpace : float\",\n        \"+ VehicleID : string\"\n      ]\n    },\n    {\n      \"name\": \"VolunteerDriver\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ AvailableDays : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PickupRoute\",\n      \"attributes\": [\n        \"+ RouteDate : date\"\n      ]\n    },\n    {\n      \"name\": \"ScheduledPickup\",\n      \"attributes\": [\n        \"+ PickupTime : time\",\n        \"+ Dimensions : string\",\n        \"+ Weight : float\"\n      ]\n    },\n    {\n      \"name\": \"DistributionCenter\",\n      \"attributes\": [\n        \"+ LocationName : string\"\n      ]\n    },\n    {\n      \"name\": \"H2SEmployee\",\n      \"attributes\": [\n        \"+ EmployeeID : string\",\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Article\",\n      \"attributes\": [\n        \"+ RFIDTag : string\",\n        \"+ Description : string\",\n        \"+ Category : string\"\n      ]\n    },\n    {\n      \"name\": \"FoodItem\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ HomeAddress : string\",\n        \"+ NeededCategories : string[]\"\n      ]\n    },\n    {\n      \"name\": \"City\",\n      \"attributes\": [\n        \"+ CityName : string\"\n      ]\n    },\n    {\n      \"name\": \"Category\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"BabyClothing\",\n        \"WomensWinterBoots\",\n        \"Fridge\",\n        \"Microwave\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DistributionCenter\",\n      \"part\": \"H2SEmployee\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DistributionCenter\",\n      \"part\": \"PickupVehicle\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"City\",\n      \"part\": \"DistributionCenter\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Resident\",\n      \"target\": \"ScheduledPickup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScheduledPickup\",\n      \"target\": \"PickupVehicle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupRoute\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRoute\",\n      \"target\": \"PickupVehicle\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PickupRoute\",\n      \"target\": \"ScheduledPickup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Article\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"H2SEmployee\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"Article\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"VolunteerDriver\",\n      \"target\": \"PickupVehicle\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4323,
+   "completion_tokens": 1188,
+   "total_tokens": 5511,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

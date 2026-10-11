@@ -987,8 +987,9 @@ def check_compact(builder: PromptBuilder, tmp: Path) -> None:
     assert all(not list(gv.iter_errors(us.apollon_to_compact(c["diagram_apollon_json"])))
                for c in builder.candidates + cl.load_queries())
     assert list(gv.iter_errors(messy))  # chiavi non previste rifiutate dallo schema
-    for cfg_path in (ROOT / "experiments" / "configs").glob("*.yaml"):  # nessuna config lo usa
-        assert "compact_generation.schema" not in cfg_path.read_text(encoding="utf-8"), cfg_path
+    for cfg_path in (ROOT / "experiments" / "configs").glob("*.yaml"):  # solo le varianti della leva della voce 119
+        if cfg_path.stem not in ("dev_cschema", "dev_cboth"):
+            assert "compact_generation.schema" not in cfg_path.read_text(encoding="utf-8"), cfg_path
     # ramo del runner (MockClient senza risposte: testo vuoto -> no_json)
     import yaml
     cfg = {"run_id": "c1", "split": "corpus", "query_ids": ["ApartmentBuilding"], "conditions": ["bm25"], "k": [2],
@@ -1960,9 +1961,26 @@ def check_analyze_pilot2(tmp: Path) -> None:
 
 def check_runner(tmp: Path, base_url: str) -> None:
     cfg_path = tmp / "cfg.yaml"
+    # run simulate del Passo 3b sul test set (server finto): marcate `passo: 3b` (voce 117)
     cfg = {"run_id": "t1", "split": "testset", "query_ids": ["DB06_Flights"], "conditions": ["zero_shot", "bm25"],
-           "k": [1], "repetitions": 2, "seed": 0, "client": {"kind": "mock", "finish_reasons": {}},
+           "k": [1], "repetitions": 2, "seed": 0, "client": {"kind": "mock", "finish_reasons": {}}, "passo": "3b",
            "generation": {"temperature": 0.0, "top_p": 1.0, "top_k": 40, "max_tokens": 100, "seed": 5}}
+    # voce 117: una run reale di sviluppo non puo' usare come query un esercizio di valutazione
+    cands, tq = cl.load_all()
+    lm = {"kind": "lmstudio", "model": "x"}
+    try:
+        rx.check_query_roles({"client": lm, "query_ids": ["DB06_Flights"]}, tq)
+        raise AssertionError("query di valutazione accettata in una run di sviluppo")
+    except SystemExit as e:
+        assert "VALUTAZIONE" in str(e) and "DB06_Flights" in str(e)
+    try:
+        rx.check_query_roles({"client": lm, "split": "corpus"}, cands)  # tutto il corpus: 34 di valutazione
+        raise AssertionError("corpus intero accettato in una run di sviluppo")
+    except SystemExit as e:
+        assert "(34)" in str(e), e
+    rx.check_query_roles({"client": lm, "query_ids": ["Boeing", "Louvre"]}, cands)  # sviluppo e pilota: ammessi
+    rx.check_query_roles({"client": lm, "passo": "3b", "query_ids": ["DB06_Flights"]}, tq)  # Passo 3b marcato
+    rx.check_query_roles({"client": {"kind": "mock"}, "query_ids": ["DB06_Flights"]}, tq)  # client finto
     import yaml
     cfg_path.write_text(yaml.safe_dump(cfg), encoding="utf-8")
     res = tmp / "results"
@@ -2274,6 +2292,93 @@ def check_v5(builder: PromptBuilder) -> None:
           "extends / implements / interface extends e righe --|> miste; config dev_v5 + dev_v5base (160); R_fam e regola sulle soglie")
 
 
+def check_compact_lever(builder: PromptBuilder) -> None:
+    """Leva della validita' del compatto (voce 119): config uguali alla baseline dev_v5base C-G salvo la variante, prompt
+    uguali (schema) o diversi solo nella forma degli esempi (indent), regola di experiments/analyze_compact.py."""
+    import yaml
+    import analyze_compact as acm
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    base = rx.resolve_configuration(load("dev_v5base"), "C-G")
+    for name, indent, schema in (("dev_cindent", True, False), ("dev_cschema", False, True), ("dev_cboth", True, True)):
+        r = rx.resolve_configuration(load(name), "C-G")
+        for key in ("query_ids", "repetitions", "seed", "model_metadata", "config_version", "conditions", "k"):
+            assert r[key] == base[key], (name, key)
+        assert r["prompt"] == {**base["prompt"], "serialization": "indent2" if indent else "compact"}, name
+        assert r["generation"] == {**base["generation"], "structured_output": schema}, name
+        assert (r["client"].get("response_schema") == "generation/schemas/compact_generation.schema.json") == schema
+        assert len(rx.plan(r, builder.candidates)) == 40
+    q = builder.by_id["Boeing"]
+    b = builder.build(q, PromptSpec("bm25", k=3, output_format="compact"))
+    i = builder.build(q, PromptSpec("bm25", k=3, output_format="compact", serialization="indent2"))
+    assert i.instructions == b.instructions and i.task == b.task and i.example_ids == b.example_ids
+    assert i.examples_block != b.examples_block and len(i.examples_block.splitlines()) > len(b.examples_block.splitlines())
+    s_b, s_i = PromptSpec("bm25", output_format="compact"), PromptSpec("bm25", output_format="compact", serialization="indent2")
+    for eid in b.example_ids:  # stesso contenuto, cambia solo la forma (una riga contro indentato)
+        ex = builder.all_by_id[eid]
+        one, ind = builder.render_example(ex, s_b), builder.render_example(ex, s_i)
+        assert one in b.examples_block and ind in i.examples_block and json.loads(one) == json.loads(ind)
+        assert "\n" not in one and "\n" in ind
+    # regola (soglie incluse)
+    B = {"R": 0.21, "Vc": 33, "M1": 0.15}
+    assert acm.admissible(B, {"R": 0.18, "Vc": 37, "M1": 0.12})["ok"]  # +4 Vc, -0,03 R, -0,03 M: ammessa
+    assert not acm.admissible(B, {"R": 0.18, "Vc": 36, "M1": 0.15})["ok"]  # +3 Vc, R uguale: no
+    assert not acm.admissible(B, {"R": 0.179, "Vc": 40, "M1": 0.15})["ok"]  # R -0,031
+    assert acm.admissible(B, {"R": 0.24, "Vc": 31, "M1": 0.15})["ok"]  # +0,03 R, -2 Vc
+    assert not acm.admissible(B, {"R": 0.30, "Vc": 30, "M1": 0.15})["ok"]  # -3 Vc
+    assert not acm.admissible(B, {"R": 0.30, "Vc": 40, "M1": 0.119})["ok"]  # M -0,031
+    T = lambda r, vc, tr=0: {"R": r, "Vc": vc, "M1": 0.15, "truncated": tr}  # noqa: E731
+    o = acm.outcome(B, {"indent": T(0.25, 37), "schema": T(0.255, 40), "both": T(0.30, 40)}, {})
+    assert o["winner"] == "both" and o["tied"] == ["both"]
+    o = acm.outcome(B, {"indent": T(0.25, 37), "schema": T(0.255, 40), "both": T(0.259, 40)}, {})
+    assert o["winner"] == "indent" and o["tied"] == ["indent", "schema", "both"]  # entro 0,01: la piu' semplice
+    o = acm.outcome(B, {"indent": T(0.20, 33), "schema": T(0.40, 40, tr=2), "both": T(0.21, 33)}, {})
+    assert o["winner"] is None and "troncamenti" in o["variants"]["schema"]["excluded"]
+    print("  OK  leva della validita' del compatto (voce 119): 3 config uguali alla baseline salvo la variante (120 "
+          "generazioni), esempi indentati con lo stesso contenuto, regola sulle soglie e sulla parita'")
+
+
+
+def check_struct_lever(builder: PromptBuilder) -> None:
+    """Passo 4 delle varianti del retriever (voce 121): config uguali alle baseline bm25 di ciascun formato salvo le
+    condizioni, condizioni del prompt builder, regola di experiments/analyze_struct.py."""
+    import yaml
+    import analyze_struct as ast
+    import prompt_builder as pb
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    for name, conf, base_name in (("dev_structP", "P-G", "dev_v5"), ("dev_structC", "C-G", "dev_cindent")):
+        r, b = rx.resolve_configuration(load(name), conf), rx.resolve_configuration(load(base_name), conf)
+        for key in ("query_ids", "repetitions", "seed", "generation", "model_metadata", "client", "config_version",
+                    "prompt", "k", "split"):
+            assert r[key] == b[key], (name, key)
+        assert r["conditions"] == ["struct", "construct", "struct_construct"] and b["conditions"] == ["bm25"]
+        assert len(rx.plan(r, builder.candidates)) == 120
+    assert set(pb.STRUCTURE_CONDITIONS) <= set(pb.CONDITIONS) and not set(pb.STRUCTURE_CONDITIONS) & pb.ANALYSIS_ONLY
+    q = builder.by_id["Boeing"]
+    base = builder.build(q, PromptSpec("bm25", k=3, output_format="plantuml", instructions_version="v5"))
+    for cond in pb.STRUCTURE_CONDITIONS:
+        bp = builder.build(q, PromptSpec(cond, k=3, output_format="plantuml", instructions_version="v5"))
+        assert bp.instructions == base.instructions and bp.task == base.task and len(bp.example_ids) == 3
+        assert q["id"] not in bp.example_ids and set(bp.example_ids) <= {c["id"] for c in builder.pool(q)}
+    # regola (soglie incluse)
+    B = {"R": 0.30, "Vc": 38, "M1": 0.30, "truncated": 0}
+    V = lambda r=0.30, vc=38, m=0.30, tr=0: {"R": r, "Vc": vc, "M1": m, "truncated": tr}  # noqa: E731
+    assert ast.verdict(B, V(r=0.27))["keeps"] and not ast.verdict(B, V(r=0.269))["keeps"]
+    assert ast.verdict(B, V(vc=36))["keeps"] and not ast.verdict(B, V(vc=35))["keeps"]
+    assert not ast.verdict(B, V(m=0.269))["keeps"] and not ast.verdict(B, V(tr=2))["keeps"]
+    assert ast.verdict(B, V(r=0.33))["gain"] and not ast.verdict(B, V(r=0.329))["gain"]
+    pf = lambda p, c: {"plantuml": p, "compact": c}  # noqa: E731
+    o = ast.outcome({f: {v: ast.verdict(B, x) for v, x in d.items()} for f, d in pf(
+        {"construct": V(r=0.34), "struct": V(r=0.35), "struct_construct": V(r=0.40)},
+        {"construct": V(r=0.30), "struct": V(r=0.30), "struct_construct": V(r=0.26)}).items()})
+    assert o["enters"] == ["construct", "struct"] and o["winner"] == "construct" and o["tied"] == ["construct", "struct"]
+    o = ast.outcome({f: {v: ast.verdict(B, x) for v, x in d.items()} for f, d in pf(
+        {"construct": V(r=0.32), "struct": V(r=0.32), "struct_construct": V(r=0.32)},
+        {"construct": V(r=0.32), "struct": V(r=0.32), "struct_construct": V(r=0.32)}).items()})
+    assert o["winner"] is None  # nessun guadagno di almeno 0,03
+    print("  OK  varianti del retriever, passo 4 (voce 121): config uguali alle baseline bm25 salvo le condizioni (240 "
+          "generazioni), condizioni struct / construct / struct_construct, regola sulle soglie e sulla parita'")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -2299,6 +2404,8 @@ def main() -> None:
         check_instructions(builder, tmp)
         check_retrievers(builder)
         check_v5(builder)
+        check_compact_lever(builder)
+        check_struct_lever(builder)
         check_review(builder, tmp)
         check_run_log(tmp)
         check_provenance()

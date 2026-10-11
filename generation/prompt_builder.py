@@ -67,7 +67,13 @@ STATIC_DIR = ROOT / "docs" / "dati" / "apollon_format_reference"
 BM25_CONFIG = ROOT / "retrieval" / "config_bm25.yaml"
 DENSE_CONFIG = ROOT / "retrieval" / "config_dense.yaml"
 
-CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle", "dense", "hybrid", "oracle_jt")
+CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle", "dense", "hybrid", "oracle_jt",
+              "struct", "construct", "struct_construct")
+# varianti del retriever della voce 120 (passo 4, voce 121), sul pool unico come bm25, il piu' simile per ultimo:
+#   struct            v2: RRF(bm25, BM25 sui nomi di classe dei candidati)
+#   construct         v4: bm25 con la spinta ai candidati che mostrano i costrutti segnalati dalla traccia
+#   struct_construct  v2 + v4: la spinta dei costrutti applicata a v2
+STRUCTURE_CONDITIONS = ("struct", "construct", "struct_construct")
 ANALYSIS_ONLY = {"oracle", "oracle_jt"}
 SERIALIZATIONS = ("indent2", "compact")
 OUTPUT_FORMATS = ("apollon", "plantuml", "compact")
@@ -243,6 +249,19 @@ class PromptBuilder:
             raise ValueError(f"query {query['id']} non presente tra gli esercizi del builder: pool non definito")
         return [c for c in self.candidates + self.test_queries if c["id"] != query["id"]]
 
+    def structure_for(self, query: dict, condition: str):
+        """Retriever delle varianti della voce 120 indicizzato su pool(query) (rifittato per query, come bm25)."""
+        key = (condition, query["id"])
+        cache = self.__dict__.setdefault("_structure", {})
+        if key not in cache:
+            import structure_retrievers as sr
+            base = lambda: KeywordRetriever(**self._bm25_args)  # noqa: E731
+            make = {"struct": lambda: sr.RRF(base(), sr.StructureBM25()),
+                    "construct": lambda: sr.ConstructBoost(base()),
+                    "struct_construct": lambda: sr.ConstructBoost(sr.RRF(base(), sr.StructureBM25()))}[condition]
+            cache[key] = make().fit(self.pool(query))
+        return cache[key]
+
     def bm25_for(self, query: dict) -> KeywordRetriever:
         """Indice RIFITTATO su pool(query) (la query non entra nelle statistiche IDF / avgdl), per il corpus come in
         retrieval/analyze_retrieval.loo e per il test set in leave-one-out (voce 112)."""
@@ -273,6 +292,9 @@ class PromptBuilder:
             h = HybridRetriever.prefitted(self.bm25_for(query), self.dense, [x["id"] for x in self.pool(query)])
             hits = h.retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
             return [self.all_by_id[x.id] for x in reversed(hits)]
+        if c in STRUCTURE_CONDITIONS:
+            hits = self.structure_for(query, c).retrieve(query["description"], spec.k, exclude_ids=self.excluded(query))
+            return [self.all_by_id[h.id] for h in reversed(hits)]
         if c == "oracle_jt":
             qt = relevance.class_tokens(query["diagram_apollon_json"])
             ranked = sorted(self.pool(query), key=lambda x: (-cl.jaccard(qt, self.tokens[x["id"]]), x["id"]))[:spec.k]

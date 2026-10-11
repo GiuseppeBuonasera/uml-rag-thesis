@@ -125,6 +125,12 @@ non sono state modificate.
 114. 2026-10-10 — Cruise recuperato: associazione ternaria riscritta con tre associazioni binarie (opzione b)
 115. 2026-10-10 — Pool unico: per ogni query (sviluppo e valutazione) tutti gli altri 79 esercizi
 116. 2026-10-10 — Pulizia del codice del corpus: percorsi condivisi e classificazione delle etichette come dati
+117. 2026-10-10 — Insieme di valutazione congelato (ruoli) e dichiarazione delle contaminazioni, prima della run v5
+118. 2026-10-10 — Leva v5: esecuzione ed esito (STOP B)
+119. 2026-10-10 — Leva "validità del JSON compatto": esempi indentati e generazione vincolata
+120. 2026-10-10 — Varianti del retriever che usano il diagramma dei candidati: piano e parametri fissati prima
+121. 2026-10-10 — Compatto con esempi indentati e passo 4 delle varianti del retriever (regola prima della run)
+122. 2026-10-10 — Varianti del retriever, passo 4: esito (nessuna entra nel 3b)
 
 ## Formato
 
@@ -4197,3 +4203,232 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   di sanità verdi.
 - **Non fatto (scelta)**: nessuna divisione di `apollon_convert.py` (1.355 righe, cuore congelato del Passo 1); tolte
   solo importazioni rimaste inutilizzate.
+
+### [2026-10-10] Insieme di valutazione congelato (ruoli) e dichiarazione delle contaminazioni, prima della run v5
+- **Ruoli (implementa la voce 113 per la parte del corpus)**: `corpus/roles.yaml`, GENERATO da `corpus/build_roles.py`
+  (non si modifica a mano; `--check` verifica che sia aggiornato), una riga per ciascuno degli 80 esercizi con `id`,
+  `source` (golden / translated_it / debari) e `role`. **sviluppo = 26** (i 20 di `dev_k.yaml` + i 6 dei piloti, gli
+  esercizi già usati come query di generazione: 21 golden + 5 translated_it); **valutazione = 54** (33 del corpus +
+  Cruise + 20 De Bari: 24 golden con Cruise, 10 translated_it, 20 debari). Conteggi verificati dallo script (hard-fail) e
+  dal test `check_roles`. `corpus/paths.py`: `ROLES_YAML`, `load_roles()`. Da notare: AirTravel (esempio 2 del prompt
+  statico) è di valutazione; la condizione static la rifiuta già come query (voce del Passo 3a).
+- **Blocco nel runner**: `experiments/run_experiment.check_query_roles` rifiuta una run REALE che usi come query un
+  esercizio di valutazione, salvo i config del Passo 3b marcati `passo: 3b`; dry run e client finto non bloccati (non
+  producono risposte di un modello). Test: query di valutazione rifiutata, corpus intero rifiutato (34 di valutazione),
+  query di sviluppo e pilota ammesse, `passo: 3b` ammesso, client finto ammesso. I test del runner che simulano il 3b
+  sul test set sono marcati `passo: 3b`.
+- **Congelamento**: tag `evalset-v1` sul commit che introduce i ruoli (lo crea l'utente). Il tag `testset-v2` (voce 112)
+  esiste in locale sul commit afb522d ma non è ancora su GitHub.
+- **Verifica delle regole v5 sui soli 26 di sviluppo (descrittiva)**: le statistiche che hanno motivato le regole v5
+  sono state ricalcolate sui 26 esercizi di sviluppo e confrontate con i 60 del corpus:
+
+  | | 26 di sviluppo | 60 del corpus | 34 del corpus di valutazione |
+  |---|---|---|---|
+  | associazione | 60% | 57% | 55% |
+  | generalizzazione | 21% | 22% | 23% |
+  | composizione | 3% | 10% | 15% |
+  | unidirezionale | 16% | 8% | 4% |
+  | aggregazione | 0% (1) | 2% | 3% |
+  | molteplicità '1' / '*' / '0..*' / vuota / '0..1' / '1..*' | 37 / 20 / 20 / 13 / 6 / 3% | 39 / 18 / 17 / 8 / 8 / 6% | 40 / 16 / 16 / 5 / 9 / 7% |
+  | '*' + '0..*' | 39% | 35% | 32% |
+  | attributi per classe (mediana; senza attributi) | 1; 32% | 1; 33% | 1; 33% |
+
+  **Stesse conclusioni** (associazione tipo dominante, composizione minoritaria, '*' / '0..*' frequenti, mediana di 1
+  attributo): le regole v5 sarebbero state le stesse usando solo i 26 di sviluppo. **Mitigazione registrata**. Differenze
+  da notare: nello sviluppo la composizione è ancora più rara (3%), l'unidirezionale e le molteplicità vuote più
+  frequenti.
+- **Dichiarazioni (contaminazioni note, da riportare in tesi)**:
+  1. le regole delle istruzioni v5 (voce 111) sono state progettate con le statistiche del GT dell'**intero corpus**,
+     compresi i 33 esercizi (34 con Cruise, recuperato dopo) ora di valutazione; il controllo sopra mostra che sui soli
+     26 di sviluppo le conclusioni non cambiano;
+  2. la scelta del modello denso (voce 108) è avvenuta in leave-one-out sull'**intero corpus** (59 query, quindi anche
+     esercizi ora di valutazione); l'esito è un pareggio risolto per spareggio sul modello più piccolo, e nessun
+     parametro è stato tarato;
+  3. dal pool unico (voce 115), nelle run di sviluppo compaiono **come esempi** esercizi di valutazione, De Bari
+     compresi (con k = 3 in 11 dei 20 esercizi di sviluppo c'è almeno un esempio De Bari): la valutazione guarda solo le
+     risposte alle query, ma il modello di sviluppo ha "visto" quei diagrammi come esempi;
+  4. l'analisi a parte sui 20 De Bari **non è alla pari** con De Bari et al.: nei nostri prompt per un esercizio De Bari
+     possono comparire come esempi gli altri 19 esercizi De Bari (stesso stile e stessa fonte), mentre nel loro studio
+     nessun esempio De Bari era nel prompt.
+
+### [2026-10-10] Leva v5: esecuzione ed esito (STOP B)
+- **Run** (pool unico, voce 115; Gemma 4 12B QAT caricato con il comando fisso, `lms ps` registrato in
+  `data/results/generation/dev_v5_model_load.log`, contesto 32768): `dev_v5base__P-G` / `__C-G` (v4) e `dev_v5__P-G` /
+  `__C-G` (v5), 4 × 40 = **160 generazioni**, tutte `stop`, nessuna dalla cache, nessun ragionamento; query = i 20 di
+  sviluppo (controllo dei ruoli della voce 117 superato). **Latenze NON confrontabili**: durante parte della run la GPU
+  era condivisa con un altro programma (un gioco), con circa 10 token/s invece di 35-40 (baseline compatta mediana
+  39,7 s, v5 10,8 s); non cambia modello né parametri.
+- **Esito della regola della voce 111 (meccanico)**:
+  - **PlantUML: v5 ADOTTATA** — dR +0,040, dR_fam +0,037, generalizzazioni invertite 16/32 → 0/40 (dimezzate); dVc −2
+    (ammesso, limite incluso), dM_primaria +0,037;
+  - **JSON compatto: v5 NON adottata (resta v4)** — dR −0,017, dR_fam −0,023, nessun guadagno; dVc −6 (oltre il
+    limite di −2); dM_primaria +0,016.
+  Effetto (voce 111): da qui **PlantUML usa le istruzioni v5 in tutte le condizioni**, il **compatto resta con le v4**.
+- **Descrittivo**: PlantUML v5 J 0,540 (v4 0,532), R 0,361 (0,321), M primaria 0,317 (0,280), verso 47/47 (24/40),
+  generalizzazioni in più 20 (35); compatto v5 V 30/40 (35/40), Vc 27/40 (33/40), J 0,371 (0,452), R 0,193 (0,210),
+  composizioni in più 29 (85). Le risposte compatte non valide sono errori di sintassi JSON del modello (parentesi
+  sbagliate o non chiuse con finish_reason `stop`): 5 in v4, 10 in v5. Report: `dev_v5_analysis/summary.md`, report
+  grafico (non versionato) `dev_v5_review/index.html`.
+- **DA SEGNALARE (non decide nulla qui): effetto del pool unico sulla baseline compatta.** Confrontando la baseline v4
+  col pool unico (`dev_v5base`) con quella storica a 58 candidati (`dev_k`, k = 3), per i **12 esercizi i cui esempi sono
+  cambiati** (11 con almeno un esempio De Bari): **compatto R 0,366 → 0,208 (−0,159 in media)**, PlantUML 0,323 → 0,360
+  (+0,036); per gli 8 esercizi con gli stessi esempi la differenza è rumore (−0,017 / −0,004). Validità della baseline
+  compatta: 39/40 (`dev_k`) → 35/40. Ipotesi da verificare: gli esempi De Bari (attributi quasi tutti senza tipo, nomi in
+  maiuscolo, molte relazioni senza nome) peggiorano il compatto. Da discutere prima del Passo 3b (pool unico, voce 115).
+
+### [2026-10-10] Leva "validità del JSON compatto": esempi indentati e generazione vincolata — regola registrata PRIMA della run
+- **Motivo**: il compatto (istruzioni v4, pool unico) ha 5-10 risposte su 40 non valide per errori di sintassi JSON
+  (parentesi sbagliate o non chiuse con finish_reason `stop`) e R più basso del PlantUML v5 (voce 118). Una riparazione
+  meccanica delle parentesi, provata sulle 16 risposte non valide di `dev_k`, `dev_v5base` e `dev_v5`, recupera 9 risposte
+  a L4 ma quasi tutte con R = 0 (tronca le relazioni): scartata.
+- **Varianti** (tre config, configurazione C-G, tutto il resto come `dev_v5base.yaml` C-G: Gemma 4 12B QAT, config v2,
+  bm25 k = 3, pool unico, istruzioni v4 del compatto):
+  - `dev_cindent.yaml` (**indent**): esempi del compatto serializzati indentati (`serialization: indent2`, stesso
+    contenuto; oggi una sola riga lunga), generazione libera; prompt più lunghi (massimo stimato 6.259 token reali,
+    budget 28.672);
+  - `dev_cschema.yaml` (**schema**): generazione vincolata allo schema `generation/schemas/compact_generation.schema.json`
+    (response_format di LM Studio; schema preparato nella voce 91 e finora disattivato), prompt identici alla baseline
+    (40/40 sha256);
+  - `dev_cboth.yaml` (**both**): entrambe.
+  Baseline: `dev_v5base__C-G` (già generata). 3 × 40 = 120 generazioni.
+- **REGOLA** (experiments/analyze_compact.py), per variante, delta = variante − baseline su 40 risposte: esclusa con 2 o
+  più troncamenti per max_tokens; controllo preliminare come voce 98; **ammissibile se dM_primaria ≥ −0,03 e [(dVc ≥ +4
+  e dR ≥ −0,03) oppure (dR ≥ +0,03 e dVc ≥ −2)]**; tra le ammissibili vince l'R più alto; entro 0,01 dal migliore vince
+  la più semplice (indent < schema < both); nessuna ammissibile → resta la baseline. Le varianti con lo schema
+  (generazione vincolata) restano **subordinate alla domanda 14** per i relatori: se vincono si propongono, non si
+  adottano senza la loro risposta. Fuori regola: confronto con PlantUML v5 (`dev_v5__P-G`), motivi di invalidità,
+  token, latenza.
+- Test: `check_compact_lever` (config uguali alla baseline salvo la variante, esempi indentati con lo stesso contenuto,
+  regola sulle soglie e sulla parità); il test "nessun config usa lo schema del compatto" ammette solo `dev_cschema` e
+  `dev_cboth`. Script testato sulla sola baseline prima della run.
+- **ESITO (2026-10-10, run `dev_cindent__C-G`, `dev_cschema__C-G`, `dev_cboth__C-G`, 120 generazioni, tutte `stop`, nessun
+  troncamento; Gemma ricaricato con il comando fisso, GPU libera per la maggior parte della run)**: **tutte e tre le
+  varianti AMMISSIBILI**; vince **both** (R più alto, nessuna altra entro 0,01), **subordinata alla domanda 14**
+  (generazione vincolata).
+
+  | run | V | Vc | J | R | M primaria | completamento med |
+  |---|---|---|---|---|---|---|
+  | baseline (dev_v5base C-G) | 35/40 | 33/40 | 0,452 | 0,210 | 0,156 | 542 |
+  | indent | **40/40** | 38/40 | 0,539 | 0,264 | 0,214 | 778 |
+  | schema | **40/40** | **40/40** | 0,543 | 0,250 | 0,202 | 736 |
+  | both | **40/40** | **40/40** | 0,528 | **0,284** | **0,233** | 794 |
+  | (riferimento) PlantUML v5 | 40/40 | 38/40 | 0,540 | 0,361 | 0,317 | 218 |
+
+  Gli esempi indentati da soli eliminano già tutte le risposte non valide (40/40) e alzano R di +0,054, senza dipendere
+  dalla domanda 14. Il compatto resta sotto PlantUML v5 (R 0,284 contro 0,361) e produce risposte circa 3,5 volte più
+  lunghe. Report: `dev_compact_analysis/summary.md`; report grafico (non versionato) `dev_compact_review/index.html`.
+  **Da decidere** (non previsto dalla regola): cosa usare per il compatto finché la domanda 14 non ha risposta.
+
+### [2026-10-10] Varianti del retriever che usano il diagramma dei candidati — piano APPROVATO, parametri fissati PRIMA dei calcoli
+- **Decisione dell'utente**: provare tutte le modifiche proposte, come **varianti separate e combinabili** (per attribuire
+  gli effetti), lasciando BM25 congelato come baseline. Le varianti 2, 4, 5 e 2s / 2d usano il **diagramma dei
+  candidati** (lecito: del diagramma della query non si usa nulla; da dichiarare in tesi: non è più un retrieval solo
+  testuale). Niente alias scritti a mano (costo, soggettività, rischio di adattamento agli esercizi di valutazione, che
+  sono anche candidati): misura a supporto, l'88% dei token dei nomi di classe di un esercizio compare già nella sua
+  traccia (mediana 86% dei nomi interi), quindi il problema è il vocabolario tra esercizi diversi, affrontato in modo
+  automatico (2s, 2d).
+- **Passi**: (1) analisi a costo zero, sulle generazioni di sviluppo già fatte, delle proprietà degli esempi associate a
+  risposte migliori; (2) implementazione con test; (3) valutazione del solo retrieval in leave-one-out sugli 80
+  esercizi (pool di 79), descrittiva; (4) generazioni di sviluppo solo per le varianti scelte allo STOP dopo il passo 3,
+  con una regola scritta prima; nel 3b al massimo una variante accanto a BM25 e MiniLM; (5) allineamento degli script di
+  analisi del retrieval al pool unico.
+- **Varianti e parametri (fissati ora, non si tarano)**. Base = BM25 congelato sulla descrizione (`config_bm25.yaml`).
+  Combinazione con la base sempre per **RRF, c = 60** (come l'ibrido, voce 107), salvo dove indicato.
+  - **2 struttura (BM25)**: secondo indice BM25 (k1 1,5, b 0,75, stesso preprocessing congelato) i cui documenti sono i
+    token dei nomi di classe del diagramma del candidato (CamelCase spezzato, come `relevance.name_tokens`); query =
+    descrizione della query. Finale = RRF(BM25 descrizione, BM25 struttura).
+  - **2s struttura + sinonimi WordNet**: come 2, con i token dei nomi di classe espansi con i lemmi del **primo
+    significato nominale** di WordNet (parole composte spezzate); WordNet via nltk, versione fissata, dati scaricati una
+    volta e poi offline.
+  - **2d struttura densa**: coseno MiniLM (voce 108) tra la descrizione della query e il testo dei nomi di classe del
+    candidato (token minuscoli separati da virgole). Finale = RRF(BM25 descrizione, struttura densa).
+  - **3 diversità (MMR)** sulla base: λ = 0,7; rilevanza = score BM25 normalizzato min-max sul pool; somiglianza tra
+    candidati = Jt tra i loro nomi di classe; si scelgono i k esempi uno alla volta.
+  - **4 costrutti**: segnali nella descrizione della query (espressioni regolari fissate ora) — ereditarietà: "is a
+    (kind|type) of", "kinds of", "types of", "either … or", "can be (a|an|either)", "subclass", "special(ized|
+    ization|kind)", "is a specific"; parte-tutto: "consist(s) of", "composed of", "made (up )?of", "part of",
+    "contain(s)", "comprise(s)". Ranking dei costrutti = numero di costrutti segnalati presenti nel candidato
+    (generalizzazione; composizione o aggregazione), parità per rango BM25. Finale = RRF(BM25, costrutti); senza segnali
+    = BM25.
+  - **5 qualità**: qualità del candidato q = 1 − (quota di relazioni non di generalizzazione senza entrambe le
+    molteplicità + quota di attributi senza tipo) / 2; finale = score_norm BM25 × q (nessun RRF).
+  - **6 MiniLM a pezzi**: descrizione divisa in pezzi di al più 256 token del tokenizer di MiniLM (senza
+    sovrapposizione), media degli embedding normalizzati dei pezzi, poi rinormalizzata.
+- **Misure del passo 3** (descrittive, nessun embedding): J, Jt, S a k = 1, 2, 3 (voce 107), **copertura dei tipi** (quota
+  dei tipi di relazione del GT della query presenti in almeno uno dei 3 esempi), hubness. **Attenzione**: le varianti
+  2 / 2s / 2d confrontano la traccia con i nomi di classe dei candidati, e J / Jt misurano i nomi di classe: sono
+  favorite per costruzione (come BM25 sulle misure lessicali, voce 107). Il giudizio vero è delle generazioni (passo 4).
+- **Passo 1 (fatto, `experiments/analyze_examples.py`, `data/results/generation/dev_examples_analysis/summary.md`)**: 640
+  risposte di sviluppo di Gemma con istruzioni v4 (dev_k, dev_retrievers, dev_v5base); Spearman tra gli scarti dalla
+  media dello stesso esercizio e formato. **PlantUML**: nessuna proprietà degli esempi associata alla qualità (tutti i
+  |rho| ≤ 0,09, p ≥ 0,1). **Compatto**: copertura dei tipi di relazione della query **+0,22 (p < 0,001)**, dimensione
+  degli esempi +0,19 (p 0,001), numero di esempi +0,15 (p 0,006); somiglianza dei nomi di classe −0,07 (n.s.), qualità
+  del GT −0,04 (n.s.), quota De Bari −0,02 (n.s.). Indizio a favore della variante 4 (costrutti), non della 2.
+- **Passo 2 (fatto)**: `retrieval/structure_retrievers.py` (StructureBM25 con opzione sinonimi, StructureDense, RRF, MMR,
+  ConstructBoost, QualityWeighted), `DenseRetriever(chunk_tokens=...)` con cache separata (`..._chunk256.npz`); nltk
+  3.10.3 + WordNet 3.0 (torch invariato; dati scaricati una volta). Test `check_structure_retrievers` (dati finti).
+- **Passo 3 (fatto, `retrieval/analyze_variants.py`, run `data/results/retrieval/variants_2026-10-10_2b74319/`)**, LOO
+  sugli 80 (pool di 79):
+
+  | retriever | J@3 | Jt@3 | S@3 | copertura@3 | ∩ top-3 con bm25 | mai nei top-3 |
+  |---|---|---|---|---|---|---|
+  | bm25 | 0,078 | 0,096 | 0,666 | 0,877 | 1,00 | 10 |
+  | dense (MiniLM) | 0,060 | 0,075 | 0,640 | 0,874 | 0,40 | 8 |
+  | hybrid | 0,070 | 0,088 | 0,653 | 0,886 | 0,64 | 6 |
+  | v2 struttura BM25 | 0,084 | 0,106 | 0,660 | 0,873 | 0,72 | 8 |
+  | v2s + sinonimi | 0,081 | 0,104 | 0,652 | 0,873 | 0,69 | 7 |
+  | v2d struttura densa | 0,080 | 0,099 | 0,659 | 0,884 | 0,66 | 12 |
+  | v3 MMR | 0,076 | 0,094 | 0,668 | 0,886 | 0,95 | 9 |
+  | v4 costrutti | 0,059 | 0,075 | 0,645 | **0,912** | 0,70 | 11 |
+  | v5 qualità | 0,070 | 0,089 | 0,667 | 0,881 | 0,81 | 17 |
+  | v6 MiniLM a pezzi | 0,063 | 0,077 | 0,649 | 0,894 | 0,42 | 7 |
+
+  v2 / v2s migliorano J e Jt di poco (come atteso per costruzione); v4 ha la copertura dei tipi più alta (la proprietà
+  associata alla qualità nel compatto al passo 1); v3 quasi uguale a bm25; v5 concentra gli esempi (17 candidati mai
+  nei top-3); v6 poco diverso da MiniLM. Solo descrittivo: la scelta di cosa generare allo STOP.
+
+### [2026-10-10] Configurazione di lavoro del compatto (esempi indentati) e passo 4 delle varianti del retriever — regola registrata PRIMA della run
+- **Decisione dell'utente sul compatto** (voce 119, esito "both" subordinato alla domanda 14): **opzione (a)**, finché la
+  domanda 14 non ha risposta il compatto usa le istruzioni v4 con gli **esempi indentati** (`serialization: indent2`,
+  variante "indent", ammissibile e indipendente dalla domanda 14); se i relatori approvano la generazione vincolata si
+  passa a "both" (stesso config + schema). **Configurazione di lavoro**: PlantUML istruzioni v5 (voce 118); compatto
+  istruzioni v4 + esempi indentati; pool unico; Gemma 4 12B QAT, config v2, k = 3.
+- **Passo 4 delle varianti del retriever (voce 120)**: condizioni nuove del prompt builder (`STRUCTURE_CONDITIONS`):
+  `struct` (v2: RRF(bm25, BM25 sui nomi di classe dei candidati)), `construct` (v4: spinta ai costrutti segnalati dalla
+  traccia), `struct_construct` (v2 + v4: ConstructBoost(RRF(bm25, struttura))); indici rifittati su `pool(query)`;
+  identiche ai top-3 del passo 3 (0 differenze su 80 per struct e construct). Config `dev_structP.yaml` (P-G, uguale a
+  `dev_v5.yaml` salvo le condizioni) e `dev_structC.yaml` (C-G, uguale a `dev_cindent.yaml` salvo le condizioni): 3 × 2 ×
+  20 × 2 = **240 generazioni**. Baseline bm25 già generate con la stessa configurazione: `dev_v5__P-G`,
+  `dev_cindent__C-G`.
+- **REGOLA** (`experiments/analyze_struct.py`): una variante **entra nel Passo 3b** (accanto a bm25 e MiniLM) se **in
+  entrambi i formati** dR ≥ −0,03, dVc ≥ −2, dM_primaria ≥ −0,03 e meno di 2 troncamenti (controllo preliminare come voce
+  98), **e in almeno un formato dR ≥ +0,03**; tra quelle che entrano vince la media di dR sui due formati più alta, entro
+  0,01 la più semplice (construct < struct < struct_construct); nessuna → nel 3b restano bm25 e MiniLM.
+- **Controlli prima della run**: con il codice attuale i prompt bm25 delle baseline si riproducono identici (sha256 ed
+  esempi, 60/60 per formato); i prompt delle varianti differiscono dalla baseline SOLO negli esempi (60/60); esempi in
+  comune con bm25 (su 60): struct 43, construct 43, struct_construct 31; prompt più lungo stimato 4.620 token (P-G) e
+  7.260 (C-G, esempi indentati) contro un budget di 28.672. Test `check_struct_lever`; script testato sulle sole baseline.
+
+### [2026-10-10] Varianti del retriever, passo 4: esito (nessuna entra nel 3b)
+- **Run**: `dev_structP__P-G` e `dev_structC__C-G`, 240 generazioni, tutte `stop`, nessun troncamento; Gemma ricaricato con
+  il comando fisso (log in `dev_v5_model_load.log`). Analisi `experiments/analyze_struct.py`,
+  `data/results/generation/dev_struct_analysis/summary.md`; report grafico (non versionato) `dev_struct_review/index.html`.
+- **Esito della regola della voce 121 (meccanico)**: **nessuna variante entra nel Passo 3b**; nel 3b restano bm25 e MiniLM.
+
+  | formato | retriever | V | Vc | R | M primaria |
+  |---|---|---|---|---|---|
+  | PlantUML | bm25 (baseline) | 40 | 38 | 0,361 | 0,317 |
+  | PlantUML | v4 costrutti | 40 | 39 | 0,344 | 0,298 |
+  | PlantUML | v2 struttura | 40 | 39 | 0,364 | 0,307 |
+  | PlantUML | v2 + v4 | 40 | 38 | 0,349 | 0,288 |
+  | compatto | bm25 (baseline) | 40 | 38 | 0,264 | 0,214 |
+  | compatto | v4 costrutti | 40 | 37 | 0,276 | 0,220 |
+  | compatto | v2 struttura | 40 | 38 | 0,278 | 0,210 |
+  | compatto | v2 + v4 | 40 | 36 | 0,273 | 0,191 |
+
+  Tutte le differenze di R sono entro ±0,02 (rumore, con 2 ripetizioni); nessuna variante peggiora oltre le soglie, ma
+  nessuna raggiunge +0,03 in un formato. Coerente con l'oracolo (voce 110) e con l'analisi del passo 1 (voce 120): in
+  PlantUML gli esempi contano poco; nel compatto la copertura dei tipi era associata alla qualità, ma la spinta ai
+  costrutti (v4) la migliora poco (0,912 contro 0,877) e non si traduce in un guadagno misurabile.
+- **Per la tesi**: usare il diagramma dei candidati (nomi di classe, costrutti) non migliora le generazioni rispetto a
+  bm25 su questo corpus e con questo modello: risultato negativo da riportare. Il codice resta nel repository.

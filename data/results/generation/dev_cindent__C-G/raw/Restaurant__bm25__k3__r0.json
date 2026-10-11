@@ -1,0 +1,59 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ PhoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Table\",\n      \"attributes\": [\n        \"+ SeatCount : int\",\n        \"+ IsSmoking : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ ReservationDate : date\",\n        \"+ ReservationTime : time\",\n        \"+ NumberOfPeople : int\"\n      ]\n    },\n    {\n      \"name\": \"Waiter\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ YearsOfService : int\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ UnitPrice : double\"\n      ]\n    },\n    {\n      \"name\": \"Bill\",\n      \"attributes\": [\n        \"+ TotalAmount : double\"\n      ]\n    },\n    {\n      \"name\": \"BillItem\",\n      \"attributes\": [\n        \"+ Quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Reservation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Reservation\",\n      \"part\": \"Table\",\n      \"wholeMultiplicity\": \"1..*\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Waiter\",\n      \"target\": \"Reservation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Bill\",\n      \"part\": \"BillItem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BillItem\",\n      \"target\": \"Dish\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Bill\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 20.477715400000307,
+ "prompt_tokens": 5074,
+ "completion_tokens": 634,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7ek39swewjq89dr0kt77d9",
+  "object": "chat.completion",
+  "created": 1791647060,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ PhoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Table\",\n      \"attributes\": [\n        \"+ SeatCount : int\",\n        \"+ IsSmoking : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ ReservationDate : date\",\n        \"+ ReservationTime : time\",\n        \"+ NumberOfPeople : int\"\n      ]\n    },\n    {\n      \"name\": \"Waiter\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ YearsOfService : int\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ UnitPrice : double\"\n      ]\n    },\n    {\n      \"name\": \"Bill\",\n      \"attributes\": [\n        \"+ TotalAmount : double\"\n      ]\n    },\n    {\n      \"name\": \"BillItem\",\n      \"attributes\": [\n        \"+ Quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Reservation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Reservation\",\n      \"part\": \"Table\",\n      \"wholeMultiplicity\": \"1..*\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Waiter\",\n      \"target\": \"Reservation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Bill\",\n      \"part\": \"BillItem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BillItem\",\n      \"target\": \"Dish\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Bill\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5074,
+   "completion_tokens": 634,
+   "total_tokens": 5708,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

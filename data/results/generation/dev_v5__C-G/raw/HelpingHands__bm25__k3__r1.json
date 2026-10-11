@@ -1,0 +1,59 @@
+{
+ "text": "{\"classes\":[{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\",\"+ ItemDescription : string\"]},{\"name\":\"PickupVehicle\",\"attributes\":[\"+ StorageSpace : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ AvailableDays : string[]\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ Date : date\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"Article\",\"attributes\":[\"+ Description : string\",\"+ RFIDTag : string\"]},{\"name\":\"FoodItem\",\"attributes\":[\"+ Description : string\"]},{\"name\":\"Category\",\"kind\":\"enum\",\"values\":[\"BabyClothing\",\"WomensWinterBoots\",\"Fridge\",\"Microwave\",\"...\"]},{\"name\":\"H2SEmployee\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Client\",\"attributes\":[\"+ HomeAddress : string\",\"+ NeededCategories : Category[]\"]},{\"name\":\"Pickup\",\"attributes\":[\"+ RequestedDate : date\",\"+ RequestedTime : time\",\"+ Dimensions : float\",\"+ Weight : float\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"Pickup\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Pickup\",\"target\":\"PickupVehicle\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PickupRoute\",\"target\":\"PickupVehicle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"PickupVehicle\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"FoodItem\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Article\",\"target\":\"Category\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Client\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"Client\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"delivers\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 1,
+ "latency_s": 14.52380120000089,
+ "prompt_tokens": 3965,
+ "completion_tokens": 519,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ryiojfspuee1h59l5jc0ij",
+  "object": "chat.completion",
+  "created": 1791642321,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\":[{\"name\":\"Resident\",\"attributes\":[\"+ Name : string\",\"+ StreetAddress : string\",\"+ PhoneNumber : string\",\"+ Email : string\",\"+ ItemDescription : string\"]},{\"name\":\"PickupVehicle\",\"attributes\":[\"+ StorageSpace : float\"]},{\"name\":\"VolunteerDriver\",\"attributes\":[\"+ AvailableDays : string[]\"]},{\"name\":\"PickupRoute\",\"attributes\":[\"+ Date : date\"]},{\"name\":\"DistributionCenter\",\"attributes\":[\"+ Location : string\"]},{\"name\":\"Article\",\"attributes\":[\"+ Description : string\",\"+ RFIDTag : string\"]},{\"name\":\"FoodItem\",\"attributes\":[\"+ Description : string\"]},{\"name\":\"Category\",\"kind\":\"enum\",\"values\":[\"BabyClothing\",\"WomensWinterBoots\",\"Fridge\",\"Microwave\",\"...\"]},{\"name\":\"H2SEmployee\",\"attributes\":[\"+ Name : string\"]},{\"name\":\"Client\",\"attributes\":[\"+ HomeAddress : string\",\"+ NeededCategories : Category[]\"]},{\"name\":\"Pickup\",\"attributes\":[\"+ RequestedDate : date\",\"+ RequestedTime : time\",\"+ Dimensions : float\",\"+ Weight : float\"]}],\"relations\":[{\"type\":\"association\",\"source\":\"Resident\",\"target\":\"Pickup\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Pickup\",\"target\":\"PickupVehicle\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"PickupRoute\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"PickupRoute\",\"target\":\"PickupVehicle\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"PickupVehicle\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"DistributionCenter\",\"target\":\"FoodItem\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Article\",\"sourceMultiplicity\":\"1\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"Article\",\"target\":\"Category\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"Client\",\"target\":\"DistributionCenter\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"1\"},{\"type\":\"association\",\"source\":\"H2SEmployee\",\"target\":\"Client\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\"},{\"type\":\"association\",\"source\":\"VolunteerDriver\",\"target\":\"Client\",\"sourceMultiplicity\":\"*\",\"targetMultiplicity\":\"*\",\"label\":\"delivers\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3965,
+   "completion_tokens": 519,
+   "total_tokens": 4484,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

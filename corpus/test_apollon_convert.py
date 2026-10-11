@@ -935,6 +935,20 @@ def check_paths_and_label_yaml() -> None:
           f"label_classification.yaml = {len(data)} voci ({len(used)} usate nel json), voce ripetuta rifiutata")
 
 
+def check_roles() -> None:
+    """corpus/roles.yaml (voce 117): uguale a quello generato da build_roles.py, 80 esercizi, 26 di sviluppo (20 + 6
+    piloti) e 54 di valutazione (33 del corpus + Cruise + 20 De Bari)."""
+    import build_roles
+    import paths
+    assert paths.ROLES_YAML.read_text(encoding="utf-8") == build_roles.build(), "roles.yaml non aggiornato"
+    roles = paths.load_roles()
+    n = lambda role, src=None: sum(r["role"] == role and (src is None or r["source"] == src) for r in roles.values())  # noqa: E731
+    assert len(roles) == 80 and n("sviluppo") == 26 and n("valutazione") == 54
+    assert n("valutazione", "debari") == 20 and n("sviluppo", "debari") == 0 and roles["Cruise"]["role"] == "valutazione"
+    assert roles["Boeing"]["role"] == roles["Louvre"]["role"] == "sviluppo"  # sviluppo (voce 92) e pilota
+    print("  OK  roles.yaml: 80 esercizi, 26 di sviluppo e 54 di valutazione (20 De Bari, Cruise), uguale al generato")
+
+
 def main() -> None:
     print("Split corpus / test set De Bari:")
     check_split_separation()
@@ -963,6 +977,7 @@ def main() -> None:
     check_label_classification_auto_association()
     check_label_classification_ruolo_doppio_and_missing()
     check_paths_and_label_yaml()
+    check_roles()
     print()
     print("FASE 3 — modificatori/const/default attributi e notazione Tipo[]:")
     check_attribute_modifiers_const_default()

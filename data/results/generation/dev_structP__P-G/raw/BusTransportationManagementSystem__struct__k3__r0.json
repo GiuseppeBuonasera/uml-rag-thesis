@@ -1,0 +1,59 @@
+{
+ "text": "@startuml\n\nclass Driver {\n  + ID : string\n  + Name : string\n  + IsSickLeave : boolean\n}\n\nclass Bus {\n  + LicensePlate : string\n  + InRepairShop : boolean\n}\n\nclass Route {\n  + RouteNumber : int\n}\n\nclass Shift {\n  + ShiftType : string\n}\n\nclass Schedule {\n  + Date : date\n}\n\nclass Assignment {\n  + Date : date\n}\n\nclass DriverSchedule {\n  + Date : date\n}\n\nclass BusRouteAssignment {\n  + Date : date\n}\n\nclass Route \"1\" *-- \"3\" Shift\nBusRouteAssignment \"*\" -- \"1\" Route\nBusRouteAssignment \"*\" -- \"1\" Bus\nBusRouteAssignment \"*\" -- \"1\" Assignment\n\nDriver \"1\" -- \"*\" DriverSchedule\nBus \"1\" -- \"*\" DriverSchedule\nDriverSchedule \"*\" -- \"1\" Shift\nDriverSchedule \"*\" -- \"1\" Schedule\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-12b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false
+ },
+ "repetition": 0,
+ "latency_s": 9.022227199999179,
+ "prompt_tokens": 3474,
+ "completion_tokens": 210,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-f0tmv8wklw863dkcfnnna",
+  "object": "chat.completion",
+  "created": 1791652722,
+  "model": "google/gemma-4-12b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Driver {\n  + ID : string\n  + Name : string\n  + IsSickLeave : boolean\n}\n\nclass Bus {\n  + LicensePlate : string\n  + InRepairShop : boolean\n}\n\nclass Route {\n  + RouteNumber : int\n}\n\nclass Shift {\n  + ShiftType : string\n}\n\nclass Schedule {\n  + Date : date\n}\n\nclass Assignment {\n  + Date : date\n}\n\nclass DriverSchedule {\n  + Date : date\n}\n\nclass BusRouteAssignment {\n  + Date : date\n}\n\nclass Route \"1\" *-- \"3\" Shift\nBusRouteAssignment \"*\" -- \"1\" Route\nBusRouteAssignment \"*\" -- \"1\" Bus\nBusRouteAssignment \"*\" -- \"1\" Assignment\n\nDriver \"1\" -- \"*\" DriverSchedule\nBus \"1\" -- \"*\" DriverSchedule\nDriverSchedule \"*\" -- \"1\" Shift\nDriverSchedule \"*\" -- \"1\" Schedule\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3474,
+   "completion_tokens": 210,
+   "total_tokens": 3684,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-12b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

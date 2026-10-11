@@ -9,6 +9,9 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
 - **Versione di configurazione 2** (voce 93): contesto 32768, max_tokens 4096.
 - Campionamento: temperature 0.3, top_p 0.95, top_k 64 (valori di lavoro; domanda 8 aperta).
 - Retrieval: bm25, **k = 3** (per il Passo 3b anche k = 2, per il confronto con la baseline statica a parità di esempi).
+- **Istruzioni (voci 118, 121)**: PlantUML usa le **v5**; il JSON compatto le **v4 con gli esempi indentati**
+  (`serialization: indent2`; con la generazione vincolata, "both", se la domanda 14 sarà positiva). Pool unico di 79
+  candidati per query (voce 115).
 - Prompt: istruzioni dei formati **senza** il blocco di "istruzioni mirate" (non adottato, voci 101 e 103; i file del
   blocco restano congelati solo come documentazione; nessuna iterazione sullo stesso insieme di sviluppo).
 - Formati: **PlantUML** (post-processing v2) e **JSON compatto** (docs/compact_format.md), entrambi espansi in Apollon
@@ -413,11 +416,17 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
    nel corpus di retrieval e di ridistribuirne le traduzioni; licenza dell'item figshare da verificare con gli autori.
 2. **Dove conservare `corpus/raw/translated_it/`** se la licenza non ne permette la pubblicazione: repository
    privato / archivio separato / solo i file derivati necessari alla pipeline (oggi la cartella è esclusa da git).
-3. **RISOLTA (2026-10-10, voce 112)**: test set in leave-one-out (candidati = 59 del corpus + gli altri 19 De Bari).
-   Testo originale: **Ruolo dei 20 esercizi De Bari**: confermare la scelta attuale (test set tenuto fuori dal retrieval, congelato in
-   `testset-v1`) e se adottare in aggiunta un leave-one-out (gli altri 19 come candidati del retrieval).
-4. **Es. 6 Flights** (TF-IDF 0.418 vs AirTravel, che è anche l'esempio 2 del prompt statico): confermare la scelta di
-   tenerlo nel test set e nel retrieval, riportando ogni metrica su 20 e su 19 esercizi.
+3. **Insieme di valutazione e ruolo dei 20 De Bari — DECISIONE PRESA, DA CONFERMARE** (voci 112-117): un solo insieme di
+   80 esercizi (60 del corpus con Cruise + 20 De Bari); per ogni query i candidati del retrieval sono tutti gli altri
+   79 (leave-one-out); valutazione principale sui **54** esercizi mai usati come query di generazione (34 del corpus +
+   20 De Bari), i 26 di sviluppo riportati a parte come esplorativi; i 20 De Bari riportati anche a parte per il
+   confronto con De Bari et al., dichiarando che non è alla pari (nei nostri prompt possono comparire come esempi gli
+   altri 19 De Bari, nel loro studio no). Ruoli congelati in `corpus/roles.yaml` (tag `evalset-v1`). Contaminazioni
+   dichiarate nella voce 117.
+4. **Es. 6 Flights — DECISIONE PRESA, DA CONFERMARE**: resta tra gli esercizi di valutazione e tra i candidati del
+   retrieval, nonostante la sovrapposizione con AirTravel (TF-IDF 0.418), che è anche l'esempio 2 del prompt statico e
+   ora a sua volta esercizio di valutazione; ogni metrica sui De Bari si riporta su 20 e su 19 esercizi (senza
+   Flights).
 5. **Formato e convenzioni**: confermare Apollon JSON v4 come target (non PlantUML, a differenza di De Bari et al.) e
    le convenzioni di trascrizione/traduzione (tabella di coerenza sopra), in particolare quelle senza precedenti
    esterni (maiuscolo/minuscolo tipografico, tipi di dominio, completamento dei token tagliati da Analysis.xlsx).
