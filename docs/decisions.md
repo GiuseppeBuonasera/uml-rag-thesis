@@ -139,6 +139,12 @@ non sono state modificate.
 128. 2026-10-11 — Qualità del ground truth per sorgente (solo descrittivo, limiti da citare in tesi)
 129. 2026-10-11 — Retrieval pronto per il 3b: pool unico negli script, esempi congelati, analisi descrittiva sui 26 di sviluppo, domanda 4
 130. 2026-10-11 — Seme della condizione random per esercizio e ripetizione; proposta sulla domanda 4; analisi pertinenza-qualità entro esercizio nel piano del 3b
+131. 2026-10-12 — Gemma 4 26B A4B QAT come modello del 3b: prova di fattibilità (STOP)
+132. 2026-10-12 — Controllo del 26B sul dev set (regola registrata prima della run), config del 3b e notebook di esecuzione
+133. 2026-10-12 — Controllo del 26B: esito (Gemma 4 26B A4B QAT adottato come modello del 3b)
+134. 2026-10-12 — Confronto visivo nel notebook: ground truth, PlantUML e JSON compatto affiancati
+135. 2026-10-12 — Leva "attributi del compatto" (istruzioni v5b): testi, metrica e regola registrati prima della run
+136. 2026-10-12 — Metriche standard P / R / F1 per tipo di elemento (esatto e rilassato): ricalcolo sul dev set e proposta per il 3b
 
 ## Formato
 
@@ -4813,3 +4819,242 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
     estrazioni (Jt@3 0,018, come la media su 20 semi 0,018 ± 0,004; il seme 0 dava 0,023); sovrapposizione, hubness e
     provenienza di random sulla ripetizione 0; nel piano PREVISTO l'analisi entro esercizio. Test `check_frozen`
     aggiornato (seme, piano del runner con le due modalità, guardia, template).
+
+### [2026-10-12] Gemma 4 26B A4B QAT come modello del Passo 3b — prova di fattibilità (STOP, nessuna decisione)
+- **Richiesta dell'utente**: usare `google/gemma-4-26b-a4b-qat` (LM Studio) al posto di Gemma 4 12B QAT nel 3b. La scelta
+  del modello fa parte della domanda 8 ai relatori. Tutte le leve del dev set (formato, k, istruzioni v5, esempi
+  indentati, temperatura, ragionamento spento) sono state decise sul 12B: con il 26B vanno almeno verificate.
+- **Modello** (da LM Studio, `GET /api/v1/models`): MoE 26B-A4B (circa 4 miliardi di parametri attivi per token, 8
+  esperti), Q4_0 (QAT), 15,63 GB, contesto massimo 262144, visione, ragionamento "on" di default. Già scaricato.
+- **Caricamento**: con contesto 32768 LM Studio stima 17,6 GiB di VRAM per il caricamento completo (la RTX 4070 ne ha
+  12): `lms load google/gemma-4-26b-a4b-qat --context-length 32768 --gpu 0.5 -y` (stima 9,6 GiB; misurati circa 9,6 GB
+  del modello, 11,0 GB con il desktop, e circa 14,8 GB di RAM per i processi di LM Studio), flash attention attiva, KV
+  cache sulla GPU, parallel 4. La scelta automatica di LM Studio metterebbe tutto in GPU (17,6 GiB su 12, memoria
+  condivisa): esclusa.
+- **Ragionamento**: acceso di default (257 token di ragionamento per "17 × 23"); `reasoning_effort: "none"` per
+  richiesta lo spegne (0 token). **Runner**: `thinking: none` nel config invia `reasoning_effort: "none"` e, a
+  differenza di `thinking: true` / livello, lascia ATTIVO `stop_on_reasoning` (`run_experiment.thinking_on`; test in
+  `check_thinking`). Per il 12B nulla cambia (ragionamento già spento nelle impostazioni salvate).
+- **Prova (2 generazioni, cartella di lavoro della sessione, non in data/results)**: configurazione di lavoro (P-G:
+  PlantUML v5 = dev_v5; C-G: compatto v5 + esempi indentati = dev_c5indent; bm25 k = 3, pool unico, temperatura 0,3,
+  max_tokens 4096) con il solo modello cambiato e `thinking: none`; GPU libera.
+
+  | chiamata | finish | livello | token di output | ragionamento | latenza 26B | latenza 12B (stesso formato) |
+  |---|---|---|---|---|---|---|
+  | P-G Boeing | stop | 4 | 228 | 0 | 16,9 s | Boeing 5,9-7,8 s; mediana del formato 8,0 s |
+  | C-G Restaurant | stop | 4 | 569 | 0 | 38,9 s | mediana del formato 17,7 s |
+
+  Il 26B è circa **2,2 volte più lento** del 12B (parte degli esperti gira su CPU). Stima grezza, da 2 chiamate, per
+  circa 2.300 generazioni del 3b: circa **18 ore** contro circa 8 col 12B.
+- **Proposta per il passo 2 (da approvare, NON eseguito)**: controllo sul dev set con la configurazione di lavoro (20
+  esercizi × 2 ripetizioni × 2 formati = 80 generazioni) contro le baseline dev_v5__P-G e dev_c5indent__C-G, con la
+  regola registrata PRIMA della run. Proposta di regola (non inferiorità): il 26B diventa il modello del 3b se, in
+  ENTRAMBI i formati, dR ≥ −0,03 E dVc ≥ −2 E dM_primaria ≥ −0,03 E meno di 2 troncamenti E stima del 3b ≤ 30 ore
+  (soglia della voce 125); si riportano anche J, R_fam, generalizzazioni invertite, elementi in più e latenze. Se
+  passa in un solo formato, decide l'utente. Le leve non si ritarano sul 26B (resterebbe sullo stesso dev set).
+- Al termine della prova il 26B resta caricato; per tornare al 12B: `lms unload --all` e
+  `lms load google/gemma-4-12b-qat --context-length 32768 --gpu max -y` (comando di dev_v5_model_load.log).
+
+### [2026-10-12] Controllo del 26B sul dev set e config del Passo 3b — regola e disegno registrati PRIMA di qualsiasi run
+- **Approvazione**: l'utente ha approvato la proposta del passo 2 della voce 131 ("perfetto") e chiesto un notebook che
+  esegua sia il controllo del 26B sia il 3b, con lo stato della generazione visibile.
+- **Passo 2, controllo del 26B** (`experiments/configs/dev_g26.yaml`, run `dev_g26__P-G` e `dev_g26__C-G`): la
+  configurazione di lavoro con il solo modello cambiato. P-G: PlantUML, istruzioni v5, serializzazione compact (=
+  dev_v5__P-G); C-G: compatto, istruzioni v5, esempi indentati (= dev_c5indent__C-G); bm25 k = 3 dal file congelato
+  (prompt identici a quelli delle baseline, voce 129); 20 esercizi di sviluppo × 2 ripetizioni × 2 formati = **80
+  generazioni**; temperatura 0,3, top_p 0,95, top_k 64, seme 42, contesto 32768, max_tokens 4096 (versione di
+  configurazione 2); `thinking: none` (voce 131) con stop_on_reasoning; caricamento `--gpu 0.5`.
+  - **REGOLA** (`experiments/analyze_g26.py`, scritto e testato prima della run, sulle sole baseline), per formato,
+    delta = 26B − 12B su 40 risposte: **il 26B diventa il modello del 3b se, in ENTRAMBI i formati, dR ≥ −0,03 E dVc
+    ≥ −2 E dM_primaria ≥ −0,03 E meno di 2 troncamenti, E la stima del 3b è ≤ 30 ore**. Stima: per formato, latenza
+    mediana del 26B in questa run × generazioni del 3b di quel formato (1.131), sommate (prudente: zero_shot e static
+    hanno prompt più corti). Se passa in un solo formato, decide l'utente. Riportati fuori regola: J, R_fam,
+    generalizzazioni invertite, classi / generalizzazioni / composizioni in più, token, latenze. Le leve NON si ritarano.
+- **Passo 3b** (`experiments/configs/passo3b.yaml`, run `passo3b__<formato>-<split>-<modello>`):
+  - query: i **54 esercizi di valutazione** (corpus/roles.yaml, tag evalset-v1): 34 del corpus (split `corpus`) e 20 De
+    Bari (split `testset`), elencati nel config; i 26 di sviluppo NON si generano (già usati per decidere);
+  - condizioni: zero_shot, static, random k = 3, bm25 k = 2 e 3, dense k = 3, hybrid k = 3 (**k per condizione**,
+    nuova possibilità del runner: `k: {bm25: [2, 3], random: [3], dense: [3], hybrid: [3]}`);
+  - **cella static di AirTravel non definita** (l'esempio statico coinciderebbe con la query, voce 130): il runner la
+    salta e la registra in `config.json` (`celle_saltate`), le analisi la trattano come mancante (confronto appaiato
+    static contro retrieval su 53);
+  - 3 ripetizioni; esempi dal file congelato; random con seme per esercizio e ripetizione; `passo: 3b`;
+  - formati: P (PlantUML, v5, compact) e C (compatto, v5, indent2), come nel passo 2;
+  - **modello**: configurazioni per il 26B (`-G26`) e per il 12B (`-G12`); si esegue quella indicata dall'esito del
+    passo 2 (o dalla decisione dell'utente);
+  - generazioni: 2 formati × (34 × 7 × 3 − 3 + 20 × 7 × 3) = 2 × 1.131 = **2.262**;
+  - il 3b resta **bloccato** finché i relatori non rispondono (domande 8, 11, 14, 16) e finché lo script di analisi del
+    3b non è scritto e testato: il notebook ha un interruttore apposito, a False.
+- **Runner** (nessun effetto sulle config esistenti): `k` può essere una mappa condizione → lista; una configurazione
+  può precisare `split` e `query_ids`; la cella static di una query che coincide con un esempio statico si salta e si
+  registra. **Esecuzione in background**: `experiments/run_batch.py` esegue in sequenza una lista di (config,
+  configurazione) con `--resume` (riprende dove si era fermato), scrive log e stato in `data/results/batch/<nome>/`;
+  `experiments/progress.py` legge i manifest mentre la run gira (fatte / attese, livelli, troncamenti, latenza,
+  stima del tempo residuo). Notebook: `notebooks/passo3b.ipynb`.
+- **Esecuzione (2026-10-12)**: runner (`ks_for`, `skipped_cells`, configurazioni con `split` / `query_ids`,
+  `celle_saltate` nella provenienza), `prompt_builder.STATIC_EXAMPLE_IDS`, `experiments/analyze_g26.py`,
+  `experiments/run_batch.py`, `experiments/progress.py`, config `dev_g26.yaml` e `passo3b.yaml`, notebook
+  `notebooks/passo3b.ipynb`. Verificato: dev_g26 ha la configurazione delle baseline salvo modello, `thinking: none` e
+  file congelato, e i suoi 80 prompt sono identici a quelli dei manifest di dev_v5__P-G e dev_c5indent__C-G; passo3b
+  pianifica 711 + 420 = 1.131 generazioni per formato e modello sui 54 di valutazione (static di AirTravel saltata) e
+  ogni cella si costruisce dal file congelato; dry run del 3b per il 26B: prompt da circa 1.100 (zero_shot) a 6.500
+  token (dense k = 3), dentro il contesto di 32768 con max_tokens 4096; regola di analyze_g26 provata sulle soglie e
+  su una run simulata (baseline copiate: ADOTTATO, stima circa 8 ore); batch con client finto: ripresa, arresto su
+  errore, avvio in background e stato. Notebook eseguito per intero con gli interruttori a False: controlli superati
+  (26B caricato a 32768), nessuna generazione. Test `check_3b_and_batch`. Nessuna run del passo 2 né del 3b eseguita.
+
+### [2026-10-12] Controllo di Gemma 4 26B A4B QAT sul dev set: esito della regola della voce 132
+- **Esecuzione**: batch `passo2_g26` dal notebook `notebooks/passo3b.ipynb` (kernel `.venv`), 80 generazioni, dalle
+  01:39 alle 02:20 del 2026-10-12 (41 minuti), GPU libera, 26B caricato con `--gpu 0.5`; nessuna risposta con
+  ragionamento. Run `dev_g26__P-G` e `dev_g26__C-G`; analisi `data/results/generation/dev_g26_analysis/summary.md`.
+- **Regola applicata così com'è** (`experiments/analyze_g26.py`):
+
+  | formato | dR | dVc | dM_primaria | troncate | esito |
+  |---|---|---|---|---|---|
+  | PlantUML | −0,014 (0,361 → 0,347) | +1 (38 → 39) | 0,000 (0,317) | 1 | non inferiore |
+  | JSON compatto | +0,037 (0,307 → 0,344) | −1 (37 → 36) | +0,016 (0,263 → 0,280) | 0 | non inferiore |
+
+  Stima del 3b: **16,8 ore** (soglia 30). **Esito: Gemma 4 26B A4B QAT ADOTTATO come modello del Passo 3b**
+  (configurazioni `-G26` di `passo3b.yaml`, `MODELLO = "G26"` nel notebook).
+- **Fuori regola**: J 0,540 → 0,546 (PlantUML), 0,536 → 0,554 (compatto); R_fam 0,386 → 0,378 e 0,335 → 0,386; meno
+  elementi in più col 26B (classi 115 → 94 e 101 → 81, generalizzazioni 20 → 12 e 16 → 13, composizioni 43 → 28 e 37
+  → 12); generalizzazioni invertite 0 in entrambi; latenza mediana 8,0 → 15,7 s (PlantUML) e 17,7 → 37,8 s (compatto).
+- **Risposte non valide del 26B (3 su 80)**: PlantUML `HelpingHands__bm25__k3__r1` troncata a 4096 token (230 s) per
+  un **ciclo di ripetizione** (la riga `H2SLocation "1" -- "*" DistributionCenter : has` ripetuta 276 volte);
+  compatto `HelpingHands__bm25__k3__r1` (JSON incompleto, finish `stop`) e `HomeForTheElderly__bm25__k3__r0` (JSON non
+  valido). Nel 3b i cicli di ripetizione vanno contati e riportati (un troncamento costa circa 4 minuti).
+- Il 3b resta bloccato per le domande ai relatori (8, 11, 14, 16) e per lo script di analisi del 3b da scrivere e
+  testare prima delle run. La scelta del modello va comunque portata ai relatori con la domanda 8.
+
+### [2026-10-12] Confronto visivo nel notebook (richiesta dell'utente), solo lettura
+- `experiments/compare_view.py`: per un esercizio e una ripetizione (e, nel 3b, una condizione e un k) mostra nel
+  notebook la pagina di `experiments/review_report.py` ristretta a quell'esercizio: ground truth e una risposta per run
+  (es. dev_g26__P-G e dev_g26__C-G, piu' le baseline del 12B), stesso rendering per tutti (PlantUML canonico → SVG con
+  plantuml.jar, classi verdi nel GT e arancioni in piu'), metriche per risposta e relazioni classificate. Nessuna logica
+  nuova: validazione, rendering e confronto sono quelli del report di revisione (voce 100). Pagine salvate in
+  `data/results/generation/confronti/` (non versionate). `review_report.build` ora trova anche gli esercizi De Bari
+  (servono per le run del 3b sullo split testset). Notebook `passo3b.ipynb`, sezione 6 (un esercizio) e sezione 7 (report completo di una o piu' run, aperto nel browser: `review_report.py --runs ... --name ...`). Test `check_compare_view`.
+
+### [2026-10-12] Leva "attributi del compatto" (istruzioni v5b) — testi, metrica e regola registrati PRIMA delle generazioni
+- **Osservazione** (revisione visiva del passo 2, voce 133, fuori regola): il 26B nel JSON compatto omette TUTTI gli
+  attributi in 10 risposte valide su 38 (12B: 2 su 39; 26B in PlantUML: 0 su 39), sempre sugli stessi esercizi
+  (AlphaInsurance, Boeing, Ebike, ProjectManagement in entrambe le ripetizioni; HospitalHouseMD e InsuranceCompany in
+  una), benché gli esempi del prompt abbiano 8-23 attributi; in quelle risposte ha molteplicità solo il 55 % delle
+  relazioni (79 % nelle altre). Nessuna perdita nella pipeline: gli attributi del testo sono tutti nel diagramma. Le
+  metriche J, R, M non guardano gli attributi, quindi la regola della voce 132 non poteva vederlo. Causa probabile: le
+  istruzioni v5 del compatto dicono "Omit if there are none" e "A class may have no attributes" e indicano le
+  molteplicità come chiavi "optional" (in contrasto con la regola 4, che le chiede sempre).
+- **Decisione dell'utente**: sistemare le istruzioni. È una leva nuova sull'insieme di sviluppo, già usato per le leve
+  precedenti (dichiarato); **un solo tentativo**: nessuna iterazione sul testo dopo aver visto i risultati.
+- **Testo** (`generation/templates/v5b_compact_instructions.txt`, congelato con sha256 nel test): la v5 del compatto
+  con **4 righe** cambiate e nient'altro: (riga 10) "Omit if there are none" → "List every attribute that the text
+  states or clearly implies for the class; leave out the key only for a class that has none in the text"; (righe 15 e
+  17) le molteplicità passano da chiavi "optional" a chiavi richieste di association / unidirectional e composition /
+  aggregation; (riga 25, regola 2) "only those stated or clearly implied by the text. A class may have no attributes"
+  → "write all those stated or clearly implied by the text, for every class; a class has no attributes only when the
+  text gives none for it" (resta "Do not add classes, attributes or generalizations just to make the diagram
+  richer"). Esempi, traccia e riga finale identici alla v5. **PlantUML invariato** (v5): lì il problema non c'è.
+- **Metrica nuova sugli attributi** (`evaluation/metrics.py`, aggiunta: le metriche esistenti non cambiano). Nomi
+  normalizzati come quelli delle classi (minuscole, solo alfanumerici; tipo e visibilità ignorati); classi non enum.
+  - **A (richiamo)**: attributi del GT presenti nella classe con lo stesso nome della risposta / attributi del GT,
+    sommati su TUTTE le risposte (0 per le non valide), come R;
+  - **A_prec (precisione)**: attributi della risposta presenti nella classe omonima del GT / attributi della risposta
+    (risposte valide);
+  - **scheletri**: risposte valide senza nessun attributo per un esercizio il cui GT ne ha.
+- **Config** `experiments/configs/dev_g26b.yaml` (run `dev_g26b__C-G`): identico a `dev_g26.yaml` C-G salvo
+  `instructions_version: v5b`; 26B, 20 esercizi di sviluppo × 2 ripetizioni = **40 generazioni**. Baseline:
+  `dev_g26__C-G` (26B, v5).
+- **REGOLA** (`experiments/analyze_v5b.py`, scritto e testato prima della run, sulla sola baseline), delta = v5b − v5
+  su 40 risposte: **adottare v5b per il compatto se (scheletri ≤ metà di quelli della baseline OPPURE dA ≥ +0,05) E
+  dA_prec ≥ −0,05 E dR ≥ −0,03 E dVc ≥ −2 E dM_primaria ≥ −0,03 E meno di 2 troncamenti.** Se adottata: il compatto
+  del 3b usa v5b (configurazioni C-* di `passo3b.yaml`); se no, resta v5. Riportati: J, R_fam, elementi in più,
+  molteplicità presenti, token e latenza.
+- **Smoke test** (2 chiamate, cartella di lavoro della sessione): Boeing r0 e Restaurant r0 nel compatto v5b, per
+  verificare che la risposta sia valida e che le istruzioni nuove non rompano il formato. Poi STOP; le 40 generazioni
+  solo dopo il via dell'utente.
+- **REVISIONE PRIMA DELLA RUN (decisione dell'utente, 2026-10-12): la leva gira su un SOTTOINSIEME**, per vedere se il
+  miglioramento è uniforme; sostituisce config, regola e smoke test sopra.
+  - **Esercizi** (8 × 2 ripetizioni = **16 generazioni**, `experiments/configs/dev_g26b.yaml`, run `dev_g26b__C-G`):
+    i 6 con almeno una risposta della baseline senza nessun attributo (AlphaInsurance, Boeing, Ebike, HospitalHouseMD,
+    InsuranceCompany, ProjectManagement; per ProjectManagement il GT non ha attributi: serve da controllo contro gli
+    attributi inventati) + **2 di controllo** che gli attributi li scrivevano bene, scelti con una regola: i due con A
+    più alto nella baseline, pareggi per id (EUScienceConnect 0,682; Facepage 0,667, a pari merito con Musicmatic e
+    PizzaDeliveryWithEntertainment).
+  - **Metriche della baseline sul sottoinsieme** (dev_g26__C-G, gli stessi 16 esercizi × ripetizioni): scheletri 8
+    (AlphaInsurance 2, Boeing 2, Ebike 2, HospitalHouseMD 1, InsuranceCompany 1).
+  - **REGOLA** (`experiments/analyze_v5b.py`), confronto appaiato sugli stessi 16 (esercizio, ripetizione): **adottare
+    v5b per il compatto del 3b se: scheletri ≤ 4 (almeno dimezzati) E, sui 2 esercizi di controllo, dA ≥ −0,05 e
+    dA_prec ≥ −0,05 E, sulle 16 risposte, dR ≥ −0,03, dM_primaria ≥ −0,03, dVc ≥ −1 e meno di 2 troncamenti.**
+    Riportati per esercizio: attributi della risposta, A, A_prec, R, molteplicità presenti; per ProjectManagement gli
+    attributi aggiunti (nessuna soglia).
+  - **Limite dichiarato**: la decisione si prende su 8 esercizi scelti guardando la baseline (per costruzione gli
+    scheletri tendono a migliorare anche per caso: i 2 di controllo e la ripetizione appaiata servono a vederlo); i
+    restanti 12 esercizi di sviluppo non sono provati con v5b.
+  - **Smoke test**: 1 chiamata (Boeing r0, v5b) per verificare il formato; poi STOP.
+- **SOSPESA (decisione dell'utente, 2026-10-12)**: sistemate le istruzioni, NESSUNA generazione (nemmeno lo smoke
+  test) finché non è implementato il sistema delle metriche. Fatto: `generation/templates/v5b_compact_instructions.txt`
+  (sha256 `838de1a19d4990d063bcd76df25f96fad8815807afb0573cca9998d65215fce6`, senza conversione degli a capo in
+  .gitattributes), versione `v5b` nel prompt builder (solo compatto; verificato senza modello: rispetto alla v5
+  cambiano solo le 4 righe delle istruzioni, esempi e traccia identici; rifiutata per PlantUML), config
+  `experiments/configs/dev_g26b.yaml` (16 generazioni, differisce dalla baseline solo per istruzioni ed esercizi),
+  metrica degli attributi in `evaluation/metrics.py` (`attribute_names`, `attribute_counts`, `attribute_metrics`;
+  le metriche precedenti non cambiano), bozza di `experiments/analyze_v5b.py` NON ancora testata. Prima della run,
+  metrica degli attributi e regola vanno riallineate al sistema delle metriche (con una nota in questa voce o una
+  voce nuova), poi lo script si testa sulla sola baseline.
+
+### [2026-10-12] Metriche standard P / R / F1 per tipo di elemento — ricalcolo descrittivo sul dev set e PROPOSTA per il 3b
+- **Riferimenti**: Chen et al. (MODELS 2023) e Chen, Shen, He (2024), P / R / F1 per classi, attributi, associazioni e
+  generalizzazioni; Yang et al. (2022), abbinamento esatto e rilassato. Nessuna generazione; solo risposte già salvate
+  delle run di sviluppo; esercizi di valutazione non toccati; `evaluation/metrics.py` NON modificato in questo compito
+  (contiene ancora le funzioni sugli attributi aggiunte con la voce 135, da riallineare); nessun embedding, nessuna
+  soglia.
+- **Modulo** `evaluation/element_metrics.py` (definizioni complete nel docstring):
+  - elementi: classi (tutti i nodi); attributi (nodi non enumerazione; nome senza visibilità e tipo); relazioni
+    strutturali (associazione, unidirezionale, composizione, aggregazione, dipendenza, insieme); generalizzazioni
+    (ereditarietà + realizzazione);
+  - classi abbinate uno a uno, deterministico (pareggi per nome normalizzato, poi nome): ESATTO = nome normalizzato
+    come oggi; RILASSATO = prima gli esatti, poi lo stesso insieme di token (CamelCase spezzato, minuscole, Snowball,
+    come Jt), niente altro; attributi solo dentro classi abbinate (esatto: nome normalizzato; rilassato: poi stessi
+    token); relazioni strutturali abbinate se gli estremi sono abbinati, SENZA verso (prima lo stesso tipo);
+    generalizzazioni CON verso, le invertite contate a parte;
+  - per tipo e livello TP / FP / FN, P / R / F1; macro per esercizio (prima le ripetizioni) e micro; **risposta non
+    valida = diagramma vuoto: recall 0, F1 0, precision non definita ed esclusa dalla media della precision** (il
+    numero di risposte escluse si riporta); P non definita senza elementi nella risposta, R senza elementi nel GT, F1 = 0
+    se TP = 0 e almeno una parte ne ha, non definita se nessuna;
+  - sulle relazioni abbinate: stesso tipo, stessa famiglia (associazione = unidirezionale), molteplicità uguali per
+    estremo (norm_mult attuale; tutti gli estremi e quelli espliciti del GT), stesso verso per i tipi orientati.
+  - Test `evaluation/test_element_metrics.py` (richiamato da `evaluation/test_metrics.py`): casi a mano per ogni regola
+    (nomi quasi uguali, verso invertito, generalizzazione invertita, risposta non valida, pareggi, attributi in classi
+    non abbinate, medie macro e micro) e determinismo (stesso risultato con nodi e archi in ordine diverso).
+- **Ricalcolo** (`evaluation/evaluate_dev.py`, `data/results/evaluation_dev/summary.md`, `metrics.csv`,
+  `per_exercise.csv`, versionati): 30 gruppi (run × formato × condizione × k) di dev_v5, dev_c5indent, dev_v5base,
+  dev_retrievers, dev_k, dev_cindent / cschema / cboth, dev_structP / C, più dev_g26 (passo 2). Risultati principali:
+  - **il livello rilassato, come definito, coincide con l'esatto**: 0 classi abbinate solo dal rilassato in tutte le
+    risposte (F1 classi e relazioni identici; attributi al più +0,005 in micro). Le classi che restano non abbinate
+    differiscono per una parola in più o in meno (Bus / BusVehicle, Customer / HungryCustomer, Company /
+    InsuranceCompany, Car / PassengerCar, Volunteer / VolunteerDriver: coppie frequenti in tutte le run), non per
+    lo stesso insieme di token in ordine o forma diversi;
+  - F1 delle relazioni (rilassato, macro) contro R per esercizio: Spearman mediana 0,57 (da 0,45 a 0,71 nei 30
+    gruppi). F1 relazioni è in genere più alta di R (non chiede il tipo) ma penalizza le relazioni in più;
+  - esempi: 26B PlantUML F1 classi 0,675, relazioni 0,411, generalizzazioni 0,503; 12B PlantUML v5 0,678 / 0,419 /
+    0,470; compatto 26B 0,675 / 0,417 / 0,521 contro 12B v5 + indentati 0,668 / 0,362 / 0,423. Sulle relazioni
+    abbinate il 26B ha più tipi giusti (0,737 PlantUML, 0,728 compatto) e molteplicità esplicite uguali (0,802 /
+    0,739);
+  - **regole passate con F1 delle relazioni al posto di R** (funzioni di decisione degli script richiamate così come
+    sono, R sostituita solo in memoria): stesso esito per formati (92), k (94), istruzioni mirate (98), v5 (111/118),
+    varianti del retriever (121/122), compatto v5 + indent e pool (123/124), 26B (132/133); **diverso solo per la
+    validità del compatto (119/121): vincerebbe "indent" invece di "both"** (che peraltro era subordinata alla domanda
+    14; la configurazione di lavoro usa già "indent"). SOLO descrittivo: gli esiti registrati restano.
+- **PROPOSTA per il 3b (per i relatori)**: metrica PRIMARIA = F1 macro per esercizio delle relazioni strutturali,
+  abbinamento rilassato; SECONDARIE = F1 classi e F1 generalizzazioni (rilassato), R rigida (continuità con il dev
+  set), tipo e molteplicità sulle relazioni abbinate; DESCRITTIVE = attributi, livello esatto, medie micro; correzione
+  di Holm sulle secondarie. **Da segnalare insieme alla proposta**: sul dev set il livello rilassato come definito è
+  identico all'esatto, quindi la scelta "rilassato" non cambia nulla in pratica; i casi che sfuggono sono di
+  inclusione di token (una parola in più), che la regola esclude di proposito ("niente altro"): estenderla (es. un
+  nome contenuto nell'altro) sarebbe una decisione nuova, da discutere con i relatori insieme all'abbinamento con
+  embedding.
+- **Limiti da annotare**: unica soluzione di riferimento per esercizio; abbinamento uno a uno (scomposizioni e fusioni
+  di classi penalizzate); attributi rumorosi (stili diversi del GT: De Bari quasi senza tipi, voce 128); sinonimi non
+  riconosciuti dal livello rilassato (es. Client / Customer).
+- **Rimandati, da riprendere con i relatori**: abbinamento con embedding, distanza di Nikiforova, qualità intrinseca
+  del diagramma, valutazione umana.

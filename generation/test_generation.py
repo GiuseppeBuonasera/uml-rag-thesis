@@ -2464,6 +2464,10 @@ def check_thinking() -> None:
     res = SimpleNamespace(reasoning_field="reasoning_content", text="@startuml\nclass A {}\n@enduml")
     assert rx.should_stop_on_reasoning({"stop_on_reasoning": True}, res)  # config normali: si ferma come prima
     assert not rx.should_stop_on_reasoning({"stop_on_reasoning": True, "thinking": True}, res)
+    # voce 131: `thinking: none` spegne il ragionamento nella richiesta e lascia attivo stop_on_reasoning
+    assert rx.params_for({"thinking": "none", "generation": b["generation"]}, 0).reasoning_effort == "none"
+    assert rx.should_stop_on_reasoning({"stop_on_reasoning": True, "thinking": "none"}, res)
+    assert not rx.thinking_on({"thinking": "none"}) and rx.thinking_on({"thinking": "low"}) and not rx.thinking_on({})
     assert not rx.should_stop_on_reasoning({"stop_on_reasoning": True}, SimpleNamespace(reasoning_field=None, text="x"))
     # regola (soglie incluse)
     B = {"R": 0.30, "R_fam": 0.33, "Vc": 38, "M1": 0.30}
@@ -2700,6 +2704,153 @@ def check_frozen(builder: PromptBuilder, tmp: Path) -> None:
           "ripetizione (voce 130): seme, piano del runner, guardia del 3b, template")
 
 
+def check_3b_and_batch(builder: PromptBuilder, tmp: Path) -> None:
+    """Voce 132: k per condizione, split ed esercizi per configurazione, cella static di AirTravel saltata; config
+    dev_g26 (= baseline salvo il modello, prompt identici ai manifest) e passo3b (54 di valutazione, 1.131 generazioni
+    per formato, ogni cella costruibile dal file congelato); regola di experiments/analyze_g26.py (anche su una run
+    simulata); batch in background e stato di avanzamento con il client finto."""
+    import yaml
+    import analyze_g26 as g26
+    import progress
+    import run_batch
+    import prompt_builder as pb
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    cands, tq = cl.load_all()
+    # runner: k per condizione, configurazione con split / query_ids, static saltata
+    assert rx.ks_for({"k": {"bm25": [2, 3], "random": [3]}}, "bm25") == [2, 3] and rx.ks_for({"k": [3]}, "dense") == [3]
+    assert rx.ks_for({"k": [3]}, "zero_shot") == [0] and rx.ks_for({"k": {"bm25": [2]}}, "static") == [2]
+    try:
+        rx.ks_for({"k": {"bm25": [3]}}, "dense")
+        raise AssertionError("condizione senza k accettata")
+    except SystemExit:
+        pass
+    air = [q for q in cands if q["id"] in ("AirTravel", "Boeing")]
+    cfg = {"conditions": ["zero_shot", "static", "bm25"], "k": {"bm25": [2, 3]}, "repetitions": 2,
+           "query_ids": ["AirTravel", "Boeing"]}
+    cells = [(q["id"], s.condition, s.k) for q, s, _, _ in rx.plan(cfg, air)]
+    assert ("AirTravel", "static", 2) not in cells and cells.count(("Boeing", "static", 2)) == 2 and len(cells) == 14
+    assert rx.skipped_cells(cfg, air) == ["AirTravel__static"] and pb.STATIC_EXAMPLE_IDS[1] == "AirTravel"
+    # dev_g26: uguale alle baseline salvo modello, thinking none e file congelato; prompt = manifest delle baseline
+    for conf, base in (("P-G", "dev_v5"), ("C-G", "dev_c5indent")):
+        r, b = rx.resolve_configuration(load("dev_g26"), conf), rx.resolve_configuration(load(base), conf)
+        assert r["prompt"] == b["prompt"] and r["generation"] == b["generation"] and r["query_ids"] == b["query_ids"]
+        assert (r["conditions"], r["k"], r["repetitions"], r["config_version"]) == (b["conditions"], b["k"], 2, 2)
+        assert r["model_metadata"]["model_id"] == g26.MODEL_26 and r["thinking"] == "none" and r["stop_on_reasoning"]
+        man = ROOT / "data" / "results" / "generation" / f"{base}__{conf}" / "manifest.jsonl"
+        sha = {m["call_id"]: m["prompt_sha256"] for m in map(json.loads, man.read_text(encoding="utf-8").splitlines())}
+        fz = PromptBuilder(cands, tq, retrieval_source="frozen")
+        for q, s, rep, temp in rx.plan(r, cands):
+            bp = fz.build(q, s)
+            got = hashlib.sha256(json.dumps(bp.messages, ensure_ascii=False).encode()).hexdigest()
+            assert got == sha[rx.call_id(q["id"], s, rep, temp)], (conf, q["id"])
+    # passo3b: 54 di valutazione, 1.131 per formato e modello, celle costruibili dal file congelato, guardie superate
+    raw3 = load("passo3b")
+    ev = {i for i, x in cl.paths.load_roles().items() if x["role"] == "valutazione"}
+    fz = PromptBuilder(cands, tq, retrieval_source="frozen")
+    total = {}
+    for name in raw3["configurations"]:
+        c = rx.resolve_configuration(raw3, name)
+        qs = tq if c["split"] == "testset" else cands
+        pl = rx.plan(c, qs)
+        assert set(c["query_ids"]) <= ev and c["passo"] == "3b" and c["repetitions"] == 3
+        rx.check_retrieval_source(c)
+        rx.check_query_roles(c, qs)
+        total[name] = len(pl)
+        if name.endswith("G26") and name.startswith("P"):
+            for q, s, _, _ in pl:
+                if s.condition in pb.FROZEN_CONDITIONS:
+                    fz.hits(q, s)  # chiave presente nel file congelato
+    assert {total[f"{f}-corpus-{m}"] + total[f"{f}-testset-{m}"] for f in "PC" for m in ("G26", "G12")} == {1131}
+    assert len({q for n in raw3["configurations"] for q in rx.resolve_configuration(raw3, n)["query_ids"]}) == 54
+    # regola di analyze_g26
+    B = {"R": 0.30, "R_fam": 0.33, "Vc": 38, "M1": 0.30, "J": 0.5}
+    T = lambda **kw: {**B, **kw}  # noqa: E731
+    assert g26.keeps(B, T(R=0.27), 1)["ok"] and not g26.keeps(B, T(R=0.269), 0)["ok"]
+    assert g26.keeps(B, T(Vc=36), 0)["ok"] and not g26.keeps(B, T(Vc=35), 0)["ok"]
+    assert not g26.keeps(B, T(M1=0.269), 0)["ok"] and not g26.keeps(B, B, 2)["ok"]
+    ok, bad = g26.keeps(B, B, 0), g26.keeps(B, T(R=0.1), 0)
+    assert abs(g26.hours_3b({"plantuml": 30.0, "compact": 60.0}) - 90 * 1131 / 3600) < 1e-9
+    assert g26.outcome({"plantuml": ok, "compact": ok}, 29.9).startswith("26B ADOTTATO")
+    assert g26.outcome({"plantuml": ok, "compact": ok}, 30.1).startswith("26B NON adottato")
+    assert "DECIDE L'UTENTE" in g26.outcome({"plantuml": ok, "compact": bad}, 10)
+    assert g26.outcome({"plantuml": ok, "compact": None}, 10).startswith("STOP")
+    # run simulata: le baseline copiate come dev_g26 (modello 26B nel config) -> stesse metriche, esito ADOTTATO
+    res = tmp / "g26"
+    for conf, base in (("P-G", "dev_v5"), ("C-G", "dev_c5indent")):
+        shutil.copytree(ROOT / "data" / "results" / "generation" / f"{base}__{conf}", res / f"{base}__{conf}")
+        shutil.copytree(res / f"{base}__{conf}", res / f"dev_g26__{conf}")
+        cj = res / f"dev_g26__{conf}" / "config.json"
+        d = json.loads(cj.read_text(encoding="utf-8"))
+        d["config"]["model_metadata"]["model_id"] = g26.MODEL_26
+        cj.write_text(json.dumps(d), encoding="utf-8")
+    text, out = g26.report(g26.load_all(res))
+    assert out["outcome"].startswith("26B ADOTTATO") and all(v["dR"] == 0 for v in out["formats"].values()), out
+    assert "Esito: 26B ADOTTATO" in text and 5 < out["hours_3b"] < 15
+    # batch e stato di avanzamento, client finto
+    old = run_batch.BATCH_DIR
+    run_batch.BATCH_DIR = tmp / "batch"
+    try:
+        resp = tmp / "batch_resp"
+        resp.mkdir()
+        (resp / "Boeing.txt").write_text("@startuml\nclass A {}\n@enduml\n", encoding="utf-8")
+        mock = {"run_id": "bt", "split": "corpus", "query_ids": ["Boeing"], "conditions": ["zero_shot", "bm25"],
+                "k": [3], "repetitions": 2, "seed": 0, "plantuml_label_rule": "auto_v1",
+                "prompt": {"output_format": "plantuml", "instructions_version": "v5"},
+                "client": {"kind": "mock", "responses_dir": str(resp)},
+                "generation": {"temperature": 0.3, "top_p": 0.95, "top_k": 64, "max_tokens": 4096, "seed": 42}}
+        cp = tmp / "bt.yaml"
+        cp.write_text(yaml.safe_dump(mock), encoding="utf-8")
+        assert progress.expected_calls(str(cp), None) == 4
+        with contextlib.redirect_stdout(io.StringIO()):
+            assert run_batch.run_all("prova", [(str(cp), None)], tmp / "batch_res") == 0
+        st = progress.status("prova")
+        assert (st["fatte"], st["attese"], st["runs"][0]["esito"], st["vivo"]) == (4, 4, "completata", False)
+        assert "FINITO" in progress.report("prova") and "4/4" in progress.report("prova")
+        lines = (tmp / "batch_res" / "bt" / "manifest.jsonl").read_text(encoding="utf-8").splitlines()
+        (tmp / "batch_res" / "bt" / "manifest.jsonl").write_text(lines[0] + "\n", encoding="utf-8")  # interrotta
+        assert progress.status("prova")["fatte"] == 1
+        with contextlib.redirect_stdout(io.StringIO()):
+            assert run_batch.run_all("prova", [(str(cp), None)], tmp / "batch_res") == 0  # ripresa (--resume)
+        assert progress.status("prova")["fatte"] == 4
+        bad = dict(mock, run_id="bt2", conditions=["nessuna"])
+        cp2 = tmp / "bt2.yaml"
+        cp2.write_text(yaml.safe_dump(bad), encoding="utf-8")
+        with contextlib.redirect_stdout(io.StringIO()):
+            assert run_batch.run_all("prova2", [(str(cp2), None), (str(cp), None)], tmp / "batch_res") == 1
+        st2 = json.loads((tmp / "batch" / "prova2" / "stato.json").read_text(encoding="utf-8"))
+        assert st2["runs"][0]["esito"].startswith("FERMATA") and st2["runs"][1]["esito"] == "in attesa"
+        assert run_batch.stop("prova") == "il batch si fermera' alla fine della run in corso"
+        assert not run_batch.alive(None)
+    finally:
+        run_batch.BATCH_DIR = old
+    print("  OK  3b e batch (voce 132): k per condizione, split / esercizi per configurazione, static di AirTravel "
+          "saltata; dev_g26 = baseline salvo il modello (80 prompt identici ai manifest); passo3b sui 54 di "
+          "valutazione, 1.131 generazioni per formato e modello, celle dal file congelato; regola di analyze_g26 (anche "
+          "su una run simulata); batch con ripresa, arresto su errore e stato di avanzamento")
+
+
+def check_compare_view() -> None:
+    """experiments/compare_view.py (voce 134): esercizi comuni alle run, pagina ristretta a un esercizio e a una
+    ripetizione con GT + una risposta per run; rendering verificato solo se java e plantuml.jar sono disponibili."""
+    import shutil as _sh
+    import compare_view as cv
+    import review_report as rr
+    runs = ["dev_v5__P-G", "dev_c5indent__C-G"]
+    ex = cv.exercises(runs)
+    assert len(ex) == 20 and "Boeing" in ex
+    text, stats = cv.page("Boeing", runs, rep=1)
+    assert stats["responses"] == 2 and stats["diagrams"] == 3 and text.count('class="card"') == 3
+    assert "Ground truth" in text and "dev_v5__P-G bm25 k=3" in text and "dev_c5indent__C-G bm25 k=3" in text
+    if _sh.which("java") and rr.DEFAULT_JAR.exists():
+        assert stats["svgs"] == 3 and not stats["errors"], stats
+    try:
+        cv.page("Boeing", runs, rep=7)
+        raise AssertionError("ripetizione inesistente accettata")
+    except SystemExit:
+        pass
+    print("  OK  confronto visivo (voce 134): GT + PlantUML + compatto per un esercizio e una ripetizione")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -2731,6 +2882,8 @@ def main() -> None:
         check_thinking()
         check_plan(builder, tmp)
         check_frozen(builder, tmp)
+        check_3b_and_batch(builder, tmp)
+        check_compare_view()
         check_review(builder, tmp)
         check_run_log(tmp)
         check_provenance()

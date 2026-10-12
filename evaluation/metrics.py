@@ -281,3 +281,49 @@ def all_metrics(calls: list[dict]) -> dict:
               "inv_gen_tot": conf["inv_tot"]["generalizzazione"], "extra_cls": conf["extra_cls"],
               "extra_gen": conf["extra_gen"], "extra_comp": extra_compositions(calls), "conf": conf})
     return m
+
+# --- attributi (voce 135, aggiunta: le metriche precedenti non cambiano) ---------------------------------------------
+
+
+def attribute_names(diagram: dict) -> dict[str, set[str]]:
+    """Classe (nome normalizzato) -> nomi normalizzati dei suoi attributi; classi non enum. Il nome dell'attributo e'
+    la parte prima dei due punti, senza visibilita' ("+ DeliveryDate : date" -> "deliverydate")."""
+    out: dict[str, set[str]] = {}
+    for n in diagram.get("nodes", []) or []:
+        data = n.get("data") or {}
+        if data.get("stereotype") == "enumeration":
+            continue
+        names = set()
+        for a in data.get("attributes", []) or []:
+            raw = (a.get("name") if isinstance(a, dict) else str(a)).split(":")[0]
+            raw = re.sub(r"^[\s+\-#~]+", "", raw)
+            if norm(raw):
+                names.add(norm(raw))
+        out.setdefault(norm(data.get("name", "")), set()).update(names)
+    return out
+
+
+def attribute_counts(c: dict) -> Counter:
+    """Per una risposta: attributi del GT, del GT ritrovati (stessa classe, stesso nome), della risposta e della
+    risposta presenti nel GT; skeleton = risposta valida senza attributi per un GT che ne ha."""
+    gt = attribute_names(c["gt"])
+    out = Counter(gt_attrs=sum(len(v) for v in gt.values()))
+    if c["v"].level < 3:
+        return out
+    resp = attribute_names(c["v"].diagram)
+    out["resp_attrs"] = sum(len(v) for v in resp.values())
+    out["found"] = sum(len(gt[k] & resp.get(k, set())) for k in gt)
+    out["resp_in_gt"] = sum(len(resp[k] & gt.get(k, set())) for k in resp)
+    out["skeleton"] = int(out["resp_attrs"] == 0 and out["gt_attrs"] > 0)
+    return out
+
+
+def attribute_metrics(calls: list[dict]) -> dict:
+    """A = attributi del GT ritrovati / attributi del GT su TUTTE le risposte (0 per le non valide); A_prec =
+    attributi della risposta presenti nel GT / attributi della risposta (risposte valide); scheletri."""
+    tot = Counter()
+    for c in calls:
+        tot += attribute_counts(c)
+    return {"A": tot["found"] / tot["gt_attrs"] if tot["gt_attrs"] else None,
+            "A_prec": tot["resp_in_gt"] / tot["resp_attrs"] if tot["resp_attrs"] else None,
+            "skeletons": tot["skeleton"], "attr_counts": tot}

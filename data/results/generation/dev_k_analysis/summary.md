@@ -2,7 +2,7 @@
 
 Esperimento di SVILUPPO sul corpus (20 esercizi, leave-one-out), mai sul test set; versione di configurazione 2 (contesto 32768, max_tokens 4096). Regola registrata PRIMA delle run (docs/decisions.md, voce 94) e applicata cosi' com'e' da `experiments/analyze_k.py`; metriche della voce 92 (J e R su tutte le risposte, 0 per le non valide). Confronto per contenuto, mai per id. La leva vale solo per le condizioni con esempi: sul test set il confronto con random dovra' usare lo stesso k.
 
-Analisi eseguita sul commit `b2a68d9bb3f1` (con modifiche non committate). GT del corpus: 60 diagrammi, sha256 del contenuto `b700693f7f421c5dae9aa1e0608efa90ce668a377bedd37deffb211d45986991` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `87f56f95414607b9…`.
+Analisi eseguita sul commit `df38da2bd2bf` (con modifiche non committate). GT del corpus: 60 diagrammi, sha256 del contenuto `b700693f7f421c5dae9aa1e0608efa90ce668a377bedd37deffb211d45986991` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `87f56f95414607b9…`.
 
 ## Regola di scelta di k (voce 94), applicata cosi' com'e'
 

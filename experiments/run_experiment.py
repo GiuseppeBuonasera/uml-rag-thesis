@@ -69,8 +69,8 @@ from plantuml_format import apollon_to_plantuml  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient  # noqa: E402
 from plan_split import plan_lines, split_plan  # noqa: E402  (voce 126)
 from prompt_builder import (BM25_CONFIG, CONDITIONS, DENSE_CONFIG, FROZEN_CONDITIONS, FROZEN_PATH,  # noqa: E402
-                            RANDOM_SEED_MODES, PromptBuilder, PromptSpec, cl, dense_model, random_seed,
-                            serialize_diagram)
+                            RANDOM_SEED_MODES, STATIC_EXAMPLE_IDS, PromptBuilder, PromptSpec, cl, dense_model,
+                            random_seed, serialize_diagram)
 import token_estimate  # noqa: E402
 
 RESULTS = ROOT / "data" / "results" / "generation"
@@ -200,9 +200,35 @@ def temperatures(cfg: dict) -> list:
     return list(t) if isinstance(t, list) else [None]
 
 
+def ks_for(cfg: dict, cond: str) -> list[int]:
+    """k della condizione: zero_shot 0, static 2; altrimenti la lista `k` del config oppure, se `k` e' una mappa
+    condizione -> lista (voce 132), la lista di quella condizione."""
+    if cond == "zero_shot":
+        return [0]
+    if cond == "static":
+        return [2]
+    k = cfg["k"]
+    if isinstance(k, dict):
+        if cond not in k:
+            raise SystemExit(f"k per condizione: manca la condizione {cond} (presenti: {sorted(k)})")
+        return list(k[cond])
+    return list(k)
+
+
+def skipped_cells(cfg: dict, queries: list[dict]) -> list[str]:
+    """Celle non definite e saltate (voce 132): la condizione static per una query che coincide con un esempio statico
+    (AirTravel, voce 130)."""
+    ids = cfg.get("query_ids")
+    sel = [q for q in queries if not ids or q["id"] in ids]
+    if "static" not in cfg.get("conditions", []):
+        return []
+    return [f"{q['id']}__static" for q in sel if q["id"] in STATIC_EXAMPLE_IDS]
+
+
 def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, float | None]]:
     """(query, spec, ripetizione, temperatura) nell'ordine di esecuzione. zero_shot e static non dipendono da k: una
-    sola volta. Con piu' temperature l'ordine e' query > condizione > k > temperatura > ripetizione."""
+    sola volta. Con piu' temperature l'ordine e' query > condizione > k > temperatura > ripetizione. Le celle di
+    skipped_cells non compaiono."""
     p = cfg.get("prompt", {})
     ids = cfg.get("query_ids")
     sel = [q for q in queries if not ids or q["id"] in ids]
@@ -217,8 +243,9 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
         for cond in cfg["conditions"]:
             if cond not in CONDITIONS:
                 raise SystemExit(f"condizione sconosciuta: {cond}")
-            ks = [0] if cond == "zero_shot" else [2] if cond == "static" else cfg["k"]
-            for k in ks:
+            if cond == "static" and q["id"] in STATIC_EXAMPLE_IDS:  # voce 132: cella non definita, saltata
+                continue
+            for k in ks_for(cfg, cond):
                 spec = PromptSpec(condition=cond, k=k, seed=cfg.get("seed", 0),
                                   serialization=p.get("serialization", "compact"),
                                   layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True),
@@ -257,6 +284,9 @@ def resolve_configuration(cfg: dict, name: str | None) -> dict:
     out["configuration"] = name
     out["client"] = dict(model["client"])
     out["model_metadata"] = dict(model["model_metadata"])
+    for key in ("split", "query_ids"):  # voce 132: una configurazione puo' avere split ed esercizi propri
+        if key in conf:
+            out[key] = conf[key]
     # voce 123: una configurazione puo' precisare le proprie chiavi di prompt (es. istruzioni diverse per formato)
     out["prompt"] = {**cfg.get("prompt", {}), **(conf.get("prompt") or {}), "output_format": conf["output_format"]}
     out["generation"] = {**cfg.get("generation", {}), "structured_output": bool(conf.get("structured_output"))}
@@ -278,11 +308,17 @@ def call_id(qid: str, spec: PromptSpec, r: int, temperature: float | None = None
     return f"{qid}__{spec.condition}__k{spec.k}{t}__r{r}"
 
 
+def thinking_on(cfg: dict) -> bool:
+    """Ragionamento atteso nella risposta: `thinking: true` o un livello (voce 125). `thinking: none` (voce 131) lo
+    SPEGNE esplicitamente nella richiesta (reasoning_effort "none"), per i modelli che lo hanno acceso di default."""
+    return bool(cfg.get("thinking")) and cfg.get("thinking") != "none"
+
+
 def should_stop_on_reasoning(cfg: dict, res) -> bool:
     """stop_on_reasoning: ferma la run se c'e' ragionamento (campo separato o marcatori nel contenuto). Con `thinking:
     true` (voce 125) il ragionamento e' atteso e salvato a parte nel raw: non ferma; i marcatori NEL CONTENUTO pero' si
     registrano nel manifest e invalidano l'analisi (il diagramma deve essere pulito)."""
-    if not cfg.get("stop_on_reasoning") or cfg.get("thinking"):
+    if not cfg.get("stop_on_reasoning") or thinking_on(cfg):
         return False
     return bool(res.reasoning_field or pp.reasoning_markers(res.text))
 
@@ -465,6 +501,9 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
             prov["plantuml_postprocess_version"] = ppu.DEFAULT_VERSION  # v2 dal 2026-10-08 (voce 89)
         if (cfg.get("prompt") or {}).get("output_format") == "compact":
             prov["compact_format_spec"] = "docs/compact_format.md"  # voci 90-91
+        skipped = skipped_cells(cfg, queries)
+        if skipped:  # voce 132: celle non definite (static con la query uguale a un esempio statico)
+            prov["celle_saltate"] = skipped
         if builder.retrieval_source == "frozen":  # voce 129: esempi dal file congelato
             prov["retrieval_frozen"] = str(FROZEN_PATH.relative_to(ROOT)).replace("\\", "/")
             prov["retrieval_frozen_sha256"] = builder.frozen_sha256

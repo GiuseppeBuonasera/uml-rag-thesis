@@ -203,7 +203,7 @@ def fmt(x) -> str:
 
 def build(calls: list[dict], jar: Path, title: str) -> tuple[str, dict]:
     t0 = time.time()
-    cands = {c["id"]: c for c in cl.load_candidates()}
+    cands = {c["id"]: c for c in cl.load_candidates() + cl.load_queries()}  # anche i De Bari del 3b (voce 134)
     queries = sorted({c["q"] for c in calls})
     conds = sorted({c["cond"] for c in calls})
     for c in calls:

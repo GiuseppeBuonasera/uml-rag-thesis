@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Hospital\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Patient\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Doctor\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Nurse\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Illness\", \"attributes\": [\"+ name : string\", \"+ priorityScore : PriorityScore\"]}, {\"name\": \"Diagnosis\", \"attributes\": [\"+ description : string\"]}, {\"name\": \"Treatment\", \"attributes\": [\"+ stage : int\"]}, {\"name\": \"ConsentForm\", \"attributes\": [\"+ signedDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Patient\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Illness\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Illness\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"ConsentForm\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Nurse\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Patient\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Patient\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}], \"enums\": [{\"name\": \"PriorityScore\", \"values\": [\"HIGH\", \"LOW\"]}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 40.37883030000012,
+ "prompt_tokens": 4958,
+ "completion_tokens": 587,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-bqad6q0stp7u4106t0kq9r",
+  "object": "chat.completion",
+  "created": 1791763764,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Hospital\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Patient\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Doctor\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Nurse\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Illness\", \"attributes\": [\"+ name : string\", \"+ priorityScore : PriorityScore\"]}, {\"name\": \"Diagnosis\", \"attributes\": [\"+ description : string\"]}, {\"name\": \"Treatment\", \"attributes\": [\"+ stage : int\"]}, {\"name\": \"ConsentForm\", \"attributes\": [\"+ signedDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Patient\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Illness\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Illness\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"ConsentForm\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Nurse\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Patient\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Patient\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}], \"enums\": [{\"name\": \"PriorityScore\", \"values\": [\"HIGH\", \"LOW\"]}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4958,
+   "completion_tokens": 587,
+   "total_tokens": 5545,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

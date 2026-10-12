@@ -1,0 +1,74 @@
+# CONTROLLO DI GEMMA 4 26B A4B QAT sull'insieme di sviluppo (2026-10-12, voci 131-132): la configurazione di lavoro
+# con il SOLO modello cambiato. Baseline 12B: dev_v5__P-G (PlantUML v5) e dev_c5indent__C-G (compatto v5 + esempi
+# indentati): stessi 20 esercizi, stessi esempi (bm25 k = 3, file congelato = prompt identici), stesse ripetizioni.
+# Regola registrata PRIMA della run (voce 132): experiments/analyze_g26.py. Esercizi di sviluppo, MAI di valutazione.
+# Caricamento: lms load google/gemma-4-26b-a4b-qat --context-length 32768 --gpu 0.5 -y
+#   python experiments/run_experiment.py experiments/configs/dev_g26.yaml --configuration P-G [--resume]
+# Totale: 2 formati x 20 esercizi x 2 ripetizioni = 80 generazioni.
+run_id: dev_g26
+config_version: 2           # contesto 32768, max_tokens 4096 (voce 93), come le baseline
+split: corpus
+query_ids:   # insieme di sviluppo della voce 92, identico a dev_v5.yaml
+  - Boeing
+  - OilWells
+  - Restaurant
+  - EUScienceConnect
+  - HomeForTheElderly
+  - HelpingHands
+  - Bookmaker
+  - BusTransportationManagementSystem
+  - FitnessCompanyConan
+  - Facepage
+  - Musicmatic
+  - AlphaInsurance
+  - ClothingCompany
+  - PizzaDeliveryWithEntertainment
+  - ProjectManagement
+  - HospitalHouseMD
+  - InsuranceCompany
+  - TruckLogistics
+  - Ebike
+  - eHome2020
+conditions: [bm25]
+k: [3]
+repetitions: 2
+seed: 0
+stop_on_reasoning: true
+thinking: none              # voce 131: reasoning_effort "none" in ogni richiesta (il 26B ragiona di default)
+retrieval_source: frozen    # voce 129: esempi da data/retrieval_frozen/retrievals_3b.jsonl
+prompt: {layout: user_only, drop_interactive: true}  # istruzioni e serializzazione per configurazione
+generation:
+  temperature: 0.3
+  top_p: 0.95
+  top_k: 64
+  max_tokens: 4096
+  seed: 42
+plantuml_label_rule: auto_v1
+models:
+  G26:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-26b-a4b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-26b-a4b-qat
+      quantization: QAT (Q4_0), MoE 26B-A4B (circa 4 miliardi di parametri attivi, 8 esperti)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: true          # impostazione salvata di LM Studio (default del modello); spento per richiesta: thinking none
+      kv_cache_quant: F16            # KV cache sulla GPU (offload_kv_cache_to_gpu)
+      flash_attention: true
+      gpu_offload: 0.5               # lms load google/gemma-4-26b-a4b-qat --context-length 32768 --gpu 0.5 -y (voce 131)
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: "circa 9,6 GB del modello (11,0 GB con il desktop), offload GPU 0,5; RAM circa 14,8 GB (prova del 2026-10-12)"
+configurations:
+  P-G: {model: G26, output_format: plantuml, prompt: {instructions_version: v5, serialization: compact}}
+  C-G: {model: G26, output_format: compact, prompt: {instructions_version: v5, serialization: indent2}}

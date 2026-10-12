@@ -115,14 +115,17 @@ INSTRUCTION_VARIANTS = ("base", "targeted")
 # esempi prima di "Examples to follow:", assente in zero-shot), esempi PlantUML nel canonico v5 (ereditarieta' e realizzazione
 # nell'intestazione, plantuml_format.apollon_to_plantuml(version="v5")). Solo per PlantUML e compatto. Il blocco esempi e
 # le voci degli esempi sono quelli della v4.
-INSTRUCTION_VERSIONS = ("v4", "v5", "v5plan")
+INSTRUCTION_VERSIONS = ("v4", "v5", "v5plan", "v5b")
 # v5plan (voce 126): v5 con la risposta in due parti, PLAN (al piu' 15 righe, citazioni brevi dal testo) e DIAGRAM;
 # istruzioni templates/v5plan_<formato>_instructions.txt (v5 con il solo paragrafo OUTPUT FORMAT cambiato), stesso
 # blocco esempi e stessi esempi della v5 (che mostrano SOLO diagrammi), riga finale della traccia per il piano
 V5PLAN_INSTRUCTION_TEMPLATES = {"plantuml": "v5plan_plantuml_instructions.txt",
                                 "compact": "v5plan_compact_instructions.txt"}
 V5PLAN_FINAL_LINE = "Now write the PLAN and then the DIAGRAM for this system only."
-V5_FAMILY = ("v5", "v5plan")
+# v5b (voce 135): SOLO compatto; la v5 con 4 righe cambiate (attributi da elencare tutti, molteplicita' richieste);
+# esempi, blocco esempi, traccia e riga finale identici alla v5
+V5B_INSTRUCTION_TEMPLATES = {"compact": "v5b_compact_instructions.txt"}
+V5_FAMILY = ("v5", "v5plan", "v5b")
 V5_INSTRUCTION_TEMPLATES = {"plantuml": "v5_plantuml_instructions.txt", "compact": "v5_compact_instructions.txt"}
 V5_FINAL_LINE = {"plantuml": "Now write the PlantUML diagram for this system only.",
                  "compact": "Now write the compact JSON diagram for this system only."}
@@ -155,6 +158,8 @@ class PromptSpec:
             raise ValueError(f"versione delle istruzioni sconosciuta: {self.instructions_version}")
         if self.instructions_version in V5_FAMILY and self.output_format not in V5_INSTRUCTION_TEMPLATES:
             raise ValueError(f"istruzioni v5 solo per {tuple(V5_INSTRUCTION_TEMPLATES)}, non per {self.output_format}")
+        if self.instructions_version == "v5b" and self.output_format not in V5B_INSTRUCTION_TEMPLATES:
+            raise ValueError(f"istruzioni v5b solo per {tuple(V5B_INSTRUCTION_TEMPLATES)}, non per {self.output_format}")
         if self.instructions_version in V5_FAMILY and self.instructions_variant != "base":
             raise ValueError("istruzioni v5: il blocco mirato della voce 98 vale solo per le v4")
         if self.serialization not in SERIALIZATIONS or self.layout not in LAYOUTS:
@@ -197,6 +202,10 @@ def serialize_diagram(diagram: dict, serialization: str, drop_interactive: bool)
     if serialization == "compact":
         return json.dumps(d, ensure_ascii=False, separators=(",", ":"))
     return json.dumps(d, ensure_ascii=False, indent=2)
+
+
+# id degli esempi della condizione static (static_examples): una query con uno di questi id non ha la cella static
+STATIC_EXAMPLE_IDS = ("STATIC_example_1_bank_loans", "AirTravel")
 
 
 def static_examples(candidates_by_id: dict[str, dict]) -> list[dict]:
@@ -276,6 +285,7 @@ class PromptBuilder:
         self.instructions_by_format = {f: _template(t) for f, t in INSTRUCTION_TEMPLATES.items()}
         self.instructions_v5 = {f: _template(t) for f, t in V5_INSTRUCTION_TEMPLATES.items()}
         self.instructions_v5plan = {f: _template(t) for f, t in V5PLAN_INSTRUCTION_TEMPLATES.items()}
+        self.instructions_v5b = {f: _template(t) for f, t in V5B_INSTRUCTION_TEMPLATES.items()}
         self.names = {i: cl.class_names(c["diagram_apollon_json"]) for i, c in self.all_by_id.items()}
         self.tokens = {i: relevance.class_tokens(c["diagram_apollon_json"]) for i, c in self.all_by_id.items()}
         self._dense = dense
@@ -423,6 +433,7 @@ class PromptBuilder:
         user = (examples_block + "\n" if examples_block else "") + task
         instructions = (self.instructions_v5[spec.output_format] if spec.instructions_version == "v5"
                         else self.instructions_v5plan[spec.output_format] if spec.instructions_version == "v5plan"
+                        else self.instructions_v5b[spec.output_format] if spec.instructions_version == "v5b"
                         else self.instructions_by_format[spec.output_format])
         if spec.instructions_variant == "targeted":
             instructions = targeted_instructions(instructions, spec.output_format)

@@ -132,6 +132,8 @@ def main() -> None:
     check_reexports()
     check_by_hand()
     check_versioned_analyses()
+    from evaluation import test_element_metrics  # metriche per elemento (voce 136)
+    test_element_metrics.run_all()
     print("Tutti i test delle metriche sono passati.")
 
 

@@ -1,0 +1,59 @@
+# LEVA "ATTRIBUTI DEL COMPATTO" (2026-10-12, voce 135): istruzioni v5b del compatto (la v5 con 4 righe cambiate:
+# attributi da elencare tutti, molteplicita' richieste). Identico a dev_g26.yaml C-G salvo le istruzioni e gli
+# esercizi: SOTTOINSIEME di 8 esercizi di sviluppo (decisione dell'utente): i 6 con risposte della baseline senza
+# attributi + 2 di controllo. Baseline: dev_g26__C-G (stessi esercizi e ripetizioni). Regola registrata PRIMA della
+# run: experiments/analyze_v5b.py. Totale: 8 esercizi x 2 ripetizioni = 16 generazioni.
+run_id: dev_g26b
+config_version: 2           # contesto 32768, max_tokens 4096 (voce 93), come le baseline
+split: corpus
+query_ids:   # voce 135: i 6 con risposte senza attributi + 2 di controllo (A piu' alto)
+  - AlphaInsurance
+  - Boeing
+  - Ebike
+  - HospitalHouseMD
+  - InsuranceCompany
+  - ProjectManagement
+  - EUScienceConnect
+  - Facepage
+conditions: [bm25]
+k: [3]
+repetitions: 2
+seed: 0
+stop_on_reasoning: true
+thinking: none              # voce 131: reasoning_effort "none" in ogni richiesta (il 26B ragiona di default)
+retrieval_source: frozen    # voce 129: esempi da data/retrieval_frozen/retrievals_3b.jsonl
+prompt: {layout: user_only, drop_interactive: true}  # istruzioni e serializzazione per configurazione
+generation:
+  temperature: 0.3
+  top_p: 0.95
+  top_k: 64
+  max_tokens: 4096
+  seed: 42
+plantuml_label_rule: auto_v1
+models:
+  G26:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-26b-a4b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-26b-a4b-qat
+      quantization: QAT (Q4_0), MoE 26B-A4B (circa 4 miliardi di parametri attivi, 8 esperti)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: true          # impostazione salvata di LM Studio (default del modello); spento per richiesta: thinking none
+      kv_cache_quant: F16            # KV cache sulla GPU (offload_kv_cache_to_gpu)
+      flash_attention: true
+      gpu_offload: 0.5               # lms load google/gemma-4-26b-a4b-qat --context-length 32768 --gpu 0.5 -y (voce 131)
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: "circa 9,6 GB del modello (11,0 GB con il desktop), offload GPU 0,5; RAM circa 14,8 GB (prova del 2026-10-12)"
+configurations:
+  C-G: {model: G26, output_format: compact, prompt: {instructions_version: v5b, serialization: indent2}}

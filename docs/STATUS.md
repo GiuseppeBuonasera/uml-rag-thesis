@@ -21,6 +21,20 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
   dall'espansore unico.
 
 ## Stato
+- **Metriche per elemento (2026-10-12, voce 136)**: `evaluation/element_metrics.py` (P / R / F1 per classi,
+  attributi, relazioni strutturali, generalizzazioni; abbinamento esatto e rilassato), ricalcolo descrittivo sul dev
+  set in `data/results/evaluation_dev/summary.md` (`python evaluation/evaluate_dev.py`). Sul dev set il rilassato
+  coincide con l'esatto. Proposta per il 3b (F1 macro delle relazioni come primaria) da portare ai relatori.
+- **Modello del 3b (2026-10-12, voce 133): Gemma 4 26B A4B QAT**, adottato dalla regola della voce 132 sul dev set
+  (non inferiore in entrambi i formati: PlantUML R 0,347 contro 0,361, compatto R 0,344 contro 0,307; stima del 3b
+  16,8 ore). Caricamento: `lms load google/gemma-4-26b-a4b-qat --context-length 32768 --gpu 0.5 -y`; ragionamento
+  spento per richiesta (`thinking: none`). Da confermare con i relatori (domanda 8).
+- **Esecuzione (2026-10-12, voci 131-132)**: notebook `notebooks/passo3b.ipynb` per il controllo del 26B (passo 2, 80
+  generazioni, regola in `experiments/analyze_g26.py`) e per il 3b (`experiments/configs/passo3b.yaml`, 2.262
+  generazioni sui 54 di valutazione, configurazioni per il 26B e per il 12B), in background con lo stato di
+  avanzamento (`experiments/run_batch.py`, `experiments/progress.py`). Interruttori a False; il 3b resta bloccato.
+  Gemma 4 26B A4B QAT: caricato con `--gpu 0.5`, ragionamento spento con `thinking: none`, circa 2,2 volte più lento
+  del 12B (stima del 3b circa 18 ore).
 - **Retrieval pronto per il 3b (2026-10-11, voce 129)**: esempi CONGELATI in `data/retrieval_frozen/retrievals_3b.jsonl`
   (80 query × bm25 k = 2 / 3, dense k = 3, hybrid k = 3, random k = 3 in 3 ripetizioni con seme per esercizio e
   ripetizione, voce 130; sha256 e provenienza nel `.meta.json`); il 3b usa `retrieval_source: frozen` e
@@ -121,6 +135,10 @@ python retrieval/freeze_retrievals.py                # UNA volta: esempi congela
 python generation/check_frozen.py                    # file congelato = dal vivo e = run dev (denso reale)
 python retrieval/check_protocols.py                  # protocolli storici riprodotti byte per byte (circa 8 minuti)
 python retrieval/analyze_dev80.py                    # analisi descrittiva sui 26 di sviluppo (pool unico, file congelato)
+# esecuzione del passo 2 (controllo del 26B) e del 3b: notebooks/passo3b.ipynb (voce 132); da riga di comando:
+python experiments/run_batch.py passo2_g26 experiments/configs/dev_g26.yaml::P-G experiments/configs/dev_g26.yaml::C-G
+python experiments/progress.py passo2_g26             # stato: fatte / attese, validita', tempo residuo
+python experiments/analyze_g26.py                    # regola della voce 132, a run finite
 
 # --- generazione (Passo 3a): corpus/ e config_bm25.yaml in sola lettura; nessun LLM reale nei test ---
 python generation/test_generation.py                 # prompt, cache, client su server HTTP finto, estrazione, L0-L4, runner
