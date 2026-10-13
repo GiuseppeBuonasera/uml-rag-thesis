@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Resident {\n  + name : string\n  + street_address : string\n  + phone_number : string\n  + email : string\n}\n\nclass Item {\n  + description : string\n  + dimensions : string\n  + weight : float\n  + category : string\n}\n\nclass Vehicle {\n  + storage_space : float\n}\n\nclass Route {\n  + date : date\n}\n\nclass VolunteerDriver {\n  + available_days : string[]\n}\n\nclass Pickup {\n  + scheduled_time : time\n}\n\nclass Location {\n  + name : string\n}\n\nclass DistributionCenter {\n  + address : string\n}\n\nclass FoodBank {\n  + name : string\n}\n\nclass Client {\n  + home_address : string\n  + needed_categories : string[]\n}\n\nclass Article {\n  + description : string\n  + category : string\n  + rfid_tag : string\n}\n\nLocation \"1\" -- \"*\" DistributionCenter\nLocation \"1\" -- \"*\" FoodBank\n\nResident \"1\" -- \"*\" Item : provides\nResident \"1\" -- \"0..1\" Client : is a\nClient \"1\" -- \"*\" Article : receives\n\nVolunteerDriver \"1\" -- \"0..*\" Route : drives\nRoute \"1\" -- \"1\" Vehicle : assigned to\nRoute \"1\" -- \"*\" Pickup : contains\nPickup \"1\" -- \"1\" Resident : at\nPickup \"1\" -- \"1\" Item : collects\n\nVehicle \"1\" -- \"*\" Pickup : performs\n\nArticle \"*\" -- \"1\" DistributionCenter : processed at\nArticle \"1\" -- \"1\" Item : is a\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 20.841819100000066,
+ "prompt_tokens": 2929,
+ "completion_tokens": 365,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gxx8jr8feyndtb0xv1odkf",
+  "object": "chat.completion",
+  "created": 1791810377,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Resident {\n  + name : string\n  + street_address : string\n  + phone_number : string\n  + email : string\n}\n\nclass Item {\n  + description : string\n  + dimensions : string\n  + weight : float\n  + category : string\n}\n\nclass Vehicle {\n  + storage_space : float\n}\n\nclass Route {\n  + date : date\n}\n\nclass VolunteerDriver {\n  + available_days : string[]\n}\n\nclass Pickup {\n  + scheduled_time : time\n}\n\nclass Location {\n  + name : string\n}\n\nclass DistributionCenter {\n  + address : string\n}\n\nclass FoodBank {\n  + name : string\n}\n\nclass Client {\n  + home_address : string\n  + needed_categories : string[]\n}\n\nclass Article {\n  + description : string\n  + category : string\n  + rfid_tag : string\n}\n\nLocation \"1\" -- \"*\" DistributionCenter\nLocation \"1\" -- \"*\" FoodBank\n\nResident \"1\" -- \"*\" Item : provides\nResident \"1\" -- \"0..1\" Client : is a\nClient \"1\" -- \"*\" Article : receives\n\nVolunteerDriver \"1\" -- \"0..*\" Route : drives\nRoute \"1\" -- \"1\" Vehicle : assigned to\nRoute \"1\" -- \"*\" Pickup : contains\nPickup \"1\" -- \"1\" Resident : at\nPickup \"1\" -- \"1\" Item : collects\n\nVehicle \"1\" -- \"*\" Pickup : performs\n\nArticle \"*\" -- \"1\" DistributionCenter : processed at\nArticle \"1\" -- \"1\" Item : is a\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2929,
+   "completion_tokens": 365,
+   "total_tokens": 3294,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

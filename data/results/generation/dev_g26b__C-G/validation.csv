@@ -1,0 +1,17 @@
+call_id,query_id,condition,k,repetition,temperature,L0_extracted,L1_json,L2_schema,L3_integrity,L4_style,level,failure,truncated,finish_reason,reasoning_removed,extraction,errors,style_raw,l4_rewrites,format_issues,layout_issues,C0_found,C1_valid_json,C2b_converted,C2_clean,compact_issues,normalizations,style_raw_count,l4_rewrites_total,compact_issues_count
+AlphaInsurance__bm25__k3__r0,AlphaInsurance,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__bm25__k3__r1,AlphaInsurance,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k3__r0,Boeing,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k3__r1,Boeing,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__bm25__k3__r0,Ebike,bm25,3,0,0.3,True,True,True,True,False,3,style,False,stop,False,raw,"{""C2"": [""chiave di primo livello non prevista (ignorata): 'enums'""], ""L4"": [""output: tipo 'ControllerState' dell'attributo '+ state : ControllerState' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe Controller)""]}","[""output: tipo 'ControllerState' dell'attributo '+ state : ControllerState' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe Controller)""]",{},,,True,True,True,False,"{""chiave di primo livello non prevista (ignorata)"": 1}",{},1,0,1
+Ebike__bm25__k3__r1,Ebike,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k3__r0,EUScienceConnect,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k3__r1,EUScienceConnect,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k3__r0,Facepage,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k3__r1,Facepage,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__bm25__k3__r0,HospitalHouseMD,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__bm25__k3__r1,HospitalHouseMD,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k3__r0,ProjectManagement,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k3__r1,ProjectManagement,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k3__r0,InsuranceCompany,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k3__r1,InsuranceCompany,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0

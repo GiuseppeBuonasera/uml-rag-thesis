@@ -21,6 +21,19 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
   dall'espansore unico.
 
 ## Stato
+- **Leva v5b, attributi del compatto (2026-10-13, voce 146)**: riallineata alla configurazione di lavoro (vista
+  `clean_v1`) e alle metriche per elemento; regola definitiva in `experiments/analyze_v5b.py` (scheletri ≤ 3 dai 7 della
+  baseline, controlli sugli attributi, non inferiorità su relazioni, R, M, Vc). Config `dev_g26b.yaml`, 16
+  generazioni, solo compatto. **Esito (voce 148): NON adottata** (scheletri 7 → 8); il compatto del 3b resta v5 e le
+  risposte senza attributi restano un limite dichiarato (legate agli esempi con classi senza attributi, analisi
+  descrittiva nella voce 148). Leva "piano breve" (v5plan) chiusa senza adozione (voce 147). Nessuna leva aperta.
+- **Dense fuori dal 3b (2026-10-12, voci 143-144, decisione dell'utente)**: condizioni del 3b zero_shot, static, random,
+  bm25 k = 2 e 3, hybrid; 1.938 generazioni (969 per formato), circa 14,5 ore col 26B.
+- **Hybrid con la configurazione attuale (2026-10-12, voci 140-141)**: non inferiore a bm25 sul dev set in entrambi i
+  formati (F1 relazioni 0,410 contro 0,412 in PlantUML, 0,408 contro 0,418 nel compatto; 80/80 valide): resta nel 3b.
+- **Esempi senza istruzioni per lo studente (2026-10-12, voci 138-139)**: vista `clean_v1` (11 frasi tolte da 6
+  esercizi quando compaiono come esempio) ADOTTATA per il 3b (non inferiore in entrambi i formati sul dev set);
+  `passo3b.yaml` con `prompt.example_view: clean_v1`.
 - **Metriche per elemento (2026-10-12, voce 136)**: `evaluation/element_metrics.py` (P / R / F1 per classi,
   attributi, relazioni strutturali, generalizzazioni; abbinamento esatto e rilassato), ricalcolo descrittivo sul dev
   set in `data/results/evaluation_dev/summary.md` (`python evaluation/evaluate_dev.py`). Sul dev set il rilassato

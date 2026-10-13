@@ -1,0 +1,25 @@
+# Vista "clean_v1" degli ESEMPI (2026-10-12, voce 138): frasi tolte dalla traccia di un esercizio SOLO quando compare
+# come esempio nel prompt. Il GT, la traccia della query e il retrieval (che usa le descrizioni originali) non cambiano.
+# Regola: si toglie una frase solo se da' istruzioni sul compito, sullo strumento o sulla cornice dell'esercizio e non
+# dice nulla del sistema da modellare; si tiene ogni frase con informazione di dominio, anche in seconda persona o
+# all'imperativo, comprese quelle che identificano il sistema ("Design an information system for managing a gym",
+# "Generate a class diagram of an EBike..."): FitnessCompanyConan, DB18_LibrarySystem, Ebike, Gym, Menso restano
+# intatti. Ogni frase deve comparire ESATTAMENTE una volta nella descrizione dell'esercizio (altrimenti il prompt
+# builder si ferma). File congelato: sha256 nel test.
+BankAccount:
+  - "Create a suitable class diagram from the given informal description."
+GasStation_TUW:
+  - "Model the following situation using a UML class diagram based on the following information:"
+GameArea:
+  - "Use at least one role name and at least one association name."
+  - "(You do not need to model setters and getters)."
+  - "Ignore the visibilities."
+Musicmatic:
+  - "Being economists, they are unaware of the specificities of databases and have therefore asked you to create a UML class diagram."
+PizzaDeliveryWithEntertainment:
+  - "He heard from other people that you are following the course on database management, and asks you to design the UML class diagram."
+  - "Afterwards, he will use the UML class diagram to ask programmers to implement the app."
+SellingGoods:
+  - "This exercise teaches you to build and re-evaluate your solution in an iterative manner to handle changing requirements."
+  - "First, create a class diagram for the use case described in STEP 1, and add attributes, event types, non-default FSMs and constraints if necessary."
+  - "For each step, revise your model and add, remove or change elments where necessary."

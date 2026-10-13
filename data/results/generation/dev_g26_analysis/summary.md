@@ -2,7 +2,7 @@
 
 SVILUPPO: 20 esercizi, pool unico, bm25 k = 3 (file congelato), temperatura 0,3, ragionamento spento, 2 ripetizioni. Baseline 12B: dev_v5__P-G (PlantUML v5) e dev_c5indent__C-G (compatto v5 + esempi indentati). Regola registrata PRIMA della run (voce 132), applicata da `experiments/analyze_g26.py`.
 
-Analisi eseguita sul commit `df38da2bd2bf` (con modifiche non committate). GT del corpus: 60 diagrammi, sha256 del contenuto `b700693f7f421c5dae9aa1e0608efa90ce668a377bedd37deffb211d45986991` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `87f56f95414607b9…`.
+Analisi eseguita sul commit `8d5001f7b182` (con modifiche non committate). GT del corpus: 60 diagrammi, sha256 del contenuto `b700693f7f421c5dae9aa1e0608efa90ce668a377bedd37deffb211d45986991` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `87f56f95414607b9…`.
 
 ## Regola (voce 132)
 

@@ -251,7 +251,8 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
                                   layout=p.get("layout", "user_only"), drop_interactive=p.get("drop_interactive", True),
                                   output_format=p.get("output_format", "apollon"),
                                   instructions_variant=p.get("instructions_variant", "base"),
-                                  instructions_version=p.get("instructions_version", "v4"))
+                                  instructions_version=p.get("instructions_version", "v4"),
+                                  example_view=p.get("example_view", "raw"))  # voce 138
                 for t in temperatures(cfg):
                     for r in range(cfg.get("repetitions", 1)):
                         if cond == "random" and mode == "per_esercizio_ripetizione":  # voce 130
@@ -501,6 +502,11 @@ def run(cfg: dict, builder: PromptBuilder, queries: list[dict], out_dir: Path, r
             prov["plantuml_postprocess_version"] = ppu.DEFAULT_VERSION  # v2 dal 2026-10-08 (voce 89)
         if (cfg.get("prompt") or {}).get("output_format") == "compact":
             prov["compact_format_spec"] = "docs/compact_format.md"  # voci 90-91
+        view = (cfg.get("prompt") or {}).get("example_view", "raw")
+        if view != "raw":  # voce 138: frasi tolte dagli esempi, file congelato
+            from prompt_builder import EXAMPLE_VIEW_FILES
+            prov["example_view"] = view
+            prov["example_view_sha256"] = hashlib.sha256(EXAMPLE_VIEW_FILES[view].read_bytes()).hexdigest()
         skipped = skipped_cells(cfg, queries)
         if skipped:  # voce 132: celle non definite (static con la query uguale a un esempio statico)
             prov["celle_saltate"] = skipped
@@ -622,6 +628,11 @@ def check_retrieval_source(cfg: dict) -> None:
             and cfg.get("random_seed") != "per_esercizio_ripetizione"):
         raise SystemExit("config del Passo 3b con la condizione random: serve `random_seed: per_esercizio_ripetizione` "
                          "(voce 130)")
+    with_examples = set(cfg.get("conditions") or []) - {"zero_shot"}
+    if (cfg.get("passo") == "3b" and with_examples and not mock
+            and (cfg.get("prompt") or {}).get("example_view") != "clean_v1"):
+        raise SystemExit("config del Passo 3b con condizioni che mostrano esempi: serve `prompt.example_view: clean_v1` "
+                         "(voce 139)")
 
 
 def main(argv: list[str] | None = None) -> int:

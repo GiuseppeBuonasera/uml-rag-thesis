@@ -3,6 +3,8 @@
 # esercizi: SOTTOINSIEME di 8 esercizi di sviluppo (decisione dell'utente): i 6 con risposte della baseline senza
 # attributi + 2 di controllo. Baseline: dev_g26__C-G (stessi esercizi e ripetizioni). Regola registrata PRIMA della
 # run: experiments/analyze_v5b.py. Totale: 8 esercizi x 2 ripetizioni = 16 generazioni.
+# Riallineata il 2026-10-13 (voce 146): esempi puliti (clean_v1) come la configurazione di lavoro; baseline bm25 +
+# clean_v1 ricostruita da dev_g26 e dev_g26ev; regola definitiva in experiments/analyze_v5b.py.
 run_id: dev_g26b
 config_version: 2           # contesto 32768, max_tokens 4096 (voce 93), come le baseline
 split: corpus
@@ -22,7 +24,7 @@ seed: 0
 stop_on_reasoning: true
 thinking: none              # voce 131: reasoning_effort "none" in ogni richiesta (il 26B ragiona di default)
 retrieval_source: frozen    # voce 129: esempi da data/retrieval_frozen/retrievals_3b.jsonl
-prompt: {layout: user_only, drop_interactive: true}  # istruzioni e serializzazione per configurazione
+prompt: {layout: user_only, drop_interactive: true, example_view: clean_v1}  # voce 146; istruzioni e serializzazione per configurazione
 generation:
   temperature: 0.3
   top_p: 0.95

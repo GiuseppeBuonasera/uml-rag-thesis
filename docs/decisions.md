@@ -145,6 +145,18 @@ non sono state modificate.
 134. 2026-10-12 — Confronto visivo nel notebook: ground truth, PlantUML e JSON compatto affiancati
 135. 2026-10-12 — Leva "attributi del compatto" (istruzioni v5b): testi, metrica e regola registrati prima della run
 136. 2026-10-12 — Metriche standard P / R / F1 per tipo di elemento (esatto e rilassato): ricalcolo sul dev set e proposta per il 3b
+137. 2026-10-12 — Qualità degli esempi che il 3b mostrerà (solo descrittivo)
+138. 2026-10-12 — Leva "esempi senza istruzioni per lo studente" (vista clean_v1): testi e regola registrati prima della run
+139. 2026-10-12 — Leva "esempi senza istruzioni per lo studente": esito (clean_v1 adottata per il 3b)
+140. 2026-10-12 — Passo 2 rifatto con il retriever hybrid (26B, configurazione attuale): regola registrata prima della run
+141. 2026-10-12 — Passo 2 con hybrid: esito (hybrid resta nel 3b)
+142. 2026-10-12 — Passo 2 rifatto con il retriever dense (26B, configurazione attuale): regola registrata prima della run
+143. 2026-10-12 — Passo 2 con dense: esito (inferiore a bm25 nel compatto, di poco: decide l'utente)
+144. 2026-10-12 — Decisione dell'utente: il retriever dense esce dal Passo 3b
+145. 2026-10-12 — Strumento di confronto visivo bm25 / hybrid / ground truth (solo lettura)
+146. 2026-10-13 — Leva v5b (attributi del compatto): riallineata alla configurazione attuale e alle metriche nuove, regola prima della run
+147. 2026-10-13 — Leva "piano breve" (v5plan): chiusa senza adozione
+148. 2026-10-13 — Leva v5b: esito (NON adottata); risposte senza attributi del compatto lasciate come limite
 
 ## Formato
 
@@ -5058,3 +5070,247 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   riconosciuti dal livello rilassato (es. Client / Customer).
 - **Rimandati, da riprendere con i relatori**: abbinamento con embedding, distanza di Nikiforova, qualità intrinseca
   del diagramma, valutazione umana.
+
+### [2026-10-12] Qualità degli esempi che il 3b mostrerà — SOLO DESCRITTIVO
+- **Domanda dell'utente**: il corpus si può rendere più leggibile al modello? Vincolo: il GT è il riferimento della
+  valutazione (congelato, evalset-v1 / testset-v2) e non si modifica; si può cambiare solo COME un esercizio viene
+  mostrato quando fa da esempio. Prima di qualsiasi leva, analisi descrittiva degli esempi del file congelato
+  (`retrieval/analyze_example_quality.py`, `data/results/retrieval/examples_quality_2026-10-12_8d5001f/`): si guarda
+  solo il GT degli esempi, mai quello della query.
+- **Risultati, query di VALUTAZIONE** (54; random: le 3 ripetizioni insieme, quindi la quota di query è gonfiata):
+  - **istruzioni per lo studente** (7 esercizi della voce 128): 7-10 % degli esempi; query con almeno un esempio così:
+    bm25 k = 3 27,8 %, hybrid 22,2 %, dense 18,5 %, bm25 k = 2 14,8 %;
+  - **attributi senza tipo**: 16-20 % degli attributi degli esempi con bm25, hybrid e random, ma **31,5 % con dense**,
+    che recupera più De Bari (38,3 % degli esempi contro 21-24 %); query con almeno un esempio con oltre metà degli
+    attributi senza tipo: dense 63,0 %, bm25 k = 3 33,3 %, hybrid 38,9 %;
+  - **molteplicità vuote**: 7-8 % degli estremi, uniformi tra i retriever;
+  - esempi senza attributi: 2,5-4,9 %.
+  Sviluppo (26): stesso quadro (dense 32,1 % di esempi De Bari, 26,6 % di attributi senza tipo).
+- **Lettura**: (1) circa un quarto delle query di valutazione con bm25 k = 3 avrà nel prompt almeno un esempio con
+  istruzioni rivolte allo studente; (2) **la qualità degli esempi non è uniforme tra i retriever**: dense mostra più
+  esempi De Bari e quasi il doppio di attributi senza tipo. Sul dev set lo stile dei De Bari non viene copiato nelle
+  risposte (attributi senza tipo ≤ 2 %), ma nel confronto tra retriever del 3b la provenienza e la completezza degli
+  esempi vanno riportate come covariate descrittive (insieme al numero di esempi De Bari, proposta precedente).
+- Nessuna decisione: retriever e file congelato invariati. Leva candidata, se l'utente la vuole: togliere le
+  istruzioni per lo studente dalle tracce mostrate come ESEMPIO (GT, traccia della query e retrieval invariati),
+  registrata e provata come le altre.
+
+### [2026-10-12] Leva "esempi senza istruzioni per lo studente" (vista clean_v1) — registrata PRIMA delle generazioni
+- **Origine**: voce 137 (circa un quarto delle query di valutazione con bm25 k = 3 ha nel prompt un esempio con
+  istruzioni rivolte allo studente). Richiesta dell'utente di preparare la leva. **Un solo tentativo**; dev set già
+  usato per le leve precedenti (dichiarato).
+- **Intervento** (`generation/example_view_clean_v1.yaml`, congelato con sha256 nel test): quando un esercizio compare
+  come ESEMPIO, dalla sua traccia si tolgono **11 frasi in 6 esercizi** (BankAccount 1, GasStation_TUW 1, GameArea 3,
+  Musicmatic 1, PizzaDeliveryWithEntertainment 2, SellingGoods 3). L'elenco della voce 128 (ricerca per parole chiave,
+  non esaustiva) è stato riletto su tutte le 80 tracce con criteri più larghi (verbi all'imperativo, "class diagram",
+  "UML"...) PRIMA di qualsiasi generazione: aggiunte "Create a suitable class diagram from the given informal
+  description." (BankAccount), "Use at least one role name and at least one association name." (GameArea) e
+  "Afterwards, he will use the UML class diagram to ask programmers to implement the app." (Pizza…). **Regola di scelta**: si toglie una frase solo se dà istruzioni sul
+  compito, sullo strumento o sulla cornice dell'esercizio e non dice nulla del sistema da modellare; si tiene ogni
+  frase con informazione di dominio, anche in seconda persona o all'imperativo, comprese quelle che identificano il
+  sistema ("Generate a class diagram of an EBike…", "Design an information system for managing a gym", "Create a
+  database for a factory…", "Design a system for a movie-shop…"; restano intatti FitnessCompanyConan, con i suoi vincoli
+  "you can assume…", DB18_LibrarySystem, la cui unica frase "exercise" dice qual è il sistema, e Menso; in GameArea
+  resta "Write down the classes game element, shape, object and opponent…", che elenca le classi; in SellingGoods
+  restano i passi STEP 1-4, dove "you" è il titolare dell'azienda). Solo rimozione di frasi intere, nessuna riscrittura.
+  **Invariati**: GT, traccia della QUERY, retrieval e file congelato (il retrieval usa le descrizioni originali).
+- **Implementazione**: `PromptSpec.example_view` = `raw` (default, prompt identici a prima) | `clean_v1`; chiave di
+  config `prompt.example_view`; ogni frase deve comparire esattamente una volta (altrimenti errore); sha256 del file
+  nella provenienza delle run.
+- **Portata nel 3b** (file congelato): query di valutazione toccate 16/54 con bm25 k = 3, 8 con k = 2, 14 hybrid, 9
+  dense, 24 random (3 ripetizioni insieme). File congelato: sha256
+  `756ce36bfdde20fe82e20dafc5d9ada48c97fcbdb6e121fb8c1ec05c23e323f0`.
+- **Prova sul dev set** (`experiments/configs/dev_g26ev.yaml`, run `dev_g26ev__P-G` e `__C-G`): le **8 query
+  dell'insieme di sviluppo toccate con bm25 k = 3** (AlphaInsurance, ClothingCompany, Facepage, FitnessCompanyConan,
+  Musicmatic, PizzaDeliveryWithEntertainment, Restaurant, eHome2020) × 2 ripetizioni × 2 formati = **32 generazioni**,
+  26B, configurazione di lavoro (PlantUML v5; compatto v5 + esempi indentati) con la sola vista clean_v1. Baseline:
+  `dev_g26__P-G` / `__C-G` sulle stesse 8 query.
+- **REGOLA** (`experiments/analyze_exview.py`, scritto e testato prima della run), per formato, confronto appaiato su
+  16 risposte: **adottare clean_v1 (per tutte le condizioni del 3b) se, in ENTRAMBI i formati, dF1_relazioni ≥ −0,03
+  (F1 macro delle relazioni strutturali, abbinamento rilassato, voce 136) E dR ≥ −0,03 E dVc ≥ −1 E meno di 2
+  troncamenti.** È una regola di NON INFERIORITÀ: la pulizia è giustificata a priori (le frasi tolte non descrivono il
+  sistema), la prova serve a escludere che peggiori. Se passa in un solo formato, decide l'utente. Riportati: F1 di
+  classi e generalizzazioni, J, token, latenza e il dettaglio per esercizio.
+- **STOP** prima delle generazioni: la prova parte solo con il via dell'utente.
+
+### [2026-10-12] Leva "esempi senza istruzioni per lo studente": esito della regola della voce 138
+- **Esecuzione**: batch `leva_exview` dal notebook `notebooks/passo3b.ipynb` (sezione 3 bis, kernel `.venv`), 32
+  generazioni dalle 13:21 alle 13:37 del 2026-10-12, 26B caricato con `--gpu 0.5`; 32/32 valide (livello 4), nessun
+  troncamento, nessun ragionamento. Run `dev_g26ev__P-G` e `__C-G`; analisi
+  `data/results/generation/dev_g26ev_analysis/summary.md`.
+- **Regola applicata così com'è** (`experiments/analyze_exview.py`), 16 risposte per formato, contro dev_g26 sulle
+  stesse 8 query:
+
+  | formato | dF1_relazioni | dR | dVc | troncate | esito |
+  |---|---|---|---|---|---|
+  | PlantUML | +0,002 (0,439 → 0,441) | −0,019 (0,487 → 0,468) | 0 | 0 | non inferiore |
+  | JSON compatto | +0,003 (0,406 → 0,409) | 0,000 (0,455) | 0 | 0 | non inferiore |
+
+  **Esito: vista `clean_v1` ADOTTATA per tutte le condizioni del 3b**: `experiments/configs/passo3b.yaml` ha
+  `prompt.example_view: clean_v1` (le configurazioni di sviluppo restano `raw`).
+- **Fuori regola**: J +0,011 / +0,014, F1 classi +0,008 / +0,017, F1 generalizzazioni +0,020 / +0,010 (PlantUML /
+  compatto), token di output un po' meno (242 contro 254; 660 contro 688). Per esercizio le differenze vanno nei due
+  sensi (es. AlphaInsurance PlantUML 0,345 → 0,250, compatto 0,174 → 0,267): effetto complessivo nullo, come atteso da
+  una pulizia; Restaurant ha F1 delle relazioni 0 in tutte e quattro le celle (da guardare a parte, indipendente dalla
+  leva).
+- **Limite dichiarato**: provata solo con bm25 k = 3 e su 8 esercizi; nel 3b si applica anche a static (nessun esempio
+  toccato), random, dense e hybrid.
+- **Obbligatoria nel 3b** (2026-10-12): il runner rifiuta un config `passo: 3b` con condizioni che mostrano esempi
+  senza `prompt.example_view: clean_v1` (client finti esclusi, come per le altre guardie); i template
+  `gemma4_12b_qat_template.yaml` e `lmstudio_template.yaml` la impostano. Le run di sviluppo storiche restano `raw`.
+
+### [2026-10-12] Passo 2 rifatto con il retriever hybrid — config e regola registrate PRIMA delle generazioni
+- **Richiesta dell'utente**: rifare il controllo sul dev set con le scelte attuali e il retriever hybrid. Motivo: gli
+  unici confronti tra retriever con generazioni (voci 109-110) sono con il 12B, le istruzioni v4 e il pool storico di
+  58; con la configurazione attuale dense e hybrid non sono mai stati provati, e l'utente valuta se usare nel 3b il solo
+  bm25. Dev set già usato per le leve precedenti (dichiarato).
+- **Trattamento** (`experiments/configs/dev_g26hy.yaml`, run `dev_g26hy__P-G` e `__C-G`): configurazione di lavoro
+  del 3b sui 20 esercizi di sviluppo × 2 ripetizioni × 2 formati = **80 generazioni**: 26B (`thinking: none`, `--gpu
+  0.5`), PlantUML v5 e compatto v5 + esempi indentati, vista degli esempi `clean_v1` (voce 139), pool unico, esempi dal
+  file congelato, **condizione hybrid** k = 3 (RRF di bm25 e MiniLM), temperatura 0,3, max_tokens 4096. La v5b del
+  compatto NON è inclusa (non provata né adottata, voce 135).
+- **Baseline** (nessuna generazione): bm25 k = 3 con la stessa configurazione, ricostruita da run esistenti con prompt
+  **identici** (verificato con lo sha256 dei messaggi): le 8 query toccate dalla pulizia da `dev_g26ev`, le altre 12 da
+  `dev_g26` (per loro la vista clean_v1 non cambia il prompt). Hybrid sceglie esempi diversi da bm25 in 18 query su 20.
+- **REGOLA** (`experiments/analyze_hybrid26.py`, scritta e testata prima della run sulla sola baseline), per formato,
+  delta = hybrid − bm25 su 40 risposte: **hybrid resta nel 3b se, in ENTRAMBI i formati, dF1_relazioni ≥ −0,03 (F1
+  macro delle relazioni strutturali, abbinamento rilassato, voce 136) E dR ≥ −0,03 E dVc ≥ −2 E meno di 2
+  troncamenti.** Altrimenti **decide l'utente** se toglierlo (ed eventualmente dense, che non è provato qui) dal 3b. È
+  una regola di non inferiorità: non sceglie il retriever migliore (lo farà il 3b sui 54 di valutazione), dice solo se
+  hybrid regge con la configurazione attuale. Riportati: F1 di classi e generalizzazioni, J, M primaria, quota di
+  esempi De Bari, token, latenza, dettaglio per esercizio, e un confronto descrittivo per esercizio (Spearman).
+- **STOP** prima delle generazioni: la run parte dal notebook (sezione 3 ter) con il via dell'utente.
+
+### [2026-10-12] Passo 2 con il retriever hybrid: esito della regola della voce 140
+- **Esecuzione**: batch `passo2_hybrid` dal notebook (sezione 3 ter), 80 generazioni dalle 13:55 alle 14:32 del
+  2026-10-12, 26B con `--gpu 0.5`; 80/80 valide (livello 4), nessun troncamento, nessun ragionamento. Run
+  `dev_g26hy__P-G` e `__C-G`; analisi `data/results/generation/dev_g26hy_analysis/summary.md`.
+- **Regola applicata così com'è** (`experiments/analyze_hybrid26.py`), 40 risposte per formato, contro bm25 con la
+  stessa configurazione (baseline ricostruita da dev_g26 e dev_g26ev, prompt identici):
+
+  | formato | dF1_relazioni | dR | dVc | troncate | esito |
+  |---|---|---|---|---|---|
+  | PlantUML | −0,002 (0,412 → 0,410) | 0,000 (0,338) | 0 (39) | 0 | non inferiore |
+  | JSON compatto | −0,011 (0,418 → 0,408) | −0,011 (0,344 → 0,332) | +4 (36 → 40) | 0 | non inferiore |
+
+  **Esito: hybrid RESTA nel 3b.**
+- **Fuori regola**: hybrid ha tutte le risposte valide (40/40 in entrambi i formati; bm25 39 e 38) e nel compatto più
+  risposte senza scarti (Vc 40 contro 36); in PlantUML F1 delle generalizzazioni più alta (0,566 contro 0,511) e M
+  primaria +0,012; nel compatto F1 delle generalizzazioni più bassa (0,484 contro 0,525). Esempi De Bari 28 % contro
+  22 %. Per esercizio: hybrid meglio in 9 e peggio in 7 (PlantUML), meglio in 9 e peggio in 5 (compatto); differenze
+  grandi nei due sensi (EUScienceConnect 0,41 → 0,24 e 0,50 → 0,28; OilWells PlantUML 0,47 → 0,62, compatto 0,86 →
+  0,67). In sintesi: con la configurazione attuale hybrid e bm25 sono equivalenti sul dev set.
+- **Da guardare a parte**: Restaurant e BusTransportationManagementSystem hanno F1 delle relazioni 0 con entrambi i
+  retriever e in entrambi i formati (indipendente dal retriever).
+- Dense non è stato provato con la configurazione attuale.
+
+### [2026-10-12] Passo 2 rifatto con il retriever dense — config e regola registrate PRIMA delle generazioni
+- **Richiesta dell'utente** dopo l'esito di hybrid (voce 141): provare anche dense con la configurazione attuale.
+- **Trattamento** (`experiments/configs/dev_g26de.yaml`, run `dev_g26de__P-G` e `__C-G`): identico a `dev_g26hy.yaml`
+  salvo la condizione, **dense** k = 3 (all-MiniLM-L6-v2 alla revisione fissata, dal file congelato); 20 esercizi ×
+  2 ripetizioni × 2 formati = **80 generazioni**. Dense sceglie esempi diversi da bm25 in 20 query su 20 (da hybrid in
+  17) e il 37 % dei suoi esempi è De Bari (bm25 22 %, voce 137).
+- **Baseline**: la stessa bm25 della voce 140 (dev_g26 + dev_g26ev, prompt identici).
+- **REGOLA** (`experiments/analyze_dense26.py`, che riusa `scores` e `keeps` di `analyze_hybrid26.py` senza
+  modificarli), identica a quella di hybrid: **dense resta nel 3b se, in ENTRAMBI i formati, dF1_relazioni ≥ −0,03 E
+  dR ≥ −0,03 E dVc ≥ −2 E meno di 2 troncamenti**; altrimenti decide l'utente. Riportati anche il confronto con hybrid
+  (descrittivo) e la quota di esempi De Bari.
+- **STOP** prima delle generazioni: la run parte dal notebook (sezione 3 quater) con il via dell'utente.
+
+### [2026-10-12] Passo 2 con il retriever dense: esito della regola della voce 142
+- **Esecuzione**: batch `passo2_dense` dal notebook (sezione 3 quater), 80 generazioni dalle 15:01 alle 15:41 del
+  2026-10-12, 26B con `--gpu 0.5`; vista `clean_v1` verificata nei prompt inviati; nessun ragionamento. PlantUML 40/40
+  valide; compatto 37/40 valide (HelpingHands r1 e Musicmatic r1 JSON non valido, HomeForTheElderly r1 non nel formato
+  compatto) e 1 risposta valida con scarti (HospitalHouseMD r0). Run `dev_g26de__P-G` e `__C-G`; analisi
+  `data/results/generation/dev_g26de_analysis/summary.md`.
+- **Regola applicata così com'è** (`experiments/analyze_dense26.py`, funzioni di `analyze_hybrid26.py`), 40 risposte
+  per formato, contro bm25 con la stessa configurazione:
+
+  | formato | dF1_relazioni | dR | dVc | troncate | esito |
+  |---|---|---|---|---|---|
+  | PlantUML | −0,019 (0,412 → 0,393) | −0,014 (0,338 → 0,324) | +1 (39 → 40) | 0 | non inferiore |
+  | JSON compatto | **−0,034** (0,418 → 0,384) | **−0,037** (0,344 → 0,307) | 0 (36) | 1 | **inferiore** |
+
+  **Esito: dense inferiore a bm25 nel JSON compatto (di poco oltre la soglia di 0,03): DECIDE L'UTENTE** se toglierlo
+  dal 3b.
+- **Fuori regola**: confronto a tre (bm25 / hybrid / dense), F1 delle relazioni PlantUML 0,412 / 0,410 / 0,393,
+  compatto 0,418 / 0,408 / 0,384; F1 classi compatto 0,682 / 0,681 / 0,643; esempi De Bari 22 / 28 / 37 %. Per
+  esercizio dense è meglio in 8 e peggio in 9 (PlantUML), meglio in 7 e peggio in 7 (compatto): la perdita nel
+  compatto viene in buona parte dalle 3 risposte non valide (che valgono 0; es. Musicmatic 0,641 → 0,308) e da pochi
+  esercizi (Musicmatic, OilWells, Boeing, EUScienceConnect).
+
+### [2026-10-12] Decisione dell'utente: il retriever dense esce dal Passo 3b
+- **Decisione**: dopo l'esito della voce 143 (dense inferiore a bm25 nel JSON compatto, dF1_relazioni −0,034 e dR
+  −0,037 contro una soglia di −0,03; non inferiore in PlantUML), l'utente toglie dense dal 3b. Il consiglio era di
+  tenerlo (scarto al limite, dovuto in parte a 3 risposte non valide; il confronto tra retriever è una domanda della
+  tesi): la decisione resta dell'utente ed è registrata così.
+- **Conseguenze**: `experiments/configs/passo3b.yaml` con le condizioni zero_shot, static, random k = 3, bm25 k = 2 e 3,
+  hybrid k = 3; **969 generazioni per formato, 1.938 in totale** (prima 2.262), circa 14,5 ore col 26B. Il confronto
+  tra retriever nel 3b diventa **bm25 contro hybrid** (keyword contro combinazione keyword + denso); il denso puro resta
+  documentato dai risultati di sviluppo (voci 107-110, 143). File congelato invariato: contiene ancora le righe dense
+  (non usate). La regola del passo 2 (`analyze_g26.py`, voce 132) usava 1.131 generazioni per formato: già applicata,
+  non si ricalcola.
+- **Da dichiarare in tesi**: la scelta è di risorse e di prestazioni sul dev set (20 esercizi), non un risultato sul
+  set di valutazione; la Fase 2 del progetto prevedeva tre varianti di retrieval (keyword, dense, hybrid).
+
+### [2026-10-12] Strumento di confronto visivo bm25 / hybrid / ground truth — richiesta dell'utente, solo lettura
+- `experiments/compare_retrievers.py` genera `data/results/generation/confronto_bm25_hybrid/index.html` (non
+  versionata, circa 5,5 MB, autonoma: SVG incorporati, nessuna risorsa esterna): per i 20 esercizi di sviluppo, i 2
+  formati e le 2 ripetizioni, GT | bm25 | hybrid affiancati, con le risposte del 26B nella configurazione di lavoro con
+  esempi puliti (bm25 ricostruito come nella voce 140: dev_g26ev per le 8 query toccate, dev_g26 per le altre;
+  hybrid: dev_g26hy). Per risposta: livello, F1 di relazioni / classi / generalizzazioni (rilassato,
+  evaluation/element_metrics.py), R, J, M (review_report.response_metrics), relazioni classificate
+  (review_report.classify_relations), esempi del prompt; scheda Indice con l'F1 delle relazioni medio per esercizio e
+  retriever (coerente con `analyze_hybrid26.py`, verificato nel test). Nessuna logica nuova: rendering, validazione e
+  confronto sono quelli del report di revisione. Notebook `passo3b.ipynb`, sezione 6 bis. Test
+  `check_compare_retrievers`.
+
+### [2026-10-13] Leva v5b (attributi del compatto): riallineamento e regola definitiva — registrati PRIMA della run
+- **Motivo**: la leva della voce 135 era sospesa in attesa del sistema delle metriche (ora `evaluation/element_metrics.py`,
+  voce 136); nel frattempo la vista degli esempi `clean_v1` è stata adottata (voce 139). Il problema intanto si è
+  ripresentato in tutte le run del 26B nel JSON compatto (risposte valide senza nessun attributo: bm25 8/38, hybrid
+  7/40, dense 11/37; PlantUML 0 in tutte), sempre sugli stessi esercizi. Decisione dell'utente: provarla prima del 3b.
+- **Invariati dalla voce 135**: testo `generation/templates/v5b_compact_instructions.txt` (sha256 `838de1a1…`), gli 8
+  esercizi (AlphaInsurance, Boeing, Ebike, HospitalHouseMD, InsuranceCompany, ProjectManagement + i 2 di controllo
+  EUScienceConnect e Facepage), 2 ripetizioni, **16 generazioni**, solo compatto.
+- **Cambiato**: `experiments/configs/dev_g26b.yaml` ora ha anche `example_view: clean_v1` (configurazione di lavoro
+  attuale); la **baseline** è bm25 + clean_v1 sugli stessi 8 esercizi, ricostruita come nella voce 140 (AlphaInsurance
+  e Facepage da dev_g26ev, gli altri 6 da dev_g26: prompt identici). Baseline: **7 scheletri su 16** risposte
+  (AlphaInsurance 1, Boeing 2, Ebike 2, HospitalHouseMD 1, InsuranceCompany 1).
+- **Metriche** (tutte da `evaluation/element_metrics.py`, abbinamento rilassato, macro per esercizio): attributi
+  (P / R / F1), relazioni (F1); più R e M primaria (metrics.py) e Vc. **Scheletro** = risposta valida senza nessun
+  attributo per un esercizio il cui GT ne ha (contato con `element_metrics.elements`).
+- **REGOLA** (`experiments/analyze_v5b.py`, riscritto e testato prima della run sulla sola baseline; sostituisce la
+  regola della voce 135): **adottare v5b per il compatto del 3b se: scheletri ≤ 3 (almeno dimezzati) E, sui 2 esercizi
+  di controllo, d(recall attributi) ≥ −0,05 e d(precision attributi) ≥ −0,05 E, sulle 16 risposte, dF1_relazioni ≥
+  −0,03, dR ≥ −0,03, dM_primaria ≥ −0,03, dVc ≥ −1 e meno di 2 troncamenti.** Se adottata, le configurazioni C-* di
+  `passo3b.yaml` usano `instructions_version: v5b`. Riportati: F1 attributi, molteplicità presenti, attributi aggiunti
+  per ProjectManagement (GT senza attributi), dettaglio per esercizio.
+- **Limite dichiarato**: 8 esercizi scelti guardando la baseline; provata con bm25; i restanti 12 esercizi non provati.
+- **STOP** prima delle generazioni: parte dal notebook (sezione 3 quinquies) con il via dell'utente.
+
+### [2026-10-13] Leva "piano breve" (v5plan, voce 126): chiusa senza adozione
+- Fatta solo la FASE 1 (testi, 2 chiamate di prova riuscite) sul 12B; la FASE 2 (80 generazioni) non è mai stata
+  eseguita, e nel frattempo il modello del 3b è diventato il 26B. Su proposta dell'assistente e con l'accordo
+  dell'utente, la leva si chiude **senza adozione** prima del 3b: nessun indizio forte di beneficio, costo maggiore
+  (risposte più lunghe in ogni generazione). Il 3b usa le istruzioni v5 (PlantUML) e v5 o v5b (compatto, voce 146).
+  Codice, testi e config (`v5plan`, `dev_plan.yaml`, `analyze_plan.py`) restano come documentazione.
+
+### [2026-10-13] Leva v5b: esito — NON adottata; risposte senza attributi lasciate come limite dichiarato
+- **Run**: `dev_g26b__C-G`, 16/16 generazioni, nessun troncamento; analisi `experiments/analyze_v5b.py` (regola della
+  voce 146) in `data/results/generation/dev_g26b_analysis/summary.md`.
+- **Esito: v5b NON adottata, il compatto del 3b resta v5.** Scheletri 7 → 8 (soglia ≤ 3). Le altre condizioni erano
+  rispettate: dF1_relazioni −0,004, dR +0,007, dM_primaria +0,021, dVc 0, controlli invariati (attributi P e R 0,674).
+  Per esercizio gli scheletri si spostano invece di sparire (Boeing ed Ebike migliorano, AlphaInsurance,
+  HospitalHouseMD e InsuranceCompany peggiorano): variabilità del modello, non effetto delle istruzioni. Molteplicità
+  presenti 0,74 → 0,88; token in mediana 499 → 611.
+- **Analisi descrittiva successiva (solo dev set, run del compatto col 26B: dev_g26, dev_g26ev, dev_g26hy, dev_g26de,
+  dev_g26b; 137 risposte valide con GT dotato di attributi)**: 27 dei 35 scheletri (77 %) hanno nel prompt almeno un
+  esempio con metà o più delle classi senza attributi, contro 43 su 102 (42 %) delle risposte con attributi; quota
+  media di classi senza attributi negli esempi 0,34 contro 0,21. Ipotesi: nel compatto le chiavi vuote si omettono,
+  quindi l'esempio mostra la classe come `{"name": "X"}` e il modello copia la forma dalla prima classe in poi (in
+  PlantUML, con gli stessi esempi, nessuno scheletro). Correlazione su risposte non indipendenti, non una prova.
+- **Decisione dell'utente**: nessuna ulteriore leva (proposte e non adottate: schema JSON con `attributes`
+  obbligatoria, legato alla domanda 14; chiave vuota esplicita negli esempi). Il fenomeno resta come **limite
+  dichiarato del formato compatto** e come materiale per la fase 5 (qualità degli esempi recuperati → output); nel 3b
+  si conta con la definizione di scheletro della voce 146.

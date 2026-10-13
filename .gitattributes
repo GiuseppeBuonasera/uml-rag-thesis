@@ -21,5 +21,7 @@ generation/templates/v5plan_compact_instructions.txt -text
 generation/templates/v5plan_plantuml_instructions.txt -text
 # istruzioni v5b del compatto, congelate con lo sha256 nel test check_v5b (voce 135)
 generation/templates/v5b_compact_instructions.txt -text
+# vista degli esempi clean_v1, congelata con lo sha256 nel test (voce 138)
+generation/example_view_clean_v1.yaml -text
 # esempi congelati del 3b: lo sha256 dei byte e' verificato dal prompt builder (voci 129-130)
 data/retrieval_frozen/* -text

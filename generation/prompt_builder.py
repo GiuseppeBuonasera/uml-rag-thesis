@@ -98,6 +98,34 @@ def random_seed(query_id: str, repetition: int) -> int:
     return int(hashlib.sha256(f"random|{query_id}|{repetition}".encode("utf-8")).hexdigest()[:8], 16)
 ANALYSIS_ONLY = {"oracle", "oracle_jt"}
 SERIALIZATIONS = ("indent2", "compact")
+# voce 138: vista degli ESEMPI. "raw" = traccia originale (default, prompt identici a prima); "clean_v1" = tolte le
+# frasi elencate in example_view_clean_v1.yaml (istruzioni per lo studente). La traccia della query non cambia mai.
+EXAMPLE_VIEWS = ("raw", "clean_v1")
+EXAMPLE_VIEW_FILES = {"clean_v1": Path(__file__).resolve().parent / "example_view_clean_v1.yaml"}
+
+
+def example_view_edits(view: str) -> dict[str, list[str]]:
+    """Frasi da togliere per esercizio nella vista indicata (vuoto per "raw")."""
+    if view == "raw":
+        return {}
+    return yaml.safe_load(EXAMPLE_VIEW_FILES[view].read_text(encoding="utf-8")) or {}
+
+
+def apply_example_view(exercise_id: str, description: str, edits: dict[str, list[str]]) -> str:
+    """Toglie le frasi della vista (ognuna deve comparire esattamente una volta) con lo spazio che le separa."""
+    out = description
+    for sentence in edits.get(exercise_id, []):
+        if out.count(sentence) != 1:
+            raise ValueError(f"vista degli esempi: in {exercise_id} la frase compare {out.count(sentence)} volte: "
+                             f"{sentence[:60]!r}")
+        i = out.index(sentence)
+        j = i + len(sentence)
+        if j < len(out) and out[j] == " ":
+            j += 1  # spazio dopo la frase
+        elif i > 0 and out[i - 1] == " ":
+            i -= 1  # altrimenti lo spazio prima
+        out = out[:i] + out[j:]
+    return out
 OUTPUT_FORMATS = ("apollon", "plantuml", "compact")
 INSTRUCTION_TEMPLATES = {"apollon": "v4_instructions.txt", "plantuml": "v4_plantuml_instructions.txt",
                          "compact": "v4_compact_instructions.txt"}
@@ -144,6 +172,7 @@ class PromptSpec:
     output_format: str = "apollon"  # "apollon" (JSON) | "plantuml" (convertito in Apollon nel post-processing)
     instructions_variant: str = "base"  # "base" | "targeted" (voce 98)
     instructions_version: str = "v4"  # "v4" | "v5" (voce 111)
+    example_view: str = "raw"  # "raw" | "clean_v1" (voce 138)
 
     def __post_init__(self):
         if self.condition not in CONDITIONS:
@@ -162,6 +191,8 @@ class PromptSpec:
             raise ValueError(f"istruzioni v5b solo per {tuple(V5B_INSTRUCTION_TEMPLATES)}, non per {self.output_format}")
         if self.instructions_version in V5_FAMILY and self.instructions_variant != "base":
             raise ValueError("istruzioni v5: il blocco mirato della voce 98 vale solo per le v4")
+        if self.example_view not in EXAMPLE_VIEWS:
+            raise ValueError(f"vista degli esempi sconosciuta: {self.example_view} (ammesse: {EXAMPLE_VIEWS})")
         if self.serialization not in SERIALIZATIONS or self.layout not in LAYOUTS:
             raise ValueError(f"serializzazione o layout non validi: {self.serialization}, {self.layout}")
 
@@ -421,7 +452,9 @@ class PromptBuilder:
         if query["id"] in {e["id"] for e in examples}:
             raise AssertionError(f"la query {query['id']} compare tra i propri esempi")
         item = _template(ITEM_TEMPLATES[spec.output_format])
-        items = [item.format(n=i, description=e["description"].strip(), diagram_json=self.render_example(e, spec))
+        edits = example_view_edits(spec.example_view)  # voce 138: solo gli esempi, mai la traccia della query
+        items = [item.format(n=i, description=apply_example_view(e["id"], e["description"], edits).strip(),
+                             diagram_json=self.render_example(e, spec))
                  for i, e in enumerate(examples, start=1)]
         block = "v5_examples_block.txt" if spec.instructions_version in V5_FAMILY else "v4_examples_block.txt"  # voce 111
         examples_block = _template(block).format(examples="\n".join(items)) if items else ""

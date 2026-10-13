@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\"\n    },\n    {\n      \"name\": \"Apartment\"\n    },\n    {\n      \"name\": \"Inhabitant\"\n    },\n    {\n      \"name\": \"Sensor\"\n    },\n    {\n      \"name\": \"TemperatureSensor\"\n    },\n    {\n      \"name\": \"PowerSensor\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"MeasuredValue\"\n    },\n    {\n      \"name\": \"EMonitor\"\n    },\n    {\n      \"name\": \"Unit\"\n    },\n    {\n      \"name\": \"Threshold\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"Apartment\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Apartment\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"SensorController\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SensorController\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SensorController\",\n      \"target\": \"EMonitor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sensor\",\n      \"part\": \"MeasuredValue\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"Threshold\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PowerSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"Unit\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 40.7933766999995,
+ "prompt_tokens": 6488,
+ "completion_tokens": 694,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-fn20pcukin76n0lwd17r3d",
+  "object": "chat.completion",
+  "created": 1791811120,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\"\n    },\n    {\n      \"name\": \"Apartment\"\n    },\n    {\n      \"name\": \"Inhabitant\"\n    },\n    {\n      \"name\": \"Sensor\"\n    },\n    {\n      \"name\": \"TemperatureSensor\"\n    },\n    {\n      \"name\": \"PowerSensor\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"MeasuredValue\"\n    },\n    {\n      \"name\": \"EMonitor\"\n    },\n    {\n      \"name\": \"Unit\"\n    },\n    {\n      \"name\": \"Threshold\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SensorController\",\n      \"part\": \"Apartment\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Apartment\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Inhabitant\",\n      \"target\": \"SensorController\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SensorController\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SensorController\",\n      \"target\": \"EMonitor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Room\",\n      \"part\": \"Sensor\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sensor\",\n      \"part\": \"MeasuredValue\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"Threshold\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PowerSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"Unit\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6488,
+   "completion_tokens": 694,
+   "total_tokens": 7182,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

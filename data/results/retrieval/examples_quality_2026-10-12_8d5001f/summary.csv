@@ -1,0 +1,11 @@
+ruolo_query,retriever,k,righe,posti,quota_attributi_senza_tipo,quota_molteplicita_vuote,posti_istruzioni_studente,query_istruzioni_studente,posti_istruzioni_dubbie,query_istruzioni_dubbie,posti_attributi_senza_tipo_oltre_meta,query_attributi_senza_tipo_oltre_meta,posti_senza_attributi,query_senza_attributi,posti_debari,query_debari
+valutazione,bm25,2,54,108,0.1819,0.0841,0.0833,0.1481,0.0093,0.0185,0.1574,0.2778,0.0278,0.0556,0.2407,0.4074
+valutazione,bm25,3,54,162,0.1771,0.0729,0.1049,0.2778,0.0309,0.0926,0.142,0.3333,0.0247,0.0741,0.216,0.4815
+valutazione,dense,3,54,162,0.3152,0.0715,0.0741,0.1852,0.0,0.0,0.3025,0.6296,0.0494,0.1481,0.3827,0.7407
+valutazione,hybrid,3,54,162,0.2017,0.0709,0.0926,0.2222,0.0,0.0,0.1605,0.3889,0.0432,0.1296,0.2346,0.5
+valutazione,random,3,162,486,0.1616,0.0763,0.0761,0.463,0.0123,0.1111,0.1399,0.7778,0.0288,0.2222,0.2222,0.963
+sviluppo,bm25,2,26,52,0.162,0.0478,0.1154,0.1923,0.0385,0.0769,0.1346,0.2692,0.0192,0.0385,0.2115,0.4231
+sviluppo,bm25,3,26,78,0.1372,0.0521,0.1154,0.3077,0.0256,0.0769,0.1154,0.3462,0.0256,0.0769,0.1923,0.5
+sviluppo,dense,3,26,78,0.2656,0.0632,0.1282,0.3077,0.0128,0.0385,0.2564,0.6154,0.0,0.0,0.3205,0.6923
+sviluppo,hybrid,3,26,78,0.2231,0.05,0.1282,0.3077,0.0128,0.0385,0.2051,0.4615,0.0,0.0,0.2564,0.5769
+sviluppo,random,3,78,234,0.1505,0.0846,0.1026,0.5,0.0342,0.2692,0.1282,0.6923,0.047,0.3077,0.2051,0.9231

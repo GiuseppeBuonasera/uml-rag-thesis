@@ -2,24 +2,24 @@
 # evalset-v1): 34 del corpus (split corpus) + 20 De Bari (split testset). BLOCCATO finche' i relatori non rispondono
 # (domande 8, 11, 14, 16) e finche' lo script di analisi del 3b non e' scritto e testato: si lancia dal notebook
 # notebooks/passo3b.ipynb (interruttore SBLOCCA_3B).
-# Condizioni: zero_shot, static, random k = 3, bm25 k = 2 e 3, dense k = 3, hybrid k = 3; 3 ripetizioni; esempi dal file
+# Condizioni: zero_shot, static, random k = 3, bm25 k = 2 e 3, hybrid k = 3 (dense tolto, voce 144); 3 ripetizioni; esempi dal file
 # congelato; random con seme per esercizio e ripetizione (voce 130); cella static di AirTravel non definita (saltata).
 # Formati: P = PlantUML v5; C = compatto v5 con esempi indentati (configurazione di lavoro, voci 118, 121, 124).
 # Modello: configurazioni -G26 (Gemma 4 26B A4B QAT) e -G12 (Gemma 4 12B QAT): si esegue quella scelta dal passo 2
 # (experiments/analyze_g26.py) o dall'utente.
-# Generazioni per formato: 34 x 7 x 3 - 3 + 20 x 7 x 3 = 1.131; totale 2.262.
+# Generazioni per formato: 34 x 6 x 3 - 3 + 20 x 6 x 3 = 969; totale 1.938 (prima di togliere dense: 1.131 e 2.262).
 run_id: passo3b
 passo: 3b
 config_version: 2           # contesto 32768, max_tokens 4096
 random_seed: per_esercizio_ripetizione  # voce 130
-conditions: [zero_shot, static, random, bm25, dense, hybrid]
-k: {random: [3], bm25: [2, 3], dense: [3], hybrid: [3]}  # voce 132: k per condizione
+conditions: [zero_shot, static, random, bm25, hybrid]   # voce 144: dense tolto
+k: {random: [3], bm25: [2, 3], hybrid: [3]}  # voce 132: k per condizione
 repetitions: 3
 seed: 0                     # non usato da random (random_seed: per_esercizio_ripetizione)
 stop_on_reasoning: true
 thinking: none              # voce 131: reasoning_effort "none" in ogni richiesta (il 26B ragiona di default)
 retrieval_source: frozen    # voce 129: esempi da data/retrieval_frozen/retrievals_3b.jsonl
-prompt: {layout: user_only, drop_interactive: true}  # istruzioni e serializzazione per configurazione
+prompt: {layout: user_only, drop_interactive: true, example_view: clean_v1}  # voce 139: esempi senza istruzioni per lo studente
 generation:
   temperature: 0.3
   top_p: 0.95

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"AlphaInsurance\"}, {\"name\": \"Customer\"}, {\"name\": \"Broker\"}, {\"name\": \"Policy\"}, {\"name\": \"Contract\"}, {\"name\": \"InsuranceProduct\"}, {\"name\": \"ClaimCase\"}, {\"name\": \"Estimator\"}, {\"name\": \"EstimatorReport\"}, {\"name\": \"CompensationDecision\"}, {\"name\": \"Claim\"}], \"relations\": [{\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"Customer\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"Broker\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"ClaimCase\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Broker\", \"target\": \"Customer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Claim\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"Policy\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"InsuranceProduct\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ClaimCase\", \"target\": \"Claim\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"ClaimCase\", \"target\": \"Estimator\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"assessor\"}, {\"type\": \"association\", \"source\": \"Estimator\", \"target\": \"EstimatorReport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"EstimatorReport\", \"target\": \"ClaimCase\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ClaimCase\", \"target\": \"CompensationDecision\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"CompensationDecision\", \"target\": \"Claim\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 31.133126300001095,
+ "prompt_tokens": 4039,
+ "completion_tokens": 545,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lnx1gxoo2gh8o1lyf57jo4",
+  "object": "chat.completion",
+  "created": 1791806759,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"AlphaInsurance\"}, {\"name\": \"Customer\"}, {\"name\": \"Broker\"}, {\"name\": \"Policy\"}, {\"name\": \"Contract\"}, {\"name\": \"InsuranceProduct\"}, {\"name\": \"ClaimCase\"}, {\"name\": \"Estimator\"}, {\"name\": \"EstimatorReport\"}, {\"name\": \"CompensationDecision\"}, {\"name\": \"Claim\"}], \"relations\": [{\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"Customer\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"Broker\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"ClaimCase\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Broker\", \"target\": \"Customer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Claim\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"Policy\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"InsuranceProduct\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ClaimCase\", \"target\": \"Claim\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"ClaimCase\", \"target\": \"Estimator\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"assessor\"}, {\"type\": \"association\", \"source\": \"Estimator\", \"target\": \"EstimatorReport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"EstimatorReport\", \"target\": \"ClaimCase\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ClaimCase\", \"target\": \"CompensationDecision\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"CompensationDecision\", \"target\": \"Claim\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4039,
+   "completion_tokens": 545,
+   "total_tokens": 4584,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

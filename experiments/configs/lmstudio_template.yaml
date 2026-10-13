@@ -9,7 +9,7 @@ random_seed: per_esercizio_ripetizione  # voce 130: seme di random = f(id eserci
 k: [3]
 repetitions: 1
 seed: 0  # con random_seed: per_esercizio_ripetizione la condizione random non lo usa (voce 130)
-prompt: {serialization: compact, layout: user_only, drop_interactive: true}
+prompt: {serialization: compact, layout: user_only, drop_interactive: true, example_view: clean_v1}  # voce 139 (obbligatorio con passo: 3b)
 client:
   kind: lmstudio
   base_url: http://localhost:1234/v1

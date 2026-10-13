@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {\n  + ID : int\n  + Name : string\n  + Address : string\n}\n\nclass RegularUser extends User {\n}\n\nclass BusinessUser extends User {\n  + VATNumber : string\n}\n\nclass Artist {\n  + Name : string\n  + DateOfBirth : date\n  + WebsiteURL : string\n}\n\nclass Song {\n  + Title : string\n  + Year : int\n  + Length : int\n  + Genre : string\n}\n\nclass Single extends Song {}\n\nclass Hit extends Song {}\n\nclass Album {\n  + TrackNumber : int\n}\n\nUser \"1\" -- \"*\" Song : uploads\nArtist \"1\" -- \"*\" Song : belongs to\nRegularUser \"1\" -- \"*\" Single : buys\nRegularUser \"1\" -- \"*\" Album : composes\nAlbum \"1\" *-- \"*\" Hit : contains\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 12.30826579999848,
+ "prompt_tokens": 3346,
+ "completion_tokens": 194,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wj7m33eg5w089bjuqwlcwy",
+  "object": "chat.completion",
+  "created": 1791806524,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + ID : int\n  + Name : string\n  + Address : string\n}\n\nclass RegularUser extends User {\n}\n\nclass BusinessUser extends User {\n  + VATNumber : string\n}\n\nclass Artist {\n  + Name : string\n  + DateOfBirth : date\n  + WebsiteURL : string\n}\n\nclass Song {\n  + Title : string\n  + Year : int\n  + Length : int\n  + Genre : string\n}\n\nclass Single extends Song {}\n\nclass Hit extends Song {}\n\nclass Album {\n  + TrackNumber : int\n}\n\nUser \"1\" -- \"*\" Song : uploads\nArtist \"1\" -- \"*\" Song : belongs to\nRegularUser \"1\" -- \"*\" Single : buys\nRegularUser \"1\" -- \"*\" Album : composes\nAlbum \"1\" *-- \"*\" Hit : contains\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3346,
+   "completion_tokens": 194,
+   "total_tokens": 3540,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -2659,8 +2659,15 @@ def check_frozen(builder: PromptBuilder, tmp: Path) -> None:
     prov = json.loads((tmp / "frozen_res" / "frozen_run" / "config.json").read_text(encoding="utf-8"))["provenance"]
     assert prov["retrieval_frozen_sha256"] == meta["sha256"] and prov["retrieval_frozen"].endswith("retrievals_3b.jsonl")
     # guardia del Passo 3b: condizioni di retrieval solo dal file congelato
-    rx.check_retrieval_source({"passo": "3b", "conditions": ["zero_shot", "static"]})
-    rx.check_retrieval_source({"passo": "3b", "conditions": ["bm25"], "retrieval_source": "frozen"})
+    rx.check_retrieval_source({"passo": "3b", "conditions": ["zero_shot", "static"], "prompt": {"example_view": "clean_v1"}})
+    rx.check_retrieval_source({"passo": "3b", "conditions": ["bm25"], "retrieval_source": "frozen",
+                               "prompt": {"example_view": "clean_v1"}})
+    rx.check_retrieval_source({"passo": "3b", "conditions": ["zero_shot"]})  # nessun esempio: vista indifferente
+    try:  # voce 139: esempi senza istruzioni per lo studente obbligatori nel 3b
+        rx.check_retrieval_source({"passo": "3b", "conditions": ["static"]})
+        raise AssertionError("config 3b con esempi raw accettato")
+    except SystemExit as e:
+        assert "example_view" in str(e)
     rx.check_retrieval_source({"conditions": ["bm25"]})  # run di sviluppo: dal vivo, invariate
     rx.check_retrieval_source({"passo": "3b", "conditions": ["bm25"], "client": {"kind": "mock"}})  # prove del runner
     # voce 130: seme di random per esercizio e ripetizione nel runner; obbligatorio nel Passo 3b
@@ -2681,7 +2688,7 @@ def check_frozen(builder: PromptBuilder, tmp: Path) -> None:
         except SystemExit as e:
             assert msg in str(e)
     rx.check_retrieval_source({"passo": "3b", "conditions": ["random"], "retrieval_source": "frozen",
-                               "random_seed": "per_esercizio_ripetizione"})
+                               "random_seed": "per_esercizio_ripetizione", "prompt": {"example_view": "clean_v1"}})
     try:
         rx.check_retrieval_source({"passo": "3b", "conditions": ["random"], "retrieval_source": "frozen"})
         raise AssertionError("config 3b con random a seme unico accettato")
@@ -2696,6 +2703,7 @@ def check_frozen(builder: PromptBuilder, tmp: Path) -> None:
     for name in ("gemma4_12b_qat_template.yaml", "lmstudio_template.yaml"):
         tpl = yaml.safe_load((ROOT / "experiments" / "configs" / name).read_text(encoding="utf-8"))
         assert tpl["retrieval_source"] == "frozen" and tpl["random_seed"] == "per_esercizio_ripetizione", name
+        assert tpl["prompt"]["example_view"] == "clean_v1", name
     assert "sentence_transformers" not in sys.modules, "i test non devono caricare sentence-transformers"
     print("  OK  file congelato (voce 129): congelato = dal vivo (denso finto, 4 retriever, 2 formati); file versionato "
           "con sha256 verificato, bm25 / random = dal vivo per i 26 di sviluppo, 160 prompt dei manifest dev_v5 / "
@@ -2760,7 +2768,9 @@ def check_3b_and_batch(builder: PromptBuilder, tmp: Path) -> None:
             for q, s, _, _ in pl:
                 if s.condition in pb.FROZEN_CONDITIONS:
                     fz.hits(q, s)  # chiave presente nel file congelato
-    assert {total[f"{f}-corpus-{m}"] + total[f"{f}-testset-{m}"] for f in "PC" for m in ("G26", "G12")} == {1131}
+    # voce 144: dense tolto dal 3b -> 6 celle per esercizio: 34 x 6 x 3 - 3 + 20 x 6 x 3 = 969 per formato e modello
+    assert {total[f"{f}-corpus-{m}"] + total[f"{f}-testset-{m}"] for f in "PC" for m in ("G26", "G12")} == {969}
+    assert "dense" not in raw3["conditions"] and "dense" not in raw3["k"]
     assert len({q for n in raw3["configurations"] for q in rx.resolve_configuration(raw3, n)["query_ids"]}) == 54
     # regola di analyze_g26
     B = {"R": 0.30, "R_fam": 0.33, "Vc": 38, "M1": 0.30, "J": 0.5}
@@ -2851,6 +2861,285 @@ def check_compare_view() -> None:
     print("  OK  confronto visivo (voce 134): GT + PlantUML + compatto per un esercizio e una ripetizione")
 
 
+def check_example_view(builder: PromptBuilder, tmp: Path) -> None:
+    """Voce 138: vista clean_v1 degli esempi (file congelato, frasi tolte solo dagli esempi, traccia della query e
+    istruzioni invariate, raw identica a prima, errore se una frase non c'e'), config dev_g26ev (= dev_g26 salvo vista
+    ed esercizi), provenienza del runner, regola di experiments/analyze_exview.py (soglie e run simulata)."""
+    import yaml
+    import analyze_exview as ax
+    import prompt_builder as pb
+    assert hashlib.sha256(pb.EXAMPLE_VIEW_FILES["clean_v1"].read_bytes()).hexdigest() == \
+        "756ce36bfdde20fe82e20dafc5d9ada48c97fcbdb6e121fb8c1ec05c23e323f0"
+    ed = pb.example_view_edits("clean_v1")
+    assert sorted(ed) == ["BankAccount", "GameArea", "GasStation_TUW", "Musicmatic", "PizzaDeliveryWithEntertainment",
+                          "SellingGoods"] and sum(map(len, ed.values())) == 11 and pb.example_view_edits("raw") == {}
+    for i, sents in ed.items():
+        d = builder.all_by_id[i]["description"]
+        c = pb.apply_example_view(i, d, ed)
+        assert all(s not in c for s in sents) and len(d) - len(c) >= sum(map(len, sents))
+    try:
+        pb.apply_example_view("GameArea", "testo senza le frasi", ed)
+        raise AssertionError("frase mancante accettata")
+    except ValueError:
+        pass
+    # solo gli esempi cambiano: Musicmatic come query ha tra gli esempi PizzaDeliveryWithEntertainment
+    q = builder.all_by_id["Musicmatic"]
+    for f, ser in (("plantuml", "compact"), ("compact", "indent2")):
+        a = builder.build(q, PromptSpec("bm25", k=3, output_format=f, serialization=ser, instructions_version="v5"))
+        c = builder.build(q, PromptSpec("bm25", k=3, output_format=f, serialization=ser, instructions_version="v5",
+                                        example_view="clean_v1"))
+        assert a.task == c.task and a.instructions == c.instructions and a.example_ids == c.example_ids
+        assert a.examples_block != c.examples_block and "asks you to design the UML class diagram" not in c.examples_block
+        assert "Being economists" in c.task  # la traccia della query (Musicmatic) resta intatta
+    # una query senza esempi toccati: prompt identico
+    z = builder.all_by_id["Boeing"]
+    s = PromptSpec("bm25", k=3, output_format="plantuml", instructions_version="v5")
+    assert builder.build(z, s).text == builder.build(z, PromptSpec("bm25", k=3, output_format="plantuml",
+                                                                   instructions_version="v5", example_view="clean_v1")).text
+    try:
+        PromptSpec("bm25", example_view="x")
+        raise AssertionError("vista sconosciuta accettata")
+    except ValueError:
+        pass
+    # config: uguale a dev_g26 salvo vista ed esercizi
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    for conf in ("P-G", "C-G"):
+        a, b = rx.resolve_configuration(load("dev_g26ev"), conf), rx.resolve_configuration(load("dev_g26"), conf)
+        assert a["prompt"] == {**b["prompt"], "example_view": "clean_v1"} and len(a["query_ids"]) == 8
+        assert {k: v for k, v in a.items() if k not in ("prompt", "run_id", "query_ids")} == \
+            {k: v for k, v in b.items() if k not in ("prompt", "run_id", "query_ids")}
+    # regola
+    B = {"F1rel": 0.40, "R": 0.35, "Vc": 15, "truncated": 0}
+    T = lambda **kw: {**B, **kw}  # noqa: E731
+    assert ax.keeps(B, T(F1rel=0.37))["ok"] and not ax.keeps(B, T(F1rel=0.369))["ok"]
+    assert ax.keeps(B, T(Vc=14))["ok"] and not ax.keeps(B, T(Vc=13))["ok"] and not ax.keeps(B, T(truncated=2))["ok"]
+    ok, bad = ax.keeps(B, B), ax.keeps(B, T(R=0.2))
+    assert ax.outcome({"plantuml": ok, "compact": ok}).startswith("clean_v1 ADOTTATA")
+    assert "DECIDE L'UTENTE" in ax.outcome({"plantuml": ok, "compact": bad})
+    assert ax.outcome({"plantuml": ok, "compact": None}).startswith("STOP")
+    # run simulata: baseline ristretta alle 8 query copiata come dev_g26ev -> deltas nulli, ADOTTATA
+    res = tmp / "exview"
+    ids = set(load("dev_g26ev")["query_ids"])
+    for conf in ("P-G", "C-G"):
+        src = ROOT / "data" / "results" / "generation" / f"dev_g26__{conf}"
+        shutil.copytree(src, res / f"dev_g26__{conf}")
+        shutil.copytree(src, res / f"dev_g26ev__{conf}")
+        mp = res / f"dev_g26ev__{conf}" / "manifest.jsonl"
+        mp.write_text("".join(x + "\n" for x in mp.read_text(encoding="utf-8").splitlines()
+                              if json.loads(x)["query_id"] in ids), encoding="utf-8")
+        cj = res / f"dev_g26ev__{conf}" / "config.json"
+        dd = json.loads(cj.read_text(encoding="utf-8"))
+        dd["config"]["query_ids"] = sorted(ids)
+        cj.write_text(json.dumps(dd), encoding="utf-8")
+    text, out = ax.report(ax.load_all(res))
+    assert out["outcome"].startswith("clean_v1 ADOTTATA") and all(v["dF1rel"] == 0 for v in out["formats"].values()), out
+    assert "| Musicmatic |" in text
+    print("  OK  vista degli esempi clean_v1 (voce 138): file congelato, frasi tolte solo dagli esempi, query e "
+          "istruzioni invariate, raw identica; config dev_g26ev; regola di analyze_exview (soglie e run simulata)")
+
+
+def check_hybrid26(builder: PromptBuilder, tmp: Path) -> None:
+    """Voce 140: config dev_g26hy (= configurazione di lavoro del 3b con hybrid sul dev set), baseline bm25 ricostruita
+    con prompt identici a quelli delle run, regola di experiments/analyze_hybrid26.py (soglie e run simulata)."""
+    import yaml
+    import analyze_hybrid26 as ah
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    cands, _ = cl.load_all()
+    fz = PromptBuilder(retrieval_source="frozen")
+    clean_ids = set(load("dev_g26ev")["query_ids"])
+    for conf in ("P-G", "C-G"):
+        a, b = rx.resolve_configuration(load("dev_g26hy"), conf), rx.resolve_configuration(load("dev_g26"), conf)
+        assert a["conditions"] == ["hybrid"] and a["prompt"] == {**b["prompt"], "example_view": "clean_v1"}
+        assert {k: v for k, v in a.items() if k not in ("prompt", "run_id", "conditions")} == \
+            {k: v for k, v in b.items() if k not in ("prompt", "run_id", "conditions")}
+        assert len(rx.plan(a, cands)) == 40
+        for q, s, _, _ in rx.plan(a, cands):
+            fz.hits(q, s)  # hybrid k = 3 nel file congelato
+        # baseline: bm25 con la vista clean_v1 = prompt dei manifest di dev_g26ev (8 query) e dev_g26 (le altre 12)
+        clean = dict(b, prompt={**b["prompt"], "example_view": "clean_v1"})
+        sha = {}
+        for run in ("dev_g26", "dev_g26ev"):
+            man = ROOT / "data" / "results" / "generation" / f"{run}__{conf}" / "manifest.jsonl"
+            for m in map(json.loads, man.read_text(encoding="utf-8").splitlines()):
+                if (run == "dev_g26ev") == (m["query_id"] in clean_ids):
+                    sha[(m["query_id"], m["repetition"])] = m["prompt_sha256"]
+        for q, s, r, _ in rx.plan(clean, cands):
+            got = hashlib.sha256(json.dumps(fz.build(q, s).messages, ensure_ascii=False).encode()).hexdigest()
+            assert got == sha[(q["id"], r)], (conf, q["id"], r)
+    B = {"F1rel": 0.40, "R": 0.35, "Vc": 38, "truncated": 0}
+    T = lambda **kw: {**B, **kw}  # noqa: E731
+    assert ah.keeps(B, T(F1rel=0.37))["ok"] and not ah.keeps(B, T(F1rel=0.369))["ok"]
+    assert ah.keeps(B, T(Vc=36))["ok"] and not ah.keeps(B, T(Vc=35))["ok"] and not ah.keeps(B, T(truncated=2))["ok"]
+    ok, bad = ah.keeps(B, B), ah.keeps(B, T(R=0.2))
+    assert ah.outcome({"plantuml": ok, "compact": ok}).startswith("hybrid RESTA")
+    assert "DECIDE L'UTENTE" in ah.outcome({"plantuml": ok, "compact": bad})
+    assert ah.outcome({"plantuml": None, "compact": ok}).startswith("STOP")
+    # run simulata: la baseline ricostruita copiata come dev_g26hy -> deltas nulli, hybrid resta
+    res = tmp / "hy26"
+    for conf in ("P-G", "C-G"):
+        for run in ("dev_g26", "dev_g26ev"):
+            shutil.copytree(ROOT / "data" / "results" / "generation" / f"{run}__{conf}", res / f"{run}__{conf}")
+        out = res / f"dev_g26hy__{conf}"
+        shutil.copytree(res / f"dev_g26__{conf}", out)
+        keep = [x for x in (out / "manifest.jsonl").read_text(encoding="utf-8").splitlines()
+                if json.loads(x)["query_id"] not in clean_ids]
+        ev = res / f"dev_g26ev__{conf}"
+        for x in (ev / "manifest.jsonl").read_text(encoding="utf-8").splitlines():
+            keep.append(x)
+            cid = json.loads(x)["call_id"]
+            shutil.copy(ev / "raw" / f"{cid}.json", out / "raw" / f"{cid}.json")
+        (out / "manifest.jsonl").write_text("".join(x + "\n" for x in keep), encoding="utf-8")
+    text, outc = ah.report(ah.load_all(res))
+    assert outc["outcome"].startswith("hybrid RESTA") and all(v["dF1rel"] == 0 for v in outc["formats"].values()), outc
+    assert "| Boeing |" in text and "hybrid meglio in 0 esercizi, peggio in 0" in text
+    print("  OK  passo 2 con hybrid (voce 140): config = configurazione di lavoro del 3b con hybrid, celle nel file "
+          "congelato, baseline bm25 + clean_v1 con prompt identici ai manifest, regola di analyze_hybrid26")
+
+
+def check_dense26(tmp: Path) -> None:
+    """Voce 142: config dev_g26de (= dev_g26hy salvo la condizione dense, celle nel file congelato) e analisi
+    experiments/analyze_dense26.py (regola della voce 140 riusata; run simulata dalla baseline)."""
+    import yaml
+    import analyze_dense26 as adn
+    import analyze_hybrid26 as ah
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    cands, _ = cl.load_all()
+    fz = PromptBuilder(retrieval_source="frozen")
+    for conf in ("P-G", "C-G"):
+        a, b = rx.resolve_configuration(load("dev_g26de"), conf), rx.resolve_configuration(load("dev_g26hy"), conf)
+        assert a["conditions"] == ["dense"] and {k: v for k, v in a.items() if k not in ("run_id", "conditions")} == \
+            {k: v for k, v in b.items() if k not in ("run_id", "conditions")}
+        for q, s, _, _ in rx.plan(a, cands):
+            fz.hits(q, s)
+    assert adn.ah.keeps is ah.keeps and adn.ah.MAX_F1_LOSS == 0.03
+    ok = ah.keeps({"F1rel": 0.4, "R": 0.3, "Vc": 38, "truncated": 0}, {"F1rel": 0.4, "R": 0.3, "Vc": 38, "truncated": 0})
+    assert adn.outcome({"plantuml": ok, "compact": ok}).startswith("dense RESTA")
+    assert adn.outcome({"plantuml": ok, "compact": None}).startswith("STOP")
+    # run simulata: baseline bm25 ricostruita copiata come dev_g26de (hybrid assente) -> deltas nulli
+    res = tmp / "de26"
+    clean_ids = set(load("dev_g26ev")["query_ids"])
+    for conf in ("P-G", "C-G"):
+        for run in ("dev_g26", "dev_g26ev"):
+            shutil.copytree(ROOT / "data" / "results" / "generation" / f"{run}__{conf}", res / f"{run}__{conf}")
+        out = res / f"dev_g26de__{conf}"
+        shutil.copytree(res / f"dev_g26__{conf}", out)
+        keep = [x for x in (out / "manifest.jsonl").read_text(encoding="utf-8").splitlines()
+                if json.loads(x)["query_id"] not in clean_ids]
+        ev = res / f"dev_g26ev__{conf}"
+        for x in (ev / "manifest.jsonl").read_text(encoding="utf-8").splitlines():
+            keep.append(x)
+            cid = json.loads(x)["call_id"]
+            shutil.copy(ev / "raw" / f"{cid}.json", out / "raw" / f"{cid}.json")
+        (out / "manifest.jsonl").write_text("".join(x + "\n" for x in keep), encoding="utf-8")
+    text, outc = adn.report(adn.load_all(res))
+    assert outc["outcome"].startswith("dense RESTA") and all(v["dF1rel"] == 0 for v in outc["formats"].values()), outc
+    assert "dense meglio in 0 esercizi, peggio in 0" in text
+    print("  OK  passo 2 con dense (voce 142): config = dev_g26hy salvo la condizione, celle nel file congelato, "
+          "regola della voce 140 riusata, run simulata")
+
+
+def check_compare_retrievers() -> None:
+    """experiments/compare_retrievers.py (voce 145): bm25 ricostruito come nella voce 140, 20 esercizi x 2 formati x 2
+    ripetizioni per retriever, indice coerente con element_metrics; pagina autonoma (SVG solo con java e plantuml.jar)."""
+    import re as _re
+    import shutil as _sh
+    import compare_retrievers as cr
+    import review_report as rr
+    calls = cr.load_calls()
+    assert {k: len(v) for k, v in calls.items()} == {(r, c): 40 for r in ("bm25", "hybrid") for c in ("P-G", "C-G")}
+    assert {c["m"]["call_id"].split("__")[1] for c in calls[("bm25", "P-G")]} == {"bm25"}
+    if not (_sh.which("java") and rr.DEFAULT_JAR.exists()):
+        print("  --  confronto bm25 / hybrid: java o plantuml.jar assenti, pagina non provata")
+        return
+    text, stats = cr.build(calls)
+    assert stats["exercises"] == 20 and stats["responses"] == 160 and stats["svgs"] == stats["diagrams"]
+    data = json.loads(_re.search(r"const D = (\{.*?\});\nconst Q", text, _re.S).group(1).replace("<\\/", "</"))
+    row = next(r for r in data["index"] if r["q"] == "OilWells")
+    assert abs(row["P-G__bm25"] - 0.472) < 1e-3 and abs(row["P-G__hybrid"] - 0.619) < 1e-3, row
+    assert "<script src" not in text and "http" not in text.split("<script>")[1][:200]
+    print("  OK  confronto bm25 / hybrid (voce 145): 160 risposte, indice coerente con l'analisi, pagina autonoma")
+
+
+def check_v5b(tmp: Path) -> None:
+    """Voce 146: leva v5b riallineata. Testo v5b invariato e solo per il compatto; config dev_g26b = dev_g26 C-G salvo
+    istruzioni, vista clean_v1 ed esercizi; baseline v5 + clean_v1 con prompt identici ai manifest; regola di
+    experiments/analyze_v5b.py (soglie, run simulata dalla baseline, guardia senza run)."""
+    import yaml
+    import analyze_v5b as av5
+    from prompt_builder import TEMPLATES
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    sha = hashlib.sha256((TEMPLATES / "v5b_compact_instructions.txt").read_bytes()).hexdigest()
+    assert sha == "838de1a19d4990d063bcd76df25f96fad8815807afb0573cca9998d65215fce6", sha
+    try:
+        PromptSpec(condition="bm25", output_format="plantuml", instructions_version="v5b")
+        raise AssertionError("v5b accettata per PlantUML")
+    except ValueError:
+        pass
+    cands, _ = cl.load_all()
+    fz = PromptBuilder(retrieval_source="frozen")
+    a, b = rx.resolve_configuration(load("dev_g26b"), "C-G"), rx.resolve_configuration(load("dev_g26"), "C-G")
+    assert a["prompt"] == {**b["prompt"], "instructions_version": "v5b", "example_view": "clean_v1"}, a["prompt"]
+    assert {k: v for k, v in a.items() if k not in ("prompt", "run_id", "query_ids")} == \
+        {k: v for k, v in b.items() if k not in ("prompt", "run_id", "query_ids")}
+    ids = load("dev_g26b")["query_ids"]
+    assert len(ids) == 8 and set(av5.CONTROLS) <= set(ids) and len(rx.plan(a, cands)) == 16
+    clean_ids = set(load("dev_g26ev")["query_ids"])
+    man_sha = {}
+    for run in ("dev_g26", "dev_g26ev"):
+        man = ROOT / "data" / "results" / "generation" / f"{run}__C-G" / "manifest.jsonl"
+        for m in map(json.loads, man.read_text(encoding="utf-8").splitlines()):
+            if (run == "dev_g26ev") == (m["query_id"] in clean_ids):
+                man_sha[(m["query_id"], m["repetition"])] = m["prompt_sha256"]
+    base = dict(a, prompt={**a["prompt"], "instructions_version": "v5"})
+    digest = lambda bp: hashlib.sha256(json.dumps(bp.messages, ensure_ascii=False).encode()).hexdigest()  # noqa: E731
+    for (q, s, r, _), (q2, s2, _, _) in zip(rx.plan(base, cands), rx.plan(a, cands)):
+        assert digest(fz.build(q, s)) == man_sha[(q["id"], r)], (q["id"], r)  # baseline = prompt delle run
+        assert digest(fz.build(q2, s2)) != man_sha[(q2["id"], r)]  # v5b: solo le istruzioni cambiano
+    # regola (voce 146)
+    assert (av5.MAX_SKELETONS, av5.MAX_CONTROL_R_LOSS, av5.MAX_CONTROL_P_LOSS, av5.MAX_F1_LOSS, av5.MAX_R_LOSS,
+            av5.MAX_M_LOSS, av5.MAX_VC_LOSS, av5.MAX_TRUNCATED) == (3, 0.05, 0.05, 0.03, 0.03, 0.03, 1, 1)
+    B = {"skeletons": 7, "F1rel": 0.44, "R": 0.35, "M1": 0.27, "Vc": 15, "truncated": 0}
+    C = {"attrR": 0.67, "attrP": 0.67}
+    T = lambda **kw: {**B, "skeletons": 3, **kw}  # noqa: E731
+    assert av5.adopt(B, T(), C, C)["ok"] and not av5.adopt(B, T(skeletons=4), C, C)["ok"]
+    assert av5.adopt(B, T(F1rel=0.41), C, C)["ok"] and not av5.adopt(B, T(F1rel=0.409), C, C)["ok"]
+    assert av5.adopt(B, T(Vc=14), C, C)["ok"] and not av5.adopt(B, T(Vc=13), C, C)["ok"]
+    assert not av5.adopt(B, T(truncated=2), C, C)["ok"] and not av5.adopt(B, T(M1=0.239), C, C)["ok"]
+    assert av5.adopt(B, T(), C, {"attrR": 0.62, "attrP": 0.62})["ok"]
+    assert not av5.adopt(B, T(), C, {"attrR": 0.619, "attrP": 0.67})["ok"]
+    assert not av5.adopt(B, T(), C, {"attrR": 0.67, "attrP": 0.619})["ok"]
+    assert av5.outcome(None).startswith("STOP")
+    # guardia: senza la run del trattamento nessun summary
+    res = tmp / "v5b"
+    for run in ("dev_g26", "dev_g26ev"):
+        shutil.copytree(ROOT / "data" / "results" / "generation" / f"{run}__C-G", res / f"{run}__C-G")
+    assert av5.main(["--results-dir", str(res)]) == 1 and not (res / av5.OUT_NAME).exists()
+    # run simulata: la baseline ricostruita (8 esercizi) copiata come dev_g26b -> deltas nulli, 7 scheletri, NON adottata
+    out = res / "dev_g26b__C-G"
+    out.mkdir()
+    (out / "raw").mkdir()
+    keep = []
+    for run in ("dev_g26", "dev_g26ev"):
+        src = res / f"{run}__C-G"
+        for x in (src / "manifest.jsonl").read_text(encoding="utf-8").splitlines():
+            q = json.loads(x)["query_id"]
+            if q in ids and (run == "dev_g26ev") == (q in clean_ids):
+                keep.append(x)
+                cid = json.loads(x)["call_id"]
+                shutil.copy(src / "raw" / f"{cid}.json", out / "raw" / f"{cid}.json")
+    (out / "manifest.jsonl").write_text("".join(x + "\n" for x in keep), encoding="utf-8")
+    saved = json.loads((res / "dev_g26__C-G" / "config.json").read_text(encoding="utf-8"))
+    saved["config"]["query_ids"] = ids
+    (out / "config.json").write_text(json.dumps(saved), encoding="utf-8")
+    text, outc = av5.report(av5.load_all(res))
+    d = outc["rule"]
+    assert outc["outcome"].startswith("v5b NON adottata") and d["skeletons"] == 7, outc
+    assert all(d[k] == 0 for k in ("dF1rel", "dR", "dM1", "dVc", "dAttrR_ctrl", "dAttrP_ctrl")), d
+    assert "| Boeing | senza attributi in v5 |" in text and "| ProjectManagement | GT senza attributi |" in text
+    print("  OK  leva v5b (voce 146): testo invariato e solo compatto, config = dev_g26 C-G salvo istruzioni, vista "
+          "ed esercizi, baseline con prompt identici ai manifest, regola di analyze_v5b (soglie, run simulata, guardia)")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -2884,6 +3173,11 @@ def main() -> None:
         check_frozen(builder, tmp)
         check_3b_and_batch(builder, tmp)
         check_compare_view()
+        check_compare_retrievers()
+        check_example_view(builder, tmp)
+        check_hybrid26(builder, tmp)
+        check_dense26(tmp)
+        check_v5b(tmp)
         check_review(builder, tmp)
         check_run_log(tmp)
         check_provenance()
