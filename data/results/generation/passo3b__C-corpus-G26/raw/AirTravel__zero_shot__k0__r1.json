@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Aircraft\", \"attributes\": [\"+ name : string\", \"+ type : string\", \"+ yearOfManufacture : int\", \"+ nextInspectionDate : date\"]}, {\"name\": \"Flight\", \"attributes\": [\"+ flightNumber : string\", \"+ date : date\"]}, {\"name\": \"Passenger\", \"attributes\": [\"+ name : string\", \"+ passportNumber : string\"]}, {\"name\": \"Ticket\", \"attributes\": [\"+ ticketNumber : string\", \"+ price : float\", \"+ upgradeDesired : boolean\"]}, {\"name\": \"PassengerAircraft\", \"attributes\": [\"+ numberOfSeats : int\"]}, {\"name\": \"SeatCategory\", \"attributes\": [\"+ designation : string\", \"+ offersEntertainment : boolean\", \"+ numberOfSeats : int\"]}, {\"name\": \"Airline\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"FlightAttendant\", \"attributes\": [\"+ name : string\", \"+ dateOfEmployment : date\", \"+ isChiefStewardess : boolean\"]}, {\"name\": \"Pilot\", \"attributes\": [\"+ name : string\", \"+ dateOfEmployment : date\", \"+ license : string\"]}, {\"name\": \"Airport\", \"attributes\": [\"+ name : string\", \"+ address : string\", \"+ runwayNumbers : string[]\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Aircraft\", \"target\": \"Flight\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Passenger\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"Flight\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"Passenger\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"SeatCategory\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"inheritance\", \"child\": \"PassengerAircraft\", \"parent\": \"Aircraft\"}, {\"type\": \"association\", \"source\": \"PassengerAircraft\", \"target\": \"SeatCategory\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Aircraft\", \"target\": \"Airline\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Airline\", \"target\": \"FlightAttendant\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Airline\", \"target\": \"Pilot\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"FlightAttendant\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Pilot\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"captain\", \"targetRole\": \"captain\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Pilot\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..2\", \"label\": \"co-pilot\", \"targetRole\": \"co-pilot\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Airport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"departure\", \"targetRole\": \"departureAirport\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Airport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"destination\", \"targetRole\": \"destinationAirport\"}, {\"type\": \"association\", \"source\": \"Aircraft\", \"target\": \"Airport\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\", \"label\": \"home\", \"targetRole\": \"homeAirport\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 39.82124269999986,
+ "prompt_tokens": 1369,
+ "completion_tokens": 865,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-uoowvrgya1otpc61xmacya",
+  "object": "chat.completion",
+  "created": 1791867114,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Aircraft\", \"attributes\": [\"+ name : string\", \"+ type : string\", \"+ yearOfManufacture : int\", \"+ nextInspectionDate : date\"]}, {\"name\": \"Flight\", \"attributes\": [\"+ flightNumber : string\", \"+ date : date\"]}, {\"name\": \"Passenger\", \"attributes\": [\"+ name : string\", \"+ passportNumber : string\"]}, {\"name\": \"Ticket\", \"attributes\": [\"+ ticketNumber : string\", \"+ price : float\", \"+ upgradeDesired : boolean\"]}, {\"name\": \"PassengerAircraft\", \"attributes\": [\"+ numberOfSeats : int\"]}, {\"name\": \"SeatCategory\", \"attributes\": [\"+ designation : string\", \"+ offersEntertainment : boolean\", \"+ numberOfSeats : int\"]}, {\"name\": \"Airline\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"FlightAttendant\", \"attributes\": [\"+ name : string\", \"+ dateOfEmployment : date\", \"+ isChiefStewardess : boolean\"]}, {\"name\": \"Pilot\", \"attributes\": [\"+ name : string\", \"+ dateOfEmployment : date\", \"+ license : string\"]}, {\"name\": \"Airport\", \"attributes\": [\"+ name : string\", \"+ address : string\", \"+ runwayNumbers : string[]\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Aircraft\", \"target\": \"Flight\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Passenger\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"Flight\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"Passenger\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"SeatCategory\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"inheritance\", \"child\": \"PassengerAircraft\", \"parent\": \"Aircraft\"}, {\"type\": \"association\", \"source\": \"PassengerAircraft\", \"target\": \"SeatCategory\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Aircraft\", \"target\": \"Airline\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Airline\", \"target\": \"FlightAttendant\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Airline\", \"target\": \"Pilot\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"FlightAttendant\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Pilot\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"captain\", \"targetRole\": \"captain\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Pilot\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..2\", \"label\": \"co-pilot\", \"targetRole\": \"co-pilot\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Airport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"departure\", \"targetRole\": \"departureAirport\"}, {\"type\": \"association\", \"source\": \"Flight\", \"target\": \"Airport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"destination\", \"targetRole\": \"destinationAirport\"}, {\"type\": \"association\", \"source\": \"Aircraft\", \"target\": \"Airport\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\", \"label\": \"home\", \"targetRole\": \"homeAirport\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1369,
+   "completion_tokens": 865,
+   "total_tokens": 2234,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Game\",\n      \"attributes\": [\n        \"+ hiddenTile : Tile\",\n        \"+ startingPositions : Tile[]\"\n      ]\n    },\n    {\n      \"name\": \"Board\",\n      \"attributes\": [\n        \"+ layout : Tile[]\"\n      ]\n    },\n    {\n      \"name\": \"Tile\",\n      \"attributes\": [\n        \"+ isVisited : boolean\",\n        \"+ isActionTile : boolean\",\n        \"+ actionTileDuration : int\"\n      ]\n    },\n    {\n      \"name\": \"Connection\",\n      \"attributes\": [\n        \"+ side : string\"\n      ]\n    },\n    {\n      \"name\": \"ActionCard\",\n      \"attributes\": [\n        \"+ instruction : string\"\n      ]\n    },\n    {\n      \"name\": \"ActionType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RollExtraTurn\",\n        \"ConnectAdjacentTiles\",\n        \"RemoveConnection\",\n        \"MoveToArbitraryTile\",\n        \"LoseNextTurn\"\n      ]\n    },\n    {\n      \"name\": \"Player\",\n      \"attributes\": [\n        \"+ color : string\",\n        \"+ currentPosition : Tile\"\n      ]\n    },\n    {\n      \"name\": \"PlayingPiece\",\n      \"attributes\": [\n        \"+ color : string\"\n      ]\n    },\n    {\n      \"name\": \"Die\"\n    },\n    {\n      \"name\": \"Deck\",\n      \"attributes\": [\n        \"+ size : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Board\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Board\",\n      \"part\": \"Tile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"Connection\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"Tile\",\n      \"label\": \"connectedTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"ActionCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActionCard\",\n      \"target\": \"ActionType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"PlayingPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Die\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Deck\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Deck\",\n      \"target\": \"ActionCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"32\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 55.40275329999713,
+ "prompt_tokens": 5691,
+ "completion_tokens": 894,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-y2r3hpuat63n9gdj0unss",
+  "object": "chat.completion",
+  "created": 1791882190,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Game\",\n      \"attributes\": [\n        \"+ hiddenTile : Tile\",\n        \"+ startingPositions : Tile[]\"\n      ]\n    },\n    {\n      \"name\": \"Board\",\n      \"attributes\": [\n        \"+ layout : Tile[]\"\n      ]\n    },\n    {\n      \"name\": \"Tile\",\n      \"attributes\": [\n        \"+ isVisited : boolean\",\n        \"+ isActionTile : boolean\",\n        \"+ actionTileDuration : int\"\n      ]\n    },\n    {\n      \"name\": \"Connection\",\n      \"attributes\": [\n        \"+ side : string\"\n      ]\n    },\n    {\n      \"name\": \"ActionCard\",\n      \"attributes\": [\n        \"+ instruction : string\"\n      ]\n    },\n    {\n      \"name\": \"ActionType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RollExtraTurn\",\n        \"ConnectAdjacentTiles\",\n        \"RemoveConnection\",\n        \"MoveToArbitraryTile\",\n        \"LoseNextTurn\"\n      ]\n    },\n    {\n      \"name\": \"Player\",\n      \"attributes\": [\n        \"+ color : string\",\n        \"+ currentPosition : Tile\"\n      ]\n    },\n    {\n      \"name\": \"PlayingPiece\",\n      \"attributes\": [\n        \"+ color : string\"\n      ]\n    },\n    {\n      \"name\": \"Die\"\n    },\n    {\n      \"name\": \"Deck\",\n      \"attributes\": [\n        \"+ size : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Board\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Board\",\n      \"part\": \"Tile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"Connection\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"Tile\",\n      \"label\": \"connectedTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"ActionCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActionCard\",\n      \"target\": \"ActionType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"PlayingPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Die\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Deck\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Deck\",\n      \"target\": \"ActionCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"32\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5691,
+   "completion_tokens": 894,
+   "total_tokens": 6585,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

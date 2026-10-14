@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"House\",\n      \"attributes\": [\n        \"+ Address : string\",\n        \"+ BuildingMaterial : string\"\n      ]\n    },\n    {\n      \"name\": \"Basement\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Size : double\"\n      ]\n    },\n    {\n      \"name\": \"EarthBasement\",\n      \"attributes\": [\n        \"+ HumidityLevel : double\"\n      ]\n    },\n    {\n      \"name\": \"ConcreteBasement\"\n    },\n    {\n      \"name\": \"SemiDetachedHouse\",\n      \"attributes\": [\n        \"+ HasGarden : boolean\",\n        \"+ WindowCount : int\"\n      ]\n    },\n    {\n      \"name\": \"Carport\",\n      \"attributes\": [\n        \"+ IsDouble : boolean\",\n        \"+ HasFlatRoof : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Garage\",\n      \"attributes\": [\n        \"+ HasAutomaticDoor : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Company\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"JobLog\",\n      \"attributes\": [\n        \"+ Hours : double\",\n        \"+ Price : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"House\",\n      \"part\": \"Basement\",\n      \"wholeMultiplicity\": \"0..1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EarthBasement\",\n      \"parent\": \"Basement\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ConcreteBasement\",\n      \"parent\": \"Basement\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SemiDetachedHouse\",\n      \"parent\": \"House\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SemiDetachedHouse\",\n      \"target\": \"Carport\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SemiDetachedHouse\",\n      \"target\": \"Garage\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Company\",\n      \"target\": \"JobLog\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"House\",\n      \"target\": \"JobLog\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Company\",\n      \"target\": \"House\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 41.914881999997306,
+ "prompt_tokens": 3617,
+ "completion_tokens": 758,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-uqnobhenoo8i561j6rw86i",
+  "object": "chat.completion",
+  "created": 1791874420,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"House\",\n      \"attributes\": [\n        \"+ Address : string\",\n        \"+ BuildingMaterial : string\"\n      ]\n    },\n    {\n      \"name\": \"Basement\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Size : double\"\n      ]\n    },\n    {\n      \"name\": \"EarthBasement\",\n      \"attributes\": [\n        \"+ HumidityLevel : double\"\n      ]\n    },\n    {\n      \"name\": \"ConcreteBasement\"\n    },\n    {\n      \"name\": \"SemiDetachedHouse\",\n      \"attributes\": [\n        \"+ HasGarden : boolean\",\n        \"+ WindowCount : int\"\n      ]\n    },\n    {\n      \"name\": \"Carport\",\n      \"attributes\": [\n        \"+ IsDouble : boolean\",\n        \"+ HasFlatRoof : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Garage\",\n      \"attributes\": [\n        \"+ HasAutomaticDoor : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Company\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"JobLog\",\n      \"attributes\": [\n        \"+ Hours : double\",\n        \"+ Price : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"House\",\n      \"part\": \"Basement\",\n      \"wholeMultiplicity\": \"0..1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EarthBasement\",\n      \"parent\": \"Basement\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ConcreteBasement\",\n      \"parent\": \"Basement\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SemiDetachedHouse\",\n      \"parent\": \"House\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SemiDetachedHouse\",\n      \"target\": \"Carport\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SemiDetachedHouse\",\n      \"target\": \"Garage\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Company\",\n      \"target\": \"JobLog\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"House\",\n      \"target\": \"JobLog\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Company\",\n      \"target\": \"House\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3617,
+   "completion_tokens": 758,
+   "total_tokens": 4375,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

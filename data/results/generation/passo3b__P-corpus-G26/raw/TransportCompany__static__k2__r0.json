@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Company {\n}\n\nclass Employee {\n  + Name : string\n  + SocialSecurityNumber : string\n}\n\nclass Planner extends Employee {\n  + Username : string\n  + Password : string\n}\n\nclass AdministrativeStaff extends Employee {\n  + Username : string\n  + Password : string\n  + FieldOfActivity : string\n}\n\nclass Driver extends Employee {\n}\n\nclass Customer {\n  + Name : string\n  + BillingAddress : string\n}\n\nclass PartnerCompany {\n  + Name : string\n  + Address : string\n}\n\nclass Vehicle {\n  + LicensePlate : string\n  + Mileage : int\n}\n\nclass RefrigeratedTruck extends Vehicle {}\nclass SmallVan extends Vehicle {}\nclass LoadingPlatform extends Vehicle {}\nclass BoxTruck extends Vehicle {}\n\nclass Repair {\n  + Duration : string\n  + Cost : float\n}\n\nclass RepairShop {\n  + Name : string\n  + Address : string\n}\n\nclass Order {\n  + PackageSize : string\n  + Comment : string\n  + StartTime : datetime\n  + FinishTime : datetime\n  + PickUpAddress : string\n  + DeliveryAddress : string\n}\n\nCompany \"1\" -- \"0..*\" Employee\nCompany \"1\" -- \"0..*\" Customer\nCompany \"1\" -- \"0..*\" Vehicle\nCompany \"1\" -- \"0..*\" Order\n\nEmployee \"0..*\" -- \"0..*\" Repair : takes vehicle to\nRepair \"0..*\" -- \"1\" Vehicle\nRepair \"0..*\" -- \"1\" RepairShop\n\nOrder \"0..*\" -- \"1\" Customer : client\nOrder \"0..*\" -- \"0..1\" AdministrativeStaff : placed by\nOrder \"0..*\" -- \"0..1\" PartnerCompany : placed by\nOrder \"0..*\" -- \"1\" Planner : assigned by\nOrder \"0..*\" -- \"1\" Vehicle : assigned to\nOrder \"0..*\" -- \"1\" Driver : completed by\nOrder \"0..*\" -- \"1\" Driver : assigned to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 24.18596980000075,
+ "prompt_tokens": 2608,
+ "completion_tokens": 448,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1bwsqz65nqor2zoxtifmpj",
+  "object": "chat.completion",
+  "created": 1791859222,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Company {\n}\n\nclass Employee {\n  + Name : string\n  + SocialSecurityNumber : string\n}\n\nclass Planner extends Employee {\n  + Username : string\n  + Password : string\n}\n\nclass AdministrativeStaff extends Employee {\n  + Username : string\n  + Password : string\n  + FieldOfActivity : string\n}\n\nclass Driver extends Employee {\n}\n\nclass Customer {\n  + Name : string\n  + BillingAddress : string\n}\n\nclass PartnerCompany {\n  + Name : string\n  + Address : string\n}\n\nclass Vehicle {\n  + LicensePlate : string\n  + Mileage : int\n}\n\nclass RefrigeratedTruck extends Vehicle {}\nclass SmallVan extends Vehicle {}\nclass LoadingPlatform extends Vehicle {}\nclass BoxTruck extends Vehicle {}\n\nclass Repair {\n  + Duration : string\n  + Cost : float\n}\n\nclass RepairShop {\n  + Name : string\n  + Address : string\n}\n\nclass Order {\n  + PackageSize : string\n  + Comment : string\n  + StartTime : datetime\n  + FinishTime : datetime\n  + PickUpAddress : string\n  + DeliveryAddress : string\n}\n\nCompany \"1\" -- \"0..*\" Employee\nCompany \"1\" -- \"0..*\" Customer\nCompany \"1\" -- \"0..*\" Vehicle\nCompany \"1\" -- \"0..*\" Order\n\nEmployee \"0..*\" -- \"0..*\" Repair : takes vehicle to\nRepair \"0..*\" -- \"1\" Vehicle\nRepair \"0..*\" -- \"1\" RepairShop\n\nOrder \"0..*\" -- \"1\" Customer : client\nOrder \"0..*\" -- \"0..1\" AdministrativeStaff : placed by\nOrder \"0..*\" -- \"0..1\" PartnerCompany : placed by\nOrder \"0..*\" -- \"1\" Planner : assigned by\nOrder \"0..*\" -- \"1\" Vehicle : assigned to\nOrder \"0..*\" -- \"1\" Driver : completed by\nOrder \"0..*\" -- \"1\" Driver : assigned to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2608,
+   "completion_tokens": 448,
+   "total_tokens": 3056,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name\n  + surname\n  + age\n  + address\n  + profession\n}\n\nclass Subscription {\n  + type\n}\n\nclass MonthlySubscription extends Subscription {}\n\nclass AnnualSubscription extends Subscription {}\n\nclass Service {\n  + name\n}\n\nclass WeightRoom extends Service {}\n\nclass SwimmingPool extends Service {}\n\nclass ClimbingWall extends Service {}\n\nclass Sauna extends Service {}\n\nclass TurkishBath extends Service {}\n\nclass AdditionalService extends Service {}\n\nclass WorkoutPlan {\n  + exercises\n  + repetitions\n  + frequency\n  + visitsPerWeek\n}\n\nclass MedicalStaff {\n  + assistCustomer()\n  + determineFitnessLevel()\n  + defineDiet()\n}\n\nclass MedicalCheck {\n  + weight\n  + bodyFat\n  + electrocardiogram\n  + restingHeartbeat\n  + stressHeartbeat\n}\n\nclass Gym {\n  + computeMonthlyBalance()\n  + computeYearlyBalance()\n  + sendArrearsReminder()\n  + sendMedicalCheckReminder()\n}\n\nCustomer \"1\" -- \"1\" Subscription : has\nCustomer \"1\" -- \"*\" Service : requests\nCustomer \"1\" -- \"0..1\" WorkoutPlan : associatedWith\nCustomer \"1\" -- \"0..1\" MedicalStaff : assistedBy\nCustomer \"1\" -- \"*\" MedicalCheck : undergoes\nMedicalCheck \"*\" -- \"1\" MedicalStaff : performedBy\nGym \"1\" -- \"*\" Customer : manages\nGym \"1\" -- \"*\" Subscription : offers\nGym \"1\" -- \"*\" Service : offers\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 19.164713800000754,
+ "prompt_tokens": 2751,
+ "completion_tokens": 339,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-aoaz7deqtnq6objvq4mfj7",
+  "object": "chat.completion",
+  "created": 1791860879,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name\n  + surname\n  + age\n  + address\n  + profession\n}\n\nclass Subscription {\n  + type\n}\n\nclass MonthlySubscription extends Subscription {}\n\nclass AnnualSubscription extends Subscription {}\n\nclass Service {\n  + name\n}\n\nclass WeightRoom extends Service {}\n\nclass SwimmingPool extends Service {}\n\nclass ClimbingWall extends Service {}\n\nclass Sauna extends Service {}\n\nclass TurkishBath extends Service {}\n\nclass AdditionalService extends Service {}\n\nclass WorkoutPlan {\n  + exercises\n  + repetitions\n  + frequency\n  + visitsPerWeek\n}\n\nclass MedicalStaff {\n  + assistCustomer()\n  + determineFitnessLevel()\n  + defineDiet()\n}\n\nclass MedicalCheck {\n  + weight\n  + bodyFat\n  + electrocardiogram\n  + restingHeartbeat\n  + stressHeartbeat\n}\n\nclass Gym {\n  + computeMonthlyBalance()\n  + computeYearlyBalance()\n  + sendArrearsReminder()\n  + sendMedicalCheckReminder()\n}\n\nCustomer \"1\" -- \"1\" Subscription : has\nCustomer \"1\" -- \"*\" Service : requests\nCustomer \"1\" -- \"0..1\" WorkoutPlan : associatedWith\nCustomer \"1\" -- \"0..1\" MedicalStaff : assistedBy\nCustomer \"1\" -- \"*\" MedicalCheck : undergoes\nMedicalCheck \"*\" -- \"1\" MedicalStaff : performedBy\nGym \"1\" -- \"*\" Customer : manages\nGym \"1\" -- \"*\" Subscription : offers\nGym \"1\" -- \"*\" Service : offers\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2751,
+   "completion_tokens": 339,
+   "total_tokens": 3090,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

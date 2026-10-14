@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"RepairShop\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ NumberOfEmployees : int\"\n      ],\n      \"methods\": [\n        \"+ CalculateAverageSeniority() : float\",\n        \"+ CalculateLongestRepair() : Repair\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ TaxCode : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\",\n        \"+ YearsOfService : int\"\n      ]\n    },\n    {\n      \"name\": \"Director\",\n      \"attributes\": [\n        \"+ Age : int\"\n      ]\n    },\n    {\n      \"name\": \"Repair\",\n      \"attributes\": [\n        \"+ Code : string\",\n        \"+ CheckInTime : datetime\",\n        \"+ CheckInDate : date\",\n        \"+ ReturnTime : time\",\n        \"+ ReturnDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ Model : string\",\n        \"+ Type : string\",\n        \"+ LicensePlate : string\",\n        \"+ YearOfRegistration : int\",\n        \"+ Owner : string\"\n      ]\n    },\n    {\n      \"name\": \"Owner\",\n      \"attributes\": [\n        \"+ TaxCode : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Manager\",\n      \"methods\": [\n        \"+ AnalyzeStaffPerformance(repairShop: RepairShop) : void\",\n        \"+ AnalyzeRepairPerformance(repairShop: RepairShop) : void\"\n      ]\n    },\n    {\n      \"name\": \"AccountingOffice\",\n      \"methods\": [\n        \"+ ReceiveManagementResults(results: string) : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"RepairShop\",\n      \"target\": \"Employee\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RepairShop\",\n      \"target\": \"Director\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RepairShop\",\n      \"target\": \"Repair\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Repair\",\n      \"target\": \"Vehicle\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"AccountingOffice\",\n      \"targetRole\": \"communicatesTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Manager\",\n      \"target\": \"RepairShop\",\n      \"targetRole\": \"analyzes\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 46.44829420000315,
+ "prompt_tokens": 3721,
+ "completion_tokens": 816,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lbb20jjhfudsmp3medtkc",
+  "object": "chat.completion",
+  "created": 1791897093,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"RepairShop\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ NumberOfEmployees : int\"\n      ],\n      \"methods\": [\n        \"+ CalculateAverageSeniority() : float\",\n        \"+ CalculateLongestRepair() : Repair\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ TaxCode : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\",\n        \"+ YearsOfService : int\"\n      ]\n    },\n    {\n      \"name\": \"Director\",\n      \"attributes\": [\n        \"+ Age : int\"\n      ]\n    },\n    {\n      \"name\": \"Repair\",\n      \"attributes\": [\n        \"+ Code : string\",\n        \"+ CheckInTime : datetime\",\n        \"+ CheckInDate : date\",\n        \"+ ReturnTime : time\",\n        \"+ ReturnDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ Model : string\",\n        \"+ Type : string\",\n        \"+ LicensePlate : string\",\n        \"+ YearOfRegistration : int\",\n        \"+ Owner : string\"\n      ]\n    },\n    {\n      \"name\": \"Owner\",\n      \"attributes\": [\n        \"+ TaxCode : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Manager\",\n      \"methods\": [\n        \"+ AnalyzeStaffPerformance(repairShop: RepairShop) : void\",\n        \"+ AnalyzeRepairPerformance(repairShop: RepairShop) : void\"\n      ]\n    },\n    {\n      \"name\": \"AccountingOffice\",\n      \"methods\": [\n        \"+ ReceiveManagementResults(results: string) : void\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"RepairShop\",\n      \"target\": \"Employee\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RepairShop\",\n      \"target\": \"Director\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RepairShop\",\n      \"target\": \"Repair\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Repair\",\n      \"target\": \"Vehicle\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"AccountingOffice\",\n      \"targetRole\": \"communicatesTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Manager\",\n      \"target\": \"RepairShop\",\n      \"targetRole\": \"analyzes\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3721,
+   "completion_tokens": 816,
+   "total_tokens": 4537,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

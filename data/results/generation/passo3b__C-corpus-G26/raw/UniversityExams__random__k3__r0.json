@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Student\",\n      \"attributes\": [\n        \"+ studentID : int\",\n        \"+ birthDate : date\",\n        \"+ birthCity : string\",\n        \"+ birthRegion : string\",\n        \"+ enrollmentYear : int\"\n      ]\n    },\n    {\n      \"name\": \"Professor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ birthDate : date\",\n        \"+ birthCity : string\"\n      ]\n    },\n    {\n      \"name\": \"Faculty\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ type : string\"\n      ]\n    },\n    {\n      \"name\": \"Course\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ lectureHours : int\"\n      ]\n    },\n    {\n      \"name\": \"Exam\",\n      \"attributes\": [\n        \"+ grade : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Student\",\n      \"target\": \"Faculty\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Student\",\n      \"target\": \"Exam\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Exam\",\n      \"target\": \"Course\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Professor\",\n      \"target\": \"Course\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"Faculty\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 34.868178999997326,
+ "prompt_tokens": 6426,
+ "completion_tokens": 480,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-un64wfcc35rhouan358e",
+  "object": "chat.completion",
+  "created": 1791898332,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Student\",\n      \"attributes\": [\n        \"+ studentID : int\",\n        \"+ birthDate : date\",\n        \"+ birthCity : string\",\n        \"+ birthRegion : string\",\n        \"+ enrollmentYear : int\"\n      ]\n    },\n    {\n      \"name\": \"Professor\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ birthDate : date\",\n        \"+ birthCity : string\"\n      ]\n    },\n    {\n      \"name\": \"Faculty\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ type : string\"\n      ]\n    },\n    {\n      \"name\": \"Course\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ lectureHours : int\"\n      ]\n    },\n    {\n      \"name\": \"Exam\",\n      \"attributes\": [\n        \"+ grade : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Student\",\n      \"target\": \"Faculty\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Student\",\n      \"target\": \"Exam\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Exam\",\n      \"target\": \"Course\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Professor\",\n      \"target\": \"Course\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"Faculty\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6426,
+   "completion_tokens": 480,
+   "total_tokens": 6906,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

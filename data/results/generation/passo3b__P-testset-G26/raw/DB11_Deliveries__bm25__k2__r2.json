@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + VATNumber : string\n  + Name : string\n  + PhoneNumber : string\n  + Address : string\n}\n\nclass Package {\n  + IdentifierCode : string\n  + Weight : float\n  + IsUrgent : boolean\n}\n\nclass DeliveryCenter {\n  + Name : string\n  + Address : string\n}\n\nclass Courier {\n  + VATNumber : string\n  + Name : string\n  + PhoneNumber : string\n}\n\nCustomer \"1\" -- \"0..*\" Package : sends\nCustomer \"1\" -- \"0..1\" DeliveryCenter : associated with\nCustomer \"1\" -- \"0..*\" Customer : recipient\nPackage \"1\" -- \"1\" Customer : recipient\nPackage \"1\" -- \"1\" DeliveryCenter : delivered to\nPackage \"1\" -- \"0..1\" Courier : assigned to\nCourier \"1\" -- \"1\" DeliveryCenter : works in\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 12.666564400002244,
+ "prompt_tokens": 2999,
+ "completion_tokens": 207,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6kvat290herbudx91ogsp",
+  "object": "chat.completion",
+  "created": 1791864729,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + VATNumber : string\n  + Name : string\n  + PhoneNumber : string\n  + Address : string\n}\n\nclass Package {\n  + IdentifierCode : string\n  + Weight : float\n  + IsUrgent : boolean\n}\n\nclass DeliveryCenter {\n  + Name : string\n  + Address : string\n}\n\nclass Courier {\n  + VATNumber : string\n  + Name : string\n  + PhoneNumber : string\n}\n\nCustomer \"1\" -- \"0..*\" Package : sends\nCustomer \"1\" -- \"0..1\" DeliveryCenter : associated with\nCustomer \"1\" -- \"0..*\" Customer : recipient\nPackage \"1\" -- \"1\" Customer : recipient\nPackage \"1\" -- \"1\" DeliveryCenter : delivered to\nPackage \"1\" -- \"0..1\" Courier : assigned to\nCourier \"1\" -- \"1\" DeliveryCenter : works in\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2999,
+   "completion_tokens": 207,
+   "total_tokens": 3206,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

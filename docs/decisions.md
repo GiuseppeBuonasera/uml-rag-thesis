@@ -157,6 +157,8 @@ non sono state modificate.
 146. 2026-10-13 — Leva v5b (attributi del compatto): riallineata alla configurazione attuale e alle metriche nuove, regola prima della run
 147. 2026-10-13 — Leva "piano breve" (v5plan): chiusa senza adozione
 148. 2026-10-13 — Leva v5b: esito (NON adottata); risposte senza attributi del compatto lasciate come limite
+149. 2026-10-13 — Avvio del 3b prima delle risposte dei relatori (rischio di rifacimento accettato, nessuna lettura dei risultati prima dello script di analisi)
+150. 2026-10-14 — Leva v5c ("attributes" sempre presente nel compatto): regola e config registrate PRIMA della run
 
 ## Formato
 
@@ -5314,3 +5316,47 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   obbligatoria, legato alla domanda 14; chiave vuota esplicita negli esempi). Il fenomeno resta come **limite
   dichiarato del formato compatto** e come materiale per la fase 5 (qualità degli esempi recuperati → output); nel 3b
   si conta con la definizione di scheletro della voce 146.
+
+### [2026-10-13] Avvio del 3b prima delle risposte dei relatori — decisione dell'utente
+- **Cosa**: il 3b (`experiments/configs/passo3b.yaml`, Gemma 4 26B A4B QAT, 4 run `passo3b__{P,C}-{corpus,testset}-G26`,
+  **1.938 generazioni**, circa 14,5 ore) si avvia dal notebook (sezione 4, `SBLOCCA_3B = True`) sul commit `485fd0f`.
+  Dry run superato: 609 + 360 per formato, tutti i prompt entro il contesto di 32768 token.
+- **Configurazione congelata**: PlantUML v5; compatto v5 + esempi indentati (v5b non adottata, voce 148); vista
+  `clean_v1` (voce 139); esempi dal file congelato (voce 129); condizioni zero_shot, static, random (seme per esercizio
+  e ripetizione), bm25 k = 2 e 3, hybrid k = 3 (dense tolto, voce 144); 3 ripetizioni; temperatura 0,3, top_p 0,95,
+  top_k 64; contesto 32768, max_tokens 4096; ragionamento spento (`thinking: none`).
+- **Rischio accettato dall'utente**: le domande 8 (modello, campionamento, ripetizioni) e 14 (generazione libera o
+  vincolata) sono ancora aperte; se i relatori rispondono diversamente, il 3b si rifà (circa 14,5 ore). Le domande 11
+  (metriche) e 16 (secondo modello) non toccano queste generazioni.
+- **Regola di non lettura**: nessuno guarda i risultati del 3b (manifest, risposte, metriche, report di revisione)
+  finché lo script di analisi del 3b non è scritto, testato su dati simulati e registrato in una voce. La cella di stato
+  del notebook mostra solo l'avanzamento (conteggi), non le metriche.
+
+### [2026-10-14] Leva v5c ("attributes" sempre presente nel compatto) — regola e config registrate PRIMA della run
+- **Motivo**: le risposte del compatto senza nessun attributo (scheletri) restano dopo la v5b (voce 148). **Dichiarazione**:
+  la leva nasce DOPO che l'utente ha visto i risultati del 3b prima dello script di analisi (deroga alla voce 149, su
+  sua richiesta esplicita, 2026-10-13/14). Nel 3b gli scheletri del compatto sono circa 20 con zero_shot e static e
+  36-45 con random, bm25 e hybrid (PlantUML: 11 in zero_shot, 0-3 con gli esempi): conferma l'ipotesi della voce 148
+  (forma `{"name": "X"}` copiata dagli esempi con classi vuote). La leva si prova SOLO sul dev set.
+- **Cosa cambia (solo compatto)**: istruzioni `generation/templates/v5c_compact_instructions.txt` (sha256
+  `383ad1e8…`) = la v5 con 2 righe cambiate ("attributes" obbligatoria in ogni classe non enum, `[]` solo se il testo
+  non dà attributi per quella classe; "attributes" esclusa dalle chiavi vuote da omettere) **e** esempi del prompt
+  con `"attributes": []` esplicita nelle classi non enum che non ne hanno (`prompt_builder.explicit_attributes`, chiave
+  subito dopo name e kind). Regole di modellazione invariate (anche "A class may have no attributes"). Le chiavi vuote
+  nella risposta sono ammesse dal post-processing (`read_compact`), quindi Vc non cambia per costruzione.
+- **Config** `experiments/configs/dev_g26c.yaml`: identico a `dev_g26.yaml` C-G salvo istruzioni v5c e vista
+  `clean_v1`; 20 esercizi di SVILUPPO × 2 ripetizioni = **40 generazioni** (circa 25 minuti col 26B). **Baseline**: v5 +
+  clean_v1 ricostruita come nella voce 140 (dev_g26ev per le 8 query toccate dalla pulizia, dev_g26 per le altre),
+  prompt identici ai manifest (verificato dal test): 40 risposte, **7 scheletri**, F1 relazioni 0,418, R 0,344, M
+  primaria 0,288, Vc 36, attributi R 0,350 e P 0,426.
+- **REGOLA** (`experiments/analyze_v5c.py`, testato prima della run sulla sola baseline): **adottare v5c per il compatto
+  del 3b se scheletri ≤ 3 E, sulle 40 risposte, d(recall attributi) ≥ 0, d(precision attributi) ≥ −0,05,
+  dF1_relazioni ≥ −0,03, dR ≥ −0,03, dM_primaria ≥ −0,03, dVc ≥ −2 e meno di 2 troncamenti.** Metriche e scheletri
+  con le definizioni della voce 146 (element_metrics rilassato, macro per esercizio). Riportati anche la quota di
+  classi senza attributi, le molteplicità presenti, i token e il dettaglio per esercizio.
+- **Se adottata**: le configurazioni C-* di `passo3b.yaml` passano a `instructions_version: v5c` e la parte compatta del
+  3b si rifà (969 generazioni, circa 10 ore) in run nuove; le run compatte v5 restano come documentazione. PlantUML
+  invariato.
+- **Limiti dichiarati**: secondo tentativo sullo stesso dev set per lo stesso problema (rischio di adattamento al dev
+  set); leva motivata anche dai risultati del 3b visti in anticipo.
+- **STOP** prima delle generazioni: parte dal notebook (sezione 3 sexies) con il via dell'utente.

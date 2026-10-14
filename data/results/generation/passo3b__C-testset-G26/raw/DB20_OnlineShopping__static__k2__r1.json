@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Account\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"ShoppingCart\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"WebUser\",\n      \"attributes\": [\n        \"+ loginName : string\"\n      ]\n    },\n    {\n      \"name\": \"UserStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"New\",\n        \"Active\",\n        \"TemporaryBlocked\",\n        \"Banned\"\n      ]\n    },\n    {\n      \"name\": \"Payment\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"LineItem\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Product\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Account\",\n      \"part\": \"ShoppingCart\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Account\",\n      \"part\": \"Order\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"WebUser\",\n      \"parent\": \"Customer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WebUser\",\n      \"target\": \"ShoppingCart\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Payment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Payment\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ShoppingCart\",\n      \"part\": \"LineItem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Order\",\n      \"part\": \"LineItem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"LineItem\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 43.176808199990774,
+ "prompt_tokens": 3621,
+ "completion_tokens": 772,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-p1iseuyd91cha27xczsi0a",
+  "object": "chat.completion",
+  "created": 1791921264,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Account\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"ShoppingCart\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"WebUser\",\n      \"attributes\": [\n        \"+ loginName : string\"\n      ]\n    },\n    {\n      \"name\": \"UserStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"New\",\n        \"Active\",\n        \"TemporaryBlocked\",\n        \"Banned\"\n      ]\n    },\n    {\n      \"name\": \"Payment\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"LineItem\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Product\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Account\",\n      \"part\": \"ShoppingCart\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Account\",\n      \"part\": \"Order\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"WebUser\",\n      \"parent\": \"Customer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WebUser\",\n      \"target\": \"ShoppingCart\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Payment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Payment\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ShoppingCart\",\n      \"part\": \"LineItem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Order\",\n      \"part\": \"LineItem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"LineItem\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3621,
+   "completion_tokens": 772,
+   "total_tokens": 4393,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

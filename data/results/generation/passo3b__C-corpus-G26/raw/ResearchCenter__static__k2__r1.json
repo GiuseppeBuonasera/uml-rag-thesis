@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"ResearchCenter\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Area\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Team\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Researcher\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Area\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"manager\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Area\",\n      \"target\": \"Team\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Team\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetRole\": \"leader\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Team\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetRole\": \"juniorResearcher\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Team\",\n      \"target\": \"Project\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Area\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"targetRole\": \"availableResearcher\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 25.909056899996358,
+ "prompt_tokens": 3553,
+ "completion_tokens": 444,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-rhmj2uhpl9jdx1nt9ezus",
+  "object": "chat.completion",
+  "created": 1791897681,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"ResearchCenter\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Area\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Team\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Researcher\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Area\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"manager\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Area\",\n      \"target\": \"Team\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Team\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetRole\": \"leader\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Team\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetRole\": \"juniorResearcher\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Team\",\n      \"target\": \"Project\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Area\",\n      \"target\": \"Researcher\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"targetRole\": \"availableResearcher\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3553,
+   "completion_tokens": 444,
+   "total_tokens": 3997,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

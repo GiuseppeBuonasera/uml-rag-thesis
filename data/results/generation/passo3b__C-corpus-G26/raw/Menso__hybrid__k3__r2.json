@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ lineNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Trajectory\",\n      \"attributes\": [\n        \"+ destination : string\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Approval\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Line\",\n      \"attributes\": [\n        \"+ category : string\"\n      ]\n    },\n    {\n      \"name\": \"MENSOProject\",\n      \"attributes\": [\n        \"+ price : float\"\n      ]\n    },\n    {\n      \"name\": \"MENSOUser\",\n      \"attributes\": [\n        \"+ homeAddress : string\",\n        \"+ officeAddress : string\",\n        \"+ workingHours : string\"\n      ]\n    },\n    {\n      \"name\": \"MENSOCard\",\n      \"attributes\": [\n        \"+ cardNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Trip\",\n      \"attributes\": [\n        \"+ time : time\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ amount : float\",\n        \"+ discount : float\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trajectory\",\n      \"target\": \"Approval\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"MENSOProject\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOUser\",\n      \"target\": \"MENSOCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOCard\",\n      \"target\": \"Trip\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOUser\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 49.62742540000181,
+ "prompt_tokens": 5526,
+ "completion_tokens": 879,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1wdgd6da4kb806lhic5887",
+  "object": "chat.completion",
+  "created": 1791877176,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ lineNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Trajectory\",\n      \"attributes\": [\n        \"+ destination : string\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Approval\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Line\",\n      \"attributes\": [\n        \"+ category : string\"\n      ]\n    },\n    {\n      \"name\": \"MENSOProject\",\n      \"attributes\": [\n        \"+ price : float\"\n      ]\n    },\n    {\n      \"name\": \"MENSOUser\",\n      \"attributes\": [\n        \"+ homeAddress : string\",\n        \"+ officeAddress : string\",\n        \"+ workingHours : string\"\n      ]\n    },\n    {\n      \"name\": \"MENSOCard\",\n      \"attributes\": [\n        \"+ cardNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Trip\",\n      \"attributes\": [\n        \"+ time : time\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ amount : float\",\n        \"+ discount : float\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trajectory\",\n      \"target\": \"Approval\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"MENSOProject\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOUser\",\n      \"target\": \"MENSOCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOCard\",\n      \"target\": \"Trip\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOUser\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5526,
+   "completion_tokens": 879,
+   "total_tokens": 6405,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

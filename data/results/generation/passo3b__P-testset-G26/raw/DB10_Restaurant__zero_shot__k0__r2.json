@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass Ingredient {\n  +name : string\n  +measuringUnit : string\n  +quantityInStock : float\n}\n\nclass Dish {\n  +name : string\n  +identifier : int\n}\n\nclass Table {\n  +identifier : int\n  +maximumAmountOfPeople : int\n}\n\nclass Meal {\n  +date : date\n  +startTime : time\n  +endTime : time\n}\n\nclass Waiter {\n  +identifier : int\n  +name : string\n  +address : string\n  +phoneNumber : string\n}\n\nclass Client {\n  +taxIdentificationNumber : string\n  +name : string\n  +address : string\n}\n\nclass MealDish {\n  +quantity : float\n}\n\nIngredient \"1..*\" -- \"1..*\" Dish : composed of\n\"1\" -- \"*\" MealDish : includes\n\"1\" -- \"*\" MealDish : contains\nDish \"1\" -- \"1..*\" MealDish : is part of\nTable \"1\" -- \"*\" Meal : takes place at\nWaiter \"1\" -- \"*\" Meal : is responsible for\n\"0..1\" -- \"1\" Client : consumes\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 13.104407599999831,
+ "prompt_tokens": 1266,
+ "completion_tokens": 257,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tu2zmdhx5bmezr2ipx65bf",
+  "object": "chat.completion",
+  "created": 1791864361,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Ingredient {\n  +name : string\n  +measuringUnit : string\n  +quantityInStock : float\n}\n\nclass Dish {\n  +name : string\n  +identifier : int\n}\n\nclass Table {\n  +identifier : int\n  +maximumAmountOfPeople : int\n}\n\nclass Meal {\n  +date : date\n  +startTime : time\n  +endTime : time\n}\n\nclass Waiter {\n  +identifier : int\n  +name : string\n  +address : string\n  +phoneNumber : string\n}\n\nclass Client {\n  +taxIdentificationNumber : string\n  +name : string\n  +address : string\n}\n\nclass MealDish {\n  +quantity : float\n}\n\nIngredient \"1..*\" -- \"1..*\" Dish : composed of\n\"1\" -- \"*\" MealDish : includes\n\"1\" -- \"*\" MealDish : contains\nDish \"1\" -- \"1..*\" MealDish : is part of\nTable \"1\" -- \"*\" Meal : takes place at\nWaiter \"1\" -- \"*\" Meal : is responsible for\n\"0..1\" -- \"1\" Client : consumes\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1266,
+   "completion_tokens": 257,
+   "total_tokens": 1523,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

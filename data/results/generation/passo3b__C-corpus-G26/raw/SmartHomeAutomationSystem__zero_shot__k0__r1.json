@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"SmartHome\", \"attributes\": [\"+ address : string\"]}, {\"name\": \"Room\", \"attributes\": []}, {\"name\": \"Device\", \"attributes\": [\"+ deviceIdentifier : string\"]}, {\"name\": \"Sensor\", \"attributes\": []}, {\"name\": \"Actuator\", \"attributes\": []}, {\"name\": \"SensorReading\", \"attributes\": [\"+ measuredValue : float\", \"+ timestamp : datetime\"]}, {\"name\": \"ControlCommand\", \"attributes\": [\"+ commandName : string\", \"+ timestamp : datetime\", \"+ status : string\"]}, {\"name\": \"ActivityLog\", \"attributes\": []}, {\"name\": \"User\", \"attributes\": []}, {\"name\": \"Owner\", \"attributes\": []}, {\"name\": \"AutomationRule\", \"attributes\": [\"+ isActivated : boolean\", \"+ triggerTimestamp : datetime\"]}, {\"name\": \"Precondition\", \"attributes\": [\"+ expression : string\"]}, {\"name\": \"Action\", \"attributes\": [\"+ sequence : string\"]}], \"relations\": [{\"type\": \"composition\", \"source\": \"SmartHome\", \"target\": \"Room\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Sensor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Actuator\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"Sensor\", \"parent\": \"Device\"}, {\"type\": \"inheritance\", \"child\": \"Actuator\", \"parent\": \"Device\"}, {\"type\": \"association\", \"source\": \"Sensor\", \"target\": \"SensorReading\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Actuator\", \"target\": \"ControlCommand\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"SmartHome\", \"target\": \"ActivityLog\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ActivityLog\", \"target\": \"SensorReading\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ActivityLog\", \"target\": \"ControlCommand\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"Owner\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Owner\", \"target\": \"AutomationRule\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"AutomationRule\", \"target\": \"Precondition\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"AutomationRule\", \"target\": \"Action\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"AutomationRule\", \"label\": \"depends on / conflicts with\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 32.970498800001224,
+ "prompt_tokens": 1439,
+ "completion_tokens": 705,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-c2xh7t89pbplxypmwg4ihm",
+  "object": "chat.completion",
+  "created": 1791880345,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"SmartHome\", \"attributes\": [\"+ address : string\"]}, {\"name\": \"Room\", \"attributes\": []}, {\"name\": \"Device\", \"attributes\": [\"+ deviceIdentifier : string\"]}, {\"name\": \"Sensor\", \"attributes\": []}, {\"name\": \"Actuator\", \"attributes\": []}, {\"name\": \"SensorReading\", \"attributes\": [\"+ measuredValue : float\", \"+ timestamp : datetime\"]}, {\"name\": \"ControlCommand\", \"attributes\": [\"+ commandName : string\", \"+ timestamp : datetime\", \"+ status : string\"]}, {\"name\": \"ActivityLog\", \"attributes\": []}, {\"name\": \"User\", \"attributes\": []}, {\"name\": \"Owner\", \"attributes\": []}, {\"name\": \"AutomationRule\", \"attributes\": [\"+ isActivated : boolean\", \"+ triggerTimestamp : datetime\"]}, {\"name\": \"Precondition\", \"attributes\": [\"+ expression : string\"]}, {\"name\": \"Action\", \"attributes\": [\"+ sequence : string\"]}], \"relations\": [{\"type\": \"composition\", \"source\": \"SmartHome\", \"target\": \"Room\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Sensor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Actuator\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"Sensor\", \"parent\": \"Device\"}, {\"type\": \"inheritance\", \"child\": \"Actuator\", \"parent\": \"Device\"}, {\"type\": \"association\", \"source\": \"Sensor\", \"target\": \"SensorReading\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Actuator\", \"target\": \"ControlCommand\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"SmartHome\", \"target\": \"ActivityLog\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ActivityLog\", \"target\": \"SensorReading\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ActivityLog\", \"target\": \"ControlCommand\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"Owner\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Owner\", \"target\": \"AutomationRule\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"AutomationRule\", \"target\": \"Precondition\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"AutomationRule\", \"target\": \"Action\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"AutomationRule\", \"label\": \"depends on / conflicts with\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1439,
+   "completion_tokens": 705,
+   "total_tokens": 2144,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

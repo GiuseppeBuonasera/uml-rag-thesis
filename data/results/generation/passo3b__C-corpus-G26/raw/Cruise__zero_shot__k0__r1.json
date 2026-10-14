@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Provider\", \"attributes\": [\"+ name : string\", \"+ location : string\"]}, {\"name\": \"Cruise\", \"attributes\": [\"+ number : int\", \"+ name : string\", \"+ startDate : date\", \"+ endDate : date\"]}, {\"name\": \"Employee\", \"attributes\": [\"+ name : string\", \"+ socialSecurityNumber : string\"]}, {\"name\": \"Guest\", \"attributes\": [\"+ name : string\", \"+ isVIP : boolean\"]}, {\"name\": \"Ship\", \"attributes\": [\"+ name : string\", \"+ numberOfDecks : int\", \"+ length : float\", \"+ numberOfPassengers : int\"]}, {\"name\": \"TravelAgency\", \"attributes\": [\"+ name : string\", \"+ address : string\"]}, {\"name\": \"Booking\", \"attributes\": [\"+ bookingNumber : string\", \"+ bookingDate : date\"]}, {\"name\": \"DestinationArea\", \"attributes\": [\"+ name : string\", \"+ seaName : string\"]}, {\"name\": \"Show\", \"attributes\": [\"+ title : string\", \"+ duration : int\"]}, {\"name\": \"Ticket\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Provider\", \"target\": \"Cruise\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"Employee\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"Guest\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Ship\", \"target\": \"Cruise\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TravelAgency\", \"target\": \"Booking\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"Cruise\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"DestinationArea\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Cruise\", \"target\": \"Ticket\", \"wholeRole\": \"cruise\", \"partRole\": \"ticket\"}, {\"type\": \"association\", \"source\": \"Guest\", \"target\": \"Ticket\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"Booking\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 27.707078800005547,
+ "prompt_tokens": 1328,
+ "completion_tokens": 595,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-e2xaiv9xpu7og538k2hhx",
+  "object": "chat.completion",
+  "created": 1791870385,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Provider\", \"attributes\": [\"+ name : string\", \"+ location : string\"]}, {\"name\": \"Cruise\", \"attributes\": [\"+ number : int\", \"+ name : string\", \"+ startDate : date\", \"+ endDate : date\"]}, {\"name\": \"Employee\", \"attributes\": [\"+ name : string\", \"+ socialSecurityNumber : string\"]}, {\"name\": \"Guest\", \"attributes\": [\"+ name : string\", \"+ isVIP : boolean\"]}, {\"name\": \"Ship\", \"attributes\": [\"+ name : string\", \"+ numberOfDecks : int\", \"+ length : float\", \"+ numberOfPassengers : int\"]}, {\"name\": \"TravelAgency\", \"attributes\": [\"+ name : string\", \"+ address : string\"]}, {\"name\": \"Booking\", \"attributes\": [\"+ bookingNumber : string\", \"+ bookingDate : date\"]}, {\"name\": \"DestinationArea\", \"attributes\": [\"+ name : string\", \"+ seaName : string\"]}, {\"name\": \"Show\", \"attributes\": [\"+ title : string\", \"+ duration : int\"]}, {\"name\": \"Ticket\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Provider\", \"target\": \"Cruise\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"Employee\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"Guest\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Ship\", \"target\": \"Cruise\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TravelAgency\", \"target\": \"Booking\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"Cruise\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"DestinationArea\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Cruise\", \"target\": \"Ticket\", \"wholeRole\": \"cruise\", \"partRole\": \"ticket\"}, {\"type\": \"association\", \"source\": \"Guest\", \"target\": \"Ticket\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Cruise\", \"target\": \"Booking\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1328,
+   "completion_tokens": 595,
+   "total_tokens": 1923,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

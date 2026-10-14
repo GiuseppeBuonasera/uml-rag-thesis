@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Kinepolis\", \"attributes\": []}, {\"name\": \"Cinema\", \"attributes\": []}, {\"name\": \"Theatre\", \"attributes\": []}, {\"name\": \"Movie\", \"attributes\": []}, {\"name\": \"MovieCopy\", \"attributes\": []}, {\"name\": \"Show\", \"attributes\": [\"+ startTime : datetime\", \"+ isPublished : boolean\"]}, {\"name\": \"Reservation\", \"attributes\": [\"+ reservationTime : datetime\"]}, {\"name\": \"CreditCard\", \"attributes\": []}, {\"name\": \"Seat\", \"attributes\": [\"+ seatNumber : string\"]}, {\"name\": \"Offer\", \"attributes\": [\"+ expiryTime : datetime\", \"+ isAccepted : boolean\"]}, {\"name\": \"Ticket\", \"attributes\": [\"+ isAnonymous : boolean\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Kinepolis\", \"target\": \"Cinema\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cinema\", \"target\": \"Theatre\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cinema\", \"target\": \"MovieCopy\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"MovieCopy\", \"target\": \"Movie\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"MovieCopy\", \"target\": \"Theatre\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Theatre\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Reservation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"CreditCard\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"Seat\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Offer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Offer\", \"target\": \"Reservation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Ticket\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Seat\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 37.43105780000042,
+ "prompt_tokens": 3843,
+ "completion_tokens": 639,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-35v4wban4eqemi3ldz19d",
+  "object": "chat.completion",
+  "created": 1791875373,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Kinepolis\", \"attributes\": []}, {\"name\": \"Cinema\", \"attributes\": []}, {\"name\": \"Theatre\", \"attributes\": []}, {\"name\": \"Movie\", \"attributes\": []}, {\"name\": \"MovieCopy\", \"attributes\": []}, {\"name\": \"Show\", \"attributes\": [\"+ startTime : datetime\", \"+ isPublished : boolean\"]}, {\"name\": \"Reservation\", \"attributes\": [\"+ reservationTime : datetime\"]}, {\"name\": \"CreditCard\", \"attributes\": []}, {\"name\": \"Seat\", \"attributes\": [\"+ seatNumber : string\"]}, {\"name\": \"Offer\", \"attributes\": [\"+ expiryTime : datetime\", \"+ isAccepted : boolean\"]}, {\"name\": \"Ticket\", \"attributes\": [\"+ isAnonymous : boolean\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Kinepolis\", \"target\": \"Cinema\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cinema\", \"target\": \"Theatre\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cinema\", \"target\": \"MovieCopy\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"MovieCopy\", \"target\": \"Movie\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"MovieCopy\", \"target\": \"Theatre\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Theatre\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Reservation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"CreditCard\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"Seat\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Offer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Offer\", \"target\": \"Reservation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Ticket\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Seat\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3843,
+   "completion_tokens": 639,
+   "total_tokens": 4482,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

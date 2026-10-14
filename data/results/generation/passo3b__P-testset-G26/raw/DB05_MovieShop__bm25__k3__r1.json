@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Movie {\n  + Title : string\n}\n\nclass Order {\n  + OrderDate : date\n}\n\nclass User {\n  + Name : string\n}\n\nclass Subscriber {\n  + CardNumber : string\n  + Balance : float\n}\n\nclass Card {\n  + CardNumber : string\n  + Balance : float\n}\n\nUser \"1\" -- \"*\" Order : places\nUser \"1\" -- \"0..1\" Subscriber : is a\nSubscriber \"1\" -- \"1\" Card : uses\nOrder \"*\" -- \"1\" Movie : contains\nMovie \"0..1\" -- \"0..*\" Order : is ordered in\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 9.779590300000564,
+ "prompt_tokens": 3510,
+ "completion_tokens": 147,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-a6tv6v25b6bvpvcoewbosm",
+  "object": "chat.completion",
+  "created": 1791863411,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Movie {\n  + Title : string\n}\n\nclass Order {\n  + OrderDate : date\n}\n\nclass User {\n  + Name : string\n}\n\nclass Subscriber {\n  + CardNumber : string\n  + Balance : float\n}\n\nclass Card {\n  + CardNumber : string\n  + Balance : float\n}\n\nUser \"1\" -- \"*\" Order : places\nUser \"1\" -- \"0..1\" Subscriber : is a\nSubscriber \"1\" -- \"1\" Card : uses\nOrder \"*\" -- \"1\" Movie : contains\nMovie \"0..1\" -- \"0..*\" Order : is ordered in\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3510,
+   "completion_tokens": 147,
+   "total_tokens": 3657,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

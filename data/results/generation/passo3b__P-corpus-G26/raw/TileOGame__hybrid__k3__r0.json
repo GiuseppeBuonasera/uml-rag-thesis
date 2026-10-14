@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Game {\n  + isHiddenTileFound : boolean\n}\n\nclass Board {\n  + layout : string\n}\n\nclass Tile {\n  + isHidden : boolean\n  + isActionTile : boolean\n  + color : string\n  + actionTileDuration : int\n}\n\nclass Connection {\n  + side : string\n}\n\nclass ActionCard {\n  + type : ActionType\n}\n\nclass Player {\n  + color : string\n  + currentPosition : Tile\n}\n\nclass PlayingPiece {\n  + color : string\n}\n\nclass Die {\n  + value : int\n}\n\nenum ActionType {\n  EXTRA_TURN\n  CONNECT_TILES\n  REMOVE_CONNECTION\n  MOVE_TO_ARBITRARY_TILE\n  LOSE_NEXT_TURN\n}\n\nclass Designer {}\n\nclass GameSession {\n  + turnOrder : int\n}\n\nDesigner \"1\" -- \"*\" Game : designs\nGame \"1\" *-- \"1\" Board\nBoard \"1\" *-- \"*\" Tile\nBoard \"1\" *-- \"*\" Connection\nTile \"1\" -- \"0..1\" Connection : connected_to\nTile \"1\" -- \"0..1\" Connection : connected_to\nTile \"1\" -- \"0..1\" Connection : connected_to\nTile \"1\" -- \"0..1\" Connection : connected_to\nTile \"1\" -- \"0..1\" Tile : hidden_tile\nGame \"1\" *-- \"32\" ActionCard\nGame \"1\" -- \"2..4\" Player\nPlayer \"1\" -- \"1\" PlayingPiece\nGame \"1\" -- \"1\" Die\nGame \"1\" -- \"1\" GameSession\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 23.429909399997996,
+ "prompt_tokens": 3638,
+ "completion_tokens": 377,
+ "cached": true,
+ "raw": {
+  "id": "chatcmpl-x04vo027a1gma85zkg64pd",
+  "object": "chat.completion",
+  "created": 1791859097,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Game {\n  + isHiddenTileFound : boolean\n}\n\nclass Board {\n  + layout : string\n}\n\nclass Tile {\n  + isHidden : boolean\n  + isActionTile : boolean\n  + color : string\n  + actionTileDuration : int\n}\n\nclass Connection {\n  + side : string\n}\n\nclass ActionCard {\n  + type : ActionType\n}\n\nclass Player {\n  + color : string\n  + currentPosition : Tile\n}\n\nclass PlayingPiece {\n  + color : string\n}\n\nclass Die {\n  + value : int\n}\n\nenum ActionType {\n  EXTRA_TURN\n  CONNECT_TILES\n  REMOVE_CONNECTION\n  MOVE_TO_ARBITRARY_TILE\n  LOSE_NEXT_TURN\n}\n\nclass Designer {}\n\nclass GameSession {\n  + turnOrder : int\n}\n\nDesigner \"1\" -- \"*\" Game : designs\nGame \"1\" *-- \"1\" Board\nBoard \"1\" *-- \"*\" Tile\nBoard \"1\" *-- \"*\" Connection\nTile \"1\" -- \"0..1\" Connection : connected_to\nTile \"1\" -- \"0..1\" Connection : connected_to\nTile \"1\" -- \"0..1\" Connection : connected_to\nTile \"1\" -- \"0..1\" Connection : connected_to\nTile \"1\" -- \"0..1\" Tile : hidden_tile\nGame \"1\" *-- \"32\" ActionCard\nGame \"1\" -- \"2..4\" Player\nPlayer \"1\" -- \"1\" PlayingPiece\nGame \"1\" -- \"1\" Die\nGame \"1\" -- \"1\" GameSession\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3638,
+   "completion_tokens": 377,
+   "total_tokens": 4015,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

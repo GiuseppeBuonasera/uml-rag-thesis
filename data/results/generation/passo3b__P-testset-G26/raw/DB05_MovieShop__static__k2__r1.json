@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass MovieShop {\n}\n\nclass Movie {\n  + Title : string\n}\n\nclass Order {\n  + OrderDate : date\n}\n\nclass User {\n  + Name : string\n}\n\nclass Subscriber extends User {\n  + CardNumber : string\n  + Credit : float\n}\n\nclass Card {\n  + CardNumber : string\n  + Credit : float\n}\n\nclass Rental {\n}\n\nclass OrderItem {\n}\n\nUser \"1\" -- \"*\" Order : places\nUser \"1\" -- \"*\" Rental : performs\nSubscriber \"1\" -- \"1\" Card : owns\nCard \"1\" -- \"*\" Rental : used for\nMovie \"1\" -- \"*\" Order : included in\nMovie \"1\" -- \"*\" Rental : rented in\nMovie \"1\" -- \"*\" Order : ordered\nOrder \"1\" *-- \"*\" OrderItem\nOrderItem \"1\" -- \"1\" Movie\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 11.433220300001267,
+ "prompt_tokens": 2296,
+ "completion_tokens": 200,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qvfhxwvit3n7w5fdpcsuv3",
+  "object": "chat.completion",
+  "created": 1791863314,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass MovieShop {\n}\n\nclass Movie {\n  + Title : string\n}\n\nclass Order {\n  + OrderDate : date\n}\n\nclass User {\n  + Name : string\n}\n\nclass Subscriber extends User {\n  + CardNumber : string\n  + Credit : float\n}\n\nclass Card {\n  + CardNumber : string\n  + Credit : float\n}\n\nclass Rental {\n}\n\nclass OrderItem {\n}\n\nUser \"1\" -- \"*\" Order : places\nUser \"1\" -- \"*\" Rental : performs\nSubscriber \"1\" -- \"1\" Card : owns\nCard \"1\" -- \"*\" Rental : used for\nMovie \"1\" -- \"*\" Order : included in\nMovie \"1\" -- \"*\" Rental : rented in\nMovie \"1\" -- \"*\" Order : ordered\nOrder \"1\" *-- \"*\" OrderItem\nOrderItem \"1\" -- \"1\" Movie\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2296,
+   "completion_tokens": 200,
+   "total_tokens": 2496,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

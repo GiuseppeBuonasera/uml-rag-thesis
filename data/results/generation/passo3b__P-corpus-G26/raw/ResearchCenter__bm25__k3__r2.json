@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass ResearchCenter {}\n\nclass Area {\n  + Name\n}\n\nclass Team {\n  + Name\n}\n\nclass Researcher {\n  + Name\n}\n\nclass Project {\n  + Name\n}\n\nclass SeniorResearcher extends Researcher {}\n\nclass JuniorResearcher extends Researcher {}\n\nclass AreaManager extends Researcher {}\n\nclass TeamLeader extends Researcher {}\n\nArea \"1\" -- \"0..*\" Team\nArea \"1\" -- \"0..1\" AreaManager\nTeam \"1\" -- \"1\" SeniorResearcher : leads\nTeam \"1\" -- \"1..*\" JuniorResearcher : includes\nTeam \"1\" -- \"0..*\" Project : carries out\nProject \"0..*\" -- \"1\" Area : assigned to\nProject \"0..*\" -- \"1\" Team : formed by\nProject \"0..*\" -- \"1\" TeamLeader : choosing\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 11.029618300002767,
+ "prompt_tokens": 2577,
+ "completion_tokens": 188,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2ec6paepoqx4o3rtdpuzuo",
+  "object": "chat.completion",
+  "created": 1791862084,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass ResearchCenter {}\n\nclass Area {\n  + Name\n}\n\nclass Team {\n  + Name\n}\n\nclass Researcher {\n  + Name\n}\n\nclass Project {\n  + Name\n}\n\nclass SeniorResearcher extends Researcher {}\n\nclass JuniorResearcher extends Researcher {}\n\nclass AreaManager extends Researcher {}\n\nclass TeamLeader extends Researcher {}\n\nArea \"1\" -- \"0..*\" Team\nArea \"1\" -- \"0..1\" AreaManager\nTeam \"1\" -- \"1\" SeniorResearcher : leads\nTeam \"1\" -- \"1..*\" JuniorResearcher : includes\nTeam \"1\" -- \"0..*\" Project : carries out\nProject \"0..*\" -- \"1\" Area : assigned to\nProject \"0..*\" -- \"1\" Team : formed by\nProject \"0..*\" -- \"1\" TeamLeader : choosing\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2577,
+   "completion_tokens": 188,
+   "total_tokens": 2765,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

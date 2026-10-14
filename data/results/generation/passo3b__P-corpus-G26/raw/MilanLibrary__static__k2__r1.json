@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Library {\n  + Name : string\n}\n\nclass User {\n  + Name : string\n  + ContactInfo : string\n  + SecurityDeposit : float\n}\n\nclass BorrowableItem {\n  + LibraryCode : string\n  + Location : string\n}\n\nclass Book extends BorrowableItem {\n  + Publisher : string\n}\n\nclass MagazineIssue extends BorrowableItem {\n  + PublicationDate : date\n  + Publisher : string\n}\n\nclass MusicCD extends BorrowableItem {\n  + Publisher : string\n  + Artist : string\n}\n\nclass Film extends BorrowableItem {\n  + Duration : int\n  + Publisher : string\n}\n\nclass DVDFilm extends Film {}\n\nclass VHSFilm extends Film {}\n\nclass Author {\n  + Name : string\n}\n\nclass Actor {\n  + Name : string\n}\n\nclass Loan {\n  + ReturnDeadline : date\n}\n\nclass Request {\n  + RequestDate : date\n}\n\nLibrary \"1\" -- \"*\" User : has\nLibrary \"1\" -- \"*\" BorrowableItem : has\nLibrary \"0..1\" -- \"*\" Request : receives\n\nUser \"0..1\" -- \"*\" Loan : borrows\nLoan \"1\" -- \"1\" BorrowableItem : involves\n\nBook \"1\" -- \"1..*\" Author : written by\nFilm \"1\" -- \"1..*\" Actor : features\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 16.245429099999456,
+ "prompt_tokens": 2468,
+ "completion_tokens": 303,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-q8gcl9xsicpkicw5n8yc2p",
+  "object": "chat.completion",
+  "created": 1791861259,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Library {\n  + Name : string\n}\n\nclass User {\n  + Name : string\n  + ContactInfo : string\n  + SecurityDeposit : float\n}\n\nclass BorrowableItem {\n  + LibraryCode : string\n  + Location : string\n}\n\nclass Book extends BorrowableItem {\n  + Publisher : string\n}\n\nclass MagazineIssue extends BorrowableItem {\n  + PublicationDate : date\n  + Publisher : string\n}\n\nclass MusicCD extends BorrowableItem {\n  + Publisher : string\n  + Artist : string\n}\n\nclass Film extends BorrowableItem {\n  + Duration : int\n  + Publisher : string\n}\n\nclass DVDFilm extends Film {}\n\nclass VHSFilm extends Film {}\n\nclass Author {\n  + Name : string\n}\n\nclass Actor {\n  + Name : string\n}\n\nclass Loan {\n  + ReturnDeadline : date\n}\n\nclass Request {\n  + RequestDate : date\n}\n\nLibrary \"1\" -- \"*\" User : has\nLibrary \"1\" -- \"*\" BorrowableItem : has\nLibrary \"0..1\" -- \"*\" Request : receives\n\nUser \"0..1\" -- \"*\" Loan : borrows\nLoan \"1\" -- \"1\" BorrowableItem : involves\n\nBook \"1\" -- \"1..*\" Author : written by\nFilm \"1\" -- \"1..*\" Actor : features\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2468,
+   "completion_tokens": 303,
+   "total_tokens": 2771,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

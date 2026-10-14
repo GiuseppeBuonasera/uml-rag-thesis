@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"SmartHome\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Device\"\n    },\n    {\n      \"name\": \"Sensor\"\n    },\n    {\n      \"name\": \"Actuator\"\n    },\n    {\n      \"name\": \"SensorReading\"\n    },\n    {\n      \"name\": \"ControlCommand\"\n    },\n    {\n      \"name\": \"ActivityLog\"\n    },\n    {\n      \"name\": \"Owner\"\n    },\n    {\n      \"name\": \"AutomationRule\"\n    },\n    {\n      \"name\": \"Precondition\"\n    },\n    {\n      \"name\": \"Action\"\n    },\n    {\n      \"name\": \"CommandStatus\"\n    },\n    {\n      \"name\": \"TriggerEvent\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SmartHome\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Device\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Sensor\",\n      \"parent\": \"Device\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Actuator\",\n      \"parent\": \"Device\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"SensorReading\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Actuator\",\n      \"target\": \"ControlCommand\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SmartHome\",\n      \"target\": \"ActivityLog\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActivityLog\",\n      \"target\": \"SensorReading\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActivityLog\",\n      \"target\": \"ControlCommand\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Owner\",\n      \"target\": \"AutomationRule\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"Precondition\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"Action\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"TriggerEvent\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"AutomationRule\",\n      \"label\": \"depends on/conflicts with\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Action\",\n      \"target\": \"ControlCommand\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 44.93596070000058,
+ "prompt_tokens": 3738,
+ "completion_tokens": 782,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-u11ic6v2vmylxpg7bfg6k",
+  "object": "chat.completion",
+  "created": 1791880781,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"SmartHome\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Device\"\n    },\n    {\n      \"name\": \"Sensor\"\n    },\n    {\n      \"name\": \"Actuator\"\n    },\n    {\n      \"name\": \"SensorReading\"\n    },\n    {\n      \"name\": \"ControlCommand\"\n    },\n    {\n      \"name\": \"ActivityLog\"\n    },\n    {\n      \"name\": \"Owner\"\n    },\n    {\n      \"name\": \"AutomationRule\"\n    },\n    {\n      \"name\": \"Precondition\"\n    },\n    {\n      \"name\": \"Action\"\n    },\n    {\n      \"name\": \"CommandStatus\"\n    },\n    {\n      \"name\": \"TriggerEvent\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SmartHome\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Device\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Sensor\",\n      \"parent\": \"Device\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Actuator\",\n      \"parent\": \"Device\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"SensorReading\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Actuator\",\n      \"target\": \"ControlCommand\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SmartHome\",\n      \"target\": \"ActivityLog\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActivityLog\",\n      \"target\": \"SensorReading\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActivityLog\",\n      \"target\": \"ControlCommand\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Owner\",\n      \"target\": \"AutomationRule\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"Precondition\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"Action\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"TriggerEvent\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"AutomationRule\",\n      \"label\": \"depends on/conflicts with\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Action\",\n      \"target\": \"ControlCommand\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3738,
+   "completion_tokens": 782,
+   "total_tokens": 4520,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

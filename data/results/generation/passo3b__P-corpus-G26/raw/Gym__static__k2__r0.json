@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Gym {\n  + ComputeMonthlyBalance(month: int, year: int): double\n  + ComputeYearlyBalance(year: int): double\n  + SendArrearsReminder(): void\n  + SendMedicalCheckReminder(): void\n}\n\nclass Customer {\n  + Name : string\n  + Surname : string\n  + Age : int\n  + Address : string\n  + Profession : string\n  + SubscriptionType : string\n}\n\nclass Subscription {\n  + Type : string\n}\n\nclass Service {\n  + Name : string\n  + IsBaseService : boolean\n}\n\nclass WorkoutPlan {\n  + Exercises : string\n  + Repetitions : int\n  + Frequency : int\n}\n\nclass MedicalStaff {\n  + Name : string\n}\n\nclass MedicalCheck {\n  + Date : date\n  + Weight : float\n  + BodyFat : float\n  + Electrocardiogram : string\n  + RestingHeartbeat : int\n  + StressHeartbeat : int\n}\n\nGym \"1\" -- \"*\" Customer\nGym \"1\" -- \"*\" Subscription\nGym \"1\" -- \"*\" Service\nGym \"1\" -- \"*\" MedicalStaff\n\nCustomer \"1\" -- \"1\" Subscription\nCustomer \"1\" -- \"0..1\" WorkoutPlan\nCustomer \"0..*\" -- \"0..*\" Service\nCustomer \"0..*\" -- \"0..*\" MedicalStaff : requests\n\nWorkoutPlan \"1\" -- \"0..*\" Service : includes\n\nMedicalStaff \"1\" -- \"*\" MedicalCheck : performs\nMedicalCheck \"1\" -- \"1\" Customer : belongs to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 18.981497999997373,
+ "prompt_tokens": 2479,
+ "completion_tokens": 350,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5iig5zy57p8ayte8v6konj",
+  "object": "chat.completion",
+  "created": 1791860726,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Gym {\n  + ComputeMonthlyBalance(month: int, year: int): double\n  + ComputeYearlyBalance(year: int): double\n  + SendArrearsReminder(): void\n  + SendMedicalCheckReminder(): void\n}\n\nclass Customer {\n  + Name : string\n  + Surname : string\n  + Age : int\n  + Address : string\n  + Profession : string\n  + SubscriptionType : string\n}\n\nclass Subscription {\n  + Type : string\n}\n\nclass Service {\n  + Name : string\n  + IsBaseService : boolean\n}\n\nclass WorkoutPlan {\n  + Exercises : string\n  + Repetitions : int\n  + Frequency : int\n}\n\nclass MedicalStaff {\n  + Name : string\n}\n\nclass MedicalCheck {\n  + Date : date\n  + Weight : float\n  + BodyFat : float\n  + Electrocardiogram : string\n  + RestingHeartbeat : int\n  + StressHeartbeat : int\n}\n\nGym \"1\" -- \"*\" Customer\nGym \"1\" -- \"*\" Subscription\nGym \"1\" -- \"*\" Service\nGym \"1\" -- \"*\" MedicalStaff\n\nCustomer \"1\" -- \"1\" Subscription\nCustomer \"1\" -- \"0..1\" WorkoutPlan\nCustomer \"0..*\" -- \"0..*\" Service\nCustomer \"0..*\" -- \"0..*\" MedicalStaff : requests\n\nWorkoutPlan \"1\" -- \"0..*\" Service : includes\n\nMedicalStaff \"1\" -- \"*\" MedicalCheck : performs\nMedicalCheck \"1\" -- \"1\" Customer : belongs to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2479,
+   "completion_tokens": 350,
+   "total_tokens": 2829,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

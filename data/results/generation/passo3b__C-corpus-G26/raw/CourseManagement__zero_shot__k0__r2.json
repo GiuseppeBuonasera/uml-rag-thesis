@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Course\", \"attributes\": []}, {\"name\": \"Edition\", \"attributes\": [\"+ participants : int\"]}, {\"name\": \"Lesson\", \"attributes\": [\"+ date : date\", \"+ startTime : time\", \"+ duration : int\", \"+ room : string\"]}, {\"name\": \"Teacher\", \"attributes\": []}, {\"name\": \"InternalTeacher\", \"attributes\": []}, {\"name\": \"ExternalTeacher\", \"attributes\": []}, {\"name\": \"MasterStudent\", \"attributes\": []}, {\"name\": \"ExternalAuditor\", \"attributes\": []}, {\"name\": \"Resource\", \"attributes\": [\"+ name : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Course\", \"target\": \"Edition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Edition\", \"target\": \"Lesson\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Lesson\", \"target\": \"Teacher\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Course\", \"target\": \"Teacher\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Course\", \"target\": \"InternalTeacher\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"responsible\"}, {\"type\": \"association\", \"source\": \"Edition\", \"target\": \"MasterStudent\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Edition\", \"target\": \"ExternalAuditor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Lesson\", \"target\": \"Resource\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"InternalTeacher\", \"parent\": \"Teacher\"}, {\"type\": \"inheritance\", \"child\": \"ExternalTeacher\", \"parent\": \"Teacher\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 21.28766650000034,
+ "prompt_tokens": 1238,
+ "completion_tokens": 450,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-y1zzzrgaosmzqydmentg3",
+  "object": "chat.completion",
+  "created": 1791885079,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Course\", \"attributes\": []}, {\"name\": \"Edition\", \"attributes\": [\"+ participants : int\"]}, {\"name\": \"Lesson\", \"attributes\": [\"+ date : date\", \"+ startTime : time\", \"+ duration : int\", \"+ room : string\"]}, {\"name\": \"Teacher\", \"attributes\": []}, {\"name\": \"InternalTeacher\", \"attributes\": []}, {\"name\": \"ExternalTeacher\", \"attributes\": []}, {\"name\": \"MasterStudent\", \"attributes\": []}, {\"name\": \"ExternalAuditor\", \"attributes\": []}, {\"name\": \"Resource\", \"attributes\": [\"+ name : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Course\", \"target\": \"Edition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Edition\", \"target\": \"Lesson\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Lesson\", \"target\": \"Teacher\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Course\", \"target\": \"Teacher\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Course\", \"target\": \"InternalTeacher\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"responsible\"}, {\"type\": \"association\", \"source\": \"Edition\", \"target\": \"MasterStudent\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Edition\", \"target\": \"ExternalAuditor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Lesson\", \"target\": \"Resource\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"InternalTeacher\", \"parent\": \"Teacher\"}, {\"type\": \"inheritance\", \"child\": \"ExternalTeacher\", \"parent\": \"Teacher\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1238,
+   "completion_tokens": 450,
+   "total_tokens": 1688,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

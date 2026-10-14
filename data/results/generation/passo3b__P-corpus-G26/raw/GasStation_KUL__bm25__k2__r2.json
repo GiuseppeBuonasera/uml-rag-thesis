@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass GasStation {\n}\n\nclass Pump {\n  + CurrentLevel : float\n  + ReorderingLevel : float\n  + CriticalLevel : float\n}\n\nclass Reservoir {\n}\n\nclass Gasoline {\n}\n\nclass RefuelTurn {\n}\n\nclass Customer {\n  + IsSuspended : boolean\n  + IsBlocked : boolean\n}\n\nclass RefuelCard {\n}\n\nclass MonthlyInvoice {\n  + Month : string\n  + Discount : float\n}\n\nclass Payment {\n}\n\nclass DailyReport {\n}\n\nGasStation \"1\" -- \"*\" Pump\nPump \"1\" -- \"1\" Reservoir\nPump \"*\" -- \"1\" Gasoline\nPump \"1\" -- \"0..1\" RefuelTurn\nCustomer \"0..1\" -- \"0..1\" RefuelTurn\nCustomer \"1\" -- \"0..*\" RefuelCard\nCustomer \"1\" -- \"0..*\" MonthlyInvoice\nMonthlyInvoice \"1\" -- \"*\" RefuelTurn\nMonthlyInvoice \"1\" -- \"0..*\" Payment\nPayment \"1\" -- \"1\" MonthlyInvoice\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 14.29961810000168,
+ "prompt_tokens": 2888,
+ "completion_tokens": 240,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-z5qclwfn00eza8u77ywpz",
+  "object": "chat.completion",
+  "created": 1791855062,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass GasStation {\n}\n\nclass Pump {\n  + CurrentLevel : float\n  + ReorderingLevel : float\n  + CriticalLevel : float\n}\n\nclass Reservoir {\n}\n\nclass Gasoline {\n}\n\nclass RefuelTurn {\n}\n\nclass Customer {\n  + IsSuspended : boolean\n  + IsBlocked : boolean\n}\n\nclass RefuelCard {\n}\n\nclass MonthlyInvoice {\n  + Month : string\n  + Discount : float\n}\n\nclass Payment {\n}\n\nclass DailyReport {\n}\n\nGasStation \"1\" -- \"*\" Pump\nPump \"1\" -- \"1\" Reservoir\nPump \"*\" -- \"1\" Gasoline\nPump \"1\" -- \"0..1\" RefuelTurn\nCustomer \"0..1\" -- \"0..1\" RefuelTurn\nCustomer \"1\" -- \"0..*\" RefuelCard\nCustomer \"1\" -- \"0..*\" MonthlyInvoice\nMonthlyInvoice \"1\" -- \"*\" RefuelTurn\nMonthlyInvoice \"1\" -- \"0..*\" Payment\nPayment \"1\" -- \"1\" MonthlyInvoice\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2888,
+   "completion_tokens": 240,
+   "total_tokens": 3128,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

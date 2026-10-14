@@ -3060,6 +3060,38 @@ def check_compare_retrievers() -> None:
     print("  OK  confronto bm25 / hybrid (voce 145): 160 risposte, indice coerente con l'analisi, pagina autonoma")
 
 
+def check_compare_3b() -> None:
+    """experiments/compare_3b.py: esercizi scelti del 3b in tutte le condizioni (corpus e De Bari), cella static di
+    AirTravel assente, indice coerente con element_metrics, pagina autonoma (SVG solo con java e plantuml.jar)."""
+    import re as _re
+    import shutil as _sh
+    import compare_3b as c3
+    import review_report as rr
+    if not (ROOT / "data" / "results" / "generation" / "passo3b__P-corpus-G26" / "manifest.jsonl").exists():
+        print("  --  confronto 3b: run del 3b assenti, non provato")
+        return
+    calls = c3.load_calls(["AirTravel", "DB05_MovieShop"])
+    labels = [c3.label(c, k) for c, k in c3.CONDITIONS]
+    assert set(calls) == {(f, lab) for f in c3.FORMATS for lab in labels}
+    for (f, lab), cs in calls.items():
+        n = {q: sum(c["q"] == q for c in cs) for q in ("AirTravel", "DB05_MovieShop")}
+        assert n == {"AirTravel": 0 if lab == "static k2" else 3, "DB05_MovieShop": 3}, (f, lab, n)
+    if not (_sh.which("java") and rr.DEFAULT_JAR.exists()):
+        print("  --  confronto 3b: java o plantuml.jar assenti, pagina non provata")
+        return
+    text, stats = c3.build(calls)
+    assert stats["exercises"] == 2 and stats["responses"] == 66 and stats["svgs"] == stats["diagrams"], stats
+    data = json.loads(_re.search(r"const D = (\{.*?\});\nconst Q", text, _re.S).group(1).replace("<\\/", "</"))
+    from evaluation import element_metrics as _el
+    row = next(r for r in data["index"] if r["q"] == "DB05_MovieShop")
+    want = _el.per_exercise(calls[("C", "bm25 k3")])["DB05_MovieShop"]
+    assert abs(row["C__bm25 k3"] - want) < 1e-9 and row["P__static k2"] is not None
+    assert next(r for r in data["index"] if r["q"] == "AirTravel")["P__static k2"] is None
+    assert "<script src" not in text and "http" not in text.split("<script>")[1][:200]
+    print("  OK  confronto 3b: 2 esercizi (corpus e De Bari) x 6 condizioni x 2 formati, static di AirTravel assente, "
+          "indice coerente con element_metrics, pagina autonoma")
+
+
 def check_v5b(tmp: Path) -> None:
     """Voce 146: leva v5b riallineata. Testo v5b invariato e solo per il compatto; config dev_g26b = dev_g26 C-G salvo
     istruzioni, vista clean_v1 ed esercizi; baseline v5 + clean_v1 con prompt identici ai manifest; regola di
@@ -3140,6 +3172,95 @@ def check_v5b(tmp: Path) -> None:
           "ed esercizi, baseline con prompt identici ai manifest, regola di analyze_v5b (soglie, run simulata, guardia)")
 
 
+def check_v5c(tmp: Path) -> None:
+    """Voce 150: leva v5c. Testo v5c (2 righe diverse dalla v5) solo per il compatto; esempi con "attributes": []
+    esplicita (explicit_attributes); config dev_g26c = dev_g26 C-G salvo istruzioni e vista clean_v1; baseline v5 +
+    clean_v1 con prompt identici ai manifest; regola di experiments/analyze_v5c.py (soglie, run simulata, guardia)."""
+    import difflib
+    import yaml
+    import analyze_v5c as av5c
+    from prompt_builder import TEMPLATES, explicit_attributes
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    v5c = (TEMPLATES / "v5c_compact_instructions.txt").read_text(encoding="utf-8")
+    assert hashlib.sha256((TEMPLATES / "v5c_compact_instructions.txt").read_bytes()).hexdigest() == "383ad1e8c6ef2466b0f676334cb3734608160959b7bfe14e5afebd7a87724a53"
+    v5 = (TEMPLATES / "v5_compact_instructions.txt").read_text(encoding="utf-8")
+    changed = [x for x in difflib.ndiff(v5.splitlines(), v5c.splitlines()) if x[:1] in "+-"]
+    assert len(changed) == 4 and all("attributes" in x or "Omit optional keys" in x for x in changed), changed
+    try:
+        PromptSpec(condition="bm25", output_format="plantuml", instructions_version="v5c")
+        raise AssertionError("v5c accettata per PlantUML")
+    except ValueError:
+        pass
+    # explicit_attributes: chiave dopo name e kind, enum e classi con attributi invariati, nessun'altra modifica
+    data = {"classes": [{"name": "A"}, {"name": "B", "kind": "abstract", "methods": ["+ m()"]},
+                        {"name": "C", "attributes": ["+ x : int"]}, {"name": "E", "kind": "enum", "values": ["V"]}],
+            "relations": [{"type": "association", "source": "A", "target": "C"}]}
+    out = explicit_attributes(data)
+    assert [list(c) for c in out["classes"]] == [["name", "attributes"], ["name", "kind", "attributes", "methods"],
+                                                 ["name", "attributes"], ["name", "kind", "values"]]
+    assert out["relations"] == data["relations"] and "attributes" not in data["classes"][0]
+    cands, _ = cl.load_all()
+    fz = PromptBuilder(retrieval_source="frozen")
+    a, b = rx.resolve_configuration(load("dev_g26c"), "C-G"), rx.resolve_configuration(load("dev_g26"), "C-G")
+    assert a["prompt"] == {**b["prompt"], "instructions_version": "v5c", "example_view": "clean_v1"}, a["prompt"]
+    assert {k: v for k, v in a.items() if k not in ("prompt", "run_id")} == \
+        {k: v for k, v in b.items() if k not in ("prompt", "run_id")}
+    assert len(rx.plan(a, cands)) == 40
+    clean_ids = set(load("dev_g26ev")["query_ids"])
+    man_sha = {}
+    for run in ("dev_g26", "dev_g26ev"):
+        man = ROOT / "data" / "results" / "generation" / f"{run}__C-G" / "manifest.jsonl"
+        for m in map(json.loads, man.read_text(encoding="utf-8").splitlines()):
+            if (run == "dev_g26ev") == (m["query_id"] in clean_ids):
+                man_sha[(m["query_id"], m["repetition"])] = m["prompt_sha256"]
+    base = dict(a, prompt={**a["prompt"], "instructions_version": "v5"})
+    digest = lambda bp: hashlib.sha256(json.dumps(bp.messages, ensure_ascii=False).encode()).hexdigest()  # noqa: E731
+    empty = 0
+    for (q, s, r, _), (q2, s2, _, _) in zip(rx.plan(base, cands), rx.plan(a, cands)):
+        p5, p5c = fz.build(q, s), fz.build(q2, s2)
+        assert digest(p5) == man_sha[(q["id"], r)], (q["id"], r)  # baseline = prompt delle run
+        assert p5.example_ids == p5c.example_ids and p5.task == p5c.task
+        diff = [x for x in difflib.ndiff(p5.examples_block.splitlines(), p5c.examples_block.splitlines()) if x[:1] in "+-"]
+        assert all(x.rstrip(",").endswith(('"', '"attributes": []')) for x in diff), diff[:4]  # solo name e chiavi vuote
+        empty += p5c.examples_block.count('"attributes": []')
+    assert empty > 0
+    # regola (voce 150)
+    assert (av5c.MAX_SKELETONS, av5c.MIN_ATTR_R_GAIN, av5c.MAX_ATTR_P_LOSS, av5c.MAX_F1_LOSS, av5c.MAX_R_LOSS,
+            av5c.MAX_M_LOSS, av5c.MAX_VC_LOSS, av5c.MAX_TRUNCATED) == (3, 0.0, 0.05, 0.03, 0.03, 0.03, 2, 1)
+    B = {"skeletons": 7, "attrR": 0.35, "attrP": 0.43, "F1rel": 0.42, "R": 0.34, "M1": 0.29, "Vc": 36, "truncated": 0}
+    T = lambda **kw: {**B, "skeletons": 3, **kw}  # noqa: E731
+    assert av5c.adopt(B, T())["ok"] and not av5c.adopt(B, T(skeletons=4))["ok"]
+    assert not av5c.adopt(B, T(attrR=0.349))["ok"] and av5c.adopt(B, T(attrP=0.38))["ok"]
+    assert not av5c.adopt(B, T(attrP=0.379))["ok"] and not av5c.adopt(B, T(F1rel=0.389))["ok"]
+    assert av5c.adopt(B, T(Vc=34))["ok"] and not av5c.adopt(B, T(Vc=33))["ok"] and not av5c.adopt(B, T(truncated=2))["ok"]
+    assert not av5c.adopt(B, T(M1=0.259))["ok"] and not av5c.adopt(B, T(R=0.309))["ok"]
+    assert av5c.outcome(None).startswith("STOP")
+    # guardia: senza la run del trattamento nessun summary
+    res = tmp / "v5c"
+    for run in ("dev_g26", "dev_g26ev"):
+        shutil.copytree(ROOT / "data" / "results" / "generation" / f"{run}__C-G", res / f"{run}__C-G")
+    assert av5c.main(["--results-dir", str(res)]) == 1 and not (res / av5c.OUT_NAME).exists()
+    # run simulata: la baseline ricostruita (20 esercizi) copiata come dev_g26c -> deltas nulli, 7 scheletri, NON adottata
+    out = res / "dev_g26c__C-G"
+    shutil.copytree(res / "dev_g26__C-G", out)
+    keep = [x for x in (out / "manifest.jsonl").read_text(encoding="utf-8").splitlines()
+            if json.loads(x)["query_id"] not in clean_ids]
+    ev = res / "dev_g26ev__C-G"
+    for x in (ev / "manifest.jsonl").read_text(encoding="utf-8").splitlines():
+        keep.append(x)
+        cid = json.loads(x)["call_id"]
+        shutil.copy(ev / "raw" / f"{cid}.json", out / "raw" / f"{cid}.json")
+    (out / "manifest.jsonl").write_text("".join(x + "\n" for x in keep), encoding="utf-8")
+    text, outc = av5c.report(av5c.load_all(res))
+    d = outc["rule"]
+    assert outc["outcome"].startswith("v5c NON adottata") and d["skeletons"] == 7, outc
+    assert all(d[k] == 0 for k in ("dAttrR", "dAttrP", "dF1rel", "dR", "dM1", "dVc")), d
+    assert "| Boeing |" in text and "classi senza attributi" in text
+    print("  OK  leva v5c (voce 150): testo con 2 righe diverse dalla v5 e solo compatto, esempi con attributes vuota "
+          "esplicita, config = dev_g26 C-G salvo istruzioni e vista, baseline con prompt identici ai manifest, regola di "
+          "analyze_v5c (soglie, run simulata, guardia)")
+
+
 def main() -> None:
     before = snapshot_corpus()
     candidates, queries = cl.load_all()
@@ -3174,10 +3295,12 @@ def main() -> None:
         check_3b_and_batch(builder, tmp)
         check_compare_view()
         check_compare_retrievers()
+        check_compare_3b()
         check_example_view(builder, tmp)
         check_hybrid26(builder, tmp)
         check_dense26(tmp)
         check_v5b(tmp)
+        check_v5c(tmp)
         check_review(builder, tmp)
         check_run_log(tmp)
         check_provenance()

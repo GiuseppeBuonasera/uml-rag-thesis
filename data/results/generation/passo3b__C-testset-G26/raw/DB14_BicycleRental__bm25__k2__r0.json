@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ NIN : string\",\n        \"+ TIN : string\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"BicycleModel\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ gears : int\"\n      ]\n    },\n    {\n      \"name\": \"BicycleType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"ROAD\",\n        \"MOUNTAIN\",\n        \"BMX\",\n        \"HYBRID\"\n      ]\n    },\n    {\n      \"name\": \"Bicycle\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Store\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ pickup_date : date\"\n      ]\n    },\n    {\n      \"name\": \"Rental\",\n      \"attributes\": [\n        \"+ return_date : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"BicycleModel\",\n      \"target\": \"BicycleType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bicycle\",\n      \"target\": \"BicycleModel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"BicycleModel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Store\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Rental\",\n      \"target\": \"Bicycle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 33.883919400002924,
+ "prompt_tokens": 3423,
+ "completion_tokens": 585,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-u3ltvoghb780xjtzlghmhgl",
+  "object": "chat.completion",
+  "created": 1791915795,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ NIN : string\",\n        \"+ TIN : string\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"BicycleModel\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ gears : int\"\n      ]\n    },\n    {\n      \"name\": \"BicycleType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"ROAD\",\n        \"MOUNTAIN\",\n        \"BMX\",\n        \"HYBRID\"\n      ]\n    },\n    {\n      \"name\": \"Bicycle\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Store\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ pickup_date : date\"\n      ]\n    },\n    {\n      \"name\": \"Rental\",\n      \"attributes\": [\n        \"+ return_date : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"BicycleModel\",\n      \"target\": \"BicycleType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bicycle\",\n      \"target\": \"BicycleModel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"BicycleModel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Store\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Rental\",\n      \"target\": \"Bicycle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3423,
+   "completion_tokens": 585,
+   "total_tokens": 4008,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

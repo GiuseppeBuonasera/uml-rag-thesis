@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass SmartHome {\n  + address : string\n}\n\nclass Room {\n  + name : string\n}\n\nabstract class Device {\n  + deviceId : int\n}\n\nclass Sensor extends Device {\n  + type : string\n}\n\nclass Actuator extends Device {\n  + type : string\n}\n\nclass SensorReading {\n  + measuredValue : float\n  + timestamp : datetime\n}\n\nclass ControlCommand {\n  + commandName : string\n  + status : string\n  + timestamp : datetime\n}\n\nclass ActivityLog {\n}\n\nclass User {\n  + name : string\n}\n\nclass Owner extends User {}\n\nclass AutomationRule {\n  + timestamp : datetime\n  + status : string\n  + edit()\n  + activate()\n  + deactivate()\n  + trigger()\n}\n\nclass Precondition {}\n\nclass Action {}\n\nclass RelationalTerm {}\n\nclass BooleanExpression {}\n\nSmartHome \"1\" -- \"*\" Room\nRoom \"1\" -- \"*\" Sensor\nRoom \"1\" -- \"*\" Actuator\nSensor \"1\" -- \"*\" SensorReading\nActuator \"1\" -- \"*\" ControlCommand\nSmartHome \"1\" -- \"*\" ActivityLog\nActivityLog \"1\" -- \"*\" SensorReading\nActivityLog \"1\" -- \"*\" ControlCommand\nOwner \"1\" -- \"*\" AutomationRule : manages\nAutomationRule \"1\" -- \"1\" Precondition\nAutomationRule \"1\" -- \"1\" Action\nAction \"1\" -- \"*\" ControlCommand\nPrecondition \"1\" -- \"1\" BooleanExpression\nBooleanExpression \"1\" -- \"1\" BooleanExpression : AND/OR/NOT\nBooleanExpression \"1\" -- \"1\" RelationalTerm\nRelationalTerm \"1\" -- \"0..1\" Sensor\nRelationalTerm \"1\" -- \"0..1\" Actuator\nRelationalTerm \"1\" -- \"0..1\" SensorReading\nRelationalTerm \"1\" -- \"0..1\" ControlCommand\nRelationalTerm \"1\" -- \"0..1\" Room\nAutomationRule \"0..1\" -- \"0..1\" AutomationRule : depends on\nAutomationRule \"0..1\" -- \"0..1\" AutomationRule : conflicts with\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 28.14648970000053,
+ "prompt_tokens": 3329,
+ "completion_tokens": 478,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5316y0y0ht9nkqcihh64k8",
+  "object": "chat.completion",
+  "created": 1791858357,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass SmartHome {\n  + address : string\n}\n\nclass Room {\n  + name : string\n}\n\nabstract class Device {\n  + deviceId : int\n}\n\nclass Sensor extends Device {\n  + type : string\n}\n\nclass Actuator extends Device {\n  + type : string\n}\n\nclass SensorReading {\n  + measuredValue : float\n  + timestamp : datetime\n}\n\nclass ControlCommand {\n  + commandName : string\n  + status : string\n  + timestamp : datetime\n}\n\nclass ActivityLog {\n}\n\nclass User {\n  + name : string\n}\n\nclass Owner extends User {}\n\nclass AutomationRule {\n  + timestamp : datetime\n  + status : string\n  + edit()\n  + activate()\n  + deactivate()\n  + trigger()\n}\n\nclass Precondition {}\n\nclass Action {}\n\nclass RelationalTerm {}\n\nclass BooleanExpression {}\n\nSmartHome \"1\" -- \"*\" Room\nRoom \"1\" -- \"*\" Sensor\nRoom \"1\" -- \"*\" Actuator\nSensor \"1\" -- \"*\" SensorReading\nActuator \"1\" -- \"*\" ControlCommand\nSmartHome \"1\" -- \"*\" ActivityLog\nActivityLog \"1\" -- \"*\" SensorReading\nActivityLog \"1\" -- \"*\" ControlCommand\nOwner \"1\" -- \"*\" AutomationRule : manages\nAutomationRule \"1\" -- \"1\" Precondition\nAutomationRule \"1\" -- \"1\" Action\nAction \"1\" -- \"*\" ControlCommand\nPrecondition \"1\" -- \"1\" BooleanExpression\nBooleanExpression \"1\" -- \"1\" BooleanExpression : AND/OR/NOT\nBooleanExpression \"1\" -- \"1\" RelationalTerm\nRelationalTerm \"1\" -- \"0..1\" Sensor\nRelationalTerm \"1\" -- \"0..1\" Actuator\nRelationalTerm \"1\" -- \"0..1\" SensorReading\nRelationalTerm \"1\" -- \"0..1\" ControlCommand\nRelationalTerm \"1\" -- \"0..1\" Room\nAutomationRule \"0..1\" -- \"0..1\" AutomationRule : depends on\nAutomationRule \"0..1\" -- \"0..1\" AutomationRule : conflicts with\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3329,
+   "completion_tokens": 478,
+   "total_tokens": 3807,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

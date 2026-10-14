@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {}\n\nclass Student extends User {\n  + name : string\n  + email : string\n}\n\nclass Tutor extends User {\n  + name : string\n  + email : string\n  + bankAccount : string\n}\n\nclass Subject {\n  + name : string\n}\n\nclass ExpertiseLevel {\n  + level : string\n}\n\nclass TutoringOffer {\n  + expertiseLevel : ExpertiseLevel\n  + hourlyPrice : double\n}\n\nclass Availability {\n  + dayOfWeek : string\n  + startTime : time\n  + endTime : time\n}\n\nclass TutoringRequest {\n  + requestedLevel : ExpertiseLevel\n  + targetDate : date\n  + targetTime : time\n}\n\nclass TutoringSession {\n  + actualDate : date\n  + actualTime : time\n  + status : string\n  + pricePaid : double\n}\n\nclass Payment {\n  + amount : double\n  + method : string\n}\n\nclass TutorOfTheMonthAward {\n  + month : string\n}\n\nStudent \"1\" -- \"*\" TutoringRequest : makes\nTutor \"1\" -- \"*\" TutoringOffer : offers\nTutor \"1\" -- \"*\" Availability : specifies\nTutor \"1\" -- \"*\" TutoringOffer : provides\nTutoringOffer \"*\" -- \"1\" Subject : for\nTutoringOffer \"*\" -- \"1\" Tutor : offered by\nTutoringRequest \"*\" -- \"1\" Tutor : sent to\nTutoringRequest \"*\" -- \"1\" Student : from\nTutoringRequest \"0..1\" -- \"0..1\" TutoringSession : becomes\nTutoringSession \"*\" -- \"1\" Tutor : conducted by\nTutoringSession \"*\" -- \"1\" Student : attended by\nTutoringSession \"1\" -- \"0..1\" Payment : results in\nTutorOfTheMonthAward \"*\" -- \"1\" Subject : for\nTutorOfTheMonthAward \"*\" -- \"1\" Tutor : awarded to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 25.278328699998383,
+ "prompt_tokens": 3442,
+ "completion_tokens": 421,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zw280jhunvjpgsq30c7eyb",
+  "object": "chat.completion",
+  "created": 1791857269,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {}\n\nclass Student extends User {\n  + name : string\n  + email : string\n}\n\nclass Tutor extends User {\n  + name : string\n  + email : string\n  + bankAccount : string\n}\n\nclass Subject {\n  + name : string\n}\n\nclass ExpertiseLevel {\n  + level : string\n}\n\nclass TutoringOffer {\n  + expertiseLevel : ExpertiseLevel\n  + hourlyPrice : double\n}\n\nclass Availability {\n  + dayOfWeek : string\n  + startTime : time\n  + endTime : time\n}\n\nclass TutoringRequest {\n  + requestedLevel : ExpertiseLevel\n  + targetDate : date\n  + targetTime : time\n}\n\nclass TutoringSession {\n  + actualDate : date\n  + actualTime : time\n  + status : string\n  + pricePaid : double\n}\n\nclass Payment {\n  + amount : double\n  + method : string\n}\n\nclass TutorOfTheMonthAward {\n  + month : string\n}\n\nStudent \"1\" -- \"*\" TutoringRequest : makes\nTutor \"1\" -- \"*\" TutoringOffer : offers\nTutor \"1\" -- \"*\" Availability : specifies\nTutor \"1\" -- \"*\" TutoringOffer : provides\nTutoringOffer \"*\" -- \"1\" Subject : for\nTutoringOffer \"*\" -- \"1\" Tutor : offered by\nTutoringRequest \"*\" -- \"1\" Tutor : sent to\nTutoringRequest \"*\" -- \"1\" Student : from\nTutoringRequest \"0..1\" -- \"0..1\" TutoringSession : becomes\nTutoringSession \"*\" -- \"1\" Tutor : conducted by\nTutoringSession \"*\" -- \"1\" Student : attended by\nTutoringSession \"1\" -- \"0..1\" Payment : results in\nTutorOfTheMonthAward \"*\" -- \"1\" Subject : for\nTutorOfTheMonthAward \"*\" -- \"1\" Tutor : awarded to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3442,
+   "completion_tokens": 421,
+   "total_tokens": 3863,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

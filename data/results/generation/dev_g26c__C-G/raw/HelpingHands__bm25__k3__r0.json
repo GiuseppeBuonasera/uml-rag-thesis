@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Resident\", \"attributes\": [\"+ Name : string\", \"+ StreetAddress : string\", \"+ PhoneNumber : string\", \"+ EmailAddress : string\", \"+ ItemDescription : string\"]}, {\"name\": \"Pickup\", \"attributes\": [\"+ ScheduledTime : time\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ StorageSpace : float\", \"+ Dimensions : string\", \"+ Weight : float\"]}, {\"name\": \"Route\", \"attributes\": []}, {\"name\": \"VolunteerDriver\", \"attributes\": [\"+ AvailableDays : string[]\"]}, {\"name\": \"SecondHandArticle\", \"attributes\": [\"+ Description : string\", \"+ RFIDTag : string\"]}, {\"name\": \"Category\", \"attributes\": []}, {\"name\": \"H2SEmployee\", \"attributes\": []}, {\"name\": \"Client\", \"attributes\": [\"+ HomeAddress : string\", \"+ NeededCategories : Category[]\"]}, {\"name\": \"FoodBank\", \"attributes\": []}, {\"name\": \"NonPerishableFood\", \"attributes\": []}, {\"name\": \"DistributionCenter\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Resident\", \"target\": \"Pickup\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pickup\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Vehicle\", \"target\": \"Route\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"VolunteerDriver\", \"target\": \"Route\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pickup\", \"target\": \"SecondHandArticle\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pickup\", \"target\": \"NonPerishableFood\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"SecondHandArticle\", \"target\": \"Category\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"H2SEmployee\", \"target\": \"SecondHandArticle\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"H2SEmployee\", \"target\": \"Client\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}]}</json>",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 38.20962349999991,
+ "prompt_tokens": 5368,
+ "completion_tokens": 543,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-sy1fpgyf8gzhf0x9ouok",
+  "object": "chat.completion",
+  "created": 1791967707,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Resident\", \"attributes\": [\"+ Name : string\", \"+ StreetAddress : string\", \"+ PhoneNumber : string\", \"+ EmailAddress : string\", \"+ ItemDescription : string\"]}, {\"name\": \"Pickup\", \"attributes\": [\"+ ScheduledTime : time\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ StorageSpace : float\", \"+ Dimensions : string\", \"+ Weight : float\"]}, {\"name\": \"Route\", \"attributes\": []}, {\"name\": \"VolunteerDriver\", \"attributes\": [\"+ AvailableDays : string[]\"]}, {\"name\": \"SecondHandArticle\", \"attributes\": [\"+ Description : string\", \"+ RFIDTag : string\"]}, {\"name\": \"Category\", \"attributes\": []}, {\"name\": \"H2SEmployee\", \"attributes\": []}, {\"name\": \"Client\", \"attributes\": [\"+ HomeAddress : string\", \"+ NeededCategories : Category[]\"]}, {\"name\": \"FoodBank\", \"attributes\": []}, {\"name\": \"NonPerishableFood\", \"attributes\": []}, {\"name\": \"DistributionCenter\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Resident\", \"target\": \"Pickup\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pickup\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Vehicle\", \"target\": \"Route\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"VolunteerDriver\", \"target\": \"Route\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pickup\", \"target\": \"SecondHandArticle\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pickup\", \"target\": \"NonPerishableFood\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"SecondHandArticle\", \"target\": \"Category\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"H2SEmployee\", \"target\": \"SecondHandArticle\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"H2SEmployee\", \"target\": \"Client\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}]}</json>",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5368,
+   "completion_tokens": 543,
+   "total_tokens": 5911,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

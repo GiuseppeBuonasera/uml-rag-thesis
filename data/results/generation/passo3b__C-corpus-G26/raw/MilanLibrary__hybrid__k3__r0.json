@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Library\"\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ SecurityDeposit : float\",\n        \"+ ContactInfo : string[]\"\n      ]\n    },\n    {\n      \"name\": \"BorrowableItem\",\n      \"attributes\": [\n        \"+ LibraryCode : string\",\n        \"+ Location : string\",\n        \"+ ReturnPeriod : string\"\n      ]\n    },\n    {\n      \"name\": \"Book\",\n      \"attributes\": [\n        \"+ Publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"MagazineIssue\",\n      \"attributes\": [\n        \"+ PublicationDate : date\",\n        \"+ Publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"MusicCD\",\n      \"attributes\": [\n        \"+ Publisher : string\",\n        \"+ Artist : string\"\n      ]\n    },\n    {\n      \"name\": \"Film\",\n      \"attributes\": [\n        \"+ Duration : int\",\n        \"+ Publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"VHSFilm\"\n    },\n    {\n      \"name\": \"DVDFilm\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"BorrowableItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BorrowableItem\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..3\",\n      \"label\": \"lent to\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Book\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MagazineIssue\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MusicCD\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"VHSFilm\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DVDFilm\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Book\",\n      \"target\": \"Book\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\",\n      \"label\": \"written by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Film\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\",\n      \"label\": \"acts in\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 49.95936950000032,
+ "prompt_tokens": 5151,
+ "completion_tokens": 745,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2xwfcaga7z50zlhui41rw1g",
+  "object": "chat.completion",
+  "created": 1791896474,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Library\"\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ SecurityDeposit : float\",\n        \"+ ContactInfo : string[]\"\n      ]\n    },\n    {\n      \"name\": \"BorrowableItem\",\n      \"attributes\": [\n        \"+ LibraryCode : string\",\n        \"+ Location : string\",\n        \"+ ReturnPeriod : string\"\n      ]\n    },\n    {\n      \"name\": \"Book\",\n      \"attributes\": [\n        \"+ Publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"MagazineIssue\",\n      \"attributes\": [\n        \"+ PublicationDate : date\",\n        \"+ Publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"MusicCD\",\n      \"attributes\": [\n        \"+ Publisher : string\",\n        \"+ Artist : string\"\n      ]\n    },\n    {\n      \"name\": \"Film\",\n      \"attributes\": [\n        \"+ Duration : int\",\n        \"+ Publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"VHSFilm\"\n    },\n    {\n      \"name\": \"DVDFilm\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"BorrowableItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BorrowableItem\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..3\",\n      \"label\": \"lent to\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Book\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MagazineIssue\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MusicCD\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"VHSFilm\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DVDFilm\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Book\",\n      \"target\": \"Book\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\",\n      \"label\": \"written by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Film\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\",\n      \"label\": \"acts in\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5151,
+   "completion_tokens": 745,
+   "total_tokens": 5896,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

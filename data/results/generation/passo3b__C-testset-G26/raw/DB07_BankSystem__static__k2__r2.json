@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"BankSystem\"\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Account\"\n    },\n    {\n      \"name\": \"SavingsAccount\",\n      \"attributes\": [\n        \"+ interestRate : float\"\n      ]\n    },\n    {\n      \"name\": \"InvestmentAccount\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"StockOrder\",\n      \"attributes\": [\n        \"+ quantity : int\",\n        \"+ price : float\",\n        \"+ ticker : string\",\n        \"+ commission : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"BankSystem\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SavingsAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InvestmentAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"InvestmentAccount\",\n      \"target\": \"StockOrder\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 22.720244800002547,
+ "prompt_tokens": 3503,
+ "completion_tokens": 402,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4cg6v92st3ywvhgh37z53",
+  "object": "chat.completion",
+  "created": 1791911130,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"BankSystem\"\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Account\"\n    },\n    {\n      \"name\": \"SavingsAccount\",\n      \"attributes\": [\n        \"+ interestRate : float\"\n      ]\n    },\n    {\n      \"name\": \"InvestmentAccount\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"StockOrder\",\n      \"attributes\": [\n        \"+ quantity : int\",\n        \"+ price : float\",\n        \"+ ticker : string\",\n        \"+ commission : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"BankSystem\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SavingsAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InvestmentAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"InvestmentAccount\",\n      \"target\": \"StockOrder\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3503,
+   "completion_tokens": 402,
+   "total_tokens": 3905,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

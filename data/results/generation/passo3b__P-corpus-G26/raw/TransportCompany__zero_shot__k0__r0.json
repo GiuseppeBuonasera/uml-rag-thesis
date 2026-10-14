@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Employee {\n  +name : string\n  +socialSecurityNumber : string\n}\n\nclass Driver extends Employee {\n}\n\nclass Planner extends Employee {\n  +username : string\n  +password : string\n}\n\nclass AdministrativeStaff extends Employee {\n  +username : string\n  +password : string\n  +fieldOfActivity : string\n}\n\nclass Customer {\n  +name : string\n  +billingAddress : string\n}\n\nclass PartnerCompany {\n  +name : string\n  +address : string\n}\n\nclass Vehicle {\n  +licensePlateNumber : string\n  +mileage : int\n}\n\nclass RefrigeratedTruck extends Vehicle {}\nclass SmallVan extends Vehicle {}\nclass LoadingPlatform extends Vehicle {}\nclass BoxTruck extends Vehicle {}\n\nclass Repair {\n  +duration : string\n  +cost : float\n}\n\nclass RepairShop {\n  +name : string\n  +address : string\n}\n\nclass Order {\n  +packageSize : string\n  +comment : string\n  +startTime : datetime\n  +finishTime : datetime\n  +pickupAddress : string\n  +deliveryAddress : string\n}\n\nEmployee \"0..*\" -- \"1\" Repair : takes vehicle to :\nRepair \"0..*\" -- \"1\" Vehicle : is for :\nRepair \"0..*\" -- \"1\" RepairShop : occurs at :\n\nDriver \"0..1\" -- \"*\" Order : is assigned to :\nDriver \"0..*\" -- \"*\" Order : completes :\nVehicle \"0..1\" -- \"*\" Order : is used for :\nPlanner \"0..*\" -- \"*\" Order : assigns :\n\nCustomer \"1\" -- \"*\" Order : is client of :\nOrder \"0..*\" -- \"0..1\" PartnerCompany : is placed with :\nAdministrativeStaff \"0..*\" -- \"*\" Order : places :\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 18.260523599998123,
+ "prompt_tokens": 1402,
+ "completion_tokens": 402,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-12obe9y2ivpl743hhux0uc",
+  "object": "chat.completion",
+  "created": 1791859162,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Employee {\n  +name : string\n  +socialSecurityNumber : string\n}\n\nclass Driver extends Employee {\n}\n\nclass Planner extends Employee {\n  +username : string\n  +password : string\n}\n\nclass AdministrativeStaff extends Employee {\n  +username : string\n  +password : string\n  +fieldOfActivity : string\n}\n\nclass Customer {\n  +name : string\n  +billingAddress : string\n}\n\nclass PartnerCompany {\n  +name : string\n  +address : string\n}\n\nclass Vehicle {\n  +licensePlateNumber : string\n  +mileage : int\n}\n\nclass RefrigeratedTruck extends Vehicle {}\nclass SmallVan extends Vehicle {}\nclass LoadingPlatform extends Vehicle {}\nclass BoxTruck extends Vehicle {}\n\nclass Repair {\n  +duration : string\n  +cost : float\n}\n\nclass RepairShop {\n  +name : string\n  +address : string\n}\n\nclass Order {\n  +packageSize : string\n  +comment : string\n  +startTime : datetime\n  +finishTime : datetime\n  +pickupAddress : string\n  +deliveryAddress : string\n}\n\nEmployee \"0..*\" -- \"1\" Repair : takes vehicle to :\nRepair \"0..*\" -- \"1\" Vehicle : is for :\nRepair \"0..*\" -- \"1\" RepairShop : occurs at :\n\nDriver \"0..1\" -- \"*\" Order : is assigned to :\nDriver \"0..*\" -- \"*\" Order : completes :\nVehicle \"0..1\" -- \"*\" Order : is used for :\nPlanner \"0..*\" -- \"*\" Order : assigns :\n\nCustomer \"1\" -- \"*\" Order : is client of :\nOrder \"0..*\" -- \"0..1\" PartnerCompany : is placed with :\nAdministrativeStaff \"0..*\" -- \"*\" Order : places :\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1402,
+   "completion_tokens": 402,
+   "total_tokens": 1804,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

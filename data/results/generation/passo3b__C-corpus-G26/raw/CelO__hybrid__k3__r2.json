@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Organizer\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ email : string\",\n        \"+ postalAddress : string\",\n        \"+ phoneNumber : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Event\",\n      \"attributes\": [\n        \"+ startDateTime : datetime\",\n        \"+ endDateTime : datetime\",\n        \"+ occasion : string\"\n      ]\n    },\n    {\n      \"name\": \"EventType\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Attendee\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ email : string\",\n        \"+ password : string\",\n        \"+ attendanceStatus : string\"\n      ]\n    },\n    {\n      \"name\": \"Task\",\n      \"attributes\": [\n        \"+ description : string\",\n        \"+ status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Event\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"EventType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Attendee\",\n      \"label\": \"Invites\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Attendee\",\n      \"label\": \"Attends\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Attendee\",\n      \"label\": \"Has attendees\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Event\",\n      \"part\": \"Task\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"Task\",\n      \"label\": \"Accomplishes\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 40.95950769999763,
+ "prompt_tokens": 5165,
+ "completion_tokens": 714,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0vcum6jjsobj0t7log9xpenb",
+  "object": "chat.completion",
+  "created": 1791870317,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Organizer\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ email : string\",\n        \"+ postalAddress : string\",\n        \"+ phoneNumber : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Event\",\n      \"attributes\": [\n        \"+ startDateTime : datetime\",\n        \"+ endDateTime : datetime\",\n        \"+ occasion : string\"\n      ]\n    },\n    {\n      \"name\": \"EventType\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Attendee\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ email : string\",\n        \"+ password : string\",\n        \"+ attendanceStatus : string\"\n      ]\n    },\n    {\n      \"name\": \"Task\",\n      \"attributes\": [\n        \"+ description : string\",\n        \"+ status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Event\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"EventType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Attendee\",\n      \"label\": \"Invites\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Attendee\",\n      \"label\": \"Attends\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Attendee\",\n      \"label\": \"Has attendees\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Event\",\n      \"part\": \"Task\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"Task\",\n      \"label\": \"Accomplishes\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5165,
+   "completion_tokens": 714,
+   "total_tokens": 5879,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

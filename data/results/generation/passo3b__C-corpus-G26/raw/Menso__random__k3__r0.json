@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Bus\"\n    },\n    {\n      \"name\": \"Trajectory\"\n    },\n    {\n      \"name\": \"Line\"\n    },\n    {\n      \"name\": \"LineCategory\"\n    },\n    {\n      \"name\": \"MENSOProject\"\n    },\n    {\n      \"name\": \"MENSOUser\"\n    },\n    {\n      \"name\": \"Trip\"\n    },\n    {\n      \"name\": \"Invoice\"\n    },\n    {\n      \"name\": \"Customer\"\n    },\n    {\n      \"name\": \"Address\"\n    },\n    {\n      \"name\": \"WorkingHours\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"LineCategory\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOUser\",\n      \"target\": \"Trip\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"Customer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Address\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"WorkingHours\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"MENSOUser\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 41.73743629999808,
+ "prompt_tokens": 6222,
+ "completion_tokens": 621,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ar8lf4wddxvxsszvdiahp",
+  "object": "chat.completion",
+  "created": 1791876755,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Bus\"\n    },\n    {\n      \"name\": \"Trajectory\"\n    },\n    {\n      \"name\": \"Line\"\n    },\n    {\n      \"name\": \"LineCategory\"\n    },\n    {\n      \"name\": \"MENSOProject\"\n    },\n    {\n      \"name\": \"MENSOUser\"\n    },\n    {\n      \"name\": \"Trip\"\n    },\n    {\n      \"name\": \"Invoice\"\n    },\n    {\n      \"name\": \"Customer\"\n    },\n    {\n      \"name\": \"Address\"\n    },\n    {\n      \"name\": \"WorkingHours\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"LineCategory\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOUser\",\n      \"target\": \"Trip\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"Customer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Address\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"WorkingHours\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"MENSOUser\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 6222,
+   "completion_tokens": 621,
+   "total_tokens": 6843,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

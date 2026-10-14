@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"User\"}, {\"name\": \"Document\"}, {\"name\": \"Page\"}, {\"name\": \"Header\"}, {\"name\": \"Body\"}, {\"name\": \"Footer\"}, {\"name\": \"Sentence\"}, {\"name\": \"Word\"}, {\"name\": \"PunctuationCharacter\"}, {\"name\": \"Letter\"}, {\"name\": \"Digit\"}, {\"name\": \"SpecialCharacter\"}, {\"name\": \"Picture\"}, {\"name\": \"Table\"}, {\"name\": \"Row\"}, {\"name\": \"Column\"}, {\"name\": \"Cell\"}, {\"name\": \"Text\"}], \"relations\": [{\"type\": \"association\", \"source\": \"User\", \"target\": \"Document\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Document\", \"part\": \"Page\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"composition\", \"whole\": \"Page\", \"part\": \"Header\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Page\", \"part\": \"Body\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Page\", \"part\": \"Footer\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Body\", \"part\": \"Sentence\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Sentence\", \"part\": \"Word\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Sentence\", \"part\": \"PunctuationCharacter\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Word\", \"part\": \"Letter\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Word\", \"part\": \"Digit\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Word\", \"part\": \"SpecialCharacter\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Body\", \"target\": \"Picture\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Body\", \"target\": \"Table\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"composition\", \"whole\": \"Table\", \"part\": \"Row\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"composition\", \"whole\": \"Table\", \"part\": \"Column\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"composition\", \"whole\": \"Row\", \"part\": \"Cell\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"composition\", \"whole\": \"Column\", \"part\": \"Cell\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cell\", \"target\": \"Text\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Cell\", \"target\": \"Picture\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 50.005774099998234,
+ "prompt_tokens": 4638,
+ "completion_tokens": 785,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0pz10cw0akqxtngqfzcplc",
+  "object": "chat.completion",
+  "created": 1791900449,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"User\"}, {\"name\": \"Document\"}, {\"name\": \"Page\"}, {\"name\": \"Header\"}, {\"name\": \"Body\"}, {\"name\": \"Footer\"}, {\"name\": \"Sentence\"}, {\"name\": \"Word\"}, {\"name\": \"PunctuationCharacter\"}, {\"name\": \"Letter\"}, {\"name\": \"Digit\"}, {\"name\": \"SpecialCharacter\"}, {\"name\": \"Picture\"}, {\"name\": \"Table\"}, {\"name\": \"Row\"}, {\"name\": \"Column\"}, {\"name\": \"Cell\"}, {\"name\": \"Text\"}], \"relations\": [{\"type\": \"association\", \"source\": \"User\", \"target\": \"Document\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Document\", \"part\": \"Page\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"composition\", \"whole\": \"Page\", \"part\": \"Header\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Page\", \"part\": \"Body\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Page\", \"part\": \"Footer\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Body\", \"part\": \"Sentence\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Sentence\", \"part\": \"Word\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Sentence\", \"part\": \"PunctuationCharacter\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Word\", \"part\": \"Letter\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Word\", \"part\": \"Digit\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Word\", \"part\": \"SpecialCharacter\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Body\", \"target\": \"Picture\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Body\", \"target\": \"Table\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"composition\", \"whole\": \"Table\", \"part\": \"Row\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"composition\", \"whole\": \"Table\", \"part\": \"Column\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"composition\", \"whole\": \"Row\", \"part\": \"Cell\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"composition\", \"whole\": \"Column\", \"part\": \"Cell\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cell\", \"target\": \"Text\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Cell\", \"target\": \"Picture\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4638,
+   "completion_tokens": 785,
+   "total_tokens": 5423,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

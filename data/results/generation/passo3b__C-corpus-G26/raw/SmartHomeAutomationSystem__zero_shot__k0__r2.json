@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"SmartHome\", \"attributes\": [\"+ address : string\"]}, {\"name\": \"Room\"}, {\"name\": \"Device\", \"attributes\": [\"+ deviceIdentifier : string\"]}, {\"name\": \"Sensor\", \"attributes\": []}, {\"name\": \"Actuator\", \"attributes\": []}, {\"name\": \"SensorReading\", \"attributes\": [\"+ measuredValue : string\", \"+ timestamp : datetime\"]}, {\"name\": \"ControlCommand\", \"attributes\": [\"+ timestamp : datetime\", \"+ status : string\"]}, {\"name\": \"ActivityLog\"}, {\"name\": \"User\", \"attributes\": []}, {\"name\": \"Owner\", \"attributes\": []}, {\"name\": \"AutomationRule\", \"attributes\": [\"+ isActivated : boolean\", \"+ lastTriggered : datetime\"]}, {\"name\": \"Precondition\"}, {\"name\": \"Action\"}, {\"name\": \"RelationalTerm\"}, {\"name\": \"BooleanOperator\"}, {\"name\": \"ControlCommandSequence\"}], \"relations\": [{\"type\": \"composition\", \"source\": \"SmartHome\", \"target\": \"Room\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Sensor\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Actuator\", \"partMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"Sensor\", \"parent\": \"Device\"}, {\"type\": \"inheritance\", \"child\": \"Actuator\", \"parent\": \"Device\"}, {\"type\": \"association\", \"source\": \"Sensor\", \"target\": \"SensorReading\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Actuator\", \"target\": \"ControlCommand\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"SmartHome\", \"target\": \"ActivityLog\"}, {\"type\": \"association\", \"source\": \"ActivityLog\", \"target\": \"SensorReading\"}, {\"type\": \"association\", \"source\": \"ActivityLog\", \"target\": \"ControlCommand\"}, {\"type\": \"association\", \"source\": \"Owner\", \"target\": \"AutomationRule\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"Precondition\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"Action\"}, {\"type\": \"association\", \"source\": \"Precondition\", \"target\": \"RelationalTerm\"}, {\"type\": \"association\", \"source\": \"Precondition\", \"target\": \"BooleanOperator\"}, {\"type\": \"association\", \"source\": \"Action\", \"target\": \"ControlCommandSequence\"}, {\"type\": \"association\", \"source\": \"ControlCommandSequence\", \"target\": \"ControlCommand\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"AutomationRule\", \"label\": \"depends on\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"AutomationRule\", \"label\": \"conflicts with\"}, {\"type\": \"inheritance\", \"child\": \"Owner\", \"parent\": \"User\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 30.61851469999965,
+ "prompt_tokens": 1439,
+ "completion_tokens": 657,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wc1rralg26r1nfmnn4pwbh",
+  "object": "chat.completion",
+  "created": 1791880378,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"SmartHome\", \"attributes\": [\"+ address : string\"]}, {\"name\": \"Room\"}, {\"name\": \"Device\", \"attributes\": [\"+ deviceIdentifier : string\"]}, {\"name\": \"Sensor\", \"attributes\": []}, {\"name\": \"Actuator\", \"attributes\": []}, {\"name\": \"SensorReading\", \"attributes\": [\"+ measuredValue : string\", \"+ timestamp : datetime\"]}, {\"name\": \"ControlCommand\", \"attributes\": [\"+ timestamp : datetime\", \"+ status : string\"]}, {\"name\": \"ActivityLog\"}, {\"name\": \"User\", \"attributes\": []}, {\"name\": \"Owner\", \"attributes\": []}, {\"name\": \"AutomationRule\", \"attributes\": [\"+ isActivated : boolean\", \"+ lastTriggered : datetime\"]}, {\"name\": \"Precondition\"}, {\"name\": \"Action\"}, {\"name\": \"RelationalTerm\"}, {\"name\": \"BooleanOperator\"}, {\"name\": \"ControlCommandSequence\"}], \"relations\": [{\"type\": \"composition\", \"source\": \"SmartHome\", \"target\": \"Room\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Sensor\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Actuator\", \"partMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"Sensor\", \"parent\": \"Device\"}, {\"type\": \"inheritance\", \"child\": \"Actuator\", \"parent\": \"Device\"}, {\"type\": \"association\", \"source\": \"Sensor\", \"target\": \"SensorReading\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Actuator\", \"target\": \"ControlCommand\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"SmartHome\", \"target\": \"ActivityLog\"}, {\"type\": \"association\", \"source\": \"ActivityLog\", \"target\": \"SensorReading\"}, {\"type\": \"association\", \"source\": \"ActivityLog\", \"target\": \"ControlCommand\"}, {\"type\": \"association\", \"source\": \"Owner\", \"target\": \"AutomationRule\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"Precondition\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"Action\"}, {\"type\": \"association\", \"source\": \"Precondition\", \"target\": \"RelationalTerm\"}, {\"type\": \"association\", \"source\": \"Precondition\", \"target\": \"BooleanOperator\"}, {\"type\": \"association\", \"source\": \"Action\", \"target\": \"ControlCommandSequence\"}, {\"type\": \"association\", \"source\": \"ControlCommandSequence\", \"target\": \"ControlCommand\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"AutomationRule\", \"label\": \"depends on\"}, {\"type\": \"association\", \"source\": \"AutomationRule\", \"target\": \"AutomationRule\", \"label\": \"conflicts with\"}, {\"type\": \"inheritance\", \"child\": \"Owner\", \"parent\": \"User\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1439,
+   "completion_tokens": 657,
+   "total_tokens": 2096,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

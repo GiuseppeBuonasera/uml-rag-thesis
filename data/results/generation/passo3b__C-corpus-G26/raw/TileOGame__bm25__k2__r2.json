@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Designer\"\n    },\n    {\n      \"name\": \"Game\"\n    },\n    {\n      \"name\": \"Board\"\n    },\n    {\n      \"name\": \"Tile\"\n    },\n    {\n      \"name\": \"ConnectionPiece\"\n    },\n    {\n      \"name\": \"ActionCard\"\n    },\n    {\n      \"name\": \"ActionType\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"PlayingPiece\"\n    },\n    {\n      \"name\": \"Die\"\n    },\n    {\n      \"name\": \"ActionTile\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Designer\",\n      \"target\": \"Game\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Board\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Board\",\n      \"part\": \"Tile\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"ConnectionPiece\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"ActionCard\",\n      \"targetMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActionCard\",\n      \"target\": \"ActionType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Player\",\n      \"targetMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Player\",\n      \"part\": \"PlayingPiece\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Die\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ActionTile\",\n      \"parent\": \"Tile\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 35.33216459999676,
+ "prompt_tokens": 5236,
+ "completion_tokens": 606,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-askzcihkjuddy9me95453p",
+  "object": "chat.completion",
+  "created": 1791882305,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Designer\"\n    },\n    {\n      \"name\": \"Game\"\n    },\n    {\n      \"name\": \"Board\"\n    },\n    {\n      \"name\": \"Tile\"\n    },\n    {\n      \"name\": \"ConnectionPiece\"\n    },\n    {\n      \"name\": \"ActionCard\"\n    },\n    {\n      \"name\": \"ActionType\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"PlayingPiece\"\n    },\n    {\n      \"name\": \"Die\"\n    },\n    {\n      \"name\": \"ActionTile\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Designer\",\n      \"target\": \"Game\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Board\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Board\",\n      \"part\": \"Tile\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"ConnectionPiece\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"ActionCard\",\n      \"targetMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActionCard\",\n      \"target\": \"ActionType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Player\",\n      \"targetMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Player\",\n      \"part\": \"PlayingPiece\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Die\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ActionTile\",\n      \"parent\": \"Tile\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5236,
+   "completion_tokens": 606,
+   "total_tokens": 5842,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

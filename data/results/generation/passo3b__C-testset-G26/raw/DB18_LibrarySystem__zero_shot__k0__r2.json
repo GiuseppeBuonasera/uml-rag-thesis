@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ fullName : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"UnderAgedUser\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"AdultUser\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"UnderAgedUser\", \"target\": \"StudentCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"AdultUser\", \"target\": \"IdCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"Book\", \"targetMultiplicity\": \"0..4\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"BorrowingHistory\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"BorrowingHistory\", \"part\": \"BorrowedBook\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"BorrowedBook\", \"target\": \"Book\", \"targetMultiplicity\": \"1\"}], \"classes_extended\": [{\"name\": \"StudentCard\", \"attributes\": []}, {\"name\": \"IdCard\", \"attributes\": []}, {\"name\": \"Book\", \"attributes\": [\"+ title : string\", \"+ author : string\"]}, {\"name\": \"BorrowingHistory\", \"attributes\": [\"+ dates : datetime[]\"]}, {\"name\": \"BorrowedBook\", \"attributes\": [\"+ date : datetime\"]}]}\n\nWait, I must follow the strict JSON format and ensure all classes used in relations are declared. Let me re-format correctly.\n\n{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ fullName : string\"]}, {\"name\": \"UnderAgedUser\", \"attributes\": []}, {\"name\": \"AdultUser\", \"attributes\": []}, {\"name\": \"StudentCard\", \"attributes\": []}, {\"name\": \"IdCard\", \"attributes\": []}, {\"name\": \"Book\", \"attributes\": [\"+ title : string\", \"+ author : string\"]}, {\"name\": \"BorrowingHistory\", \"attributes\": [\"+ dates : datetime[]\"]}, {\"name\": \"BorrowedBook\", \"attributes\": [\"+ date : datetime\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"UnderAgedUser\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"AdultUser\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"UnderAgedUser\", \"target\": \"StudentCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"AdultUser\", \"target\": \"IdCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"Book\", \"targetMultiplicity\": \"0..4\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"BorrowingHistory\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"BorrowingHistory\", \"part\": \"BorrowedBook\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"BorrowedBook\", \"target\": \"Book\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 31.433869900007267,
+ "prompt_tokens": 1198,
+ "completion_tokens": 681,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-d6kxx6edj7umoby36a2kj",
+  "object": "chat.completion",
+  "created": 1791920093,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ fullName : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"UnderAgedUser\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"AdultUser\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"UnderAgedUser\", \"target\": \"StudentCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"AdultUser\", \"target\": \"IdCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"Book\", \"targetMultiplicity\": \"0..4\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"BorrowingHistory\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"BorrowingHistory\", \"part\": \"BorrowedBook\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"BorrowedBook\", \"target\": \"Book\", \"targetMultiplicity\": \"1\"}], \"classes_extended\": [{\"name\": \"StudentCard\", \"attributes\": []}, {\"name\": \"IdCard\", \"attributes\": []}, {\"name\": \"Book\", \"attributes\": [\"+ title : string\", \"+ author : string\"]}, {\"name\": \"BorrowingHistory\", \"attributes\": [\"+ dates : datetime[]\"]}, {\"name\": \"BorrowedBook\", \"attributes\": [\"+ date : datetime\"]}]}\n\nWait, I must follow the strict JSON format and ensure all classes used in relations are declared. Let me re-format correctly.\n\n{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ fullName : string\"]}, {\"name\": \"UnderAgedUser\", \"attributes\": []}, {\"name\": \"AdultUser\", \"attributes\": []}, {\"name\": \"StudentCard\", \"attributes\": []}, {\"name\": \"IdCard\", \"attributes\": []}, {\"name\": \"Book\", \"attributes\": [\"+ title : string\", \"+ author : string\"]}, {\"name\": \"BorrowingHistory\", \"attributes\": [\"+ dates : datetime[]\"]}, {\"name\": \"BorrowedBook\", \"attributes\": [\"+ date : datetime\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"UnderAgedUser\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"AdultUser\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"UnderAgedUser\", \"target\": \"StudentCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"AdultUser\", \"target\": \"IdCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"Book\", \"targetMultiplicity\": \"0..4\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"BorrowingHistory\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"BorrowingHistory\", \"part\": \"BorrowedBook\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"BorrowedBook\", \"target\": \"Book\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1198,
+   "completion_tokens": 681,
+   "total_tokens": 1879,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

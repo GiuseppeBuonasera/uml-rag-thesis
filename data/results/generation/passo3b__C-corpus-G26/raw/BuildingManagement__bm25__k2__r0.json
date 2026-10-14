@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"WebPortal\",\n      \"attributes\": [\n        \"+ versionNumber : string\",\n        \"+ urlAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Building\",\n      \"attributes\": [\n        \"+ id : string\",\n        \"+ name : string\",\n        \"+ energyClass : string\",\n        \"+ address : string\",\n        \"+ yearOfConstruction : int\"\n      ]\n    },\n    {\n      \"name\": \"AdditionalEntry\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ isPublic : boolean\"\n      ]\n    },\n    {\n      \"name\": \"TextualInformation\"\n    },\n    {\n      \"name\": \"NumericalInformation\",\n      \"attributes\": [\n        \"+ value : float\",\n        \"+ unit : string\"\n      ]\n    },\n    {\n      \"name\": \"Image\",\n      \"attributes\": [\n        \"+ fileName : string\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ userName : string\",\n        \"+ email : string\",\n        \"+ password : string\",\n        \"+ isActivated : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Administrator\",\n      \"attributes\": [\n        \"+ idCardNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Comment\"\n    },\n    {\n      \"name\": \"Visitor\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"WebPortal\",\n      \"target\": \"Building\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Building\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Building\",\n      \"part\": \"AdditionalEntry\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TextualInformation\",\n      \"parent\": \"AdditionalEntry\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NumericalInformation\",\n      \"parent\": \"AdditionalEntry\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Building\",\n      \"part\": \"Image\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Comment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Building\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Administrator\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Administrator\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Visitor\",\n      \"target\": \"WebPortal\",\n      \"sourceMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Visitor\",\n      \"target\": \"Building\",\n      \"sourceMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"User\",\n      \"parent\": \"Visitor\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 52.69424969999818,
+ "prompt_tokens": 3960,
+ "completion_tokens": 901,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-x5oj4048ixqiuprnuru10s",
+  "object": "chat.completion",
+  "created": 1791868671,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"WebPortal\",\n      \"attributes\": [\n        \"+ versionNumber : string\",\n        \"+ urlAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Building\",\n      \"attributes\": [\n        \"+ id : string\",\n        \"+ name : string\",\n        \"+ energyClass : string\",\n        \"+ address : string\",\n        \"+ yearOfConstruction : int\"\n      ]\n    },\n    {\n      \"name\": \"AdditionalEntry\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ isPublic : boolean\"\n      ]\n    },\n    {\n      \"name\": \"TextualInformation\"\n    },\n    {\n      \"name\": \"NumericalInformation\",\n      \"attributes\": [\n        \"+ value : float\",\n        \"+ unit : string\"\n      ]\n    },\n    {\n      \"name\": \"Image\",\n      \"attributes\": [\n        \"+ fileName : string\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ userName : string\",\n        \"+ email : string\",\n        \"+ password : string\",\n        \"+ isActivated : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Administrator\",\n      \"attributes\": [\n        \"+ idCardNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Comment\"\n    },\n    {\n      \"name\": \"Visitor\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"WebPortal\",\n      \"target\": \"Building\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Building\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Building\",\n      \"part\": \"AdditionalEntry\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TextualInformation\",\n      \"parent\": \"AdditionalEntry\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NumericalInformation\",\n      \"parent\": \"AdditionalEntry\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Building\",\n      \"part\": \"Image\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Comment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Building\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Administrator\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Administrator\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Visitor\",\n      \"target\": \"WebPortal\",\n      \"sourceMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Visitor\",\n      \"target\": \"Building\",\n      \"sourceMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"User\",\n      \"parent\": \"Visitor\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3960,
+   "completion_tokens": 901,
+   "total_tokens": 4861,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

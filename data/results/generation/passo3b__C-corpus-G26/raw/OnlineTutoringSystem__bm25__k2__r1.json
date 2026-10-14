@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Person\", \"attributes\": [\"+ Name : string\", \"+ Email : string\"]}, {\"name\": \"Student\", \"attributes\": [\"+ Name : string\", \"+ Email : string\"]}, {\"name\": \"Tutor\", \"attributes\": [\"+ Name : string\", \"+ Email : string\", \"+ BankAccount : string\"]}, {\"name\": \"Subject\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"ExpertiseLevel\", \"values\": [\"PRIMARY_SCHOOL\", \"HIGH_SCHOOL\", \"UNIVERSITY\"]}, {\"name\": \"TutoringOffer\", \"attributes\": [\"+ ExpertiseLevel : ExpertiseLevel\", \"+ HourlyPrice : float\"]}, {\"name\": \"Availability\", \"attributes\": [\"+ DayOfWeek : string\", \"+ StartTime : time\", \"+ EndTime : time\"]}, {\"name\": \"TutoringRequest\", \"attributes\": [\"+ RequestedLevel : ExpertiseLevel\", \"+ SuggestedDateTime : datetime\"]}, {\"name\": \"TutoringSession\", \"attributes\": [\"+ ScheduledDateTime : datetime\", \"+ Status : string\"]}, {\"name\": \"Payment\", \"attributes\": [\"+ Amount : float\", \"+ PaymentMethod : string\"]}, {\"name\": \"TutorOfTheMonthAward\", \"attributes\": [\"+ Month : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Student\", \"parent\": \"Person\"}, {\"type\": \"inheritance\", \"child\": \"Tutor\", \"parent\": \"Person\"}, {\"type\": \"association\", \"source\": \"Tutor\", \"target\": \"TutoringOffer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TutoringOffer\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Tutor\", \"target\": \"Availability\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"TutoringRequest\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"TutoringSession\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Student\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutorOfTheMonthAward\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutorOfTheMonthAward\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 33.17965120000008,
+ "prompt_tokens": 3433,
+ "completion_tokens": 691,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-l0tjfgyih3eb7s1no9wm74",
+  "object": "chat.completion",
+  "created": 1791877893,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Person\", \"attributes\": [\"+ Name : string\", \"+ Email : string\"]}, {\"name\": \"Student\", \"attributes\": [\"+ Name : string\", \"+ Email : string\"]}, {\"name\": \"Tutor\", \"attributes\": [\"+ Name : string\", \"+ Email : string\", \"+ BankAccount : string\"]}, {\"name\": \"Subject\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"ExpertiseLevel\", \"values\": [\"PRIMARY_SCHOOL\", \"HIGH_SCHOOL\", \"UNIVERSITY\"]}, {\"name\": \"TutoringOffer\", \"attributes\": [\"+ ExpertiseLevel : ExpertiseLevel\", \"+ HourlyPrice : float\"]}, {\"name\": \"Availability\", \"attributes\": [\"+ DayOfWeek : string\", \"+ StartTime : time\", \"+ EndTime : time\"]}, {\"name\": \"TutoringRequest\", \"attributes\": [\"+ RequestedLevel : ExpertiseLevel\", \"+ SuggestedDateTime : datetime\"]}, {\"name\": \"TutoringSession\", \"attributes\": [\"+ ScheduledDateTime : datetime\", \"+ Status : string\"]}, {\"name\": \"Payment\", \"attributes\": [\"+ Amount : float\", \"+ PaymentMethod : string\"]}, {\"name\": \"TutorOfTheMonthAward\", \"attributes\": [\"+ Month : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Student\", \"parent\": \"Person\"}, {\"type\": \"inheritance\", \"child\": \"Tutor\", \"parent\": \"Person\"}, {\"type\": \"association\", \"source\": \"Tutor\", \"target\": \"TutoringOffer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TutoringOffer\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Tutor\", \"target\": \"Availability\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"TutoringRequest\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"TutoringSession\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Student\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutorOfTheMonthAward\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutorOfTheMonthAward\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3433,
+   "completion_tokens": 691,
+   "total_tokens": 4124,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

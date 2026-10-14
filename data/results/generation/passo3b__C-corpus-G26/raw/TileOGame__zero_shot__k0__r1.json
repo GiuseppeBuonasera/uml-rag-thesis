@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"GameDesigner\", \"methods\": []}, {\"name\": \"Game\", \"attributes\": [\"+ isPaused : boolean\", \"+ isSaved : boolean\"]}, {\"name\": \"Board\", \"methods\": []}, {\"name\": \"Tile\", \"attributes\": [\"+ color : string\", \"+ isHidden : boolean\", \"+ isActionTile : boolean\", \"+ turnsAsRegularTile : int\"]}, {\"name\": \"ConnectionPiece\", \"methods\": []}, {\"name\": \"ActionCard\", \"attributes\": [\"+ instruction : string\"]}, {\"name\": \"Player\", \"attributes\": [\"+ color : string\"]}, {\"name\": \"PlayingPiece\", \"attributes\": [\"+ color : string\"]}, {\"name\": \"Die\", \"methods\": [\"+ roll() : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"GameDesigner\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Game\", \"target\": \"Board\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Board\", \"target\": \"Tile\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Tile\", \"target\": \"ConnectionPiece\", \"label\": \"connected to\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"ActionCard\", \"label\": \"contains deck of\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"Player\", \"label\": \"has players\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"2..4\"}, {\"type\": \"composition\", \"source\": \"Player\", \"target\": \"PlayingPiece\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Die\", \"label\": \"rolls\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 20.415327599999728,
+ "prompt_tokens": 1525,
+ "completion_tokens": 421,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zoird7i8gedoah5bbuynlr",
+  "object": "chat.completion",
+  "created": 1791881943,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"GameDesigner\", \"methods\": []}, {\"name\": \"Game\", \"attributes\": [\"+ isPaused : boolean\", \"+ isSaved : boolean\"]}, {\"name\": \"Board\", \"methods\": []}, {\"name\": \"Tile\", \"attributes\": [\"+ color : string\", \"+ isHidden : boolean\", \"+ isActionTile : boolean\", \"+ turnsAsRegularTile : int\"]}, {\"name\": \"ConnectionPiece\", \"methods\": []}, {\"name\": \"ActionCard\", \"attributes\": [\"+ instruction : string\"]}, {\"name\": \"Player\", \"attributes\": [\"+ color : string\"]}, {\"name\": \"PlayingPiece\", \"attributes\": [\"+ color : string\"]}, {\"name\": \"Die\", \"methods\": [\"+ roll() : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"GameDesigner\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Game\", \"target\": \"Board\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Board\", \"target\": \"Tile\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Tile\", \"target\": \"ConnectionPiece\", \"label\": \"connected to\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"ActionCard\", \"label\": \"contains deck of\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"Player\", \"label\": \"has players\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"2..4\"}, {\"type\": \"composition\", \"source\": \"Player\", \"target\": \"PlayingPiece\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Die\", \"label\": \"rolls\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1525,
+   "completion_tokens": 421,
+   "total_tokens": 1946,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

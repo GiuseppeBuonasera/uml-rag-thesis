@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Library {\n}\n\nclass User {\n  + SecurityDeposit : float\n  + ContactInfo : string\n}\n\nclass BorrowableItem {\n  + LibraryCode : string\n  + Location : string\n}\n\nclass Book {\n  + Publisher : string\n}\n\nclass MagazineIssue {\n  + PublicationDate : date\n  + Publisher : string\n}\n\nclass MusicCD {\n  + Publisher : string\n  + Artist : string\n}\n\nclass Film {\n  + Duration : int\n  + Publisher : string\n}\n\nclass Author {\n  + Name : string\n}\n\nclass Actor {\n  + Name : string\n}\n\nclass BookAuthor {\n}\n\nclass FilmActor {\n}\n\nclass Loan {\n  + ReturnDeadline : date\n}\n\nLibrary \"1\" -- \"*\" User : has\nLibrary \"1\" -- \"*\" BorrowableItem : has\nBorrowableItem \"0..1\" -- \"0..1\" User : lent to\nBorrowableItem \"1\" -- \"0..1\" Loan : associated with\nUser \"1\" -- \"0..3\" Loan : makes\n\nBook \"1\" -- \"*\" BookAuthor : has\nBookAuthor \"*\" -- \"1\" Book : written by\nBook \"1\" -- \"1\" Author : has\nMagazineIssue \"1\" -- \"1\" Library : belongs to\n\nMusicCD \"1\" -- \"1\" Artist : has\nFilm \"1\" -- \"*\" FilmActor : has\nFilmActor \"*\" -- \"1\" Actor : acts in\n\nBook extends BorrowableItem {}\nMagazineIssue extends BorrowableItem {}\nMusicCD extends BorrowableItem {}\nFilm extends BorrowableItem {}\n\nclass DVDFilm extends Film {}\nclass VHSFilm extends Film {}\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 21.65807799999675,
+ "prompt_tokens": 3242,
+ "completion_tokens": 376,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-rzg5h42erhkto2gvuwxv",
+  "object": "chat.completion",
+  "created": 1791861482,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Library {\n}\n\nclass User {\n  + SecurityDeposit : float\n  + ContactInfo : string\n}\n\nclass BorrowableItem {\n  + LibraryCode : string\n  + Location : string\n}\n\nclass Book {\n  + Publisher : string\n}\n\nclass MagazineIssue {\n  + PublicationDate : date\n  + Publisher : string\n}\n\nclass MusicCD {\n  + Publisher : string\n  + Artist : string\n}\n\nclass Film {\n  + Duration : int\n  + Publisher : string\n}\n\nclass Author {\n  + Name : string\n}\n\nclass Actor {\n  + Name : string\n}\n\nclass BookAuthor {\n}\n\nclass FilmActor {\n}\n\nclass Loan {\n  + ReturnDeadline : date\n}\n\nLibrary \"1\" -- \"*\" User : has\nLibrary \"1\" -- \"*\" BorrowableItem : has\nBorrowableItem \"0..1\" -- \"0..1\" User : lent to\nBorrowableItem \"1\" -- \"0..1\" Loan : associated with\nUser \"1\" -- \"0..3\" Loan : makes\n\nBook \"1\" -- \"*\" BookAuthor : has\nBookAuthor \"*\" -- \"1\" Book : written by\nBook \"1\" -- \"1\" Author : has\nMagazineIssue \"1\" -- \"1\" Library : belongs to\n\nMusicCD \"1\" -- \"1\" Artist : has\nFilm \"1\" -- \"*\" FilmActor : has\nFilmActor \"*\" -- \"1\" Actor : acts in\n\nBook extends BorrowableItem {}\nMagazineIssue extends BorrowableItem {}\nMusicCD extends BorrowableItem {}\nFilm extends BorrowableItem {}\n\nclass DVDFilm extends Film {}\nclass VHSFilm extends Film {}\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3242,
+   "completion_tokens": 376,
+   "total_tokens": 3618,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass OilCompany {}\n\nclass GasStation {\n  + location : string\n}\n\nclass Pump {\n  + gasolineType : string\n  + currentLevel : float\n  + reorderingLevel : float\n  + criticalLevel : float\n  + isBlocked : boolean\n  + isAvailable : boolean\n  + getDailyReport()\n}\n\nclass Reservoir {\n  + quantity : float\n}\n\nclass Customer {\n  + name : string\n  + isSuspended : boolean\n  + isBlocked : boolean\n  + slack : int\n}\n\nclass CreditCard {\n  + cardNumber : string\n  + isBlocked : boolean\n}\n\nclass RefuelTurn {\n  + amount : float\n  + timestamp : datetime\n}\n\nclass Invoice {\n  + month : int\n  + year : int\n  + discount : float\n  + totalAmount : float\n  + status : string\n}\n\nclass Payment {\n  + amount : float\n  + date : date\n}\n\nGasStation \"1\" -- \"*\" Pump : possesses\nPump \"1\" *-- \"1\" Reservoir\nPump \"0..1\" -- \"0..1\" Customer : used by\nPump \"0..1\" -- \"0..1\" RefuelTurn : records\n\nCustomer \"1\" -- \"0..*\" RefuelTurn : performs\nCustomer \"1\" -- \"0..*\" CreditCard : owns\nCustomer \"1\" -- \"0..*\" Invoice : receives\nInvoice \"1\" -- \"0..*\" Payment : settled by\nInvoice \"1\" -- \"1..*\" RefuelTurn : contains\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 20.907296500001394,
+ "prompt_tokens": 2933,
+ "completion_tokens": 350,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-waloc9pj4be8idbc0ph7au",
+  "object": "chat.completion",
+  "created": 1791855009,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass OilCompany {}\n\nclass GasStation {\n  + location : string\n}\n\nclass Pump {\n  + gasolineType : string\n  + currentLevel : float\n  + reorderingLevel : float\n  + criticalLevel : float\n  + isBlocked : boolean\n  + isAvailable : boolean\n  + getDailyReport()\n}\n\nclass Reservoir {\n  + quantity : float\n}\n\nclass Customer {\n  + name : string\n  + isSuspended : boolean\n  + isBlocked : boolean\n  + slack : int\n}\n\nclass CreditCard {\n  + cardNumber : string\n  + isBlocked : boolean\n}\n\nclass RefuelTurn {\n  + amount : float\n  + timestamp : datetime\n}\n\nclass Invoice {\n  + month : int\n  + year : int\n  + discount : float\n  + totalAmount : float\n  + status : string\n}\n\nclass Payment {\n  + amount : float\n  + date : date\n}\n\nGasStation \"1\" -- \"*\" Pump : possesses\nPump \"1\" *-- \"1\" Reservoir\nPump \"0..1\" -- \"0..1\" Customer : used by\nPump \"0..1\" -- \"0..1\" RefuelTurn : records\n\nCustomer \"1\" -- \"0..*\" RefuelTurn : performs\nCustomer \"1\" -- \"0..*\" CreditCard : owns\nCustomer \"1\" -- \"0..*\" Invoice : receives\nInvoice \"1\" -- \"0..*\" Payment : settled by\nInvoice \"1\" -- \"1..*\" RefuelTurn : contains\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2933,
+   "completion_tokens": 350,
+   "total_tokens": 3283,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

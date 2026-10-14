@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ practitionerNumber : long\",\n        \"+ signature : string\",\n        \"+ fullName : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ healthNumber : string\",\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Requisition\",\n      \"attributes\": [\n        \"+ validFrom : date\",\n        \"+ repetitionCount : int\",\n        \"+ repetitionInterval : Interval\"\n      ]\n    },\n    {\n      \"name\": \"Interval\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"WEEKLY\",\n        \"MONTHLY\",\n        \"HALF_YEARLY\",\n        \"YEARLY\"\n      ]\n    },\n    {\n      \"name\": \"Test\",\n      \"attributes\": [\n        \"+ duration : int\",\n        \"+ isWalkInOnly : boolean\",\n        \"+ requiresSampleDropOff : boolean\",\n        \"+ requiresAppointment : boolean\"\n      ]\n    },\n    {\n      \"name\": \"TestGroup\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"TestResult\",\n      \"attributes\": [\n        \"+ isPositive : boolean\",\n        \"+ report : string\"\n      ]\n    },\n    {\n      \"name\": \"Lab\",\n      \"attributes\": [\n        \"+ address : string\",\n        \"+ registrationNumber : string\",\n        \"+ businessHoursStart : time\",\n        \"+ businessHoursEnd : time\",\n        \"+ cancellationFee : float\"\n      ]\n    },\n    {\n      \"name\": \"Appointment\",\n      \"attributes\": [\n        \"+ confirmationNumber : string\",\n        \"+ date : date\",\n        \"+ startTime : time\",\n        \"+ endTime : time\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Requisition\",\n      \"target\": \"Test\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Test\",\n      \"target\": \"TestGroup\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Test\",\n      \"target\": \"TestResult\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Appointment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Requisition\",\n      \"target\": \"Appointment\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lab\",\n      \"target\": \"Appointment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lab\",\n      \"target\": \"Test\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Patient\",\n      \"label\": \"prescribesTo\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 57.15220090000366,
+ "prompt_tokens": 5194,
+ "completion_tokens": 1008,
+ "cached": true,
+ "raw": {
+  "id": "chatcmpl-6xf9p97n4fmqyxcuxhowq",
+  "object": "chat.completion",
+  "created": 1791876500,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ practitionerNumber : long\",\n        \"+ signature : string\",\n        \"+ fullName : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ healthNumber : string\",\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ dateOfBirth : date\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Requisition\",\n      \"attributes\": [\n        \"+ validFrom : date\",\n        \"+ repetitionCount : int\",\n        \"+ repetitionInterval : Interval\"\n      ]\n    },\n    {\n      \"name\": \"Interval\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"WEEKLY\",\n        \"MONTHLY\",\n        \"HALF_YEARLY\",\n        \"YEARLY\"\n      ]\n    },\n    {\n      \"name\": \"Test\",\n      \"attributes\": [\n        \"+ duration : int\",\n        \"+ isWalkInOnly : boolean\",\n        \"+ requiresSampleDropOff : boolean\",\n        \"+ requiresAppointment : boolean\"\n      ]\n    },\n    {\n      \"name\": \"TestGroup\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"TestResult\",\n      \"attributes\": [\n        \"+ isPositive : boolean\",\n        \"+ report : string\"\n      ]\n    },\n    {\n      \"name\": \"Lab\",\n      \"attributes\": [\n        \"+ address : string\",\n        \"+ registrationNumber : string\",\n        \"+ businessHoursStart : time\",\n        \"+ businessHoursEnd : time\",\n        \"+ cancellationFee : float\"\n      ]\n    },\n    {\n      \"name\": \"Appointment\",\n      \"attributes\": [\n        \"+ confirmationNumber : string\",\n        \"+ date : date\",\n        \"+ startTime : time\",\n        \"+ endTime : time\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Requisition\",\n      \"target\": \"Test\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Test\",\n      \"target\": \"TestGroup\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Test\",\n      \"target\": \"TestResult\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Appointment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Requisition\",\n      \"target\": \"Appointment\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lab\",\n      \"target\": \"Appointment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lab\",\n      \"target\": \"Test\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Patient\",\n      \"label\": \"prescribesTo\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5194,
+   "completion_tokens": 1008,
+   "total_tokens": 6202,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

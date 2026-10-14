@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Hospital\", \"attributes\": []}, {\"name\": \"Office\", \"attributes\": []}, {\"name\": \"User\", \"attributes\": []}, {\"name\": \"Doctor\", \"attributes\": []}, {\"name\": \"Patient\", \"attributes\": []}, {\"name\": \"Schedule\", \"attributes\": [\"+ date : date\", \"+ startTime : time\", \"+ endTime : time\"]}, {\"name\": \"Appointment\", \"attributes\": []}, {\"name\": \"AppointmentType\", \"values\": [\"Blood Test\", \"Consultation\", \"Surgery\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Office\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"User\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"User\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Office\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Schedule\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Office\", \"target\": \"Schedule\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Appointment\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Appointment\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Schedule\", \"target\": \"Appointment\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"AppointmentType\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 17.596414200001163,
+ "prompt_tokens": 1420,
+ "completion_tokens": 351,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-obuseksjdxcxdv43fauk5e",
+  "object": "chat.completion",
+  "created": 1791920533,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Hospital\", \"attributes\": []}, {\"name\": \"Office\", \"attributes\": []}, {\"name\": \"User\", \"attributes\": []}, {\"name\": \"Doctor\", \"attributes\": []}, {\"name\": \"Patient\", \"attributes\": []}, {\"name\": \"Schedule\", \"attributes\": [\"+ date : date\", \"+ startTime : time\", \"+ endTime : time\"]}, {\"name\": \"Appointment\", \"attributes\": []}, {\"name\": \"AppointmentType\", \"values\": [\"Blood Test\", \"Consultation\", \"Surgery\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Office\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"User\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"User\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Office\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Schedule\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Office\", \"target\": \"Schedule\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Appointment\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Appointment\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Schedule\", \"target\": \"Appointment\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"AppointmentType\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1420,
+   "completion_tokens": 351,
+   "total_tokens": 1771,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

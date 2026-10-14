@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Employee\", \"attributes\": [\"+ id : long\", \"+ name : string\", \"+ address : string\"]}, {\"name\": \"AssemblyService\", \"attributes\": [\"+ kms : int\", \"+ workHours : float\", \"+ admissionDate : date\", \"+ finishDate : date\"]}, {\"name\": \"PartAccessory\", \"attributes\": [\"+ category : string\", \"+ serialNumber : string\", \"+ price : double\"]}, {\"name\": \"Car\", \"attributes\": [\"+ licensePlate : string\", \"+ make : string\", \"+ model : string\", \"+ color : string\"]}, {\"name\": \"Owner\", \"attributes\": [\"+ id : long\", \"+ name : string\", \"+ address : string\", \"+ phone : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"Employee\", \"targetRole\": \"responsibleEmployee\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"Car\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"PartAccessory\", \"targetMultiplicity\": \"*\", \"sourceMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"PartAccessory\", \"target\": \"Car\", \"label\": \"fits in\", \"targetMultiplicity\": \"*\", \"sourceMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"Owner\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 17.80928670000867,
+ "prompt_tokens": 1321,
+ "completion_tokens": 345,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zz4bp6danzvqghxuy5qcg",
+  "object": "chat.completion",
+  "created": 1791912087,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Employee\", \"attributes\": [\"+ id : long\", \"+ name : string\", \"+ address : string\"]}, {\"name\": \"AssemblyService\", \"attributes\": [\"+ kms : int\", \"+ workHours : float\", \"+ admissionDate : date\", \"+ finishDate : date\"]}, {\"name\": \"PartAccessory\", \"attributes\": [\"+ category : string\", \"+ serialNumber : string\", \"+ price : double\"]}, {\"name\": \"Car\", \"attributes\": [\"+ licensePlate : string\", \"+ make : string\", \"+ model : string\", \"+ color : string\"]}, {\"name\": \"Owner\", \"attributes\": [\"+ id : long\", \"+ name : string\", \"+ address : string\", \"+ phone : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"Employee\", \"targetRole\": \"responsibleEmployee\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"Car\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"PartAccessory\", \"targetMultiplicity\": \"*\", \"sourceMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"PartAccessory\", \"target\": \"Car\", \"label\": \"fits in\", \"targetMultiplicity\": \"*\", \"sourceMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"Owner\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1321,
+   "completion_tokens": 345,
+   "total_tokens": 1666,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

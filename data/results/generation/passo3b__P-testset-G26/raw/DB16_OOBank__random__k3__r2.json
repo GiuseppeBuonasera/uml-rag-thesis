@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass OOBank {}\n\nclass Branch {\n  + address : string\n  + branchNumber : int\n}\n\nclass Division {\n}\n\nclass Subdivision {\n}\n\nclass Employee {\n}\n\nclass Client {\n}\n\nclass Account {\n  + accountNumber : int\n  + balance : double\n  + creditOrOverdraftLimit : double\n  + interestRate : float\n  + monthlyFee : float\n  + privileges : string[]\n}\n\nclass MortgageAccount extends Account {}\nclass CheckingAccount extends Account {}\nclass CreditCardAccount extends Account {}\n\nclass SecondaryCard {\n  + expiryDate : date\n}\n\nclass Property {\n  + description : string\n}\n\nclass JointAccount {\n}\n\nclass Manager {\n}\n\nDivision \"1\" *-- \"1..*\" Subdivision\nDivision \"1\" -- \"1\" Manager\nDivision \"1\" -- \"*\" Employee\nSubdivision \"1\" -- \"*\" Branch\nBranch \"1\" -- \"*\" Account : offers\nBranch \"1\" -- \"*\" Client : serves\nClient \"1..*\" -- \"1\" Employee : personal banker\nClient \"1..*\" -- \"*\" Account : owns\nAccount \"0..*\" -- \"0..1\" Property : collateral\nCreditCardAccount \"1\" *-- \"0..*\" SecondaryCard : has\nAccount \"1\" -- \"0..1\" JointAccount : is\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 17.550079699998605,
+ "prompt_tokens": 2722,
+ "completion_tokens": 298,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-nfwrfj334ahcct3wzwdz6",
+  "object": "chat.completion",
+  "created": 1791865899,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass OOBank {}\n\nclass Branch {\n  + address : string\n  + branchNumber : int\n}\n\nclass Division {\n}\n\nclass Subdivision {\n}\n\nclass Employee {\n}\n\nclass Client {\n}\n\nclass Account {\n  + accountNumber : int\n  + balance : double\n  + creditOrOverdraftLimit : double\n  + interestRate : float\n  + monthlyFee : float\n  + privileges : string[]\n}\n\nclass MortgageAccount extends Account {}\nclass CheckingAccount extends Account {}\nclass CreditCardAccount extends Account {}\n\nclass SecondaryCard {\n  + expiryDate : date\n}\n\nclass Property {\n  + description : string\n}\n\nclass JointAccount {\n}\n\nclass Manager {\n}\n\nDivision \"1\" *-- \"1..*\" Subdivision\nDivision \"1\" -- \"1\" Manager\nDivision \"1\" -- \"*\" Employee\nSubdivision \"1\" -- \"*\" Branch\nBranch \"1\" -- \"*\" Account : offers\nBranch \"1\" -- \"*\" Client : serves\nClient \"1..*\" -- \"1\" Employee : personal banker\nClient \"1..*\" -- \"*\" Account : owns\nAccount \"0..*\" -- \"0..1\" Property : collateral\nCreditCardAccount \"1\" *-- \"0..*\" SecondaryCard : has\nAccount \"1\" -- \"0..1\" JointAccount : is\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2722,
+   "completion_tokens": 298,
+   "total_tokens": 3020,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

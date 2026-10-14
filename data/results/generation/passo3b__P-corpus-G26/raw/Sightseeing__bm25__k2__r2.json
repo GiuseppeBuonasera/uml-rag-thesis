@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass City {\n  + name : string\n  + inhabitants : int\n}\n\nclass Attraction {\n  + name : string\n  + address : string\n}\n\nclass GuidedTour {\n  + duration : int\n  + number : int\n}\n\nclass Person {\n  + name : string\n}\n\nclass Visitor extends Person {}\n\nclass Guide extends Person {}\n\nclass Discount {\n  + amount : float\n}\n\nCity \"1\" *-- \"*\" Attraction\nAttraction \"1\" -- \"*\" GuidedTour\nGuidedTour \"1\" -- \"1\" Guide : requires\nGuidedTour \"1\" -- \"1..20\" Visitor : takes part in\nVisitor \"0..*\" -- \"0..*\" GuidedTour : receives\nDiscount \"0..*\" -- \"1\" Visitor : granted to\nDiscount \"0..*\" -- \"1\" GuidedTour : for\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 10.92249449999872,
+ "prompt_tokens": 2249,
+ "completion_tokens": 192,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ticup0ks160r5bwbfnzwc",
+  "object": "chat.completion",
+  "created": 1791858163,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass City {\n  + name : string\n  + inhabitants : int\n}\n\nclass Attraction {\n  + name : string\n  + address : string\n}\n\nclass GuidedTour {\n  + duration : int\n  + number : int\n}\n\nclass Person {\n  + name : string\n}\n\nclass Visitor extends Person {}\n\nclass Guide extends Person {}\n\nclass Discount {\n  + amount : float\n}\n\nCity \"1\" *-- \"*\" Attraction\nAttraction \"1\" -- \"*\" GuidedTour\nGuidedTour \"1\" -- \"1\" Guide : requires\nGuidedTour \"1\" -- \"1..20\" Visitor : takes part in\nVisitor \"0..*\" -- \"0..*\" GuidedTour : receives\nDiscount \"0..*\" -- \"1\" Visitor : granted to\nDiscount \"0..*\" -- \"1\" GuidedTour : for\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2249,
+   "completion_tokens": 192,
+   "total_tokens": 2441,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

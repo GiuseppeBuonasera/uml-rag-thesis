@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass OOBank {}\n\nclass Branch {\n  + address : string\n  + branchNumber : int\n}\n\nclass Division {}\n\nclass Subdivision {}\n\nclass Employee {\n  + name : string\n}\n\nclass Customer {\n  + name : string\n}\n\nabstract class Account {\n  + accountNumber : int\n  + balance : double\n  + creditOrOverdraftLimit : double\n  + interestRate : float\n  + monthlyFee : float\n}\n\nclass MortgageAccount extends Account {\n  + propertyCollateral : string\n}\n\nclass CheckingAccount extends Account {}\n\nclass CreditCardAccount extends Account {\n  + expiryDate : date\n}\n\nclass CreditCard {}\n\nclass Privilege {}\n\nclass Manager {}\n\nManager \"1\" -- \"1\" Division : manages\n\nDivision \"1\" -- \"*\" Subdivision\nSubdivision \"1\" -- \"*\" Branch\nDivision \"1\" -- \"*\" Employee : has\n\nCustomer \"*\" -- \"1\" Employee : personal banker\n\nCustomer \"1\" -- \"*\" Account : opens at\n\nAccount \"1\" -- \"*\" Privilege : has\n\nAccount \"1\" -- \"0..1\" MortgageAccount : is a\nAccount \"1\" -- \"0..1\" CheckingAccount : is a\nAccount \"1\" -- \"0..1\" CreditCardAccount : is a\n\nCreditCardAccount \"1\" -- \"*\" CreditCard : has secondary\n\nAccount \"*\" -- \"*\" Customer : joint account\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 16.260851200000616,
+ "prompt_tokens": 2153,
+ "completion_tokens": 305,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-d9d5ijvu5tz8s2eft3m8j",
+  "object": "chat.completion",
+  "created": 1791865916,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass OOBank {}\n\nclass Branch {\n  + address : string\n  + branchNumber : int\n}\n\nclass Division {}\n\nclass Subdivision {}\n\nclass Employee {\n  + name : string\n}\n\nclass Customer {\n  + name : string\n}\n\nabstract class Account {\n  + accountNumber : int\n  + balance : double\n  + creditOrOverdraftLimit : double\n  + interestRate : float\n  + monthlyFee : float\n}\n\nclass MortgageAccount extends Account {\n  + propertyCollateral : string\n}\n\nclass CheckingAccount extends Account {}\n\nclass CreditCardAccount extends Account {\n  + expiryDate : date\n}\n\nclass CreditCard {}\n\nclass Privilege {}\n\nclass Manager {}\n\nManager \"1\" -- \"1\" Division : manages\n\nDivision \"1\" -- \"*\" Subdivision\nSubdivision \"1\" -- \"*\" Branch\nDivision \"1\" -- \"*\" Employee : has\n\nCustomer \"*\" -- \"1\" Employee : personal banker\n\nCustomer \"1\" -- \"*\" Account : opens at\n\nAccount \"1\" -- \"*\" Privilege : has\n\nAccount \"1\" -- \"0..1\" MortgageAccount : is a\nAccount \"1\" -- \"0..1\" CheckingAccount : is a\nAccount \"1\" -- \"0..1\" CreditCardAccount : is a\n\nCreditCardAccount \"1\" -- \"*\" CreditCard : has secondary\n\nAccount \"*\" -- \"*\" Customer : joint account\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2153,
+   "completion_tokens": 305,
+   "total_tokens": 2458,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + VATNumber : string\n  + Name : string\n  + PhoneNumber : string\n  + Address : string\n}\n\nclass DeliveryCenter {\n  + Name : string\n  + Address : string\n}\n\nclass Package {\n  + IdentifierCode : string\n  + Weight : float\n  + IsUrgent : boolean\n}\n\nclass Courier {\n  + VATNumber : string\n  + Name : string\n  + PhoneNumber : string\n}\n\nCustomer \"1\" -- \"0..*\" Package : sends\nCustomer \"1\" -- \"0..*\" Package : receives\nCustomer \"1\" -- \"0..1\" DeliveryCenter : associated to\nDeliveryCenter \"1\" -- \"0..*\" Package : routes through\nDeliveryCenter \"1\" -- \"0..*\" Courier : employs\nCourier \"1\" -- \"0..*\" Package : assigned to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 12.112454599999182,
+ "prompt_tokens": 2487,
+ "completion_tokens": 195,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8ijkak00sayhd7uyat8nje",
+  "object": "chat.completion",
+  "created": 1791864630,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + VATNumber : string\n  + Name : string\n  + PhoneNumber : string\n  + Address : string\n}\n\nclass DeliveryCenter {\n  + Name : string\n  + Address : string\n}\n\nclass Package {\n  + IdentifierCode : string\n  + Weight : float\n  + IsUrgent : boolean\n}\n\nclass Courier {\n  + VATNumber : string\n  + Name : string\n  + PhoneNumber : string\n}\n\nCustomer \"1\" -- \"0..*\" Package : sends\nCustomer \"1\" -- \"0..*\" Package : receives\nCustomer \"1\" -- \"0..1\" DeliveryCenter : associated to\nDeliveryCenter \"1\" -- \"0..*\" Package : routes through\nDeliveryCenter \"1\" -- \"0..*\" Courier : employs\nCourier \"1\" -- \"0..*\" Package : assigned to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2487,
+   "completion_tokens": 195,
+   "total_tokens": 2682,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

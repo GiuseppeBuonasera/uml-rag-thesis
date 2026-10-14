@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Provider\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Location : string\"\n      ]\n    },\n    {\n      \"name\": \"Cruise\",\n      \"attributes\": [\n        \"+ Number : int\",\n        \"+ Name : string\",\n        \"+ StartDate : date\",\n        \"+ EndDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ SocialSecurityNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Guest\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ IsVIP : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Ship\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ NumberOfDecks : int\",\n        \"+ Length : float\",\n        \"+ NumberOfPassengers : int\"\n      ]\n    },\n    {\n      \"name\": \"TravelAgency\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Booking\",\n      \"attributes\": [\n        \"+ BookingNumber : string\",\n        \"+ BookingDate : date\"\n      ]\n    },\n    {\n      \"name\": \"DestinationArea\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ SeaName : string\"\n      ]\n    },\n    {\n      \"name\": \"Show\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ Duration : int\"\n      ]\n    },\n    {\n      \"name\": \"Ticket\",\n      \"attributes\": [\n        \"+ TicketNumber : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Provider\",\n      \"target\": \"Cruise\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Employee\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Guest\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Ship\",\n      \"target\": \"Cruise\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TravelAgency\",\n      \"target\": \"Booking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Booking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"DestinationArea\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Show\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Guest\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 50.670268699999724,
+ "prompt_tokens": 3686,
+ "completion_tokens": 921,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-psw0aga8ba6w2llee168j",
+  "object": "chat.completion",
+  "created": 1791870493,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Provider\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Location : string\"\n      ]\n    },\n    {\n      \"name\": \"Cruise\",\n      \"attributes\": [\n        \"+ Number : int\",\n        \"+ Name : string\",\n        \"+ StartDate : date\",\n        \"+ EndDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ SocialSecurityNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Guest\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ IsVIP : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Ship\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ NumberOfDecks : int\",\n        \"+ Length : float\",\n        \"+ NumberOfPassengers : int\"\n      ]\n    },\n    {\n      \"name\": \"TravelAgency\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Booking\",\n      \"attributes\": [\n        \"+ BookingNumber : string\",\n        \"+ BookingDate : date\"\n      ]\n    },\n    {\n      \"name\": \"DestinationArea\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ SeaName : string\"\n      ]\n    },\n    {\n      \"name\": \"Show\",\n      \"attributes\": [\n        \"+ Title : string\",\n        \"+ Duration : int\"\n      ]\n    },\n    {\n      \"name\": \"Ticket\",\n      \"attributes\": [\n        \"+ TicketNumber : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Provider\",\n      \"target\": \"Cruise\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Employee\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Guest\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Ship\",\n      \"target\": \"Cruise\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TravelAgency\",\n      \"target\": \"Booking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Booking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"DestinationArea\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Show\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cruise\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Guest\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3686,
+   "completion_tokens": 921,
+   "total_tokens": 4607,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

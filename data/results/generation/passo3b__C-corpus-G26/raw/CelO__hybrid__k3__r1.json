@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Organizer\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ email : string\",\n        \"+ postalAddress : string\",\n        \"+ phoneNumber : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Event\",\n      \"attributes\": [\n        \"+ startDateTime : datetime\",\n        \"+ endDateTime : datetime\",\n        \"+ occasion : string\"\n      ]\n    },\n    {\n      \"name\": \"EventType\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Attendee\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ email : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"RSVPStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"WILL_ATTEND\",\n        \"MAYBE\",\n        \"CANNOT_ATTEND\"\n      ]\n    },\n    {\n      \"name\": \"Task\",\n      \"attributes\": [\n        \"+ description : string\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"EventTaskAssignment\",\n      \"attributes\": [\n        \"+ isCompleted : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Event\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"EventType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Attendee\",\n      \"label\": \"Invites\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"Event\",\n      \"label\": \"RSVP\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Task\",\n      \"label\": \"Checklist\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"Task\",\n      \"label\": \"Accomplishes\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EventTaskAssignment\",\n      \"target\": \"Attendee\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EventTaskAssignment\",\n      \"target\": \"Task\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 48.769874799996614,
+ "prompt_tokens": 5165,
+ "completion_tokens": 859,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0m1ladejc7miw7eytllhc9",
+  "object": "chat.completion",
+  "created": 1791870268,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Organizer\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ email : string\",\n        \"+ postalAddress : string\",\n        \"+ phoneNumber : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Event\",\n      \"attributes\": [\n        \"+ startDateTime : datetime\",\n        \"+ endDateTime : datetime\",\n        \"+ occasion : string\"\n      ]\n    },\n    {\n      \"name\": \"EventType\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Attendee\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ email : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"RSVPStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"WILL_ATTEND\",\n        \"MAYBE\",\n        \"CANNOT_ATTEND\"\n      ]\n    },\n    {\n      \"name\": \"Task\",\n      \"attributes\": [\n        \"+ description : string\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"EventTaskAssignment\",\n      \"attributes\": [\n        \"+ isCompleted : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Event\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"EventType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Attendee\",\n      \"label\": \"Invites\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"Event\",\n      \"label\": \"RSVP\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Task\",\n      \"label\": \"Checklist\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"Task\",\n      \"label\": \"Accomplishes\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EventTaskAssignment\",\n      \"target\": \"Attendee\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"EventTaskAssignment\",\n      \"target\": \"Task\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5165,
+   "completion_tokens": 859,
+   "total_tokens": 6024,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

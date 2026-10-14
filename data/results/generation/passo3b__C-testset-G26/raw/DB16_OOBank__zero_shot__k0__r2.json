@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"OOBank\"}, {\"name\": \"Branch\", \"attributes\": [\"+ address : string\", \"+ branchNumber : int\"]}, {\"name\": \"Division\"}, {\"name\": \"Subdivision\"}, {\"name\": \"Employee\"}, {\"name\": \"Manager\"}, {\"name\": \"Customer\"}, {\"name\": \"Account\", \"attributes\": [\"+ accountNumber : int\", \"+ balance : float\", \"+ creditOrOverdraftLimit : float\", \"+ interestRate : float\", \"+ monthlyFee : float\"]}, {\"name\": \"MortgageAccount\", \"attributes\": [\"+ property : string\"]}, {\"name\": \"CheckingAccount\"}, {\"name\": \"CreditCardAccount\", \"attributes\": [\"+ expiryDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"OOBank\", \"target\": \"Branch\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Branch\", \"target\": \"Customer\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Branch\", \"target\": \"Account\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Subdivision\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Employee\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Manager\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Subdivision\", \"target\": \"Branch\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Employee\", \"targetMultiplicity\": \"1\", \"label\": \"personal banker\", \"targetRole\": \"personal banker\"}, {\"type\": \"association\", \"source\": \"Account\", \"target\": \"Customer\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"inheritance\", \"child\": \"MortgageAccount\", \"parent\": \"Account\"}, {\"type\": \"inheritance\", \"child\": \"CheckingAccount\", \"parent\": \"Account\"}, {\"type\": \"inheritance\", \"child\": \"CreditCardAccount\", \"parent\": \"Account\"}, {\"type\": \"association\", \"source\": \"CreditCardAccount\", \"target\": \"CreditCardAccount\", \"targetMultiplicity\": \"*\", \"label\": \"secondary card\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 23.799751300000935,
+ "prompt_tokens": 1287,
+ "completion_tokens": 496,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-k7u09cx125xlcl765zbid",
+  "object": "chat.completion",
+  "created": 1791916535,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"OOBank\"}, {\"name\": \"Branch\", \"attributes\": [\"+ address : string\", \"+ branchNumber : int\"]}, {\"name\": \"Division\"}, {\"name\": \"Subdivision\"}, {\"name\": \"Employee\"}, {\"name\": \"Manager\"}, {\"name\": \"Customer\"}, {\"name\": \"Account\", \"attributes\": [\"+ accountNumber : int\", \"+ balance : float\", \"+ creditOrOverdraftLimit : float\", \"+ interestRate : float\", \"+ monthlyFee : float\"]}, {\"name\": \"MortgageAccount\", \"attributes\": [\"+ property : string\"]}, {\"name\": \"CheckingAccount\"}, {\"name\": \"CreditCardAccount\", \"attributes\": [\"+ expiryDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"OOBank\", \"target\": \"Branch\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Branch\", \"target\": \"Customer\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Branch\", \"target\": \"Account\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Subdivision\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Employee\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Manager\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Subdivision\", \"target\": \"Branch\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Employee\", \"targetMultiplicity\": \"1\", \"label\": \"personal banker\", \"targetRole\": \"personal banker\"}, {\"type\": \"association\", \"source\": \"Account\", \"target\": \"Customer\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"inheritance\", \"child\": \"MortgageAccount\", \"parent\": \"Account\"}, {\"type\": \"inheritance\", \"child\": \"CheckingAccount\", \"parent\": \"Account\"}, {\"type\": \"inheritance\", \"child\": \"CreditCardAccount\", \"parent\": \"Account\"}, {\"type\": \"association\", \"source\": \"CreditCardAccount\", \"target\": \"CreditCardAccount\", \"targetMultiplicity\": \"*\", \"label\": \"secondary card\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1287,
+   "completion_tokens": 496,
+   "total_tokens": 1783,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

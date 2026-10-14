@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Gym {\n  + ComputeMonthlyBalance(month: int, year: int): double\n  + ComputeYearlyBalance(year: int): double\n  + SendArrearsReminder(): void\n  + SendMedicalCheckReminder(): void\n}\n\nclass Customer {\n  + Name : string\n  + Surname : string\n  + Age : int\n  + Address : string\n  + Profession : string\n}\n\nclass Subscription {\n  + Type : string\n}\n\nclass AdditionalService {\n  + Name : string\n}\n\nclass WorkoutPlan {\n  + Exercises : string\n  + Repetitions : int\n  + Frequency : int\n}\n\nclass MedicalStaff {\n  + Name : string\n}\n\nclass MedicalCheck {\n  + Weight : float\n  + BodyFat : float\n  + Electrocardiogram : string\n  + RestingHeartbeats : int\n  + StressHeartbeats : int\n}\n\nGym \"1\" -- \"*\" Customer\nGym \"1\" -- \"*\" MedicalStaff\nCustomer \"1\" -- \"0..1\" Subscription\nCustomer \"1\" -- \"0..*\" AdditionalService\nCustomer \"1\" -- \"0..1\" WorkoutPlan\nCustomer \"1\" -- \"0..*\" MedicalCheck\nMedicalStaff \"1\" -- \"*\" MedicalCheck\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 15.341485299999476,
+ "prompt_tokens": 2479,
+ "completion_tokens": 283,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hxe4n0wqo5qm65yi3hupa",
+  "object": "chat.completion",
+  "created": 1791860766,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Gym {\n  + ComputeMonthlyBalance(month: int, year: int): double\n  + ComputeYearlyBalance(year: int): double\n  + SendArrearsReminder(): void\n  + SendMedicalCheckReminder(): void\n}\n\nclass Customer {\n  + Name : string\n  + Surname : string\n  + Age : int\n  + Address : string\n  + Profession : string\n}\n\nclass Subscription {\n  + Type : string\n}\n\nclass AdditionalService {\n  + Name : string\n}\n\nclass WorkoutPlan {\n  + Exercises : string\n  + Repetitions : int\n  + Frequency : int\n}\n\nclass MedicalStaff {\n  + Name : string\n}\n\nclass MedicalCheck {\n  + Weight : float\n  + BodyFat : float\n  + Electrocardiogram : string\n  + RestingHeartbeats : int\n  + StressHeartbeats : int\n}\n\nGym \"1\" -- \"*\" Customer\nGym \"1\" -- \"*\" MedicalStaff\nCustomer \"1\" -- \"0..1\" Subscription\nCustomer \"1\" -- \"0..*\" AdditionalService\nCustomer \"1\" -- \"0..1\" WorkoutPlan\nCustomer \"1\" -- \"0..*\" MedicalCheck\nMedicalStaff \"1\" -- \"*\" MedicalCheck\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2479,
+   "completion_tokens": 283,
+   "total_tokens": 2762,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

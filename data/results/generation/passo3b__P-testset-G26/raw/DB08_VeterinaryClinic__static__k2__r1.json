@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Animal {\n  + Identifier : int\n  + Name : string\n  + Breed : string\n}\n\nclass Owner {\n  + Identifier : int\n  + Name : string\n  + Address : string\n  + PhoneNumber : string\n}\n\nclass Breed {\n  + Name : string\n}\n\nclass Physician {\n  + Identifier : int\n  + Name : string\n  + Address : string\n  + PhoneNumber : string\n}\n\nclass Appointment {\n  + StartDateTime : datetime\n}\n\nclass Condition {\n  + CommonName : string\n  + ScientificName : string\n}\n\nOwner \"0..1\" -- \"0..*\" Animal : owns\nAnimal \"0..*\" -- \"1\" Breed : belongs to\nBreed \"1\" -- \"0..*\" Condition : has common\nPhysician \"1\" -- \"0..*\" Appointment : is responsible for\nAnimal \"1\" -- \"0..*\" Appointment : attends\nOwner \"1\" -- \"0..*\" Appointment : attends\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 12.648715600000287,
+ "prompt_tokens": 2483,
+ "completion_tokens": 222,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-efvyo7j9bv5jzmczcft4u",
+  "object": "chat.completion",
+  "created": 1791863912,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Animal {\n  + Identifier : int\n  + Name : string\n  + Breed : string\n}\n\nclass Owner {\n  + Identifier : int\n  + Name : string\n  + Address : string\n  + PhoneNumber : string\n}\n\nclass Breed {\n  + Name : string\n}\n\nclass Physician {\n  + Identifier : int\n  + Name : string\n  + Address : string\n  + PhoneNumber : string\n}\n\nclass Appointment {\n  + StartDateTime : datetime\n}\n\nclass Condition {\n  + CommonName : string\n  + ScientificName : string\n}\n\nOwner \"0..1\" -- \"0..*\" Animal : owns\nAnimal \"0..*\" -- \"1\" Breed : belongs to\nBreed \"1\" -- \"0..*\" Condition : has common\nPhysician \"1\" -- \"0..*\" Appointment : is responsible for\nAnimal \"1\" -- \"0..*\" Appointment : attends\nOwner \"1\" -- \"0..*\" Appointment : attends\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2483,
+   "completion_tokens": 222,
+   "total_tokens": 2705,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Aircraft {\n  + name : string\n  + type : string\n  + yearOfManufacture : int\n  + nextInspectionDate : date\n}\n\nclass PassengerAircraft extends Aircraft {\n  + numberOfSeats : int\n}\n\nclass SeatCategory {\n  + designation : string\n  + offersEntertainment : boolean\n  + numberOfSeats : int\n}\n\nclass Airline {\n  + name : string\n}\n\nclass Flight {\n  + flightNumber : string\n  + date : date\n}\n\nclass Passenger {\n  + name : string\n  + passportNumber : string\n}\n\nclass Ticket {\n  + ticketNumber : string\n  + price : float\n  + upgradeDesired : boolean\n}\n\nclass FlightAttendant {\n  + name : string\n  + employmentDate : date\n  + isChiefStewardess : boolean\n}\n\nclass Pilot {\n  + name : string\n  + employmentDate : date\n  + license : string\n}\n\nclass Airport {\n  + name : string\n  + address : string\n  + numberOfRunways : int\n}\n\nAircraft \"0..*\" -- \"0..1\" Airline : belongs to\nPassengerAircraft \"1\" *-- \"1..*\" SeatCategory : has\nFlight \"1\" -- \"*\" Ticket : includes\nPassenger \"1\" -- \"*\" Ticket : holds\nSeatCategory \"1\" -- \"*\" Ticket : assigned to\nFlight \"1\" -- \"*\" FlightAttendant : staffed by\nFlight \"1\" -- \"1..3\" Pilot : crewed by\nFlight \"1\" -- \"1\" Pilot : captain\nFlight \"1\" -- \"1..2\" Pilot : co-pilot\nFlight \"*\" -- \"1\" Aircraft : performs\nFlight \"*\" -- \"1\" Airport : departs from\nFlight \"*\" -- \"1\" Airport : arrives at\nAircraft \"*\" -- \"0..1\" Airport : home airport\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 22.635026399999333,
+ "prompt_tokens": 3076,
+ "completion_tokens": 410,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-m44bif0iq2xij1xt00djj",
+  "object": "chat.completion",
+  "created": 1791853184,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Aircraft {\n  + name : string\n  + type : string\n  + yearOfManufacture : int\n  + nextInspectionDate : date\n}\n\nclass PassengerAircraft extends Aircraft {\n  + numberOfSeats : int\n}\n\nclass SeatCategory {\n  + designation : string\n  + offersEntertainment : boolean\n  + numberOfSeats : int\n}\n\nclass Airline {\n  + name : string\n}\n\nclass Flight {\n  + flightNumber : string\n  + date : date\n}\n\nclass Passenger {\n  + name : string\n  + passportNumber : string\n}\n\nclass Ticket {\n  + ticketNumber : string\n  + price : float\n  + upgradeDesired : boolean\n}\n\nclass FlightAttendant {\n  + name : string\n  + employmentDate : date\n  + isChiefStewardess : boolean\n}\n\nclass Pilot {\n  + name : string\n  + employmentDate : date\n  + license : string\n}\n\nclass Airport {\n  + name : string\n  + address : string\n  + numberOfRunways : int\n}\n\nAircraft \"0..*\" -- \"0..1\" Airline : belongs to\nPassengerAircraft \"1\" *-- \"1..*\" SeatCategory : has\nFlight \"1\" -- \"*\" Ticket : includes\nPassenger \"1\" -- \"*\" Ticket : holds\nSeatCategory \"1\" -- \"*\" Ticket : assigned to\nFlight \"1\" -- \"*\" FlightAttendant : staffed by\nFlight \"1\" -- \"1..3\" Pilot : crewed by\nFlight \"1\" -- \"1\" Pilot : captain\nFlight \"1\" -- \"1..2\" Pilot : co-pilot\nFlight \"*\" -- \"1\" Aircraft : performs\nFlight \"*\" -- \"1\" Airport : departs from\nFlight \"*\" -- \"1\" Airport : arrives at\nAircraft \"*\" -- \"0..1\" Airport : home airport\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3076,
+   "completion_tokens": 410,
+   "total_tokens": 3486,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass Ingredient {\n  +name : string\n  +measuringUnit : string\n  +quantityInStock : float\n}\n\nclass Dish {\n  +name : string\n  +numericIdentifier : int\n}\n\nclass Table {\n  +numericIdentifier : int\n  +maximumAmmountOfPeople : int\n}\n\nclass Meal {\n  +date : date\n  +startTime : time\n  +endTime : time\n}\n\nclass Waiter {\n  +numericIdentifier : int\n  +name : string\n  +address : string\n  +phoneNumber : string\n}\n\nclass Client {\n  +taxIdentificationNumber : string\n  +name : string\n  +address : string\n}\n\nclass DishIngredient {\n  +quantity : float\n}\n\nclass MealDish {\n  +quantity : float\n}\n\nDish \"1\" -- \"*\" DishIngredient : contains\nIngredient \"1\" -- \"*\" DishIngredient : used in\nDish \"*\" -- \"*\" Meal : consumed in\nMeal \"1\" -- \"*\" MealDish : includes\nDish \"1\" -- \"*\" MealDish : part of\nMeal \"0..1\" -- \"1\" Client : consumed by\nMeal \"*\" -- \"1\" Waiter : responsible waiter\nMeal \"*\" -- \"1\" Table : takes place at\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 14.077577799998835,
+ "prompt_tokens": 1266,
+ "completion_tokens": 281,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tgkdk4ktsrq08pwmazxna9q",
+  "object": "chat.completion",
+  "created": 1791864347,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Ingredient {\n  +name : string\n  +measuringUnit : string\n  +quantityInStock : float\n}\n\nclass Dish {\n  +name : string\n  +numericIdentifier : int\n}\n\nclass Table {\n  +numericIdentifier : int\n  +maximumAmmountOfPeople : int\n}\n\nclass Meal {\n  +date : date\n  +startTime : time\n  +endTime : time\n}\n\nclass Waiter {\n  +numericIdentifier : int\n  +name : string\n  +address : string\n  +phoneNumber : string\n}\n\nclass Client {\n  +taxIdentificationNumber : string\n  +name : string\n  +address : string\n}\n\nclass DishIngredient {\n  +quantity : float\n}\n\nclass MealDish {\n  +quantity : float\n}\n\nDish \"1\" -- \"*\" DishIngredient : contains\nIngredient \"1\" -- \"*\" DishIngredient : used in\nDish \"*\" -- \"*\" Meal : consumed in\nMeal \"1\" -- \"*\" MealDish : includes\nDish \"1\" -- \"*\" MealDish : part of\nMeal \"0..1\" -- \"1\" Client : consumed by\nMeal \"*\" -- \"1\" Waiter : responsible waiter\nMeal \"*\" -- \"1\" Table : takes place at\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1266,
+   "completion_tokens": 281,
+   "total_tokens": 1547,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

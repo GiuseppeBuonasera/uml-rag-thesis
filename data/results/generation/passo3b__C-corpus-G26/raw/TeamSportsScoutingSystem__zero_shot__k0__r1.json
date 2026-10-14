@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Employee\", \"attributes\": []}, {\"name\": \"HeadCoach\", \"attributes\": []}, {\"name\": \"Director\", \"attributes\": []}, {\"name\": \"Scout\", \"attributes\": []}, {\"name\": \"HeadScout\", \"attributes\": []}, {\"name\": \"PlayerProfile\", \"attributes\": [\"+ targetPositions : string[]\"]}, {\"name\": \"PlayerAttribute\", \"attributes\": [\"+ name : string\", \"+ value : float\"]}, {\"name\": \"Player\", \"attributes\": []}, {\"name\": \"LongListEntry\", \"attributes\": []}, {\"name\": \"ScoutingAssignment\", \"attributes\": []}, {\"name\": \"ScoutingReport\", \"attributes\": [\"+ pros : string\", \"+ cons : string\", \"+ recommendation : string\"]}, {\"name\": \"ShortList\", \"attributes\": []}, {\"name\": \"Offer\", \"attributes\": []}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"HeadCoach\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Director\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Scout\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"HeadScout\", \"parent\": \"Scout\"}, {\"type\": \"association\", \"source\": \"HeadCoach\", \"target\": \"PlayerProfile\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PlayerProfile\", \"target\": \"PlayerAttribute\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Scout\", \"target\": \"LongListEntry\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"LongListEntry\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"HeadScout\", \"target\": \"ScoutingAssignment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ScoutingAssignment\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ScoutingAssignment\", \"target\": \"ScoutingReport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ScoutingReport\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ShortList\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Director\", \"target\": \"Offer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Offer\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 30.52411060000304,
+ "prompt_tokens": 1345,
+ "completion_tokens": 657,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lsqig69jf7dq32sjq2yfng",
+  "object": "chat.completion",
+  "created": 1791881086,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Employee\", \"attributes\": []}, {\"name\": \"HeadCoach\", \"attributes\": []}, {\"name\": \"Director\", \"attributes\": []}, {\"name\": \"Scout\", \"attributes\": []}, {\"name\": \"HeadScout\", \"attributes\": []}, {\"name\": \"PlayerProfile\", \"attributes\": [\"+ targetPositions : string[]\"]}, {\"name\": \"PlayerAttribute\", \"attributes\": [\"+ name : string\", \"+ value : float\"]}, {\"name\": \"Player\", \"attributes\": []}, {\"name\": \"LongListEntry\", \"attributes\": []}, {\"name\": \"ScoutingAssignment\", \"attributes\": []}, {\"name\": \"ScoutingReport\", \"attributes\": [\"+ pros : string\", \"+ cons : string\", \"+ recommendation : string\"]}, {\"name\": \"ShortList\", \"attributes\": []}, {\"name\": \"Offer\", \"attributes\": []}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"HeadCoach\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Director\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Scout\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"HeadScout\", \"parent\": \"Scout\"}, {\"type\": \"association\", \"source\": \"HeadCoach\", \"target\": \"PlayerProfile\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PlayerProfile\", \"target\": \"PlayerAttribute\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Scout\", \"target\": \"LongListEntry\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"LongListEntry\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"HeadScout\", \"target\": \"ScoutingAssignment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ScoutingAssignment\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ScoutingAssignment\", \"target\": \"ScoutingReport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ScoutingReport\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ShortList\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Director\", \"target\": \"Offer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Offer\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1345,
+   "completion_tokens": 657,
+   "total_tokens": 2002,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"ContractComponent\"\n    },\n    {\n      \"name\": \"BasicContract\",\n      \"attributes\": [\n        \"+ contractNumber : int\",\n        \"+ balance : double\"\n      ],\n      \"methods\": [\n        \"+ getCharges() : double\",\n        \"+ getBalance() : double\",\n        \"+ setBalance(double) : void\"\n      ]\n    },\n    {\n      \"name\": \"ContractDecorator\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"DataOption\",\n      \"attributes\": [\n        \"+ dataAmount : int\"\n      ],\n      \"methods\": [\n        \"+ getCharges() : double\"\n      ]\n    },\n    {\n      \"name\": \"SMSOption\",\n      \"attributes\": [\n        \"+ smsCount : int\"\n      ],\n      \"methods\": [\n        \"+ getCharges() : double\"\n      ]\n    },\n    {\n      \"name\": \"MinutesOption\",\n      \"attributes\": [\n        \"+ minutes : int\"\n      ],\n      \"methods\": [\n        \"+ getCharges() : double\"\n      ]\n    },\n    {\n      \"name\": \"DoubleTransferRateOption\",\n      \"methods\": [\n        \"+ getCharges() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"realization\",\n      \"child\": \"BasicContract\",\n      \"parent\": \"ContractComponent\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"ContractDecorator\",\n      \"parent\": \"ContractComponent\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"DataOption\",\n      \"parent\": \"ContractDecorator\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"SMSOption\",\n      \"parent\": \"ContractDecorator\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"MinutesOption\",\n      \"parent\": \"ContractDecorator\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"DoubleTransferRateOption\",\n      \"parent\": \"ContractDecorator\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ContractDecorator\",\n      \"target\": \"ContractComponent\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"wraps\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 35.266356199994334,
+ "prompt_tokens": 3966,
+ "completion_tokens": 580,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-d6iieechktlvan7m4us7n",
+  "object": "chat.completion",
+  "created": 1791919835,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"ContractComponent\"\n    },\n    {\n      \"name\": \"BasicContract\",\n      \"attributes\": [\n        \"+ contractNumber : int\",\n        \"+ balance : double\"\n      ],\n      \"methods\": [\n        \"+ getCharges() : double\",\n        \"+ getBalance() : double\",\n        \"+ setBalance(double) : void\"\n      ]\n    },\n    {\n      \"name\": \"ContractDecorator\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"DataOption\",\n      \"attributes\": [\n        \"+ dataAmount : int\"\n      ],\n      \"methods\": [\n        \"+ getCharges() : double\"\n      ]\n    },\n    {\n      \"name\": \"SMSOption\",\n      \"attributes\": [\n        \"+ smsCount : int\"\n      ],\n      \"methods\": [\n        \"+ getCharges() : double\"\n      ]\n    },\n    {\n      \"name\": \"MinutesOption\",\n      \"attributes\": [\n        \"+ minutes : int\"\n      ],\n      \"methods\": [\n        \"+ getCharges() : double\"\n      ]\n    },\n    {\n      \"name\": \"DoubleTransferRateOption\",\n      \"methods\": [\n        \"+ getCharges() : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"realization\",\n      \"child\": \"BasicContract\",\n      \"parent\": \"ContractComponent\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"ContractDecorator\",\n      \"parent\": \"ContractComponent\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"DataOption\",\n      \"parent\": \"ContractDecorator\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"SMSOption\",\n      \"parent\": \"ContractDecorator\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"MinutesOption\",\n      \"parent\": \"ContractDecorator\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"DoubleTransferRateOption\",\n      \"parent\": \"ContractDecorator\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ContractDecorator\",\n      \"target\": \"ContractComponent\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"wraps\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3966,
+   "completion_tokens": 580,
+   "total_tokens": 4546,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

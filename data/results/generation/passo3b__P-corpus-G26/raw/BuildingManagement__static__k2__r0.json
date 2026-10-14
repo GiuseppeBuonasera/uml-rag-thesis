@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass WebPortal {\n  + VersionNumber : string\n  + URLAddress : string\n}\n\nclass Building {\n  + ID : string\n  + Name : string\n  + EnergyClass : string\n  + Address : string\n  + YearOfConstruction : int\n}\n\nclass AdditionalEntry {\n  + Name : string\n  + IsPublic : boolean\n}\n\nclass TextualEntry extends AdditionalEntry {\n  + TextContent : string\n}\n\nclass NumericalEntry extends AdditionalEntry {\n  + Value : float\n  + Unit : string\n}\n\nclass Image {\n  + FileName : string\n  + IsProfilePhoto : boolean\n}\n\nclass User {\n  + UserName : string\n  + EmailAddress : string\n  + Password : string\n  + IsActivated : boolean\n}\n\nclass Administrator extends User {\n  + IDCardNumber : string\n}\n\nclass Comment {\n  + Content : string\n}\n\nWebPortal \"1\" -- \"*\" Building : provides catalog of\nWebPortal \"1\" -- \"*\" User : registers\nWebPortal \"1\" -- \"*\" Administrator : manages\nWebPortal \"1\" -- \"*\" Visitor : allows access to\n\nBuilding \"1\" *-- \"0..*\" AdditionalEntry\nBuilding \"1\" *-- \"0..*\" Image\nBuilding \"0..*\" -- \"1\" User : owner\n\nUser \"1\" -- \"*\" Building : creates\nUser \"1\" -- \"*\" Comment : writes\nUser \"1\" -- \"*\" Building : comments on\nAdministrator \"1\" -- \"*\" User : sets up\nAdministrator \"1\" -- \"*\" Comment : deletes\n\nclass Visitor {}\n\nVisitor \"0..*\" -- \"*\" Building : searches\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 19.859341200000927,
+ "prompt_tokens": 2545,
+ "completion_tokens": 361,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-sd5dmhkmv7hor1hveku2qt",
+  "object": "chat.completion",
+  "created": 1791853469,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass WebPortal {\n  + VersionNumber : string\n  + URLAddress : string\n}\n\nclass Building {\n  + ID : string\n  + Name : string\n  + EnergyClass : string\n  + Address : string\n  + YearOfConstruction : int\n}\n\nclass AdditionalEntry {\n  + Name : string\n  + IsPublic : boolean\n}\n\nclass TextualEntry extends AdditionalEntry {\n  + TextContent : string\n}\n\nclass NumericalEntry extends AdditionalEntry {\n  + Value : float\n  + Unit : string\n}\n\nclass Image {\n  + FileName : string\n  + IsProfilePhoto : boolean\n}\n\nclass User {\n  + UserName : string\n  + EmailAddress : string\n  + Password : string\n  + IsActivated : boolean\n}\n\nclass Administrator extends User {\n  + IDCardNumber : string\n}\n\nclass Comment {\n  + Content : string\n}\n\nWebPortal \"1\" -- \"*\" Building : provides catalog of\nWebPortal \"1\" -- \"*\" User : registers\nWebPortal \"1\" -- \"*\" Administrator : manages\nWebPortal \"1\" -- \"*\" Visitor : allows access to\n\nBuilding \"1\" *-- \"0..*\" AdditionalEntry\nBuilding \"1\" *-- \"0..*\" Image\nBuilding \"0..*\" -- \"1\" User : owner\n\nUser \"1\" -- \"*\" Building : creates\nUser \"1\" -- \"*\" Comment : writes\nUser \"1\" -- \"*\" Building : comments on\nAdministrator \"1\" -- \"*\" User : sets up\nAdministrator \"1\" -- \"*\" Comment : deletes\n\nclass Visitor {}\n\nVisitor \"0..*\" -- \"*\" Building : searches\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2545,
+   "completion_tokens": 361,
+   "total_tokens": 2906,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

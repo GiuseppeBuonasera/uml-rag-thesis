@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"EmployeeCard\", \"attributes\": [\"+ name : string\", \"+ department : string\", \"+ number : string\"]} , {\"name\": \"GuestCard\", \"attributes\": [\"+ number : string\", \"+ date : date\"]} , {\"name\": \"CardReader\", \"methods\": [\"+ verify(card_number) : boolean\"]} , {\"name\": \"Barrier\", \"methods\": [\"+ rise()\"]} , {\"name\": \"CarParkSign\", \"attributes\": [\"+ status : string\"]} , {\"name\": \"Car\", \"attributes\": [\"+ licensePlate : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"CardReader\", \"target\": \"EmployeeCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"CardReader\", \"target\": \"GuestCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"CardReader\", \"target\": \"Barrier\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"Barrier\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"CarParkSign\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 13.675990799994906,
+ "prompt_tokens": 1369,
+ "completion_tokens": 266,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8kuy66iwyugeq3a3v0wdiw",
+  "object": "chat.completion",
+  "created": 1791916112,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"EmployeeCard\", \"attributes\": [\"+ name : string\", \"+ department : string\", \"+ number : string\"]} , {\"name\": \"GuestCard\", \"attributes\": [\"+ number : string\", \"+ date : date\"]} , {\"name\": \"CardReader\", \"methods\": [\"+ verify(card_number) : boolean\"]} , {\"name\": \"Barrier\", \"methods\": [\"+ rise()\"]} , {\"name\": \"CarParkSign\", \"attributes\": [\"+ status : string\"]} , {\"name\": \"Car\", \"attributes\": [\"+ licensePlate : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"CardReader\", \"target\": \"EmployeeCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"CardReader\", \"target\": \"GuestCard\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"CardReader\", \"target\": \"Barrier\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"Barrier\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"CarParkSign\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1369,
+   "completion_tokens": 266,
+   "total_tokens": 1635,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"OilCompany\"\n    },\n    {\n      \"name\": \"GasStation\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Pump\",\n      \"attributes\": [\n        \"+ currentLevel : float\",\n        \"+ reorderingLevel : float\",\n        \"+ criticalLevel : float\",\n        \"+ isBlocked : boolean\"\n      ]\n    },\n    {\n      \"name\": \"GasolineType\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Reservoir\",\n      \"attributes\": [\n        \"+ capacity : float\"\n      ]\n    },\n    {\n      \"name\": \"RefuelTurn\",\n      \"attributes\": [\n        \"+ amount : float\",\n        \"+ timestamp : datetime\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ isSuspended : boolean\",\n        \"+ isNewCustomer : boolean\"\n      ]\n    },\n    {\n      \"name\": \"RefuelCard\",\n      \"attributes\": [\n        \"+ cardNumber : string\",\n        \"+ isBlocked : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ month : int\",\n        \"+ year : int\",\n        \"+ discount : float\",\n        \"+ isSent : boolean\",\n        \"+ isPaid : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Payment\",\n      \"attributes\": [\n        \"+ amount : float\",\n        \"+ date : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"OilCompany\",\n      \"target\": \"GasStation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"GasStation\",\n      \"target\": \"Pump\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Pump\",\n      \"target\": \"GasolineType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Pump\",\n      \"part\": \"Reservoir\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"RefuelCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"RefuelTurn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"Payment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RefuelTurn\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Pump\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 57.10459350000019,
+ "prompt_tokens": 5386,
+ "completion_tokens": 926,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-vj9gdhcbigczjrui6nao7e",
+  "object": "chat.completion",
+  "created": 1791872717,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"OilCompany\"\n    },\n    {\n      \"name\": \"GasStation\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Pump\",\n      \"attributes\": [\n        \"+ currentLevel : float\",\n        \"+ reorderingLevel : float\",\n        \"+ criticalLevel : float\",\n        \"+ isBlocked : boolean\"\n      ]\n    },\n    {\n      \"name\": \"GasolineType\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Reservoir\",\n      \"attributes\": [\n        \"+ capacity : float\"\n      ]\n    },\n    {\n      \"name\": \"RefuelTurn\",\n      \"attributes\": [\n        \"+ amount : float\",\n        \"+ timestamp : datetime\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ isSuspended : boolean\",\n        \"+ isNewCustomer : boolean\"\n      ]\n    },\n    {\n      \"name\": \"RefuelCard\",\n      \"attributes\": [\n        \"+ cardNumber : string\",\n        \"+ isBlocked : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ month : int\",\n        \"+ year : int\",\n        \"+ discount : float\",\n        \"+ isSent : boolean\",\n        \"+ isPaid : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Payment\",\n      \"attributes\": [\n        \"+ amount : float\",\n        \"+ date : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"OilCompany\",\n      \"target\": \"GasStation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"GasStation\",\n      \"target\": \"Pump\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Pump\",\n      \"target\": \"GasolineType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Pump\",\n      \"part\": \"Reservoir\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"RefuelCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"RefuelTurn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"Payment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RefuelTurn\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Pump\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5386,
+   "completion_tokens": 926,
+   "total_tokens": 6312,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

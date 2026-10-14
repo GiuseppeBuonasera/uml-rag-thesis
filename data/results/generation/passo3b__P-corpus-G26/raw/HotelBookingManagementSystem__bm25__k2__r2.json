@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Traveller {\n  + name : string\n  + billingInformation : string\n  + companyName : string\n  + companyAddress : string\n  + travelPreferences : string[]\n  + reliabilityRating : float\n}\n\nclass Hotel {\n  + name : string\n  + address : string\n  + rating : int\n}\n\nclass HotelChain {\n  + name : string\n}\n\nclass City {\n  + name : string\n}\n\nclass RoomType {\n  + type : string\n}\n\nclass Booking {\n  + bookingIdentifier : string\n  + arrivalDate : date\n  + departureDate : date\n  + numRooms : int\n  + roomType : RoomType\n  + maxCostPerNight : float\n  + status : string\n  + cancellationDeadline : date\n}\n\nclass PreliminaryBooking {\n  + price : float\n  + cityArea : string\n  + hotelRating : int\n  + keyPreferences : string[]\n}\n\nclass SpecialOffer {\n  + price : float\n}\n\nclass PaymentMethod {\n  + creditCardInfo : string\n}\n\nenum PaymentStatus {\n  PRE_PAID\n  PAID_AT_HOTEL\n}\n\nclass SearchCriteria {\n  + city : string\n  + arrivalDate : date\n  + departureDate : date\n  + numRooms : int\n  + roomType : string\n  + minRating : int\n  + maxCostPerNight : float\n  + preferences : string[]\n}\n\nTraveller \"1\" -- \"*\" Booking : makes\nTraveller \"1\" -- \"*\" PreliminaryBooking : creates\nHotel \"0..*\" -- \"1\" City : located in\nHotel \"0..*\" -- \"0..1\" HotelChain : run by\nHotel \"1\" -- \"*\" Booking : confirms\nHotel \"1\" -- \"*\" SpecialOffer : provides\nHotel \"1\" -- \"*\" RoomType : offers\nBooking \"1\" -- \"1\" PaymentMethod : uses\nBooking \"1\" -- \"0..1\" SpecialOffer : can switch to\nPreliminaryBooking \"1\" -- \"0..*\" SpecialOffer : generates\nPreliminaryBooking \"1\" -- \"1\" Booking : converts to\nBooking \"1\" -- \"1\" PaymentStatus : has\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 28.552138999999443,
+ "prompt_tokens": 2991,
+ "completion_tokens": 489,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0fnm1fhxomcekztpq7rpxwr",
+  "object": "chat.completion",
+  "created": 1791855667,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Traveller {\n  + name : string\n  + billingInformation : string\n  + companyName : string\n  + companyAddress : string\n  + travelPreferences : string[]\n  + reliabilityRating : float\n}\n\nclass Hotel {\n  + name : string\n  + address : string\n  + rating : int\n}\n\nclass HotelChain {\n  + name : string\n}\n\nclass City {\n  + name : string\n}\n\nclass RoomType {\n  + type : string\n}\n\nclass Booking {\n  + bookingIdentifier : string\n  + arrivalDate : date\n  + departureDate : date\n  + numRooms : int\n  + roomType : RoomType\n  + maxCostPerNight : float\n  + status : string\n  + cancellationDeadline : date\n}\n\nclass PreliminaryBooking {\n  + price : float\n  + cityArea : string\n  + hotelRating : int\n  + keyPreferences : string[]\n}\n\nclass SpecialOffer {\n  + price : float\n}\n\nclass PaymentMethod {\n  + creditCardInfo : string\n}\n\nenum PaymentStatus {\n  PRE_PAID\n  PAID_AT_HOTEL\n}\n\nclass SearchCriteria {\n  + city : string\n  + arrivalDate : date\n  + departureDate : date\n  + numRooms : int\n  + roomType : string\n  + minRating : int\n  + maxCostPerNight : float\n  + preferences : string[]\n}\n\nTraveller \"1\" -- \"*\" Booking : makes\nTraveller \"1\" -- \"*\" PreliminaryBooking : creates\nHotel \"0..*\" -- \"1\" City : located in\nHotel \"0..*\" -- \"0..1\" HotelChain : run by\nHotel \"1\" -- \"*\" Booking : confirms\nHotel \"1\" -- \"*\" SpecialOffer : provides\nHotel \"1\" -- \"*\" RoomType : offers\nBooking \"1\" -- \"1\" PaymentMethod : uses\nBooking \"1\" -- \"0..1\" SpecialOffer : can switch to\nPreliminaryBooking \"1\" -- \"0..*\" SpecialOffer : generates\nPreliminaryBooking \"1\" -- \"1\" Booking : converts to\nBooking \"1\" -- \"1\" PaymentStatus : has\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2991,
+   "completion_tokens": 489,
+   "total_tokens": 3480,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

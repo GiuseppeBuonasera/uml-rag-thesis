@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Player\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Admin\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"Admin\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"admin of\"}]}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Game\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"plays\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"HallOfFame\", \"label\": \"has\"}, {\"type\": \"association\", \"source\": \"HallOfFame\", \"target\": \"Player\", \"label\": \"records score for\"}, {\"type\": \"composition\", \"source\": \"Game\", \"target\": \"Level\", \"label\": \"contains\"}, {\"type\": \"composition\", \"source\": \"Level\", \"target\": \"GridCell\", \"label\": \"consists of\"}, {\"type\": \"association\", \"source\": \"GridCell\", \"target\": \"Block\", \"label\": \"contains\"}, {\"type\": \"composition\", \"source\": \"Game\", \"target\": \"Block\", \"label\": \"defines\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"GameSettings\", \"label\": \"has\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"GameSession\", \"label\": \"plays\"}, {\"type\": \"composition\", \"source\": \"GameSession\", \"target\": \"GameSessionState\", \"label\": \"saves\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 18.955412300005264,
+ "prompt_tokens": 1844,
+ "completion_tokens": 378,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4mbrapv2jai5hkjxiq2lae",
+  "object": "chat.completion",
+  "created": 1791871269,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Player\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Admin\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"Admin\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"admin of\"}]}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Game\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"plays\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"HallOfFame\", \"label\": \"has\"}, {\"type\": \"association\", \"source\": \"HallOfFame\", \"target\": \"Player\", \"label\": \"records score for\"}, {\"type\": \"composition\", \"source\": \"Game\", \"target\": \"Level\", \"label\": \"contains\"}, {\"type\": \"composition\", \"source\": \"Level\", \"target\": \"GridCell\", \"label\": \"consists of\"}, {\"type\": \"association\", \"source\": \"GridCell\", \"target\": \"Block\", \"label\": \"contains\"}, {\"type\": \"composition\", \"source\": \"Game\", \"target\": \"Block\", \"label\": \"defines\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"GameSettings\", \"label\": \"has\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"GameSession\", \"label\": \"plays\"}, {\"type\": \"composition\", \"source\": \"GameSession\", \"target\": \"GameSessionState\", \"label\": \"saves\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1844,
+   "completion_tokens": 378,
+   "total_tokens": 2222,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

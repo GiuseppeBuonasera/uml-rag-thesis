@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum BicycleType {\n  ROAD\n  MOUNTAIN\n  BMX\n  HYBRID\n}\n\nclass Client {\n  + NIN : string\n  + TIN : string\n  + name : string\n  + address : string\n}\n\nclass BicycleModel {\n  + name : string\n  + type : BicycleType\n  + gears : int\n}\n\nclass Bicycle {\n  + id : string\n}\n\nclass Store {\n  + name : string\n  + address : string\n}\n\nclass Reservation {\n  + pick_up_date : date\n}\n\nclass Rental {\n  + return_date : date\n}\n\nClient \"1\" -- \"*\" Reservation : makes\nBicycleModel \"1\" -- \"*\" Reservation : requested_in\nStore \"1\" -- \"*\" Reservation : at_pickup\nReservation \"1\" -- \"0..1\" Rental : becomes\nBicycle \"1\" -- \"0..1\" Rental : is_rented_in\nBicycle \"*\" -- \"1\" BicycleModel : is_a\nBicycle \"1\" -- \"1\" Store : stored_at\nRental \"*\" -- \"1\" Store : returned_to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 13.917273399998521,
+ "prompt_tokens": 2275,
+ "completion_tokens": 257,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-w6l0uvc7qnpouvelfes1m8",
+  "object": "chat.completion",
+  "created": 1791865462,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum BicycleType {\n  ROAD\n  MOUNTAIN\n  BMX\n  HYBRID\n}\n\nclass Client {\n  + NIN : string\n  + TIN : string\n  + name : string\n  + address : string\n}\n\nclass BicycleModel {\n  + name : string\n  + type : BicycleType\n  + gears : int\n}\n\nclass Bicycle {\n  + id : string\n}\n\nclass Store {\n  + name : string\n  + address : string\n}\n\nclass Reservation {\n  + pick_up_date : date\n}\n\nclass Rental {\n  + return_date : date\n}\n\nClient \"1\" -- \"*\" Reservation : makes\nBicycleModel \"1\" -- \"*\" Reservation : requested_in\nStore \"1\" -- \"*\" Reservation : at_pickup\nReservation \"1\" -- \"0..1\" Rental : becomes\nBicycle \"1\" -- \"0..1\" Rental : is_rented_in\nBicycle \"*\" -- \"1\" BicycleModel : is_a\nBicycle \"1\" -- \"1\" Store : stored_at\nRental \"*\" -- \"1\" Store : returned_to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2275,
+   "completion_tokens": 257,
+   "total_tokens": 2532,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

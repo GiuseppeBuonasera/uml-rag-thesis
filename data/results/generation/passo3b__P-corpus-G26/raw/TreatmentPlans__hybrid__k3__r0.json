@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Hospital {\n  + Name : string\n}\n\nclass ExaminationType {\n  + Name : string\n}\n\nclass Problem {\n  + Name : string\n}\n\nclass TreatmentPlan {\n  + Name : string\n}\n\nclass Doctor {\n  + Name : string\n}\n\nclass Patient {\n  + Name : string\n}\n\nclass Diagnosis {\n  + Date : date\n}\n\nclass Treatment {\n  + Date : date\n}\n\nclass MedicalAction {\n  + Description : string\n}\n\nclass Examination {\n  + Date : date\n}\n\nHospital \"1\" -- \"*\" ExaminationType : has permission for\nHospital \"1\" -- \"*\" Doctor : employs\nHospital \"1\" -- \"*\" Diagnosis : hosts\nHospital \"1\" -- \"*\" Treatment : hosts\nHospital \"1\" -- \"*\" Examination : hosts\n\nProblem \"1\" -- \"*\" TreatmentPlan : defines\nTreatmentPlan \"1\" -- \"*\" ExaminationType : advises\n\nDoctor \"1\" -- \"*\" Diagnosis : poses\nPatient \"1\" -- \"*\" Diagnosis : receives\nDiagnosis \"1\" -- \"1\" Treatment : results in\n\nTreatment \"1\" -- \"*\" MedicalAction : consists of\nTreatment \"1\" -- \"*\" Examination : consists of\n\nExamination \"*\" -- \"1\" ExaminationType : is a type of\nExamination \"0..1\" -- \"0..1\" Hospital : performed at\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 19.162118600001122,
+ "prompt_tokens": 3523,
+ "completion_tokens": 294,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qvooac6qv3m81y411x7my3",
+  "object": "chat.completion",
+  "created": 1791859790,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Hospital {\n  + Name : string\n}\n\nclass ExaminationType {\n  + Name : string\n}\n\nclass Problem {\n  + Name : string\n}\n\nclass TreatmentPlan {\n  + Name : string\n}\n\nclass Doctor {\n  + Name : string\n}\n\nclass Patient {\n  + Name : string\n}\n\nclass Diagnosis {\n  + Date : date\n}\n\nclass Treatment {\n  + Date : date\n}\n\nclass MedicalAction {\n  + Description : string\n}\n\nclass Examination {\n  + Date : date\n}\n\nHospital \"1\" -- \"*\" ExaminationType : has permission for\nHospital \"1\" -- \"*\" Doctor : employs\nHospital \"1\" -- \"*\" Diagnosis : hosts\nHospital \"1\" -- \"*\" Treatment : hosts\nHospital \"1\" -- \"*\" Examination : hosts\n\nProblem \"1\" -- \"*\" TreatmentPlan : defines\nTreatmentPlan \"1\" -- \"*\" ExaminationType : advises\n\nDoctor \"1\" -- \"*\" Diagnosis : poses\nPatient \"1\" -- \"*\" Diagnosis : receives\nDiagnosis \"1\" -- \"1\" Treatment : results in\n\nTreatment \"1\" -- \"*\" MedicalAction : consists of\nTreatment \"1\" -- \"*\" Examination : consists of\n\nExamination \"*\" -- \"1\" ExaminationType : is a type of\nExamination \"0..1\" -- \"0..1\" Hospital : performed at\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3523,
+   "completion_tokens": 294,
+   "total_tokens": 3817,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

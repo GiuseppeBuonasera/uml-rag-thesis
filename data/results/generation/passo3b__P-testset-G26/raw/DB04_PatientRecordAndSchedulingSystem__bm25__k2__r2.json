@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Patient {\n}\n\nclass Family {\n}\n\nclass Doctor {\n}\n\nclass Appointment {\n}\n\nclass Visit {\n  + diagnosis : string\n  + treatment : string\n}\n\nclass Medication {\n}\n\nclass Receptionist {}\n\nclass Nurse {}\n\nclass DoctorUser {}\n\nclass PatientHistory {}\n\nFamily \"1\" -- \"1..*\" Patient : has\nFamily \"1\" -- \"0..1\" Doctor : primary care physician\nPatient \"1\" -- \"*\" Appointment : scheduled for\nPatient \"1\" -- \"*\" Visit : undergoes\nVisit \"1\" -- \"*\" Medication : prescribes\nVisit \"1\" -- \"0..*\" Doctor : seen by\nVisit \"1\" -- \"0..*\" Nurse : attended by\nReceptionist \"1\" -- \"*\" Appointment : schedules\nReceptionist \"1\" -- \"*\" Patient : enters information\nNurse \"1\" -- \"*\" Visit : records\nNurse \"1\" -- \"*\" PatientHistory : prints\nDoctor \"1\" -- \"*\" PatientHistory : views\nDoctor \"1\" -- \"*\" Visit : enters information\nDoctor \"1\" -- \"*\" Medication : prescribes\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 13.22037619999901,
+ "prompt_tokens": 2426,
+ "completion_tokens": 239,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-s0yhdqmlud8f66lzmvozv",
+  "object": "chat.completion",
+  "created": 1791863171,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Patient {\n}\n\nclass Family {\n}\n\nclass Doctor {\n}\n\nclass Appointment {\n}\n\nclass Visit {\n  + diagnosis : string\n  + treatment : string\n}\n\nclass Medication {\n}\n\nclass Receptionist {}\n\nclass Nurse {}\n\nclass DoctorUser {}\n\nclass PatientHistory {}\n\nFamily \"1\" -- \"1..*\" Patient : has\nFamily \"1\" -- \"0..1\" Doctor : primary care physician\nPatient \"1\" -- \"*\" Appointment : scheduled for\nPatient \"1\" -- \"*\" Visit : undergoes\nVisit \"1\" -- \"*\" Medication : prescribes\nVisit \"1\" -- \"0..*\" Doctor : seen by\nVisit \"1\" -- \"0..*\" Nurse : attended by\nReceptionist \"1\" -- \"*\" Appointment : schedules\nReceptionist \"1\" -- \"*\" Patient : enters information\nNurse \"1\" -- \"*\" Visit : records\nNurse \"1\" -- \"*\" PatientHistory : prints\nDoctor \"1\" -- \"*\" PatientHistory : views\nDoctor \"1\" -- \"*\" Visit : enters information\nDoctor \"1\" -- \"*\" Medication : prescribes\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2426,
+   "completion_tokens": 239,
+   "total_tokens": 2665,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

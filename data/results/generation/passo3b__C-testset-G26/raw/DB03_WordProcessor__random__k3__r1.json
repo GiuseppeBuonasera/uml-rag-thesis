@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"User\"\n    },\n    {\n      \"name\": \"Document\"\n    },\n    {\n      \"name\": \"Page\"\n    },\n    {\n      \"name\": \"Header\"\n    },\n    {\n      \"name\": \"Footer\"\n    },\n    {\n      \"name\": \"Body\"\n    },\n    {\n      \"name\": \"Sentence\"\n    },\n    {\n      \"name\": \"Word\"\n    },\n    {\n      \"name\": \"PunctuationCharacter\"\n    },\n    {\n      \"name\": \"Letter\"\n    },\n    {\n      \"name\": \"Digit\"\n    },\n    {\n      \"name\": \"SpecialCharacter\"\n    },\n    {\n      \"name\": \"Picture\"\n    },\n    {\n      \"name\": \"Table\"\n    },\n    {\n      \"name\": \"Row\"\n    },\n    {\n      \"name\": \"Column\"\n    },\n    {\n      \"name\": \"Cell\"\n    },\n    {\n      \"name\": \"Text\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Document\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Document\",\n      \"part\": \"Page\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Header\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Body\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Footer\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Sentence\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sentence\",\n      \"part\": \"Word\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sentence\",\n      \"part\": \"PunctuationCharacter\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Word\",\n      \"part\": \"Letter\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Word\",\n      \"part\": \"Digit\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Word\",\n      \"part\": \"SpecialCharacter\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Body\",\n      \"target\": \"Picture\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Body\",\n      \"target\": \"Table\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Row\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Column\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Row\",\n      \"part\": \"Cell\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Column\",\n      \"part\": \"Cell\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cell\",\n      \"target\": \"Text\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cell\",\n      \"target\": \"Picture\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 70.38873379999859,
+ "prompt_tokens": 5748,
+ "completion_tokens": 1125,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-01jecwv3m80hqaylb60o35m",
+  "object": "chat.completion",
+  "created": 1791899906,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"User\"\n    },\n    {\n      \"name\": \"Document\"\n    },\n    {\n      \"name\": \"Page\"\n    },\n    {\n      \"name\": \"Header\"\n    },\n    {\n      \"name\": \"Footer\"\n    },\n    {\n      \"name\": \"Body\"\n    },\n    {\n      \"name\": \"Sentence\"\n    },\n    {\n      \"name\": \"Word\"\n    },\n    {\n      \"name\": \"PunctuationCharacter\"\n    },\n    {\n      \"name\": \"Letter\"\n    },\n    {\n      \"name\": \"Digit\"\n    },\n    {\n      \"name\": \"SpecialCharacter\"\n    },\n    {\n      \"name\": \"Picture\"\n    },\n    {\n      \"name\": \"Table\"\n    },\n    {\n      \"name\": \"Row\"\n    },\n    {\n      \"name\": \"Column\"\n    },\n    {\n      \"name\": \"Cell\"\n    },\n    {\n      \"name\": \"Text\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Document\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Document\",\n      \"part\": \"Page\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Header\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Body\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Footer\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Sentence\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sentence\",\n      \"part\": \"Word\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sentence\",\n      \"part\": \"PunctuationCharacter\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Word\",\n      \"part\": \"Letter\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Word\",\n      \"part\": \"Digit\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Word\",\n      \"part\": \"SpecialCharacter\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Body\",\n      \"target\": \"Picture\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Body\",\n      \"target\": \"Table\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Row\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Column\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Row\",\n      \"part\": \"Cell\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Column\",\n      \"part\": \"Cell\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cell\",\n      \"target\": \"Text\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cell\",\n      \"target\": \"Picture\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5748,
+   "completion_tokens": 1125,
+   "total_tokens": 6873,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

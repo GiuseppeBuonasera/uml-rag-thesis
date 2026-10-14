@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Gym {\n  + ComputeMonthlyBalance(month: int, year: int): double\n  + ComputeAnnualBalance(year: int): double\n  + SendArrearsReminder(): void\n  + SendCheckReminder(): void\n}\n\nclass Customer {\n  + Name : string\n  + Surname : string\n  + Age : int\n  + Address : string\n  + Profession : string\n}\n\nclass Subscription {\n  + Type : string\n}\n\nclass AdditionalService {\n  + Name : string\n}\n\nclass WorkoutPlan {\n  + Exercises : string\n  + Repetitions : int\n  + Frequency : int\n}\n\nclass MedicalCheck {\n  + Date : date\n  + Weight : float\n  + BodyFat : float\n  + Electrocardiogram : string\n  + RestingHeartbeat : int\n  + StressHeartbeat : int\n}\n\nclass MedicalStaff {\n  + Name : string\n}\n\nclass Diet {\n  + Description : string\n}\n\nclass FitnessLevel {\n  + Level : string\n}\n\nGym \"1\" -- \"*\" Customer : manages\nGym \"1\" -- \"*\" Subscription : offers\nGym \"1\" -- \"*\" AdditionalService : offers\nGym \"1\" -- \"*\" MedicalStaff : employs\n\nCustomer \"1\" -- \"1\" Subscription : has\nCustomer \"0..1\" -- \"0..1\" WorkoutPlan : follows\nCustomer \"0..1\" -- \"*\" AdditionalService : requests\nCustomer \"0..1\" -- \"*\" MedicalCheck : undergoes\nCustomer \"0..1\" -- \"0..1\" Diet : follows\nCustomer \"0..1\" -- \"0..1\" FitnessLevel : has\n\nMedicalStaff \"1\" -- \"*\" MedicalCheck : performs\nMedicalStaff \"1\" -- \"1\" Diet : defines\nMedicalStaff \"1\" -- \"1\" FitnessLevel : determines\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 21.14729250000164,
+ "prompt_tokens": 2479,
+ "completion_tokens": 405,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4jurda6yq3e49ankfmftez",
+  "object": "chat.completion",
+  "created": 1791860745,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Gym {\n  + ComputeMonthlyBalance(month: int, year: int): double\n  + ComputeAnnualBalance(year: int): double\n  + SendArrearsReminder(): void\n  + SendCheckReminder(): void\n}\n\nclass Customer {\n  + Name : string\n  + Surname : string\n  + Age : int\n  + Address : string\n  + Profession : string\n}\n\nclass Subscription {\n  + Type : string\n}\n\nclass AdditionalService {\n  + Name : string\n}\n\nclass WorkoutPlan {\n  + Exercises : string\n  + Repetitions : int\n  + Frequency : int\n}\n\nclass MedicalCheck {\n  + Date : date\n  + Weight : float\n  + BodyFat : float\n  + Electrocardiogram : string\n  + RestingHeartbeat : int\n  + StressHeartbeat : int\n}\n\nclass MedicalStaff {\n  + Name : string\n}\n\nclass Diet {\n  + Description : string\n}\n\nclass FitnessLevel {\n  + Level : string\n}\n\nGym \"1\" -- \"*\" Customer : manages\nGym \"1\" -- \"*\" Subscription : offers\nGym \"1\" -- \"*\" AdditionalService : offers\nGym \"1\" -- \"*\" MedicalStaff : employs\n\nCustomer \"1\" -- \"1\" Subscription : has\nCustomer \"0..1\" -- \"0..1\" WorkoutPlan : follows\nCustomer \"0..1\" -- \"*\" AdditionalService : requests\nCustomer \"0..1\" -- \"*\" MedicalCheck : undergoes\nCustomer \"0..1\" -- \"0..1\" Diet : follows\nCustomer \"0..1\" -- \"0..1\" FitnessLevel : has\n\nMedicalStaff \"1\" -- \"*\" MedicalCheck : performs\nMedicalStaff \"1\" -- \"1\" Diet : defines\nMedicalStaff \"1\" -- \"1\" FitnessLevel : determines\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2479,
+   "completion_tokens": 405,
+   "total_tokens": 2884,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass GasStation {\n  + ID : int\n  + Address : string\n}\n\nclass FuelPump {\n  + Number : int\n  + IsSelfService : boolean\n}\n\nclass Fuel {\n  + Name : string\n  + OctaneRating : int\n}\n\nclass DailyPrice {\n  + Date : date\n  + PricePerLiter : float\n}\n\nclass FuelPurchase {\n  + ID : int\n  + LitersDispensed : float\n}\n\nGasStation \"1\" -- \"1..12\" FuelPump\nGasStation \"1\" -- \"*\" DailyPrice\nFuelPump \"1\" -- \"*\" Fuel\nFuel \"1\" -- \"*\" DailyPrice\nDailyPrice \"1\" -- \"*\" FuelPurchase\nFuelPump \"1\" -- \"*\" FuelPurchase\nFuel \"1\" -- \"*\" FuelPurchase\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 11.00340739999956,
+ "prompt_tokens": 2617,
+ "completion_tokens": 183,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-929kxhr4ujbukly9alpef",
+  "object": "chat.completion",
+  "created": 1791855312,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass GasStation {\n  + ID : int\n  + Address : string\n}\n\nclass FuelPump {\n  + Number : int\n  + IsSelfService : boolean\n}\n\nclass Fuel {\n  + Name : string\n  + OctaneRating : int\n}\n\nclass DailyPrice {\n  + Date : date\n  + PricePerLiter : float\n}\n\nclass FuelPurchase {\n  + ID : int\n  + LitersDispensed : float\n}\n\nGasStation \"1\" -- \"1..12\" FuelPump\nGasStation \"1\" -- \"*\" DailyPrice\nFuelPump \"1\" -- \"*\" Fuel\nFuel \"1\" -- \"*\" DailyPrice\nDailyPrice \"1\" -- \"*\" FuelPurchase\nFuelPump \"1\" -- \"*\" FuelPurchase\nFuel \"1\" -- \"*\" FuelPurchase\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2617,
+   "completion_tokens": 183,
+   "total_tokens": 2800,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

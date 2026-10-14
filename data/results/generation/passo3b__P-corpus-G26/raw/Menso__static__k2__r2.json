@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass DeLijn {\n}\n\nclass Bus {\n  + LineNumber : int\n}\n\nclass Trajectory {\n  + IsApproved : boolean\n  + IsOperational : boolean\n  + IsSuspended : boolean\n  + IsCancelled : boolean\n}\n\nclass Line {\n  + Category : string\n}\n\nclass ApprovalProcess {\n}\n\nclass MENSOProject {\n}\n\nclass MENSOUser {\n  + HomeAddress : string\n  + OfficeAddress : string\n  + WorkingHours : string\n}\n\nclass Trip {\n  + Time : time\n  + Date : date\n}\n\nclass Invoice {\n  + TotalAmount : double\n  + Discount : float\n}\n\nclass TicketMachine {\n}\n\nclass MENSOCard {\n}\n\nclass OtherCard {\n}\n\nclass Customer {\n}\n\nDeLijn \"1\" -- \"*\" Bus\nDeLijn \"1\" -- \"*\" Trajectory\nDeLijn \"1\" -- \"*\" Line\nDeLijn \"1\" -- \"*\" MENSOUser\nDeLijn \"1\" -- \"*\" Invoice\n\nLine \"1\" -- \"*\" Trajectory\nLine \"1\" -- \"1\" MENSOProject : has category\n\nTrajectory \"1\" -- \"0..*\" Bus : assigned to\n\nTrajectory \"1\" -- \"0..*\" ApprovalProcess : undergoes\n\nApprovalProcess \"0..*\" -- \"1\" Trajectory\n\nMENSOUser \"1\" -- \"*\" Trip\nMENSOUser \"1\" -- \"*\" Invoice\n\nTrip \"1\" -- \"1\" Line\nTrip \"1\" -- \"1\" TicketMachine\nTrip \"1\" -- \"0..1\" MENSOCard\nTrip \"1\" -- \"0..1\" OtherCard\n\nInvoice \"1\" -- \"1\" Customer\nInvoice \"1\" -- \"1\" MENSOUser\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 20.12301170000137,
+ "prompt_tokens": 2833,
+ "completion_tokens": 394,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8ciqmsbva9blxq8829q63",
+  "object": "chat.completion",
+  "created": 1791856878,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass DeLijn {\n}\n\nclass Bus {\n  + LineNumber : int\n}\n\nclass Trajectory {\n  + IsApproved : boolean\n  + IsOperational : boolean\n  + IsSuspended : boolean\n  + IsCancelled : boolean\n}\n\nclass Line {\n  + Category : string\n}\n\nclass ApprovalProcess {\n}\n\nclass MENSOProject {\n}\n\nclass MENSOUser {\n  + HomeAddress : string\n  + OfficeAddress : string\n  + WorkingHours : string\n}\n\nclass Trip {\n  + Time : time\n  + Date : date\n}\n\nclass Invoice {\n  + TotalAmount : double\n  + Discount : float\n}\n\nclass TicketMachine {\n}\n\nclass MENSOCard {\n}\n\nclass OtherCard {\n}\n\nclass Customer {\n}\n\nDeLijn \"1\" -- \"*\" Bus\nDeLijn \"1\" -- \"*\" Trajectory\nDeLijn \"1\" -- \"*\" Line\nDeLijn \"1\" -- \"*\" MENSOUser\nDeLijn \"1\" -- \"*\" Invoice\n\nLine \"1\" -- \"*\" Trajectory\nLine \"1\" -- \"1\" MENSOProject : has category\n\nTrajectory \"1\" -- \"0..*\" Bus : assigned to\n\nTrajectory \"1\" -- \"0..*\" ApprovalProcess : undergoes\n\nApprovalProcess \"0..*\" -- \"1\" Trajectory\n\nMENSOUser \"1\" -- \"*\" Trip\nMENSOUser \"1\" -- \"*\" Invoice\n\nTrip \"1\" -- \"1\" Line\nTrip \"1\" -- \"1\" TicketMachine\nTrip \"1\" -- \"0..1\" MENSOCard\nTrip \"1\" -- \"0..1\" OtherCard\n\nInvoice \"1\" -- \"1\" Customer\nInvoice \"1\" -- \"1\" MENSOUser\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2833,
+   "completion_tokens": 394,
+   "total_tokens": 3227,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

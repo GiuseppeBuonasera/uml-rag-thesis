@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"ElevatorControlSystem\",\n      \"attributes\": [\n        \"+ m : int\"\n      ]\n    },\n    {\n      \"name\": \"Elevator\",\n      \"attributes\": [\n        \"+ currentFloor : int\"\n      ]\n    },\n    {\n      \"name\": \"Floor\",\n      \"attributes\": [\n        \"+ floorNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"ElevatorButton\",\n      \"attributes\": [\n        \"+ isLit : boolean\"\n      ]\n    },\n    {\n      \"name\": \"FloorButton\",\n      \"attributes\": [\n        \"+ isLit : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"ElevatorControlSystem\",\n      \"target\": \"Elevator\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ElevatorControlSystem\",\n      \"target\": \"Floor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"m\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Elevator\",\n      \"part\": \"ElevatorButton\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"m\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Floor\",\n      \"part\": \"FloorButton\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..2\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FloorButton\",\n      \"target\": \"Elevator\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 26.237149200002023,
+ "prompt_tokens": 3560,
+ "completion_tokens": 450,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7v5oryzpw6oh3n811635q6",
+  "object": "chat.completion",
+  "created": 1791886224,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"ElevatorControlSystem\",\n      \"attributes\": [\n        \"+ m : int\"\n      ]\n    },\n    {\n      \"name\": \"Elevator\",\n      \"attributes\": [\n        \"+ currentFloor : int\"\n      ]\n    },\n    {\n      \"name\": \"Floor\",\n      \"attributes\": [\n        \"+ floorNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"ElevatorButton\",\n      \"attributes\": [\n        \"+ isLit : boolean\"\n      ]\n    },\n    {\n      \"name\": \"FloorButton\",\n      \"attributes\": [\n        \"+ isLit : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"ElevatorControlSystem\",\n      \"target\": \"Elevator\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ElevatorControlSystem\",\n      \"target\": \"Floor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"m\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Elevator\",\n      \"part\": \"ElevatorButton\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"m\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Floor\",\n      \"part\": \"FloorButton\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..2\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FloorButton\",\n      \"target\": \"Elevator\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3560,
+   "completion_tokens": 450,
+   "total_tokens": 4010,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

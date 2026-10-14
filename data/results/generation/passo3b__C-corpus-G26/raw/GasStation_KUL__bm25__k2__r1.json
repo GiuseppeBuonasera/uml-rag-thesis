@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"OilCompany\"}, {\"name\": \"GasStation\"}, {\"name\": \"Customer\", \"attributes\": [\"+ Status : string\", \"+ Slack : int\"]}, {\"name\": \"RefuelCard\", \"attributes\": [\"+ IsBlocked : boolean\"]}, {\"name\": \"Invoice\", \"attributes\": [\"+ Month : string\", \"+ Discount : double\", \"+ IsPaid : boolean\"]}, {\"name\": \"RefuelTurn\", \"attributes\": [\"+ Amount : double\", \"+ IsPaid : boolean\"]}, {\"name\": \"Payment\", \"attributes\": [\"+ Date : date\"]}, {\"name\": \"Pump\", \"attributes\": [\"+ IsBlocked : boolean\", \"+ CurrentLevel : float\", \"+ ReorderingLevel : float\", \"+ CriticalLevel : float\", \"+ IsAvailable : boolean\"]}, {\"name\": \"Reservoir\", \"attributes\": [\"+ CurrentLevel : float\", \"+ ReorderingLevel : float\", \"+ CriticalLevel : float\"]}, {\"name\": \"Gasoline\", \"attributes\": [\"+ Type : string\"]}, {\"name\": \"DailyReport\", \"attributes\": [\"+ Date : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"OilCompany\", \"target\": \"GasStation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"Pump\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"Reservoir\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"Gasoline\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelCard\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Invoice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelTurn\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"RefuelTurn\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"DailyReport\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"DailyReport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}]",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 34.38447449999512,
+ "prompt_tokens": 3919,
+ "completion_tokens": 612,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ryzd5vhd6q1l8qjc7iobq",
+  "object": "chat.completion",
+  "created": 1791872853,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"OilCompany\"}, {\"name\": \"GasStation\"}, {\"name\": \"Customer\", \"attributes\": [\"+ Status : string\", \"+ Slack : int\"]}, {\"name\": \"RefuelCard\", \"attributes\": [\"+ IsBlocked : boolean\"]}, {\"name\": \"Invoice\", \"attributes\": [\"+ Month : string\", \"+ Discount : double\", \"+ IsPaid : boolean\"]}, {\"name\": \"RefuelTurn\", \"attributes\": [\"+ Amount : double\", \"+ IsPaid : boolean\"]}, {\"name\": \"Payment\", \"attributes\": [\"+ Date : date\"]}, {\"name\": \"Pump\", \"attributes\": [\"+ IsBlocked : boolean\", \"+ CurrentLevel : float\", \"+ ReorderingLevel : float\", \"+ CriticalLevel : float\", \"+ IsAvailable : boolean\"]}, {\"name\": \"Reservoir\", \"attributes\": [\"+ CurrentLevel : float\", \"+ ReorderingLevel : float\", \"+ CriticalLevel : float\"]}, {\"name\": \"Gasoline\", \"attributes\": [\"+ Type : string\"]}, {\"name\": \"DailyReport\", \"attributes\": [\"+ Date : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"OilCompany\", \"target\": \"GasStation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"Pump\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"Reservoir\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"Gasoline\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelCard\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Invoice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelTurn\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"RefuelTurn\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"DailyReport\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"DailyReport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}]",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3919,
+   "completion_tokens": 612,
+   "total_tokens": 4531,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

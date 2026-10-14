@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Receptionist\"}, {\"name\": \"Nurse\"}, {\"name\": \"Doctor\"}, {\"name\": \"Patient\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Family\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Appointment\"}, {\"name\": \"Visit\", \"attributes\": [\"+ diagnosis : string\", \"+ treatment : string\"]}, {\"name\": \"Medication\"}, {\"name\": \"Prescription\"}], \"relations\": [{\"type\": \"association\", \"source\": \"Receptionist\", \"target\": \"Patient\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Receptionist\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Visit\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Patient\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Patient\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Visit\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Visit\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Family\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Family\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"primary care physician\"}, {\"type\": \"association\", \"source\": \"Visit\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Visit\", \"target\": \"Prescription\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Prescription\", \"target\": \"Medication\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 31.0189387000064,
+ "prompt_tokens": 3735,
+ "completion_tokens": 503,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-msncrhfvmy91mbq9lbt1cc",
+  "object": "chat.completion",
+  "created": 1791900879,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Receptionist\"}, {\"name\": \"Nurse\"}, {\"name\": \"Doctor\"}, {\"name\": \"Patient\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Family\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Appointment\"}, {\"name\": \"Visit\", \"attributes\": [\"+ diagnosis : string\", \"+ treatment : string\"]}, {\"name\": \"Medication\"}, {\"name\": \"Prescription\"}], \"relations\": [{\"type\": \"association\", \"source\": \"Receptionist\", \"target\": \"Patient\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Receptionist\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Visit\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Patient\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Patient\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Visit\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Visit\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Family\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Family\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"primary care physician\"}, {\"type\": \"association\", \"source\": \"Visit\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Visit\", \"target\": \"Prescription\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Prescription\", \"target\": \"Medication\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3735,
+   "completion_tokens": 503,
+   "total_tokens": 4238,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

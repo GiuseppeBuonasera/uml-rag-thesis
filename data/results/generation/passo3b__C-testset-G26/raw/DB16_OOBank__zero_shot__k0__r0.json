@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"OOBank\"}, {\"name\": \"Branch\", \"attributes\": [\"+ address : string\", \"+ branchNumber : int\"]}, {\"name\": \"Division\"}, {\"name\": \"Subdivision\"}, {\"name\": \"Employee\"}, {\"name\": \"Manager\"}, {\"name\": \"Client\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Account\", \"attributes\": [\"+ accountNumber : string\", \"+ balance : double\", \"+ creditOrOverdraftLimit : double\", \"+ interestRate : float\", \"+ monthlyFee : float\", \"+ privileges : string[]\"]}, {\"name\": \"MortgageAccount\", \"attributes\": [\"+ property : string\"]}, {\"name\": \"CheckingAccount\"}, {\"name\": \"CreditCardAccount\", \"attributes\": [\"+ expiryDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"OOBank\", \"target\": \"Branch\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Branch\", \"target\": \"Client\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Client\", \"target\": \"Account\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Branch\", \"target\": \"Account\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"MortgageAccount\", \"parent\": \"Account\"}, {\"type\": \"inheritance\", \"child\": \"CheckingAccount\", \"parent\": \"Account\"}, {\"type\": \"inheritance\", \"child\": \"CreditCardAccount\", \"parent\": \"Account\"}, {\"type\": \"association\", \"source\": \"CreditCardAccount\", \"target\": \"CreditCardAccount\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"secondary cards\"}, {\"type\": \"association\", \"source\": \"OOBank\", \"target\": \"Division\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Subdivision\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Subdivision\", \"target\": \"Branch\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Employee\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Manager\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Client\", \"target\": \"Employee\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"0..1\", \"label\": \"personal banker\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 25.763521200002288,
+ "prompt_tokens": 1287,
+ "completion_tokens": 565,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5tq9u1350z5uiprsme0oy",
+  "object": "chat.completion",
+  "created": 1791916484,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"OOBank\"}, {\"name\": \"Branch\", \"attributes\": [\"+ address : string\", \"+ branchNumber : int\"]}, {\"name\": \"Division\"}, {\"name\": \"Subdivision\"}, {\"name\": \"Employee\"}, {\"name\": \"Manager\"}, {\"name\": \"Client\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Account\", \"attributes\": [\"+ accountNumber : string\", \"+ balance : double\", \"+ creditOrOverdraftLimit : double\", \"+ interestRate : float\", \"+ monthlyFee : float\", \"+ privileges : string[]\"]}, {\"name\": \"MortgageAccount\", \"attributes\": [\"+ property : string\"]}, {\"name\": \"CheckingAccount\"}, {\"name\": \"CreditCardAccount\", \"attributes\": [\"+ expiryDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"OOBank\", \"target\": \"Branch\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Branch\", \"target\": \"Client\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Client\", \"target\": \"Account\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Branch\", \"target\": \"Account\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"MortgageAccount\", \"parent\": \"Account\"}, {\"type\": \"inheritance\", \"child\": \"CheckingAccount\", \"parent\": \"Account\"}, {\"type\": \"inheritance\", \"child\": \"CreditCardAccount\", \"parent\": \"Account\"}, {\"type\": \"association\", \"source\": \"CreditCardAccount\", \"target\": \"CreditCardAccount\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"secondary cards\"}, {\"type\": \"association\", \"source\": \"OOBank\", \"target\": \"Division\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Subdivision\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Subdivision\", \"target\": \"Branch\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Employee\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Division\", \"target\": \"Manager\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Client\", \"target\": \"Employee\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"0..1\", \"label\": \"personal banker\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1287,
+   "completion_tokens": 565,
+   "total_tokens": 1852,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Factory\"\n    },\n    {\n      \"name\": \"Machine\",\n      \"attributes\": [\n        \"+ SerialNumber : string\",\n        \"+ Make : string\",\n        \"+ Model : string\",\n        \"+ PurchaseDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Worker\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ BirthDate : date\",\n        \"+ Address : string\",\n        \"+ Skills : string[]\"\n      ]\n    },\n    {\n      \"name\": \"ProductType\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Weight : float\"\n      ]\n    },\n    {\n      \"name\": \"Material\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\",\n        \"+ ContactPerson : string\"\n      ]\n    },\n    {\n      \"name\": \"PurchaseOrder\",\n      \"attributes\": [\n        \"+ OrderNumber : string\",\n        \"+ OrderDate : date\",\n        \"+ ExpectedDeliveryDate : date\",\n        \"+ ActualDeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"OrderItem\",\n      \"attributes\": [\n        \"+ Quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Factory\",\n      \"target\": \"Machine\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Machine\",\n      \"target\": \"Worker\",\n      \"label\": \"operatedBy\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Machine\",\n      \"target\": \"ProductType\",\n      \"label\": \"produces\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ProductType\",\n      \"target\": \"Material\",\n      \"label\": \"madeFrom\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"PurchaseOrder\",\n      \"label\": \"issues\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PurchaseOrder\",\n      \"target\": \"OrderItem\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OrderItem\",\n      \"target\": \"ProductType\",\n      \"label\": \"refersTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 41.81141260000004,
+ "prompt_tokens": 4673,
+ "completion_tokens": 762,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3u1k2k3x8gicu6af15ol94",
+  "object": "chat.completion",
+  "created": 1791915245,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Factory\"\n    },\n    {\n      \"name\": \"Machine\",\n      \"attributes\": [\n        \"+ SerialNumber : string\",\n        \"+ Make : string\",\n        \"+ Model : string\",\n        \"+ PurchaseDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Worker\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ BirthDate : date\",\n        \"+ Address : string\",\n        \"+ Skills : string[]\"\n      ]\n    },\n    {\n      \"name\": \"ProductType\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Weight : float\"\n      ]\n    },\n    {\n      \"name\": \"Material\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\",\n        \"+ ContactPerson : string\"\n      ]\n    },\n    {\n      \"name\": \"PurchaseOrder\",\n      \"attributes\": [\n        \"+ OrderNumber : string\",\n        \"+ OrderDate : date\",\n        \"+ ExpectedDeliveryDate : date\",\n        \"+ ActualDeliveryDate : date\"\n      ]\n    },\n    {\n      \"name\": \"OrderItem\",\n      \"attributes\": [\n        \"+ Quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Factory\",\n      \"target\": \"Machine\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Machine\",\n      \"target\": \"Worker\",\n      \"label\": \"operatedBy\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Machine\",\n      \"target\": \"ProductType\",\n      \"label\": \"produces\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ProductType\",\n      \"target\": \"Material\",\n      \"label\": \"madeFrom\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Client\",\n      \"target\": \"PurchaseOrder\",\n      \"label\": \"issues\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PurchaseOrder\",\n      \"target\": \"OrderItem\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OrderItem\",\n      \"target\": \"ProductType\",\n      \"label\": \"refersTo\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4673,
+   "completion_tokens": 762,
+   "total_tokens": 5435,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

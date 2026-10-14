@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"School\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\"\n      ]\n    },\n    {\n      \"name\": \"Teacher\",\n      \"attributes\": [\n        \"+ email : string\"\n      ]\n    },\n    {\n      \"name\": \"Student\"\n    },\n    {\n      \"name\": \"TeachingRelationship\",\n      \"attributes\": [\n        \"+ hours : int\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Classroom\",\n      \"attributes\": [\n        \"+ capacity : int\"\n      ]\n    },\n    {\n      \"name\": \"Gym\",\n      \"attributes\": [\n        \"+ size : float\"\n      ]\n    },\n    {\n      \"name\": \"ClassGroup\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Teacher\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Student\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Classroom\",\n      \"parent\": \"Room\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Gym\",\n      \"parent\": \"Room\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"School\",\n      \"target\": \"Teacher\",\n      \"label\": \"principal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Teacher\",\n      \"target\": \"School\",\n      \"label\": \"teaches at\",\n      \"sourceMultiplicity\": \"0..3\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Teacher\",\n      \"target\": \"School\",\n      \"label\": \"teaching relationship\",\n      \"sourceMultiplicity\": \"0..3\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TeachingRelationship\",\n      \"target\": \"Teacher\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TeachingRelationship\",\n      \"target\": \"School\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Student\",\n      \"target\": \"School\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Student\",\n      \"target\": \"ClassGroup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClassGroup\",\n      \"target\": \"Classroom\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Classroom\",\n      \"target\": \"ClassGroup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 51.948055699998804,
+ "prompt_tokens": 5285,
+ "completion_tokens": 913,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-pcfcz3gtneoj1j391p98a",
+  "object": "chat.completion",
+  "created": 1791878840,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"School\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\"\n      ]\n    },\n    {\n      \"name\": \"Teacher\",\n      \"attributes\": [\n        \"+ email : string\"\n      ]\n    },\n    {\n      \"name\": \"Student\"\n    },\n    {\n      \"name\": \"TeachingRelationship\",\n      \"attributes\": [\n        \"+ hours : int\"\n      ]\n    },\n    {\n      \"name\": \"Room\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Classroom\",\n      \"attributes\": [\n        \"+ capacity : int\"\n      ]\n    },\n    {\n      \"name\": \"Gym\",\n      \"attributes\": [\n        \"+ size : float\"\n      ]\n    },\n    {\n      \"name\": \"ClassGroup\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Teacher\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Student\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Classroom\",\n      \"parent\": \"Room\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Gym\",\n      \"parent\": \"Room\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"School\",\n      \"target\": \"Teacher\",\n      \"label\": \"principal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Teacher\",\n      \"target\": \"School\",\n      \"label\": \"teaches at\",\n      \"sourceMultiplicity\": \"0..3\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Teacher\",\n      \"target\": \"School\",\n      \"label\": \"teaching relationship\",\n      \"sourceMultiplicity\": \"0..3\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TeachingRelationship\",\n      \"target\": \"Teacher\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TeachingRelationship\",\n      \"target\": \"School\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Student\",\n      \"target\": \"School\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Student\",\n      \"target\": \"ClassGroup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ClassGroup\",\n      \"target\": \"Classroom\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Classroom\",\n      \"target\": \"ClassGroup\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5285,
+   "completion_tokens": 913,
+   "total_tokens": 6198,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

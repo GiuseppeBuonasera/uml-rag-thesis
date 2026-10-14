@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Contract\", \"attributes\": [\"+ contractNumber : int\", \"+ balance : double\"], \"methods\": [\"+ getCharges() : double\", \"+ getBalance() : double\", \"+ setBalance(double) : void\"]}, {\"name\": \"ContractOption\", \"methods\": [\"+ getCharges() : double\", \"+ getBalance() : double\", \"+ setBalance(double) : void\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"ContractOption\", \"parent\": \"Contract\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 8.196048700003303,
+ "prompt_tokens": 1301,
+ "completion_tokens": 110,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ya764nz4he9zjl4x822ygf",
+  "object": "chat.completion",
+  "created": 1791919386,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Contract\", \"attributes\": [\"+ contractNumber : int\", \"+ balance : double\"], \"methods\": [\"+ getCharges() : double\", \"+ getBalance() : double\", \"+ setBalance(double) : void\"]}, {\"name\": \"ContractOption\", \"methods\": [\"+ getCharges() : double\", \"+ getBalance() : double\", \"+ setBalance(double) : void\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"ContractOption\", \"parent\": \"Contract\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1301,
+   "completion_tokens": 110,
+   "total_tokens": 1411,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

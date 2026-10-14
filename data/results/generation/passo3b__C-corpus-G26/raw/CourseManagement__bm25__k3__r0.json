@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Course\"\n    },\n    {\n      \"name\": \"Edition\"\n    },\n    {\n      \"name\": \"Lesson\"\n    },\n    {\n      \"name\": \"Teacher\"\n    },\n    {\n      \"name\": \"InternalTeacher\"\n    },\n    {\n      \"name\": \"ExternalTeacher\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Resource\"\n    },\n    {\n      \"name\": \"Participant\"\n    },\n    {\n      \"name\": \"MasterStudent\"\n    },\n    {\n      \"name\": \"ExternalAuditor\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"Edition\",\n      \"label\": \"offered in\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Edition\",\n      \"part\": \"Lesson\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Teacher\",\n      \"label\": \"given by\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Teacher\",\n      \"target\": \"Course\",\n      \"label\": \"assigned to\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Room\",\n      \"label\": \"assigned to\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Resource\",\n      \"label\": \"requires\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InternalTeacher\",\n      \"parent\": \"Teacher\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalTeacher\",\n      \"parent\": \"Teacher\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"InternalTeacher\",\n      \"label\": \"responsible\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Edition\",\n      \"target\": \"Participant\",\n      \"label\": \"enrolled in\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MasterStudent\",\n      \"parent\": \"Participant\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalAuditor\",\n      \"parent\": \"Participant\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 45.60876129999815,
+ "prompt_tokens": 3982,
+ "completion_tokens": 778,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-yn129syqvcwfltgdm2bbc",
+  "object": "chat.completion",
+  "created": 1791885516,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Course\"\n    },\n    {\n      \"name\": \"Edition\"\n    },\n    {\n      \"name\": \"Lesson\"\n    },\n    {\n      \"name\": \"Teacher\"\n    },\n    {\n      \"name\": \"InternalTeacher\"\n    },\n    {\n      \"name\": \"ExternalTeacher\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Resource\"\n    },\n    {\n      \"name\": \"Participant\"\n    },\n    {\n      \"name\": \"MasterStudent\"\n    },\n    {\n      \"name\": \"ExternalAuditor\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"Edition\",\n      \"label\": \"offered in\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Edition\",\n      \"part\": \"Lesson\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Teacher\",\n      \"label\": \"given by\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Teacher\",\n      \"target\": \"Course\",\n      \"label\": \"assigned to\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Room\",\n      \"label\": \"assigned to\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Resource\",\n      \"label\": \"requires\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InternalTeacher\",\n      \"parent\": \"Teacher\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalTeacher\",\n      \"parent\": \"Teacher\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"InternalTeacher\",\n      \"label\": \"responsible\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Edition\",\n      \"target\": \"Participant\",\n      \"label\": \"enrolled in\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MasterStudent\",\n      \"parent\": \"Participant\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalAuditor\",\n      \"parent\": \"Participant\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3982,
+   "completion_tokens": 778,
+   "total_tokens": 4760,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"University\"\n    },\n    {\n      \"name\": \"Faculty\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Institute\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ SocialSecurityNumber : string\",\n        \"+ Name : string\",\n        \"+ EmailAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"ResearchStaff\",\n      \"attributes\": [\n        \"+ FieldOfResearch : string\"\n      ]\n    },\n    {\n      \"name\": \"AdministrativeStaff\"\n    },\n    {\n      \"name\": \"ResearchAssistant\",\n      \"methods\": [\n        \"+ teachCourse()\"\n      ]\n    },\n    {\n      \"name\": \"Lecturer\",\n      \"methods\": [\n        \"+ teachCourse()\"\n      ]\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StartDate : date\",\n        \"+ EndDate : date\",\n        \"+ Hours : int\"\n      ]\n    },\n    {\n      \"name\": \"Course\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ WeeklyDuration : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"University\",\n      \"target\": \"Faculty\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Faculty\",\n      \"target\": \"Institute\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Faculty\",\n      \"target\": \"Employee\",\n      \"label\": \"HeadedBy\",\n      \"targetRole\": \"Dean\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"University\",\n      \"target\": \"Employee\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ResearchStaff\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdministrativeStaff\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ResearchAssistant\",\n      \"parent\": \"ResearchStaff\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Lecturer\",\n      \"parent\": \"ResearchAssistant\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchAssistant\",\n      \"target\": \"Institute\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchAssistant\",\n      \"target\": \"Project\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lecturer\",\n      \"target\": \"Course\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 47.691037500000675,
+ "prompt_tokens": 4820,
+ "completion_tokens": 773,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-m0jgvwg0wj62d6li8291s",
+  "object": "chat.completion",
+  "created": 1791884645,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"University\"\n    },\n    {\n      \"name\": \"Faculty\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Institute\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ SocialSecurityNumber : string\",\n        \"+ Name : string\",\n        \"+ EmailAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"ResearchStaff\",\n      \"attributes\": [\n        \"+ FieldOfResearch : string\"\n      ]\n    },\n    {\n      \"name\": \"AdministrativeStaff\"\n    },\n    {\n      \"name\": \"ResearchAssistant\",\n      \"methods\": [\n        \"+ teachCourse()\"\n      ]\n    },\n    {\n      \"name\": \"Lecturer\",\n      \"methods\": [\n        \"+ teachCourse()\"\n      ]\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ StartDate : date\",\n        \"+ EndDate : date\",\n        \"+ Hours : int\"\n      ]\n    },\n    {\n      \"name\": \"Course\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ WeeklyDuration : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"University\",\n      \"target\": \"Faculty\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Faculty\",\n      \"target\": \"Institute\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Faculty\",\n      \"target\": \"Employee\",\n      \"label\": \"HeadedBy\",\n      \"targetRole\": \"Dean\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"University\",\n      \"target\": \"Employee\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ResearchStaff\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdministrativeStaff\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ResearchAssistant\",\n      \"parent\": \"ResearchStaff\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Lecturer\",\n      \"parent\": \"ResearchAssistant\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchAssistant\",\n      \"target\": \"Institute\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchAssistant\",\n      \"target\": \"Project\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lecturer\",\n      \"target\": \"Course\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4820,
+   "completion_tokens": 773,
+   "total_tokens": 5593,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

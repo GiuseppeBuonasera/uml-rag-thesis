@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum SubscriptionType {\n  Monthly\n  Annual\n}\n\nenum ServiceType {\n  WeightRoom\n  SwimmingPool\n  ClimbingWall\n  Sauna\n  TurkishBath\n}\n\nclass Customer {\n  + name : string\n  + surname : string\n  + age : int\n  + address : string\n  + profession : string\n}\n\nclass Subscription {\n  + type : SubscriptionType\n}\n\nclass Service {\n  + type : ServiceType\n}\n\nclass WorkoutPlan {\n  + frequency : int\n}\n\nclass Exercise {\n  + name : string\n  + repetitions : int\n}\n\nclass MedicalCheck {\n  + date : date\n  + weight : float\n  + bodyFat : float\n  + electrocardiogram : string\n  + restingHeartbeat : int\n  + stressHeartbeat : int\n}\n\nclass MedicalStaff {\n  + diet : string\n  + fitnessLevel : string\n}\n\nclass Gym {\n  + computeMonthlyBalance()\n  + computeYearlyBalance()\n  + sendArrearsReminder()\n  + sendMedicalCheckReminder()\n}\n\nCustomer \"1\" -- \"1\" Subscription : has\nCustomer \"1\" -- \"*\" Service : requests\nCustomer \"1\" -- \"0..1\" WorkoutPlan : follows\nCustomer \"1\" -- \"0..*\" MedicalCheck : undergoes\nCustomer \"0..1\" -- \"1\" MedicalStaff : assistedBy\nWorkoutPlan \"1\" *-- \"*\" Exercise : defines\nGym \"1\" -- \"*\" Customer : manages\nGym \"1\" -- \"*\" Subscription : offers\nGym \"1\" -- \"*\" Service : offers\nGym \"1\" -- \"*\" MedicalStaff : employs\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 23.206657499998983,
+ "prompt_tokens": 3572,
+ "completion_tokens": 369,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qyq77no6iebdpdnul4ix7n",
+  "object": "chat.completion",
+  "created": 1791860821,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum SubscriptionType {\n  Monthly\n  Annual\n}\n\nenum ServiceType {\n  WeightRoom\n  SwimmingPool\n  ClimbingWall\n  Sauna\n  TurkishBath\n}\n\nclass Customer {\n  + name : string\n  + surname : string\n  + age : int\n  + address : string\n  + profession : string\n}\n\nclass Subscription {\n  + type : SubscriptionType\n}\n\nclass Service {\n  + type : ServiceType\n}\n\nclass WorkoutPlan {\n  + frequency : int\n}\n\nclass Exercise {\n  + name : string\n  + repetitions : int\n}\n\nclass MedicalCheck {\n  + date : date\n  + weight : float\n  + bodyFat : float\n  + electrocardiogram : string\n  + restingHeartbeat : int\n  + stressHeartbeat : int\n}\n\nclass MedicalStaff {\n  + diet : string\n  + fitnessLevel : string\n}\n\nclass Gym {\n  + computeMonthlyBalance()\n  + computeYearlyBalance()\n  + sendArrearsReminder()\n  + sendMedicalCheckReminder()\n}\n\nCustomer \"1\" -- \"1\" Subscription : has\nCustomer \"1\" -- \"*\" Service : requests\nCustomer \"1\" -- \"0..1\" WorkoutPlan : follows\nCustomer \"1\" -- \"0..*\" MedicalCheck : undergoes\nCustomer \"0..1\" -- \"1\" MedicalStaff : assistedBy\nWorkoutPlan \"1\" *-- \"*\" Exercise : defines\nGym \"1\" -- \"*\" Customer : manages\nGym \"1\" -- \"*\" Subscription : offers\nGym \"1\" -- \"*\" Service : offers\nGym \"1\" -- \"*\" MedicalStaff : employs\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3572,
+   "completion_tokens": 369,
+   "total_tokens": 3941,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

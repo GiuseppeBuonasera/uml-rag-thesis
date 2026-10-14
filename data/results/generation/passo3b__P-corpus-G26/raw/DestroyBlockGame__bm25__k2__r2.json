@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {\n  + username : string\n  + password : string\n}\n\nclass Player extends User {\n}\n\nclass Admin extends User {\n}\n\nclass Game {\n  + name : string\n  + minSpeed : float\n  + speedIncreaseFactor : float\n  + maxLength : float\n  + minLength : float\n}\n\nclass HallOfFame {\n}\n\nclass Block {\n  + color : string\n  + points : int\n}\n\nclass Level {\n  + levelNumber : int\n  + isRandom : boolean\n}\n\nclass Cell {\n  + gridPositionX : int\n  + gridPositionY : int\n}\n\nclass GameSession {\n  + currentScore : int\n  + lives : int\n  + isPaused : boolean\n}\n\nUser \"0..1\" -- \"0..*\" Game : admin for\nPlayer \"1\" -- \"0..*\" Game : player for\nGame \"1\" *-- \"1\" HallOfFame\nGame \"1\" *-- \"*\" Level\nGame \"1\" *-- \"*\" Block\nLevel \"1\" *-- \"*\" Cell\nCell \"0..1\" -- \"0..1\" Block\nGame \"1\" -- \"0..1\" GameSession : played as\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 16.494524400000955,
+ "prompt_tokens": 3193,
+ "completion_tokens": 278,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-jz33efoz4pbh5oxp4d68r9",
+  "object": "chat.completion",
+  "created": 1791854590,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + username : string\n  + password : string\n}\n\nclass Player extends User {\n}\n\nclass Admin extends User {\n}\n\nclass Game {\n  + name : string\n  + minSpeed : float\n  + speedIncreaseFactor : float\n  + maxLength : float\n  + minLength : float\n}\n\nclass HallOfFame {\n}\n\nclass Block {\n  + color : string\n  + points : int\n}\n\nclass Level {\n  + levelNumber : int\n  + isRandom : boolean\n}\n\nclass Cell {\n  + gridPositionX : int\n  + gridPositionY : int\n}\n\nclass GameSession {\n  + currentScore : int\n  + lives : int\n  + isPaused : boolean\n}\n\nUser \"0..1\" -- \"0..*\" Game : admin for\nPlayer \"1\" -- \"0..*\" Game : player for\nGame \"1\" *-- \"1\" HallOfFame\nGame \"1\" *-- \"*\" Level\nGame \"1\" *-- \"*\" Block\nLevel \"1\" *-- \"*\" Cell\nCell \"0..1\" -- \"0..1\" Block\nGame \"1\" -- \"0..1\" GameSession : played as\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3193,
+   "completion_tokens": 278,
+   "total_tokens": 3471,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

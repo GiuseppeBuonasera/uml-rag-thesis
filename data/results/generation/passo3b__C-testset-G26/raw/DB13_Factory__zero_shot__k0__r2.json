@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Factory\", \"attributes\": []}, {\"name\": \"Machine\", \"attributes\": [\"+ serialNumber : string\", \"+ make : string\", \"+ model : string\", \"+ purchaseDate : date\"]}, {\"name\": \"Worker\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\", \"+ birthDate : date\", \"+ address : string\", \"+ skills : string[]\"]}, {\"name\": \"ProductType\", \"attributes\": [\"+ id : string\", \"+ material : string\", \"+ weight : float\"]}, {\"name\": \"Product\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"Client\", \"attributes\": [\"+ name : string\", \"+ address : string\", \"+ phoneNumber : string\", \"+ contactPerson : string\"]}, {\"name\": \"PurchaseOrder\", \"attributes\": [\"+ orderNumber : string\", \"+ orderDate : date\", \"+ expectedDeliveryDate : date\", \"+ actualDeliveryDate : date\"]}, {\"name\": \"OrderItem\", \"attributes\": [\"+ quantity : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Factory\", \"target\": \"Machine\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Machine\", \"target\": \"Worker\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Machine\", \"target\": \"ProductType\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"ProductType\", \"target\": \"Product\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Client\", \"target\": \"PurchaseOrder\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"PurchaseOrder\", \"target\": \"OrderItem\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"OrderItem\", \"target\": \"Product\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 21.322956600008183,
+ "prompt_tokens": 1329,
+ "completion_tokens": 439,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4lsw49435uvh1bza3gf2tb",
+  "object": "chat.completion",
+  "created": 1791914649,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Factory\", \"attributes\": []}, {\"name\": \"Machine\", \"attributes\": [\"+ serialNumber : string\", \"+ make : string\", \"+ model : string\", \"+ purchaseDate : date\"]}, {\"name\": \"Worker\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\", \"+ birthDate : date\", \"+ address : string\", \"+ skills : string[]\"]}, {\"name\": \"ProductType\", \"attributes\": [\"+ id : string\", \"+ material : string\", \"+ weight : float\"]}, {\"name\": \"Product\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"Client\", \"attributes\": [\"+ name : string\", \"+ address : string\", \"+ phoneNumber : string\", \"+ contactPerson : string\"]}, {\"name\": \"PurchaseOrder\", \"attributes\": [\"+ orderNumber : string\", \"+ orderDate : date\", \"+ expectedDeliveryDate : date\", \"+ actualDeliveryDate : date\"]}, {\"name\": \"OrderItem\", \"attributes\": [\"+ quantity : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Factory\", \"target\": \"Machine\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Machine\", \"target\": \"Worker\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Machine\", \"target\": \"ProductType\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"ProductType\", \"target\": \"Product\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Client\", \"target\": \"PurchaseOrder\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"PurchaseOrder\", \"target\": \"OrderItem\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"OrderItem\", \"target\": \"Product\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1329,
+   "completion_tokens": 439,
+   "total_tokens": 1768,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

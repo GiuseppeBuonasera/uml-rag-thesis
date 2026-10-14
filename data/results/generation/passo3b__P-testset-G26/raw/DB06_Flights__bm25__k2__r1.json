@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Airline {\n  + ID : int\n}\n\nclass Airport {\n  + ID : string\n}\n\nclass Flight {\n  + ID : int\n  + DepartureTime : datetime\n  + ArrivalTime : datetime\n}\n\nclass Aircraft {\n  + Type : string\n  + IsWorking : boolean\n  + IsAirborne : boolean\n}\n\nclass Pilot {\n  + ExperienceLevel : int\n}\n\nclass RoleRequirement {\n  + Role : string\n  + RequiredCount : int\n}\n\nAirline \"1\" -- \"0..*\" Flight\nAirline \"1\" *-- \"0..*\" Aircraft\nAirline \"1\" -- \"0..*\" Pilot\nFlight \"0..*\" -- \"1\" Airport : departure\nFlight \"0..*\" -- \"1\" Airport : arrival\nFlight \"0..*\" -- \"1\" Pilot : captain\nFlight \"0..*\" -- \"1\" Pilot : co-pilot\nFlight \"0..*\" -- \"1\" Aircraft\nAircraft \"0..*\" -- \"1\" RoleRequirement\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 12.776009099998191,
+ "prompt_tokens": 2418,
+ "completion_tokens": 229,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gab3wiwaacssxt3wy2t8n",
+  "object": "chat.completion",
+  "created": 1791863592,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Airline {\n  + ID : int\n}\n\nclass Airport {\n  + ID : string\n}\n\nclass Flight {\n  + ID : int\n  + DepartureTime : datetime\n  + ArrivalTime : datetime\n}\n\nclass Aircraft {\n  + Type : string\n  + IsWorking : boolean\n  + IsAirborne : boolean\n}\n\nclass Pilot {\n  + ExperienceLevel : int\n}\n\nclass RoleRequirement {\n  + Role : string\n  + RequiredCount : int\n}\n\nAirline \"1\" -- \"0..*\" Flight\nAirline \"1\" *-- \"0..*\" Aircraft\nAirline \"1\" -- \"0..*\" Pilot\nFlight \"0..*\" -- \"1\" Airport : departure\nFlight \"0..*\" -- \"1\" Airport : arrival\nFlight \"0..*\" -- \"1\" Pilot : captain\nFlight \"0..*\" -- \"1\" Pilot : co-pilot\nFlight \"0..*\" -- \"1\" Aircraft\nAircraft \"0..*\" -- \"1\" RoleRequirement\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2418,
+   "completion_tokens": 229,
+   "total_tokens": 2647,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

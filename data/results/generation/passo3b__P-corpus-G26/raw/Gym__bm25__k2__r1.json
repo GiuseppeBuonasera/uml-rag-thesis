@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name\n  + surname\n  + age\n  + address\n  + profession\n  + subscriptionType\n}\n\nclass Subscription {\n  + type\n}\n\nclass MonthlySubscription extends Subscription {}\n\nclass AnnualSubscription extends Subscription {}\n\nclass Service {\n  + name\n}\n\nclass WeightRoom extends Service {}\n\nclass SwimmingPool extends Service {}\n\nclass ClimbingWall extends Service {}\n\nclass Sauna extends Service {}\n\nclass TurkishBath extends Service {}\n\nclass AdditionalService extends Service {}\n\nclass WorkoutPlan {\n  + exercises\n  + repetitions\n  + frequency\n  + visitsPerWeek\n}\n\nclass MedicalStaff {\n  + assistCustomer()\n  + determineFitnessLevel()\n  + defineDiet()\n}\n\nclass MedicalCheck {\n  + date\n  + weight\n  + bodyFat\n  + electrocardiogram\n  + restingHeartbeat\n  + stressHeartbeat\n}\n\nclass Gym {\n  + computeMonthlyBalance()\n  + computeYearlyBalance()\n  + sendArrearsReminder()\n  + sendMedicalCheckReminder()\n}\n\nCustomer \"1\" -- \"1\" Subscription : has\nCustomer \"1\" -- \"*\" Service : requests\nCustomer \"1\" -- \"0..1\" WorkoutPlan : associatedWith\nCustomer \"1\" -- \"0..*\" MedicalCheck : undergoes\nMedicalStaff \"1\" -- \"*\" MedicalCheck : performs\nMedicalStaff \"1\" -- \"*\" Customer : assists\nGym \"1\" -- \"*\" Customer : manages\nGym \"1\" -- \"*\" Subscription : offers\nGym \"1\" -- \"*\" Service : offers\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 19.168604100002995,
+ "prompt_tokens": 2751,
+ "completion_tokens": 345,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kyezqpuoy3rleoi7nasph",
+  "object": "chat.completion",
+  "created": 1791860860,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name\n  + surname\n  + age\n  + address\n  + profession\n  + subscriptionType\n}\n\nclass Subscription {\n  + type\n}\n\nclass MonthlySubscription extends Subscription {}\n\nclass AnnualSubscription extends Subscription {}\n\nclass Service {\n  + name\n}\n\nclass WeightRoom extends Service {}\n\nclass SwimmingPool extends Service {}\n\nclass ClimbingWall extends Service {}\n\nclass Sauna extends Service {}\n\nclass TurkishBath extends Service {}\n\nclass AdditionalService extends Service {}\n\nclass WorkoutPlan {\n  + exercises\n  + repetitions\n  + frequency\n  + visitsPerWeek\n}\n\nclass MedicalStaff {\n  + assistCustomer()\n  + determineFitnessLevel()\n  + defineDiet()\n}\n\nclass MedicalCheck {\n  + date\n  + weight\n  + bodyFat\n  + electrocardiogram\n  + restingHeartbeat\n  + stressHeartbeat\n}\n\nclass Gym {\n  + computeMonthlyBalance()\n  + computeYearlyBalance()\n  + sendArrearsReminder()\n  + sendMedicalCheckReminder()\n}\n\nCustomer \"1\" -- \"1\" Subscription : has\nCustomer \"1\" -- \"*\" Service : requests\nCustomer \"1\" -- \"0..1\" WorkoutPlan : associatedWith\nCustomer \"1\" -- \"0..*\" MedicalCheck : undergoes\nMedicalStaff \"1\" -- \"*\" MedicalCheck : performs\nMedicalStaff \"1\" -- \"*\" Customer : assists\nGym \"1\" -- \"*\" Customer : manages\nGym \"1\" -- \"*\" Subscription : offers\nGym \"1\" -- \"*\" Service : offers\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2751,
+   "completion_tokens": 345,
+   "total_tokens": 3096,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

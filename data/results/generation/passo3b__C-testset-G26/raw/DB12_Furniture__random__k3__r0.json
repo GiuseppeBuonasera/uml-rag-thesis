@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"FurnitureLine\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"FurniturePiece\",\n      \"attributes\": [\n        \"+ Reference : string\",\n        \"+ SellingPrice : float\"\n      ]\n    },\n    {\n      \"name\": \"ComponentType\",\n      \"attributes\": [\n        \"+ Code : int\",\n        \"+ ManufacturingPrice : float\",\n        \"+ Type : string\"\n      ]\n    },\n    {\n      \"name\": \"Store\",\n      \"attributes\": [\n        \"+ Address : string\",\n        \"+ FaxNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderNumber : int\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"OrderLine\",\n      \"attributes\": [\n        \"+ Quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"FurnitureLine\",\n      \"target\": \"FurniturePiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FurniturePiece\",\n      \"target\": \"ComponentType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Store\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Order\",\n      \"part\": \"OrderLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OrderLine\",\n      \"target\": \"FurniturePiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 33.41128369999933,
+ "prompt_tokens": 5688,
+ "completion_tokens": 496,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qs62s5s127x19g36norp",
+  "object": "chat.completion",
+  "created": 1791914229,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"FurnitureLine\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"FurniturePiece\",\n      \"attributes\": [\n        \"+ Reference : string\",\n        \"+ SellingPrice : float\"\n      ]\n    },\n    {\n      \"name\": \"ComponentType\",\n      \"attributes\": [\n        \"+ Code : int\",\n        \"+ ManufacturingPrice : float\",\n        \"+ Type : string\"\n      ]\n    },\n    {\n      \"name\": \"Store\",\n      \"attributes\": [\n        \"+ Address : string\",\n        \"+ FaxNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ OrderNumber : int\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"OrderLine\",\n      \"attributes\": [\n        \"+ Quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"FurnitureLine\",\n      \"target\": \"FurniturePiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FurniturePiece\",\n      \"target\": \"ComponentType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Store\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Order\",\n      \"part\": \"OrderLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OrderLine\",\n      \"target\": \"FurniturePiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5688,
+   "completion_tokens": 496,
+   "total_tokens": 6184,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Employee {\n  + id : int\n  + name : string\n  + address : string\n}\n\nclass AssemblyService {\n  + kms : int\n  + workHours : float\n  + admissionDate : date\n  + finishDate : date\n}\n\nclass PartAccessory {\n  + category : string\n  + serialNumber : string\n  + price : double\n}\n\nclass Car {\n  + licensePlate : string\n  + make : string\n  + model : string\n  + color : string\n}\n\nclass Owner {\n  + id : int\n  + name : string\n  + address : string\n  + phone : string\n}\n\nEmployee \"1\" -- \"*\" AssemblyService : responsible for\nAssemblyService \"*\" -- \"1\" Car : executed in\nAssemblyService \"*\" -- \"*\" PartAccessory : fits\nPartAccessory \"*\" -- \"*\" Car : fits in\n\nOwner \"1\" -- \"1..*\" Car : owns\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 13.388360700002522,
+ "prompt_tokens": 2603,
+ "completion_tokens": 213,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-rtafhoe23rldp7256bqlij",
+  "object": "chat.completion",
+  "created": 1791864166,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Employee {\n  + id : int\n  + name : string\n  + address : string\n}\n\nclass AssemblyService {\n  + kms : int\n  + workHours : float\n  + admissionDate : date\n  + finishDate : date\n}\n\nclass PartAccessory {\n  + category : string\n  + serialNumber : string\n  + price : double\n}\n\nclass Car {\n  + licensePlate : string\n  + make : string\n  + model : string\n  + color : string\n}\n\nclass Owner {\n  + id : int\n  + name : string\n  + address : string\n  + phone : string\n}\n\nEmployee \"1\" -- \"*\" AssemblyService : responsible for\nAssemblyService \"*\" -- \"1\" Car : executed in\nAssemblyService \"*\" -- \"*\" PartAccessory : fits\nPartAccessory \"*\" -- \"*\" Car : fits in\n\nOwner \"1\" -- \"1..*\" Car : owns\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2603,
+   "completion_tokens": 213,
+   "total_tokens": 2816,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

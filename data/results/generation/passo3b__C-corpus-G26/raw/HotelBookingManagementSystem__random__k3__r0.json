@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Traveller\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ BillingInformation : string\",\n        \"+ CompanyName : string\",\n        \"+ CompanyAddress : string\",\n        \"+ TravelPreferences : string[]\",\n        \"+ ReliabilityRating : float\"\n      ]\n    },\n    {\n      \"name\": \"SearchCriteria\",\n      \"attributes\": [\n        \"+ City : string\",\n        \"+ ArrivalDate : date\",\n        \"+ DepartureDate : date\",\n        \"+ NumberOfRooms : int\",\n        \"+ RoomType : string\",\n        \"+ MinimumRating : int\",\n        \"+ MaxCostPerNight : double\",\n        \"+ AdditionalPreferences : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PreliminaryBooking\",\n      \"attributes\": [\n        \"+ BookingIdentifier : string\",\n        \"+ Price : double\",\n        \"+ CityArea : string\",\n        \"+ HotelRating : int\",\n        \"+ KeyPreferences : string[]\"\n      ]\n    },\n    {\n      \"name\": \"SpecialOffer\",\n      \"attributes\": [\n        \"+ Price : double\"\n      ]\n    },\n    {\n      \"name\": \"Booking\",\n      \"attributes\": [\n        \"+ CreditCardInfo : string\",\n        \"+ CancellationDeadline : datetime\",\n        \"+ IsPrePaid : boolean\",\n        \"+ IsConfirmed : boolean\",\n        \"+ IsCancelled : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Hotel\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ Rating : int\"\n      ]\n    },\n    {\n      \"name\": \"HotelChain\"\n    },\n    {\n      \"name\": \"City\"\n    },\n    {\n      \"name\": \"RoomType\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Traveller\",\n      \"target\": \"SearchCriteria\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Traveller\",\n      \"target\": \"PreliminaryBooking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Traveller\",\n      \"target\": \"Booking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PreliminaryBooking\",\n      \"target\": \"SpecialOffer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Booking\",\n      \"target\": \"Hotel\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"HotelChain\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"City\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"RoomType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Booking\",\n      \"target\": \"RoomType\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SpecialOffer\",\n      \"target\": \"Hotel\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 59.01011489999655,
+ "prompt_tokens": 5341,
+ "completion_tokens": 957,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kjq3iplfhpna4m1jt9gseb",
+  "object": "chat.completion",
+  "created": 1791873834,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Traveller\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ BillingInformation : string\",\n        \"+ CompanyName : string\",\n        \"+ CompanyAddress : string\",\n        \"+ TravelPreferences : string[]\",\n        \"+ ReliabilityRating : float\"\n      ]\n    },\n    {\n      \"name\": \"SearchCriteria\",\n      \"attributes\": [\n        \"+ City : string\",\n        \"+ ArrivalDate : date\",\n        \"+ DepartureDate : date\",\n        \"+ NumberOfRooms : int\",\n        \"+ RoomType : string\",\n        \"+ MinimumRating : int\",\n        \"+ MaxCostPerNight : double\",\n        \"+ AdditionalPreferences : string[]\"\n      ]\n    },\n    {\n      \"name\": \"PreliminaryBooking\",\n      \"attributes\": [\n        \"+ BookingIdentifier : string\",\n        \"+ Price : double\",\n        \"+ CityArea : string\",\n        \"+ HotelRating : int\",\n        \"+ KeyPreferences : string[]\"\n      ]\n    },\n    {\n      \"name\": \"SpecialOffer\",\n      \"attributes\": [\n        \"+ Price : double\"\n      ]\n    },\n    {\n      \"name\": \"Booking\",\n      \"attributes\": [\n        \"+ CreditCardInfo : string\",\n        \"+ CancellationDeadline : datetime\",\n        \"+ IsPrePaid : boolean\",\n        \"+ IsConfirmed : boolean\",\n        \"+ IsCancelled : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Hotel\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\",\n        \"+ Rating : int\"\n      ]\n    },\n    {\n      \"name\": \"HotelChain\"\n    },\n    {\n      \"name\": \"City\"\n    },\n    {\n      \"name\": \"RoomType\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Traveller\",\n      \"target\": \"SearchCriteria\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Traveller\",\n      \"target\": \"PreliminaryBooking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Traveller\",\n      \"target\": \"Booking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PreliminaryBooking\",\n      \"target\": \"SpecialOffer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Booking\",\n      \"target\": \"Hotel\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"HotelChain\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"City\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"RoomType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Booking\",\n      \"target\": \"RoomType\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SpecialOffer\",\n      \"target\": \"Hotel\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5341,
+   "completion_tokens": 957,
+   "total_tokens": 6298,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

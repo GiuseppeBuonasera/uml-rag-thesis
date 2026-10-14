@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Receptionist\"}, {\"name\": \"Nurse\"}, {\"name\": \"Doctor\"}, {\"name\": \"Patient\"}, {\"name\": \"Family\"}, {\"name\": \"Visit\"}, {\"name\": \"Medication\"}], \"relations\": [{\"type\": \"association\", \"source\": \"Receptionist\", \"target\": \"Patient\"}, {\"type\": \"association\", \"source\": \"Receptionist\", \"target\": \"Visit\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Visit\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Medication\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Visit\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Patient\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Visit\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Family\"}, {\"type\": \"association\", \"source\": \"Family\", \"target\": \"Doctor\", \"label\": \"primary care physician\"}, {\"type\": \"association\", \"source\": \"Visit\", \"target\": \"Medication\", \"label\": \"prescribed\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 13.311836499997298,
+ "prompt_tokens": 1268,
+ "completion_tokens": 252,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-w58ah0s36yh8se5vfhup7n",
+  "object": "chat.completion",
+  "created": 1791900638,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Receptionist\"}, {\"name\": \"Nurse\"}, {\"name\": \"Doctor\"}, {\"name\": \"Patient\"}, {\"name\": \"Family\"}, {\"name\": \"Visit\"}, {\"name\": \"Medication\"}], \"relations\": [{\"type\": \"association\", \"source\": \"Receptionist\", \"target\": \"Patient\"}, {\"type\": \"association\", \"source\": \"Receptionist\", \"target\": \"Visit\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Visit\"}, {\"type\": \"association\", \"source\": \"Nurse\", \"target\": \"Medication\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Visit\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Patient\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Visit\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Family\"}, {\"type\": \"association\", \"source\": \"Family\", \"target\": \"Doctor\", \"label\": \"primary care physician\"}, {\"type\": \"association\", \"source\": \"Visit\", \"target\": \"Medication\", \"label\": \"prescribed\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1268,
+   "completion_tokens": 252,
+   "total_tokens": 1520,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

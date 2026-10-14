@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"School\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Person\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\"]}, {\"name\": \"Teacher\", \"attributes\": [\"+ email : string\"]}, {\"name\": \"Student\"}, {\"name\": \"TeachingAssignment\", \"attributes\": [\"+ hours : int\"]}, {\"name\": \"Room\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Classroom\", \"attributes\": [\"+ capacity : int\"]}, {\"name\": \"Gym\", \"attributes\": [\"+ size : float\"]}, {\"name\": \"ClassGroup\", \"attributes\": [\"+ name : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Teacher\", \"target\": \"School\", \"sourceMultiplicity\": \"0..3\", \"targetMultiplicity\": \"*\", \"label\": \"teaches\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"School\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Teacher\", \"target\": \"School\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\", \"label\": \"is principal of\"}, {\"type\": \"association\", \"source\": \"School\", \"target\": \"Room\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"Teacher\", \"parent\": \"Person\"}, {\"type\": \"inheritance\", \"child\": \"Student\", \"parent\": \"Person\"}, {\"type\": \"inheritance\", \"child\": \"Classroom\", \"parent\": \"Room\"}, {\"type\": \"inheritance\", \"child\": \"Gym\", \"parent\": \"Room\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"ClassGroup\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ClassGroup\", \"target\": \"Classroom\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TeachingAssignment\", \"target\": \"Teacher\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TeachingAssignment\", \"target\": \"School\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 22.297253799995815,
+ "prompt_tokens": 1274,
+ "completion_tokens": 470,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-o4bgwmf3vvbk9kli5hdtw",
+  "object": "chat.completion",
+  "created": 1791878314,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"School\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Person\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\"]}, {\"name\": \"Teacher\", \"attributes\": [\"+ email : string\"]}, {\"name\": \"Student\"}, {\"name\": \"TeachingAssignment\", \"attributes\": [\"+ hours : int\"]}, {\"name\": \"Room\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Classroom\", \"attributes\": [\"+ capacity : int\"]}, {\"name\": \"Gym\", \"attributes\": [\"+ size : float\"]}, {\"name\": \"ClassGroup\", \"attributes\": [\"+ name : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Teacher\", \"target\": \"School\", \"sourceMultiplicity\": \"0..3\", \"targetMultiplicity\": \"*\", \"label\": \"teaches\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"School\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Teacher\", \"target\": \"School\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\", \"label\": \"is principal of\"}, {\"type\": \"association\", \"source\": \"School\", \"target\": \"Room\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"Teacher\", \"parent\": \"Person\"}, {\"type\": \"inheritance\", \"child\": \"Student\", \"parent\": \"Person\"}, {\"type\": \"inheritance\", \"child\": \"Classroom\", \"parent\": \"Room\"}, {\"type\": \"inheritance\", \"child\": \"Gym\", \"parent\": \"Room\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"ClassGroup\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ClassGroup\", \"target\": \"Classroom\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TeachingAssignment\", \"target\": \"Teacher\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TeachingAssignment\", \"target\": \"School\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1274,
+   "completion_tokens": 470,
+   "total_tokens": 1744,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

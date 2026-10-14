@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"User\"\n    },\n    {\n      \"name\": \"Document\"\n    },\n    {\n      \"name\": \"Page\"\n    },\n    {\n      \"name\": \"Header\"\n    },\n    {\n      \"name\": \"Footer\"\n    },\n    {\n      \"name\": \"Body\"\n    },\n    {\n      \"name\": \"Sentence\"\n    },\n    {\n      \"name\": \"Word\"\n    },\n    {\n      \"name\": \"PunctuationCharacter\"\n    },\n    {\n      \"name\": \"Letter\"\n    },\n    {\n      \"name\": \"Digit\"\n    },\n    {\n      \"name\": \"SpecialCharacter\"\n    },\n    {\n      \"name\": \"Picture\"\n    },\n    {\n      \"name\": \"Table\"\n    },\n    {\n      \"name\": \"Row\"\n    },\n    {\n      \"name\": \"Column\"\n    },\n    {\n      \"name\": \"Cell\"\n    },\n    {\n      \"name\": \"Text\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Document\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Document\",\n      \"part\": \"Page\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Header\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Body\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Footer\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Sentence\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Word\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"PunctuationCharacter\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Picture\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Table\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Row\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Column\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Row\",\n      \"part\": \"Cell\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Column\",\n      \"part\": \"Cell\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cell\",\n      \"target\": \"Text\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cell\",\n      \"target\": \"Picture\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Word\",\n      \"parent\": \"Letter\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Word\",\n      \"parent\": \"Digit\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Word\",\n      \"parent\": \"SpecialCharacter\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 47.98210370000015,
+ "prompt_tokens": 3554,
+ "completion_tokens": 852,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1h0afrzlouw5v144g3hyuh",
+  "object": "chat.completion",
+  "created": 1791899803,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"User\"\n    },\n    {\n      \"name\": \"Document\"\n    },\n    {\n      \"name\": \"Page\"\n    },\n    {\n      \"name\": \"Header\"\n    },\n    {\n      \"name\": \"Footer\"\n    },\n    {\n      \"name\": \"Body\"\n    },\n    {\n      \"name\": \"Sentence\"\n    },\n    {\n      \"name\": \"Word\"\n    },\n    {\n      \"name\": \"PunctuationCharacter\"\n    },\n    {\n      \"name\": \"Letter\"\n    },\n    {\n      \"name\": \"Digit\"\n    },\n    {\n      \"name\": \"SpecialCharacter\"\n    },\n    {\n      \"name\": \"Picture\"\n    },\n    {\n      \"name\": \"Table\"\n    },\n    {\n      \"name\": \"Row\"\n    },\n    {\n      \"name\": \"Column\"\n    },\n    {\n      \"name\": \"Cell\"\n    },\n    {\n      \"name\": \"Text\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Document\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Document\",\n      \"part\": \"Page\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Header\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Body\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Footer\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Sentence\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Word\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"PunctuationCharacter\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Picture\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Table\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Row\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Column\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Row\",\n      \"part\": \"Cell\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Column\",\n      \"part\": \"Cell\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cell\",\n      \"target\": \"Text\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cell\",\n      \"target\": \"Picture\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Word\",\n      \"parent\": \"Letter\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Word\",\n      \"parent\": \"Digit\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Word\",\n      \"parent\": \"SpecialCharacter\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3554,
+   "completion_tokens": 852,
+   "total_tokens": 4406,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

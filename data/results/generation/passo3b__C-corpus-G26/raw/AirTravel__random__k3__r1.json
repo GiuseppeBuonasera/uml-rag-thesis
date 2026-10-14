@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Aircraft\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ type : string\",\n        \"+ yearOfManufacture : int\",\n        \"+ nextInspectionDate : date\"\n      ]\n    },\n    {\n      \"name\": \"PassengerAircraft\",\n      \"attributes\": [\n        \"+ numberOfSeats : int\"\n      ]\n    },\n    {\n      \"name\": \"Flight\",\n      \"attributes\": [\n        \"+ flightNumber : string\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Passenger\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ passportNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Ticket\",\n      \"attributes\": [\n        \"+ ticketNumber : string\",\n        \"+ price : double\",\n        \"+ upgradeDesired : boolean\"\n      ]\n    },\n    {\n      \"name\": \"SeatCategory\",\n      \"attributes\": [\n        \"+ designation : string\",\n        \"+ offersEntertainment : boolean\",\n        \"+ numberOfSeats : int\"\n      ]\n    },\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfEmployment : date\"\n      ]\n    },\n    {\n      \"name\": \"FlightAttendant\",\n      \"attributes\": [\n        \"+ isChiefStewardess : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Pilot\",\n      \"attributes\": [\n        \"+ license : string\"\n      ]\n    },\n    {\n      \"name\": \"Airport\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ numberOfRunways : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"Flight\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Passenger\",\n      \"target\": \"Flight\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Passenger\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Ticket\",\n      \"target\": \"SeatCategory\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PassengerAircraft\",\n      \"target\": \"SeatCategory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"Airline\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"FlightAttendant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"FlightAttendant\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"Captain\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"1..2\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"Co-pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"Airport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"HomeAirport\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"Departure\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"Destination\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PassengerAircraft\",\n      \"parent\": \"Aircraft\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"FlightAttendant\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Pilot\",\n      \"parent\": \"Employee\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 75.2752728000014,
+ "prompt_tokens": 3658,
+ "completion_tokens": 1339,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gx636oq5hacyfo5c98frq",
+  "object": "chat.completion",
+  "created": 1791867266,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Aircraft\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ type : string\",\n        \"+ yearOfManufacture : int\",\n        \"+ nextInspectionDate : date\"\n      ]\n    },\n    {\n      \"name\": \"PassengerAircraft\",\n      \"attributes\": [\n        \"+ numberOfSeats : int\"\n      ]\n    },\n    {\n      \"name\": \"Flight\",\n      \"attributes\": [\n        \"+ flightNumber : string\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Passenger\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ passportNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Ticket\",\n      \"attributes\": [\n        \"+ ticketNumber : string\",\n        \"+ price : double\",\n        \"+ upgradeDesired : boolean\"\n      ]\n    },\n    {\n      \"name\": \"SeatCategory\",\n      \"attributes\": [\n        \"+ designation : string\",\n        \"+ offersEntertainment : boolean\",\n        \"+ numberOfSeats : int\"\n      ]\n    },\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ dateOfEmployment : date\"\n      ]\n    },\n    {\n      \"name\": \"FlightAttendant\",\n      \"attributes\": [\n        \"+ isChiefStewardess : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Pilot\",\n      \"attributes\": [\n        \"+ license : string\"\n      ]\n    },\n    {\n      \"name\": \"Airport\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ numberOfRunways : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"Flight\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Passenger\",\n      \"target\": \"Flight\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Passenger\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Ticket\",\n      \"target\": \"SeatCategory\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PassengerAircraft\",\n      \"target\": \"SeatCategory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"Airline\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"FlightAttendant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"FlightAttendant\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"Captain\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"1..2\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"Co-pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"Airport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"HomeAirport\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"Departure\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"Destination\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PassengerAircraft\",\n      \"parent\": \"Aircraft\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"FlightAttendant\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Pilot\",\n      \"parent\": \"Employee\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3658,
+   "completion_tokens": 1339,
+   "total_tokens": 4997,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Employee\", \"kind\": \"abstract\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"HeadCoach\", \"attributes\": []}, {\"name\": \"Director\", \"attributes\": []}, {\"name\": \"Scout\", \"attributes\": []}, {\"name\": \"HeadScout\", \"attributes\": []}, {\"name\": \"PlayerProfile\", \"attributes\": [\"+ targetPosition : string\"]}, {\"name\": \"PlayerAttribute\", \"attributes\": [\"+ name : string\", \"+ value : int\"]}, {\"name\": \"Player\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"LongListEntry\", \"attributes\": []}, {\"name\": \"ScoutingAssignment\", \"attributes\": []}, {\"name\": \"ScoutingReport\", \"attributes\": [\"+ pros : string\", \"+ cons : string\", \"+ recommendation : string\"]}, {\"name\": \"ShortList\", \"attributes\": []}, {\"name\": \"OfficialOffer\", \"attributes\": []}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"HeadCoach\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Director\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Scout\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"HeadScout\", \"parent\": \"Scout\"}, {\"type\": \"association\", \"source\": \"HeadCoach\", \"target\": \"PlayerProfile\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PlayerProfile\", \"target\": \"PlayerAttribute\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Scout\", \"target\": \"LongListEntry\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"LongListEntry\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"HeadScout\", \"target\": \"ScoutingAssignment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ScoutingAssignment\", \"target\": \"ScoutingReport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ScoutingReport\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ScoutingAssignment\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"ShortList\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Director\", \"target\": \"OfficialOffer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"OfficialOffer\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 39.959670000003825,
+ "prompt_tokens": 3933,
+ "completion_tokens": 677,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7q9d0rtxtttl2dba5lpch",
+  "object": "chat.completion",
+  "created": 1791881437,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Employee\", \"kind\": \"abstract\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"HeadCoach\", \"attributes\": []}, {\"name\": \"Director\", \"attributes\": []}, {\"name\": \"Scout\", \"attributes\": []}, {\"name\": \"HeadScout\", \"attributes\": []}, {\"name\": \"PlayerProfile\", \"attributes\": [\"+ targetPosition : string\"]}, {\"name\": \"PlayerAttribute\", \"attributes\": [\"+ name : string\", \"+ value : int\"]}, {\"name\": \"Player\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"LongListEntry\", \"attributes\": []}, {\"name\": \"ScoutingAssignment\", \"attributes\": []}, {\"name\": \"ScoutingReport\", \"attributes\": [\"+ pros : string\", \"+ cons : string\", \"+ recommendation : string\"]}, {\"name\": \"ShortList\", \"attributes\": []}, {\"name\": \"OfficialOffer\", \"attributes\": []}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"HeadCoach\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Director\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Scout\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"HeadScout\", \"parent\": \"Scout\"}, {\"type\": \"association\", \"source\": \"HeadCoach\", \"target\": \"PlayerProfile\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PlayerProfile\", \"target\": \"PlayerAttribute\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Scout\", \"target\": \"LongListEntry\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"LongListEntry\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"HeadScout\", \"target\": \"ScoutingAssignment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ScoutingAssignment\", \"target\": \"ScoutingReport\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ScoutingReport\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ScoutingAssignment\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"ShortList\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Director\", \"target\": \"OfficialOffer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"OfficialOffer\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3933,
+   "completion_tokens": 677,
+   "total_tokens": 4610,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

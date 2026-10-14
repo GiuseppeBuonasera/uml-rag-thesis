@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Traveller {\n  + Name : string\n  + BillingInformation : string\n  + CompanyName : string\n  + CompanyAddress : string\n  + TravelPreferences : string[]\n  + ReliabilityRating : float\n}\n\nclass Hotel {\n  + Address : string\n  + Rating : int\n}\n\nclass HotelChain {\n  + Name : string\n}\n\nclass City {\n  + Name : string\n}\n\nclass RoomType {\n  + Type : string\n}\n\nclass Booking {\n  + BookingIdentifier : string\n  + ArrivalDate : date\n  + DepartureDate : date\n  + NumberOfRooms : int\n  + RoomType : RoomType\n  + MaxCostPerNight : float\n  + Status : string\n  + CancellationDeadline : date\n}\n\nclass SpecialOffer {\n  + Price : float\n  + OfferDetails : string\n}\n\nclass CreditCardInfo {\n  + CardNumber : string\n}\n\nclass PaymentMethod {\n  + Method : string\n}\n\nclass SearchCriteria {\n  + City : string\n  + ArrivalDate : date\n  + DepartureDate : date\n  + NumberOfRooms : int\n  + RoomType : string\n  + MinRating : int\n  + MaxCostPerNight : float\n  + Preferences : string[]\n}\n\nTraveller \"1\" -- \"*\" Booking : makes\nTraveller \"1\" -- \"0..1\" CreditCardInfo : provides\nTraveller \"1\" -- \"*\" SpecialOffer : receives\nHotel \"0..*\" -- \"1\" City : located in\nHotel \"0..*\" -- \"0..1\" HotelChain : run by\nHotel \"1\" -- \"*\" Booking : confirms\nHotel \"1\" -- \"*\" RoomType : offers\nBooking \"1\" -- \"1\" PaymentMethod : uses\nBooking \"1\" -- \"0..*\" SpecialOffer : can switch to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 26.90868000000046,
+ "prompt_tokens": 3922,
+ "completion_tokens": 411,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3ol2wwawizhyiq2tjujk5",
+  "object": "chat.completion",
+  "created": 1791855695,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Traveller {\n  + Name : string\n  + BillingInformation : string\n  + CompanyName : string\n  + CompanyAddress : string\n  + TravelPreferences : string[]\n  + ReliabilityRating : float\n}\n\nclass Hotel {\n  + Address : string\n  + Rating : int\n}\n\nclass HotelChain {\n  + Name : string\n}\n\nclass City {\n  + Name : string\n}\n\nclass RoomType {\n  + Type : string\n}\n\nclass Booking {\n  + BookingIdentifier : string\n  + ArrivalDate : date\n  + DepartureDate : date\n  + NumberOfRooms : int\n  + RoomType : RoomType\n  + MaxCostPerNight : float\n  + Status : string\n  + CancellationDeadline : date\n}\n\nclass SpecialOffer {\n  + Price : float\n  + OfferDetails : string\n}\n\nclass CreditCardInfo {\n  + CardNumber : string\n}\n\nclass PaymentMethod {\n  + Method : string\n}\n\nclass SearchCriteria {\n  + City : string\n  + ArrivalDate : date\n  + DepartureDate : date\n  + NumberOfRooms : int\n  + RoomType : string\n  + MinRating : int\n  + MaxCostPerNight : float\n  + Preferences : string[]\n}\n\nTraveller \"1\" -- \"*\" Booking : makes\nTraveller \"1\" -- \"0..1\" CreditCardInfo : provides\nTraveller \"1\" -- \"*\" SpecialOffer : receives\nHotel \"0..*\" -- \"1\" City : located in\nHotel \"0..*\" -- \"0..1\" HotelChain : run by\nHotel \"1\" -- \"*\" Booking : confirms\nHotel \"1\" -- \"*\" RoomType : offers\nBooking \"1\" -- \"1\" PaymentMethod : uses\nBooking \"1\" -- \"0..*\" SpecialOffer : can switch to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3922,
+   "completion_tokens": 411,
+   "total_tokens": 4333,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

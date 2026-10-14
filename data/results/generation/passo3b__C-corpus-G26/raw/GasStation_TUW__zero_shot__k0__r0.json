@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"GasStation\", \"attributes\": [\"+ id : string\", \"+ address : string\"]}, {\"name\": \"FuelPump\", \"attributes\": [\"+ number : int\", \"+ isSelfService : boolean\"]}, {\"name\": \"Fuel\", \"attributes\": [\"+ name : string\", \"+ octaneRating : int\"]}, {\"name\": \"DailyPrice\", \"attributes\": [\"+ date : date\", \"+ pricePerLiter : float\"]}, {\"name\": \"FuelPurchase\", \"attributes\": [\"+ id : string\", \"+ litersDispensed : float\"]}], \"relations\": [{\"type\": \"composition\", \"whole\": \"GasStation\", \"part\": \"FuelPump\", \"partMultiplicity\": \"1..12\"}, {\"type\": \"association\", \"source\": \"FuelPump\", \"target\": \"Fuel\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"DailyPrice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Fuel\", \"target\": \"DailyPrice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"FuelPurchase\", \"target\": \"FuelPump\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"FuelPurchase\", \"target\": \"Fuel\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"FuelPurchase\", \"target\": \"DailyPrice\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 16.116107199995895,
+ "prompt_tokens": 1269,
+ "completion_tokens": 357,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-goaowqjdnch7p8scg1izd6",
+  "object": "chat.completion",
+  "created": 1791873065,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"GasStation\", \"attributes\": [\"+ id : string\", \"+ address : string\"]}, {\"name\": \"FuelPump\", \"attributes\": [\"+ number : int\", \"+ isSelfService : boolean\"]}, {\"name\": \"Fuel\", \"attributes\": [\"+ name : string\", \"+ octaneRating : int\"]}, {\"name\": \"DailyPrice\", \"attributes\": [\"+ date : date\", \"+ pricePerLiter : float\"]}, {\"name\": \"FuelPurchase\", \"attributes\": [\"+ id : string\", \"+ litersDispensed : float\"]}], \"relations\": [{\"type\": \"composition\", \"whole\": \"GasStation\", \"part\": \"FuelPump\", \"partMultiplicity\": \"1..12\"}, {\"type\": \"association\", \"source\": \"FuelPump\", \"target\": \"Fuel\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"DailyPrice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Fuel\", \"target\": \"DailyPrice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"FuelPurchase\", \"target\": \"FuelPump\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"FuelPurchase\", \"target\": \"Fuel\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"FuelPurchase\", \"target\": \"DailyPrice\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1269,
+   "completion_tokens": 357,
+   "total_tokens": 1626,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

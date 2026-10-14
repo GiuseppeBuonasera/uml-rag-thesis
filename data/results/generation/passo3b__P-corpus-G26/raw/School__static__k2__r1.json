@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass School {\n  + Name : string\n}\n\nclass Person {\n  + FirstName : string\n  + LastName : string\n}\n\nclass Teacher extends Person {\n  + EmailAddress : string\n}\n\nclass Student extends Person {\n}\n\nclass TeachingRelationship {\n  + Hours : int\n}\n\nclass ClassGroup {\n  + Name : string\n}\n\nclass Classroom {\n  + Name : string\n  + Capacity : int\n}\n\nclass Gym {\n  + Name : string\n  + Size : float\n}\n\nclass Room {\n}\n\nRoom <|-- Classroom\nRoom <|-- Gym\n\nSchool \"1\" -- \"1\" Teacher : Principal\nSchool \"1\" -- \"*\" Teacher : employs\nSchool \"1\" -- \"1\" Student : attends\nSchool \"1\" -- \"*\" Room : consists of\nSchool \"0..3\" -- \"1\" Teacher : teaches\nTeachingRelationship \"1\" -- \"1\" Teacher\nTeachingRelationship \"1\" -- \"1\" School\n\nStudent \"1\" -- \"1\" ClassGroup : belongs to\nClassGroup \"1\" -- \"1\" Classroom : assigned to\nClassGroup \"10..31\" -- \"1\" Student : contains\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 14.548054599999887,
+ "prompt_tokens": 2410,
+ "completion_tokens": 267,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-o48gox7dxmbd5fqm0acg",
+  "object": "chat.completion",
+  "created": 1791857544,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass School {\n  + Name : string\n}\n\nclass Person {\n  + FirstName : string\n  + LastName : string\n}\n\nclass Teacher extends Person {\n  + EmailAddress : string\n}\n\nclass Student extends Person {\n}\n\nclass TeachingRelationship {\n  + Hours : int\n}\n\nclass ClassGroup {\n  + Name : string\n}\n\nclass Classroom {\n  + Name : string\n  + Capacity : int\n}\n\nclass Gym {\n  + Name : string\n  + Size : float\n}\n\nclass Room {\n}\n\nRoom <|-- Classroom\nRoom <|-- Gym\n\nSchool \"1\" -- \"1\" Teacher : Principal\nSchool \"1\" -- \"*\" Teacher : employs\nSchool \"1\" -- \"1\" Student : attends\nSchool \"1\" -- \"*\" Room : consists of\nSchool \"0..3\" -- \"1\" Teacher : teaches\nTeachingRelationship \"1\" -- \"1\" Teacher\nTeachingRelationship \"1\" -- \"1\" School\n\nStudent \"1\" -- \"1\" ClassGroup : belongs to\nClassGroup \"1\" -- \"1\" Classroom : assigned to\nClassGroup \"10..31\" -- \"1\" Student : contains\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2410,
+   "completion_tokens": 267,
+   "total_tokens": 2677,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

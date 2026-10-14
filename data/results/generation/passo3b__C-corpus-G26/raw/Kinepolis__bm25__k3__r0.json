@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Cinema\", \"attributes\": [\"+ Name : string\", \"+ Town : string\"]}, {\"name\": \"Theatre\", \"attributes\": [\"+ NumberOfSeats : int\"]}, {\"name\": \"Movie\"}, {\"name\": \"MovieCopy\", \"attributes\": [\"+ CopyId : string\"]}, {\"name\": \"Show\", \"attributes\": [\"+ StartTime : datetime\"]}, {\"name\": \"Reservation\", \"attributes\": [\"+ ReservationTime : datetime\"]}, {\"name\": \"Seat\", \"attributes\": [\"+ SeatNumber : int\"]}, {\"name\": \"CreditCard\", \"attributes\": [\"+ CardNumber : string\"]}, {\"name\": \"Ticket\", \"attributes\": [\"+ TicketNumber : string\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"Offer\", \"attributes\": [\"+ ExpiryTime : datetime\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Cinema\", \"target\": \"Theatre\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cinema\", \"target\": \"MovieCopy\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Movie\", \"target\": \"MovieCopy\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Theatre\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"MovieCopy\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Reservation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"Seat\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"CreditCard\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"Customer\", \"sourceMultiplicity\": \"0..*\", \"targetRole\": \"customer\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Offer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Offer\", \"target\": \"Customer\", \"sourceMultiplicity\": \"0..*\", \"targetRole\": \"customer\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Ticket\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"Seat\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 43.435487900002045,
+ "prompt_tokens": 5386,
+ "completion_tokens": 679,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qk9dojq9ujz2y3s4k1x4",
+  "object": "chat.completion",
+  "created": 1791875496,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Cinema\", \"attributes\": [\"+ Name : string\", \"+ Town : string\"]}, {\"name\": \"Theatre\", \"attributes\": [\"+ NumberOfSeats : int\"]}, {\"name\": \"Movie\"}, {\"name\": \"MovieCopy\", \"attributes\": [\"+ CopyId : string\"]}, {\"name\": \"Show\", \"attributes\": [\"+ StartTime : datetime\"]}, {\"name\": \"Reservation\", \"attributes\": [\"+ ReservationTime : datetime\"]}, {\"name\": \"Seat\", \"attributes\": [\"+ SeatNumber : int\"]}, {\"name\": \"CreditCard\", \"attributes\": [\"+ CardNumber : string\"]}, {\"name\": \"Ticket\", \"attributes\": [\"+ TicketNumber : string\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"Offer\", \"attributes\": [\"+ ExpiryTime : datetime\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Cinema\", \"target\": \"Theatre\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Cinema\", \"target\": \"MovieCopy\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Movie\", \"target\": \"MovieCopy\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Theatre\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"MovieCopy\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Reservation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"Seat\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"CreditCard\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"Customer\", \"sourceMultiplicity\": \"0..*\", \"targetRole\": \"customer\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Offer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Offer\", \"target\": \"Customer\", \"sourceMultiplicity\": \"0..*\", \"targetRole\": \"customer\"}, {\"type\": \"association\", \"source\": \"Show\", \"target\": \"Ticket\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"Seat\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Ticket\", \"target\": \"Show\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5386,
+   "completion_tokens": 679,
+   "total_tokens": 6065,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

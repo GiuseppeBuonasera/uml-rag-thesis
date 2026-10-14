@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"ProjectManager\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"Project\", \"attributes\": [\"+ StartDate : date\", \"+ EndDate : date\"]}, {\"name\": \"WorkProduct\", \"attributes\": [\"+ Description : string\", \"+ PercentComplete : float\", \"+ IsValidated : boolean\"]}, {\"name\": \"Requirement\", \"attributes\": [\"+ Media : string\"]}, {\"name\": \"System\", \"attributes\": [\"+ Platform : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"ProjectManager\", \"target\": \"Project\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Project\", \"target\": \"Requirement\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Project\", \"target\": \"System\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"inheritance\", \"child\": \"Requirement\", \"parent\": \"WorkProduct\"}, {\"type\": \"inheritance\", \"child\": \"System\", \"parent\": \"WorkProduct\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 20.597476499999175,
+ "prompt_tokens": 5231,
+ "completion_tokens": 249,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-vld2c8skxkb5fb4v35vfk",
+  "object": "chat.completion",
+  "created": 1791898787,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"ProjectManager\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"Project\", \"attributes\": [\"+ StartDate : date\", \"+ EndDate : date\"]}, {\"name\": \"WorkProduct\", \"attributes\": [\"+ Description : string\", \"+ PercentComplete : float\", \"+ IsValidated : boolean\"]}, {\"name\": \"Requirement\", \"attributes\": [\"+ Media : string\"]}, {\"name\": \"System\", \"attributes\": [\"+ Platform : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"ProjectManager\", \"target\": \"Project\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Project\", \"target\": \"Requirement\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Project\", \"target\": \"System\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"inheritance\", \"child\": \"Requirement\", \"parent\": \"WorkProduct\"}, {\"type\": \"inheritance\", \"child\": \"System\", \"parent\": \"WorkProduct\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5231,
+   "completion_tokens": 249,
+   "total_tokens": 5480,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

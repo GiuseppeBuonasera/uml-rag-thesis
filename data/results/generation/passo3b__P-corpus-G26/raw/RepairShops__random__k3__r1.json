@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass RepairShop {\n  + name : string\n  + address : string\n  + numberOfEmployees : int\n}\n\nclass Employee {\n  + taxCode : string\n  + address : string\n  + phoneNumber : string\n  + yearsOfService : int\n}\n\nclass Director extends Employee {\n  + age : int\n}\n\nclass Repair {\n  + code : string\n  + checkInDateTime : datetime\n  + returnDateTime : datetime\n}\n\nclass Vehicle {\n  + model : string\n  + type : string\n  + licensePlate : string\n  + yearOfRegistration : int\n}\n\nclass Owner {\n  + taxCode : string\n  + address : string\n  + phoneNumber : string\n}\n\nclass Manager {}\n\nclass AccountingOffice {}\n\nRepairShop \"1\" *-- \"1\" Director : manages\nRepairShop \"1\" *-- \"1..*\" Employee : employs\nRepairShop \"1\" -- \"*\" Repair : performs\nRepair \"1\" -- \"1\" Vehicle : involves\nVehicle \"1\" -- \"1\" Owner : owned by\n\nManager ..> RepairShop : analyzes\nManager ..> Employee : analyzes\nManager ..> Repair : analyzes\nDirector ..> RepairShop : manages\nDirector ..> AccountingOffice : communicates results to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 18.791509300001053,
+ "prompt_tokens": 3982,
+ "completion_tokens": 280,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-b46b74h6s0kgrd6ocgyn6f",
+  "object": "chat.completion",
+  "created": 1791861775,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass RepairShop {\n  + name : string\n  + address : string\n  + numberOfEmployees : int\n}\n\nclass Employee {\n  + taxCode : string\n  + address : string\n  + phoneNumber : string\n  + yearsOfService : int\n}\n\nclass Director extends Employee {\n  + age : int\n}\n\nclass Repair {\n  + code : string\n  + checkInDateTime : datetime\n  + returnDateTime : datetime\n}\n\nclass Vehicle {\n  + model : string\n  + type : string\n  + licensePlate : string\n  + yearOfRegistration : int\n}\n\nclass Owner {\n  + taxCode : string\n  + address : string\n  + phoneNumber : string\n}\n\nclass Manager {}\n\nclass AccountingOffice {}\n\nRepairShop \"1\" *-- \"1\" Director : manages\nRepairShop \"1\" *-- \"1..*\" Employee : employs\nRepairShop \"1\" -- \"*\" Repair : performs\nRepair \"1\" -- \"1\" Vehicle : involves\nVehicle \"1\" -- \"1\" Owner : owned by\n\nManager ..> RepairShop : analyzes\nManager ..> Employee : analyzes\nManager ..> Repair : analyzes\nDirector ..> RepairShop : manages\nDirector ..> AccountingOffice : communicates results to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3982,
+   "completion_tokens": 280,
+   "total_tokens": 4262,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

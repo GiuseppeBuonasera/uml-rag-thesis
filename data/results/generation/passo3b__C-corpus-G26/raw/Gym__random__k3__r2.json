@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ surname : string\",\n        \"+ age : int\",\n        \"+ address : string\",\n        \"+ profession : string\"\n      ]\n    },\n    {\n      \"name\": \"SubscriptionType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Monthly\",\n        \"Annual\"\n      ]\n    },\n    {\n      \"name\": \"Service\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"WorkoutPlan\",\n      \"attributes\": [\n        \"+ exercises : string[]\",\n        \"+ repetitions : int\",\n        \"+ frequency : int\"\n      ]\n    },\n    {\n      \"name\": \"MedicalStaff\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"MedicalCheck\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ weight : float\",\n        \"+ bodyFat : float\",\n        \"+ electrocardiogram : string\",\n        \"+ restingHeartbeat : int\",\n        \"+ stressHeartbeat : int\"\n      ]\n    },\n    {\n      \"name\": \"Gym\",\n      \"attributes\": [\n        \"+ totalIncome : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"SubscriptionType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Service\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"WorkoutPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MedicalStaff\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MedicalStaff\",\n      \"target\": \"MedicalCheck\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"MedicalCheck\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Gym\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 44.01350000000093,
+ "prompt_tokens": 5906,
+ "completion_tokens": 677,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-azjby0ilit2qdr84atw5h",
+  "object": "chat.completion",
+  "created": 1791886800,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ surname : string\",\n        \"+ age : int\",\n        \"+ address : string\",\n        \"+ profession : string\"\n      ]\n    },\n    {\n      \"name\": \"SubscriptionType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Monthly\",\n        \"Annual\"\n      ]\n    },\n    {\n      \"name\": \"Service\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"WorkoutPlan\",\n      \"attributes\": [\n        \"+ exercises : string[]\",\n        \"+ repetitions : int\",\n        \"+ frequency : int\"\n      ]\n    },\n    {\n      \"name\": \"MedicalStaff\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"MedicalCheck\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ weight : float\",\n        \"+ bodyFat : float\",\n        \"+ electrocardiogram : string\",\n        \"+ restingHeartbeat : int\",\n        \"+ stressHeartbeat : int\"\n      ]\n    },\n    {\n      \"name\": \"Gym\",\n      \"attributes\": [\n        \"+ totalIncome : float\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"SubscriptionType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Service\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"WorkoutPlan\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MedicalStaff\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MedicalStaff\",\n      \"target\": \"MedicalCheck\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"MedicalCheck\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Gym\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5906,
+   "completion_tokens": 677,
+   "total_tokens": 6583,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

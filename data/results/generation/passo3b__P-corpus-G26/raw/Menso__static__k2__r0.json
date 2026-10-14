@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass DeLijn {\n}\n\nclass Bus {\n  + LineNumber : int\n}\n\nclass Trajectory {\n  + IsOperational : boolean\n  + IsSuspended : boolean\n  + IsCancelled : boolean\n}\n\nclass Line {\n  + Category : string\n}\n\nclass ApprovalProcess {\n}\n\nclass TownAuthority {\n}\n\nclass MENSOProject {\n}\n\nclass MENSOUser {\n  + HomeAddress : string\n  + OfficeAddress : string\n  + WorkingHours : string\n}\n\nclass MENSOCard {\n}\n\nclass Trip {\n  + Time : time\n  + Date : date\n}\n\nclass MonthlyInvoice {\n  + TotalAmount : double\n  + Discount : float\n}\n\nclass Customer {\n}\n\nclass TicketMachine {\n}\n\nclass OtherCard {\n}\n\nclass Ticket {\n  + Price : double\n}\n\nDeLijn \"1\" -- \"*\" Bus\nDeLijn \"1\" -- \"*\" Trajectory\nDeLijn \"1\" -- \"*\" Line\nDeLijn \"1\" -- \"*\" MENSOUser\nDeLijn \"1\" -- \"*\" MonthlyInvoice\nDeLijn \"1\" -- \"*\" Trajectory : \"approves\"\n\nTownAuthority \"1\" -- \"*\" ApprovalProcess : \"handles\"\nApprovalProcess \"1\" -- \"1\" Trajectory : \"concerns\"\n\nLine \"1\" -- \"*\" Trajectory : \"groups\"\nLine \"1\" -- \"1\" MENSOProject : \"assigned to\"\n\nMENSOUser \"1\" -- \"1\" MENSOCard\nMENSOUser \"1\" -- \"*\" MonthlyInvoice\nMENSOUser \"1\" -- \"*\" Trip\n\nTrip \"*\" -- \"1\" Line\nTrip \"*\" -- \"1\" Bus\nTrip \"*\" -- \"1\" MENSOCard : \"uses\"\nTrip \"*\" -- \"0..1\" Ticket : \"if card forgotten\"\n\nMonthlyInvoice \"*\" -- \"1\" Customer\nCustomer \"1\" -- \"*\" MENSOUser\nCustomer \"1\" -- \"*\" Ticket : \"buys\"\nCustomer \"1\" -- \"*\" OtherCard : \"uses\"\n\nTicketMachine \"1\" -- \"*\" Trip : \"registers\"\nTicketMachine \"1\" -- \"0..1\" Ticket : \"sells\"\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 23.984373800001777,
+ "prompt_tokens": 2833,
+ "completion_tokens": 487,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cvey6p0wej4k7dd4wuc6ob",
+  "object": "chat.completion",
+  "created": 1791856834,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass DeLijn {\n}\n\nclass Bus {\n  + LineNumber : int\n}\n\nclass Trajectory {\n  + IsOperational : boolean\n  + IsSuspended : boolean\n  + IsCancelled : boolean\n}\n\nclass Line {\n  + Category : string\n}\n\nclass ApprovalProcess {\n}\n\nclass TownAuthority {\n}\n\nclass MENSOProject {\n}\n\nclass MENSOUser {\n  + HomeAddress : string\n  + OfficeAddress : string\n  + WorkingHours : string\n}\n\nclass MENSOCard {\n}\n\nclass Trip {\n  + Time : time\n  + Date : date\n}\n\nclass MonthlyInvoice {\n  + TotalAmount : double\n  + Discount : float\n}\n\nclass Customer {\n}\n\nclass TicketMachine {\n}\n\nclass OtherCard {\n}\n\nclass Ticket {\n  + Price : double\n}\n\nDeLijn \"1\" -- \"*\" Bus\nDeLijn \"1\" -- \"*\" Trajectory\nDeLijn \"1\" -- \"*\" Line\nDeLijn \"1\" -- \"*\" MENSOUser\nDeLijn \"1\" -- \"*\" MonthlyInvoice\nDeLijn \"1\" -- \"*\" Trajectory : \"approves\"\n\nTownAuthority \"1\" -- \"*\" ApprovalProcess : \"handles\"\nApprovalProcess \"1\" -- \"1\" Trajectory : \"concerns\"\n\nLine \"1\" -- \"*\" Trajectory : \"groups\"\nLine \"1\" -- \"1\" MENSOProject : \"assigned to\"\n\nMENSOUser \"1\" -- \"1\" MENSOCard\nMENSOUser \"1\" -- \"*\" MonthlyInvoice\nMENSOUser \"1\" -- \"*\" Trip\n\nTrip \"*\" -- \"1\" Line\nTrip \"*\" -- \"1\" Bus\nTrip \"*\" -- \"1\" MENSOCard : \"uses\"\nTrip \"*\" -- \"0..1\" Ticket : \"if card forgotten\"\n\nMonthlyInvoice \"*\" -- \"1\" Customer\nCustomer \"1\" -- \"*\" MENSOUser\nCustomer \"1\" -- \"*\" Ticket : \"buys\"\nCustomer \"1\" -- \"*\" OtherCard : \"uses\"\n\nTicketMachine \"1\" -- \"*\" Trip : \"registers\"\nTicketMachine \"1\" -- \"0..1\" Ticket : \"sells\"\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2833,
+   "completion_tokens": 487,
+   "total_tokens": 3320,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

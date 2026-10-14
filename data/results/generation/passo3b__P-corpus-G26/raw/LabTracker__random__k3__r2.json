@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Doctor {\n  + practitionerNumber : string\n  + fullName : string\n  + address : string\n  + phoneNumber : string\n  + signature : string\n}\n\nclass Patient {\n  + healthNumber : string\n  + firstName : string\n  + lastName : string\n  + dateOfBirth : date\n  + address : string\n  + phoneNumber : string\n}\n\nclass Requisition {\n  + validFrom : date\n  + repetitionCount : int\n  + repetitionInterval : Interval\n}\n\nenum Interval {\n  WEEKLY\n  MONTHLY\n  HALF_YEARLY\n  YEARLY\n}\n\nclass Test {\n  + duration : int\n}\n\nclass TestGroup {\n  + name : string\n}\n\nclass Lab {\n  + address : string\n  + registrationNumber : string\n  + businessHoursStart : time\n  + businessHoursEnd : time\n  + cancellationFee : float\n}\n\nclass Appointment {\n  + confirmationNumber : string\n  + date : date\n  + startTime : time\n  + endTime : time\n}\n\nclass TestResult {\n  + resultValue : string\n  + report : string\n}\n\nDoctor \"1\" -- \"*\" Requisition : prescribes\nPatient \"1\" -- \"*\" Requisition : receives\nRequisition \"1\" -- \"1..*\" Test : contains\nTest \"*\" -- \"1\" TestGroup : belongs to\nTest \"1\" -- \"0..*\" TestResult : produces\nPatient \"1\" -- \"*\" TestResult : views\nDoctor \"1\" -- \"*\" TestResult : views\nPatient \"1\" -- \"*\" Appointment : books\nAppointment \"1\" -- \"1\" Lab : at\nAppointment \"1\" -- \"1\" Test : for\nAppointment \"*\" -- \"1\" Requisition : for\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 24.0855485999964,
+ "prompt_tokens": 3535,
+ "completion_tokens": 389,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-44m5f6npepk1gko7rbp6aj",
+  "object": "chat.completion",
+  "created": 1791856602,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Doctor {\n  + practitionerNumber : string\n  + fullName : string\n  + address : string\n  + phoneNumber : string\n  + signature : string\n}\n\nclass Patient {\n  + healthNumber : string\n  + firstName : string\n  + lastName : string\n  + dateOfBirth : date\n  + address : string\n  + phoneNumber : string\n}\n\nclass Requisition {\n  + validFrom : date\n  + repetitionCount : int\n  + repetitionInterval : Interval\n}\n\nenum Interval {\n  WEEKLY\n  MONTHLY\n  HALF_YEARLY\n  YEARLY\n}\n\nclass Test {\n  + duration : int\n}\n\nclass TestGroup {\n  + name : string\n}\n\nclass Lab {\n  + address : string\n  + registrationNumber : string\n  + businessHoursStart : time\n  + businessHoursEnd : time\n  + cancellationFee : float\n}\n\nclass Appointment {\n  + confirmationNumber : string\n  + date : date\n  + startTime : time\n  + endTime : time\n}\n\nclass TestResult {\n  + resultValue : string\n  + report : string\n}\n\nDoctor \"1\" -- \"*\" Requisition : prescribes\nPatient \"1\" -- \"*\" Requisition : receives\nRequisition \"1\" -- \"1..*\" Test : contains\nTest \"*\" -- \"1\" TestGroup : belongs to\nTest \"1\" -- \"0..*\" TestResult : produces\nPatient \"1\" -- \"*\" TestResult : views\nDoctor \"1\" -- \"*\" TestResult : views\nPatient \"1\" -- \"*\" Appointment : books\nAppointment \"1\" -- \"1\" Lab : at\nAppointment \"1\" -- \"1\" Test : for\nAppointment \"*\" -- \"1\" Requisition : for\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3535,
+   "completion_tokens": 389,
+   "total_tokens": 3924,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

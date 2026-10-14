@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {\n  + username : string\n  + password : string\n}\n\nclass Player extends User {\n}\n\nclass Admin extends User {\n  + createGame()\n}\n\nclass Game {\n  + name : string\n  + minSpeed : float\n  + speedIncreaseFactor : float\n  + maxLength : float\n  + minLength : float\n  + isPublished : boolean\n}\n\nclass Block {\n  + color : string\n  + points : int\n}\n\nclass Level {\n  + levelNumber : int\n  + isRandom : boolean\n  + startingArrangement : string[]\n  + blocksAtStartCount : int\n}\n\nclass HallOfFame {\n}\n\nclass ScoreEntry {\n  + score : int\n}\n\nclass GameSession {\n  + lives : int\n  + currentScore : int\n  + isPaused : boolean\n}\n\nAdmin \"1\" -- \"0..*\" Game : manages\nGame \"1\" -- \"1\" HallOfFame : has\nHallOfFame \"1\" -- \"0..*\" ScoreEntry : contains\nScoreEntry \"0..*\" -- \"1\" Player : belongs to\nGame \"1\" *-- \"1..99\" Level : consists of\nGame \"1\" *-- \"0..*\" Block : defines\nLevel \"1\" -- \"0..*\" Block : uses\nPlayer \"0..*\" -- \"0..*\" Game : plays\nPlayer \"0..1\" -- \"0..*\" GameSession : participates in\nGameSession \"1\" -- \"1\" Game : is a session of\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 18.279604899998958,
+ "prompt_tokens": 2980,
+ "completion_tokens": 351,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-s8y6n309zqbdlmliaq4vo",
+  "object": "chat.completion",
+  "created": 1791854434,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + username : string\n  + password : string\n}\n\nclass Player extends User {\n}\n\nclass Admin extends User {\n  + createGame()\n}\n\nclass Game {\n  + name : string\n  + minSpeed : float\n  + speedIncreaseFactor : float\n  + maxLength : float\n  + minLength : float\n  + isPublished : boolean\n}\n\nclass Block {\n  + color : string\n  + points : int\n}\n\nclass Level {\n  + levelNumber : int\n  + isRandom : boolean\n  + startingArrangement : string[]\n  + blocksAtStartCount : int\n}\n\nclass HallOfFame {\n}\n\nclass ScoreEntry {\n  + score : int\n}\n\nclass GameSession {\n  + lives : int\n  + currentScore : int\n  + isPaused : boolean\n}\n\nAdmin \"1\" -- \"0..*\" Game : manages\nGame \"1\" -- \"1\" HallOfFame : has\nHallOfFame \"1\" -- \"0..*\" ScoreEntry : contains\nScoreEntry \"0..*\" -- \"1\" Player : belongs to\nGame \"1\" *-- \"1..99\" Level : consists of\nGame \"1\" *-- \"0..*\" Block : defines\nLevel \"1\" -- \"0..*\" Block : uses\nPlayer \"0..*\" -- \"0..*\" Game : plays\nPlayer \"0..1\" -- \"0..*\" GameSession : participates in\nGameSession \"1\" -- \"1\" Game : is a session of\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2980,
+   "completion_tokens": 351,
+   "total_tokens": 3331,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

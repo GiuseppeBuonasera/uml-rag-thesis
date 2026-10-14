@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {\n  + username : string\n  + password : string\n}\n\nclass Player extends User {\n  + lives : int\n  + score : int\n}\n\nclass Admin extends User {\n}\n\nclass Game {\n  + name : string\n  + minSpeed : float\n  + speedIncreaseFactor : float\n  + maxLength : float\n  + minLength : float\n}\n\nclass HallOfFame {\n}\n\nclass Block {\n  + color : string\n  + points : int\n}\n\nclass Level {\n  + levelNumber : int\n  + isRandom : boolean\n  + startingArrangement : string[]\n  + blocksAtStart : int\n}\n\nclass GridPosition {\n  + x : int\n  + y : int\n}\n\nclass Cell {\n  + position : GridPosition\n}\n\nclass GameSession {\n  + currentLevel : int\n  + currentScore : int\n  + currentLives : int\n  + isPaused : boolean\n}\n\nAdmin \"1\" -- \"*\" Game : creates\nAdmin \"0..1\" -- \"1\" Game : manages\nPlayer \"0..*\" -- \"0..*\" Game : plays\nPlayer \"1\" -- \"0..*\" HallOfFame : competes in\nGame \"1\" *-- \"1\" HallOfFame\nGame \"1\" *-- \"*\" Level\nGame \"1\" *-- \"*\" Block\nGame \"1\" *-- \"0..1\" GameSession\nLevel \"1\" *-- \"*\" Cell\nCell \"0..1\" -- \"0..1\" Block\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 20.352470099998754,
+ "prompt_tokens": 3512,
+ "completion_tokens": 349,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wnqpfdfbi3mb8j0h8t97",
+  "object": "chat.completion",
+  "created": 1791854646,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + username : string\n  + password : string\n}\n\nclass Player extends User {\n  + lives : int\n  + score : int\n}\n\nclass Admin extends User {\n}\n\nclass Game {\n  + name : string\n  + minSpeed : float\n  + speedIncreaseFactor : float\n  + maxLength : float\n  + minLength : float\n}\n\nclass HallOfFame {\n}\n\nclass Block {\n  + color : string\n  + points : int\n}\n\nclass Level {\n  + levelNumber : int\n  + isRandom : boolean\n  + startingArrangement : string[]\n  + blocksAtStart : int\n}\n\nclass GridPosition {\n  + x : int\n  + y : int\n}\n\nclass Cell {\n  + position : GridPosition\n}\n\nclass GameSession {\n  + currentLevel : int\n  + currentScore : int\n  + currentLives : int\n  + isPaused : boolean\n}\n\nAdmin \"1\" -- \"*\" Game : creates\nAdmin \"0..1\" -- \"1\" Game : manages\nPlayer \"0..*\" -- \"0..*\" Game : plays\nPlayer \"1\" -- \"0..*\" HallOfFame : competes in\nGame \"1\" *-- \"1\" HallOfFame\nGame \"1\" *-- \"*\" Level\nGame \"1\" *-- \"*\" Block\nGame \"1\" *-- \"0..1\" GameSession\nLevel \"1\" *-- \"*\" Cell\nCell \"0..1\" -- \"0..1\" Block\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3512,
+   "completion_tokens": 349,
+   "total_tokens": 3861,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Bus {\n  + LineNumber : string\n}\n\nclass Trajectory {\n  + Destination : string\n  + Status : string\n}\n\nclass Line {\n  + Category : string\n}\n\nclass TownAuthority {\n  + ApprovalStatus : string\n}\n\nclass ApprovalProcedure {\n  + ProcedureNumber : int\n}\n\nclass MENSOUser {\n  + HomeAddress : string\n  + OfficeAddress : string\n  + WorkingHours : string\n}\n\nclass MENSOCard {\n  + CardNumber : string\n}\n\nclass Trip {\n  + Date : date\n  + Time : time\n}\n\nclass Invoice {\n  + Amount : double\n  + Discount : double\n}\n\nclass Customer {\n  + Name : string\n}\n\nBus \"0..*\" -- \"0..*\" Trajectory : assigned to\nLine \"1\" -- \"1..*\" Trajectory : groups\nTrajectory \"0..*\" -- \"0..1\" TownAuthority : approved by\nTrajectory \"0..*\" -- \"0..*\" ApprovalProcedure : undergoes\nMENSOUser \"1\" -- \"1\" MENSOCard : possesses\nMENSOUser \"1\" -- \"0..*\" Invoice : receives\nMENSOUser \"1\" -- \"0..*\" Trip : performs\nMENSOCard \"1\" -- \"0..*\" Trip : used for\nLine \"1\" -- \"0..*\" Trip : traveled on\nInvoice \"1\" -- \"0..*\" Trip : records\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 18.785185400000046,
+ "prompt_tokens": 3272,
+ "completion_tokens": 323,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-slxj5tc6scxpk9l00ypd",
+  "object": "chat.completion",
+  "created": 1791856999,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bus {\n  + LineNumber : string\n}\n\nclass Trajectory {\n  + Destination : string\n  + Status : string\n}\n\nclass Line {\n  + Category : string\n}\n\nclass TownAuthority {\n  + ApprovalStatus : string\n}\n\nclass ApprovalProcedure {\n  + ProcedureNumber : int\n}\n\nclass MENSOUser {\n  + HomeAddress : string\n  + OfficeAddress : string\n  + WorkingHours : string\n}\n\nclass MENSOCard {\n  + CardNumber : string\n}\n\nclass Trip {\n  + Date : date\n  + Time : time\n}\n\nclass Invoice {\n  + Amount : double\n  + Discount : double\n}\n\nclass Customer {\n  + Name : string\n}\n\nBus \"0..*\" -- \"0..*\" Trajectory : assigned to\nLine \"1\" -- \"1..*\" Trajectory : groups\nTrajectory \"0..*\" -- \"0..1\" TownAuthority : approved by\nTrajectory \"0..*\" -- \"0..*\" ApprovalProcedure : undergoes\nMENSOUser \"1\" -- \"1\" MENSOCard : possesses\nMENSOUser \"1\" -- \"0..*\" Invoice : receives\nMENSOUser \"1\" -- \"0..*\" Trip : performs\nMENSOCard \"1\" -- \"0..*\" Trip : used for\nLine \"1\" -- \"0..*\" Trip : traveled on\nInvoice \"1\" -- \"0..*\" Trip : records\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3272,
+   "completion_tokens": 323,
+   "total_tokens": 3595,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

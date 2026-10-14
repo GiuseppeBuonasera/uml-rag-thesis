@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"GasStation\",\n      \"attributes\": [\n        \"+ id\",\n        \"+ address\"\n      ]\n    },\n    {\n      \"name\": \"FuelPump\",\n      \"attributes\": [\n        \"+ number\",\n        \"+ isSelfService\"\n      ]\n    },\n    {\n      \"name\": \"Fuel\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ octaneRating\"\n      ]\n    },\n    {\n      \"name\": \"DailyPrice\",\n      \"attributes\": [\n        \"+ date\",\n        \"+ pricePerLiter\"\n      ]\n    },\n    {\n      \"name\": \"FuelPurchase\",\n      \"attributes\": [\n        \"+ id\",\n        \"+ litersDispensed\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"GasStation\",\n      \"part\": \"FuelPump\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..12\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FuelPump\",\n      \"target\": \"Fuel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DailyPrice\",\n      \"target\": \"Fuel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DailyPrice\",\n      \"target\": \"GasStation\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FuelPurchase\",\n      \"target\": \"FuelPump\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FuelPurchase\",\n      \"target\": \"DailyPrice\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FuelPurchase\",\n      \"target\": \"Fuel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 32.606285200003185,
+ "prompt_tokens": 3656,
+ "completion_tokens": 554,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zb2b4jpch9hpbheakq5won",
+  "object": "chat.completion",
+  "created": 1791873239,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"GasStation\",\n      \"attributes\": [\n        \"+ id\",\n        \"+ address\"\n      ]\n    },\n    {\n      \"name\": \"FuelPump\",\n      \"attributes\": [\n        \"+ number\",\n        \"+ isSelfService\"\n      ]\n    },\n    {\n      \"name\": \"Fuel\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ octaneRating\"\n      ]\n    },\n    {\n      \"name\": \"DailyPrice\",\n      \"attributes\": [\n        \"+ date\",\n        \"+ pricePerLiter\"\n      ]\n    },\n    {\n      \"name\": \"FuelPurchase\",\n      \"attributes\": [\n        \"+ id\",\n        \"+ litersDispensed\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"GasStation\",\n      \"part\": \"FuelPump\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..12\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FuelPump\",\n      \"target\": \"Fuel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DailyPrice\",\n      \"target\": \"Fuel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DailyPrice\",\n      \"target\": \"GasStation\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FuelPurchase\",\n      \"target\": \"FuelPump\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FuelPurchase\",\n      \"target\": \"DailyPrice\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FuelPurchase\",\n      \"target\": \"Fuel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3656,
+   "completion_tokens": 554,
+   "total_tokens": 4210,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

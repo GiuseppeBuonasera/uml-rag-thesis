@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Doctor\", \"attributes\": [\"+ practitionerNumber : long\", \"+ fullName : string\", \"+ address : string\", \"+ phoneNumber : string\", \"+ signature : string\"]}, {\"name\": \"Patient\", \"attributes\": [\"+ healthNumber : string\", \"+ firstName : string\", \"+ lastName : string\", \"+ dateOfBirth : date\", \"+ address : string\", \"+ phoneNumber : string\"]}, {\"name\": \"Requisition\", \"attributes\": [\"+ validFrom : date\", \"+ repetitionCount : int\", \"+ repetitionInterval : Interval\"]}, {\"name\": \"Test\", \"attributes\": [\"+ duration : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"prescribes\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"is subject of\"}, {\"type\": \"association\", \"source\": \"Requisition\", \"target\": \"Test\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"prescribes to\", \"sourceRole\": \"doctor\", \"targetRole\": \"patient\"}, {\"type\": \"association\", \"source\": \"Requisition\", \"target\": \"Lab\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"scheduled at\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Requisition\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"Lab\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"Test\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Lab\", \"target\": \"Lab\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"has business hours\"}]}, \"enum\": [{\"name\": \"Interval\", \"values\": [\"weekly\", \"monthly\", \"every half year\", \"yearly\"]}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 26.48365229999763,
+ "prompt_tokens": 1743,
+ "completion_tokens": 559,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-giqxi4j7lptvkuxzplavf",
+  "object": "chat.completion",
+  "created": 1791875771,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Doctor\", \"attributes\": [\"+ practitionerNumber : long\", \"+ fullName : string\", \"+ address : string\", \"+ phoneNumber : string\", \"+ signature : string\"]}, {\"name\": \"Patient\", \"attributes\": [\"+ healthNumber : string\", \"+ firstName : string\", \"+ lastName : string\", \"+ dateOfBirth : date\", \"+ address : string\", \"+ phoneNumber : string\"]}, {\"name\": \"Requisition\", \"attributes\": [\"+ validFrom : date\", \"+ repetitionCount : int\", \"+ repetitionInterval : Interval\"]}, {\"name\": \"Test\", \"attributes\": [\"+ duration : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"prescribes\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"is subject of\"}, {\"type\": \"association\", \"source\": \"Requisition\", \"target\": \"Test\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"prescribes to\", \"sourceRole\": \"doctor\", \"targetRole\": \"patient\"}, {\"type\": \"association\", \"source\": \"Requisition\", \"target\": \"Lab\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"scheduled at\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Requisition\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"Lab\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"Test\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Lab\", \"target\": \"Lab\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"has business hours\"}]}, \"enum\": [{\"name\": \"Interval\", \"values\": [\"weekly\", \"monthly\", \"every half year\", \"yearly\"]}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1743,
+   "completion_tokens": 559,
+   "total_tokens": 2302,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

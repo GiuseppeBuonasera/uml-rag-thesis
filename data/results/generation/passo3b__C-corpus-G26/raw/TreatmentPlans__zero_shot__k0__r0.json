@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Hospital\", \"attributes\": []}, {\"name\": \"ExaminationType\", \"attributes\": []}, {\"name\": \"Permission\", \"attributes\": []}, {\"name\": \"ProblemType\", \"attributes\": []}, {\"name\": \"TreatmentPlan\", \"attributes\": []}, {\"name\": \"Doctor\", \"attributes\": []}, {\"name\": \"Patient\", \"attributes\": []}, {\"name\": \"Diagnosis\", \"attributes\": []}, {\"name\": \"ActualTreatment\", \"attributes\": []}, {\"name\": \"MedicalAction\", \"attributes\": []}, {\"name\": \"Examination\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Permission\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Permission\", \"target\": \"ExaminationType\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ProblemType\", \"target\": \"TreatmentPlan\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TreatmentPlan\", \"target\": \"ExaminationType\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Doctor\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Patient\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Diagnosis\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Diagnosis\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Diagnosis\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"ActualTreatment\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TreatmentPlan\", \"target\": \"ActualTreatment\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"ActualTreatment\", \"part\": \"Examination\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"ActualTreatment\", \"part\": \"MedicalAction\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Examination\", \"target\": \"ExaminationType\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Examination\", \"target\": \"Hospital\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 23.892234500002814,
+ "prompt_tokens": 1331,
+ "completion_tokens": 533,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-b1hjlg4nzaiid6j0arvbi",
+  "object": "chat.completion",
+  "created": 1791883520,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Hospital\", \"attributes\": []}, {\"name\": \"ExaminationType\", \"attributes\": []}, {\"name\": \"Permission\", \"attributes\": []}, {\"name\": \"ProblemType\", \"attributes\": []}, {\"name\": \"TreatmentPlan\", \"attributes\": []}, {\"name\": \"Doctor\", \"attributes\": []}, {\"name\": \"Patient\", \"attributes\": []}, {\"name\": \"Diagnosis\", \"attributes\": []}, {\"name\": \"ActualTreatment\", \"attributes\": []}, {\"name\": \"MedicalAction\", \"attributes\": []}, {\"name\": \"Examination\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Permission\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Permission\", \"target\": \"ExaminationType\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ProblemType\", \"target\": \"TreatmentPlan\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TreatmentPlan\", \"target\": \"ExaminationType\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Doctor\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Patient\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Diagnosis\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Diagnosis\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Diagnosis\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"ActualTreatment\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TreatmentPlan\", \"target\": \"ActualTreatment\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"ActualTreatment\", \"part\": \"Examination\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"ActualTreatment\", \"part\": \"MedicalAction\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Examination\", \"target\": \"ExaminationType\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Examination\", \"target\": \"Hospital\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1331,
+   "completion_tokens": 533,
+   "total_tokens": 1864,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Student\", \"attributes\": [\"+ studentID : long\", \"+ birthDate : date\", \"+ birthCity : string\", \"+ birthRegion : string\", \"+ enrollmentYear : int\"]}, {\"name\": \"Professor\", \"attributes\": [\"+ name : string\", \"+ birthDate : date\", \"+ birthCity : string\"]}, {\"name\": \"Faculty\", \"attributes\": [\"+ name : string\", \"+ type : string\"]}, {\"name\": \"Course\", \"attributes\": [\"+ code : string\", \"+ lectureHours : int\"]}, {\"name\": \"Exam\", \"attributes\": [\"+ grade : float\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Student\", \"target\": \"Faculty\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"label\": \"enrolled in\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"Exam\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Exam\", \"target\": \"Course\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Professor\", \"target\": \"Course\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Course\", \"target\": \"Faculty\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 15.659525800001575,
+ "prompt_tokens": 1201,
+ "completion_tokens": 309,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-m5tdlys84hq2f2kj04hjp",
+  "object": "chat.completion",
+  "created": 1791898217,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Student\", \"attributes\": [\"+ studentID : long\", \"+ birthDate : date\", \"+ birthCity : string\", \"+ birthRegion : string\", \"+ enrollmentYear : int\"]}, {\"name\": \"Professor\", \"attributes\": [\"+ name : string\", \"+ birthDate : date\", \"+ birthCity : string\"]}, {\"name\": \"Faculty\", \"attributes\": [\"+ name : string\", \"+ type : string\"]}, {\"name\": \"Course\", \"attributes\": [\"+ code : string\", \"+ lectureHours : int\"]}, {\"name\": \"Exam\", \"attributes\": [\"+ grade : float\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Student\", \"target\": \"Faculty\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"label\": \"enrolled in\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"Exam\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Exam\", \"target\": \"Course\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Professor\", \"target\": \"Course\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Course\", \"target\": \"Faculty\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1201,
+   "completion_tokens": 309,
+   "total_tokens": 1510,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"DestroyBlockApp\"}, {\"name\": \"User\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}, {\"name\": \"Player\", \"attributes\": [\"+ lives : int = 3\"]}, {\"name\": \"Admin\"}, {\"name\": \"Game\", \"attributes\": [\"+ name : string\", \"+ minSpeed : float\", \"+ speedIncreaseFactor : float\", \"+ maxLength : float\", \"+ minLength : float\"]}, {\"name\": \"HallOfFame\", \"attributes\": [\"+ highScores : int[]\"]}, {\"name\": \"Block\", \"attributes\": [\"+ color : string\", \"+ points : int\"]}, {\"name\": \"Level\", \"attributes\": [\"+ levelNumber : int\", \"+ isRandom : boolean\", \"+ startingBlocksCount : int\"]}, {\"name\": \"GridPosition\", \"attributes\": [\"+ x : int\", \"+ y : int\"]}, {\"name\": \"BlockPlacement\", \"attributes\": []}, {\"name\": \"Score\", \"attributes\": [\"+ totalScore : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"User\", \"target\": \"Player\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"Admin\"}, {\"type\": \"composition\", \"whole\": \"DestroyBlockApp\", \"part\": \"User\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"DestroyBlockApp\", \"part\": \"Game\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Game\", \"part\": \"HallOfFame\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Game\", \"part\": \"Block\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Game\", \"part\": \"Level\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..99\"}, {\"type\": \"association\", \"source\": \"Admin\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Game\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Score\"}, {\"type\": \"association\", \"source\": \"HallOfFame\", \"target\": \"Score\"}, {\"type\": \"association\", \"source\": \"Level\", \"target\": \"BlockPlacement\"}, {\"type\": \"association\", \"source\": \"BlockPlacement\", \"target\": \"Block\"}, {\"type\": \"association\", \"source\": \"BlockPlacement\", \"target\": \"GridPosition\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 29.348806499998318,
+ "prompt_tokens": 5129,
+ "completion_tokens": 596,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6cbjeq5tfhfewt8ag1ujuv",
+  "object": "chat.completion",
+  "created": 1791871759,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"DestroyBlockApp\"}, {\"name\": \"User\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}, {\"name\": \"Player\", \"attributes\": [\"+ lives : int = 3\"]}, {\"name\": \"Admin\"}, {\"name\": \"Game\", \"attributes\": [\"+ name : string\", \"+ minSpeed : float\", \"+ speedIncreaseFactor : float\", \"+ maxLength : float\", \"+ minLength : float\"]}, {\"name\": \"HallOfFame\", \"attributes\": [\"+ highScores : int[]\"]}, {\"name\": \"Block\", \"attributes\": [\"+ color : string\", \"+ points : int\"]}, {\"name\": \"Level\", \"attributes\": [\"+ levelNumber : int\", \"+ isRandom : boolean\", \"+ startingBlocksCount : int\"]}, {\"name\": \"GridPosition\", \"attributes\": [\"+ x : int\", \"+ y : int\"]}, {\"name\": \"BlockPlacement\", \"attributes\": []}, {\"name\": \"Score\", \"attributes\": [\"+ totalScore : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"User\", \"target\": \"Player\"}, {\"type\": \"association\", \"source\": \"User\", \"target\": \"Admin\"}, {\"type\": \"composition\", \"whole\": \"DestroyBlockApp\", \"part\": \"User\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"DestroyBlockApp\", \"part\": \"Game\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Game\", \"part\": \"HallOfFame\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Game\", \"part\": \"Block\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Game\", \"part\": \"Level\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..99\"}, {\"type\": \"association\", \"source\": \"Admin\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Game\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Score\"}, {\"type\": \"association\", \"source\": \"HallOfFame\", \"target\": \"Score\"}, {\"type\": \"association\", \"source\": \"Level\", \"target\": \"BlockPlacement\"}, {\"type\": \"association\", \"source\": \"BlockPlacement\", \"target\": \"Block\"}, {\"type\": \"association\", \"source\": \"BlockPlacement\", \"target\": \"GridPosition\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5129,
+   "completion_tokens": 596,
+   "total_tokens": 5725,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

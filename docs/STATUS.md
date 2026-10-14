@@ -21,6 +21,15 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
   dall'espansore unico.
 
 ## Stato
+- **3b completato (2026-10-13, 1.938/1.938)**; risultati visti dall'utente prima dello script di analisi (deroga
+  alla voce 149, da registrare). Script di analisi del 3b ancora da scrivere. Strumenti di confronto:
+  `experiments/compare_3b.py` (notebook 6 ter) e report di revisione (notebook 7, ora anche per i De Bari).
+- **Leva v5c (2026-10-14, voce 150)**: "attributes" sempre presente nel compatto (istruzioni + esempi), 40 generazioni
+  sul dev set, regola in `experiments/analyze_v5c.py`. **Da lanciare dall'utente** (notebook, sezione 3 sexies); se
+  adottata si rifà la parte compatta del 3b.
+- **3b in avvio (2026-10-13, voce 149)**: decisione dell'utente di partire prima delle risposte dei relatori (domande
+  8 e 14: rischio di rifacimento accettato), sul commit `485fd0f`. **Non guardare i risultati** finché lo script
+  di analisi del 3b non è scritto e testato (prossimo lavoro dell'assistente, durante le generazioni).
 - **Leva v5b, attributi del compatto (2026-10-13, voce 146)**: riallineata alla configurazione di lavoro (vista
   `clean_v1`) e alle metriche per elemento; regola definitiva in `experiments/analyze_v5b.py` (scheletri ≤ 3 dai 7 della
   baseline, controlli sugli attributi, non inferiorità su relazioni, R, M, Vc). Config `dev_g26b.yaml`, 16

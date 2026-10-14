@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Course {\n  + name : string\n}\n\nclass Edition {\n  + numberOfParticipants : int\n}\n\nclass Lesson {\n  + date : date\n  + startTime : time\n  + duration : int\n  + room : string\n}\n\nclass Resource {\n  + name : string\n}\n\nclass Teacher {\n  + name : string\n}\n\nclass InternalTeacher extends Teacher {}\n\nclass ExternalTeacher extends Teacher {}\n\nclass MasterStudent {}\n\nclass ExternalAuditor {}\n\nclass Enrollment {\n}\n\nCourse \"1\" -- \"0..*\" Edition : is offered in\nEdition \"1\" *-- \"1..*\" Lesson : is organized into\nLesson \"1\" -- \"1..*\" Teacher : is given by\nCourse \"1\" -- \"0..*\" Teacher : has assigned\nEdition \"1\" -- \"0..*\" MasterStudent : has enrolled\nEdition \"1\" -- \"0..*\" ExternalAuditor : has enrolled\nEdition \"1\" -- \"0..*\" Enrollment : has\nMasterStudent \"1\" -- \"0..*\" Enrollment : participates\nExternalAuditor \"1\" -- \"0..*\" Enrollment : participates\nLesson \"0..*\" -- \"0..*\" Resource : requires\n\nCourse \"1\" -- \"1\" InternalTeacher : has responsible\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 16.49557999999888,
+ "prompt_tokens": 2728,
+ "completion_tokens": 279,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lhzs1142hms7u1schtvy8",
+  "object": "chat.completion",
+  "created": 1791860153,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Course {\n  + name : string\n}\n\nclass Edition {\n  + numberOfParticipants : int\n}\n\nclass Lesson {\n  + date : date\n  + startTime : time\n  + duration : int\n  + room : string\n}\n\nclass Resource {\n  + name : string\n}\n\nclass Teacher {\n  + name : string\n}\n\nclass InternalTeacher extends Teacher {}\n\nclass ExternalTeacher extends Teacher {}\n\nclass MasterStudent {}\n\nclass ExternalAuditor {}\n\nclass Enrollment {\n}\n\nCourse \"1\" -- \"0..*\" Edition : is offered in\nEdition \"1\" *-- \"1..*\" Lesson : is organized into\nLesson \"1\" -- \"1..*\" Teacher : is given by\nCourse \"1\" -- \"0..*\" Teacher : has assigned\nEdition \"1\" -- \"0..*\" MasterStudent : has enrolled\nEdition \"1\" -- \"0..*\" ExternalAuditor : has enrolled\nEdition \"1\" -- \"0..*\" Enrollment : has\nMasterStudent \"1\" -- \"0..*\" Enrollment : participates\nExternalAuditor \"1\" -- \"0..*\" Enrollment : participates\nLesson \"0..*\" -- \"0..*\" Resource : requires\n\nCourse \"1\" -- \"1\" InternalTeacher : has responsible\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2728,
+   "completion_tokens": 279,
+   "total_tokens": 3007,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

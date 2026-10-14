@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Organizer {\n  + FirstName : string\n  + LastName : string\n  + Email : string\n  + PostalAddress : string\n  + PhoneNumber : string\n  + Password : string\n}\n\nclass Attendee {\n  + FirstName : string\n  + LastName : string\n  + Email : string\n  + Password : string\n  + AttendanceStatus : string\n}\n\nclass EventType {\n  + Name : string\n}\n\nclass Event {\n  + Occasion : string\n  + StartDateTime : datetime\n  + EndDateTime : datetime\n}\n\nclass Location {\n  + Name : string\n  + Address : string\n}\n\nclass Task {\n  + Description : string\n  + Status : string\n  + AssignedToAttendee : boolean\n}\n\nclass Invitation {\n  + Status : string\n}\n\nclass ItemToBring {\n  + Name : string\n}\n\nOrganizer \"1..*\" -- \"0..*\" Event : organizes\nOrganizer \"0..1\" -- \"0..*\" Event : attends\nOrganizer \"0..*\" -- \"0..*\" Attendee : invites\nAttendee \"0..*\" -- \"0..*\" Event : attends\n\nEvent \"1\" -- \"1\" EventType\nEvent \"1\" -- \"1\" Location\nEvent \"1\" *-- \"0..*\" Task\nEvent \"1\" -- \"0..*\" Invitation\nInvitation \"1\" -- \"1\" Attendee\nInvitation \"1\" -- \"1\" Event\n\nAttendee \"0..1\" -- \"0..*\" ItemToBring : brings\nTask \"0..1\" -- \"0..*\" ItemToBring : involves\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 20.161601400002837,
+ "prompt_tokens": 2763,
+ "completion_tokens": 356,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-eye1in3qqfl3rooybvlxg9",
+  "object": "chat.completion",
+  "created": 1791853782,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Organizer {\n  + FirstName : string\n  + LastName : string\n  + Email : string\n  + PostalAddress : string\n  + PhoneNumber : string\n  + Password : string\n}\n\nclass Attendee {\n  + FirstName : string\n  + LastName : string\n  + Email : string\n  + Password : string\n  + AttendanceStatus : string\n}\n\nclass EventType {\n  + Name : string\n}\n\nclass Event {\n  + Occasion : string\n  + StartDateTime : datetime\n  + EndDateTime : datetime\n}\n\nclass Location {\n  + Name : string\n  + Address : string\n}\n\nclass Task {\n  + Description : string\n  + Status : string\n  + AssignedToAttendee : boolean\n}\n\nclass Invitation {\n  + Status : string\n}\n\nclass ItemToBring {\n  + Name : string\n}\n\nOrganizer \"1..*\" -- \"0..*\" Event : organizes\nOrganizer \"0..1\" -- \"0..*\" Event : attends\nOrganizer \"0..*\" -- \"0..*\" Attendee : invites\nAttendee \"0..*\" -- \"0..*\" Event : attends\n\nEvent \"1\" -- \"1\" EventType\nEvent \"1\" -- \"1\" Location\nEvent \"1\" *-- \"0..*\" Task\nEvent \"1\" -- \"0..*\" Invitation\nInvitation \"1\" -- \"1\" Attendee\nInvitation \"1\" -- \"1\" Event\n\nAttendee \"0..1\" -- \"0..*\" ItemToBring : brings\nTask \"0..1\" -- \"0..*\" ItemToBring : involves\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2763,
+   "completion_tokens": 356,
+   "total_tokens": 3119,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

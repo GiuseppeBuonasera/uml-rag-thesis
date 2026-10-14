@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Customer\", \"attributes\": [\"+ address : string\", \"+ vatNumber : string\", \"+ headOfficeAddress : string\"]}, {\"name\": \"Product\", \"attributes\": [\"+ stockLevel : int\"]}, {\"name\": \"Order\", \"attributes\": [\"+ paidDate : date\", \"+ isPaid : boolean\"]}, {\"name\": \"OrderLine\", \"attributes\": [\"+ quantity : int\", \"+ isShipped : boolean\"]}, {\"name\": \"Shipment\", \"attributes\": [\"+ status : string\"]}, {\"name\": \"Delivery\", \"attributes\": [\"+ status : string\", \"+ deliveryAddress : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Order\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"OrderLine\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"OrderLine\", \"target\": \"Product\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Order\", \"target\": \"OrderLine\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Shipment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Shipment\", \"target\": \"OrderLine\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Shipment\", \"target\": \"Delivery\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Delivery\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 20.45482159999665,
+ "prompt_tokens": 1726,
+ "completion_tokens": 416,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-r41p6zn1fisa2d9cshsp3s",
+  "object": "chat.completion",
+  "created": 1791879056,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Customer\", \"attributes\": [\"+ address : string\", \"+ vatNumber : string\", \"+ headOfficeAddress : string\"]}, {\"name\": \"Product\", \"attributes\": [\"+ stockLevel : int\"]}, {\"name\": \"Order\", \"attributes\": [\"+ paidDate : date\", \"+ isPaid : boolean\"]}, {\"name\": \"OrderLine\", \"attributes\": [\"+ quantity : int\", \"+ isShipped : boolean\"]}, {\"name\": \"Shipment\", \"attributes\": [\"+ status : string\"]}, {\"name\": \"Delivery\", \"attributes\": [\"+ status : string\", \"+ deliveryAddress : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Order\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"OrderLine\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"OrderLine\", \"target\": \"Product\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Order\", \"target\": \"OrderLine\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Shipment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Shipment\", \"target\": \"OrderLine\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Shipment\", \"target\": \"Delivery\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Delivery\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1726,
+   "completion_tokens": 416,
+   "total_tokens": 2142,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

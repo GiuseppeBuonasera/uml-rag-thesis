@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"EmployeeCard\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ department : string\",\n        \"+ staffNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"GuestCard\",\n      \"attributes\": [\n        \"+ cardNumber : int\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Card\",\n      \"attributes\": [\n        \"+ cardNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"CarPark\",\n      \"attributes\": [\n        \"+ isFull : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"attributes\": [\n        \"+ licensePlate : string\"\n      ]\n    },\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"CardReader\",\n      \"methods\": [\n        \"+ verify(card: Card) : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Barrier\",\n      \"methods\": [\n        \"+ raise() : void\",\n        \"+ lower() : void\"\n      ]\n    },\n    {\n      \"name\": \"Reception\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EmployeeCard\",\n      \"parent\": \"Card\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"GuestCard\",\n      \"parent\": \"Card\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Car\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Card\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"CarPark\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CardReader\",\n      \"target\": \"Barrier\",\n      \"label\": \"triggers\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CardReader\",\n      \"target\": \"Card\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"GuestCard\",\n      \"target\": \"Reception\",\n      \"label\": \"returned to\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 33.70502939999278,
+ "prompt_tokens": 3019,
+ "completion_tokens": 603,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6x4a9nvhvjahz6c7d29rq",
+  "object": "chat.completion",
+  "created": 1791916370,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"EmployeeCard\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ department : string\",\n        \"+ staffNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"GuestCard\",\n      \"attributes\": [\n        \"+ cardNumber : int\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Card\",\n      \"attributes\": [\n        \"+ cardNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"CarPark\",\n      \"attributes\": [\n        \"+ isFull : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"attributes\": [\n        \"+ licensePlate : string\"\n      ]\n    },\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"CardReader\",\n      \"methods\": [\n        \"+ verify(card: Card) : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Barrier\",\n      \"methods\": [\n        \"+ raise() : void\",\n        \"+ lower() : void\"\n      ]\n    },\n    {\n      \"name\": \"Reception\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EmployeeCard\",\n      \"parent\": \"Card\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"GuestCard\",\n      \"parent\": \"Card\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Car\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Card\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"CarPark\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CardReader\",\n      \"target\": \"Barrier\",\n      \"label\": \"triggers\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CardReader\",\n      \"target\": \"Card\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"GuestCard\",\n      \"target\": \"Reception\",\n      \"label\": \"returned to\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3019,
+   "completion_tokens": 603,
+   "total_tokens": 3622,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

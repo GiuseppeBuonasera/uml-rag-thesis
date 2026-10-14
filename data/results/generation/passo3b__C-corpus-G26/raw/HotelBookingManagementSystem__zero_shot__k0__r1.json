@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Traveller\", \"attributes\": [\"+ name : string\", \"+ billingInformation : string\", \"+ travelPreferences : string[]\", \"+ reliabilityRating : float\"]}, {\"name\": \"Hotel\", \"attributes\": [\"+ name : string\", \"+ address : string\", \"+ rating : int\"]}, {\"name\": \"HotelChain\", \"attributes\": []}, {\"name\": \"RoomType\", \"attributes\": [\"+ type : string\"]}, {\"name\": \"SearchCriteria\", \"attributes\": [\"+ city : string\", \"+ arrivalDate : date\", \"+ departureDate : date\", \"+ numRooms : int\", \"+ roomType : RoomType\", \"+ minRating : int\", \"+ maxBudget : double\", \"+ preferences : string[]\"]}, {\"name\": \"PreliminaryBooking\", \"attributes\": [\"+ bookingIdentifier : string\", \"+ price : double\", \"+ cityArea : string\", \"+ hotelRating : int\", \"+ keyPreferences : string[]\"]}, {\"name\": \"SpecialOffer\", \"attributes\": [\"+ price : double\"]}, {\"name\": \"Booking\", \"attributes\": [\"+ cancellationDeadline : date\", \"+ isConfirmed : boolean\", \"+ isPrepaid : boolean\", \"+ isCancelled : boolean\"]}, {\"name\": \"CreditCardInfo\", \"attributes\": [\"+ cardNumber : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"HotelChain\", \"label\": \"is run by\"}, {\"type\": \"association\", \"source\": \"Hotel\", \"target\": \"HotelChain\", \"label\": \"is run by\"}, {\"type\": \"association\", \"source\": \"Hotel\", \"target\": \"RoomType\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"SearchCriteria\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"PreliminaryBooking\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"Booking\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"CreditCardInfo\"}, {\"type\": \"association\", \"source\": \"PreliminaryBooking\", \"target\": \"SpecialOffer\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"Hotel\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"Traveller\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"CreditCardInfo\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 23.93597239999508,
+ "prompt_tokens": 1632,
+ "completion_tokens": 496,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gbx9e90qi8omodp3g2q2eh",
+  "object": "chat.completion",
+  "created": 1791873621,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Traveller\", \"attributes\": [\"+ name : string\", \"+ billingInformation : string\", \"+ travelPreferences : string[]\", \"+ reliabilityRating : float\"]}, {\"name\": \"Hotel\", \"attributes\": [\"+ name : string\", \"+ address : string\", \"+ rating : int\"]}, {\"name\": \"HotelChain\", \"attributes\": []}, {\"name\": \"RoomType\", \"attributes\": [\"+ type : string\"]}, {\"name\": \"SearchCriteria\", \"attributes\": [\"+ city : string\", \"+ arrivalDate : date\", \"+ departureDate : date\", \"+ numRooms : int\", \"+ roomType : RoomType\", \"+ minRating : int\", \"+ maxBudget : double\", \"+ preferences : string[]\"]}, {\"name\": \"PreliminaryBooking\", \"attributes\": [\"+ bookingIdentifier : string\", \"+ price : double\", \"+ cityArea : string\", \"+ hotelRating : int\", \"+ keyPreferences : string[]\"]}, {\"name\": \"SpecialOffer\", \"attributes\": [\"+ price : double\"]}, {\"name\": \"Booking\", \"attributes\": [\"+ cancellationDeadline : date\", \"+ isConfirmed : boolean\", \"+ isPrepaid : boolean\", \"+ isCancelled : boolean\"]}, {\"name\": \"CreditCardInfo\", \"attributes\": [\"+ cardNumber : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"HotelChain\", \"label\": \"is run by\"}, {\"type\": \"association\", \"source\": \"Hotel\", \"target\": \"HotelChain\", \"label\": \"is run by\"}, {\"type\": \"association\", \"source\": \"Hotel\", \"target\": \"RoomType\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"SearchCriteria\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"PreliminaryBooking\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"Booking\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"CreditCardInfo\"}, {\"type\": \"association\", \"source\": \"PreliminaryBooking\", \"target\": \"SpecialOffer\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"Hotel\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"Traveller\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"CreditCardInfo\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1632,
+   "completion_tokens": 496,
+   "total_tokens": 2128,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

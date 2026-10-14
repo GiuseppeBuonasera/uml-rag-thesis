@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Hospital\"}, {\"name\": \"Office\"}, {\"name\": \"User\"}, {\"name\": \"Doctor\"}, {\"name\": \"Patient\"}, {\"name\": \"Schedule\"}, {\"name\": \"Appointment\", \"attributes\": [\"+ type : string\", \"+ duration_minutes : int\", \"+ date : date\", \"+ start_time : time\", \"+ end_time : time\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Office\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Office\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Schedule\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Office\", \"target\": \"Schedule\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Schedule\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"inheritance\", \"child\": \"Doctor\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Patient\", \"parent\": \"User\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 26.50619970000116,
+ "prompt_tokens": 4686,
+ "completion_tokens": 375,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2s6zkj53tkbakvszk4pb8u",
+  "object": "chat.completion",
+  "created": 1791920682,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Hospital\"}, {\"name\": \"Office\"}, {\"name\": \"User\"}, {\"name\": \"Doctor\"}, {\"name\": \"Patient\"}, {\"name\": \"Schedule\"}, {\"name\": \"Appointment\", \"attributes\": [\"+ type : string\", \"+ duration_minutes : int\", \"+ date : date\", \"+ start_time : time\", \"+ end_time : time\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Hospital\", \"target\": \"Office\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Office\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Schedule\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Office\", \"target\": \"Schedule\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Schedule\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"inheritance\", \"child\": \"Doctor\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Patient\", \"parent\": \"User\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4686,
+   "completion_tokens": 375,
+   "total_tokens": 5061,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

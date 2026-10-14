@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Bank {\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n}\n\nclass Account {\n  + Balance : double\n}\n\nclass SavingsAccount extends Account {\n  + InterestRate : float\n}\n\nclass InvestmentAccount extends Account {\n}\n\nclass Stock {\n  + Ticker : string\n}\n\nclass StockOrder {\n  + Quantity : int\n  + Price : double\n  + Commission : double\n}\n\nBank \"1\" -- \"*\" Customer\nCustomer \"1\" -- \"*\" Account\nAccount \"1\" -- \"0..*\" StockOrder\nStockOrder \"0..*\" -- \"1\" Stock\nInvestmentAccount \"1\" -- \"0..*\" StockOrder\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 9.473007500000676,
+ "prompt_tokens": 2281,
+ "completion_tokens": 160,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hp6d46jjyeu01490xo2opvxo",
+  "object": "chat.completion",
+  "created": 1791863745,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bank {\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n}\n\nclass Account {\n  + Balance : double\n}\n\nclass SavingsAccount extends Account {\n  + InterestRate : float\n}\n\nclass InvestmentAccount extends Account {\n}\n\nclass Stock {\n  + Ticker : string\n}\n\nclass StockOrder {\n  + Quantity : int\n  + Price : double\n  + Commission : double\n}\n\nBank \"1\" -- \"*\" Customer\nCustomer \"1\" -- \"*\" Account\nAccount \"1\" -- \"0..*\" StockOrder\nStockOrder \"0..*\" -- \"1\" Stock\nInvestmentAccount \"1\" -- \"0..*\" StockOrder\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2281,
+   "completion_tokens": 160,
+   "total_tokens": 2441,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

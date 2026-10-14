@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Scene\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"Setup\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ photographicParameters : string\"\n      ]\n    },\n    {\n      \"name\": \"Take\",\n      \"attributes\": [\n        \"+ takeNumber : int\",\n        \"+ filmUsed : double\",\n        \"+ reelCode : string\"\n      ]\n    },\n    {\n      \"name\": \"InternalScene\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"ExternalScene\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"DayScene\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"NightScene\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ address : string\",\n        \"+ description : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Scene\",\n      \"part\": \"Setup\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Setup\",\n      \"part\": \"Take\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InternalScene\",\n      \"parent\": \"Scene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalScene\",\n      \"parent\": \"Scene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DayScene\",\n      \"parent\": \"ExternalScene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NightScene\",\n      \"parent\": \"ExternalScene\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExternalScene\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 31.741305899995496,
+ "prompt_tokens": 3680,
+ "completion_tokens": 552,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5q6py8ri8gmdi1n23ojrnl",
+  "object": "chat.completion",
+  "created": 1791899152,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Scene\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"Setup\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ photographicParameters : string\"\n      ]\n    },\n    {\n      \"name\": \"Take\",\n      \"attributes\": [\n        \"+ takeNumber : int\",\n        \"+ filmUsed : double\",\n        \"+ reelCode : string\"\n      ]\n    },\n    {\n      \"name\": \"InternalScene\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"ExternalScene\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"DayScene\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"NightScene\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ address : string\",\n        \"+ description : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Scene\",\n      \"part\": \"Setup\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Setup\",\n      \"part\": \"Take\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InternalScene\",\n      \"parent\": \"Scene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalScene\",\n      \"parent\": \"Scene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DayScene\",\n      \"parent\": \"ExternalScene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NightScene\",\n      \"parent\": \"ExternalScene\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExternalScene\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3680,
+   "completion_tokens": 552,
+   "total_tokens": 4232,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

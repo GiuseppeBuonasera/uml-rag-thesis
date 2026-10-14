@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Person {}\n\nclass Student extends Person {\n  + name : string\n  + email : string\n}\n\nclass Tutor extends Person {\n  + name : string\n  + email : string\n  + bank_account : string\n}\n\nclass Subject {\n  + name : string\n}\n\nclass ExpertiseLevel {\n  + level : string\n}\n\nclass TutoringOffer {\n  + expertise_level : ExpertiseLevel\n  + hourly_price : float\n}\n\nclass Availability {\n  + day : string\n  + start_time : time\n  + end_time : time\n}\n\nclass TutoringRequest {\n  + requested_level : ExpertiseLevel\n  + target_date : date\n  + target_time : time\n}\n\nclass TutoringSession {\n  + actual_date : date\n  + actual_time : time\n  + status : string\n}\n\nclass Payment {\n  + amount : float\n  + method : string\n}\n\nclass Award {\n  + month : string\n}\n\nTutor \"1\" -- \"*\" TutoringOffer : offers\nTutor \"1\" -- \"*\" Availability : specifies\nTutor \"1\" -- \"*\" TutoringRequest : receives\nTutor \"1\" -- \"*\" TutoringSession : conducts\nTutor \"1\" -- \"*\" Award : receives\nStudent \"1\" -- \"*\" TutoringRequest : makes\nStudent \"1\" -- \"*\" TutoringSession : attends\nStudent \"1\" -- \"*\" Payment : makes\nTutoringOffer \"*\" -- \"1\" Subject : in\nTutoringOffer \"*\" -- \"1\" ExpertiseLevel : at\nTutoringRequest \"*\" -- \"1\" Subject : for\nTutoringRequest \"*\" -- \"1\" TutoringOffer : based_on\nTutoringSession \"*\" -- \"1\" TutoringRequest : fulfills\nTutoringSession \"*\" -- \"1\" TutoringSession : follows_up\nTutoringSession \"1\" -- \"1\" Payment : results_in\nTutoringSession \"*\" -- \"1\" Subject : in\nAward \"*\" -- \"1\" Subject : for\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 24.66270330000043,
+ "prompt_tokens": 2621,
+ "completion_tokens": 447,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-y91vqdf1jd50q28xyijm8",
+  "object": "chat.completion",
+  "created": 1791857294,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {}\n\nclass Student extends Person {\n  + name : string\n  + email : string\n}\n\nclass Tutor extends Person {\n  + name : string\n  + email : string\n  + bank_account : string\n}\n\nclass Subject {\n  + name : string\n}\n\nclass ExpertiseLevel {\n  + level : string\n}\n\nclass TutoringOffer {\n  + expertise_level : ExpertiseLevel\n  + hourly_price : float\n}\n\nclass Availability {\n  + day : string\n  + start_time : time\n  + end_time : time\n}\n\nclass TutoringRequest {\n  + requested_level : ExpertiseLevel\n  + target_date : date\n  + target_time : time\n}\n\nclass TutoringSession {\n  + actual_date : date\n  + actual_time : time\n  + status : string\n}\n\nclass Payment {\n  + amount : float\n  + method : string\n}\n\nclass Award {\n  + month : string\n}\n\nTutor \"1\" -- \"*\" TutoringOffer : offers\nTutor \"1\" -- \"*\" Availability : specifies\nTutor \"1\" -- \"*\" TutoringRequest : receives\nTutor \"1\" -- \"*\" TutoringSession : conducts\nTutor \"1\" -- \"*\" Award : receives\nStudent \"1\" -- \"*\" TutoringRequest : makes\nStudent \"1\" -- \"*\" TutoringSession : attends\nStudent \"1\" -- \"*\" Payment : makes\nTutoringOffer \"*\" -- \"1\" Subject : in\nTutoringOffer \"*\" -- \"1\" ExpertiseLevel : at\nTutoringRequest \"*\" -- \"1\" Subject : for\nTutoringRequest \"*\" -- \"1\" TutoringOffer : based_on\nTutoringSession \"*\" -- \"1\" TutoringRequest : fulfills\nTutoringSession \"*\" -- \"1\" TutoringSession : follows_up\nTutoringSession \"1\" -- \"1\" Payment : results_in\nTutoringSession \"*\" -- \"1\" Subject : in\nAward \"*\" -- \"1\" Subject : for\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2621,
+   "completion_tokens": 447,
+   "total_tokens": 3068,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

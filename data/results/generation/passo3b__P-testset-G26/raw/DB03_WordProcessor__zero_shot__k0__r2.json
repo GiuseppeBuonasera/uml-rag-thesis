@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass User {\n}\n\nclass Document {\n}\n\nclass Page {\n}\n\nclass Header {\n}\n\nclass Footer {\n}\n\nclass Body {\n}\n\nclass Sentence {\n}\n\nclass Word {\n}\n\nclass PunctuationCharacter {\n}\n\nclass Letter {\n}\n\nclass Digit {\n}\n\nclass SpecialCharacter {\n}\n\nclass Picture {\n}\n\nclass Table {\n}\n\nclass Row {\n}\n\nclass Column {\n}\n\nclass Cell {\n}\n\nclass Text {\n}\n\nUser \"1\" -- \"*\" Document : opens\nDocument \"1\" *-- \"1..*\" Page : is made up of\nPage \"1\" *-- \"1\" Header : is made up of\nPage \"1\" *-- \"1\" Body : is made up of\nPage \"1\" *-- \"1\" Footer : is made up of\nHeader \"1\" -- \"0..1\" Date : may be added\nHeader \"1\" -- \"0..1\" Time : may be added\nHeader \"1\" -- \"0..1\" int : page number\nFooter \"1\" -- \"0..1\" Date : may be added\nFooter \"1\" -- \"0..1\" Time : may be added\nFooter \"1\" -- \"0..1\" int : page number\nBody \"1\" *-- \"1..*\" Sentence : is made up of\nSentence \"1\" *-- \"1..*\" Word : is made up of\nSentence \"1\" *-- \"1..*\" PunctuationCharacter : is made up of\nWord \"1\" *-- \"1..*\" Letter : is made up of\nWord \"1\" *-- \"1..*\" Digit : is made up of\nWord \"1\" *-- \"1..*\" SpecialCharacter : is made up of\nBody \"1\" -- \"*\" Picture : may be inserted\nBody \"1\" -- \"*\" Table : may be inserted\nTable \"1\" *-- \"1..*\" Row : is made up of\nTable \"1\" *-- \"1..*\" Column : is made up of\nRow \"1\" -- \"1..*\" Cell : contains\nColumn \"1\" -- \"1..*\" Cell : contains\nCell \"1\" -- \"0..1\" Text : can contain\nCell \"1\" -- \"0..1\" Picture : can contain\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 23.852173900002526,
+ "prompt_tokens": 1126,
+ "completion_tokens": 509,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1zze9vtk16f4s5qjl43qs7",
+  "object": "chat.completion",
+  "created": 1791862724,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass User {\n}\n\nclass Document {\n}\n\nclass Page {\n}\n\nclass Header {\n}\n\nclass Footer {\n}\n\nclass Body {\n}\n\nclass Sentence {\n}\n\nclass Word {\n}\n\nclass PunctuationCharacter {\n}\n\nclass Letter {\n}\n\nclass Digit {\n}\n\nclass SpecialCharacter {\n}\n\nclass Picture {\n}\n\nclass Table {\n}\n\nclass Row {\n}\n\nclass Column {\n}\n\nclass Cell {\n}\n\nclass Text {\n}\n\nUser \"1\" -- \"*\" Document : opens\nDocument \"1\" *-- \"1..*\" Page : is made up of\nPage \"1\" *-- \"1\" Header : is made up of\nPage \"1\" *-- \"1\" Body : is made up of\nPage \"1\" *-- \"1\" Footer : is made up of\nHeader \"1\" -- \"0..1\" Date : may be added\nHeader \"1\" -- \"0..1\" Time : may be added\nHeader \"1\" -- \"0..1\" int : page number\nFooter \"1\" -- \"0..1\" Date : may be added\nFooter \"1\" -- \"0..1\" Time : may be added\nFooter \"1\" -- \"0..1\" int : page number\nBody \"1\" *-- \"1..*\" Sentence : is made up of\nSentence \"1\" *-- \"1..*\" Word : is made up of\nSentence \"1\" *-- \"1..*\" PunctuationCharacter : is made up of\nWord \"1\" *-- \"1..*\" Letter : is made up of\nWord \"1\" *-- \"1..*\" Digit : is made up of\nWord \"1\" *-- \"1..*\" SpecialCharacter : is made up of\nBody \"1\" -- \"*\" Picture : may be inserted\nBody \"1\" -- \"*\" Table : may be inserted\nTable \"1\" *-- \"1..*\" Row : is made up of\nTable \"1\" *-- \"1..*\" Column : is made up of\nRow \"1\" -- \"1..*\" Cell : contains\nColumn \"1\" -- \"1..*\" Cell : contains\nCell \"1\" -- \"0..1\" Text : can contain\nCell \"1\" -- \"0..1\" Picture : can contain\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1126,
+   "completion_tokens": 509,
+   "total_tokens": 1635,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

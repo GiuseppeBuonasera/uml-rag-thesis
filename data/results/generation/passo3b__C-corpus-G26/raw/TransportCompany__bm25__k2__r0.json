@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Employee\", \"attributes\": [\"+ name : string\", \"+ socialSecurityNumber : string\"]}, {\"name\": \"Driver\", \"attributes\": []}, {\"name\": \"Planner\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}, {\"name\": \"AdministrativeStaff\", \"attributes\": [\"+ username : string\", \"+ password : string\", \"+ fieldOfActivity : string\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ name : string\", \"+ billingAddress : string\"]}, {\"name\": \"PartnerCompany\", \"attributes\": [\"+ name : string\", \"+ address : string\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ licensePlateNumber : string\", \"+ mileage : int\"]}, {\"name\": \"RefrigeratedTruck\"}, {\"name\": \"SmallVan\"}, {\"name\": \"LoadingPlatform\"}, {\"name\": \"BoxTruck\"}, {\"name\": \"RepairShop\", \"attributes\": [\"+ name : string\", \"+ address : string\"]}, {\"name\": \"Repair\", \"attributes\": [\"+ duration : string\", \"+ cost : float\"]}, {\"name\": \"Order\", \"attributes\": [\"+ packageSize : string\", \"+ comment : string\", \"+ startTime : datetime\", \"+ finishTime : datetime\", \"+ pickUpAddress : string\", \"+ deliveryAddress : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Driver\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Planner\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"AdministrativeStaff\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"RefrigeratedTruck\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"SmallVan\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"LoadingPlatform\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"BoxTruck\", \"parent\": \"Vehicle\"}, {\"type\": \"association\", \"source\": \"Repair\", \"target\": \"RepairShop\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Repair\", \"target\": \"Employee\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"employeeWhoTookVehicle\"}, {\"type\": \"association\", \"source\": \"Repair\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Driver\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"driver\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"vehicle\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Planner\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"planner\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Customer\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"client\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"PartnerCompany\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"AdministrativeStaff\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 42.02215509999951,
+ "prompt_tokens": 3443,
+ "completion_tokens": 748,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7e7twfhrygg1twodgufd4e",
+  "object": "chat.completion",
+  "created": 1791883008,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Employee\", \"attributes\": [\"+ name : string\", \"+ socialSecurityNumber : string\"]}, {\"name\": \"Driver\", \"attributes\": []}, {\"name\": \"Planner\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}, {\"name\": \"AdministrativeStaff\", \"attributes\": [\"+ username : string\", \"+ password : string\", \"+ fieldOfActivity : string\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ name : string\", \"+ billingAddress : string\"]}, {\"name\": \"PartnerCompany\", \"attributes\": [\"+ name : string\", \"+ address : string\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ licensePlateNumber : string\", \"+ mileage : int\"]}, {\"name\": \"RefrigeratedTruck\"}, {\"name\": \"SmallVan\"}, {\"name\": \"LoadingPlatform\"}, {\"name\": \"BoxTruck\"}, {\"name\": \"RepairShop\", \"attributes\": [\"+ name : string\", \"+ address : string\"]}, {\"name\": \"Repair\", \"attributes\": [\"+ duration : string\", \"+ cost : float\"]}, {\"name\": \"Order\", \"attributes\": [\"+ packageSize : string\", \"+ comment : string\", \"+ startTime : datetime\", \"+ finishTime : datetime\", \"+ pickUpAddress : string\", \"+ deliveryAddress : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Driver\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"Planner\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"AdministrativeStaff\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"RefrigeratedTruck\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"SmallVan\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"LoadingPlatform\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"BoxTruck\", \"parent\": \"Vehicle\"}, {\"type\": \"association\", \"source\": \"Repair\", \"target\": \"RepairShop\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Repair\", \"target\": \"Employee\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"employeeWhoTookVehicle\"}, {\"type\": \"association\", \"source\": \"Repair\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Driver\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"driver\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"vehicle\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Planner\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"planner\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Customer\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"targetRole\": \"client\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"PartnerCompany\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"AdministrativeStaff\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"0..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3443,
+   "completion_tokens": 748,
+   "total_tokens": 4191,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

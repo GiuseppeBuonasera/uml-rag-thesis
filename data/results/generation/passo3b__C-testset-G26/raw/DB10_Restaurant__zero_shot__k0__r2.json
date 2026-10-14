@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Ingredient\", \"attributes\": [\"+ name : string\", \"+ measuringUnit : string\", \"+ quantity : float\"]}, {\"name\": \"Dish\", \"attributes\": [\"+ name : string\", \"+ identifier : int\"]}, {\"name\": \"IngredientUsage\", \"attributes\": [\"+ quantity : float\"]}, {\"name\": \"Table\", \"attributes\": [\"+ identifier : int\", \"+ maxPeople : int\"]}, {\"name\": \"Meal\", \"attributes\": [\"+ date : date\", \"+ startTime : time\", \"+ endTime : time\"]}, {\"name\": \"MealDish\", \"attributes\": [\"+ quantity : int\"]}, {\"name\": \"Waiter\", \"attributes\": [\"+ identifier : int\", \"+ name : string\", \"+ address : string\", \"+ phoneNumber : string\"]}, {\"name\": \"Client\", \"attributes\": [\"+ taxId : string\", \"+ name : string\", \"+ address : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Dish\", \"target\": \"Ingredient\", \"label\": \"is composed of\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\", \"sourceRole\": \"dish\", \"targetRole\": \"ingredient\"}, {\"type\": \"association\", \"source\": \"Dish\", \"target\": \"IngredientUsage\", \"label\": \"uses\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Ingredient\", \"target\": \"IngredientUsage\", \"label\": \"is used in\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Meal\", \"target\": \"Table\", \"label\": \"takes place at\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Meal\", \"target\": \"Waiter\", \"label\": \"responsible waiter\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Meal\", \"target\": \"Client\", \"label\": \"consumed by\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Meal\", \"target\": \"MealDish\", \"label\": \"contains\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Dish\", \"target\": \"MealDish\", \"label\": \"is part of\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 26.736228299996583,
+ "prompt_tokens": 1336,
+ "completion_tokens": 548,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-e1f88ehuvktbfrqx8lqgfe",
+  "object": "chat.completion",
+  "created": 1791912667,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Ingredient\", \"attributes\": [\"+ name : string\", \"+ measuringUnit : string\", \"+ quantity : float\"]}, {\"name\": \"Dish\", \"attributes\": [\"+ name : string\", \"+ identifier : int\"]}, {\"name\": \"IngredientUsage\", \"attributes\": [\"+ quantity : float\"]}, {\"name\": \"Table\", \"attributes\": [\"+ identifier : int\", \"+ maxPeople : int\"]}, {\"name\": \"Meal\", \"attributes\": [\"+ date : date\", \"+ startTime : time\", \"+ endTime : time\"]}, {\"name\": \"MealDish\", \"attributes\": [\"+ quantity : int\"]}, {\"name\": \"Waiter\", \"attributes\": [\"+ identifier : int\", \"+ name : string\", \"+ address : string\", \"+ phoneNumber : string\"]}, {\"name\": \"Client\", \"attributes\": [\"+ taxId : string\", \"+ name : string\", \"+ address : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Dish\", \"target\": \"Ingredient\", \"label\": \"is composed of\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\", \"sourceRole\": \"dish\", \"targetRole\": \"ingredient\"}, {\"type\": \"association\", \"source\": \"Dish\", \"target\": \"IngredientUsage\", \"label\": \"uses\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Ingredient\", \"target\": \"IngredientUsage\", \"label\": \"is used in\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Meal\", \"target\": \"Table\", \"label\": \"takes place at\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Meal\", \"target\": \"Waiter\", \"label\": \"responsible waiter\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Meal\", \"target\": \"Client\", \"label\": \"consumed by\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Meal\", \"target\": \"MealDish\", \"label\": \"contains\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Dish\", \"target\": \"MealDish\", \"label\": \"is part of\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1336,
+   "completion_tokens": 548,
+   "total_tokens": 1884,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

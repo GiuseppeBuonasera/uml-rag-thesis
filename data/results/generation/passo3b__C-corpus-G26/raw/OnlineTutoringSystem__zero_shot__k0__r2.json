@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ name : string\", \"+ email : string\"]}, {\"name\": \"Student\", \"attributes\": [\"+ name : string\", \"+ email : string\"]}, {\"name\": \"Tutor\", \"attributes\": [\"+ name : string\", \"+ email : string\", \"+ bankAccount : string\"]}, {\"name\": \"Subject\", \"attributes\": []}, {\"name\": \"ExpertiseLevel\", \"attributes\": []}, {\"name\": \"TutoringOffer\", \"attributes\": [\"+ expertiseLevel : ExpertiseLevel\", \"+ hourlyPrice : float\"]}, {\"name\": \"Availability\", \"attributes\": [\"+ day : string\", \"+ startTime : time\", \"+ endTime : time\"]}, {\"name\": \"TutoringRequest\", \"attributes\": [\"+ requestedLevel : ExpertiseLevel\", \"+ targetDate : date\", \"+ targetTime : time\"]}, {\"name\": \"TutoringSession\", \"attributes\": [\"+ actualDate : date\", \"+ actualTime : time\", \"+ pricePaid : float\"]}, {\"name\": \"PaymentMethod\", \"attributes\": []}, {\"name\": \"CreditCard\", \"attributes\": []}, {\"name\": \"WireTransfer\", \"attributes\": []}, {\"name\": \"Award\", \"attributes\": [\"+ month : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Student\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Tutor\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"Tutor\", \"target\": \"TutoringOffer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"offers\"}, {\"type\": \"association\", \"source\": \"TutoringOffer\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Tutor\", \"target\": \"Availability\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"TutoringRequest\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"TutoringSession\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Student\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"PaymentMethod\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"inheritance\", \"child\": \"CreditCard\", \"parent\": \"PaymentMethod\"}, {\"type\": \"inheritance\", \"child\": \"WireTransfer\", \"parent\": \"PaymentMethod\"}, {\"type\": \"association\", \"source\": \"Award\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Award\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 35.993025199997646,
+ "prompt_tokens": 1447,
+ "completion_tokens": 775,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-e164bnnvbq80fvng3z7hdk",
+  "object": "chat.completion",
+  "created": 1791877283,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ name : string\", \"+ email : string\"]}, {\"name\": \"Student\", \"attributes\": [\"+ name : string\", \"+ email : string\"]}, {\"name\": \"Tutor\", \"attributes\": [\"+ name : string\", \"+ email : string\", \"+ bankAccount : string\"]}, {\"name\": \"Subject\", \"attributes\": []}, {\"name\": \"ExpertiseLevel\", \"attributes\": []}, {\"name\": \"TutoringOffer\", \"attributes\": [\"+ expertiseLevel : ExpertiseLevel\", \"+ hourlyPrice : float\"]}, {\"name\": \"Availability\", \"attributes\": [\"+ day : string\", \"+ startTime : time\", \"+ endTime : time\"]}, {\"name\": \"TutoringRequest\", \"attributes\": [\"+ requestedLevel : ExpertiseLevel\", \"+ targetDate : date\", \"+ targetTime : time\"]}, {\"name\": \"TutoringSession\", \"attributes\": [\"+ actualDate : date\", \"+ actualTime : time\", \"+ pricePaid : float\"]}, {\"name\": \"PaymentMethod\", \"attributes\": []}, {\"name\": \"CreditCard\", \"attributes\": []}, {\"name\": \"WireTransfer\", \"attributes\": []}, {\"name\": \"Award\", \"attributes\": [\"+ month : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Student\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Tutor\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"Tutor\", \"target\": \"TutoringOffer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"offers\"}, {\"type\": \"association\", \"source\": \"TutoringOffer\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Tutor\", \"target\": \"Availability\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Student\", \"target\": \"TutoringRequest\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringRequest\", \"target\": \"TutoringSession\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Student\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TutoringSession\", \"target\": \"PaymentMethod\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"inheritance\", \"child\": \"CreditCard\", \"parent\": \"PaymentMethod\"}, {\"type\": \"inheritance\", \"child\": \"WireTransfer\", \"parent\": \"PaymentMethod\"}, {\"type\": \"association\", \"source\": \"Award\", \"target\": \"Tutor\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Award\", \"target\": \"Subject\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1447,
+   "completion_tokens": 775,
+   "total_tokens": 2222,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

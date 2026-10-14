@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass PlayerProfile {\n  + targetPosition : string\n}\n\nclass PlayerAttribute {\n  + name : string\n  + value : float\n}\n\nclass Player {\n  + name : string\n}\n\nclass ScoutingAssignment {\n  + status : string\n}\n\nclass ScoutingReport {\n  + pros : string\n  + cons : string\n  + recommendation : string\n}\n\nclass LongList {\n  + evaluationDate : date\n}\n\nclass ShortList {}\n\nclass OfficialOffer {}\n\nclass Employee {}\n\nclass HeadCoach extends Employee {}\n\nclass Director extends Employee {}\n\nclass Scout extends Employee {}\n\nclass HeadScout extends Scout {}\n\nPlayerProfile \"1\" *-- \"* PlayerAttribute\" PlayerAttribute\nPlayerProfile \"1\" -- \"*\" Player\nPlayer \"1\" -- \"0..*\" LongList\nLongList \"1\" -- \"1\" HeadScout : evaluated by\nScoutingAssignment \"1\" -- \"1\" Player\nScoutingAssignment \"1\" -- \"1\" Scout\nScoutingAssignment \"1\" -- \"0..1\" ScoutingReport\nScoutingReport \"*\" -- \"1\" Player\nShortList \"1\" -- \"*\" Player\nShortList \"1\" -- \"1\" HeadCoach : decided by\nShortList \"1\" -- \"1\" HeadScout : decided by\nOfficialOffer \"1\" -- \"1\" Player\nOfficialOffer \"1\" -- \"1\" Director\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 18.378622500000347,
+ "prompt_tokens": 4040,
+ "completion_tokens": 308,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-azvjlceqbxqmdo1c3rv4gm",
+  "object": "chat.completion",
+  "created": 1791858799,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass PlayerProfile {\n  + targetPosition : string\n}\n\nclass PlayerAttribute {\n  + name : string\n  + value : float\n}\n\nclass Player {\n  + name : string\n}\n\nclass ScoutingAssignment {\n  + status : string\n}\n\nclass ScoutingReport {\n  + pros : string\n  + cons : string\n  + recommendation : string\n}\n\nclass LongList {\n  + evaluationDate : date\n}\n\nclass ShortList {}\n\nclass OfficialOffer {}\n\nclass Employee {}\n\nclass HeadCoach extends Employee {}\n\nclass Director extends Employee {}\n\nclass Scout extends Employee {}\n\nclass HeadScout extends Scout {}\n\nPlayerProfile \"1\" *-- \"* PlayerAttribute\" PlayerAttribute\nPlayerProfile \"1\" -- \"*\" Player\nPlayer \"1\" -- \"0..*\" LongList\nLongList \"1\" -- \"1\" HeadScout : evaluated by\nScoutingAssignment \"1\" -- \"1\" Player\nScoutingAssignment \"1\" -- \"1\" Scout\nScoutingAssignment \"1\" -- \"0..1\" ScoutingReport\nScoutingReport \"*\" -- \"1\" Player\nShortList \"1\" -- \"*\" Player\nShortList \"1\" -- \"1\" HeadCoach : decided by\nShortList \"1\" -- \"1\" HeadScout : decided by\nOfficialOffer \"1\" -- \"1\" Player\nOfficialOffer \"1\" -- \"1\" Director\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4040,
+   "completion_tokens": 308,
+   "total_tokens": 4348,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Animal\",\n      \"attributes\": [\n        \"+ identifier : int\",\n        \"+ name : string\",\n        \"+ breed : string\"\n      ]\n    },\n    {\n      \"name\": \"Owner\",\n      \"attributes\": [\n        \"+ identifier : int\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Breed\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Physician\",\n      \"attributes\": [\n        \"+ identifier : int\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Appointment\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ time : time\"\n      ]\n    },\n    {\n      \"name\": \"Condition\",\n      \"attributes\": [\n        \"+ commonName : string\",\n        \"+ scientificName : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Animal\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Animal\",\n      \"target\": \"Breed\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Physician\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Animal\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Condition\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Breed\",\n      \"target\": \"Condition\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 38.51818539999658,
+ "prompt_tokens": 3705,
+ "completion_tokens": 638,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6te9ieoomdsrsgmbphk5c",
+  "object": "chat.completion",
+  "created": 1791911514,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Animal\",\n      \"attributes\": [\n        \"+ identifier : int\",\n        \"+ name : string\",\n        \"+ breed : string\"\n      ]\n    },\n    {\n      \"name\": \"Owner\",\n      \"attributes\": [\n        \"+ identifier : int\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Breed\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Physician\",\n      \"attributes\": [\n        \"+ identifier : int\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Appointment\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ time : time\"\n      ]\n    },\n    {\n      \"name\": \"Condition\",\n      \"attributes\": [\n        \"+ commonName : string\",\n        \"+ scientificName : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Animal\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Animal\",\n      \"target\": \"Breed\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Physician\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Animal\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Condition\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Breed\",\n      \"target\": \"Condition\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3705,
+   "completion_tokens": 638,
+   "total_tokens": 4343,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

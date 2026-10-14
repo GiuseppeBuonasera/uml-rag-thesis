@@ -292,7 +292,7 @@ def build(calls: list[dict], jar: Path, title: str) -> tuple[str, dict]:
 def main(argv=None) -> int:
     a = argparse.ArgumentParser()
     a.add_argument("--runs", nargs="+", required=True, help="cartelle in data/results/generation/")
-    a.add_argument("--filter", nargs="*", default=[], help="k=<int> rep=<int> q=<id> cond=<condizione> (ripetibili)")
+    a.add_argument("--filter", nargs="*", action="extend", default=[], help="k=<int> rep=<int> q=<id> cond=<condizione> (ripetibili)")
     a.add_argument("--name", help="nome del report (default: unione dei nomi delle run e dei filtri)")
     a.add_argument("--out", help="cartella di output (default: data/results/generation/<nome>_review/)")
     a.add_argument("--plantuml-jar", default=str(DEFAULT_JAR))
@@ -302,7 +302,7 @@ def main(argv=None) -> int:
     jar = Path(args.plantuml_jar)
     if not jar.exists():
         raise SystemExit(f"plantuml.jar non trovato: {jar} (vedi docs/STATUS.md, 'Rendering dei diagrammi')")
-    gt = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates()}
+    gt = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates() + cl.load_queries()}  # anche i De Bari del 3b
     calls = []
     for run in args.runs:
         calls += load_run(Path(args.results_dir) / run, filters, gt)

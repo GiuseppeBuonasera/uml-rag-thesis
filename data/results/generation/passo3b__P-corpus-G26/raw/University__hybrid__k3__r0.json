@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Faculty {\n  + Name : string\n}\n\nclass Institute {\n  + Name : string\n  + Address : string\n}\n\nclass Employee {\n  + SocialSecurityNumber : string\n  + Name : string\n  + EmailAddress : string\n}\n\nclass ResearchStaff extends Employee {\n  + FieldOfResearch : string\n}\n\nclass AdministrativeStaff extends Employee {}\n\nclass ResearchAssistant extends ResearchStaff {}\n\nclass Lecturer extends ResearchAssistant {}\n\nclass Course {\n  + ID : int\n  + Name : string\n  + WeeklyDuration : int\n}\n\nclass ProjectInvolvement {\n  + Name : string\n  + StartDate : date\n  + EndDate : date\n  + Hours : int\n}\n\nFaculty \"1\" *-- \"*\" Institute\nFaculty \"1\" -- \"1\" Employee : headed by\nInstitute \"*\" -- \"1\" Faculty : part of\nResearchAssistant \"*\" -- \"1..*\" Institute : assigned to\nResearchAssistant \"1\" -- \"*\" ProjectInvolvement : involved in\nProjectInvolvement \"*\" -- \"1\" Course : for\nLecturer \"1\" -- \"*\" Course : teaches\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 14.772141599998577,
+ "prompt_tokens": 2597,
+ "completion_tokens": 246,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lu3sse2n7hpb2xgj4qbah",
+  "object": "chat.completion",
+  "created": 1791860043,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Faculty {\n  + Name : string\n}\n\nclass Institute {\n  + Name : string\n  + Address : string\n}\n\nclass Employee {\n  + SocialSecurityNumber : string\n  + Name : string\n  + EmailAddress : string\n}\n\nclass ResearchStaff extends Employee {\n  + FieldOfResearch : string\n}\n\nclass AdministrativeStaff extends Employee {}\n\nclass ResearchAssistant extends ResearchStaff {}\n\nclass Lecturer extends ResearchAssistant {}\n\nclass Course {\n  + ID : int\n  + Name : string\n  + WeeklyDuration : int\n}\n\nclass ProjectInvolvement {\n  + Name : string\n  + StartDate : date\n  + EndDate : date\n  + Hours : int\n}\n\nFaculty \"1\" *-- \"*\" Institute\nFaculty \"1\" -- \"1\" Employee : headed by\nInstitute \"*\" -- \"1\" Faculty : part of\nResearchAssistant \"*\" -- \"1..*\" Institute : assigned to\nResearchAssistant \"1\" -- \"*\" ProjectInvolvement : involved in\nProjectInvolvement \"*\" -- \"1\" Course : for\nLecturer \"1\" -- \"*\" Course : teaches\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2597,
+   "completion_tokens": 246,
+   "total_tokens": 2843,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

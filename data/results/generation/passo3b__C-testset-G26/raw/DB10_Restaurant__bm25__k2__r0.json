@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Ingredient\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ measuringUnit : string\",\n        \"+ quantityInStock : float\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Table\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ maxAmountOfPeople : int\"\n      ]\n    },\n    {\n      \"name\": \"Meal\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ startTime : time\",\n        \"+ endTime : time\"\n      ]\n    },\n    {\n      \"name\": \"Waiter\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ phone : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ taxIdentificationNumber : string\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"DishComposition\",\n      \"attributes\": [\n        \"+ quantity : float\"\n      ]\n    },\n    {\n      \"name\": \"MealItem\",\n      \"attributes\": [\n        \"+ quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"Ingredient\",\n      \"label\": \"composed of\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"DishComposition\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Ingredient\",\n      \"target\": \"DishComposition\",\n      \"label\": \"is used in\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Table\",\n      \"label\": \"takes place at\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Waiter\",\n      \"label\": \"is served by\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Client\",\n      \"label\": \"consumed by\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"MealItem\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"MealItem\",\n      \"label\": \"is part of\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 46.27997300001152,
+ "prompt_tokens": 2928,
+ "completion_tokens": 830,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-08mqu6i15v6efoxkx4ca0v",
+  "object": "chat.completion",
+  "created": 1791913116,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Ingredient\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ measuringUnit : string\",\n        \"+ quantityInStock : float\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ id : int\"\n      ]\n    },\n    {\n      \"name\": \"Table\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ maxAmountOfPeople : int\"\n      ]\n    },\n    {\n      \"name\": \"Meal\",\n      \"attributes\": [\n        \"+ date : date\",\n        \"+ startTime : time\",\n        \"+ endTime : time\"\n      ]\n    },\n    {\n      \"name\": \"Waiter\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ phone : string\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ taxIdentificationNumber : string\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"DishComposition\",\n      \"attributes\": [\n        \"+ quantity : float\"\n      ]\n    },\n    {\n      \"name\": \"MealItem\",\n      \"attributes\": [\n        \"+ quantity : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"Ingredient\",\n      \"label\": \"composed of\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"DishComposition\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Ingredient\",\n      \"target\": \"DishComposition\",\n      \"label\": \"is used in\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Table\",\n      \"label\": \"takes place at\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Waiter\",\n      \"label\": \"is served by\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Client\",\n      \"label\": \"consumed by\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"MealItem\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"MealItem\",\n      \"label\": \"is part of\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2928,
+   "completion_tokens": 830,
+   "total_tokens": 3758,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Bus\", \"attributes\": [\"+ line_number : string\"]}, {\"name\": \"Trajectory\", \"attributes\": [\"+ destination : string\"]}, {\"name\": \"Line\", \"attributes\": [\"+ category : string\"]}, {\"name\": \"TownAuthority\"}, {\"name\": \"Approval\", \"attributes\": [\"+ status : string\"]}, {\"name\": \"MENSO_Ticket\", \"attributes\": [\"+ validity_period : string\"]}, {\"name\": \"Trip\", \"attributes\": [\"+ time : time\", \"+ date : date\"]}, {\"name\": \"TicketMachine\", \"attributes\": []}, {\"name\": \"Invoice\", \"attributes\": [\"+ amount : float\", \"+ month : string\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ home_address : string\", \"+ office_address : string\", \"+ working_hours : string\"]}, {\"name\": \"MENSO_Card\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Bus\", \"target\": \"Line\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Line\", \"target\": \"Trajectory\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Trajectory\", \"target\": \"TownAuthority\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Trajectory\", \"target\": \"Approval\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Line\", \"target\": \"MENSO_Ticket\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Trip\", \"target\": \"Line\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Trip\", \"target\": \"TicketMachine\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Trip\", \"target\": \"MENSO_Card\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"Customer\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"Trip\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"MENSO_Card\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 23.63160390000121,
+ "prompt_tokens": 1697,
+ "completion_tokens": 487,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-53thdkny09pbmwz6lgt1mt",
+  "object": "chat.completion",
+  "created": 1791876581,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Bus\", \"attributes\": [\"+ line_number : string\"]}, {\"name\": \"Trajectory\", \"attributes\": [\"+ destination : string\"]}, {\"name\": \"Line\", \"attributes\": [\"+ category : string\"]}, {\"name\": \"TownAuthority\"}, {\"name\": \"Approval\", \"attributes\": [\"+ status : string\"]}, {\"name\": \"MENSO_Ticket\", \"attributes\": [\"+ validity_period : string\"]}, {\"name\": \"Trip\", \"attributes\": [\"+ time : time\", \"+ date : date\"]}, {\"name\": \"TicketMachine\", \"attributes\": []}, {\"name\": \"Invoice\", \"attributes\": [\"+ amount : float\", \"+ month : string\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ home_address : string\", \"+ office_address : string\", \"+ working_hours : string\"]}, {\"name\": \"MENSO_Card\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Bus\", \"target\": \"Line\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Line\", \"target\": \"Trajectory\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Trajectory\", \"target\": \"TownAuthority\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Trajectory\", \"target\": \"Approval\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Line\", \"target\": \"MENSO_Ticket\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Trip\", \"target\": \"Line\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Trip\", \"target\": \"TicketMachine\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Trip\", \"target\": \"MENSO_Card\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"Customer\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"Trip\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"MENSO_Card\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1697,
+   "completion_tokens": 487,
+   "total_tokens": 2184,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

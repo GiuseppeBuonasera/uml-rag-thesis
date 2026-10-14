@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Factory {}\n\nclass Machine {\n  + serialNumber : string\n  + make : string\n  + model : string\n  + purchaseDate : date\n}\n\nclass Worker {\n  + firstName : string\n  + lastName : string\n  + birthDate : date\n  + address : string\n  + skills : string[]\n}\n\nclass ProductType {\n  + id : string\n  + weight : float\n}\n\nclass Material {\n  + id : string\n  + name : string\n}\n\nclass Client {\n  + id : string\n  + name : string\n  + address : string\n  + phoneNumber : string\n  + contactPerson : string\n}\n\nclass PurchaseOrder {\n  + orderNumber : string\n  + dateMade : date\n  + expectedDeliveryDate : date\n  + actualDeliveryDate : date\n}\n\nclass OrderLine {\n  + quantity : int\n}\n\nFactory \"1\" -- \"*\" Machine\nMachine \"1\" -- \"*\" Worker\nMachine \"1\" -- \"*\" ProductType\nProductType \"1\" -- \"1\" Material\nClient \"1\" -- \"*\" PurchaseOrder\nPurchaseOrder \"1\" *-- \"1..*\" OrderLine\nOrderLine \"*\" -- \"1\" ProductType\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 16.66477379999924,
+ "prompt_tokens": 2950,
+ "completion_tokens": 275,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-t9hlcjxp9851jbrgsvogu",
+  "object": "chat.completion",
+  "created": 1791865156,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Factory {}\n\nclass Machine {\n  + serialNumber : string\n  + make : string\n  + model : string\n  + purchaseDate : date\n}\n\nclass Worker {\n  + firstName : string\n  + lastName : string\n  + birthDate : date\n  + address : string\n  + skills : string[]\n}\n\nclass ProductType {\n  + id : string\n  + weight : float\n}\n\nclass Material {\n  + id : string\n  + name : string\n}\n\nclass Client {\n  + id : string\n  + name : string\n  + address : string\n  + phoneNumber : string\n  + contactPerson : string\n}\n\nclass PurchaseOrder {\n  + orderNumber : string\n  + dateMade : date\n  + expectedDeliveryDate : date\n  + actualDeliveryDate : date\n}\n\nclass OrderLine {\n  + quantity : int\n}\n\nFactory \"1\" -- \"*\" Machine\nMachine \"1\" -- \"*\" Worker\nMachine \"1\" -- \"*\" ProductType\nProductType \"1\" -- \"1\" Material\nClient \"1\" -- \"*\" PurchaseOrder\nPurchaseOrder \"1\" *-- \"1..*\" OrderLine\nOrderLine \"*\" -- \"1\" ProductType\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2950,
+   "completion_tokens": 275,
+   "total_tokens": 3225,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

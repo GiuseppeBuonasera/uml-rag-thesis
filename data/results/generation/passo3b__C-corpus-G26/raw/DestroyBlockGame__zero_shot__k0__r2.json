@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Player\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Admin\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"Admin\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"admin for\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Game\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"plays\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"HallOfFame\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"has\"}, {\"type\": \"association\", \"source\": \"HallOfFame\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"contains\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"Level\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..99\", \"label\": \"has\"}, {\"type\": \"composition\", \"source\": \"Game\", \"target\": \"Block\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Level\", \"target\": \"Block\", \"wholeMultiplicity\": \"1\", \"partRole\": \"arrangement\"}, {\"type\": \"association\", \"source\": \"Level\", \"target\": \"Block\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"randomly selected from\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 19.101092799995968,
+ "prompt_tokens": 1844,
+ "completion_tokens": 378,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-c3gedqn9a56ofdnsb4pug",
+  "object": "chat.completion",
+  "created": 1791871288,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Player\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Admin\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"Admin\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"admin for\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Game\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"plays\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"HallOfFame\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"has\"}, {\"type\": \"association\", \"source\": \"HallOfFame\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"contains\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"Level\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..99\", \"label\": \"has\"}, {\"type\": \"composition\", \"source\": \"Game\", \"target\": \"Block\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Level\", \"target\": \"Block\", \"wholeMultiplicity\": \"1\", \"partRole\": \"arrangement\"}, {\"type\": \"association\", \"source\": \"Level\", \"target\": \"Block\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"randomly selected from\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1844,
+   "completion_tokens": 378,
+   "total_tokens": 2222,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

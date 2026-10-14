@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ lineNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Trajectory\",\n      \"attributes\": [\n        \"+ destination : string\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Approval\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Line\",\n      \"attributes\": [\n        \"+ category : string\"\n      ]\n    },\n    {\n      \"name\": \"MensoTicket\",\n      \"attributes\": [\n        \"+ validityYear : int\",\n        \"+ price : float\"\n      ]\n    },\n    {\n      \"name\": \"Trip\",\n      \"attributes\": [\n        \"+ time : time\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ amount : float\",\n        \"+ discount : float\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ homeAddress : string\",\n        \"+ officeAddress : string\",\n        \"+ workingHours : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Trajectory\",\n      \"target\": \"Approval\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"MensoTicket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"MensoTicket\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"MensoTicket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 44.49052690000099,
+ "prompt_tokens": 5526,
+ "completion_tokens": 778,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7pypcxcsar8rvv1n0m12wb",
+  "object": "chat.completion",
+  "created": 1791877090,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ lineNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Trajectory\",\n      \"attributes\": [\n        \"+ destination : string\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Approval\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Line\",\n      \"attributes\": [\n        \"+ category : string\"\n      ]\n    },\n    {\n      \"name\": \"MensoTicket\",\n      \"attributes\": [\n        \"+ validityYear : int\",\n        \"+ price : float\"\n      ]\n    },\n    {\n      \"name\": \"Trip\",\n      \"attributes\": [\n        \"+ time : time\",\n        \"+ date : date\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ amount : float\",\n        \"+ discount : float\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ homeAddress : string\",\n        \"+ officeAddress : string\",\n        \"+ workingHours : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Trajectory\",\n      \"target\": \"Approval\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"MensoTicket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"MensoTicket\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"MensoTicket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5526,
+   "completion_tokens": 778,
+   "total_tokens": 6304,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

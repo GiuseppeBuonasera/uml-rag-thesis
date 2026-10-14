@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Aircraft {\n  + name : string\n  + type : string\n  + year_of_manufacture : int\n  + next_inspection_date : date\n}\n\nclass PassengerAircraft extends Aircraft {\n  + number_of_seats : int\n}\n\nclass SeatCategory {\n  + designation : string\n  + offers_entertainment : boolean\n  + number_of_seats : int\n}\n\nclass Flight {\n  + flight_number : string\n  + date : date\n}\n\nclass Passenger {\n  + name : string\n  + passport_number : string\n}\n\nclass Ticket {\n  + ticket_number : string\n  + price : float\n  + upgrade_desired : boolean\n}\n\nclass Airline {\n  + name : string\n}\n\nclass FlightAttendant {\n  + name : string\n  + date_of_employment : date\n  + is_chief_stewardess : boolean\n}\n\nclass Pilot {\n  + name : string\n  + date_of_employment : date\n  + license : string\n}\n\nclass Airport {\n  + name : string\n  + address : string\n  + number_of_runways : int\n}\n\nAircraft \"*\" -- \"0..1\" Airline : belongs to\nAircraft \"1\" -- \"*\" Flight : performs\nPassengerAircraft \"1\" -- \"*\" SeatCategory : has\nPassenger \"*\" -- \"*\" Flight : takes part in\nPassenger \"1\" -- \"*\" Ticket : holds\nFlight \"1\" -- \"*\" Ticket : issues\nTicket \"*\" -- \"1\" SeatCategory : for\nFlight \"*\" -- \"1\" Airport : departs from\nFlight \"*\" -- \"1\" Airport : arrives at\nAircraft \"0..1\" -- \"1\" Airport : home airport\nAirline \"1\" -- \"*\" FlightAttendant : employs\nAirline \"1\" -- \"*\" Pilot : employs\nFlight \"*\" -- \"1..*\" FlightAttendant : works on\nFlight -- \"1\" Pilot : Captain\nFlight -- \"1..2\" Pilot : Co-pilot\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 22.994302799999787,
+ "prompt_tokens": 2218,
+ "completion_tokens": 441,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wwf0vnvwj9le2l1xk7i7",
+  "object": "chat.completion",
+  "created": 1791853073,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Aircraft {\n  + name : string\n  + type : string\n  + year_of_manufacture : int\n  + next_inspection_date : date\n}\n\nclass PassengerAircraft extends Aircraft {\n  + number_of_seats : int\n}\n\nclass SeatCategory {\n  + designation : string\n  + offers_entertainment : boolean\n  + number_of_seats : int\n}\n\nclass Flight {\n  + flight_number : string\n  + date : date\n}\n\nclass Passenger {\n  + name : string\n  + passport_number : string\n}\n\nclass Ticket {\n  + ticket_number : string\n  + price : float\n  + upgrade_desired : boolean\n}\n\nclass Airline {\n  + name : string\n}\n\nclass FlightAttendant {\n  + name : string\n  + date_of_employment : date\n  + is_chief_stewardess : boolean\n}\n\nclass Pilot {\n  + name : string\n  + date_of_employment : date\n  + license : string\n}\n\nclass Airport {\n  + name : string\n  + address : string\n  + number_of_runways : int\n}\n\nAircraft \"*\" -- \"0..1\" Airline : belongs to\nAircraft \"1\" -- \"*\" Flight : performs\nPassengerAircraft \"1\" -- \"*\" SeatCategory : has\nPassenger \"*\" -- \"*\" Flight : takes part in\nPassenger \"1\" -- \"*\" Ticket : holds\nFlight \"1\" -- \"*\" Ticket : issues\nTicket \"*\" -- \"1\" SeatCategory : for\nFlight \"*\" -- \"1\" Airport : departs from\nFlight \"*\" -- \"1\" Airport : arrives at\nAircraft \"0..1\" -- \"1\" Airport : home airport\nAirline \"1\" -- \"*\" FlightAttendant : employs\nAirline \"1\" -- \"*\" Pilot : employs\nFlight \"*\" -- \"1..*\" FlightAttendant : works on\nFlight -- \"1\" Pilot : Captain\nFlight -- \"1..2\" Pilot : Co-pilot\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2218,
+   "completion_tokens": 441,
+   "total_tokens": 2659,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

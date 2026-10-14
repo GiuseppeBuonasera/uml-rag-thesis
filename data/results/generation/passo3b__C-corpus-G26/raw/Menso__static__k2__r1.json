@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"BusCompany\",\n      \"attributes\": [\n        \"+ Name : String\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ LineNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Trajectory\",\n      \"attributes\": [\n        \"+ Destination : String\",\n        \"+ Status : String\"\n      ]\n    },\n    {\n      \"name\": \"ApprovalProcess\",\n      \"attributes\": [\n        \"+ Status : String\"\n      ]\n    },\n    {\n      \"name\": \"Line\",\n      \"attributes\": [\n        \"+ Category : String\"\n      ]\n    },\n    {\n      \"name\": \"MENSOProject\",\n      \"attributes\": [\n        \"+ ValidityPeriod : String\"\n      ]\n    },\n    {\n      \"name\": \"Trip\",\n      \"attributes\": [\n        \"+ Time : time\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"MENSOUser\",\n      \"attributes\": [\n        \"+ HomeAddress : String\",\n        \"+ OfficeAddress : String\",\n        \"+ WorkingHours : String\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ Month : String\",\n        \"+ TotalAmount : double\",\n        \"+ Discount : float\"\n      ]\n    },\n    {\n      \"name\": \"MENSOCard\",\n      \"attributes\": [\n        \"+ CardNumber : String\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"BusCompany\",\n      \"target\": \"Bus\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusCompany\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusCompany\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trajectory\",\n      \"target\": \"ApprovalProcess\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"MENSOCard\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOCard\",\n      \"target\": \"MENSOUser\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOUser\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"MENSOUser\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 52.78281940000306,
+ "prompt_tokens": 4055,
+ "completion_tokens": 942,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ha9vf73lpkjteb62lgl3ff",
+  "object": "chat.completion",
+  "created": 1791876644,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"BusCompany\",\n      \"attributes\": [\n        \"+ Name : String\"\n      ]\n    },\n    {\n      \"name\": \"Bus\",\n      \"attributes\": [\n        \"+ LineNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"Trajectory\",\n      \"attributes\": [\n        \"+ Destination : String\",\n        \"+ Status : String\"\n      ]\n    },\n    {\n      \"name\": \"ApprovalProcess\",\n      \"attributes\": [\n        \"+ Status : String\"\n      ]\n    },\n    {\n      \"name\": \"Line\",\n      \"attributes\": [\n        \"+ Category : String\"\n      ]\n    },\n    {\n      \"name\": \"MENSOProject\",\n      \"attributes\": [\n        \"+ ValidityPeriod : String\"\n      ]\n    },\n    {\n      \"name\": \"Trip\",\n      \"attributes\": [\n        \"+ Time : time\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"MENSOUser\",\n      \"attributes\": [\n        \"+ HomeAddress : String\",\n        \"+ OfficeAddress : String\",\n        \"+ WorkingHours : String\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ Month : String\",\n        \"+ TotalAmount : double\",\n        \"+ Discount : float\"\n      ]\n    },\n    {\n      \"name\": \"MENSOCard\",\n      \"attributes\": [\n        \"+ CardNumber : String\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"BusCompany\",\n      \"target\": \"Bus\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusCompany\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BusCompany\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Line\",\n      \"target\": \"Trajectory\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bus\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trajectory\",\n      \"target\": \"ApprovalProcess\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"Line\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"MENSOCard\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOCard\",\n      \"target\": \"MENSOUser\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MENSOUser\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Trip\",\n      \"target\": \"MENSOUser\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4055,
+   "completion_tokens": 942,
+   "total_tokens": 4997,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

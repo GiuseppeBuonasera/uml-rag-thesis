@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"OilCompany\"}, {\"name\": \"GasStation\"}, {\"name\": \"Customer\"}, {\"name\": \"CreditCard\"}, {\"name\": \"RefuelCard\"}, {\"name\": \"MonthlyInvoice\"}, {\"name\": \"Payment\"}, {\"name\": \"RefuelTurn\"}, {\"name\": \"Pump\"}, {\"name\": \"GasolineType\"}, {\"name\": \"Reservoir\"}], \"relations\": [{\"type\": \"association\", \"source\": \"OilCompany\", \"target\": \"GasStation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"Pump\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelCard\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"MonthlyInvoice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"RefuelTurn\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"RefuelTurn\", \"target\": \"Pump\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"GasolineType\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"Reservoir\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 27.759341699995275,
+ "prompt_tokens": 4585,
+ "completion_tokens": 402,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9vnrimoivs70cwwbxje7fio",
+  "object": "chat.completion",
+  "created": 1791872689,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"OilCompany\"}, {\"name\": \"GasStation\"}, {\"name\": \"Customer\"}, {\"name\": \"CreditCard\"}, {\"name\": \"RefuelCard\"}, {\"name\": \"MonthlyInvoice\"}, {\"name\": \"Payment\"}, {\"name\": \"RefuelTurn\"}, {\"name\": \"Pump\"}, {\"name\": \"GasolineType\"}, {\"name\": \"Reservoir\"}], \"relations\": [{\"type\": \"association\", \"source\": \"OilCompany\", \"target\": \"GasStation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"Pump\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelCard\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"MonthlyInvoice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"RefuelTurn\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"RefuelTurn\", \"target\": \"Pump\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"GasolineType\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"Reservoir\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4585,
+   "completion_tokens": 402,
+   "total_tokens": 4987,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

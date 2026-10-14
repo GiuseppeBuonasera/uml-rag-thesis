@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Faculty\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Institute\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ ssn : string\",\n        \"+ name : string\",\n        \"+ email : string\"\n      ]\n    },\n    {\n      \"name\": \"ResearchStaff\",\n      \"attributes\": [\n        \"+ fieldOfResearch : string\"\n      ]\n    },\n    {\n      \"name\": \"AdministrativeStaff\"\n    },\n    {\n      \"name\": \"ResearchAssistant\",\n      \"attributes\": [\n        \"+ hoursInProject : int\"\n      ]\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ startDate : date\",\n        \"+ endDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Lecturer\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Course\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ weeklyDuration : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Faculty\",\n      \"target\": \"Institute\",\n      \"label\": \"made up of\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Faculty\",\n      \"target\": \"Employee\",\n      \"label\": \"is headed by\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchAssistant\",\n      \"target\": \"Institute\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchAssistant\",\n      \"target\": \"Project\",\n      \"label\": \"involved in\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lecturer\",\n      \"target\": \"Course\",\n      \"label\": \"teaches\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ResearchStaff\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdministrativeStaff\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ResearchAssistant\",\n      \"parent\": \"ResearchStaff\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Lecturer\",\n      \"parent\": \"ResearchAssistant\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 43.42111540000042,
+ "prompt_tokens": 4765,
+ "completion_tokens": 699,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5xszrvym9aippsu9he5s",
+  "object": "chat.completion",
+  "created": 1791884797,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Faculty\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Institute\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ ssn : string\",\n        \"+ name : string\",\n        \"+ email : string\"\n      ]\n    },\n    {\n      \"name\": \"ResearchStaff\",\n      \"attributes\": [\n        \"+ fieldOfResearch : string\"\n      ]\n    },\n    {\n      \"name\": \"AdministrativeStaff\"\n    },\n    {\n      \"name\": \"ResearchAssistant\",\n      \"attributes\": [\n        \"+ hoursInProject : int\"\n      ]\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ startDate : date\",\n        \"+ endDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Lecturer\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Course\",\n      \"attributes\": [\n        \"+ id : int\",\n        \"+ name : string\",\n        \"+ weeklyDuration : int\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Faculty\",\n      \"target\": \"Institute\",\n      \"label\": \"made up of\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Faculty\",\n      \"target\": \"Employee\",\n      \"label\": \"is headed by\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchAssistant\",\n      \"target\": \"Institute\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ResearchAssistant\",\n      \"target\": \"Project\",\n      \"label\": \"involved in\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lecturer\",\n      \"target\": \"Course\",\n      \"label\": \"teaches\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ResearchStaff\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdministrativeStaff\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ResearchAssistant\",\n      \"parent\": \"ResearchStaff\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Lecturer\",\n      \"parent\": \"ResearchAssistant\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4765,
+   "completion_tokens": 699,
+   "total_tokens": 5464,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

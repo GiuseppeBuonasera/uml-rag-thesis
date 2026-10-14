@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + Address : string\n  + VATNumber : string\n  + HeadOfficeAddress : string\n}\n\nclass Product {\n  + Name : string\n  + StockLevel : int\n}\n\nclass Order {\n  + OrderDate : date\n  + PaymentDate : date\n  + IsPaid : boolean\n}\n\nclass OrderLine {\n  + Quantity : int\n}\n\nclass Invoice {\n  + InvoiceDate : date\n}\n\nclass Delivery {\n  + Status : string\n  + PackingDate : date\n  + ShippingDate : date\n  + ReceivedDate : date\n}\n\nclass DeliveryLine {\n}\n\nclass DeliveryService {\n  + Name : string\n}\n\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"1\" -- \"*\" Invoice : receives\nOrder \"1\" *-- \"1..*\" OrderLine : contains\nOrderLine \"1\" -- \"*\" DeliveryLine : partOf\nDelivery \"1\" *-- \"1..*\" DeliveryLine : contains\nDelivery \"*\" -- \"1\" Order : belongsTo\nDelivery \"*\" -- \"1\" DeliveryService : handledBy\nOrder \"1\" -- \"0..1\" Invoice : billedBy\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 16.894313000000693,
+ "prompt_tokens": 3222,
+ "completion_tokens": 261,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gmnleb8xd6qxn8wib8fa5l",
+  "object": "chat.completion",
+  "created": 1791857994,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + Address : string\n  + VATNumber : string\n  + HeadOfficeAddress : string\n}\n\nclass Product {\n  + Name : string\n  + StockLevel : int\n}\n\nclass Order {\n  + OrderDate : date\n  + PaymentDate : date\n  + IsPaid : boolean\n}\n\nclass OrderLine {\n  + Quantity : int\n}\n\nclass Invoice {\n  + InvoiceDate : date\n}\n\nclass Delivery {\n  + Status : string\n  + PackingDate : date\n  + ShippingDate : date\n  + ReceivedDate : date\n}\n\nclass DeliveryLine {\n}\n\nclass DeliveryService {\n  + Name : string\n}\n\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"1\" -- \"*\" Invoice : receives\nOrder \"1\" *-- \"1..*\" OrderLine : contains\nOrderLine \"1\" -- \"*\" DeliveryLine : partOf\nDelivery \"1\" *-- \"1..*\" DeliveryLine : contains\nDelivery \"*\" -- \"1\" Order : belongsTo\nDelivery \"*\" -- \"1\" DeliveryService : handledBy\nOrder \"1\" -- \"0..1\" Invoice : billedBy\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3222,
+   "completion_tokens": 261,
+   "total_tokens": 3483,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

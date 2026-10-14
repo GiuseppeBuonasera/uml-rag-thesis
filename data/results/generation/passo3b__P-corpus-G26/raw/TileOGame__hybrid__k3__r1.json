@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Game {\n  + isHiddenTileFound : boolean\n}\n\nclass Board {\n  + layout : string\n}\n\nclass Tile {\n  + isHiddenTile : boolean\n  + isActionTile : boolean\n  + actionTileDuration : int\n  + isVisited : boolean\n}\n\nclass Connection {\n  + side : string\n}\n\nclass ActionCard {\n  + type : ActionType\n}\n\nclass Player {\n  + color : string\n}\n\nclass PlayingPiece {\n  + color : string\n}\n\nclass Die {\n  + value : int\n}\n\nclass SpareConnectionPile {\n  + count : int\n}\n\nenum ActionType {\n  ROLL_EXTRA_TURN\n  CONNECT_ADJACENT_TILES\n  REMOVE_CONNECTION\n  MOVE_TO_ARBITRARY_TILE\n  LOSE_NEXT_TURN\n}\n\nDesigner -- \"1\" Game : designs\nPlayer \"2..4\" -- \"1\" Game : plays\nGame \"1\" *-- \"1\" Board\nBoard \"1\" *-- \"*\" Tile\nBoard \"1\" *-- \"*\" Connection\nBoard \"1\" *-- \"1\" SpareConnectionPile\nBoard \"1\" *-- \"1\" Die\nGame \"1\" *-- \"1\" ActionCardDeck\nActionCardDeck \"1\" *-- \"32\" ActionCard\nPlayer \"1\" -- \"1\" PlayingPiece : has\nGame \"1\" -- \"1..*\" PlayingPiece : uses\n\nTile \"1\" -- \"0..1\" Connection : has\nTile \"1\" -- \"0..1\" Connection : has\nTile \"1\" -- \"0..1\" Connection : has\nTile \"1\" -- \"0..1\" Connection : has\nConnection \"1\" -- \"1\" Tile : connects\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 22.821104300001025,
+ "prompt_tokens": 3638,
+ "completion_tokens": 398,
+ "cached": true,
+ "raw": {
+  "id": "chatcmpl-5t9e5lu1ine80w5slymjf4",
+  "object": "chat.completion",
+  "created": 1791859121,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Game {\n  + isHiddenTileFound : boolean\n}\n\nclass Board {\n  + layout : string\n}\n\nclass Tile {\n  + isHiddenTile : boolean\n  + isActionTile : boolean\n  + actionTileDuration : int\n  + isVisited : boolean\n}\n\nclass Connection {\n  + side : string\n}\n\nclass ActionCard {\n  + type : ActionType\n}\n\nclass Player {\n  + color : string\n}\n\nclass PlayingPiece {\n  + color : string\n}\n\nclass Die {\n  + value : int\n}\n\nclass SpareConnectionPile {\n  + count : int\n}\n\nenum ActionType {\n  ROLL_EXTRA_TURN\n  CONNECT_ADJACENT_TILES\n  REMOVE_CONNECTION\n  MOVE_TO_ARBITRARY_TILE\n  LOSE_NEXT_TURN\n}\n\nDesigner -- \"1\" Game : designs\nPlayer \"2..4\" -- \"1\" Game : plays\nGame \"1\" *-- \"1\" Board\nBoard \"1\" *-- \"*\" Tile\nBoard \"1\" *-- \"*\" Connection\nBoard \"1\" *-- \"1\" SpareConnectionPile\nBoard \"1\" *-- \"1\" Die\nGame \"1\" *-- \"1\" ActionCardDeck\nActionCardDeck \"1\" *-- \"32\" ActionCard\nPlayer \"1\" -- \"1\" PlayingPiece : has\nGame \"1\" -- \"1..*\" PlayingPiece : uses\n\nTile \"1\" -- \"0..1\" Connection : has\nTile \"1\" -- \"0..1\" Connection : has\nTile \"1\" -- \"0..1\" Connection : has\nTile \"1\" -- \"0..1\" Connection : has\nConnection \"1\" -- \"1\" Tile : connects\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3638,
+   "completion_tokens": 398,
+   "total_tokens": 4036,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

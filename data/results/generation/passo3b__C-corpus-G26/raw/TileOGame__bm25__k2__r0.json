@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Designer\", \"attributes\": []}, {\"name\": \"Player\", \"attributes\": [\"+ color : string\"]}, {\"name\": \"BoardGame\", \"attributes\": []}, {\"name\": \"Tile\", \"attributes\": [\"+ isHidden : boolean\", \"attributes\": [\"+ isActionTile : boolean\", \"+ turnsAsRegular : int\", \"+ isVisited : boolean\"]]}, {\"name\": \"ConnectionPiece\", \"attributes\": []}, {\"name\": \"ActionCard\", \"attributes\": []}, {\"name\": \"ActionType\", \"kind\": \"enum\", \"values\": [\"RollExtraTurn\", \"ConnectTiles\", \"RemoveConnection\", \"MoveToArbitraryTile\", \"LoseNextTurn\"]}, {\"name\": \"PlayingPiece\", \"attributes\": [\"+ color : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Designer\", \"target\": \"BoardGame\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"BoardGame\", \"part\": \"Tile\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Tile\", \"target\": \"ConnectionPiece\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"BoardGame\", \"part\": \"ActionCard\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"32\"}, {\"type\": \"association\", \"source\": \"ActionCard\", \"target\": \"ActionType\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"PlayingPiece\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"BoardGame\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"2..4\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"BoardGame\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 30.222808499995153,
+ "prompt_tokens": 5236,
+ "completion_tokens": 435,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kxt5yqwj6d8fuw83b4etfl",
+  "object": "chat.completion",
+  "created": 1791882245,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Designer\", \"attributes\": []}, {\"name\": \"Player\", \"attributes\": [\"+ color : string\"]}, {\"name\": \"BoardGame\", \"attributes\": []}, {\"name\": \"Tile\", \"attributes\": [\"+ isHidden : boolean\", \"attributes\": [\"+ isActionTile : boolean\", \"+ turnsAsRegular : int\", \"+ isVisited : boolean\"]]}, {\"name\": \"ConnectionPiece\", \"attributes\": []}, {\"name\": \"ActionCard\", \"attributes\": []}, {\"name\": \"ActionType\", \"kind\": \"enum\", \"values\": [\"RollExtraTurn\", \"ConnectTiles\", \"RemoveConnection\", \"MoveToArbitraryTile\", \"LoseNextTurn\"]}, {\"name\": \"PlayingPiece\", \"attributes\": [\"+ color : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Designer\", \"target\": \"BoardGame\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"BoardGame\", \"part\": \"Tile\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Tile\", \"target\": \"ConnectionPiece\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"BoardGame\", \"part\": \"ActionCard\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"32\"}, {\"type\": \"association\", \"source\": \"ActionCard\", \"target\": \"ActionType\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"PlayingPiece\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"BoardGame\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"2..4\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"BoardGame\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5236,
+   "completion_tokens": 435,
+   "total_tokens": 5671,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

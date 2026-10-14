@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ VATNumber : String\",\n        \"+ Name : String\",\n        \"+ PhoneNumber : String\",\n        \"+ Address : String\"\n      ]\n    },\n    {\n      \"name\": \"Package\",\n      \"attributes\": [\n        \"+ IdentifierCode : String\",\n        \"+ Weight : float\",\n        \"+ DeliveryType : String\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryCenter\",\n      \"attributes\": [\n        \"+ Name : String\",\n        \"+ Address : String\"\n      ]\n    },\n    {\n      \"name\": \"Courier\",\n      \"attributes\": [\n        \"+ VATNumber : String\",\n        \"+ Name : String\",\n        \"+ PhoneNumber : String\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"sends package to\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Package\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"sender\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Package\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"recipient\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Package\",\n      \"target\": \"DeliveryCenter\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"routed through\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"DeliveryCenter\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"associated with\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Package\",\n      \"target\": \"Courier\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"assigned to\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Courier\",\n      \"target\": \"DeliveryCenter\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"works in\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 35.27065250001033,
+ "prompt_tokens": 3709,
+ "completion_tokens": 626,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lsaxdnbro0ktqj6bxgsp7",
+  "object": "chat.completion",
+  "created": 1791913613,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ VATNumber : String\",\n        \"+ Name : String\",\n        \"+ PhoneNumber : String\",\n        \"+ Address : String\"\n      ]\n    },\n    {\n      \"name\": \"Package\",\n      \"attributes\": [\n        \"+ IdentifierCode : String\",\n        \"+ Weight : float\",\n        \"+ DeliveryType : String\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryCenter\",\n      \"attributes\": [\n        \"+ Name : String\",\n        \"+ Address : String\"\n      ]\n    },\n    {\n      \"name\": \"Courier\",\n      \"attributes\": [\n        \"+ VATNumber : String\",\n        \"+ Name : String\",\n        \"+ PhoneNumber : String\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\",\n      \"label\": \"sends package to\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Package\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"sender\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Package\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"recipient\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Package\",\n      \"target\": \"DeliveryCenter\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"routed through\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"DeliveryCenter\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"associated with\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Package\",\n      \"target\": \"Courier\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"assigned to\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Courier\",\n      \"target\": \"DeliveryCenter\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"works in\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3709,
+   "completion_tokens": 626,
+   "total_tokens": 4335,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

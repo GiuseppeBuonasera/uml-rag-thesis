@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\"\n    },\n    {\n      \"name\": \"ExaminationType\"\n    },\n    {\n      \"name\": \"Doctor\"\n    },\n    {\n      \"name\": \"Patient\"\n    },\n    {\n      \"name\": \"Problem\"\n    },\n    {\n      \"name\": \"TreatmentPlan\"\n    },\n    {\n      \"name\": \"Diagnosis\"\n    },\n    {\n      \"name\": \"ActualTreatment\"\n    },\n    {\n      \"name\": \"MedicalAction\"\n    },\n    {\n      \"name\": \"Examination\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"ExaminationType\",\n      \"label\": \"hasPermissionFor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Hospital\",\n      \"label\": \"isAffiliatedTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Problem\",\n      \"target\": \"TreatmentPlan\",\n      \"label\": \"hasPlan\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"ExaminationType\",\n      \"label\": \"advises\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"label\": \"poses\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Diagnosis\",\n      \"label\": \"receives\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Diagnosis\",\n      \"label\": \"isVisitedBy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"ActualTreatment\",\n      \"label\": \"leadsTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"ActualTreatment\",\n      \"label\": \"isStandardFor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActualTreatment\",\n      \"target\": \"Examination\",\n      \"label\": \"consistsOf\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActualTreatment\",\n      \"target\": \"MedicalAction\",\n      \"label\": \"consistsOf\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Examination\",\n      \"target\": \"ExaminationType\",\n      \"label\": \"isA\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Examination\",\n      \"target\": \"Hospital\",\n      \"label\": \"isPerformedAt\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 43.99681430000055,
+ "prompt_tokens": 5188,
+ "completion_tokens": 692,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-rybmx3zhbf8x94s55bwqwj",
+  "object": "chat.completion",
+  "created": 1791884110,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\"\n    },\n    {\n      \"name\": \"ExaminationType\"\n    },\n    {\n      \"name\": \"Doctor\"\n    },\n    {\n      \"name\": \"Patient\"\n    },\n    {\n      \"name\": \"Problem\"\n    },\n    {\n      \"name\": \"TreatmentPlan\"\n    },\n    {\n      \"name\": \"Diagnosis\"\n    },\n    {\n      \"name\": \"ActualTreatment\"\n    },\n    {\n      \"name\": \"MedicalAction\"\n    },\n    {\n      \"name\": \"Examination\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"ExaminationType\",\n      \"label\": \"hasPermissionFor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Hospital\",\n      \"label\": \"isAffiliatedTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Problem\",\n      \"target\": \"TreatmentPlan\",\n      \"label\": \"hasPlan\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"ExaminationType\",\n      \"label\": \"advises\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"label\": \"poses\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Diagnosis\",\n      \"label\": \"receives\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Diagnosis\",\n      \"label\": \"isVisitedBy\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"ActualTreatment\",\n      \"label\": \"leadsTo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"ActualTreatment\",\n      \"label\": \"isStandardFor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActualTreatment\",\n      \"target\": \"Examination\",\n      \"label\": \"consistsOf\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActualTreatment\",\n      \"target\": \"MedicalAction\",\n      \"label\": \"consistsOf\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Examination\",\n      \"target\": \"ExaminationType\",\n      \"label\": \"isA\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Examination\",\n      \"target\": \"Hospital\",\n      \"label\": \"isPerformedAt\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5188,
+   "completion_tokens": 692,
+   "total_tokens": 5880,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

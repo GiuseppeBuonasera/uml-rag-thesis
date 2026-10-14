@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Club {\n}\n\nclass Employee {\n}\n\nclass HeadCoach extends Employee {\n}\n\nclass Director extends Employee {\n}\n\nclass Scout extends Employee {\n}\n\nclass HeadScout extends Scout {\n}\n\nclass PlayerProfile {\n  + TargetPosition : string\n}\n\nclass PlayerAttribute {\n  + Name : string\n  + Value : float\n}\n\nclass Player {\n  + Name : string\n}\n\nclass LongListEntry {\n}\n\nclass ScoutingAssignment {\n}\n\nclass ScoutingReport {\n  + Pros : string\n  + Cons : string\n  + Recommendation : string\n}\n\nclass ShortList {\n}\n\nclass Offer {\n}\n\nHeadCoach \"1\" -- \"0..*\" PlayerProfile : identifies\nPlayerProfile \"1\" *-- \"1..*\" PlayerAttribute : includes\n\nScout \"1\" -- \"0..*\" LongListEntry : notes\nLongListEntry \"0..*\" -- \"1\" Player : refers to\n\nHeadScout \"1\" -- \"0..*\" ScoutingAssignment : sets up\nScout \"1\" -- \"0..*\" ScoutingAssignment : carries out\nScoutingAssignment \"1\" -- \"1\" ScoutingReport : results in\nScoutingAssignment \"0..*\" -- \"1\" Player : investigates\n\nHeadCoach \"1\" -- \"0..*\" ShortList : decides\nHeadScout \"1\" -- \"0..*\" ShortList : decides\nShortList \"1\" -- \"1\" Player : contains\n\nDirector \"1\" -- \"0..*\" Offer : makes\nOffer \"1\" -- \"1\" Player : for\nOffer \"1\" -- \"1\" ShortList : based on\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 19.72885370000222,
+ "prompt_tokens": 2481,
+ "completion_tokens": 363,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-efgqwcomcdrzk5oik9iizn",
+  "object": "chat.completion",
+  "created": 1791858609,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Club {\n}\n\nclass Employee {\n}\n\nclass HeadCoach extends Employee {\n}\n\nclass Director extends Employee {\n}\n\nclass Scout extends Employee {\n}\n\nclass HeadScout extends Scout {\n}\n\nclass PlayerProfile {\n  + TargetPosition : string\n}\n\nclass PlayerAttribute {\n  + Name : string\n  + Value : float\n}\n\nclass Player {\n  + Name : string\n}\n\nclass LongListEntry {\n}\n\nclass ScoutingAssignment {\n}\n\nclass ScoutingReport {\n  + Pros : string\n  + Cons : string\n  + Recommendation : string\n}\n\nclass ShortList {\n}\n\nclass Offer {\n}\n\nHeadCoach \"1\" -- \"0..*\" PlayerProfile : identifies\nPlayerProfile \"1\" *-- \"1..*\" PlayerAttribute : includes\n\nScout \"1\" -- \"0..*\" LongListEntry : notes\nLongListEntry \"0..*\" -- \"1\" Player : refers to\n\nHeadScout \"1\" -- \"0..*\" ScoutingAssignment : sets up\nScout \"1\" -- \"0..*\" ScoutingAssignment : carries out\nScoutingAssignment \"1\" -- \"1\" ScoutingReport : results in\nScoutingAssignment \"0..*\" -- \"1\" Player : investigates\n\nHeadCoach \"1\" -- \"0..*\" ShortList : decides\nHeadScout \"1\" -- \"0..*\" ShortList : decides\nShortList \"1\" -- \"1\" Player : contains\n\nDirector \"1\" -- \"0..*\" Offer : makes\nOffer \"1\" -- \"1\" Player : for\nOffer \"1\" -- \"1\" ShortList : based on\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2481,
+   "completion_tokens": 363,
+   "total_tokens": 2844,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

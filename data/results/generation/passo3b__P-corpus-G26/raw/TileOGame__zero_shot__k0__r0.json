@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass GameDesigner {}\nclass Game {\n  +isPaused : boolean\n  +isSaved : boolean\n}\nclass Board {}\nclass Tile {\n  +color : string\n  +isHidden : boolean\n  +isActionTile : boolean\n  +actionTileDuration : int\n}\nclass ConnectionPiece {}\nclass ActionCard {\n  +instruction : string\n}\nclass ActionCardDeck {\n  +size : int\n}\nclass Player {\n  +playerNumber : int\n}\nclass PlayingPiece {\n  +color : string\n}\nclass Die {}\n\nGameDesigner \"1\" -- \"*\" Game : designs\nGame \"1\" *-- \"1\" Board : has\nBoard \"1\" *-- \"*\" Tile : contains\nBoard \"1\" *-- \"*\" ConnectionPiece : contains\nGame \"1\" *-- \"32\" ActionCard : has\nGame \"1\" *-- \"1\" ActionCardDeck : has\nActionCardDeck \"1\" -- \"1\" ActionCard : contains\nGame \"1\" -- \"2..4\" Player : played by\nPlayer \"1\" -- \"1\" PlayingPiece : owns\nGame \"1\" -- \"1\" Die : uses\nTile \"0..1\" -- \"0..1\" Tile : connects\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 13.705319699998654,
+ "prompt_tokens": 1455,
+ "completion_tokens": 282,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-brwrzkk30nux232g4sr23b",
+  "object": "chat.completion",
+  "created": 1791858886,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass GameDesigner {}\nclass Game {\n  +isPaused : boolean\n  +isSaved : boolean\n}\nclass Board {}\nclass Tile {\n  +color : string\n  +isHidden : boolean\n  +isActionTile : boolean\n  +actionTileDuration : int\n}\nclass ConnectionPiece {}\nclass ActionCard {\n  +instruction : string\n}\nclass ActionCardDeck {\n  +size : int\n}\nclass Player {\n  +playerNumber : int\n}\nclass PlayingPiece {\n  +color : string\n}\nclass Die {}\n\nGameDesigner \"1\" -- \"*\" Game : designs\nGame \"1\" *-- \"1\" Board : has\nBoard \"1\" *-- \"*\" Tile : contains\nBoard \"1\" *-- \"*\" ConnectionPiece : contains\nGame \"1\" *-- \"32\" ActionCard : has\nGame \"1\" *-- \"1\" ActionCardDeck : has\nActionCardDeck \"1\" -- \"1\" ActionCard : contains\nGame \"1\" -- \"2..4\" Player : played by\nPlayer \"1\" -- \"1\" PlayingPiece : owns\nGame \"1\" -- \"1\" Die : uses\nTile \"0..1\" -- \"0..1\" Tile : connects\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1455,
+   "completion_tokens": 282,
+   "total_tokens": 1737,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

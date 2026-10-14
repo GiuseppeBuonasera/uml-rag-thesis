@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Employee\", \"attributes\": [\"+ id : long\", \"+ name : string\", \"+ address : string\"]}, {\"name\": \"AssemblyService\", \"attributes\": [\"+ kms : int\", \"+ workHours : float\", \"+ admissionDate : date\", \"+ finishDate : date\"]}, {\"name\": \"PartAccessory\", \"attributes\": [\"+ category : string\", \"+ serialNumber : string\", \"+ price : double\"]}, {\"name\": \"Car\", \"attributes\": [\"+ licensePlate : string\", \"+ make : string\", \"+ model : string\", \"+ color : string\"]}, {\"name\": \"Owner\", \"attributes\": [\"+ id : long\", \"+ name : string\", \"+ address : string\", \"+ phone : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"Employee\", \"targetRole\": \"responsibleEmployee\"}, {\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"Car\"}, {\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"PartAccessory\"}, {\"type\": \"association\", \"source\": \"PartAccessory\", \"target\": \"Car\", \"label\": \"fits in\"}, {\"type\": \"association\", \"source\": \"Owner\", \"target\": \"Car\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 14.469984099996509,
+ "prompt_tokens": 1321,
+ "completion_tokens": 286,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1puk0qgyma26h0hjzpnxov",
+  "object": "chat.completion",
+  "created": 1791912105,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Employee\", \"attributes\": [\"+ id : long\", \"+ name : string\", \"+ address : string\"]}, {\"name\": \"AssemblyService\", \"attributes\": [\"+ kms : int\", \"+ workHours : float\", \"+ admissionDate : date\", \"+ finishDate : date\"]}, {\"name\": \"PartAccessory\", \"attributes\": [\"+ category : string\", \"+ serialNumber : string\", \"+ price : double\"]}, {\"name\": \"Car\", \"attributes\": [\"+ licensePlate : string\", \"+ make : string\", \"+ model : string\", \"+ color : string\"]}, {\"name\": \"Owner\", \"attributes\": [\"+ id : long\", \"+ name : string\", \"+ address : string\", \"+ phone : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"Employee\", \"targetRole\": \"responsibleEmployee\"}, {\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"Car\"}, {\"type\": \"association\", \"source\": \"AssemblyService\", \"target\": \"PartAccessory\"}, {\"type\": \"association\", \"source\": \"PartAccessory\", \"target\": \"Car\", \"label\": \"fits in\"}, {\"type\": \"association\", \"source\": \"Owner\", \"target\": \"Car\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1321,
+   "completion_tokens": 286,
+   "total_tokens": 1607,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"OilCompany\"}, {\"name\": \"GasStation\"}, {\"name\": \"Pump\"}, {\"name\": \"GasolineType\"}, {\"name\": \"Reservoir\"}, {\"name\": \"Customer\"}, {\"name\": \"RefuelTurn\"}, {\"name\": \"RefuelCard\"}, {\"name\": \"MonthlyInvoice\"}, {\"name\": \"InvoicePayment\"}, {\"name\": \"Discount\"}, {\"name\": \"PaymentMethod\"}, {\"name\": \"Nozzle\"}], \"relations\": [{\"type\": \"association\", \"source\": \"OilCompany\", \"target\": \"GasStation\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"Pump\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"GasolineType\"}, {\"type\": \"composition\", \"source\": \"Pump\", \"part\": \"Reservoir\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelCard\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelTurn\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"MonthlyInvoice\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"RefuelTurn\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"Discount\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"InvoicePayment\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"Nozzle\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Nozzle\", \"target\": \"RefuelTurn\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"RefuelTurn\", \"target\": \"PaymentMethod\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 21.17519539999921,
+ "prompt_tokens": 1632,
+ "completion_tokens": 435,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-s9wfjwqku7xtkhh1ime3n",
+  "object": "chat.completion",
+  "created": 1791872539,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"OilCompany\"}, {\"name\": \"GasStation\"}, {\"name\": \"Pump\"}, {\"name\": \"GasolineType\"}, {\"name\": \"Reservoir\"}, {\"name\": \"Customer\"}, {\"name\": \"RefuelTurn\"}, {\"name\": \"RefuelCard\"}, {\"name\": \"MonthlyInvoice\"}, {\"name\": \"InvoicePayment\"}, {\"name\": \"Discount\"}, {\"name\": \"PaymentMethod\"}, {\"name\": \"Nozzle\"}], \"relations\": [{\"type\": \"association\", \"source\": \"OilCompany\", \"target\": \"GasStation\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"Pump\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"GasolineType\"}, {\"type\": \"composition\", \"source\": \"Pump\", \"part\": \"Reservoir\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelCard\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"RefuelTurn\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"MonthlyInvoice\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"RefuelTurn\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"Discount\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"MonthlyInvoice\", \"target\": \"InvoicePayment\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Pump\", \"target\": \"Nozzle\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Nozzle\", \"target\": \"RefuelTurn\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"RefuelTurn\", \"target\": \"PaymentMethod\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1632,
+   "completion_tokens": 435,
+   "total_tokens": 2067,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

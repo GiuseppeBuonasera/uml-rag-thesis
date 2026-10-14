@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Game\",\n      \"attributes\": [\n        \"+ isPaused : boolean\",\n        \"+ isSaved : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Board\",\n      \"attributes\": [\n        \"+ layout : string\"\n      ]\n    },\n    {\n      \"name\": \"Tile\",\n      \"attributes\": [\n        \"+ color : string\",\n        \"+ isHidden : boolean\",\n        \"+ isActionTile : boolean\",\n        \"+ actionTileDuration : int\"\n      ]\n    },\n    {\n      \"name\": \"ConnectionPiece\",\n      \"attributes\": [\n        \"+ side : string\"\n      ]\n    },\n    {\n      \"name\": \"ActionCard\",\n      \"attributes\": [\n        \"+ instruction : string\"\n      ]\n    },\n    {\n      \"name\": \"Player\",\n      \"attributes\": [\n        \"+ color : string\",\n        \"+ turnOrder : int\"\n      ]\n    },\n    {\n      \"name\": \"PlayingPiece\",\n      \"attributes\": [\n        \"+ color : string\"\n      ]\n    },\n    {\n      \"name\": \"Die\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"ActionType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"EXTRA_TURN\",\n        \"ADD_CONNECTION\",\n        \"REMOVE_CONNECTION\",\n        \"MOVE_TO_ARBITRARY_TILE\",\n        \"LOSE_NEXT_TURN\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Board\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Board\",\n      \"part\": \"Tile\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"ConnectionPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Board\",\n      \"target\": \"ActionCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"PlayingPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PlayingPiece\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Die\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActionCard\",\n      \"target\": \"ActionType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 43.30007879999903,
+ "prompt_tokens": 3883,
+ "completion_tokens": 804,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-1n5sb7d6o186m82ln8bk18",
+  "object": "chat.completion",
+  "created": 1791882062,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Game\",\n      \"attributes\": [\n        \"+ isPaused : boolean\",\n        \"+ isSaved : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Board\",\n      \"attributes\": [\n        \"+ layout : string\"\n      ]\n    },\n    {\n      \"name\": \"Tile\",\n      \"attributes\": [\n        \"+ color : string\",\n        \"+ isHidden : boolean\",\n        \"+ isActionTile : boolean\",\n        \"+ actionTileDuration : int\"\n      ]\n    },\n    {\n      \"name\": \"ConnectionPiece\",\n      \"attributes\": [\n        \"+ side : string\"\n      ]\n    },\n    {\n      \"name\": \"ActionCard\",\n      \"attributes\": [\n        \"+ instruction : string\"\n      ]\n    },\n    {\n      \"name\": \"Player\",\n      \"attributes\": [\n        \"+ color : string\",\n        \"+ turnOrder : int\"\n      ]\n    },\n    {\n      \"name\": \"PlayingPiece\",\n      \"attributes\": [\n        \"+ color : string\"\n      ]\n    },\n    {\n      \"name\": \"Die\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"ActionType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"EXTRA_TURN\",\n        \"ADD_CONNECTION\",\n        \"REMOVE_CONNECTION\",\n        \"MOVE_TO_ARBITRARY_TILE\",\n        \"LOSE_NEXT_TURN\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Board\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Board\",\n      \"part\": \"Tile\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"ConnectionPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Board\",\n      \"target\": \"ActionCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"PlayingPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PlayingPiece\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"Die\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ActionCard\",\n      \"target\": \"ActionType\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3883,
+   "completion_tokens": 804,
+   "total_tokens": 4687,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}
