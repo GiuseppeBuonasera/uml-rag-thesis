@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Home\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Department\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Room\", \"attributes\": [\"+ roomNumber : int\"]}, {\"name\": \"Bed\", \"attributes\": [\"+ bedId : string\"]}, {\"name\": \"StayCategory\", \"attributes\": [\"+ price : double\"]}, {\"name\": \"RestHome\", \"attributes\": []}, {\"name\": \"RestNursingHome\", \"attributes\": []}, {\"name\": \"ServiceFlat\", \"attributes\": []}, {\"name\": \"Inhabitant\", \"attributes\": [\"+ name : string\", \"+ identificationData : string\"]}, {\"name\": \"Stay\", \"attributes\": [\"+ startDate : date\", \"+ endDate : date\", \"+ isSuspended : boolean\", \"+ isInvalidated : boolean\", \"+ isPaid : boolean\", \"+ outstandingAmount : double\"]}, {\"name\": \"Registration\", \"attributes\": [\"+ registrationDate : date\", \"+ assessmentResults : string\"]}, {\"name\": \"WaitingList\", \"attributes\": [\"+ position : int\"]}, {\"name\": \"Proposal\", \"attributes\": [\"+ proposalDate : date\", \"+ responseDate : date\", \"+ isAccepted : boolean\", \"+ isRefused : boolean\"]}, {\"name\": \"Invoice\", \"attributes\": [\"+ invoiceDate : date\", \"+ amount : double\", \"+ isPaid : boolean\"]}, {\"name\": \"Payment\", \"attributes\": [\"+ amount : double\", \"+ paymentDate : date\"]}, {\"name\": \"CreditNote\", \"attributes\": [\"+ amount : double\", \"+ date : date\"]}], \"relations\": [{\"type\": \"composition\", \"whole\": \"Home\", \"part\": \"Department\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Department\", \"part\": \"Room\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Room\", \"part\": \"Bed\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Bed\", \"target\": \"StayCategory\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"Stay\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Stay\", \"target\": \"StayCategory\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"Registration\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"WaitingList\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"WaitingList\", \"target\": \"StayCategory\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Proposal\", \"target\": \"Inhabitant\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Proposal\", \"target\": \"StayCategory\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"Invoice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"CreditNote\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"RestHome\", \"parent\": \"StayCategory\"}, {\"type\": \"inheritance\", \"child\": \"RestNursingHome\", \"parent\": \"StayCategory\"}, {\"type\": \"inheritance\", \"child\": \"ServiceFlat\", \"parent\": \"StayCategory\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 52.69220789999963,
+ "prompt_tokens": 4224,
+ "completion_tokens": 899,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-iv80mev0gqphqpqv4xmd3g",
+  "object": "chat.completion",
+  "created": 1792276572,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Home\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Department\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Room\", \"attributes\": [\"+ roomNumber : int\"]}, {\"name\": \"Bed\", \"attributes\": [\"+ bedId : string\"]}, {\"name\": \"StayCategory\", \"attributes\": [\"+ price : double\"]}, {\"name\": \"RestHome\", \"attributes\": []}, {\"name\": \"RestNursingHome\", \"attributes\": []}, {\"name\": \"ServiceFlat\", \"attributes\": []}, {\"name\": \"Inhabitant\", \"attributes\": [\"+ name : string\", \"+ identificationData : string\"]}, {\"name\": \"Stay\", \"attributes\": [\"+ startDate : date\", \"+ endDate : date\", \"+ isSuspended : boolean\", \"+ isInvalidated : boolean\", \"+ isPaid : boolean\", \"+ outstandingAmount : double\"]}, {\"name\": \"Registration\", \"attributes\": [\"+ registrationDate : date\", \"+ assessmentResults : string\"]}, {\"name\": \"WaitingList\", \"attributes\": [\"+ position : int\"]}, {\"name\": \"Proposal\", \"attributes\": [\"+ proposalDate : date\", \"+ responseDate : date\", \"+ isAccepted : boolean\", \"+ isRefused : boolean\"]}, {\"name\": \"Invoice\", \"attributes\": [\"+ invoiceDate : date\", \"+ amount : double\", \"+ isPaid : boolean\"]}, {\"name\": \"Payment\", \"attributes\": [\"+ amount : double\", \"+ paymentDate : date\"]}, {\"name\": \"CreditNote\", \"attributes\": [\"+ amount : double\", \"+ date : date\"]}], \"relations\": [{\"type\": \"composition\", \"whole\": \"Home\", \"part\": \"Department\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Department\", \"part\": \"Room\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Room\", \"part\": \"Bed\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Bed\", \"target\": \"StayCategory\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"Stay\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Stay\", \"target\": \"StayCategory\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"Registration\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"WaitingList\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"WaitingList\", \"target\": \"StayCategory\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Proposal\", \"target\": \"Inhabitant\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Proposal\", \"target\": \"StayCategory\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"Invoice\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Invoice\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"CreditNote\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"RestHome\", \"parent\": \"StayCategory\"}, {\"type\": \"inheritance\", \"child\": \"RestNursingHome\", \"parent\": \"StayCategory\"}, {\"type\": \"inheritance\", \"child\": \"ServiceFlat\", \"parent\": \"StayCategory\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4224,
+   "completion_tokens": 899,
+   "total_tokens": 5123,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

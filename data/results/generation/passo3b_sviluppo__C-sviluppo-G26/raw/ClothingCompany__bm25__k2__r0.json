@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ description : string\",\n        \"+ netPrice : double\"\n      ]\n    },\n    {\n      \"name\": \"Manufacturer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ country : string\"\n      ]\n    },\n    {\n      \"name\": \"Country\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ vatRate : float\",\n        \"+ currency : string\",\n        \"+ conversionRateToEuro : double\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ socialSecurityNumber : string\",\n        \"+ telephoneNumber : string\",\n        \"+ emailAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ telephoneNumber : string\",\n        \"+ emailAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ orderId : string\",\n        \"+ quantity : int\",\n        \"+ orderDate : date\",\n        \"+ desiredDeliveryDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Manufacturer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Representative\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 41.629984799998056,
+ "prompt_tokens": 3918,
+ "completion_tokens": 716,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9t8xfrth6wqvuachne0vwi",
+  "object": "chat.completion",
+  "created": 1792270592,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ description : string\",\n        \"+ netPrice : double\"\n      ]\n    },\n    {\n      \"name\": \"Manufacturer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ country : string\"\n      ]\n    },\n    {\n      \"name\": \"Country\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ vatRate : float\",\n        \"+ currency : string\",\n        \"+ conversionRateToEuro : double\"\n      ]\n    },\n    {\n      \"name\": \"Representative\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ socialSecurityNumber : string\",\n        \"+ telephoneNumber : string\",\n        \"+ emailAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\",\n        \"+ telephoneNumber : string\",\n        \"+ emailAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ orderId : string\",\n        \"+ quantity : int\",\n        \"+ orderDate : date\",\n        \"+ desiredDeliveryDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Manufacturer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Product\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Country\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Representative\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Representative\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3918,
+   "completion_tokens": 716,
+   "total_tokens": 4634,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

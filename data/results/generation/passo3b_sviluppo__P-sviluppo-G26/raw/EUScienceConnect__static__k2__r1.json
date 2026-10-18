@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass ScientificStaff {\n  + PersonID : string\n  + PhoneNumber : string\n  + Keywords : string[]\n}\n\nclass ResearchInstitution {\n  + InstitutionCode : string\n}\n\nclass ScientificArticle {\n  + DOI : string\n  + Title : string\n}\n\nclass PeerReviewedPaper extends ScientificArticle {\n  + CitationCount : int\n}\n\nclass TechnicalReport extends ScientificArticle {\n}\n\nclass AuthorPosition {\n  + Position : int\n}\n\nclass Publisher {\n  + Name : string\n}\n\nclass Journal {\n  + Name : string\n  + ImpactFactor : float\n}\n\nclass ReviewerAssignment {\n}\n\nScientificStaff \"1\" -- \"0..*\" ScientificStaff : author\nScientificStaff \"0..*\" -- \"0..*\" ScientificArticle : reviews\nScientificStaff \"1\" -- \"1\" ResearchInstitution : works for\n\nScientificArticle \"1\" -- \"1..*\" ScientificArticle : author (via AuthorPosition)\nScientificArticle \"1\" -- \"1..*\" ScientificStaff : author (via AuthorPosition)\n\nPeerReviewedPaper \"0..*\" -- \"1\" ReviewerAssignment : reviewed by\nReviewerAssignment \"0..*\" -- \"1\" ScientificStaff : reviewer\n\nTechnicalReport \"0..*\" -- \"1\" ResearchInstitution : published by\n\nPublisher \"1\" -- \"0..*\" Journal : publishes\nResearchInstitution \"0..*\" -- \"0..*\" Journal : subscribes to\n\nJournal \"1\" -- \"0..*\" PeerReviewedPaper : publishes\n\nclass AuthorPosition {\n}\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 18.4152150000009,
+ "prompt_tokens": 2584,
+ "completion_tokens": 336,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0fueu0xfsql49vbc9slbj3u",
+  "object": "chat.completion",
+  "created": 1792262915,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass ScientificStaff {\n  + PersonID : string\n  + PhoneNumber : string\n  + Keywords : string[]\n}\n\nclass ResearchInstitution {\n  + InstitutionCode : string\n}\n\nclass ScientificArticle {\n  + DOI : string\n  + Title : string\n}\n\nclass PeerReviewedPaper extends ScientificArticle {\n  + CitationCount : int\n}\n\nclass TechnicalReport extends ScientificArticle {\n}\n\nclass AuthorPosition {\n  + Position : int\n}\n\nclass Publisher {\n  + Name : string\n}\n\nclass Journal {\n  + Name : string\n  + ImpactFactor : float\n}\n\nclass ReviewerAssignment {\n}\n\nScientificStaff \"1\" -- \"0..*\" ScientificStaff : author\nScientificStaff \"0..*\" -- \"0..*\" ScientificArticle : reviews\nScientificStaff \"1\" -- \"1\" ResearchInstitution : works for\n\nScientificArticle \"1\" -- \"1..*\" ScientificArticle : author (via AuthorPosition)\nScientificArticle \"1\" -- \"1..*\" ScientificStaff : author (via AuthorPosition)\n\nPeerReviewedPaper \"0..*\" -- \"1\" ReviewerAssignment : reviewed by\nReviewerAssignment \"0..*\" -- \"1\" ScientificStaff : reviewer\n\nTechnicalReport \"0..*\" -- \"1\" ResearchInstitution : published by\n\nPublisher \"1\" -- \"0..*\" Journal : publishes\nResearchInstitution \"0..*\" -- \"0..*\" Journal : subscribes to\n\nJournal \"1\" -- \"0..*\" PeerReviewedPaper : publishes\n\nclass AuthorPosition {\n}\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2584,
+   "completion_tokens": 336,
+   "total_tokens": 2920,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

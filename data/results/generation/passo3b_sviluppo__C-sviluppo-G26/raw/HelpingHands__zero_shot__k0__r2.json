@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Location\", \"attributes\": []}, {\"name\": \"Resident\", \"attributes\": [\"+ name : string\", \"+ streetAddress : string\", \"+ phoneNumber : string\", \"+ emailAddress : string\"]}, {\"name\": \"PickupRequest\", \"attributes\": [\"+ streetAddress : string\", \"+ description : string\", \"+ pickupTime : time\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ availableStorageSpace : float\"]}, {\"name\": \"PickupRoute\", \"attributes\": [\"+ date : date\"]}, {\"name\": \"VolunteerDriver\", \"attributes\": [\"+ availableDays : date[]\"]}, {\"name\": \"Item\", \"attributes\": [\"+ description : string\", \"+ dimensions : string\", \"+ weight : float\", \"+ rfidTag : string\"]}, {\"name\": \"Category\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Client\", \"attributes\": [\"+ homeAddress : string\", \"+ neededCategories : Category[]\"]}, {\"name\": \"Employee\", \"attributes\": []}, {\"name\": \"FoodBank\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Location\", \"target\": \"Resident\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Vehicle\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Employee\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Resident\", \"target\": \"PickupRequest\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PickupRequest\", \"target\": \"Item\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Vehicle\", \"target\": \"PickupRoute\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PickupRoute\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"vehicle\"}, {\"type\": \"association\", \"source\": \"VolunteerDriver\", \"target\": \"PickupRoute\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PickupRoute\", \"target\": \"PickupRequest\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Item\", \"target\": \"Category\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"category\"}, {\"type\": \"association\", \"source\": \"Client\", \"target\": \"Category\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"neededCategory\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Item\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"examines\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Client\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"calls\"}, {\"type\": \"association\", \"source\": \"VolunteerDriver\", \"target\": \"Client\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"delivers\"}, {\"type\": \"association\", \"source\": \"Item\", \"target\": \"FoodBank\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"droppedOff\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 33.03418729999976,
+ "prompt_tokens": 1623,
+ "completion_tokens": 701,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-016brfm0rmcc2xlq7xcy9au",
+  "object": "chat.completion",
+  "created": 1792275347,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Location\", \"attributes\": []}, {\"name\": \"Resident\", \"attributes\": [\"+ name : string\", \"+ streetAddress : string\", \"+ phoneNumber : string\", \"+ emailAddress : string\"]}, {\"name\": \"PickupRequest\", \"attributes\": [\"+ streetAddress : string\", \"+ description : string\", \"+ pickupTime : time\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ availableStorageSpace : float\"]}, {\"name\": \"PickupRoute\", \"attributes\": [\"+ date : date\"]}, {\"name\": \"VolunteerDriver\", \"attributes\": [\"+ availableDays : date[]\"]}, {\"name\": \"Item\", \"attributes\": [\"+ description : string\", \"+ dimensions : string\", \"+ weight : float\", \"+ rfidTag : string\"]}, {\"name\": \"Category\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Client\", \"attributes\": [\"+ homeAddress : string\", \"+ neededCategories : Category[]\"]}, {\"name\": \"Employee\", \"attributes\": []}, {\"name\": \"FoodBank\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Location\", \"target\": \"Resident\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Vehicle\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Employee\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Resident\", \"target\": \"PickupRequest\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PickupRequest\", \"target\": \"Item\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Vehicle\", \"target\": \"PickupRoute\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PickupRoute\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"vehicle\"}, {\"type\": \"association\", \"source\": \"VolunteerDriver\", \"target\": \"PickupRoute\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"PickupRoute\", \"target\": \"PickupRequest\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Item\", \"target\": \"Category\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"category\"}, {\"type\": \"association\", \"source\": \"Client\", \"target\": \"Category\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"neededCategory\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Item\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"examines\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Client\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"calls\"}, {\"type\": \"association\", \"source\": \"VolunteerDriver\", \"target\": \"Client\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"delivers\"}, {\"type\": \"association\", \"source\": \"Item\", \"target\": \"FoodBank\", \"sourceMultiplicity\": \"*\", \"targetRole\": \"droppedOff\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1623,
+   "completion_tokens": 701,
+   "total_tokens": 2324,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

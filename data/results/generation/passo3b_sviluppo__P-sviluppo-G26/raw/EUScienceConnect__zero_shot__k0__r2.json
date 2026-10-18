@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass Person {\n  +personID : string\n  +phoneNumber : string\n  +keywords : string[]\n}\n\nclass ResearchInstitution {\n  +institutionCode : string\n}\n\nclass ScientificArticle {\n  +DOI : string\n  +title : string\n}\n\nclass PeerReviewedPaper extends ScientificArticle {\n  +citationCount : int\n}\n\nclass TechnicalReport extends ScientificArticle {\n}\n\nclass AuthorPosition {\n  +position : string\n}\n\nclass Publisher {\n  +name : string\n}\n\nclass Journal {\n  +name : string\n  +impactFactor : float\n}\n\nPerson \"1\" -- \"1\" ResearchInstitution : works for\nPerson \"1\" -- \"*\" ScientificArticle : author of\nPerson \"0..*\" -- \"0..*\" ScientificArticle : reviewer of\nScientificArticle \"1\" -- \"*\" AuthorPosition : has\nPerson \"1\" -- \"*\" AuthorPosition : in position\n\nResearchInstitution \"1\" -- \"*\" TechnicalReport : publishes\nPublisher \"1\" -- \"*\" Journal : publishes\nResearchInstitution \"0..*\" -- \"0..*\" Journal : subscribes\nJournal \"1\" -- \"*\" PeerReviewedPaper : publishes\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 13.10726479999721,
+ "prompt_tokens": 1378,
+ "completion_tokens": 255,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-d2jucs4ie69qtiw9wtaj4i",
+  "object": "chat.completion",
+  "created": 1792262883,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Person {\n  +personID : string\n  +phoneNumber : string\n  +keywords : string[]\n}\n\nclass ResearchInstitution {\n  +institutionCode : string\n}\n\nclass ScientificArticle {\n  +DOI : string\n  +title : string\n}\n\nclass PeerReviewedPaper extends ScientificArticle {\n  +citationCount : int\n}\n\nclass TechnicalReport extends ScientificArticle {\n}\n\nclass AuthorPosition {\n  +position : string\n}\n\nclass Publisher {\n  +name : string\n}\n\nclass Journal {\n  +name : string\n  +impactFactor : float\n}\n\nPerson \"1\" -- \"1\" ResearchInstitution : works for\nPerson \"1\" -- \"*\" ScientificArticle : author of\nPerson \"0..*\" -- \"0..*\" ScientificArticle : reviewer of\nScientificArticle \"1\" -- \"*\" AuthorPosition : has\nPerson \"1\" -- \"*\" AuthorPosition : in position\n\nResearchInstitution \"1\" -- \"*\" TechnicalReport : publishes\nPublisher \"1\" -- \"*\" Journal : publishes\nResearchInstitution \"0..*\" -- \"0..*\" Journal : subscribes\nJournal \"1\" -- \"*\" PeerReviewedPaper : publishes\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1378,
+   "completion_tokens": 255,
+   "total_tokens": 1633,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

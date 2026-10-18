@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Museum\"\n    },\n    {\n      \"name\": \"Location\"\n    },\n    {\n      \"name\": \"Exhibition\"\n    },\n    {\n      \"name\": \"Employee\"\n    },\n    {\n      \"name\": \"ExhibitionItem\"\n    },\n    {\n      \"name\": \"Piece\"\n    },\n    {\n      \"name\": \"Collector\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Museum\",\n      \"part\": \"Location\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Location\",\n      \"target\": \"Exhibition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Exhibition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Exhibition\",\n      \"target\": \"ExhibitionItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExhibitionItem\",\n      \"target\": \"Piece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Piece\",\n      \"target\": \"Collector\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Employee\",\n      \"label\": \"coaching\",\n      \"sourceRole\": \"junior employee\",\n      \"targetRole\": \"senior employee\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 28.802479400001175,
+ "prompt_tokens": 3772,
+ "completion_tokens": 478,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-sos5vlb4nxn0emzfzmki4s",
+  "object": "chat.completion",
+  "created": 1792278233,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Museum\"\n    },\n    {\n      \"name\": \"Location\"\n    },\n    {\n      \"name\": \"Exhibition\"\n    },\n    {\n      \"name\": \"Employee\"\n    },\n    {\n      \"name\": \"ExhibitionItem\"\n    },\n    {\n      \"name\": \"Piece\"\n    },\n    {\n      \"name\": \"Collector\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Museum\",\n      \"part\": \"Location\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Location\",\n      \"target\": \"Exhibition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Exhibition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Exhibition\",\n      \"target\": \"ExhibitionItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExhibitionItem\",\n      \"target\": \"Piece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Piece\",\n      \"target\": \"Collector\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Employee\",\n      \"label\": \"coaching\",\n      \"sourceRole\": \"junior employee\",\n      \"targetRole\": \"senior employee\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3772,
+   "completion_tokens": 478,
+   "total_tokens": 4250,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

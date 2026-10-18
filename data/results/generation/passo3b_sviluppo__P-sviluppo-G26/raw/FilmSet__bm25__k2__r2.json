@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Employee {\n  + name : string\n  + socialSecurityNumber : string\n  + hasOscar : boolean\n}\n\nclass CreativeEmployee extends Employee {\n}\n\nclass Director extends CreativeEmployee {\n  + assistantName : string\n}\n\nclass Actor extends CreativeEmployee {\n  + education : string\n}\n\nclass Technician extends Employee {\n  + fieldOfActivity : string\n}\n\nclass Location {\n  + name : string\n}\n\nclass Film {\n  + title : string\n  + releaseYear : int\n}\n\nclass Genre {\n}\n\nclass Thriller extends Genre {}\nclass Action extends Genre {}\nclass Horror extends Genre {}\nclass Comedy extends Genre {}\n\nclass Screenwriter {\n  + name : string\n  + mostSuccessfulFilm : string\n}\n\nclass Screenplay {\n  + title : string\n  + version : string\n  + date : date\n  + numberOfScenes : int\n  + plot : string\n}\n\nclass Novel {\n  + title : string\n}\n\nclass Author {\n  + name : string\n}\n\nclass Concept {\n}\n\nFilm \"*\" -- \"*\" Location : used at\nFilm \"1\" -- \"1\" Genre : assigned to\nFilm \"1\" -- \"1\" Screenplay : based on\nScreenplay \"1\" -- \"1\" Screenwriter : written by\nScreenplay \"1\" -- \"0..1\" Novel : based on\nScreenplay \"1\" -- \"0..1\" Concept : based on\nActor \"1..*\" -- \"1\" Screenplay : prepares for role in\nDirector \"1\" -- \"1\" Screenplay : implements\n\nScreenwriter \"1\" -- \"*\" Screenplay : creates\nNovel \"1\" -- \"1\" Author : written by\nActor \"1..*\" -- \"1\" Film : appears in\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 20.843261399997573,
+ "prompt_tokens": 2477,
+ "completion_tokens": 394,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8qwgn5rm58tepnnhgz05",
+  "object": "chat.completion",
+  "created": 1792263558,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Employee {\n  + name : string\n  + socialSecurityNumber : string\n  + hasOscar : boolean\n}\n\nclass CreativeEmployee extends Employee {\n}\n\nclass Director extends CreativeEmployee {\n  + assistantName : string\n}\n\nclass Actor extends CreativeEmployee {\n  + education : string\n}\n\nclass Technician extends Employee {\n  + fieldOfActivity : string\n}\n\nclass Location {\n  + name : string\n}\n\nclass Film {\n  + title : string\n  + releaseYear : int\n}\n\nclass Genre {\n}\n\nclass Thriller extends Genre {}\nclass Action extends Genre {}\nclass Horror extends Genre {}\nclass Comedy extends Genre {}\n\nclass Screenwriter {\n  + name : string\n  + mostSuccessfulFilm : string\n}\n\nclass Screenplay {\n  + title : string\n  + version : string\n  + date : date\n  + numberOfScenes : int\n  + plot : string\n}\n\nclass Novel {\n  + title : string\n}\n\nclass Author {\n  + name : string\n}\n\nclass Concept {\n}\n\nFilm \"*\" -- \"*\" Location : used at\nFilm \"1\" -- \"1\" Genre : assigned to\nFilm \"1\" -- \"1\" Screenplay : based on\nScreenplay \"1\" -- \"1\" Screenwriter : written by\nScreenplay \"1\" -- \"0..1\" Novel : based on\nScreenplay \"1\" -- \"0..1\" Concept : based on\nActor \"1..*\" -- \"1\" Screenplay : prepares for role in\nDirector \"1\" -- \"1\" Screenplay : implements\n\nScreenwriter \"1\" -- \"*\" Screenplay : creates\nNovel \"1\" -- \"1\" Author : written by\nActor \"1..*\" -- \"1\" Film : appears in\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2477,
+   "completion_tokens": 394,
+   "total_tokens": 2871,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

@@ -2839,6 +2839,74 @@ def check_3b_and_batch(builder: PromptBuilder, tmp: Path) -> None:
           "su una run simulata); batch con ripresa, arresto su errore e stato di avanzamento")
 
 
+def check_3b_sviluppo() -> None:
+    """Voce 151: passo3b_sviluppo.yaml = passo3b.yaml salvo gli esercizi (i 26 di sviluppo di corpus/roles.yaml) e il
+    nome; 468 generazioni per formato, tutte le celle nel file congelato, nessuna cella static saltata."""
+    import yaml
+    import progress
+    load = lambda n: yaml.safe_load((ROOT / "experiments" / "configs" / f"{n}.yaml").read_text(encoding="utf-8"))  # noqa: E731
+    roles = yaml.safe_load((ROOT / "corpus" / "roles.yaml").read_text(encoding="utf-8"))
+    dev = sorted(r["id"] for r in roles if r["role"] == "sviluppo")
+    cands, _ = cl.load_all()
+    fz = PromptBuilder(retrieval_source="frozen")
+    for a, b in (("P-sviluppo-G26", "P-corpus-G26"), ("C-sviluppo-G26", "C-corpus-G26")):
+        x = rx.resolve_configuration(load("passo3b_sviluppo"), a)
+        y = rx.resolve_configuration(load("passo3b"), b)
+        assert {k for k in set(x) | set(y) if x.get(k) != y.get(k)} == {"run_id", "configuration", "query_ids", "elenchi"}
+        assert sorted(x["query_ids"]) == dev and len(dev) == 26
+        plan = rx.plan(x, cands)
+        assert len(plan) == 468 == progress.expected_calls(str(ROOT / "experiments" / "configs" / "passo3b_sviluppo.yaml"), a)
+        for q, s, _, _ in plan:
+            fz.build(q, s)  # tutte le condizioni costruibili (esempi dal file congelato)
+    print("  OK  3b sui 26 di sviluppo (voce 151): config = passo3b salvo esercizi e nome, 2 x 468 generazioni, "
+          "celle nel file congelato")
+
+
+def check_difficulty() -> None:
+    """experiments/difficulty_3b.py: 54 esercizi di valutazione, Flesch-Kincaid (textstat 0.7.4) e dimensione del GT
+    (classi + tutti gli archi), ordinati per difficolta_fk decrescente."""
+    import importlib.metadata as md
+    import difficulty_3b as dif
+    assert md.version("textstat") == "0.7.4", md.version("textstat")
+    rows = dif.rows()
+    assert len(rows) == 54 and len({r["esercizio"] for r in rows}) == 54
+    assert [r["difficolta_fk"] for r in rows] == sorted((r["difficolta_fk"] for r in rows), reverse=True)
+    bank = next(r for r in rows if r["esercizio"] == "BankAccount")
+    assert (bank["difficolta_fk"], bank["difficolta_size"], bank["n_classi"], bank["n_relazioni"]) == (5.2, 11, 6, 5), bank
+    assert sum(r["tradotto"] for r in rows) == 10 and sum(r["split"] == "debari" for r in rows) == 20
+    print("  OK  difficolta' dei 54 esercizi: Flesch-Kincaid e dimensione del GT, 10 tradotti, 20 De Bari")
+
+
+def check_synonym_review() -> None:
+    """Voce 152: candidati dei sinonimi (experiments/synonym_review.py) su risposte finte, con un encoder finto: solo
+    classi NON abbinate dal livello rilassato, accoppiamento uno a uno, soglia, raggruppamento per esercizio."""
+    import numpy as np
+    import synonym_review as sr
+    from types import SimpleNamespace
+
+    def diagram(classes, edges=()):
+        return {"nodes": [{"id": n, "data": {"name": n, "attributes": [f"+ {a} : string" for a in at]}} for n, at in classes],
+                "edges": [{"id": f"e{i}", "source": s, "target": d, "type": "ClassBidirectional", "data": {}}
+                          for i, (s, d) in enumerate(edges)]}
+    gt = diagram([("Airline", []), ("Airplane", ["model"]), ("Pilot", [])], [("Airline", "Airplane")])
+    resp = diagram([("Airline", []), ("Aircraft", ["model"]), ("Crew", [])], [("Airline", "Aircraft")])
+    vec = {"airplane": [1, 0, 0], "aircraft": [0.9, 0.436, 0], "pilot": [0, 0, 1], "crew": [0, 0.6, 0.8]}
+    enc = lambda xs: np.array([vec[x] for x in xs], dtype=float)  # noqa: E731
+    call = {"v": SimpleNamespace(level=4, diagram=resp), "gt": gt, "q": "Q"}
+    bad = {"v": SimpleNamespace(level=1, diagram=None), "gt": gt, "q": "Q"}
+    cand = sr.candidates([call, call, bad], enc, soglia=0.85)
+    assert set(cand["Q"]) == {("Airplane", "Aircraft")} and cand["Q"][("Airplane", "Aircraft")]["n"] == 2, cand
+    assert set(sr.candidates([call], enc, soglia=0.5)["Q"]) == {("Airplane", "Aircraft"), ("Pilot", "Crew")}
+    items = sr.build_items(cand, {"Q": {"diagram_apollon_json": gt, "description": "An airplane has a model. Pilots fly."}})
+    it = items[0]
+    assert (it["gt"], it["risposta"], it["occorrenze"]) == ("Airplane", "Aircraft", 2)
+    assert it["gt_attributi"] == ["model"] and it["risp_relazioni"] == ["associazione con Airline"]
+    assert it["frasi"] == ["An airplane has a model."] and "condition" not in it and "sim" not in json.dumps(it)
+    assert sr.unique_ci(["name", "Name", "type"]) == ["name", "type"]
+    print("  OK  revisione dei sinonimi (voce 152): candidati solo tra classi non abbinate, uno a uno, soglia, per "
+          "esercizio, contesto senza condizione ne' somiglianza")
+
+
 def check_compare_view() -> None:
     """experiments/compare_view.py (voce 134): esercizi comuni alle run, pagina ristretta a un esercizio e a una
     ripetizione con GT + una risposta per run; rendering verificato solo se java e plantuml.jar sono disponibili."""
@@ -3293,6 +3361,9 @@ def main() -> None:
         check_plan(builder, tmp)
         check_frozen(builder, tmp)
         check_3b_and_batch(builder, tmp)
+        check_3b_sviluppo()
+        check_difficulty()
+        check_synonym_review()
         check_compare_view()
         check_compare_retrievers()
         check_compare_3b()

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Museum\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Exhibition\",\n      \"attributes\": [\n        \"+ OpeningDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"ExhibitionItem\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Piece\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Collector\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"RequestedPiece\",\n      \"attributes\": [\n        \"+ Status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Museum\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Location\",\n      \"target\": \"Exhibition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Exhibition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Exhibition\",\n      \"target\": \"ExhibitionItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExhibitionItem\",\n      \"target\": \"RequestedPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RequestedPiece\",\n      \"target\": \"Piece\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RequestedPiece\",\n      \"target\": \"Collector\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Employee\",\n      \"label\": \"coaching\",\n      \"sourceRole\": \"Junior\",\n      \"targetRole\": \"Senior\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 40.81215510000038,
+ "prompt_tokens": 4216,
+ "completion_tokens": 672,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-drfp4oa0zjth0qohc2typb",
+  "object": "chat.completion",
+  "created": 1792278262,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Museum\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Exhibition\",\n      \"attributes\": [\n        \"+ OpeningDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"ExhibitionItem\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Piece\",\n      \"attributes\": [\n        \"+ Description : string\"\n      ]\n    },\n    {\n      \"name\": \"Collector\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"RequestedPiece\",\n      \"attributes\": [\n        \"+ Status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Museum\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Location\",\n      \"target\": \"Exhibition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Exhibition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Exhibition\",\n      \"target\": \"ExhibitionItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExhibitionItem\",\n      \"target\": \"RequestedPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RequestedPiece\",\n      \"target\": \"Piece\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RequestedPiece\",\n      \"target\": \"Collector\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Employee\",\n      \"label\": \"coaching\",\n      \"sourceRole\": \"Junior\",\n      \"targetRole\": \"Senior\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4216,
+   "completion_tokens": 672,
+   "total_tokens": 4888,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

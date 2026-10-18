@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum ControllerState {\n  On\n  Off\n  Charging\n}\n\nclass EBike {\n  + Material : string\n}\n\nclass Frame {\n  + Material : string\n}\n\nclass DriveSystem {\n}\n\nclass Motor {\n}\n\nclass Controller {\n  + State : ControllerState\n}\n\nclass BasicController extends Controller {\n}\n\nclass AdvancedController extends Controller {\n  + EstimateNextMaintenance() : date\n}\n\nclass Battery {\n  + StoredEnergy : float\n}\n\nclass Wheel {\n}\n\nEBike \"1\" *-- \"1\" Frame\nEBike \"1\" *-- \"1\" DriveSystem\nEBike \"1\" *-- \"1\" Controller\nFrame \"1\" *-- \"2\" Wheel\nDriveSystem \"1\" *-- \"1\" Motor\nController \"0..1\" -- \"0..1\" Battery : controls\nController \"1\" -- \"1\" DriveSystem : commands\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 11.917935600002238,
+ "prompt_tokens": 2364,
+ "completion_tokens": 211,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qaxb2eojhw3i9nnzjplmm",
+  "object": "chat.completion",
+  "created": 1792262363,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum ControllerState {\n  On\n  Off\n  Charging\n}\n\nclass EBike {\n  + Material : string\n}\n\nclass Frame {\n  + Material : string\n}\n\nclass DriveSystem {\n}\n\nclass Motor {\n}\n\nclass Controller {\n  + State : ControllerState\n}\n\nclass BasicController extends Controller {\n}\n\nclass AdvancedController extends Controller {\n  + EstimateNextMaintenance() : date\n}\n\nclass Battery {\n  + StoredEnergy : float\n}\n\nclass Wheel {\n}\n\nEBike \"1\" *-- \"1\" Frame\nEBike \"1\" *-- \"1\" DriveSystem\nEBike \"1\" *-- \"1\" Controller\nFrame \"1\" *-- \"2\" Wheel\nDriveSystem \"1\" *-- \"1\" Motor\nController \"0..1\" -- \"0..1\" Battery : controls\nController \"1\" -- \"1\" DriveSystem : commands\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2364,
+   "completion_tokens": 211,
+   "total_tokens": 2575,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

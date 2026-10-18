@@ -159,6 +159,8 @@ non sono state modificate.
 148. 2026-10-13 — Leva v5b: esito (NON adottata); risposte senza attributi del compatto lasciate come limite
 149. 2026-10-13 — Avvio del 3b prima delle risposte dei relatori (rischio di rifacimento accettato, nessuna lettura dei risultati prima dello script di analisi)
 150. 2026-10-14 — Leva v5c ("attributes" sempre presente nel compatto): regola e config registrate PRIMA della run
+151. 2026-10-16 — Passo 3b anche sui 26 esercizi di sviluppo: analisi SECONDARIA, separata dalla principale
+152. 2026-10-18 — Revisione dei sinonimi tra classi (livello di abbinamento semantico, solo sensibilita'): regola dei candidati prima della revisione
 
 ## Formato
 
@@ -5360,3 +5362,35 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - **Limiti dichiarati**: secondo tentativo sullo stesso dev set per lo stesso problema (rischio di adattamento al dev
   set); leva motivata anche dai risultati del 3b visti in anticipo.
 - **STOP** prima delle generazioni: parte dal notebook (sezione 3 sexies) con il via dell'utente.
+
+### [2026-10-16] Passo 3b anche sui 26 esercizi di sviluppo — analisi SECONDARIA (decisione dell'utente)
+- **Cosa**: le stesse 6 condizioni × 3 ripetizioni × 2 formati del 3b sui 26 esercizi di sviluppo (20 del dev set + 6
+  dei piloti, `corpus/roles.yaml`): `experiments/configs/passo3b_sviluppo.yaml`, identico a `passo3b.yaml` salvo
+  esercizi e nome (verificato dal test `check_3b_sviluppo`); **936 generazioni** (468 per formato, nessuna cella
+  saltata), circa 7 ore col 26B; esempi dal file congelato (le 80 query ci sono tutte). Run
+  `passo3b_sviluppo__{P,C}-sviluppo-G26`, avvio dal notebook (sezione 4 bis).
+- **Motivo**: completezza ("per completezza", utente): avere tutte le condizioni anche sugli esercizi di sviluppo, per
+  un controllo di coerenza con il 3b principale.
+- **Limite e regola d'uso**: la configurazione (istruzioni, modello, vista clean_v1, retriever) è stata scelta su
+  questi esercizi misurando bm25 (in un caso hybrid): su di essi bm25 e hybrid sono favoriti rispetto a random, static
+  e zero_shot. Quindi: **analisi principale SOLO sui 54 di valutazione** (voci 113, 117); i 26 si riportano a parte
+  come analisi secondaria dichiarata, mai sommati ai 54 nei test della domanda principale. Il 3b principale è già
+  stato visto (deroga alla voce 149): anche questa estensione è decisa dopo averlo visto.
+
+### [2026-10-18] Revisione dei sinonimi tra classi — regola dei candidati registrata PRIMA della revisione
+- **Motivo** (osservazione dell'utente): classi che rappresentano lo stesso concetto con nomi diversi (Airplane /
+  Aircraft) non vengono abbinate, e l'errore si propaga ad attributi e relazioni (abbinati solo dentro classi
+  abbinate). Il modello usa un vocabolario stabile (Jaccard dei nomi 0,86-0,88 tra ripetizioni, 0,80 tra prompt) ma
+  lontano dal GT (0,47-0,49): il problema e' sistematico e tocca tutte le condizioni. Risultati del 3b gia' visti.
+- **Candidati** (`experiments/synonym_review.py`, test `check_synonym_review`): su tutte le risposte valide del 3b (54
+  di valutazione + 26 di sviluppo, due formati), classi del GT e della risposta NON abbinate dal livello rilassato,
+  accoppiate uno a uno (ungherese) sulla somiglianza coseno di all-MiniLM-L6-v2 (revisione fissata, offline) dei nomi
+  spezzati; soglia **0,5**; una decisione per (esercizio, classe del GT, classe della risposta). Esito: **314 coppie**
+  da 69 esercizi, 3.616 occorrenze. Limite: sinonimi con somiglianza < 0,5 non proposti.
+- **Revisione**: dell'utente, su `data/results/generation/revisione_sinonimi/index.html`, **cieca** rispetto a
+  condizione, formato e somiglianza; giudizi "stessa classe" / "classe diversa" / "incerto" sul significato nel
+  contesto (attributi, relazioni, frasi della traccia). Annotatore unico: proposta di far rivedere un campione a un
+  relatore e misurare l'accordo.
+- **Uso**: le coppie "stessa classe" diventano un livello di abbinamento **semantico** (dopo esatto e rilassato) in un
+  file di annotazione versionato; si ricalcolano F1 e tabelle come **analisi di sensibilita'**. La metrica primaria
+  (rilassata, voce 136) **non cambia**. Le "incerte" restano non abbinate (scelta conservativa).

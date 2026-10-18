@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Boeing\"\n    },\n    {\n      \"name\": \"Aircraft\"\n    },\n    {\n      \"name\": \"AirlineCompany\"\n    },\n    {\n      \"name\": \"Contract\"\n    },\n    {\n      \"name\": \"Acquisition\"\n    },\n    {\n      \"name\": \"Employee\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Aircraft\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Contract\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AirlineCompany\",\n      \"target\": \"Contract\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AirlineCompany\",\n      \"target\": \"AirlineCompany\",\n      \"label\": \"mother-daughter relationship\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Acquisition\",\n      \"label\": \"consists of\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Acquisition\",\n      \"target\": \"Aircraft\",\n      \"label\": \"is an acquisition of\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Contract\",\n      \"label\": \"manages\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 31.50263669999549,
+ "prompt_tokens": 5463,
+ "completion_tokens": 463,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-x4b10cm0z2hmko8jadmzp",
+  "object": "chat.completion",
+  "created": 1792268839,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Boeing\"\n    },\n    {\n      \"name\": \"Aircraft\"\n    },\n    {\n      \"name\": \"AirlineCompany\"\n    },\n    {\n      \"name\": \"Contract\"\n    },\n    {\n      \"name\": \"Acquisition\"\n    },\n    {\n      \"name\": \"Employee\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Aircraft\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Contract\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Boeing\",\n      \"target\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AirlineCompany\",\n      \"target\": \"Contract\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AirlineCompany\",\n      \"target\": \"AirlineCompany\",\n      \"label\": \"mother-daughter relationship\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Contract\",\n      \"target\": \"Acquisition\",\n      \"label\": \"consists of\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Acquisition\",\n      \"target\": \"Aircraft\",\n      \"label\": \"is an acquisition of\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Contract\",\n      \"label\": \"manages\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5463,
+   "completion_tokens": 463,
+   "total_tokens": 5926,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

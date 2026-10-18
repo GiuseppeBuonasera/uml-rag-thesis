@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n}\n\nclass ItemDescription {\n  + Description : string\n  + Dimensions : string\n  + Weight : float\n}\n\nclass ScheduledPickup {\n  + PickupTime : time\n  + StreetAddress : string\n}\n\nclass Vehicle {\n  + StorageSpace : float\n}\n\nclass PickupRoute {\n  + Day : date\n}\n\nclass VolunteerDriver {\n  + AvailableDays : string[]\n}\n\nclass SecondHandArticle {\n  + Description : string\n  + Category : string\n}\n\nclass FoodItem {}\n\nclass DistributionCenter {\n  + Location : string\n}\n\nclass Client {\n  + HomeAddress : string\n  + NeededCategories : string[]\n}\n\nclass H2SLocation {\n  + City : string\n}\n\nclass H2SEmployee {\n  + Name : string\n}\n\nclass FoodBank {\n  + Name : string\n}\n\nH2SLocation \"1\" -- \"*\" DistributionCenter\nH2SLocation \"1\" -- \"*\" VolunteerDriver\nH2SLocation \"1\" -- \"*\" H2SEmployee\nH2SLocation \"1\" -- \"*\" Vehicle\n\nResident \"1\" -- \"*\" ScheduledPickup\nResident \"1\" -- \"*\" Client\nScheduledPickup \"1\" -- \"1\" ItemDescription\nScheduledPickup \"1\" -- \"0..1\" SecondHandArticle\nScheduledPickup \"1\" -- \"0..1\" FoodItem\n\nVehicle \"1\" -- \"*\" PickupRoute\nVolunteerDriver \"1\" -- \"*\" PickupRoute\nPickupRoute \"1\" -- \"*\" ScheduledPickup\n\nDistributionCenter \"1\" -- \"*\" SecondHandArticle : receives\nDistributionCenter \"1\" -- \"*\" H2SEmployee : employs\nH2SEmployee \"1\" -- \"*\" SecondHandArticle : examines\nH2SEmployee \"1\" -- \"*\" Client : calls\n\nSecondHandArticle \"*\" -- \"1\" DistributionCenter : dropped off at\nFoodItem \"*\" -- \"1\" FoodBank : dropped off at\n\nVolunteerDriver \"1\" -- \"*\" SecondHandArticle : delivers\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 25.884998900000937,
+ "prompt_tokens": 3429,
+ "completion_tokens": 461,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ufz94f13pnholhxc2dnrf",
+  "object": "chat.completion",
+  "created": 1792264224,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n}\n\nclass ItemDescription {\n  + Description : string\n  + Dimensions : string\n  + Weight : float\n}\n\nclass ScheduledPickup {\n  + PickupTime : time\n  + StreetAddress : string\n}\n\nclass Vehicle {\n  + StorageSpace : float\n}\n\nclass PickupRoute {\n  + Day : date\n}\n\nclass VolunteerDriver {\n  + AvailableDays : string[]\n}\n\nclass SecondHandArticle {\n  + Description : string\n  + Category : string\n}\n\nclass FoodItem {}\n\nclass DistributionCenter {\n  + Location : string\n}\n\nclass Client {\n  + HomeAddress : string\n  + NeededCategories : string[]\n}\n\nclass H2SLocation {\n  + City : string\n}\n\nclass H2SEmployee {\n  + Name : string\n}\n\nclass FoodBank {\n  + Name : string\n}\n\nH2SLocation \"1\" -- \"*\" DistributionCenter\nH2SLocation \"1\" -- \"*\" VolunteerDriver\nH2SLocation \"1\" -- \"*\" H2SEmployee\nH2SLocation \"1\" -- \"*\" Vehicle\n\nResident \"1\" -- \"*\" ScheduledPickup\nResident \"1\" -- \"*\" Client\nScheduledPickup \"1\" -- \"1\" ItemDescription\nScheduledPickup \"1\" -- \"0..1\" SecondHandArticle\nScheduledPickup \"1\" -- \"0..1\" FoodItem\n\nVehicle \"1\" -- \"*\" PickupRoute\nVolunteerDriver \"1\" -- \"*\" PickupRoute\nPickupRoute \"1\" -- \"*\" ScheduledPickup\n\nDistributionCenter \"1\" -- \"*\" SecondHandArticle : receives\nDistributionCenter \"1\" -- \"*\" H2SEmployee : employs\nH2SEmployee \"1\" -- \"*\" SecondHandArticle : examines\nH2SEmployee \"1\" -- \"*\" Client : calls\n\nSecondHandArticle \"*\" -- \"1\" DistributionCenter : dropped off at\nFoodItem \"*\" -- \"1\" FoodBank : dropped off at\n\nVolunteerDriver \"1\" -- \"*\" SecondHandArticle : delivers\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3429,
+   "completion_tokens": 461,
+   "total_tokens": 3890,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

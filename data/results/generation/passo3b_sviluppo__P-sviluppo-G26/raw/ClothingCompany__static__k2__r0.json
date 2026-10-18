@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Company {\n  + Name : string\n}\n\nclass Product {\n  + Name : string\n  + Description : string\n  + NetPrice : double\n}\n\nclass Country {\n  + Name : string\n  + VatRate : float\n  + Currency : string\n  + ConversionRateToEuro : float\n}\n\nclass Representative {\n  + FirstName : string\n  + LastName : string\n  + SocialSecurityNumber : string\n  + TelephoneNumber : string\n  + EmailAddress : string\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n  + TelephoneNumber : string\n  + EmailAddress : string\n}\n\nclass Order {\n  + OrderId : string\n  + Quantity : int\n  + OrderDate : date\n  + DesiredDeliveryDate : date\n}\n\nCompany \"1\" -- \"*\" Product\nCompany \"1\" -- \"*\" Country\nProduct \"*\" -- \"1\" Company : manufactured by\nProduct \"*\" -- \"*\" Country : sold in\n\nRepresentative \"1\" -- \"1\" Country : responsible for\nRepresentative \"1\" -- \"*\" Order : places\nRepresentative \"1\" -- \"*\" Customer : manages\n\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"*\" -- \"*\" Country : resells in\n\nOrder \"*\" -- \"1\" Product : refers to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 16.194642200003727,
+ "prompt_tokens": 2465,
+ "completion_tokens": 286,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3xj9gz4nqzfqw3mbk7nv",
+  "object": "chat.completion",
+  "created": 1792262079,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Company {\n  + Name : string\n}\n\nclass Product {\n  + Name : string\n  + Description : string\n  + NetPrice : double\n}\n\nclass Country {\n  + Name : string\n  + VatRate : float\n  + Currency : string\n  + ConversionRateToEuro : float\n}\n\nclass Representative {\n  + FirstName : string\n  + LastName : string\n  + SocialSecurityNumber : string\n  + TelephoneNumber : string\n  + EmailAddress : string\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n  + TelephoneNumber : string\n  + EmailAddress : string\n}\n\nclass Order {\n  + OrderId : string\n  + Quantity : int\n  + OrderDate : date\n  + DesiredDeliveryDate : date\n}\n\nCompany \"1\" -- \"*\" Product\nCompany \"1\" -- \"*\" Country\nProduct \"*\" -- \"1\" Company : manufactured by\nProduct \"*\" -- \"*\" Country : sold in\n\nRepresentative \"1\" -- \"1\" Country : responsible for\nRepresentative \"1\" -- \"*\" Order : places\nRepresentative \"1\" -- \"*\" Customer : manages\n\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"*\" -- \"*\" Country : resells in\n\nOrder \"*\" -- \"1\" Product : refers to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2465,
+   "completion_tokens": 286,
+   "total_tokens": 2751,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

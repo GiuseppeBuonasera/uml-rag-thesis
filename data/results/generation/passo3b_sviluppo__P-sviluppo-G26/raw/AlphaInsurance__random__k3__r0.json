@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + Name : string\n  + AccountNumber : string\n}\n\nclass Broker {\n  + Name : string\n}\n\nclass InsuranceProduct {\n  + Name : string\n  + Price : float\n}\n\nclass Contract {\n  + DateSigned : date\n  + BillingCycle : string\n}\n\nclass Offer {\n  + DateSent : date\n  + Content : string\n}\n\nclass ClaimCase {\n  + CaseId : string\n  + Status : string\n}\n\nclass Estimator {\n  + Name : string\n  + Expertise : string\n}\n\nclass EstimatorReport {\n  + ReportDate : date\n  + Findings : string\n}\n\nclass CompensationDecision {\n  + EligibleCosts : float\n  + TotalAmount : float\n}\n\nclass Payment {\n  + PaymentDate : date\n  + Amount : float\n}\n\nBroker \"1\" -- \"*\" Customer : manages\nCustomer \"1\" -- \"*\" Offer : receives\nCustomer \"1\" -- \"*\" Contract : signs\nCustomer \"1\" -- \"*\" ClaimCase : files\nCustomer \"1\" -- \"*\" Payment : receives\nContract \"1\" -- \"1\" InsuranceProduct : covers\nContract \"1\" -- \"1\" Offer : based on\nClaimCase \"1\" -- \"*\" EstimatorReport : evaluated by\nEstimator \"1\" -- \"*\" EstimatorReport : issues\nClaimCase \"1\" -- \"0..1\" CompensationDecision : results in\nCompensationDecision \"1\" -- \"1\" Payment : triggers\nClaimCase \"1\" -- \"*\" ClaimCase : can be split into\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 23.615196599999763,
+ "prompt_tokens": 3995,
+ "completion_tokens": 346,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-exw1y5voxwkqe9089i37d",
+  "object": "chat.completion",
+  "created": 1792260865,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + Name : string\n  + AccountNumber : string\n}\n\nclass Broker {\n  + Name : string\n}\n\nclass InsuranceProduct {\n  + Name : string\n  + Price : float\n}\n\nclass Contract {\n  + DateSigned : date\n  + BillingCycle : string\n}\n\nclass Offer {\n  + DateSent : date\n  + Content : string\n}\n\nclass ClaimCase {\n  + CaseId : string\n  + Status : string\n}\n\nclass Estimator {\n  + Name : string\n  + Expertise : string\n}\n\nclass EstimatorReport {\n  + ReportDate : date\n  + Findings : string\n}\n\nclass CompensationDecision {\n  + EligibleCosts : float\n  + TotalAmount : float\n}\n\nclass Payment {\n  + PaymentDate : date\n  + Amount : float\n}\n\nBroker \"1\" -- \"*\" Customer : manages\nCustomer \"1\" -- \"*\" Offer : receives\nCustomer \"1\" -- \"*\" Contract : signs\nCustomer \"1\" -- \"*\" ClaimCase : files\nCustomer \"1\" -- \"*\" Payment : receives\nContract \"1\" -- \"1\" InsuranceProduct : covers\nContract \"1\" -- \"1\" Offer : based on\nClaimCase \"1\" -- \"*\" EstimatorReport : evaluated by\nEstimator \"1\" -- \"*\" EstimatorReport : issues\nClaimCase \"1\" -- \"0..1\" CompensationDecision : results in\nCompensationDecision \"1\" -- \"1\" Payment : triggers\nClaimCase \"1\" -- \"*\" ClaimCase : can be split into\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3995,
+   "completion_tokens": 346,
+   "total_tokens": 4341,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

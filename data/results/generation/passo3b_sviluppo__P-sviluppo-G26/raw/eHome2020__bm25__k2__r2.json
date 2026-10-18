@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass SensorController {\n}\n\nclass Apartment {\n  +address : string\n  +email : string\n}\n\nclass Inhabitant {\n  +username : string\n  +password : string\n}\n\nclass Administrator extends Inhabitant {\n}\n\nclass Room {\n  +description : string\n}\n\nclass Sensor {\n  +vendorId : string\n  +description : string\n  +unit : Unit\n  +threshold : double\n}\n\nabstract class SensorType {}\n\nclass TemperatureSensor extends SensorType {\n  +min : double\n  +max : double\n}\n\nclass PowerSensor extends SensorType {\n  +counterReading : double\n}\n\nclass MeasuredValue {\n  +timestamp : datetime\n  +value : double\n}\n\nclass EMonitor {}\n\nenum Unit {\n  CELSIUS\n  WATT\n}\n\nSensorController \"1\" *-- \"1\" Apartment\nApartment \"1\" *-- \"2..*\" Room\nApartment \"1\" *-- \"*\" Inhabitant\nApartment \"1\" *-- \"*\" Sensor\nInhabitant \"1\" -- \"*\" Sensor : queries\nAdministrator \"1\" -- \"*\" Sensor : configures\nRoom \"1\" *-- \"1\" Sensor\nSensor \"1\" *-- \"*\" MeasuredValue\nSensor \"1\" --> \"0..1\" MeasuredValue : last value\nEMonitor \"1\" ..> SensorController : checks thresholds\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 17.995144299995445,
+ "prompt_tokens": 3104,
+ "completion_tokens": 311,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-rcpuccsz6geczgni128iou",
+  "object": "chat.completion",
+  "created": 1792262733,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass SensorController {\n}\n\nclass Apartment {\n  +address : string\n  +email : string\n}\n\nclass Inhabitant {\n  +username : string\n  +password : string\n}\n\nclass Administrator extends Inhabitant {\n}\n\nclass Room {\n  +description : string\n}\n\nclass Sensor {\n  +vendorId : string\n  +description : string\n  +unit : Unit\n  +threshold : double\n}\n\nabstract class SensorType {}\n\nclass TemperatureSensor extends SensorType {\n  +min : double\n  +max : double\n}\n\nclass PowerSensor extends SensorType {\n  +counterReading : double\n}\n\nclass MeasuredValue {\n  +timestamp : datetime\n  +value : double\n}\n\nclass EMonitor {}\n\nenum Unit {\n  CELSIUS\n  WATT\n}\n\nSensorController \"1\" *-- \"1\" Apartment\nApartment \"1\" *-- \"2..*\" Room\nApartment \"1\" *-- \"*\" Inhabitant\nApartment \"1\" *-- \"*\" Sensor\nInhabitant \"1\" -- \"*\" Sensor : queries\nAdministrator \"1\" -- \"*\" Sensor : configures\nRoom \"1\" *-- \"1\" Sensor\nSensor \"1\" *-- \"*\" MeasuredValue\nSensor \"1\" --> \"0..1\" MeasuredValue : last value\nEMonitor \"1\" ..> SensorController : checks thresholds\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3104,
+   "completion_tokens": 311,
+   "total_tokens": 3415,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

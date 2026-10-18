@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + accountDetails : string\n}\n\nclass Broker {\n  + name : string\n}\n\nclass Policy {\n  + price : float\n}\n\nclass Contract {\n  + offerDate : date\n  + signingDate : date\n  + billingCycle : string\n}\n\nclass Invoice {\n  + amount : float\n}\n\nclass ClaimCase {\n  + status : string\n}\n\nclass Estimator {\n  + name : string\n  + expertise : string\n}\n\nclass EstimatorReport {\n  + content : string\n  + date : date\n}\n\nclass Compensation {\n  + amount : float\n  + datePaid : date\n}\n\nclass InsuranceCompany {\n  + name : string\n}\n\nBroker \"1\" -- \"*\" Customer : manages\nCustomer \"1\" -- \"*\" Contract : signs\nContract \"1\" -- \"1\" Policy : based on\nContract \"1\" -- \"*\" Invoice : generates\nCustomer \"1\" -- \"*\" ClaimCase : files\nClaimCase \"1\" -- \"*\" ClaimCase : contains\nClaimCase \"1\" -- \"*\" EstimatorReport : requires\nEstimator \"1\" -- \"*\" EstimatorReport : issues\nClaimCase \"1\" -- \"0..1\" Compensation : results in\nInsuranceCompany \"1\" -- \"*\" Broker : employs\nInsuranceCompany \"1\" -- \"*\" Estimator : employs\nInsuranceCompany \"1\" -- \"*\" Customer : serves\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 18.01372369999808,
+ "prompt_tokens": 2440,
+ "completion_tokens": 316,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9vaova5tkxb5eim81bul2p",
+  "object": "chat.completion",
+  "created": 1792260944,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + accountDetails : string\n}\n\nclass Broker {\n  + name : string\n}\n\nclass Policy {\n  + price : float\n}\n\nclass Contract {\n  + offerDate : date\n  + signingDate : date\n  + billingCycle : string\n}\n\nclass Invoice {\n  + amount : float\n}\n\nclass ClaimCase {\n  + status : string\n}\n\nclass Estimator {\n  + name : string\n  + expertise : string\n}\n\nclass EstimatorReport {\n  + content : string\n  + date : date\n}\n\nclass Compensation {\n  + amount : float\n  + datePaid : date\n}\n\nclass InsuranceCompany {\n  + name : string\n}\n\nBroker \"1\" -- \"*\" Customer : manages\nCustomer \"1\" -- \"*\" Contract : signs\nContract \"1\" -- \"1\" Policy : based on\nContract \"1\" -- \"*\" Invoice : generates\nCustomer \"1\" -- \"*\" ClaimCase : files\nClaimCase \"1\" -- \"*\" ClaimCase : contains\nClaimCase \"1\" -- \"*\" EstimatorReport : requires\nEstimator \"1\" -- \"*\" EstimatorReport : issues\nClaimCase \"1\" -- \"0..1\" Compensation : results in\nInsuranceCompany \"1\" -- \"*\" Broker : employs\nInsuranceCompany \"1\" -- \"*\" Estimator : employs\nInsuranceCompany \"1\" -- \"*\" Customer : serves\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2440,
+   "completion_tokens": 316,
+   "total_tokens": 2756,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

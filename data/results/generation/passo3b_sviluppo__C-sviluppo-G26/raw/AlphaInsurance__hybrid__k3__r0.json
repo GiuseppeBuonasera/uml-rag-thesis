@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"AlphaInsurance\", \"attributes\": []}, {\"name\": \"Customer\", \"attributes\": [\"+ name : string\", \"+ accountDetails : string\"]}, {\"name\": \"Broker\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"HeadOffice\", \"attributes\": []}, {\"name\": \"InsuranceProduct\", \"attributes\": [\"+ price : float\"]}, {\"name\": \"Offer\", \"attributes\": [\"+ date : date\"]}, {\"name\": \"Contract\", \"attributes\": [\"+ billingCycle : string\"]}, {\"name\": \"ClaimCase\", \"attributes\": [\"+ status : string\"]}, {\"name\": \"ClaimItem\", \"attributes\": [\"+ description : string\"]}, {\"name\": \"Estimator\", \"attributes\": [\"+ name : string\", \"+ expertise : string\"]}, {\"name\": \"EstimatorReport\", \"attributes\": [\"+ reportDate : date\", \"+ findings : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"Customer\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"Broker\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"HeadOffice\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"ClaimCase\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Broker\", \"target\": \"Customer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"assignedTo\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Offer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"InsuranceProduct\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"ClaimCase\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"ClaimCase\", \"part\": \"ClaimItem\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Estimator\", \"target\": \"ClaimCase\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Estimator\", \"target\": \"EstimatorReport\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"EstimatorReport\", \"target\": \"ClaimCase\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ClaimCase\", \"target\": \"Contract\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 36.99761800000124,
+ "prompt_tokens": 4039,
+ "completion_tokens": 621,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-aq2iytkrn7p01cp4uk0f3un",
+  "object": "chat.completion",
+  "created": 1792268330,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"AlphaInsurance\", \"attributes\": []}, {\"name\": \"Customer\", \"attributes\": [\"+ name : string\", \"+ accountDetails : string\"]}, {\"name\": \"Broker\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"HeadOffice\", \"attributes\": []}, {\"name\": \"InsuranceProduct\", \"attributes\": [\"+ price : float\"]}, {\"name\": \"Offer\", \"attributes\": [\"+ date : date\"]}, {\"name\": \"Contract\", \"attributes\": [\"+ billingCycle : string\"]}, {\"name\": \"ClaimCase\", \"attributes\": [\"+ status : string\"]}, {\"name\": \"ClaimItem\", \"attributes\": [\"+ description : string\"]}, {\"name\": \"Estimator\", \"attributes\": [\"+ name : string\", \"+ expertise : string\"]}, {\"name\": \"EstimatorReport\", \"attributes\": [\"+ reportDate : date\", \"+ findings : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"Customer\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"Broker\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"HeadOffice\"}, {\"type\": \"association\", \"source\": \"AlphaInsurance\", \"target\": \"ClaimCase\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Broker\", \"target\": \"Customer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"assignedTo\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Offer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"InsuranceProduct\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"ClaimCase\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"ClaimCase\", \"part\": \"ClaimItem\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Estimator\", \"target\": \"ClaimCase\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Estimator\", \"target\": \"EstimatorReport\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"EstimatorReport\", \"target\": \"ClaimCase\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ClaimCase\", \"target\": \"Contract\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4039,
+   "completion_tokens": 621,
+   "total_tokens": 4660,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

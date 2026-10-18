@@ -1,0 +1,106 @@
+# PASSO 3b SUI 26 ESERCIZI DI SVILUPPO — ANALISI SECONDARIA (2026-10-16, voce 151, decisione dell'utente "per
+# completezza"). IDENTICO a passo3b.yaml (stesse condizioni, k, ripetizioni, campionamento, istruzioni v5 / v5 +
+# indent2, vista clean_v1, file congelato, seme del random per esercizio e ripetizione, Gemma 4 26B A4B QAT) salvo gli
+# esercizi: i 26 di SVILUPPO (20 del dev set + 6 dei piloti) invece dei 54 di valutazione. Le scelte della
+# configurazione sono state fatte su questi esercizi (con bm25): i risultati NON entrano nell'analisi principale e si
+# riportano a parte, con questo limite. Nessuna cella saltata (nessuno dei 26 e' un esempio fisso di static).
+# Generazioni: 26 x 6 x 3 = 468 per formato, 936 in totale (circa 7 ore col 26B). Si lancia dal notebook.
+run_id: passo3b_sviluppo
+passo: 3b
+config_version: 2           # contesto 32768, max_tokens 4096
+random_seed: per_esercizio_ripetizione  # voce 130
+conditions: [zero_shot, static, random, bm25, hybrid]   # voce 144: dense tolto
+k: {random: [3], bm25: [2, 3], hybrid: [3]}  # voce 132: k per condizione
+repetitions: 3
+seed: 0                     # non usato da random (random_seed: per_esercizio_ripetizione)
+stop_on_reasoning: true
+thinking: none              # voce 131: reasoning_effort "none" in ogni richiesta (il 26B ragiona di default)
+retrieval_source: frozen    # voce 129: esempi da data/retrieval_frozen/retrievals_3b.jsonl
+prompt: {layout: user_only, drop_interactive: true, example_view: clean_v1}  # voce 139: esempi senza istruzioni per lo studente
+generation:
+  temperature: 0.3
+  top_p: 0.95
+  top_k: 64
+  max_tokens: 4096
+  seed: 42
+plantuml_label_rule: auto_v1
+elenchi:   # i 26 esercizi di SVILUPPO (corpus/roles.yaml, tag evalset-v1): 20 del dev set + 6 dei piloti
+  sviluppo: &sviluppo
+    - AlphaInsurance
+    - ApartmentBuilding
+    - Boeing
+    - Bookmaker
+    - BusTransportationManagementSystem
+    - CardGameApp
+    - ClothingCompany
+    - Ebike
+    - eHome2020
+    - EUScienceConnect
+    - Facepage
+    - FilmSet
+    - FitnessCompanyConan
+    - HelpingHands
+    - HomeForTheElderly
+    - HospitalHouseMD
+    - InsuranceCompany
+    - Louvre
+    - Musicmatic
+    - OilWells
+    - PizzaDeliveryWithEntertainment
+    - ProjectManagement
+    - Restaurant
+    - Sober
+    - StudentAppointment
+    - TruckLogistics
+models:
+  G26:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-26b-a4b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-26b-a4b-qat
+      quantization: QAT (Q4_0), MoE 26B-A4B (circa 4 miliardi di parametri attivi, 8 esperti)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: true          # impostazione salvata di LM Studio (default del modello); spento per richiesta: thinking none
+      kv_cache_quant: F16            # KV cache sulla GPU (offload_kv_cache_to_gpu)
+      flash_attention: true
+      gpu_offload: 0.5               # lms load google/gemma-4-26b-a4b-qat --context-length 32768 --gpu 0.5 -y (voce 131)
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: "circa 9,6 GB del modello (11,0 GB con il desktop), offload GPU 0,5; RAM circa 14,8 GB (prova del 2026-10-12)"
+  G12:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-12b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-12b-qat
+      quantization: QAT (q4_0)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: false
+      kv_cache_quant: F16
+      flash_attention: true
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: 9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente
+          in VRAM (smoke test 2026-10-06)
+configurations:
+  P-sviluppo-G26: {model: G26, output_format: plantuml, split: corpus, query_ids: *sviluppo, prompt: {instructions_version: v5, serialization: compact}}
+  C-sviluppo-G26: {model: G26, output_format: compact, split: corpus, query_ids: *sviluppo, prompt: {instructions_version: v5, serialization: indent2}}

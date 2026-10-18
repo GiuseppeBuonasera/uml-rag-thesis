@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"HospitalHouseMD\", \"attributes\": []}, {\"name\": \"Patient\", \"attributes\": []}, {\"name\": \"Doctor\", \"attributes\": []}, {\"name\": \"Diagnosis\", \"attributes\": []}, {\"name\": \"Illness\", \"attributes\": [\"+ priorityScore : PriorityScore\"], \"methods\": [\"+ changePriorityScore()\"]}, {\"name\": \"Treatment\", \"attributes\": [\"+ stage : int\"]}, {\"name\": \"ConsentForm\", \"attributes\": []}, {\"name\": \"Nurse\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"HospitalHouseMD\", \"target\": \"Patient\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"HospitalHouseMD\", \"target\": \"Doctor\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"HospitalHouseMD\", \"target\": \"Illness\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Illness\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Illness\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"approves\", \"targetRole\": \"approvedBy\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"ConsentForm\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Nurse\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"checkedBy\", \"targetRole\": \"checkedBy\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 28.776426500000525,
+ "prompt_tokens": 1507,
+ "completion_tokens": 610,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wp1mp63xohfaqj8nqyl21a",
+  "object": "chat.completion",
+  "created": 1792277349,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"HospitalHouseMD\", \"attributes\": []}, {\"name\": \"Patient\", \"attributes\": []}, {\"name\": \"Doctor\", \"attributes\": []}, {\"name\": \"Diagnosis\", \"attributes\": []}, {\"name\": \"Illness\", \"attributes\": [\"+ priorityScore : PriorityScore\"], \"methods\": [\"+ changePriorityScore()\"]}, {\"name\": \"Treatment\", \"attributes\": [\"+ stage : int\"]}, {\"name\": \"ConsentForm\", \"attributes\": []}, {\"name\": \"Nurse\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"HospitalHouseMD\", \"target\": \"Patient\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"HospitalHouseMD\", \"target\": \"Doctor\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"HospitalHouseMD\", \"target\": \"Illness\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Illness\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Illness\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"approves\", \"targetRole\": \"approvedBy\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"ConsentForm\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Nurse\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"checkedBy\", \"targetRole\": \"checkedBy\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1507,
+   "completion_tokens": 610,
+   "total_tokens": 2117,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

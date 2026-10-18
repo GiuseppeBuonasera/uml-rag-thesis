@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {\n  + ID : int\n  + name : string\n  + email : string\n  + dateOfBirth : date\n}\n\nclass Account {\n  + accountNumber : int\n}\n\nclass BusinessAccount extends Account {\n  + companyName : string\n  + monthlyFee : float\n}\n\nclass PersonalAccount extends Account {\n}\n\nclass Page {\n  + name : string\n  + numberOfVisits : int\n}\n\nclass AdvertisementPage extends Page {\n  + bounceRate : float\n  + clickThroughRate : float\n  + conversionRate : float\n}\n\nclass Privilege {\n}\n\nUser \"1\" -- \"0..1\" Account : owns\nAccount \"1\" -- \"*\" Page : administrates\nPersonalAccount \"1\" -- \"*\" Privilege : grants\nPrivilege \"*\" -- \"1\" Page : applies to\nPersonalAccount \"1\" -- \"*\" PersonalAccount : sends friend request\nPersonalAccount \"1\" -- \"*\" PersonalAccount : receives friend request\nBusinessAccount \"1\" -- \"*\" AdvertisementPage : creates\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 13.95332690000214,
+ "prompt_tokens": 3564,
+ "completion_tokens": 229,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lta52qdjelcupqqef7ng4",
+  "object": "chat.completion",
+  "created": 1792263342,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + ID : int\n  + name : string\n  + email : string\n  + dateOfBirth : date\n}\n\nclass Account {\n  + accountNumber : int\n}\n\nclass BusinessAccount extends Account {\n  + companyName : string\n  + monthlyFee : float\n}\n\nclass PersonalAccount extends Account {\n}\n\nclass Page {\n  + name : string\n  + numberOfVisits : int\n}\n\nclass AdvertisementPage extends Page {\n  + bounceRate : float\n  + clickThroughRate : float\n  + conversionRate : float\n}\n\nclass Privilege {\n}\n\nUser \"1\" -- \"0..1\" Account : owns\nAccount \"1\" -- \"*\" Page : administrates\nPersonalAccount \"1\" -- \"*\" Privilege : grants\nPrivilege \"*\" -- \"1\" Page : applies to\nPersonalAccount \"1\" -- \"*\" PersonalAccount : sends friend request\nPersonalAccount \"1\" -- \"*\" PersonalAccount : receives friend request\nBusinessAccount \"1\" -- \"*\" AdvertisementPage : creates\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3564,
+   "completion_tokens": 229,
+   "total_tokens": 3793,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

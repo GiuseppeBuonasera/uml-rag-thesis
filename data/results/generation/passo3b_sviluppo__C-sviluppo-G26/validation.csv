@@ -1,0 +1,469 @@
+call_id,query_id,condition,k,repetition,temperature,L0_extracted,L1_json,L2_schema,L3_integrity,L4_style,level,failure,truncated,finish_reason,reasoning_removed,extraction,errors,style_raw,l4_rewrites,format_issues,layout_issues,C0_found,C1_valid_json,C2b_converted,C2_clean,compact_issues,normalizations,style_raw_count,l4_rewrites_total,compact_issues_count
+AlphaInsurance__zero_shot__k0__r0,AlphaInsurance,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__zero_shot__k0__r1,AlphaInsurance,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""attributi"": 14}",0,0,0
+AlphaInsurance__zero_shot__k0__r2,AlphaInsurance,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""attributi"": 13}",0,0,0
+AlphaInsurance__static__k2__r0,AlphaInsurance,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__static__k2__r1,AlphaInsurance,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__static__k2__r2,AlphaInsurance,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__random__k3__r0,AlphaInsurance,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__random__k3__r1,AlphaInsurance,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__random__k3__r2,AlphaInsurance,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__bm25__k2__r0,AlphaInsurance,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__bm25__k2__r1,AlphaInsurance,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__bm25__k2__r2,AlphaInsurance,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__bm25__k3__r0,AlphaInsurance,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__bm25__k3__r1,AlphaInsurance,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__bm25__k3__r2,AlphaInsurance,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__hybrid__k3__r0,AlphaInsurance,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__hybrid__k3__r1,AlphaInsurance,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+AlphaInsurance__hybrid__k3__r2,AlphaInsurance,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__zero_shot__k0__r0,Boeing,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,braces,{},[],{},extra_text,,True,True,True,True,{},"{""attributi"": 6}",0,0,0
+Boeing__zero_shot__k0__r1,Boeing,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__zero_shot__k0__r2,Boeing,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__static__k2__r0,Boeing,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__static__k2__r1,Boeing,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__static__k2__r2,Boeing,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__random__k3__r0,Boeing,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__random__k3__r1,Boeing,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__random__k3__r2,Boeing,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k2__r0,Boeing,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k2__r1,Boeing,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k2__r2,Boeing,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k3__r0,Boeing,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k3__r1,Boeing,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__bm25__k3__r2,Boeing,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__hybrid__k3__r0,Boeing,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__hybrid__k3__r1,Boeing,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Boeing__hybrid__k3__r2,Boeing,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__zero_shot__k0__r0,BusTransportationManagementSystem,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__zero_shot__k0__r1,BusTransportationManagementSystem,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__zero_shot__k0__r2,BusTransportationManagementSystem,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__static__k2__r0,BusTransportationManagementSystem,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__static__k2__r1,BusTransportationManagementSystem,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__static__k2__r2,BusTransportationManagementSystem,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__random__k3__r0,BusTransportationManagementSystem,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__random__k3__r1,BusTransportationManagementSystem,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__random__k3__r2,BusTransportationManagementSystem,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__bm25__k2__r0,BusTransportationManagementSystem,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiave di relazione non prevista (ignorata): association Driver-Assignment: role"", ""chiave di relazione non prevista (ignorata): association Bus-Assignment: role"", ""chiave di relazione non prevista (ignorata): association Shift-Assignment: role""]}",[],{},,,True,True,True,False,"{""chiave di relazione non prevista (ignorata)"": 3}",{},0,0,3
+BusTransportationManagementSystem__bm25__k2__r1,BusTransportationManagementSystem,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__bm25__k2__r2,BusTransportationManagementSystem,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__bm25__k3__r0,BusTransportationManagementSystem,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__bm25__k3__r1,BusTransportationManagementSystem,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__bm25__k3__r2,BusTransportationManagementSystem,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__hybrid__k3__r0,BusTransportationManagementSystem,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__hybrid__k3__r1,BusTransportationManagementSystem,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+BusTransportationManagementSystem__hybrid__k3__r2,BusTransportationManagementSystem,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__zero_shot__k0__r0,CardGameApp,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 4}",{},0,0,4
+CardGameApp__zero_shot__k0__r1,CardGameApp,zero_shot,0,1,0.3,True,True,True,True,True,4,,True,length,False,fence,"{""C2"": [""chiave di classe non prevista (ignorata): Suit.enum"", ""'values' su una classe non enum (ignorati): Suit"", ""chiave di classe non prevista (ignorata): JackRound.parent"", ""chiave di classe non prevista (ignorata): SoloRound.parent"", ""chiave di classe non prevista (ignorata): MandatorySoloRound.parent"", ""chiave di classe non prevista (ignorata): SoloType.enum"", ""'values' su una classe non enum (ignorati): SoloType""]}",[],{},extra_text,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 2, ""chiave di classe non prevista (ignorata)"": 5}",{},0,0,7
+CardGameApp__zero_shot__k0__r2,CardGameApp,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiave di primo livello non prevista (ignorata): 'subclasses'"", ""chiave di primo livello non prevista (ignorata): 'enums'"", ""relazione verso una classe non dichiarata (scartata): association Game-Player: ['Player']"", ""relazione verso una classe non dichiarata (scartata): association Game-Deck: ['Deck']"", ""relazione verso una classe non dichiarata (scartata): association Game-ScoringTable: ['ScoringTable']"", ""relazione verso una classe non dichiarata (scartata): association Deck-Card: ['Deck', 'Card']"", ""relazione verso una classe non dichiarata (scartata): association ScoringTable-Round: ['ScoringTable', 'Round']"", ""relazione verso una classe non dichiarata (scartata): association Round-Player: ['Round', 'Player']"", ""relazione verso una classe non dichiarata (scartata): association Round-SoloRound: ['Round', 'SoloRound']"", ""relazione verso una classe non dichiarata (scartata): association SoloRound-Player: ['SoloRound', 'Player']"", ""relazione verso una classe non dichiarata (scartata): association SoloRound-SoloType: ['SoloRound', 'SoloType']""]}",[],{},,,True,True,True,False,"{""chiave di primo livello non prevista (ignorata)"": 2, ""relazione verso una classe non dichiarata (scartata)"": 9}",{},0,0,11
+CardGameApp__static__k2__r0,CardGameApp,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__static__k2__r1,CardGameApp,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__static__k2__r2,CardGameApp,static,2,2,0.3,True,True,True,True,False,3,style,False,stop,False,raw,"{""L4"": [""output: tipo 'Suit' dell'attributo '+ suit : Suit' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe Card)""]}","[""output: tipo 'Suit' dell'attributo '+ suit : Suit' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe Card)""]",{},,,True,True,True,True,{},{},1,0,0
+CardGameApp__random__k3__r0,CardGameApp,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Suit"", ""'values' su una classe non enum (ignorati): SoloType""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 2}",{},0,0,2
+CardGameApp__random__k3__r1,CardGameApp,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Suit"", ""'values' su una classe non enum (ignorati): SoloType""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 2}",{},0,0,2
+CardGameApp__random__k3__r2,CardGameApp,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__bm25__k2__r0,CardGameApp,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__bm25__k2__r1,CardGameApp,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__bm25__k2__r2,CardGameApp,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__bm25__k3__r0,CardGameApp,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__bm25__k3__r1,CardGameApp,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__bm25__k3__r2,CardGameApp,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__hybrid__k3__r0,CardGameApp,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__hybrid__k3__r1,CardGameApp,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+CardGameApp__hybrid__k3__r2,CardGameApp,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__zero_shot__k0__r0,ClothingCompany,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__zero_shot__k0__r1,ClothingCompany,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__zero_shot__k0__r2,ClothingCompany,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__static__k2__r0,ClothingCompany,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__static__k2__r1,ClothingCompany,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__static__k2__r2,ClothingCompany,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__random__k3__r0,ClothingCompany,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__random__k3__r1,ClothingCompany,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__random__k3__r2,ClothingCompany,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__bm25__k2__r0,ClothingCompany,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__bm25__k2__r1,ClothingCompany,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__bm25__k2__r2,ClothingCompany,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__bm25__k3__r0,ClothingCompany,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__bm25__k3__r1,ClothingCompany,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__bm25__k3__r2,ClothingCompany,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__hybrid__k3__r0,ClothingCompany,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__hybrid__k3__r1,ClothingCompany,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ClothingCompany__hybrid__k3__r2,ClothingCompany,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__zero_shot__k0__r0,Ebike,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiave di classe non prevista (ignorata): BasicController.parent"", ""relazione verso una classe non dichiarata (scartata): association Frame-Wheel: ['Wheel']""]}",[],{},,,True,True,True,False,"{""chiave di classe non prevista (ignorata)"": 1, ""relazione verso una classe non dichiarata (scartata)"": 1}",{},0,0,2
+Ebike__zero_shot__k0__r1,Ebike,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiave di classe non prevista (ignorata): BasicController.inheritance"", ""chiave di classe non prevista (ignorata): BasicController.parent"", ""chiave di classe non prevista (ignorata): AdvancedController.inheritance"", ""chiave di classe non prevista (ignorata): AdvancedController.parent""]}",[],{},,,True,True,True,False,"{""chiave di classe non prevista (ignorata)"": 4}",{},0,0,4
+Ebike__zero_shot__k0__r2,Ebike,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiave di primo livello non prevista (ignorata): 'enums'"", ""chiave di classe non prevista (ignorata): BasicController.inheritance"", ""chiave di classe non prevista (ignorata): BasicController.parent"", ""relazione verso una classe non dichiarata (scartata): association Frame-Wheel: ['Wheel']"", ""relazione verso una classe non dichiarata (scartata): association EBike-Battery: ['Battery']"", ""relazione verso una classe non dichiarata (scartata): association Controller-Battery: ['Battery']""]}",[],{},,,True,True,True,False,"{""chiave di classe non prevista (ignorata)"": 2, ""chiave di primo livello non prevista (ignorata)"": 1, ""relazione verso una classe non dichiarata (scartata)"": 3}",{},0,0,6
+Ebike__static__k2__r0,Ebike,static,2,0,0.3,True,False,False,False,False,0,invalid_json,False,stop,False,raw,"{""C1"": [""Expecting ',' delimiter: line 8 column 7 (char 86)""]}",[],{},,,True,False,False,False,{},{},0,0,0
+Ebike__static__k2__r1,Ebike,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__static__k2__r2,Ebike,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__random__k3__r0,Ebike,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__random__k3__r1,Ebike,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 4}",{},0,0,4
+Ebike__random__k3__r2,Ebike,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__bm25__k2__r0,Ebike,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__bm25__k2__r1,Ebike,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__bm25__k2__r2,Ebike,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__bm25__k3__r0,Ebike,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__bm25__k3__r1,Ebike,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__bm25__k3__r2,Ebike,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__hybrid__k3__r0,Ebike,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__hybrid__k3__r1,Ebike,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Ebike__hybrid__k3__r2,Ebike,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__zero_shot__k0__r0,eHome2020,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__zero_shot__k0__r1,eHome2020,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__zero_shot__k0__r2,eHome2020,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__static__k2__r0,eHome2020,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Unit""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}","{""attributi"": 12}",0,0,1
+eHome2020__static__k2__r1,eHome2020,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Unit""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+eHome2020__static__k2__r2,eHome2020,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiave di classe non prevista (ignorata): Unit.enum"", ""'values' su una classe non enum (ignorati): Unit""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1, ""chiave di classe non prevista (ignorata)"": 1}","{""attributi"": 12}",0,0,2
+eHome2020__random__k3__r0,eHome2020,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__random__k3__r1,eHome2020,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Unit""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+eHome2020__random__k3__r2,eHome2020,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__bm25__k2__r0,eHome2020,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__bm25__k2__r1,eHome2020,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__bm25__k2__r2,eHome2020,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__bm25__k3__r0,eHome2020,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__bm25__k3__r1,eHome2020,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__bm25__k3__r2,eHome2020,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__hybrid__k3__r0,eHome2020,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__hybrid__k3__r1,eHome2020,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+eHome2020__hybrid__k3__r2,eHome2020,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__zero_shot__k0__r0,EUScienceConnect,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__zero_shot__k0__r1,EUScienceConnect,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__zero_shot__k0__r2,EUScienceConnect,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__static__k2__r0,EUScienceConnect,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__static__k2__r1,EUScienceConnect,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__static__k2__r2,EUScienceConnect,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__random__k3__r0,EUScienceConnect,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__random__k3__r1,EUScienceConnect,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__random__k3__r2,EUScienceConnect,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k2__r0,EUScienceConnect,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k2__r1,EUScienceConnect,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k2__r2,EUScienceConnect,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k3__r0,EUScienceConnect,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k3__r1,EUScienceConnect,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__bm25__k3__r2,EUScienceConnect,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__hybrid__k3__r0,EUScienceConnect,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__hybrid__k3__r1,EUScienceConnect,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+EUScienceConnect__hybrid__k3__r2,EUScienceConnect,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__zero_shot__k0__r0,Facepage,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiave di relazione non prevista (ignorata): association Account-Page: wholeMultiplicity"", ""chiave di relazione non prevista (ignorata): association Account-Page: partMultiplicity""]}",[],{},,,True,True,True,False,"{""chiave di relazione non prevista (ignorata)"": 2, ""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,3
+Facepage__zero_shot__k0__r1,Facepage,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""relazione verso una classe non dichiarata (scartata): association User-Account: ['Account']""]}",[],{},,,True,True,True,False,"{""relazione verso una classe non dichiarata (scartata)"": 1}",{},0,0,1
+Facepage__zero_shot__k0__r2,Facepage,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiave di relazione non prevista (ignorata): association Account-Page: wholeMultiplicity"", ""chiave di relazione non prevista (ignorata): association Account-Page: partMultiplicity""]}",[],{},,,True,True,True,False,"{""chiave di relazione non prevista (ignorata)"": 2, ""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,3
+Facepage__static__k2__r0,Facepage,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__static__k2__r1,Facepage,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__static__k2__r2,Facepage,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__random__k3__r0,Facepage,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__random__k3__r1,Facepage,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__random__k3__r2,Facepage,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k2__r0,Facepage,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k2__r1,Facepage,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k2__r2,Facepage,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k3__r0,Facepage,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k3__r1,Facepage,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__bm25__k3__r2,Facepage,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__hybrid__k3__r0,Facepage,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__hybrid__k3__r1,Facepage,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Facepage__hybrid__k3__r2,Facepage,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__zero_shot__k0__r0,FilmSet,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Genre""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+FilmSet__zero_shot__k0__r1,FilmSet,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Genre""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+FilmSet__zero_shot__k0__r2,FilmSet,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Genre""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+FilmSet__static__k2__r0,FilmSet,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Genre""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+FilmSet__static__k2__r1,FilmSet,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__static__k2__r2,FilmSet,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Genre""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+FilmSet__random__k3__r0,FilmSet,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__random__k3__r1,FilmSet,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Genre""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+FilmSet__random__k3__r2,FilmSet,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Genre""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+FilmSet__bm25__k2__r0,FilmSet,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__bm25__k2__r1,FilmSet,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__bm25__k2__r2,FilmSet,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Genre""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+FilmSet__bm25__k3__r0,FilmSet,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__bm25__k3__r1,FilmSet,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__bm25__k3__r2,FilmSet,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__hybrid__k3__r0,FilmSet,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__hybrid__k3__r1,FilmSet,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FilmSet__hybrid__k3__r2,FilmSet,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__zero_shot__k0__r0,FitnessCompanyConan,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+FitnessCompanyConan__zero_shot__k0__r1,FitnessCompanyConan,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__zero_shot__k0__r2,FitnessCompanyConan,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__static__k2__r0,FitnessCompanyConan,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__static__k2__r1,FitnessCompanyConan,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__static__k2__r2,FitnessCompanyConan,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__random__k3__r0,FitnessCompanyConan,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__random__k3__r1,FitnessCompanyConan,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__random__k3__r2,FitnessCompanyConan,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__bm25__k2__r0,FitnessCompanyConan,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__bm25__k2__r1,FitnessCompanyConan,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__bm25__k2__r2,FitnessCompanyConan,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__bm25__k3__r0,FitnessCompanyConan,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__bm25__k3__r1,FitnessCompanyConan,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__bm25__k3__r2,FitnessCompanyConan,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__hybrid__k3__r0,FitnessCompanyConan,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__hybrid__k3__r1,FitnessCompanyConan,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+FitnessCompanyConan__hybrid__k3__r2,FitnessCompanyConan,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__zero_shot__k0__r0,HelpingHands,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__zero_shot__k0__r1,HelpingHands,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__zero_shot__k0__r2,HelpingHands,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__static__k2__r0,HelpingHands,static,2,0,0.3,True,True,True,True,True,4,,True,length,False,fence,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+HelpingHands__static__k2__r1,HelpingHands,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__static__k2__r2,HelpingHands,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__random__k3__r0,HelpingHands,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__random__k3__r1,HelpingHands,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__random__k3__r2,HelpingHands,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__bm25__k2__r0,HelpingHands,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__bm25__k2__r1,HelpingHands,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__bm25__k2__r2,HelpingHands,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,braces,"{""C2"": [""relazione verso una classe non dichiarata (scartata): association Item-FoodBank: ['FoodBank']""]}",[],{},extra_text,,True,True,True,False,"{""relazione verso una classe non dichiarata (scartata)"": 1}",{},0,0,1
+HelpingHands__bm25__k3__r0,HelpingHands,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__bm25__k3__r1,HelpingHands,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__bm25__k3__r2,HelpingHands,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__hybrid__k3__r0,HelpingHands,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HelpingHands__hybrid__k3__r1,HelpingHands,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+HelpingHands__hybrid__k3__r2,HelpingHands,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__zero_shot__k0__r0,HomeForTheElderly,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Category"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1, ""chiavi di verso di un'altra famiglia (relazione scartata)"": 3}",{},0,0,4
+HomeForTheElderly__zero_shot__k0__r1,HomeForTheElderly,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Category"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1, ""chiavi di verso di un'altra famiglia (relazione scartata)"": 3}",{},0,0,4
+HomeForTheElderly__zero_shot__k0__r2,HomeForTheElderly,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Category"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']"", ""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1, ""chiavi di verso di un'altra famiglia (relazione scartata)"": 3}",{},0,0,4
+HomeForTheElderly__static__k2__r0,HomeForTheElderly,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__static__k2__r1,HomeForTheElderly,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__static__k2__r2,HomeForTheElderly,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__random__k3__r0,HomeForTheElderly,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__random__k3__r1,HomeForTheElderly,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__random__k3__r2,HomeForTheElderly,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__bm25__k2__r0,HomeForTheElderly,bm25,2,0,0.3,True,False,False,False,False,0,not_compact,False,stop,False,braces,"{""C2"": [""manca la lista 'classes'""]}",[],{},,,True,True,False,False,{},{},0,0,0
+HomeForTheElderly__bm25__k2__r1,HomeForTheElderly,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""attributi"": 1}",0,0,0
+HomeForTheElderly__bm25__k2__r2,HomeForTheElderly,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): Category""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+HomeForTheElderly__bm25__k3__r0,HomeForTheElderly,bm25,3,0,0.3,True,False,False,False,False,0,not_compact,False,stop,False,braces,"{""C2"": [""manca la lista 'classes'""]}",[],{},,,True,True,False,False,{},{},0,0,0
+HomeForTheElderly__bm25__k3__r1,HomeForTheElderly,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): StayCategory""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+HomeForTheElderly__bm25__k3__r2,HomeForTheElderly,bm25,3,2,0.3,True,False,False,False,False,0,invalid_json,False,stop,False,raw,"{""C1"": [""Expecting ',' delimiter: line 1 column 316 (char 315)""]}",[],{},,,True,False,False,False,{},{},0,0,0
+HomeForTheElderly__hybrid__k3__r0,HomeForTheElderly,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__hybrid__k3__r1,HomeForTheElderly,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HomeForTheElderly__hybrid__k3__r2,HomeForTheElderly,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__zero_shot__k0__r0,HospitalHouseMD,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__zero_shot__k0__r1,HospitalHouseMD,zero_shot,0,1,0.3,True,True,True,True,False,3,style,False,stop,False,raw,"{""L4"": [""output: tipo 'PriorityScore' dell'attributo '+ priorityScore : PriorityScore' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe Illness)""]}","[""output: tipo 'PriorityScore' dell'attributo '+ priorityScore : PriorityScore' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe Illness)""]",{},,,True,True,True,True,{},{},1,0,0
+HospitalHouseMD__zero_shot__k0__r2,HospitalHouseMD,zero_shot,0,2,0.3,True,True,True,True,False,3,style,False,stop,False,raw,"{""C2"": [""chiave di primo livello non prevista (ignorata): 'enums'""], ""L4"": [""output: tipo 'PriorityScore' dell'attributo '+ priorityScore : PriorityScore' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe Illness)""]}","[""output: tipo 'PriorityScore' dell'attributo '+ priorityScore : PriorityScore' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe Illness)""]",{},,,True,True,True,False,"{""chiave di primo livello non prevista (ignorata)"": 1}",{},1,0,1
+HospitalHouseMD__static__k2__r0,HospitalHouseMD,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__static__k2__r1,HospitalHouseMD,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""'values' su una classe non enum (ignorati): PriorityLevel""]}",[],{},,,True,True,True,False,"{""'values' su una classe non enum (ignorati)"": 1}",{},0,0,1
+HospitalHouseMD__static__k2__r2,HospitalHouseMD,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__random__k3__r0,HospitalHouseMD,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__random__k3__r1,HospitalHouseMD,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__random__k3__r2,HospitalHouseMD,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__bm25__k2__r0,HospitalHouseMD,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__bm25__k2__r1,HospitalHouseMD,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__bm25__k2__r2,HospitalHouseMD,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiave di primo livello non prevista (ignorata): 'enums'""]}",[],{},,,True,True,True,False,"{""chiave di primo livello non prevista (ignorata)"": 1}",{},0,0,1
+HospitalHouseMD__bm25__k3__r0,HospitalHouseMD,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__bm25__k3__r1,HospitalHouseMD,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__bm25__k3__r2,HospitalHouseMD,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__hybrid__k3__r0,HospitalHouseMD,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__hybrid__k3__r1,HospitalHouseMD,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+HospitalHouseMD__hybrid__k3__r2,HospitalHouseMD,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__zero_shot__k0__r0,Louvre,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__zero_shot__k0__r1,Louvre,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__zero_shot__k0__r2,Louvre,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__static__k2__r0,Louvre,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__static__k2__r1,Louvre,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__static__k2__r2,Louvre,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__random__k3__r0,Louvre,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__random__k3__r1,Louvre,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__random__k3__r2,Louvre,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__bm25__k2__r0,Louvre,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__bm25__k2__r1,Louvre,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__bm25__k2__r2,Louvre,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__bm25__k3__r0,Louvre,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__bm25__k3__r1,Louvre,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__bm25__k3__r2,Louvre,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__hybrid__k3__r0,Louvre,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__hybrid__k3__r1,Louvre,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Louvre__hybrid__k3__r2,Louvre,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__zero_shot__k0__r0,Musicmatic,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,braces,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+Musicmatic__zero_shot__k0__r1,Musicmatic,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,braces,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+Musicmatic__zero_shot__k0__r2,Musicmatic,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,braces,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+Musicmatic__static__k2__r0,Musicmatic,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__static__k2__r1,Musicmatic,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__static__k2__r2,Musicmatic,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__random__k3__r0,Musicmatic,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__random__k3__r1,Musicmatic,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__random__k3__r2,Musicmatic,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__bm25__k2__r0,Musicmatic,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__bm25__k2__r1,Musicmatic,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__bm25__k2__r2,Musicmatic,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__bm25__k3__r0,Musicmatic,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__bm25__k3__r1,Musicmatic,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__bm25__k3__r2,Musicmatic,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__hybrid__k3__r0,Musicmatic,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__hybrid__k3__r1,Musicmatic,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Musicmatic__hybrid__k3__r2,Musicmatic,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__zero_shot__k0__r0,PizzaDeliveryWithEntertainment,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,braces,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__zero_shot__k0__r1,PizzaDeliveryWithEntertainment,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,braces,"{""C2"": [""relazione verso una classe non dichiarata (scartata): inheritance BusinessOwner-User: ['BusinessOwner']"", ""relazione verso una classe non dichiarata (scartata): inheritance HungryCustomer-User: ['HungryCustomer']"", ""relazione verso una classe non dichiarata (scartata): inheritance Entertainer-User: ['Entertainer']"", ""relazione verso una classe non dichiarata (scartata): association BusinessOwner-PizzaRestaurant: ['BusinessOwner', 'PizzaRestaurant']"", ""relazione verso una classe non dichiarata (scartata): association PizzaRestaurant-Pizza: ['PizzaRestaurant', 'Pizza']"", ""relazione verso una classe non dichiarata (scartata): association HungryCustomer-Order: ['HungryCustomer', 'Order']"", ""relazione verso una classe non dichiarata (scartata): association Order-Pizza: ['Order', 'Pizza']"", ""relazione verso una classe non dichiarata (scartata): inheritance EntertainmentOrder-Order: ['EntertainmentOrder', 'Order']"", ""relazione verso una classe non dichiarata (scartata): association EntertainmentOrder-Entertainer: ['EntertainmentOrder', 'Entertainer']"", ""relazione verso una classe non dichiarata (scartata): association Entertainer-PizzaRestaurant: ['Entertainer', 'PizzaRestaurant']""]}",[],{},extra_text,,True,True,True,False,"{""relazione verso una classe non dichiarata (scartata)"": 10}",{},0,0,10
+PizzaDeliveryWithEntertainment__zero_shot__k0__r2,PizzaDeliveryWithEntertainment,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,braces,{},[],{},extra_text,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__static__k2__r0,PizzaDeliveryWithEntertainment,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__static__k2__r1,PizzaDeliveryWithEntertainment,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__static__k2__r2,PizzaDeliveryWithEntertainment,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__random__k3__r0,PizzaDeliveryWithEntertainment,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__random__k3__r1,PizzaDeliveryWithEntertainment,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__random__k3__r2,PizzaDeliveryWithEntertainment,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__bm25__k2__r0,PizzaDeliveryWithEntertainment,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__bm25__k2__r1,PizzaDeliveryWithEntertainment,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__bm25__k2__r2,PizzaDeliveryWithEntertainment,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__bm25__k3__r0,PizzaDeliveryWithEntertainment,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__bm25__k3__r1,PizzaDeliveryWithEntertainment,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__bm25__k3__r2,PizzaDeliveryWithEntertainment,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__hybrid__k3__r0,PizzaDeliveryWithEntertainment,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__hybrid__k3__r1,PizzaDeliveryWithEntertainment,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+PizzaDeliveryWithEntertainment__hybrid__k3__r2,PizzaDeliveryWithEntertainment,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__zero_shot__k0__r0,ProjectManagement,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+ProjectManagement__zero_shot__k0__r1,ProjectManagement,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+ProjectManagement__zero_shot__k0__r2,ProjectManagement,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target', 'wholeMultiplicity']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+ProjectManagement__static__k2__r0,ProjectManagement,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__static__k2__r1,ProjectManagement,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__static__k2__r2,ProjectManagement,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__random__k3__r0,ProjectManagement,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__random__k3__r1,ProjectManagement,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__random__k3__r2,ProjectManagement,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k2__r0,ProjectManagement,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k2__r1,ProjectManagement,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k2__r2,ProjectManagement,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k3__r0,ProjectManagement,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k3__r1,ProjectManagement,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__bm25__k3__r2,ProjectManagement,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__hybrid__k3__r0,ProjectManagement,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__hybrid__k3__r1,ProjectManagement,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ProjectManagement__hybrid__k3__r2,ProjectManagement,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__zero_shot__k0__r0,Sober,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__zero_shot__k0__r1,Sober,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__zero_shot__k0__r2,Sober,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__static__k2__r0,Sober,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__static__k2__r1,Sober,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""attributi"": 11}",0,0,0
+Sober__static__k2__r2,Sober,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__random__k3__r0,Sober,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__random__k3__r1,Sober,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__random__k3__r2,Sober,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__bm25__k2__r0,Sober,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__bm25__k2__r1,Sober,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__bm25__k2__r2,Sober,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__bm25__k3__r0,Sober,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__bm25__k3__r1,Sober,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""attributi"": 26}",0,0,0
+Sober__bm25__k3__r2,Sober,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""attributi"": 18}",0,0,0
+Sober__hybrid__k3__r0,Sober,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__hybrid__k3__r1,Sober,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Sober__hybrid__k3__r2,Sober,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__zero_shot__k0__r0,StudentAppointment,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__zero_shot__k0__r1,StudentAppointment,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__zero_shot__k0__r2,StudentAppointment,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""tipo di relazione non previsto (relazione scartata): None"", ""tipo di relazione non previsto (relazione scartata): None"", ""tipo di relazione non previsto (relazione scartata): None"", ""tipo di relazione non previsto (relazione scartata): None"", ""tipo di relazione non previsto (relazione scartata): None""]}",[],{},,,True,True,True,False,"{""tipo di relazione non previsto (relazione scartata)"": 5}",{},0,0,5
+StudentAppointment__static__k2__r0,StudentAppointment,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__static__k2__r1,StudentAppointment,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__static__k2__r2,StudentAppointment,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__random__k3__r0,StudentAppointment,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__random__k3__r1,StudentAppointment,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__random__k3__r2,StudentAppointment,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__bm25__k2__r0,StudentAppointment,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__bm25__k2__r1,StudentAppointment,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__bm25__k2__r2,StudentAppointment,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__bm25__k3__r0,StudentAppointment,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__bm25__k3__r1,StudentAppointment,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__bm25__k3__r2,StudentAppointment,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__hybrid__k3__r0,StudentAppointment,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__hybrid__k3__r1,StudentAppointment,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+StudentAppointment__hybrid__k3__r2,StudentAppointment,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__zero_shot__k0__r0,TruckLogistics,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__zero_shot__k0__r1,TruckLogistics,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__zero_shot__k0__r2,TruckLogistics,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__static__k2__r0,TruckLogistics,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__static__k2__r1,TruckLogistics,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__static__k2__r2,TruckLogistics,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__random__k3__r0,TruckLogistics,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__random__k3__r1,TruckLogistics,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__random__k3__r2,TruckLogistics,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__bm25__k2__r0,TruckLogistics,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__bm25__k2__r1,TruckLogistics,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__bm25__k2__r2,TruckLogistics,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__bm25__k3__r0,TruckLogistics,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__bm25__k3__r1,TruckLogistics,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__bm25__k3__r2,TruckLogistics,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__hybrid__k3__r0,TruckLogistics,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__hybrid__k3__r1,TruckLogistics,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+TruckLogistics__hybrid__k3__r2,TruckLogistics,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__zero_shot__k0__r0,ApartmentBuilding,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__zero_shot__k0__r1,ApartmentBuilding,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__zero_shot__k0__r2,ApartmentBuilding,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__static__k2__r0,ApartmentBuilding,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__static__k2__r1,ApartmentBuilding,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__static__k2__r2,ApartmentBuilding,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__random__k3__r0,ApartmentBuilding,random,3,0,0.3,True,False,False,False,False,0,invalid_json,False,stop,False,raw,"{""C1"": [""Expecting ',' delimiter: line 1 column 450 (char 449)""]}",[],{},,,True,False,False,False,{},{},0,0,0
+ApartmentBuilding__random__k3__r1,ApartmentBuilding,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__random__k3__r2,ApartmentBuilding,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__bm25__k2__r0,ApartmentBuilding,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__bm25__k2__r1,ApartmentBuilding,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__bm25__k2__r2,ApartmentBuilding,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__bm25__k3__r0,ApartmentBuilding,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__bm25__k3__r1,ApartmentBuilding,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__bm25__k3__r2,ApartmentBuilding,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__hybrid__k3__r0,ApartmentBuilding,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__hybrid__k3__r1,ApartmentBuilding,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+ApartmentBuilding__hybrid__k3__r2,ApartmentBuilding,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__zero_shot__k0__r0,Bookmaker,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__zero_shot__k0__r1,Bookmaker,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__zero_shot__k0__r2,Bookmaker,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__static__k2__r0,Bookmaker,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""metodi"": 1}",0,0,0
+Bookmaker__static__k2__r1,Bookmaker,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""metodi"": 1}",0,0,0
+Bookmaker__static__k2__r2,Bookmaker,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},"{""metodi"": 4}",0,0,0
+Bookmaker__random__k3__r0,Bookmaker,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__random__k3__r1,Bookmaker,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__random__k3__r2,Bookmaker,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__bm25__k2__r0,Bookmaker,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__bm25__k2__r1,Bookmaker,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__bm25__k2__r2,Bookmaker,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__bm25__k3__r0,Bookmaker,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__bm25__k3__r1,Bookmaker,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__bm25__k3__r2,Bookmaker,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__hybrid__k3__r0,Bookmaker,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__hybrid__k3__r1,Bookmaker,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Bookmaker__hybrid__k3__r2,Bookmaker,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__zero_shot__k0__r0,InsuranceCompany,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__zero_shot__k0__r1,InsuranceCompany,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__zero_shot__k0__r2,InsuranceCompany,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__static__k2__r0,InsuranceCompany,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__static__k2__r1,InsuranceCompany,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__static__k2__r2,InsuranceCompany,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__random__k3__r0,InsuranceCompany,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__random__k3__r1,InsuranceCompany,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__random__k3__r2,InsuranceCompany,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k2__r0,InsuranceCompany,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k2__r1,InsuranceCompany,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k2__r2,InsuranceCompany,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k3__r0,InsuranceCompany,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k3__r1,InsuranceCompany,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__bm25__k3__r2,InsuranceCompany,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__hybrid__k3__r0,InsuranceCompany,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__hybrid__k3__r1,InsuranceCompany,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+InsuranceCompany__hybrid__k3__r2,InsuranceCompany,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__zero_shot__k0__r0,OilWells,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__zero_shot__k0__r1,OilWells,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__zero_shot__k0__r2,OilWells,zero_shot,0,2,0.3,True,True,True,True,False,3,style,False,stop,False,raw,"{""L4"": [""output: tipo 'Area [0..1]' dell'attributo '+ geographicalArea : Area [0..1]' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe OffshoreWell)""]}","[""output: tipo 'Area [0..1]' dell'attributo '+ geographicalArea : Area [0..1]' non e' ne' un tipo primitivo ammesso ne' una classe/enum dichiarata in questo diagramma (classe OffshoreWell)""]",{},,,True,True,True,True,{},{},1,0,0
+OilWells__static__k2__r0,OilWells,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__static__k2__r1,OilWells,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__static__k2__r2,OilWells,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__random__k3__r0,OilWells,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__random__k3__r1,OilWells,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__random__k3__r2,OilWells,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__bm25__k2__r0,OilWells,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__bm25__k2__r1,OilWells,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__bm25__k2__r2,OilWells,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__bm25__k3__r0,OilWells,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__bm25__k3__r1,OilWells,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__bm25__k3__r2,OilWells,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__hybrid__k3__r0,OilWells,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__hybrid__k3__r1,OilWells,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+OilWells__hybrid__k3__r2,OilWells,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__zero_shot__k0__r0,Restaurant,zero_shot,0,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+Restaurant__zero_shot__k0__r1,Restaurant,zero_shot,0,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+Restaurant__zero_shot__k0__r2,Restaurant,zero_shot,0,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,"{""C2"": [""chiavi di verso di un'altra famiglia (relazione scartata): composition: servono ['whole', 'part'], presenti ['partMultiplicity', 'source', 'target']""]}",[],{},,,True,True,True,False,"{""chiavi di verso di un'altra famiglia (relazione scartata)"": 1}",{},0,0,1
+Restaurant__static__k2__r0,Restaurant,static,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__static__k2__r1,Restaurant,static,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__static__k2__r2,Restaurant,static,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__random__k3__r0,Restaurant,random,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__random__k3__r1,Restaurant,random,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__random__k3__r2,Restaurant,random,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__bm25__k2__r0,Restaurant,bm25,2,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__bm25__k2__r1,Restaurant,bm25,2,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__bm25__k2__r2,Restaurant,bm25,2,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__bm25__k3__r0,Restaurant,bm25,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__bm25__k3__r1,Restaurant,bm25,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__bm25__k3__r2,Restaurant,bm25,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__hybrid__k3__r0,Restaurant,hybrid,3,0,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__hybrid__k3__r1,Restaurant,hybrid,3,1,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0
+Restaurant__hybrid__k3__r2,Restaurant,hybrid,3,2,0.3,True,True,True,True,True,4,,False,stop,False,raw,{},[],{},,,True,True,True,True,{},{},0,0,0

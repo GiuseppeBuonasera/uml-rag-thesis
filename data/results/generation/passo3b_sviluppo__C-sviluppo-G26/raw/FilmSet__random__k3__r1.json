@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ Name\",\n        \"+ Ssn\"\n      ]\n    },\n    {\n      \"name\": \"CreativeEmployee\",\n      \"attributes\": [\n        \"+ HasOscar : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Director\",\n      \"attributes\": [\n        \"+ AssistantName\"\n      ]\n    },\n    {\n      \"name\": \"Actor\",\n      \"attributes\": [\n        \"+ Education\"\n      ]\n    },\n    {\n      \"name\": \"Technician\",\n      \"attributes\": [\n        \"+ FieldOfActivity\"\n      ]\n    },\n    {\n      \"name\": \"FilmSet\",\n      \"attributes\": [\n        \"+ Location\"\n      ]\n    },\n    {\n      \"name\": \"Film\",\n      \"attributes\": [\n        \"+ Title\",\n        \"+ YearOfRelease\"\n      ]\n    },\n    {\n      \"name\": \"Genre\",\n      \"values\": [\n        \"Thriller\",\n        \"Action\",\n        \"Horror\",\n        \"Comedy\"\n      ]\n    },\n    {\n      \"name\": \"Screenwriter\",\n      \"attributes\": [\n        \"+ Name\",\n        \"+ MostSuccessfulFilm\"\n      ]\n    },\n    {\n      \"name\": \"Screenplay\",\n      \"attributes\": [\n        \"+ Title\",\n        \"+ Version\",\n        \"+ Date\",\n        \"+ NumberOfScenes\",\n        \"+ Plot\"\n      ]\n    },\n    {\n      \"name\": \"Novel\",\n      \"attributes\": [\n        \"+ Title\",\n        \"+ Author\"\n      ]\n    },\n    {\n      \"name\": \"Concept\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CreativeEmployee\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"CreativeEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Actor\",\n      \"parent\": \"CreativeEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Technician\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FilmSet\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Film\",\n      \"target\": \"Genre\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenwriter\",\n      \"target\": \"Screenplay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Novel\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Concept\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Actor\",\n      \"target\": \"Screenplay\",\n      \"label\": \"reads\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Screenplay\",\n      \"label\": \"implements\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 56.364284899995255,
+ "prompt_tokens": 4339,
+ "completion_tokens": 968,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-n63trvo3cc7eco3o3cde3",
+  "object": "chat.completion",
+  "created": 1792274041,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ Name\",\n        \"+ Ssn\"\n      ]\n    },\n    {\n      \"name\": \"CreativeEmployee\",\n      \"attributes\": [\n        \"+ HasOscar : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Director\",\n      \"attributes\": [\n        \"+ AssistantName\"\n      ]\n    },\n    {\n      \"name\": \"Actor\",\n      \"attributes\": [\n        \"+ Education\"\n      ]\n    },\n    {\n      \"name\": \"Technician\",\n      \"attributes\": [\n        \"+ FieldOfActivity\"\n      ]\n    },\n    {\n      \"name\": \"FilmSet\",\n      \"attributes\": [\n        \"+ Location\"\n      ]\n    },\n    {\n      \"name\": \"Film\",\n      \"attributes\": [\n        \"+ Title\",\n        \"+ YearOfRelease\"\n      ]\n    },\n    {\n      \"name\": \"Genre\",\n      \"values\": [\n        \"Thriller\",\n        \"Action\",\n        \"Horror\",\n        \"Comedy\"\n      ]\n    },\n    {\n      \"name\": \"Screenwriter\",\n      \"attributes\": [\n        \"+ Name\",\n        \"+ MostSuccessfulFilm\"\n      ]\n    },\n    {\n      \"name\": \"Screenplay\",\n      \"attributes\": [\n        \"+ Title\",\n        \"+ Version\",\n        \"+ Date\",\n        \"+ NumberOfScenes\",\n        \"+ Plot\"\n      ]\n    },\n    {\n      \"name\": \"Novel\",\n      \"attributes\": [\n        \"+ Title\",\n        \"+ Author\"\n      ]\n    },\n    {\n      \"name\": \"Concept\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CreativeEmployee\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"CreativeEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Actor\",\n      \"parent\": \"CreativeEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Technician\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FilmSet\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Film\",\n      \"target\": \"Genre\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenwriter\",\n      \"target\": \"Screenplay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Novel\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Concept\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Actor\",\n      \"target\": \"Screenplay\",\n      \"label\": \"reads\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Screenplay\",\n      \"label\": \"implements\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4339,
+   "completion_tokens": 968,
+   "total_tokens": 5307,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

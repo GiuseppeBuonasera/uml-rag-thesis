@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Sober {\n}\n\nclass Car {\n    +licensePlate : string\n}\n\nclass CarOwner {\n}\n\nclass Accident {\n    +date : date\n    +location : string\n    +damageAmount : double\n}\n\nabstract class TaxiService {\n    +pickupTime : datetime\n    +dropoffTime : datetime\n    +pickupLocation : string\n    +dropoffLocation : string\n    +rideDuration : string\n    +distance : double\n}\n\nclass RideHailing extends TaxiService {\n    +requestType : string\n    +fee : double\n    +numberOfPassengers : int\n}\n\nclass RideSharing extends TaxiService {\n    +upfrontNegotiatedFee : double\n    +numberOfPassengers : int\n}\n\nclass Customer {\n    +name : string\n}\n\nclass RideHailingService {\n    +numberOfPassengers : int\n}\n\nclass RideSharingService {\n    +numberOfPassengers : int\n}\n\nclass RideHailingTrip {\n    +pickupTime : datetime\n    +dropoffTime : datetime\n    +pickupLocation : string\n    +dropoffLocation : string\n    +rideDuration : string\n    +distance : double\n    +numberOfPassengers : int\n    +fee : double\n    +requestType : string\n}\n\nclass RideSharingTrip {\n    +pickupTime : datetime\n    +dropoffTime : datetime\n    +pickupLocation : string\n    +dropoffLocation : string\n    +rideDuration : string\n    +distance : double\n    +upfrontNegotiatedFee : double\n    +numberOfPassengers : int\n}\n\nSober \"1\" -- \"*\" Car : operates\nSober \"1\" -- \"*\" CarOwner : tracks\nCar \"1\" -- \"*\" Accident : involved in\nCar \"1\" -- \"0..1\" CarOwner : owned by\nCar \"1\" -- \"*\" RideHailingTrip\nCar \"1\" -- \"*\" RideSharingTrip\nRideHailingTrip \"1\" -- \"1\" Customer : lead customer\nRideHailingTrip \"1\" -- \"1..6\" Customer : passenger\nRideSharingTrip \"1\" -- \"1..10\" Customer : passenger\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 22.82284939999954,
+ "prompt_tokens": 1547,
+ "completion_tokens": 473,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-d722xrhv1jrntmz59wavq",
+  "object": "chat.completion",
+  "created": 1792266043,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Sober {\n}\n\nclass Car {\n    +licensePlate : string\n}\n\nclass CarOwner {\n}\n\nclass Accident {\n    +date : date\n    +location : string\n    +damageAmount : double\n}\n\nabstract class TaxiService {\n    +pickupTime : datetime\n    +dropoffTime : datetime\n    +pickupLocation : string\n    +dropoffLocation : string\n    +rideDuration : string\n    +distance : double\n}\n\nclass RideHailing extends TaxiService {\n    +requestType : string\n    +fee : double\n    +numberOfPassengers : int\n}\n\nclass RideSharing extends TaxiService {\n    +upfrontNegotiatedFee : double\n    +numberOfPassengers : int\n}\n\nclass Customer {\n    +name : string\n}\n\nclass RideHailingService {\n    +numberOfPassengers : int\n}\n\nclass RideSharingService {\n    +numberOfPassengers : int\n}\n\nclass RideHailingTrip {\n    +pickupTime : datetime\n    +dropoffTime : datetime\n    +pickupLocation : string\n    +dropoffLocation : string\n    +rideDuration : string\n    +distance : double\n    +numberOfPassengers : int\n    +fee : double\n    +requestType : string\n}\n\nclass RideSharingTrip {\n    +pickupTime : datetime\n    +dropoffTime : datetime\n    +pickupLocation : string\n    +dropoffLocation : string\n    +rideDuration : string\n    +distance : double\n    +upfrontNegotiatedFee : double\n    +numberOfPassengers : int\n}\n\nSober \"1\" -- \"*\" Car : operates\nSober \"1\" -- \"*\" CarOwner : tracks\nCar \"1\" -- \"*\" Accident : involved in\nCar \"1\" -- \"0..1\" CarOwner : owned by\nCar \"1\" -- \"*\" RideHailingTrip\nCar \"1\" -- \"*\" RideSharingTrip\nRideHailingTrip \"1\" -- \"1\" Customer : lead customer\nRideHailingTrip \"1\" -- \"1..6\" Customer : passenger\nRideSharingTrip \"1\" -- \"1..10\" Customer : passenger\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1547,
+   "completion_tokens": 473,
+   "total_tokens": 2020,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

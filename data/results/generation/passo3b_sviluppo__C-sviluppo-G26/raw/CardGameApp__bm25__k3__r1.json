@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Game\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"Deck\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Card\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Suit\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"DIAMONDS\",\n        \"HEARTS\",\n        \"SPADES\",\n        \"CLUBS\"\n      ]\n    },\n    {\n      \"name\": \"ScoringTable\"\n    },\n    {\n      \"name\": \"Round\",\n      \"attributes\": [\n        \"+ id : string\",\n        \"+ pointValue : int\",\n        \"+ isJackRound : boolean\",\n        \"+ isSoloRound : boolean\"\n      ]\n    },\n    {\n      \"name\": \"SoloRound\",\n      \"attributes\": [\n        \"+ soloType : SoloType\"\n      ]\n    },\n    {\n      \"name\": \"MandatorySoloRound\"\n    },\n    {\n      \"name\": \"SoloType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"TRUMP\",\n        \"JACK\",\n        \"QUEEN\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Player\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"4\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Deck\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"ScoringTable\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Deck\",\n      \"part\": \"Card\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..48\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Card\",\n      \"target\": \"Suit\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ScoringTable\",\n      \"part\": \"Round\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Round\",\n      \"target\": \"Player\",\n      \"targetRole\": \"winningPlayers\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SoloRound\",\n      \"target\": \"Player\",\n      \"targetRole\": \"soloPlayer\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SoloRound\",\n      \"parent\": \"Round\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MandatorySoloRound\",\n      \"parent\": \"SoloRound\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 45.99972659999912,
+ "prompt_tokens": 7442,
+ "completion_tokens": 785,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-810pege2jphj892wvaky5p",
+  "object": "chat.completion",
+  "created": 1792270075,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Game\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"Deck\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Card\",\n      \"attributes\": [\n        \"+ id : string\"\n      ]\n    },\n    {\n      \"name\": \"Suit\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"DIAMONDS\",\n        \"HEARTS\",\n        \"SPADES\",\n        \"CLUBS\"\n      ]\n    },\n    {\n      \"name\": \"ScoringTable\"\n    },\n    {\n      \"name\": \"Round\",\n      \"attributes\": [\n        \"+ id : string\",\n        \"+ pointValue : int\",\n        \"+ isJackRound : boolean\",\n        \"+ isSoloRound : boolean\"\n      ]\n    },\n    {\n      \"name\": \"SoloRound\",\n      \"attributes\": [\n        \"+ soloType : SoloType\"\n      ]\n    },\n    {\n      \"name\": \"MandatorySoloRound\"\n    },\n    {\n      \"name\": \"SoloType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"TRUMP\",\n        \"JACK\",\n        \"QUEEN\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Player\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"4\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Deck\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"ScoringTable\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Deck\",\n      \"part\": \"Card\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..48\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Card\",\n      \"target\": \"Suit\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ScoringTable\",\n      \"part\": \"Round\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Round\",\n      \"target\": \"Player\",\n      \"targetRole\": \"winningPlayers\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SoloRound\",\n      \"target\": \"Player\",\n      \"targetRole\": \"soloPlayer\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SoloRound\",\n      \"parent\": \"Round\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MandatorySoloRound\",\n      \"parent\": \"SoloRound\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 7442,
+   "completion_tokens": 785,
+   "total_tokens": 8227,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

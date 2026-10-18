@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Sober\",\n      \"attributes\": [\n        \"fleet_size : int\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"attributes\": [\n        \"license_plate : string\"\n      ]\n    },\n    {\n      \"name\": \"Owner\",\n      \"attributes\": [\n        \"name : string\"\n      ]\n    },\n    {\n      \"name\": \"RideHailService\",\n      \"attributes\": [\n        \"pickup_time : datetime\",\n        \"dropoff_time : datetime\",\n        \"pickup_location : string\",\n        \"dropoff_location : string\",\n        \"duration : string\",\n        \"distance : float\",\n        \"passenger_count : int\",\n        \"fee : float\",\n        \"request_type : string\",\n        \"lead_customer_name : string\"\n      ]\n    },\n    {\n      \"name\": \"RideShareService\",\n      \"attributes\": [\n        \"pickup_time : datetime\",\n        \"dropoff_time : datetime\",\n        \"pickup_location : string\",\n        \"dropoff_location : string\",\n        \"duration : string\",\n        \"distance : float\",\n        \"passenger_count : int\",\n        \"negotiated_fee : float\",\n        \"customer_names : string[]\"\n      ]\n    },\n    {\n      \"name\": \"Accident\",\n      \"attributes\": [\n        \"accident_date : date\",\n        \"location : string\",\n        \"damage_amount : float\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"name : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Sober\",\n      \"target\": \"Car\",\n      \"targetRole\": \"fleet\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Owner\",\n      \"target\": \"Car\",\n      \"targetRole\": \"owns\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"RideHailService\",\n      \"targetRole\": \"used_in\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"RideShareService\",\n      \"targetRole\": \"used_in\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"Accident\",\n      \"targetRole\": \"involved_in\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RideHailService\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"lead_customer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RideShareService\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 42.334221199998865,
+ "prompt_tokens": 5075,
+ "completion_tokens": 741,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-mm95boqz06a7t61qvl1p53",
+  "object": "chat.completion",
+  "created": 1792281055,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Sober\",\n      \"attributes\": [\n        \"fleet_size : int\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"attributes\": [\n        \"license_plate : string\"\n      ]\n    },\n    {\n      \"name\": \"Owner\",\n      \"attributes\": [\n        \"name : string\"\n      ]\n    },\n    {\n      \"name\": \"RideHailService\",\n      \"attributes\": [\n        \"pickup_time : datetime\",\n        \"dropoff_time : datetime\",\n        \"pickup_location : string\",\n        \"dropoff_location : string\",\n        \"duration : string\",\n        \"distance : float\",\n        \"passenger_count : int\",\n        \"fee : float\",\n        \"request_type : string\",\n        \"lead_customer_name : string\"\n      ]\n    },\n    {\n      \"name\": \"RideShareService\",\n      \"attributes\": [\n        \"pickup_time : datetime\",\n        \"dropoff_time : datetime\",\n        \"pickup_location : string\",\n        \"dropoff_location : string\",\n        \"duration : string\",\n        \"distance : float\",\n        \"passenger_count : int\",\n        \"negotiated_fee : float\",\n        \"customer_names : string[]\"\n      ]\n    },\n    {\n      \"name\": \"Accident\",\n      \"attributes\": [\n        \"accident_date : date\",\n        \"location : string\",\n        \"damage_amount : float\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"name : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Sober\",\n      \"target\": \"Car\",\n      \"targetRole\": \"fleet\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Owner\",\n      \"target\": \"Car\",\n      \"targetRole\": \"owns\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"RideHailService\",\n      \"targetRole\": \"used_in\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"RideShareService\",\n      \"targetRole\": \"used_in\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"Accident\",\n      \"targetRole\": \"involved_in\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RideHailService\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"lead_customer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RideShareService\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5075,
+   "completion_tokens": 741,
+   "total_tokens": 5816,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"University\"\n    },\n    {\n      \"name\": \"Department\"\n    },\n    {\n      \"name\": \"ResearchGroup\"\n    },\n    {\n      \"name\": \"Researcher\"\n    },\n    {\n      \"name\": \"Project\"\n    },\n    {\n      \"name\": \"WorkPackage\"\n    },\n    {\n      \"name\": \"Assignment\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"University\",\n      \"target\": \"Department\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Department\",\n      \"target\": \"ResearchGroup\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Researcher\",\n      \"target\": \"ResearchGroup\",\n      \"label\": \"belongs to\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Project\",\n      \"part\": \"WorkPackage\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WorkPackage\",\n      \"target\": \"ResearchGroup\",\n      \"label\": \"led by\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Assignment\",\n      \"target\": \"Researcher\",\n      \"label\": \"is assigned to\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Assignment\",\n      \"target\": \"WorkPackage\",\n      \"label\": \"is part of\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 23.04996879999817,
+ "prompt_tokens": 2999,
+ "completion_tokens": 412,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cmftk6ic6uuzdxefptpsf",
+  "object": "chat.completion",
+  "created": 1792280485,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"University\"\n    },\n    {\n      \"name\": \"Department\"\n    },\n    {\n      \"name\": \"ResearchGroup\"\n    },\n    {\n      \"name\": \"Researcher\"\n    },\n    {\n      \"name\": \"Project\"\n    },\n    {\n      \"name\": \"WorkPackage\"\n    },\n    {\n      \"name\": \"Assignment\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"University\",\n      \"target\": \"Department\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Department\",\n      \"target\": \"ResearchGroup\",\n      \"label\": \"contains\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Researcher\",\n      \"target\": \"ResearchGroup\",\n      \"label\": \"belongs to\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Project\",\n      \"part\": \"WorkPackage\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"WorkPackage\",\n      \"target\": \"ResearchGroup\",\n      \"label\": \"led by\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Assignment\",\n      \"target\": \"Researcher\",\n      \"label\": \"is assigned to\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Assignment\",\n      \"target\": \"WorkPackage\",\n      \"label\": \"is part of\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2999,
+   "completion_tokens": 412,
+   "total_tokens": 3411,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Sober {\n}\n\nclass Car {\n  + LicensePlate : string\n}\n\nclass Owner {\n  + Name : string\n}\n\nclass Accident {\n  + Date : date\n  + Location : string\n  + DamageAmount : double\n}\n\nclass RideHail {\n  + PickUpTime : datetime\n  + DropOffTime : datetime\n  + PickUpLocation : string\n  + DropOffLocation : string\n  + RideDuration : string\n  + Distance : double\n  + PassengerCount : int\n  + Fee : double\n  + RequestType : string\n}\n\nclass RideShare {\n  + PickUpTime : datetime\n  + DropOffTime : datetime\n  + PickUpLocation : string\n  + DropOffLocation : string\n  + RideDuration : string\n  + Distance : double\n  + PassengerCount : int\n  + NegotiatedFee : double\n}\n\nclass Customer {\n  + Name : string\n}\n\nclass RideShareCustomer {\n  + Name : string\n}\n\nCar \"0..*\" -- \"0..1\" Owner : belongs to\nCar \"1\" -- \"0..*\" Accident : involved in\nCar \"1\" -- \"0..*\" RideHail : provides\nCar \"1\" -- \"0..*\" RideShare : provides\nRideHail \"0..*\" -- \"1\" Customer : lead customer\nRideShare \"0..*\" -- \"1..10\" RideShareCustomer : passengers\nSober \"1\" -- \"0..*\" Car : operates\nSober \"1\" -- \"0..*\" RideHail : manages\nSober \"1\" -- \"0..*\" RideShare : manages\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 20.81738680000126,
+ "prompt_tokens": 2753,
+ "completion_tokens": 366,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-k0jaiuvcr7ok54pvj8omx",
+  "object": "chat.completion",
+  "created": 1792266066,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Sober {\n}\n\nclass Car {\n  + LicensePlate : string\n}\n\nclass Owner {\n  + Name : string\n}\n\nclass Accident {\n  + Date : date\n  + Location : string\n  + DamageAmount : double\n}\n\nclass RideHail {\n  + PickUpTime : datetime\n  + DropOffTime : datetime\n  + PickUpLocation : string\n  + DropOffLocation : string\n  + RideDuration : string\n  + Distance : double\n  + PassengerCount : int\n  + Fee : double\n  + RequestType : string\n}\n\nclass RideShare {\n  + PickUpTime : datetime\n  + DropOffTime : datetime\n  + PickUpLocation : string\n  + DropOffLocation : string\n  + RideDuration : string\n  + Distance : double\n  + PassengerCount : int\n  + NegotiatedFee : double\n}\n\nclass Customer {\n  + Name : string\n}\n\nclass RideShareCustomer {\n  + Name : string\n}\n\nCar \"0..*\" -- \"0..1\" Owner : belongs to\nCar \"1\" -- \"0..*\" Accident : involved in\nCar \"1\" -- \"0..*\" RideHail : provides\nCar \"1\" -- \"0..*\" RideShare : provides\nRideHail \"0..*\" -- \"1\" Customer : lead customer\nRideShare \"0..*\" -- \"1..10\" RideShareCustomer : passengers\nSober \"1\" -- \"0..*\" Car : operates\nSober \"1\" -- \"0..*\" RideHail : manages\nSober \"1\" -- \"0..*\" RideShare : manages\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2753,
+   "completion_tokens": 366,
+   "total_tokens": 3119,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

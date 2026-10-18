@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Sober\", \"attributes\": []}, {\"name\": \"Car\", \"attributes\": [\"+ licensePlate : string\"]}, {\"name\": \"CarOwner\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"TaxiService\", \"attributes\": []}, {\"name\": \"RideHailing\", \"attributes\": [\"+ pickUpTime : datetime\", \"+ dropOffTime : datetime\", \"+ pickUpLocation : string\", \"+ dropOffLocation : string\", \"+ rideDuration : string\", \"+ distance : double\", \"+ passengerCount : int\", \"+ fee : double\", \"+ requestType : string\", \"+ leadCustomerName : string\"]}, {\"name\": \"RideSharing\", \"attributes\": [\"+ pickUpTime : datetime\", \"+ dropOffTime : datetime\", \"+ pickUpLocation : string\", \"+ dropOffLocation : string\", \"+ rideDuration : string\", \"+ distance : double\", \"+ passengerCount : int\", \"+ upfrontFee : double\", \"+ customerNames : string[]\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Accident\", \"attributes\": [\"+ date : date\", \"+ location : string\", \"+ damageAmount : double\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Sober\", \"target\": \"Car\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"CarOwner\", \"target\": \"Car\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"TaxiService\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"RideHailing\", \"parent\": \"TaxiService\"}, {\"type\": \"inheritance\", \"child\": \"RideSharing\", \"parent\": \"TaxiService\"}, {\"type\": \"association\", \"source\": \"RideHailing\", \"target\": \"Customer\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"RideSharing\", \"target\": \"Customer\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"Accident\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Sober\", \"target\": \"Customer\", \"targetMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 23.276742100002593,
+ "prompt_tokens": 1617,
+ "completion_tokens": 479,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-w98hckln65f3oh3ncmy4",
+  "object": "chat.completion",
+  "created": 1792280665,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Sober\", \"attributes\": []}, {\"name\": \"Car\", \"attributes\": [\"+ licensePlate : string\"]}, {\"name\": \"CarOwner\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"TaxiService\", \"attributes\": []}, {\"name\": \"RideHailing\", \"attributes\": [\"+ pickUpTime : datetime\", \"+ dropOffTime : datetime\", \"+ pickUpLocation : string\", \"+ dropOffLocation : string\", \"+ rideDuration : string\", \"+ distance : double\", \"+ passengerCount : int\", \"+ fee : double\", \"+ requestType : string\", \"+ leadCustomerName : string\"]}, {\"name\": \"RideSharing\", \"attributes\": [\"+ pickUpTime : datetime\", \"+ dropOffTime : datetime\", \"+ pickUpLocation : string\", \"+ dropOffLocation : string\", \"+ rideDuration : string\", \"+ distance : double\", \"+ passengerCount : int\", \"+ upfrontFee : double\", \"+ customerNames : string[]\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Accident\", \"attributes\": [\"+ date : date\", \"+ location : string\", \"+ damageAmount : double\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Sober\", \"target\": \"Car\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"CarOwner\", \"target\": \"Car\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"TaxiService\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"RideHailing\", \"parent\": \"TaxiService\"}, {\"type\": \"inheritance\", \"child\": \"RideSharing\", \"parent\": \"TaxiService\"}, {\"type\": \"association\", \"source\": \"RideHailing\", \"target\": \"Customer\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"RideSharing\", \"target\": \"Customer\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Car\", \"target\": \"Accident\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Sober\", \"target\": \"Customer\", \"targetMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1617,
+   "completion_tokens": 479,
+   "total_tokens": 2096,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Game\", \"attributes\": [\"+ id : long\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Game\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"4\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"Deck\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"ScoringTable\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Deck\", \"target\": \"Card\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..48\"}, {\"type\": \"association\", \"source\": \"ScoringTable\", \"target\": \"Round\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Round\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"winning players\"}, {\"type\": \"association\", \"source\": \"Round\", \"target\": \"SoloRound\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"is a\"}, {\"type\": \"association\", \"source\": \"SoloRound\", \"target\": \"Player\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\", \"label\": \"solo player\"}, {\"type\": \"association\", \"source\": \"SoloRound\", \"target\": \"SoloType\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}], \"subclasses\": [{\"child\": \"SoloRound\", \"parent\": \"Round\"}, {\"child\": \"MandatorySoloRound\", \"parent\": \"SoloRound\"}], \"enums\": [{\"name\": \"Suit\", \"values\": [\"DIAMONDS\", \"HEARTS\", \"SPADES\", \"CLUBS\"]}, {\"name\": \"SoloType\", \"values\": [\"TRUMP\", \"JACK\", \"QUEEN\"]}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 21.638310100002855,
+ "prompt_tokens": 1272,
+ "completion_tokens": 451,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-x6tpoq8lc6e0mv1lqliy1ta",
+  "object": "chat.completion",
+  "created": 1792269576,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Game\", \"attributes\": [\"+ id : long\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Game\", \"target\": \"Player\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"4\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"Deck\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"ScoringTable\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Deck\", \"target\": \"Card\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..48\"}, {\"type\": \"association\", \"source\": \"ScoringTable\", \"target\": \"Round\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Round\", \"target\": \"Player\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"winning players\"}, {\"type\": \"association\", \"source\": \"Round\", \"target\": \"SoloRound\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"is a\"}, {\"type\": \"association\", \"source\": \"SoloRound\", \"target\": \"Player\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\", \"label\": \"solo player\"}, {\"type\": \"association\", \"source\": \"SoloRound\", \"target\": \"SoloType\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}], \"subclasses\": [{\"child\": \"SoloRound\", \"parent\": \"Round\"}, {\"child\": \"MandatorySoloRound\", \"parent\": \"SoloRound\"}], \"enums\": [{\"name\": \"Suit\", \"values\": [\"DIAMONDS\", \"HEARTS\", \"SPADES\", \"CLUBS\"]}, {\"name\": \"SoloType\", \"values\": [\"TRUMP\", \"JACK\", \"QUEEN\"]}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1272,
+   "completion_tokens": 451,
+   "total_tokens": 1723,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

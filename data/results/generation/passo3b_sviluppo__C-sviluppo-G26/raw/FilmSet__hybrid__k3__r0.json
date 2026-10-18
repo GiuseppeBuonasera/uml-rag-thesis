@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ ssn : int\"\n      ]\n    },\n    {\n      \"name\": \"CreativeEmployee\",\n      \"attributes\": [\n        \"+ hasOscar : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Director\",\n      \"attributes\": [\n        \"+ assistantName : string\"\n      ]\n    },\n    {\n      \"name\": \"Actor\",\n      \"attributes\": [\n        \"+ education : string\",\n        \"+ hasOscar : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Technician\",\n      \"attributes\": [\n        \"+ fieldOfActivity : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"FilmSet\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Film\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ releaseYear : int\"\n      ]\n    },\n    {\n      \"name\": \"Genre\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Thriller\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"THRILLER\"\n      ]\n    },\n    {\n      \"name\": \"Action\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"ACTION\"\n      ]\n    },\n    {\n      \"name\": \"Horror\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"HORROR\"\n      ]\n    },\n    {\n      \"name\": \"Comedy\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"COMEDY\"\n      ]\n    },\n    {\n      \"name\": \"Screenwriter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ mostSuccessfulFilm : string\"\n      ]\n    },\n    {\n      \"name\": \"Screenplay\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ version : string\",\n        \"+ date : date\",\n        \"+ numberOfScenes : int\",\n        \"+ plot : string\"\n      ]\n    },\n    {\n      \"name\": \"Novel\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ author : string\"\n      ]\n    },\n    {\n      \"name\": \"Concept\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CreativeEmployee\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"CreativeEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Actor\",\n      \"parent\": \"CreativeEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Technician\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FilmSet\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FilmSet\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Film\",\n      \"target\": \"Genre\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenwriter\",\n      \"target\": \"Screenplay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Novel\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Concept\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Actor\",\n      \"target\": \"Screenplay\",\n      \"label\": \"reads\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Screenplay\",\n      \"label\": \"implements\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 70.40553599999839,
+ "prompt_tokens": 4454,
+ "completion_tokens": 1213,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lwaaomoel1lkf9p6giwgkm",
+  "object": "chat.completion",
+  "created": 1792274508,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ ssn : int\"\n      ]\n    },\n    {\n      \"name\": \"CreativeEmployee\",\n      \"attributes\": [\n        \"+ hasOscar : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Director\",\n      \"attributes\": [\n        \"+ assistantName : string\"\n      ]\n    },\n    {\n      \"name\": \"Actor\",\n      \"attributes\": [\n        \"+ education : string\",\n        \"+ hasOscar : boolean\"\n      ]\n    },\n    {\n      \"name\": \"Technician\",\n      \"attributes\": [\n        \"+ fieldOfActivity : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"FilmSet\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Film\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ releaseYear : int\"\n      ]\n    },\n    {\n      \"name\": \"Genre\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Thriller\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"THRILLER\"\n      ]\n    },\n    {\n      \"name\": \"Action\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"ACTION\"\n      ]\n    },\n    {\n      \"name\": \"Horror\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"HORROR\"\n      ]\n    },\n    {\n      \"name\": \"Comedy\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"COMEDY\"\n      ]\n    },\n    {\n      \"name\": \"Screenwriter\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ mostSuccessfulFilm : string\"\n      ]\n    },\n    {\n      \"name\": \"Screenplay\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ version : string\",\n        \"+ date : date\",\n        \"+ numberOfScenes : int\",\n        \"+ plot : string\"\n      ]\n    },\n    {\n      \"name\": \"Novel\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ author : string\"\n      ]\n    },\n    {\n      \"name\": \"Concept\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CreativeEmployee\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"CreativeEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Actor\",\n      \"parent\": \"CreativeEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Technician\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FilmSet\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"FilmSet\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Film\",\n      \"target\": \"Genre\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenwriter\",\n      \"target\": \"Screenplay\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Film\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Novel\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Screenplay\",\n      \"target\": \"Concept\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Actor\",\n      \"target\": \"Screenplay\",\n      \"label\": \"reads\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Screenplay\",\n      \"label\": \"implements\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4454,
+   "completion_tokens": 1213,
+   "total_tokens": 5667,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Boeing\", \"attributes\": []}, {\"name\": \"AirlineCompany\", \"attributes\": []}, {\"name\": \"Contract\", \"attributes\": [\"+ deliveryConditions: string\", \"+ legalAspects: string\"]}, {\"name\": \"Acquisition\", \"attributes\": [\"+ model: string\", \"+ price: double\", \"+ optionsAndCustomizations: string[]\", \"+ deliveryDate: date\"]}, {\"name\": \"Employee\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Boeing\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"Acquisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"manages\", \"sourceRole\": \"salesperson\", \"targetRole\": \"contract\"}], \"note\": \"The relationship between AirlineCompany and itself is modeled as a self-association for mother-daughter relationships.\"}\n\nWait, I must provide the JSON without the note. Let me re-evaluate the self-association for AirlineCompany.\n\n{\"classes\": [{\"name\": \"Boeing\", \"attributes\": []}, {\"name\": \"AirlineCompany\", \"attributes\": []}, {\"name\": \"Contract\", \"attributes\": [\"+ deliveryConditions: string\", \"+ legalAspects: string\"]}, {\"name\": \"Acquisition\", \"attributes\": [\"+ model: string\", \"+ price: double\", \"+ optionsAndCustomizations: string[]\", \"+ deliveryDate: date\"]}, {\"name\": \"Employee\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Boeing\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"Acquisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"manages\", \"sourceRole\": \"salesperson\", \"targetRole\": \"contract\"}, {\"type\": \"association\", \"source\": \"AirlineCompany\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"*\", \"label\": \"mother-daughter\", \"sourceRole\": \"mother\", \"targetRole\": \"daughter\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 28.40358019999985,
+ "prompt_tokens": 1324,
+ "completion_tokens": 633,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lys4rc27h47g84hl3phut",
+  "object": "chat.completion",
+  "created": 1792268438,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Boeing\", \"attributes\": []}, {\"name\": \"AirlineCompany\", \"attributes\": []}, {\"name\": \"Contract\", \"attributes\": [\"+ deliveryConditions: string\", \"+ legalAspects: string\"]}, {\"name\": \"Acquisition\", \"attributes\": [\"+ model: string\", \"+ price: double\", \"+ optionsAndCustomizations: string[]\", \"+ deliveryDate: date\"]}, {\"name\": \"Employee\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Boeing\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"Acquisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"manages\", \"sourceRole\": \"salesperson\", \"targetRole\": \"contract\"}], \"note\": \"The relationship between AirlineCompany and itself is modeled as a self-association for mother-daughter relationships.\"}\n\nWait, I must provide the JSON without the note. Let me re-evaluate the self-association for AirlineCompany.\n\n{\"classes\": [{\"name\": \"Boeing\", \"attributes\": []}, {\"name\": \"AirlineCompany\", \"attributes\": []}, {\"name\": \"Contract\", \"attributes\": [\"+ deliveryConditions: string\", \"+ legalAspects: string\"]}, {\"name\": \"Acquisition\", \"attributes\": [\"+ model: string\", \"+ price: double\", \"+ optionsAndCustomizations: string[]\", \"+ deliveryDate: date\"]}, {\"name\": \"Employee\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Boeing\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"Acquisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"manages\", \"sourceRole\": \"salesperson\", \"targetRole\": \"contract\"}, {\"type\": \"association\", \"source\": \"AirlineCompany\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"*\", \"label\": \"mother-daughter\", \"sourceRole\": \"mother\", \"targetRole\": \"daughter\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1324,
+   "completion_tokens": 633,
+   "total_tokens": 1957,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

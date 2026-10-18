@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass Customer {\n  +name : string\n  +phoneNumber : string\n}\n\nclass Table {\n  +seatNumber : int\n  +isSmoking : boolean\n}\n\nclass Reservation {\n  +day : date\n  +time : time\n  +numberOfPeople : int\n}\n\nclass Waiter {\n  +name : string\n  +yearsOfService : int\n}\n\nclass Bill {\n  +totalAmount : float\n}\n\nclass Dish {\n  +name : string\n  +unitPrice : float\n}\n\nclass BillLine {\n  +quantity : int\n}\n\nCustomer \"1\" -- \"*\" Reservation : makes\nReservation \"0..1\" -- \"*\" Table : assigned to\nWaiter \"1\" -- \"*\" Customer : serves\nCustomer \"1\" -- \"*\" Bill : receives\nBill \"1\" *-- \"1..*\" BillLine : consists of\nBillLine \"*\" -- \"1\" Dish : includes\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 10.072373999995762,
+ "prompt_tokens": 1144,
+ "completion_tokens": 207,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-pr3iuap0i9kvv60o2ege8",
+  "object": "chat.completion",
+  "created": 1792267495,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Customer {\n  +name : string\n  +phoneNumber : string\n}\n\nclass Table {\n  +seatNumber : int\n  +isSmoking : boolean\n}\n\nclass Reservation {\n  +day : date\n  +time : time\n  +numberOfPeople : int\n}\n\nclass Waiter {\n  +name : string\n  +yearsOfService : int\n}\n\nclass Bill {\n  +totalAmount : float\n}\n\nclass Dish {\n  +name : string\n  +unitPrice : float\n}\n\nclass BillLine {\n  +quantity : int\n}\n\nCustomer \"1\" -- \"*\" Reservation : makes\nReservation \"0..1\" -- \"*\" Table : assigned to\nWaiter \"1\" -- \"*\" Customer : serves\nCustomer \"1\" -- \"*\" Bill : receives\nBill \"1\" *-- \"1..*\" BillLine : consists of\nBillLine \"*\" -- \"1\" Dish : includes\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1144,
+   "completion_tokens": 207,
+   "total_tokens": 1351,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

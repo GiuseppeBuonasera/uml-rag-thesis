@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass Product {\n  +name : string\n  +description : string\n  +netPrice : double\n}\n\nclass Manufacturer {\n  +name : string\n}\n\nclass Country {\n  +name : string\n  +vatRate : float\n  +currency : string\n  +conversionRateToEuro : float\n}\n\nclass Representative {\n  +firstName : string\n  +lastName : string\n  +socialSecurityNumber : string\n  +telephoneNumber : string\n  +emailAddress : string\n}\n\nclass Customer {\n  +name : string\n  +address : string\n  +telephoneNumber : string\n  +emailAddress : string\n}\n\nclass Order {\n  +orderId : string\n  +orderQuantity : int\n  +orderDate : date\n  +desiredDeliveryDate : date\n}\n\nProduct \"0..*\" -- \"1\" Manufacturer : manufactured by\nProduct \"*\" -- \"*\" Country : sold in\nProduct \"1\" -- \"*\" Order : refers to\nRepresentative \"1\" -- \"1\" Country : responsible for\nRepresentative \"1\" -- \"*\" Order : places\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"*\" -- \"*\" Country : resells goods\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 12.388501599998563,
+ "prompt_tokens": 1259,
+ "completion_tokens": 263,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-afb4n22guuzhho9s009lg",
+  "object": "chat.completion",
+  "created": 1792262038,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Product {\n  +name : string\n  +description : string\n  +netPrice : double\n}\n\nclass Manufacturer {\n  +name : string\n}\n\nclass Country {\n  +name : string\n  +vatRate : float\n  +currency : string\n  +conversionRateToEuro : float\n}\n\nclass Representative {\n  +firstName : string\n  +lastName : string\n  +socialSecurityNumber : string\n  +telephoneNumber : string\n  +emailAddress : string\n}\n\nclass Customer {\n  +name : string\n  +address : string\n  +telephoneNumber : string\n  +emailAddress : string\n}\n\nclass Order {\n  +orderId : string\n  +orderQuantity : int\n  +orderDate : date\n  +desiredDeliveryDate : date\n}\n\nProduct \"0..*\" -- \"1\" Manufacturer : manufactured by\nProduct \"*\" -- \"*\" Country : sold in\nProduct \"1\" -- \"*\" Order : refers to\nRepresentative \"1\" -- \"1\" Country : responsible for\nRepresentative \"1\" -- \"*\" Order : places\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"*\" -- \"*\" Country : resells goods\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1259,
+   "completion_tokens": 263,
+   "total_tokens": 1522,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

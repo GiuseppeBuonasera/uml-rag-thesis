@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Employee {\n  + name : string\n  + socialSecurityNumber : string\n}\n\nclass CreativeEmployee extends Employee {\n  + hasOscar : boolean\n}\n\nclass Director extends CreativeEmployee {\n  + assistantName : string\n}\n\nclass Actor extends CreativeEmployee {\n  + education : string\n}\n\nclass Technician extends Employee {\n  + fieldOfActivity : string\n}\n\nclass FilmSet {\n  + location : string\n}\n\nclass Film {\n  + title : string\n  + releaseYear : int\n}\n\nclass Genre {\n  + type : string\n}\n\nclass Screenwriter {\n  + name : string\n  + mostSuccessfulFilm : string\n}\n\nclass Screenplay {\n  + title : string\n  + version : string\n  + date : date\n  + numberOfScenes : int\n  + plot : string\n}\n\nclass Novel {\n  + title : string\n  + author : string\n}\n\nclass Concept {\n}\n\nFilmSet \"*\" -- \"*\" Film : used for\n\nFilm \"1\" -- \"1\" Genre\nFilm \"1\" -- \"1\" Screenplay\nFilm \"1\" -- \"*\" Actor : features\nFilm \"1\" -- \"1\" Director : directed by\n\nScreenwriter \"1\" -- \"*\" Screenplay : creates\n\nScreenplay \"1\" -- \"0..1\" Novel : based on\nScreenplay \"0..1\" -- \"0..1\" Concept : based on\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 19.363235999997414,
+ "prompt_tokens": 3094,
+ "completion_tokens": 318,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4ypt0ggcq1fs67trd2kqbd",
+  "object": "chat.completion",
+  "created": 1792263467,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Employee {\n  + name : string\n  + socialSecurityNumber : string\n}\n\nclass CreativeEmployee extends Employee {\n  + hasOscar : boolean\n}\n\nclass Director extends CreativeEmployee {\n  + assistantName : string\n}\n\nclass Actor extends CreativeEmployee {\n  + education : string\n}\n\nclass Technician extends Employee {\n  + fieldOfActivity : string\n}\n\nclass FilmSet {\n  + location : string\n}\n\nclass Film {\n  + title : string\n  + releaseYear : int\n}\n\nclass Genre {\n  + type : string\n}\n\nclass Screenwriter {\n  + name : string\n  + mostSuccessfulFilm : string\n}\n\nclass Screenplay {\n  + title : string\n  + version : string\n  + date : date\n  + numberOfScenes : int\n  + plot : string\n}\n\nclass Novel {\n  + title : string\n  + author : string\n}\n\nclass Concept {\n}\n\nFilmSet \"*\" -- \"*\" Film : used for\n\nFilm \"1\" -- \"1\" Genre\nFilm \"1\" -- \"1\" Screenplay\nFilm \"1\" -- \"*\" Actor : features\nFilm \"1\" -- \"1\" Director : directed by\n\nScreenwriter \"1\" -- \"*\" Screenplay : creates\n\nScreenplay \"1\" -- \"0..1\" Novel : based on\nScreenplay \"0..1\" -- \"0..1\" Concept : based on\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3094,
+   "completion_tokens": 318,
+   "total_tokens": 3412,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

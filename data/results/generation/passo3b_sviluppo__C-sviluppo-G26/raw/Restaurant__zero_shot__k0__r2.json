@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Customer\", \"attributes\": [\"+ name : string\", \"+ phone_number : string\"]}, {\"name\": \"Table\", \"attributes\": [\"+ number_of_seats : int\", \"+ is_smoking : boolean\"]}, {\"name\": \"Reservation\", \"attributes\": [\"+ day : date\", \"+ time : time\", \"+ number_of_people : int\"]}, {\"name\": \"Waiter\", \"attributes\": [\"+ name : string\", \"+ years_of_service : int\"]}, {\"name\": \"Bill\", \"attributes\": [\"+ total_amount : float\"]}, {\"name\": \"Dish\", \"attributes\": [\"+ name : string\", \"+ unit_price : float\"]}, {\"name\": \"BillItem\", \"attributes\": [\"+ quantity : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Reservation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"Table\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Waiter\", \"target\": \"Customer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Waiter\", \"target\": \"Table\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Bill\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Bill\", \"target\": \"BillItem\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"BillItem\", \"target\": \"Dish\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 18.91260790000024,
+ "prompt_tokens": 1214,
+ "completion_tokens": 393,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-d7udatzghjkh8pysrrv5b5",
+  "object": "chat.completion",
+  "created": 1792319909,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Customer\", \"attributes\": [\"+ name : string\", \"+ phone_number : string\"]}, {\"name\": \"Table\", \"attributes\": [\"+ number_of_seats : int\", \"+ is_smoking : boolean\"]}, {\"name\": \"Reservation\", \"attributes\": [\"+ day : date\", \"+ time : time\", \"+ number_of_people : int\"]}, {\"name\": \"Waiter\", \"attributes\": [\"+ name : string\", \"+ years_of_service : int\"]}, {\"name\": \"Bill\", \"attributes\": [\"+ total_amount : float\"]}, {\"name\": \"Dish\", \"attributes\": [\"+ name : string\", \"+ unit_price : float\"]}, {\"name\": \"BillItem\", \"attributes\": [\"+ quantity : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Reservation\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Reservation\", \"target\": \"Table\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Waiter\", \"target\": \"Customer\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Waiter\", \"target\": \"Table\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Bill\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Bill\", \"target\": \"BillItem\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"BillItem\", \"target\": \"Dish\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1214,
+   "completion_tokens": 393,
+   "total_tokens": 1607,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

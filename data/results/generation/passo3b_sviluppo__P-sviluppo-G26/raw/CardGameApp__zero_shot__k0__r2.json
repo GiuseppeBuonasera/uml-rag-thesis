@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass Game {\n  +id : long\n}\nclass Player {\n  +id : long\n}\nclass Deck {\n  +id : long\n}\nclass Card {\n  +id : long\n  +compareHeight(other) : string\n}\nclass ScoringTable {\n  +id : long\n}\nclass Round {\n  +id : long\n  +pointValue : int\n}\nclass JackRound {\n}\nclass SoloRound {\n  +soloType : SoloType\n}\nclass MandatorySoloRound extends SoloRound {\n}\nenum SoloType {\n  TRUMP\n  JACK\n  QUEEN\n}\n\nGame \"1\" -- \"4\" Player\nGame \"1\" -- \"1\" Deck\nGame \"1\" -- \"1\" ScoringTable\nDeck \"1\" -- \"0..48\" Card\nScoringTable \"1\" -- \"*\" Round\nRound \"1\" -- \"*\" Player : winning players\nRound <|-- JackRound\nRound <|-- SoloRound\nSoloRound \"1\" -- \"1\" Player : solo player\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 12.450420400004077,
+ "prompt_tokens": 1202,
+ "completion_tokens": 242,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-7ow0fddj7oym5udntr9r4",
+  "object": "chat.completion",
+  "created": 1792261750,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Game {\n  +id : long\n}\nclass Player {\n  +id : long\n}\nclass Deck {\n  +id : long\n}\nclass Card {\n  +id : long\n  +compareHeight(other) : string\n}\nclass ScoringTable {\n  +id : long\n}\nclass Round {\n  +id : long\n  +pointValue : int\n}\nclass JackRound {\n}\nclass SoloRound {\n  +soloType : SoloType\n}\nclass MandatorySoloRound extends SoloRound {\n}\nenum SoloType {\n  TRUMP\n  JACK\n  QUEEN\n}\n\nGame \"1\" -- \"4\" Player\nGame \"1\" -- \"1\" Deck\nGame \"1\" -- \"1\" ScoringTable\nDeck \"1\" -- \"0..48\" Card\nScoringTable \"1\" -- \"*\" Round\nRound \"1\" -- \"*\" Player : winning players\nRound <|-- JackRound\nRound <|-- SoloRound\nSoloRound \"1\" -- \"1\" Player : solo player\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1202,
+   "completion_tokens": 242,
+   "total_tokens": 1444,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

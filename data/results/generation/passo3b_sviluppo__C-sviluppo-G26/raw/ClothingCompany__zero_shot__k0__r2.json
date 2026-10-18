@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Product\", \"attributes\": [\"+ name : string\", \"+ description : string\", \"+ netPrice : double\"]}, {\"name\": \"Manufacturer\", \"attributes\": [\"+ name : string\", \"+ country : string\"]}, {\"name\": \"Country\", \"attributes\": [\"+ name : string\", \"+ vatRate : float\", \"+ currency : string\", \"+ conversionRateToEuro : float\"]}, {\"name\": \"Representative\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\", \"+ socialSecurityNumber : string\", \"+ telephoneNumber : string\", \"+ emailAddress : string\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ name : string\", \"+ address : string\", \"+ telephoneNumber : string\", \"+ emailAddress : string\"]}, {\"name\": \"Order\", \"attributes\": [\"+ orderId : string\", \"+ orderQuantity : int\", \"+ orderDate : date\", \"+ desiredDeliveryDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Product\", \"target\": \"Manufacturer\", \"targetRole\": \"manufacturer\"}, {\"type\": \"association\", \"source\": \"Product\", \"target\": \"Country\", \"targetRole\": \"countryOfOrigin\"}, {\"type\": \"association\", \"source\": \"Representative\", \"target\": \"Country\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Country\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Representative\", \"target\": \"Order\", \"targetMultiplicity\": \"*\", \"sourceRole\": \"places\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Customer\", \"targetMultiplicity\": \"1\", \"sourceRole\": \"customer\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Product\", \"targetMultiplicity\": \"1\", \"sourceRole\": \"orderedProduct\"}, {\"type\": \"association\", \"source\": \"Product\", \"target\": \"Country\", \"targetRole\": \"availableIn\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 20.799371499997505,
+ "prompt_tokens": 1329,
+ "completion_tokens": 431,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0duu0vbeo7s8acqo8qzfkxf",
+  "object": "chat.completion",
+  "created": 1792270331,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Product\", \"attributes\": [\"+ name : string\", \"+ description : string\", \"+ netPrice : double\"]}, {\"name\": \"Manufacturer\", \"attributes\": [\"+ name : string\", \"+ country : string\"]}, {\"name\": \"Country\", \"attributes\": [\"+ name : string\", \"+ vatRate : float\", \"+ currency : string\", \"+ conversionRateToEuro : float\"]}, {\"name\": \"Representative\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\", \"+ socialSecurityNumber : string\", \"+ telephoneNumber : string\", \"+ emailAddress : string\"]}, {\"name\": \"Customer\", \"attributes\": [\"+ name : string\", \"+ address : string\", \"+ telephoneNumber : string\", \"+ emailAddress : string\"]}, {\"name\": \"Order\", \"attributes\": [\"+ orderId : string\", \"+ orderQuantity : int\", \"+ orderDate : date\", \"+ desiredDeliveryDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Product\", \"target\": \"Manufacturer\", \"targetRole\": \"manufacturer\"}, {\"type\": \"association\", \"source\": \"Product\", \"target\": \"Country\", \"targetRole\": \"countryOfOrigin\"}, {\"type\": \"association\", \"source\": \"Representative\", \"target\": \"Country\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Country\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Representative\", \"target\": \"Order\", \"targetMultiplicity\": \"*\", \"sourceRole\": \"places\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Customer\", \"targetMultiplicity\": \"1\", \"sourceRole\": \"customer\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Product\", \"targetMultiplicity\": \"1\", \"sourceRole\": \"orderedProduct\"}, {\"type\": \"association\", \"source\": \"Product\", \"target\": \"Country\", \"targetRole\": \"availableIn\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1329,
+   "completion_tokens": 431,
+   "total_tokens": 1760,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass InsuranceCompany {}\n\nclass Customer {}\n\nclass Contract {}\n\nabstract class Policy {}\n\nclass CarLiabilityPolicy extends Policy {}\n\nclass LifePolicy extends Policy {}\n\nclass VariousRisksPolicy extends Policy {}\n\nInsuranceCompany \"1\" -- \"*\" Customer : has\nCustomer \"1\" -- \"*\" Contract : signs\nContract \"1\" -- \"1\" Policy : includes\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 8.260457000003953,
+ "prompt_tokens": 2972,
+ "completion_tokens": 83,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-f297abjsggah2uunw5zln",
+  "object": "chat.completion",
+  "created": 1792267034,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass InsuranceCompany {}\n\nclass Customer {}\n\nclass Contract {}\n\nabstract class Policy {}\n\nclass CarLiabilityPolicy extends Policy {}\n\nclass LifePolicy extends Policy {}\n\nclass VariousRisksPolicy extends Policy {}\n\nInsuranceCompany \"1\" -- \"*\" Customer : has\nCustomer \"1\" -- \"*\" Contract : signs\nContract \"1\" -- \"1\" Policy : includes\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2972,
+   "completion_tokens": 83,
+   "total_tokens": 3055,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

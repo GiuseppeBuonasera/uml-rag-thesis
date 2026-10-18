@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Song {\n  + title : string\n  + year : int\n  + length : int\n  + genre : string\n}\n\nclass Artist {\n  + name : string\n  + dateOfBirth : date\n  + websiteURL : string\n}\n\nabstract class User {\n  + ID : string\n  + name : string\n  + address : string\n}\n\nclass RegularUser extends User {}\n\nclass BusinessUser extends User {\n  + VATNumber : string\n}\n\nclass Single {}\n\nclass Hit {}\n\nclass Album {\n  + trackNumber : int\n}\n\nclass AlbumTrack {\n  + trackNumber : int\n}\n\nArtist \"1\" -- \"*\" Song\nBusinessUser \"1\" -- \"*\" Song : uploads\nRegularUser \"1\" -- \"*\" Single : buys\nRegularUser \"1\" -- \"*\" Album : buys\nAlbum \"1\" *-- \"1..*\" Hit : contains\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 14.163119500000903,
+ "prompt_tokens": 3262,
+ "completion_tokens": 203,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-eekfhk85aa5y6gs8oby0y",
+  "object": "chat.completion",
+  "created": 1792265356,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Song {\n  + title : string\n  + year : int\n  + length : int\n  + genre : string\n}\n\nclass Artist {\n  + name : string\n  + dateOfBirth : date\n  + websiteURL : string\n}\n\nabstract class User {\n  + ID : string\n  + name : string\n  + address : string\n}\n\nclass RegularUser extends User {}\n\nclass BusinessUser extends User {\n  + VATNumber : string\n}\n\nclass Single {}\n\nclass Hit {}\n\nclass Album {\n  + trackNumber : int\n}\n\nclass AlbumTrack {\n  + trackNumber : int\n}\n\nArtist \"1\" -- \"*\" Song\nBusinessUser \"1\" -- \"*\" Song : uploads\nRegularUser \"1\" -- \"*\" Single : buys\nRegularUser \"1\" -- \"*\" Album : buys\nAlbum \"1\" *-- \"1..*\" Hit : contains\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3262,
+   "completion_tokens": 203,
+   "total_tokens": 3465,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

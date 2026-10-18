@@ -21,6 +21,8 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
   dall'espansore unico.
 
 ## Stato
+- **3b sui 26 di sviluppo (2026-10-16, voce 151)**: analisi SECONDARIA, separata dai 54 di valutazione;
+  `experiments/configs/passo3b_sviluppo.yaml`, 936 generazioni (notebook, sezione 4 bis). Da lanciare.
 - **3b completato (2026-10-13, 1.938/1.938)**; risultati visti dall'utente prima dello script di analisi (deroga
   alla voce 149, da registrare). Script di analisi del 3b ancora da scrivere. Strumenti di confronto:
   `experiments/compare_3b.py` (notebook 6 ter) e report di revisione (notebook 7, ora anche per i De Bari).

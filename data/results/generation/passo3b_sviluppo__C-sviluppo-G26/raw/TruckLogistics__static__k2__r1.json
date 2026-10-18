@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ VehicleNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Truck\",\n      \"attributes\": [\n        \"+ Weight : float\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"attributes\": [\n        \"+ Seats : int\"\n      ]\n    },\n    {\n      \"name\": \"Van\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ ExecutionDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Location\",\n      \"target\": \"Driver\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Location\",\n      \"target\": \"Vehicle\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"origin\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"destination\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Driver\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..1\",\n      \"targetRole\": \"assignedDriver\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"carriesOut\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Vehicle\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Truck\",\n      \"parent\": \"Vehicle\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Car\",\n      \"parent\": \"Vehicle\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Van\",\n      \"parent\": \"Vehicle\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 42.30584729999828,
+ "prompt_tokens": 3575,
+ "completion_tokens": 720,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cslnqv5edlj6v1149ddzxo",
+  "object": "chat.completion",
+  "created": 1792281730,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Driver\",\n      \"attributes\": [\n        \"+ FirstName : string\",\n        \"+ LastName : string\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ VehicleNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Truck\",\n      \"attributes\": [\n        \"+ Weight : float\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"attributes\": [\n        \"+ Seats : int\"\n      ]\n    },\n    {\n      \"name\": \"Van\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ ExecutionDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Location\",\n      \"target\": \"Driver\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Location\",\n      \"target\": \"Vehicle\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"origin\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"destination\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Driver\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"0..1\",\n      \"targetRole\": \"assignedDriver\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"carriesOut\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Vehicle\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Truck\",\n      \"parent\": \"Vehicle\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Car\",\n      \"parent\": \"Vehicle\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Van\",\n      \"parent\": \"Vehicle\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3575,
+   "completion_tokens": 720,
+   "total_tokens": 4295,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

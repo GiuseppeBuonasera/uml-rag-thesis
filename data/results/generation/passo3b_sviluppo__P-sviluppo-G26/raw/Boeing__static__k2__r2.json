@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Boeing {\n}\n\nclass Employee {\n}\n\nclass Salesperson extends Employee {\n}\n\nclass Airline {\n  + Name : string\n}\n\nclass Contract {\n  + DeliveryConditions : string\n  + LegalAspects : string\n}\n\nclass Acquisition {\n  + Model : string\n  + Price : double\n  + OptionsAndCustomizations : string\n  + DeliveryDate : date\n}\n\nclass Airplane {\n}\n\nBoeing \"1\" -- \"0..*\" Contract : manages\nBoeing \"1\" -- \"0..*\" Employee : employs\nBoeing \"1\" -- \"0..*\" Airplane : builds\nContract \"0..*\" -- \"1\" Salesperson : managed by\nContract \"1\" *-- \"1..*\" Acquisition : consists of\nAcquisition \"1\" -- \"1\" Airplane : involves\nAcquisition \"1\" -- \"1\" Airline : for\nAirline \"0..1\" -- \"0..1\" Airline : daughter airline",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 12.853011400002288,
+ "prompt_tokens": 2460,
+ "completion_tokens": 213,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kd7t31qnuspp4td537h8u",
+  "object": "chat.completion",
+  "created": 1792261149,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Boeing {\n}\n\nclass Employee {\n}\n\nclass Salesperson extends Employee {\n}\n\nclass Airline {\n  + Name : string\n}\n\nclass Contract {\n  + DeliveryConditions : string\n  + LegalAspects : string\n}\n\nclass Acquisition {\n  + Model : string\n  + Price : double\n  + OptionsAndCustomizations : string\n  + DeliveryDate : date\n}\n\nclass Airplane {\n}\n\nBoeing \"1\" -- \"0..*\" Contract : manages\nBoeing \"1\" -- \"0..*\" Employee : employs\nBoeing \"1\" -- \"0..*\" Airplane : builds\nContract \"0..*\" -- \"1\" Salesperson : managed by\nContract \"1\" *-- \"1..*\" Acquisition : consists of\nAcquisition \"1\" -- \"1\" Airplane : involves\nAcquisition \"1\" -- \"1\" Airline : for\nAirline \"0..1\" -- \"0..1\" Airline : daughter airline",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2460,
+   "completion_tokens": 213,
+   "total_tokens": 2673,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

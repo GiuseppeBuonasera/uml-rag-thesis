@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass H2SLocation {\n  + Name : string\n}\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n}\n\nclass ScheduledPickup {\n  + StreetAddress : string\n  + Description : string\n  + PickupTime : time\n}\n\nclass Vehicle {\n  + StorageSpace : float\n}\n\nclass VolunteerDriver {\n  + AvailableDays : string[]\n}\n\nclass PickupRoute {\n  + Date : date\n}\n\nclass Item {\n  + Description : string\n  + Dimensions : string\n  + Weight : float\n}\n\nclass Article {\n  + RFID : string\n}\n\nclass Category {\n  + Name : string\n}\n\nclass Employee {\n  + Name : string\n}\n\nclass Client {\n  + Name : string\n  + HomeAddress : string\n}\n\nclass FoodBank {\n}\n\nclass DistributionCenter {\n}\n\nclass Delivery {\n}\n\nH2SLocation \"1\" -- \"*\" Resident\nH2SLocation \"1\" -- \"*\" VolunteerDriver\nH2SLocation \"1\" -- \"*\" Employee\nH2SLocation \"1\" -- \"*\" Vehicle\nH2SLocation \"1\" -- \"0..1\" DistributionCenter\nH2SLocation \"0..1\" -- \"0..*\" Client\n\nResident \"1\" -- \"*\" ScheduledPickup\nScheduledPickup \"1\" -- \"1\" Vehicle\nScheduledPickup \"1\" -- \"1\" PickupRoute\nPickupRoute \"1\" -- \"1\" VolunteerDriver\nPickupRoute \"1\" -- \"*\" ScheduledPickup\n\nVehicle \"1\" -- \"*\" PickupRoute\nPickupRoute \"1\" -- \"*\" ScheduledPickup\n\nScheduledPickup \"1\" -- \"*\" Item\nItem \"1\" -- \"0..1\" Article\nArticle \"1\" -- \"1\" Category\nArticle \"1\" -- \"1\" DistributionCenter\n\nArticle \"0..*\" -- \"1\" FoodBank : dropped off at\n\nEmployee \"1\" -- \"*\" Article : examines\nEmployee \"1\" -- \"*\" Delivery : arranges\n\nClient \"1\" -- \"*\" Delivery\nDelivery \"1\" -- \"1\" Article\nDelivery \"1\" -- \"1\" VolunteerDriver\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 23.68023700000049,
+ "prompt_tokens": 2759,
+ "completion_tokens": 478,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qcwfs9am0r8o2x4qbo8np",
+  "object": "chat.completion",
+  "created": 1792264002,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass H2SLocation {\n  + Name : string\n}\n\nclass Resident {\n  + Name : string\n  + StreetAddress : string\n  + PhoneNumber : string\n  + Email : string\n}\n\nclass ScheduledPickup {\n  + StreetAddress : string\n  + Description : string\n  + PickupTime : time\n}\n\nclass Vehicle {\n  + StorageSpace : float\n}\n\nclass VolunteerDriver {\n  + AvailableDays : string[]\n}\n\nclass PickupRoute {\n  + Date : date\n}\n\nclass Item {\n  + Description : string\n  + Dimensions : string\n  + Weight : float\n}\n\nclass Article {\n  + RFID : string\n}\n\nclass Category {\n  + Name : string\n}\n\nclass Employee {\n  + Name : string\n}\n\nclass Client {\n  + Name : string\n  + HomeAddress : string\n}\n\nclass FoodBank {\n}\n\nclass DistributionCenter {\n}\n\nclass Delivery {\n}\n\nH2SLocation \"1\" -- \"*\" Resident\nH2SLocation \"1\" -- \"*\" VolunteerDriver\nH2SLocation \"1\" -- \"*\" Employee\nH2SLocation \"1\" -- \"*\" Vehicle\nH2SLocation \"1\" -- \"0..1\" DistributionCenter\nH2SLocation \"0..1\" -- \"0..*\" Client\n\nResident \"1\" -- \"*\" ScheduledPickup\nScheduledPickup \"1\" -- \"1\" Vehicle\nScheduledPickup \"1\" -- \"1\" PickupRoute\nPickupRoute \"1\" -- \"1\" VolunteerDriver\nPickupRoute \"1\" -- \"*\" ScheduledPickup\n\nVehicle \"1\" -- \"*\" PickupRoute\nPickupRoute \"1\" -- \"*\" ScheduledPickup\n\nScheduledPickup \"1\" -- \"*\" Item\nItem \"1\" -- \"0..1\" Article\nArticle \"1\" -- \"1\" Category\nArticle \"1\" -- \"1\" DistributionCenter\n\nArticle \"0..*\" -- \"1\" FoodBank : dropped off at\n\nEmployee \"1\" -- \"*\" Article : examines\nEmployee \"1\" -- \"*\" Delivery : arranges\n\nClient \"1\" -- \"*\" Delivery\nDelivery \"1\" -- \"1\" Article\nDelivery \"1\" -- \"1\" VolunteerDriver\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2759,
+   "completion_tokens": 478,
+   "total_tokens": 3237,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

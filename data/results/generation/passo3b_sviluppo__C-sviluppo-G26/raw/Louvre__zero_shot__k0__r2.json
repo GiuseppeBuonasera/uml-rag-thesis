@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Museum\", \"attributes\": []}, {\"name\": \"Location\", \"attributes\": []}, {\"name\": \"Exhibition\", \"attributes\": [\"+ openingDate : date\"]}, {\"name\": \"Employee\", \"attributes\": []}, {\"name\": \"ExhibitionItem\", \"attributes\": []}, {\"name\": \"Piece\", \"attributes\": []}, {\"name\": \"Collector\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Museum\", \"target\": \"Location\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Exhibition\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Exhibition\", \"target\": \"Employee\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"label\": \"coordinator\"}, {\"type\": \"association\", \"source\": \"Exhibition\", \"target\": \"ExhibitionItem\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ExhibitionItem\", \"target\": \"Piece\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Piece\", \"target\": \"Collector\", \"targetMultiplicity\": \"1\", \"label\": \"is sourced from\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Employee\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"coaches\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 15.9181202999971,
+ "prompt_tokens": 1387,
+ "completion_tokens": 318,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-uw5zqe8wsypg9ykw854zr",
+  "object": "chat.completion",
+  "created": 1792278130,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Museum\", \"attributes\": []}, {\"name\": \"Location\", \"attributes\": []}, {\"name\": \"Exhibition\", \"attributes\": [\"+ openingDate : date\"]}, {\"name\": \"Employee\", \"attributes\": []}, {\"name\": \"ExhibitionItem\", \"attributes\": []}, {\"name\": \"Piece\", \"attributes\": []}, {\"name\": \"Collector\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Museum\", \"target\": \"Location\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Exhibition\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Exhibition\", \"target\": \"Employee\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\", \"label\": \"coordinator\"}, {\"type\": \"association\", \"source\": \"Exhibition\", \"target\": \"ExhibitionItem\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ExhibitionItem\", \"target\": \"Piece\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Piece\", \"target\": \"Collector\", \"targetMultiplicity\": \"1\", \"label\": \"is sourced from\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Employee\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"coaches\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1387,
+   "completion_tokens": 318,
+   "total_tokens": 1705,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

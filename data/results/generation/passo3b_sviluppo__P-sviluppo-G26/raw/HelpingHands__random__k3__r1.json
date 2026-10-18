@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Resident {\n  + name : string\n  + streetAddress : string\n  + phoneNumber : string\n  + emailAddress : string\n}\n\nclass PickupRequest {\n  + streetAddress : string\n  + description : string\n  + pickupTime : time\n}\n\nclass Item {\n  + description : string\n  + dimensions : string\n  + weight : float\n}\n\nclass NonPerishableFood {}\n\nclass SecondHandArticle {\n  + description : string\n  + rfidTag : string\n}\n\nclass Category {\n  + name : string\n}\n\nclass Vehicle {\n  + storageSpace : float\n}\n\nclass PickupRoute {\n  + date : date\n}\n\nclass VolunteerDriver {\n  + name : string\n}\n\nclass H2SLocation {\n  + city : string\n}\n\nclass H2SEmployee {\n  + name : string\n}\n\nclass Client {\n  + homeAddress : string\n}\n\nclass Delivery {\n  + date : date\n}\n\nResident \"1\" -- \"*\" PickupRequest : schedules\nPickupRequest \"1\" -- \"1\" Item\nItem <|-- NonPerishableFood\nItem <|-- SecondHandArticle\nSecondHandArticle \"*\" -- \"1\" Category : assigned to\nSecondHandArticle \"*\" -- \"0..1\" Client : delivered to\nH2SLocation \"1\" -- \"*\" Resident : serves\nH2SLocation \"1\" -- \"*\" H2SEmployee : employs\nH2SLocation \"1\" -- \"*\" VolunteerDriver : employs\nH2SLocation \"1\" -- \"*\" Vehicle : owns\nH2SLocation \"1\" -- \"1\" PickupRoute : manages\nPickupRoute \"1\" -- \"1\" Vehicle : assigned to\nPickupRoute \"1\" -- \"1..*\" VolunteerDriver : driven by\nPickupRoute \"1\" -- \"*\" PickupRequest : includes\nPickupRequest \"1\" -- \"1\" Vehicle : uses\nVolunteerDriver \"1\" -- \"*\" Delivery : performs\nClient \"1\" -- \"*\" Delivery : receives\nDelivery \"1\" -- \"1\" SecondHandArticle : contains\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 26.78599309999845,
+ "prompt_tokens": 3450,
+ "completion_tokens": 455,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-38tmp3aibpv7us9kr8nwh3",
+  "object": "chat.completion",
+  "created": 1792264075,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Resident {\n  + name : string\n  + streetAddress : string\n  + phoneNumber : string\n  + emailAddress : string\n}\n\nclass PickupRequest {\n  + streetAddress : string\n  + description : string\n  + pickupTime : time\n}\n\nclass Item {\n  + description : string\n  + dimensions : string\n  + weight : float\n}\n\nclass NonPerishableFood {}\n\nclass SecondHandArticle {\n  + description : string\n  + rfidTag : string\n}\n\nclass Category {\n  + name : string\n}\n\nclass Vehicle {\n  + storageSpace : float\n}\n\nclass PickupRoute {\n  + date : date\n}\n\nclass VolunteerDriver {\n  + name : string\n}\n\nclass H2SLocation {\n  + city : string\n}\n\nclass H2SEmployee {\n  + name : string\n}\n\nclass Client {\n  + homeAddress : string\n}\n\nclass Delivery {\n  + date : date\n}\n\nResident \"1\" -- \"*\" PickupRequest : schedules\nPickupRequest \"1\" -- \"1\" Item\nItem <|-- NonPerishableFood\nItem <|-- SecondHandArticle\nSecondHandArticle \"*\" -- \"1\" Category : assigned to\nSecondHandArticle \"*\" -- \"0..1\" Client : delivered to\nH2SLocation \"1\" -- \"*\" Resident : serves\nH2SLocation \"1\" -- \"*\" H2SEmployee : employs\nH2SLocation \"1\" -- \"*\" VolunteerDriver : employs\nH2SLocation \"1\" -- \"*\" Vehicle : owns\nH2SLocation \"1\" -- \"1\" PickupRoute : manages\nPickupRoute \"1\" -- \"1\" Vehicle : assigned to\nPickupRoute \"1\" -- \"1..*\" VolunteerDriver : driven by\nPickupRoute \"1\" -- \"*\" PickupRequest : includes\nPickupRequest \"1\" -- \"1\" Vehicle : uses\nVolunteerDriver \"1\" -- \"*\" Delivery : performs\nClient \"1\" -- \"*\" Delivery : receives\nDelivery \"1\" -- \"1\" SecondHandArticle : contains\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3450,
+   "completion_tokens": 455,
+   "total_tokens": 3905,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

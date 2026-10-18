@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\"\n    },\n    {\n      \"name\": \"Apartment\"\n    },\n    {\n      \"name\": \"Inhabitant\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Sensor\"\n    },\n    {\n      \"name\": \"TemperatureSensor\"\n    },\n    {\n      \"name\": \"PowerSensor\"\n    },\n    {\n      \"name\": \"MeasuredValue\"\n    },\n    {\n      \"name\": \"Unit\"\n    },\n    {\n      \"name\": \"E_Monitor\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"SensorController\",\n      \"target\": \"Apartment\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Apartment\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Apartment\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"MeasuredValue\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"Unit\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PowerSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"E_Monitor\",\n      \"target\": \"Sensor\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 35.102683900004195,
+ "prompt_tokens": 5192,
+ "completion_tokens": 530,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0gs6r8igvicq8nmfd4aqyfs",
+  "object": "chat.completion",
+  "created": 1792271791,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"SensorController\"\n    },\n    {\n      \"name\": \"Apartment\"\n    },\n    {\n      \"name\": \"Inhabitant\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Sensor\"\n    },\n    {\n      \"name\": \"TemperatureSensor\"\n    },\n    {\n      \"name\": \"PowerSensor\"\n    },\n    {\n      \"name\": \"MeasuredValue\"\n    },\n    {\n      \"name\": \"Unit\"\n    },\n    {\n      \"name\": \"E_Monitor\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"SensorController\",\n      \"target\": \"Apartment\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Apartment\",\n      \"target\": \"Inhabitant\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Apartment\",\n      \"target\": \"Room\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"MeasuredValue\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Sensor\",\n      \"target\": \"Unit\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TemperatureSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PowerSensor\",\n      \"parent\": \"Sensor\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"E_Monitor\",\n      \"target\": \"Sensor\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5192,
+   "completion_tokens": 530,
+   "total_tokens": 5722,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

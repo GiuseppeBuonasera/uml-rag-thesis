@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nenum PriorityScore {\n  HIGH\n  LOW\n}\n\nclass HospitalHouseMD {}\n\nclass Patient {\n}\n\nclass Doctor {\n}\n\nclass HeadDoctor extends Doctor {\n}\n\nclass Illness {\n  +priorityScore : PriorityScore\n}\n\nclass Diagnosis {\n}\n\nclass Treatment {\n  +stage : int\n}\n\nclass ConsentForm {\n}\n\nclass Nurse {\n}\n\nHospitalHouseMD \"1\" -- \"*\" Patient : accepts\nHospitalHouseMD \"1\" -- \"*\" Illness : has database of\nPatient \"1\" -- \"*\" Doctor : is assigned to\nPatient \"1\" -- \"*\" Diagnosis : has\nDoctor \"1\" -- \"*\" Diagnosis : makes\nDoctor \"1\" -- \"*\" Treatment : downgrades\nHeadDoctor \"1\" -- \"*\" Diagnosis : approves\nIllness \"1\" -- \"*\" Diagnosis : causes\nDiagnosis \"1\" -- \"*\" Treatment : has\nTreatment \"1\" -- \"1\" Patient : applied to\nPatient \"1\" -- \"0..1\" ConsentForm : signs\nTreatment \"*\" -- \"0..1\" ConsentForm : uses\nDoctor \"1\" -- \"*\" Nurse : checks with\nDoctor \"1\" -- \"*\" Patient : checks\nNurse \"1\" -- \"*\" Patient : checks\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 13.680648599998676,
+ "prompt_tokens": 1437,
+ "completion_tokens": 266,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-bpnn9oraoh9xzv94qd328",
+  "object": "chat.completion",
+  "created": 1792264789,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nenum PriorityScore {\n  HIGH\n  LOW\n}\n\nclass HospitalHouseMD {}\n\nclass Patient {\n}\n\nclass Doctor {\n}\n\nclass HeadDoctor extends Doctor {\n}\n\nclass Illness {\n  +priorityScore : PriorityScore\n}\n\nclass Diagnosis {\n}\n\nclass Treatment {\n  +stage : int\n}\n\nclass ConsentForm {\n}\n\nclass Nurse {\n}\n\nHospitalHouseMD \"1\" -- \"*\" Patient : accepts\nHospitalHouseMD \"1\" -- \"*\" Illness : has database of\nPatient \"1\" -- \"*\" Doctor : is assigned to\nPatient \"1\" -- \"*\" Diagnosis : has\nDoctor \"1\" -- \"*\" Diagnosis : makes\nDoctor \"1\" -- \"*\" Treatment : downgrades\nHeadDoctor \"1\" -- \"*\" Diagnosis : approves\nIllness \"1\" -- \"*\" Diagnosis : causes\nDiagnosis \"1\" -- \"*\" Treatment : has\nTreatment \"1\" -- \"1\" Patient : applied to\nPatient \"1\" -- \"0..1\" ConsentForm : signs\nTreatment \"*\" -- \"0..1\" ConsentForm : uses\nDoctor \"1\" -- \"*\" Nurse : checks with\nDoctor \"1\" -- \"*\" Patient : checks\nNurse \"1\" -- \"*\" Patient : checks\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1437,
+   "completion_tokens": 266,
+   "total_tokens": 1703,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

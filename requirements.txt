@@ -28,6 +28,7 @@ pyyaml  # corpus/corrections/<id>.yaml (correzioni di contenuto FASE 3, vedi doc
 pypdf  # testo e immagini di docs/dati/debari/Exercises.pdf (leakage_check, extract_debari)
 pillow  # conversione .jp2 -> PNG delle immagini De Bari
 openpyxl  # lettura di docs/dati/debari/Analysis.xlsx (check_debari)
+textstat==0.7.4  # leggibilita' Flesch-Kincaid delle tracce (difficolta' 1 dell'analisi del 3b); dipende da pyphen
 
 # Notebook / analysis
 jupyter

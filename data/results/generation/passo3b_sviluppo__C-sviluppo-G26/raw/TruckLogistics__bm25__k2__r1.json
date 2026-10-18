@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Location\", \"attributes\": [\"+ Address : string\"]}, {\"name\": \"Driver\", \"attributes\": [\"+ FirstName : string\", \"+ LastName : string\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ VehicleNumber : string\"]}, {\"name\": \"Truck\", \"attributes\": [\"+ Weight : float\"]}, {\"name\": \"Car\", \"attributes\": [\"+ Seats : int\"]}, {\"name\": \"Van\"}, {\"name\": \"Order\", \"attributes\": [\"+ Origin : Location\", \"+ Destination : Location\", \"+ Date : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Location\", \"target\": \"Driver\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"Truck\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"Car\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"Van\", \"parent\": \"Vehicle\"}, {\"type\": \"association\", \"source\": \"Driver\", \"target\": \"Order\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\", \"label\": \"carries out\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Driver\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Vehicle\", \"target\": \"Driver\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"is driven by\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 22.065385300000116,
+ "prompt_tokens": 4326,
+ "completion_tokens": 368,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-asavaq97furgdinh39ti48",
+  "object": "chat.completion",
+  "created": 1792318106,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Location\", \"attributes\": [\"+ Address : string\"]}, {\"name\": \"Driver\", \"attributes\": [\"+ FirstName : string\", \"+ LastName : string\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ VehicleNumber : string\"]}, {\"name\": \"Truck\", \"attributes\": [\"+ Weight : float\"]}, {\"name\": \"Car\", \"attributes\": [\"+ Seats : int\"]}, {\"name\": \"Van\"}, {\"name\": \"Order\", \"attributes\": [\"+ Origin : Location\", \"+ Destination : Location\", \"+ Date : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Location\", \"target\": \"Driver\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"Truck\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"Car\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"Van\", \"parent\": \"Vehicle\"}, {\"type\": \"association\", \"source\": \"Driver\", \"target\": \"Order\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..1\", \"label\": \"carries out\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Driver\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Vehicle\", \"target\": \"Driver\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"is driven by\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4326,
+   "completion_tokens": 368,
+   "total_tokens": 4694,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

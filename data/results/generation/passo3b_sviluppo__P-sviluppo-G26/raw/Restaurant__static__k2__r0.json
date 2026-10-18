@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + Name : string\n  + PhoneNumber : string\n}\n\nclass Table {\n  + NumberOfSeats : int\n  + IsSmoking : boolean\n}\n\nclass Reservation {\n  + Day : date\n  + Time : time\n  + NumberOfPeople : int\n}\n\nclass Waiter {\n  + Name : string\n  + YearsOfService : int\n}\n\nclass Bill {\n  + TotalAmount : double\n}\n\nclass Dish {\n  + Name : string\n  + UnitPrice : double\n}\n\nclass BillLine {\n  + Quantity : int\n}\n\nCustomer \"1\" -- \"0..*\" Reservation : makes\nReservation \"0..*\" -- \"1..*\" Table : assigned to\nWaiter \"1\" -- \"0..*\" Customer : serves\nCustomer \"1\" -- \"0..*\" Bill : pays\nBill \"1\" *-- \"1..*\" BillLine : composed of\nBillLine \"0..*\" -- \"1\" Dish : includes\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 12.850686300000234,
+ "prompt_tokens": 2350,
+ "completion_tokens": 223,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-youn6ro31nbor27g6kbzxk",
+  "object": "chat.completion",
+  "created": 1792267528,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + Name : string\n  + PhoneNumber : string\n}\n\nclass Table {\n  + NumberOfSeats : int\n  + IsSmoking : boolean\n}\n\nclass Reservation {\n  + Day : date\n  + Time : time\n  + NumberOfPeople : int\n}\n\nclass Waiter {\n  + Name : string\n  + YearsOfService : int\n}\n\nclass Bill {\n  + TotalAmount : double\n}\n\nclass Dish {\n  + Name : string\n  + UnitPrice : double\n}\n\nclass BillLine {\n  + Quantity : int\n}\n\nCustomer \"1\" -- \"0..*\" Reservation : makes\nReservation \"0..*\" -- \"1..*\" Table : assigned to\nWaiter \"1\" -- \"0..*\" Customer : serves\nCustomer \"1\" -- \"0..*\" Bill : pays\nBill \"1\" *-- \"1..*\" BillLine : composed of\nBillLine \"0..*\" -- \"1\" Dish : includes\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2350,
+   "completion_tokens": 223,
+   "total_tokens": 2573,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

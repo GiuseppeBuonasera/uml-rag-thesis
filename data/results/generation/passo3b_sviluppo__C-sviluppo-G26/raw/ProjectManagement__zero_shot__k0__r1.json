@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Department\"}, {\"name\": \"ResearchGroup\"}, {\"name\": \"Researcher\"}, {\"name\": \"Project\"}, {\"name\": \"WorkPackage\"}, {\"name\": \"TeamMemberAssignment\"}], \"relations\": [{\"type\": \"association\", \"source\": \"ResearchGroup\", \"target\": \"Department\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Researcher\", \"target\": \"ResearchGroup\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Project\", \"target\": \"WorkPackage\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"WorkPackage\", \"target\": \"ResearchGroup\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"WP leader\"}, {\"type\": \"association\", \"source\": \"Researcher\", \"target\": \"WorkPackage\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TeamMemberAssignment\", \"target\": \"Researcher\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TeamMemberAssignment\", \"target\": \"WorkPackage\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 13.900647800001025,
+ "prompt_tokens": 1267,
+ "completion_tokens": 275,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cz5r0fjcd5z9rl8l7ex1b",
+  "object": "chat.completion",
+  "created": 1792280251,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Department\"}, {\"name\": \"ResearchGroup\"}, {\"name\": \"Researcher\"}, {\"name\": \"Project\"}, {\"name\": \"WorkPackage\"}, {\"name\": \"TeamMemberAssignment\"}], \"relations\": [{\"type\": \"association\", \"source\": \"ResearchGroup\", \"target\": \"Department\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Researcher\", \"target\": \"ResearchGroup\", \"targetMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Project\", \"target\": \"WorkPackage\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"WorkPackage\", \"target\": \"ResearchGroup\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\", \"label\": \"WP leader\"}, {\"type\": \"association\", \"source\": \"Researcher\", \"target\": \"WorkPackage\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TeamMemberAssignment\", \"target\": \"Researcher\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"TeamMemberAssignment\", \"target\": \"WorkPackage\", \"targetMultiplicity\": \"1\", \"sourceMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1267,
+   "completion_tokens": 275,
+   "total_tokens": 1542,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

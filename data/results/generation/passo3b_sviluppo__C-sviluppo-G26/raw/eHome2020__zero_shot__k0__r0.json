@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"SensorController\", \"attributes\": [\"+ username : string\", \"+ password : string\", \"+ emailAddress : string\"]}, {\"name\": \"Inhabitant\", \"attributes\": [\"+ username : string\", \"+ password : string\", \"+ isAdmin : boolean\"]}, {\"name\": \"Sensor\", \"attributes\": [\"+ vendorId : string\", \"+ description : string\", \"+ unit : Unit\", \"+ threshold : float\", \"+ lastValue : float\"]}, {\"name\": \"TemperatureSensor\", \"attributes\": [\"+ min : float\", \"+ max : float\"]}, {\"name\": \"PowerSensor\", \"attributes\": [\"+ counterReading : float\"]}, {\"name\": \"MeasuredValue\", \"attributes\": [\"+ timestamp : datetime\", \"+ value : float\"]}, {\"name\": \"Room\", \"attributes\": [\"+ description : string\"]}, {\"name\": \"Apartment\", \"attributes\": [\"+ address : string\"]}, {\"name\": \"E_Monitor\", \"attributes\": []}, {\"name\": \"Unit\", \"kind\": \"enum\", \"values\": [\"CELSIUS\", \"WATT\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"SensorController\", \"target\": \"Apartment\", \"targetRole\": \"apartment\"}, {\"type\": \"association\", \"source\": \"Apartment\", \"target\": \"Inhabitant\", \"targetMultiplicity\": \"2..*\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"Sensor\", \"label\": \"configures\", \"sourceMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"SensorController\", \"target\": \"Sensor\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Sensor\", \"target\": \"Room\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Apartment\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Sensor\", \"target\": \"MeasuredValue\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"E_Monitor\", \"target\": \"Sensor\", \"label\": \"checks thresholds\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"TemperatureSensor\", \"parent\": \"Sensor\"}, {\"type\": \"inheritance\", \"child\": \"PowerSensor\", \"parent\": \"Sensor\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 23.473255199998675,
+ "prompt_tokens": 1585,
+ "completion_tokens": 501,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9ten0wversbqa8jlp19rb",
+  "object": "chat.completion",
+  "created": 1792271571,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"SensorController\", \"attributes\": [\"+ username : string\", \"+ password : string\", \"+ emailAddress : string\"]}, {\"name\": \"Inhabitant\", \"attributes\": [\"+ username : string\", \"+ password : string\", \"+ isAdmin : boolean\"]}, {\"name\": \"Sensor\", \"attributes\": [\"+ vendorId : string\", \"+ description : string\", \"+ unit : Unit\", \"+ threshold : float\", \"+ lastValue : float\"]}, {\"name\": \"TemperatureSensor\", \"attributes\": [\"+ min : float\", \"+ max : float\"]}, {\"name\": \"PowerSensor\", \"attributes\": [\"+ counterReading : float\"]}, {\"name\": \"MeasuredValue\", \"attributes\": [\"+ timestamp : datetime\", \"+ value : float\"]}, {\"name\": \"Room\", \"attributes\": [\"+ description : string\"]}, {\"name\": \"Apartment\", \"attributes\": [\"+ address : string\"]}, {\"name\": \"E_Monitor\", \"attributes\": []}, {\"name\": \"Unit\", \"kind\": \"enum\", \"values\": [\"CELSIUS\", \"WATT\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"SensorController\", \"target\": \"Apartment\", \"targetRole\": \"apartment\"}, {\"type\": \"association\", \"source\": \"Apartment\", \"target\": \"Inhabitant\", \"targetMultiplicity\": \"2..*\"}, {\"type\": \"association\", \"source\": \"Inhabitant\", \"target\": \"Sensor\", \"label\": \"configures\", \"sourceMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"SensorController\", \"target\": \"Sensor\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Sensor\", \"target\": \"Room\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Room\", \"target\": \"Apartment\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Sensor\", \"target\": \"MeasuredValue\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"E_Monitor\", \"target\": \"Sensor\", \"label\": \"checks thresholds\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"TemperatureSensor\", \"parent\": \"Sensor\"}, {\"type\": \"inheritance\", \"child\": \"PowerSensor\", \"parent\": \"Sensor\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1585,
+   "completion_tokens": 501,
+   "total_tokens": 2086,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

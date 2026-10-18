@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ Email : string\",\n        \"+ DateOfBirth : date\"\n      ]\n    },\n    {\n      \"name\": \"Account\",\n      \"attributes\": [\n        \"+ AccountNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"BusinessAccount\",\n      \"attributes\": [\n        \"+ CompanyName : string\",\n        \"+ MonthlyFee : double\"\n      ]\n    },\n    {\n      \"name\": \"PersonalAccount\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Page\",\n      \"attributes\": [\n        \"+ PageName : string\",\n        \"+ NumberOfVisits : int\"\n      ]\n    },\n    {\n      \"name\": \"AdvertisementPage\",\n      \"attributes\": [\n        \"+ BounceRate : float\",\n        \"+ ClickThroughRate : float\",\n        \"+ ConversionRate : float\"\n      ]\n    },\n    {\n      \"name\": \"FriendRequest\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PersonalAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Account\",\n      \"target\": \"Page\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvertisementPage\",\n      \"parent\": \"Page\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PersonalAccount\",\n      \"target\": \"PersonalAccount\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"friend request\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PersonalAccount\",\n      \"target\": \"Page\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"granted privileges\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 43,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 1,
+ "latency_s": 33.76138820000051,
+ "prompt_tokens": 5631,
+ "completion_tokens": 586,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ajkfkg0rgwwdu0en8944xb",
+  "object": "chat.completion",
+  "created": 1792273674,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ ID : int\",\n        \"+ Name : string\",\n        \"+ Email : string\",\n        \"+ DateOfBirth : date\"\n      ]\n    },\n    {\n      \"name\": \"Account\",\n      \"attributes\": [\n        \"+ AccountNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"BusinessAccount\",\n      \"attributes\": [\n        \"+ CompanyName : string\",\n        \"+ MonthlyFee : double\"\n      ]\n    },\n    {\n      \"name\": \"PersonalAccount\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Page\",\n      \"attributes\": [\n        \"+ PageName : string\",\n        \"+ NumberOfVisits : int\"\n      ]\n    },\n    {\n      \"name\": \"AdvertisementPage\",\n      \"attributes\": [\n        \"+ BounceRate : float\",\n        \"+ ClickThroughRate : float\",\n        \"+ ConversionRate : float\"\n      ]\n    },\n    {\n      \"name\": \"FriendRequest\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BusinessAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"PersonalAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Account\",\n      \"target\": \"Page\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdvertisementPage\",\n      \"parent\": \"Page\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PersonalAccount\",\n      \"target\": \"PersonalAccount\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"friend request\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PersonalAccount\",\n      \"target\": \"Page\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"granted privileges\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5631,
+   "completion_tokens": 586,
+   "total_tokens": 6217,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 43
+ },
+ "params_not_sent": []
+}

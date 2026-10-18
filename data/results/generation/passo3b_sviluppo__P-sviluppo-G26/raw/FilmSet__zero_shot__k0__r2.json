@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\nclass Employee {\n  +name : string\n  +socialSecurityNumber : string\n}\n\nclass CreativeEmployee extends Employee {\n  +hasOscar : boolean\n}\n\nclass Director extends CreativeEmployee {\n  +assistantName : string\n}\n\nclass Actor extends CreativeEmployee {\n  +education : string\n}\n\nclass Technician extends Employee {\n  +fieldOfActivity : string\n}\n\nclass FilmSet {\n}\n\nclass Film {\n  +title : string\n  +yearOfRelease : int\n}\n\nenum Genre {\n  THRILLER\n  ACTION\n  HORROR\n  COMEDY\n}\n\nclass Screenwriter {\n  +name : string\n  +mostSuccessfulFilm : string\n}\n\nclass Screenplay {\n  +title : string\n  +version : string\n  +date : date\n  +numberOfScenes : int\n  +plot : string\n}\n\nclass Novel {\n  +title : string\n  +author : string\n}\n\nclass Concept {\n}\n\nclass Role {\n}\n\nFilm \"1\" -- \"*\" FilmSet : shot at\nFilmSet \"*\" -- \"*\" Film : used for\nFilm \"1\" -- \"1\" Genre : assigned to\nFilm \"1\" -- \"1\" Screenplay : based on\nScreenplay \"1\" -- \"1\" Screenwriter : comes from\nScreenplay \"1\" -- \"0..1\" Novel : based on\nScreenplay \"1\" -- \"0..1\" Concept : based on\nActor \"1..*\" -- \"1\" Role : prepares for\nRole \"1\" -- \"1\" Screenplay : implements\nScreenplay \"1\" -- \"1\" Film : written for\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 17.8654303000003,
+ "prompt_tokens": 1290,
+ "completion_tokens": 366,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-8ekezmq8am34pig3y4858",
+  "object": "chat.completion",
+  "created": 1792263390,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\nclass Employee {\n  +name : string\n  +socialSecurityNumber : string\n}\n\nclass CreativeEmployee extends Employee {\n  +hasOscar : boolean\n}\n\nclass Director extends CreativeEmployee {\n  +assistantName : string\n}\n\nclass Actor extends CreativeEmployee {\n  +education : string\n}\n\nclass Technician extends Employee {\n  +fieldOfActivity : string\n}\n\nclass FilmSet {\n}\n\nclass Film {\n  +title : string\n  +yearOfRelease : int\n}\n\nenum Genre {\n  THRILLER\n  ACTION\n  HORROR\n  COMEDY\n}\n\nclass Screenwriter {\n  +name : string\n  +mostSuccessfulFilm : string\n}\n\nclass Screenplay {\n  +title : string\n  +version : string\n  +date : date\n  +numberOfScenes : int\n  +plot : string\n}\n\nclass Novel {\n  +title : string\n  +author : string\n}\n\nclass Concept {\n}\n\nclass Role {\n}\n\nFilm \"1\" -- \"*\" FilmSet : shot at\nFilmSet \"*\" -- \"*\" Film : used for\nFilm \"1\" -- \"1\" Genre : assigned to\nFilm \"1\" -- \"1\" Screenplay : based on\nScreenplay \"1\" -- \"1\" Screenwriter : comes from\nScreenplay \"1\" -- \"0..1\" Novel : based on\nScreenplay \"1\" -- \"0..1\" Concept : based on\nActor \"1..*\" -- \"1\" Role : prepares for\nRole \"1\" -- \"1\" Screenplay : implements\nScreenplay \"1\" -- \"1\" Film : written for\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1290,
+   "completion_tokens": 366,
+   "total_tokens": 1656,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

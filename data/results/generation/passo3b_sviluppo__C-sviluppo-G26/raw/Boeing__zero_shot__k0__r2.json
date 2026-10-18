@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Boeing\", \"attributes\": []}, {\"name\": \"AirlineCompany\", \"attributes\": []}, {\"name\": \"Contract\", \"attributes\": []}, {\"name\": \"Acquisition\", \"attributes\": [\"+ negotiatedPrice : double\", \"+ deliveryDate : date\", \"+ optionsAndCustomizations : string[]\"]}, {\"name\": \"Airplane\", \"attributes\": [\"+ model : string\"]}, {\"name\": \"Employee\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Boeing\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"Acquisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Acquisition\", \"target\": \"Airplane\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1..*\", \"targetRole\": \"salesperson\"}, {\"type\": \"association\", \"source\": \"AirlineCompany\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..*\", \"label\": \"mother-daughter relationship\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 16.018047699995805,
+ "prompt_tokens": 1324,
+ "completion_tokens": 324,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-vfbujawvv2h674ws567ybp",
+  "object": "chat.completion",
+  "created": 1792268484,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Boeing\", \"attributes\": []}, {\"name\": \"AirlineCompany\", \"attributes\": []}, {\"name\": \"Contract\", \"attributes\": []}, {\"name\": \"Acquisition\", \"attributes\": [\"+ negotiatedPrice : double\", \"+ deliveryDate : date\", \"+ optionsAndCustomizations : string[]\"]}, {\"name\": \"Airplane\", \"attributes\": [\"+ model : string\"]}, {\"name\": \"Employee\", \"attributes\": []}], \"relations\": [{\"type\": \"association\", \"source\": \"Boeing\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Contract\", \"target\": \"Acquisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1..*\"}, {\"type\": \"association\", \"source\": \"Acquisition\", \"target\": \"Airplane\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Employee\", \"target\": \"Contract\", \"sourceMultiplicity\": \"1..*\", \"targetRole\": \"salesperson\"}, {\"type\": \"association\", \"source\": \"AirlineCompany\", \"target\": \"AirlineCompany\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..*\", \"label\": \"mother-daughter relationship\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1324,
+   "completion_tokens": 324,
+   "total_tokens": 1648,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

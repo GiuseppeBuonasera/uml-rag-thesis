@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum PriorityScore {\n  HIGH\n  LOW\n}\n\nclass HospitalHouseMD {}\n\nclass Patient {\n  + consentSigned : boolean\n}\n\nclass Doctor {\n  + approveDiagnosis(diagnosis: Diagnosis)\n  + downgradeTreatment(treatment: Treatment)\n}\n\nclass Nurse {}\n\nclass Illness {\n  + priorityScore : PriorityScore\n}\n\nclass Diagnosis {\n  + Id : string\n}\n\nclass Treatment {\n  + stage : int\n}\n\nclass TreatmentForm {\n  + signedDate : date\n}\n\nHospitalHouseMD \"1\" -- \"*\" Illness\nHospitalHouseMD \"1\" -- \"*\" Diagnosis\nHospitalHouseMD \"1\" -- \"*\" Treatment\n\nPatient \"1\" -- \"1..*\" Doctor : assigned to\nPatient \"1\" -- \"0..*\" Diagnosis : has\nPatient \"1\" -- \"0..*\" Treatment : undergoes\nPatient \"1\" -- \"0..1\" TreatmentForm : signs\n\nDoctor \"1\" -- \"0..*\" Diagnosis : makes\nDoctor \"1\" -- \"0..*\" Treatment : manages\nDoctor \"1\" -- \"0..*\" Nurse : works with\nNurse \"1\" -- \"0..*\" Treatment : checks\n\nIllness \"1\" -- \"0..*\" Diagnosis : characterizes\nIllness \"1\" -- \"0..*\" Treatment : has possible\nDiagnosis \"1\" -- \"0..*\" Treatment : results in\nTreatment \"0..*\" -- \"1\" Diagnosis : for\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 18.38155949999782,
+ "prompt_tokens": 3134,
+ "completion_tokens": 316,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-z3hty42jrvk80nqvudbacu",
+  "object": "chat.completion",
+  "created": 1792264993,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum PriorityScore {\n  HIGH\n  LOW\n}\n\nclass HospitalHouseMD {}\n\nclass Patient {\n  + consentSigned : boolean\n}\n\nclass Doctor {\n  + approveDiagnosis(diagnosis: Diagnosis)\n  + downgradeTreatment(treatment: Treatment)\n}\n\nclass Nurse {}\n\nclass Illness {\n  + priorityScore : PriorityScore\n}\n\nclass Diagnosis {\n  + Id : string\n}\n\nclass Treatment {\n  + stage : int\n}\n\nclass TreatmentForm {\n  + signedDate : date\n}\n\nHospitalHouseMD \"1\" -- \"*\" Illness\nHospitalHouseMD \"1\" -- \"*\" Diagnosis\nHospitalHouseMD \"1\" -- \"*\" Treatment\n\nPatient \"1\" -- \"1..*\" Doctor : assigned to\nPatient \"1\" -- \"0..*\" Diagnosis : has\nPatient \"1\" -- \"0..*\" Treatment : undergoes\nPatient \"1\" -- \"0..1\" TreatmentForm : signs\n\nDoctor \"1\" -- \"0..*\" Diagnosis : makes\nDoctor \"1\" -- \"0..*\" Treatment : manages\nDoctor \"1\" -- \"0..*\" Nurse : works with\nNurse \"1\" -- \"0..*\" Treatment : checks\n\nIllness \"1\" -- \"0..*\" Diagnosis : characterizes\nIllness \"1\" -- \"0..*\" Treatment : has possible\nDiagnosis \"1\" -- \"0..*\" Treatment : results in\nTreatment \"0..*\" -- \"1\" Diagnosis : for\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3134,
+   "completion_tokens": 316,
+   "total_tokens": 3450,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}

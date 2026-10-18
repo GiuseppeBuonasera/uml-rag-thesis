@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Well\", \"attributes\": [\"+ code : string\", \"+ pollutionRate : float\"]}, {\"name\": \"OnshoreWell\", \"attributes\": [\"+ surfaceExtension : float\"], \"methods\": [\"+ pollutionRate() : float\"]}, {\"name\": \"OffshoreWell\", \"attributes\": [\"+ yearOfInstallation : int\", \"+ geographicalAreaCode : string\", \"+ geographicalAreaImportance : int\"], \"methods\": [\"+ pollutionRate() : float\"]}, {\"name\": \"Company\", \"attributes\": [\"+ taxCode : string\", \"+ numberOfEmployees : int\"]}, {\"name\": \"GeographicalArea\", \"attributes\": [\"+ code : string\", \"+ environmentalImportance : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Well\", \"target\": \"Company\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"extraction\"}, {\"type\": \"association\", \"source\": \"Well\", \"target\": \"GeographicalArea\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"located in\"}, {\"type\": \"inheritance\", \"child\": \"OnshoreWell\", \"parent\": \"Well\"}, {\"type\": \"inheritance\", \"child\": \"OffshoreWell\", \"parent\": \"Well\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 13.317381300000307,
+ "prompt_tokens": 1407,
+ "completion_tokens": 273,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-rsdvvp39v88idy2xzxdas",
+  "object": "chat.completion",
+  "created": 1792319385,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Well\", \"attributes\": [\"+ code : string\", \"+ pollutionRate : float\"]}, {\"name\": \"OnshoreWell\", \"attributes\": [\"+ surfaceExtension : float\"], \"methods\": [\"+ pollutionRate() : float\"]}, {\"name\": \"OffshoreWell\", \"attributes\": [\"+ yearOfInstallation : int\", \"+ geographicalAreaCode : string\", \"+ geographicalAreaImportance : int\"], \"methods\": [\"+ pollutionRate() : float\"]}, {\"name\": \"Company\", \"attributes\": [\"+ taxCode : string\", \"+ numberOfEmployees : int\"]}, {\"name\": \"GeographicalArea\", \"attributes\": [\"+ code : string\", \"+ environmentalImportance : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Well\", \"target\": \"Company\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"extraction\"}, {\"type\": \"association\", \"source\": \"Well\", \"target\": \"GeographicalArea\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\", \"label\": \"located in\"}, {\"type\": \"inheritance\", \"child\": \"OnshoreWell\", \"parent\": \"Well\"}, {\"type\": \"inheritance\", \"child\": \"OffshoreWell\", \"parent\": \"Well\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1407,
+   "completion_tokens": 273,
+   "total_tokens": 1680,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

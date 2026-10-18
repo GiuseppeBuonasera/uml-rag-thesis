@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Location\", \"attributes\": [\"+ address : string\"]}, {\"name\": \"Driver\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ vehicleNumber : string\"]}, {\"name\": \"Truck\", \"attributes\": [\"+ weight : float\"]}, {\"name\": \"Car\", \"attributes\": [\"+ seats : int\"]}, {\"name\": \"Van\"}, {\"name\": \"Order\", \"attributes\": [\"+ executionDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Location\", \"target\": \"Driver\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Vehicle\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Order\", \"targetMultiplicity\": \"2\"}, {\"type\": \"inheritance\", \"child\": \"Truck\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"Car\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"Van\", \"parent\": \"Vehicle\"}, {\"type\": \"association\", \"source\": \"Driver\", \"target\": \"Order\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Driver\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 44,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 2,
+ "latency_s": 17.17698129999917,
+ "prompt_tokens": 1217,
+ "completion_tokens": 314,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-hrr2vurd7185oa8izcrxhu",
+  "object": "chat.completion",
+  "created": 1792281677,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Location\", \"attributes\": [\"+ address : string\"]}, {\"name\": \"Driver\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\"]}, {\"name\": \"Vehicle\", \"attributes\": [\"+ vehicleNumber : string\"]}, {\"name\": \"Truck\", \"attributes\": [\"+ weight : float\"]}, {\"name\": \"Car\", \"attributes\": [\"+ seats : int\"]}, {\"name\": \"Van\"}, {\"name\": \"Order\", \"attributes\": [\"+ executionDate : date\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Location\", \"target\": \"Driver\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Vehicle\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Location\", \"target\": \"Order\", \"targetMultiplicity\": \"2\"}, {\"type\": \"inheritance\", \"child\": \"Truck\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"Car\", \"parent\": \"Vehicle\"}, {\"type\": \"inheritance\", \"child\": \"Van\", \"parent\": \"Vehicle\"}, {\"type\": \"association\", \"source\": \"Driver\", \"target\": \"Order\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Driver\", \"target\": \"Vehicle\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1217,
+   "completion_tokens": 314,
+   "total_tokens": 1531,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 44
+ },
+ "params_not_sent": []
+}
