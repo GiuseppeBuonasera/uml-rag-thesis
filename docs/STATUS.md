@@ -1,7 +1,7 @@
 # Stato del progetto — leggere a inizio sessione
 
-Aggiornato: 2026-10-08 (dopo la leva k, voce 95: **solo Gemma 4 12B QAT**, k di lavoro = 3, formati PlantUML e JSON
-compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei relatori, domande 8, 9, 11, 14, 15, 16).
+Aggiornato: 2026-10-19 (3b completato sui 54 e sui 26; risultati esplorativi nella voce 154; script di analisi
+del 3b affidata ai relatori, voce 158: il repo fornisce i dati; revisione dei sinonimi in corso, voce 152).
 
 ## Configurazione di lavoro (voce 95)
 - Modello: **Gemma 4 12B QAT** (`google/gemma-4-12b-qat`, QAT q4_0; Flash Attention attiva, KV cache F16, Enable
@@ -21,14 +21,21 @@ compatto; configurazione di lavoro qui sotto. Passo 3b BLOCCATO in attesa dei re
   dall'espansore unico.
 
 ## Stato
-- **3b sui 26 di sviluppo (2026-10-16, voce 151)**: analisi SECONDARIA, separata dai 54 di valutazione;
-  `experiments/configs/passo3b_sviluppo.yaml`, 936 generazioni (notebook, sezione 4 bis). Da lanciare.
+- **Risultati del 3b (voce 154, esplorativi: visti prima dello script di analisi)**: il retrieval non batte random
+  (bm25 k3 − random −0,017 PlantUML, +0,015 compatto); gli esempi aiutano nel compatto (+0,06/+0,07 su zero_shot).
+  **3b sui 26 di sviluppo completato** (936/936, voce 151): stesse conclusioni, piccolo vantaggio di bm25.
+- **Prossimi passi**: l'analisi statistica la fanno i relatori con un loro script (voce 158): al repo spetta fornire
+  i dati nel formato richiesto (da concordare: tipo di F1, colonne, insieme di esercizi, formato dei file); revisione
+  dei sinonimi dell'utente
+  (`data/results/generation/revisione_sinonimi/index.html`, voce 152), poi livello semantico come sensibilita'.
+- **Esportazione**: `python experiments/export_3b.py --unico` → `export_3b/passo3b_risultati.zip` (voce 157);
+  difficolta' in `analisi_3b/` (`python experiments/difficulty_3b.py`, voce 156).
 - **3b completato (2026-10-13, 1.938/1.938)**; risultati visti dall'utente prima dello script di analisi (deroga
-  alla voce 149, da registrare). Script di analisi del 3b ancora da scrivere. Strumenti di confronto:
+  alla voce 149, registrata nella voce 154). Script di analisi del 3b ancora da scrivere. Strumenti di confronto:
   `experiments/compare_3b.py` (notebook 6 ter) e report di revisione (notebook 7, ora anche per i De Bari).
 - **Leva v5c (2026-10-14, voce 150)**: "attributes" sempre presente nel compatto (istruzioni + esempi), 40 generazioni
-  sul dev set, regola in `experiments/analyze_v5c.py`. **Da lanciare dall'utente** (notebook, sezione 3 sexies); se
-  adottata si rifà la parte compatta del 3b.
+  sul dev set, regola in `experiments/analyze_v5c.py`. **Esito (voce 153): NON adottata** (scheletri 7 → 2 ma recall
+  degli attributi −0,007); il compatto resta v5. Scheletri legati soprattutto all'esercizio (voce 155).
 - **3b in avvio (2026-10-13, voce 149)**: decisione dell'utente di partire prima delle risposte dei relatori (domande
   8 e 14: rischio di rifacimento accettato), sul commit `485fd0f`. **Non guardare i risultati** finché lo script
   di analisi del 3b non è scritto e testato (prossimo lavoro dell'assistente, durante le generazioni).

@@ -161,6 +161,12 @@ non sono state modificate.
 150. 2026-10-14 — Leva v5c ("attributes" sempre presente nel compatto): regola e config registrate PRIMA della run
 151. 2026-10-16 — Passo 3b anche sui 26 esercizi di sviluppo: analisi SECONDARIA, separata dalla principale
 152. 2026-10-18 — Revisione dei sinonimi tra classi (livello di abbinamento semantico, solo sensibilita'): regola dei candidati prima della revisione
+153. 2026-10-14 — Leva v5c: esito (NON adottata, scheletri 7 → 2 ma recall degli attributi −0,007)
+154. 2026-10-13/19 — Risultati del 3b visti prima dello script di analisi (deroga alla voce 149) e confronto 26 / 54 (esplorativo)
+155. 2026-10-14 — Scheletri del compatto: dipendono soprattutto dall'esercizio (correzione della voce 148)
+156. 2026-10-17/18 — Difficolta' degli esercizi (Flesch-Kincaid e dimensione) e tabelle F1 per grado, schema concordato con i relatori
+157. 2026-10-14/19 — Strumenti di confronto ed esportazione del 3b, correzioni al report, verifica delle conversioni
+158. 2026-10-19 — L'analisi statistica del 3b la fanno i relatori con un loro script: al repo spetta fornire i dati
 
 ## Formato
 
@@ -5394,3 +5400,87 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - **Uso**: le coppie "stessa classe" diventano un livello di abbinamento **semantico** (dopo esatto e rilassato) in un
   file di annotazione versionato; si ricalcolano F1 e tabelle come **analisi di sensibilita'**. La metrica primaria
   (rilassata, voce 136) **non cambia**. Le "incerte" restano non abbinate (scelta conservativa).
+
+### [2026-10-14] Leva v5c: esito — NON adottata
+- Run `dev_g26c__C-G` (40/40, 1 non valida, 0 troncate), analisi `experiments/analyze_v5c.py` con la regola della voce
+  150 (`data/results/generation/dev_g26c_analysis/summary.md`).
+- Scheletri 7 → **2** (soglia ≤ 3 rispettata); **recall degli attributi 0,350 → 0,344 (−0,007): condizione "non
+  scende" NON rispettata**; precision attributi −0,047 (soglia −0,05, al limite); F1 relazioni −0,006, R −0,003, M
+  +0,008, Vc +3. **Esito: v5c NON adottata, il compatto del 3b resta v5**; nessuna parte del 3b da rifare.
+- Lettura: la forma "tutto o niente" sparisce, ma gli attributi corretti non aumentano (classi con `attributes: []`
+  dal 34,5 % al 38,8 %); conferma che lo scheletro dipende dalla forma mostrata e che la forma non basta (voce 155).
+
+### [2026-10-13/19] Risultati del 3b visti prima dello script di analisi (deroga alla voce 149) — esplorativo
+- **Deroga**: su richiesta esplicita dell'utente i risultati del 3b sono stati guardati prima che lo script di analisi
+  fosse scritto e registrato. Tutte le analisi di questa voce (e le voci 150-156) sono quindi **esplorative / a
+  posteriori**; lo script di analisi del 3b (schema concordato con i relatori, voce 156) resta da scrivere.
+- **3b principale** (54, 1.938/1.938, commit `485fd0f`, ripresa dopo una pausa senza duplicati): F1 relazioni
+  (rilassato, macro per esercizio) PlantUML 0,417-0,453, compatto 0,369-0,440. Confronti appaiati (Wilcoxon, IC
+  bootstrap): bm25 k3 − random k3 PlantUML −0,017 [−0,046; +0,010], compatto +0,015 [−0,005; +0,037]; hybrid −
+  random ≈ 0; bm25 k2 − static ≈ 0; random − zero_shot compatto **+0,056 (p 0,005)**, bm25 k3 − zero_shot compatto
+  **+0,071 (p 0,002)**; in PlantUML gli esempi non aiutano in modo significativo. **L'ipotesi centrale non e'
+  confermata**: gli esempi servono soprattutto come formato (compatto), la loro somiglianza non conta.
+- **Somiglianza degli esempi**: Jt medio random 0,018, bm25 0,098, hybrid 0,090, oracolo top-3 0,134; il migliore
+  esempio bm25 (0,154) e' vicino al migliore possibile del pool (0,170), ma solo 3 esercizi su 54 hanno un esempio
+  con Jt >= 0,3; correlazione tra somiglianza e guadagno bm25 − random ≈ 0 (rho +0,05 / +0,08). Il modello non copia
+  classi dagli esempi (classi presenti nell'esempio e non nel GT: 1,6-4,1 %, nessuna senza parole della traccia).
+- **Vocabolario del modello**: Jaccard dei nomi di classe tra ripetizioni 0,86-0,88 (meta' delle coppie identiche),
+  tra prompt 0,80, rispetto al GT 0,47-0,49: il prompt cambia poco i nomi.
+- **3b sui 26 di sviluppo** (voce 151, 936/936): stesse conclusioni; bm25 k3 − random +0,030 (PlantUML) e +0,027
+  (compatto), non significativi, contro −0,017 / +0,015 sui 54: piccolo vantaggio di bm25 sugli esercizi su cui la
+  configurazione e' stata tarata, nella direzione attesa e dentro il rumore. Uso: 54 come analisi principale, 80
+  come sensibilita' (proposta da confermare con i relatori).
+- Potenza: con la variabilita' del dev set la differenza minima rilevabile sui 54 e' circa 0,032 di F1.
+
+### [2026-10-14] Scheletri del compatto: dipendono soprattutto dall'esercizio — correzione della voce 148
+- Nel 3b gli scheletri del compatto sono circa 20 con zero_shot e static, 36-45 con random, bm25 e hybrid; in
+  PlantUML 11 con zero_shot, 0-3 con gli esempi.
+- **Correzione**: l'associazione "esempi con classi vuote → scheletri" della voce 148 (77 % contro 42 % sul dev set)
+  era confusa con l'esercizio. In random (esempi assegnati a caso) il rischio cresce poco con il numero di esempi
+  poveri (22 % / 28 % / 30 % con 0 / 1 / 2); **8 esercizi fanno 119 dei 200 scheletri** (ResearchCenter e
+  DB03_WordProcessor 18/18 in tutte le condizioni, anche zero_shot).
+- **Tratto comune** (misura grezza, parole "dato" ogni 100 parole): esercizi con molti scheletri 1,2 contro 5,7 di
+  quelli senza; attributi del GT con riscontro nella traccia 59 % contro 86 % (ResearchCenter 15 %, Hospital 17 %,
+  DB04 19 %). In buona parte lo scheletro e' il modello che segue la regola "only those stated or clearly implied":
+  limite che riguarda anche la qualita' del GT (voce 128). 4 dei 13 esercizi con molti scheletri sono tradotti.
+
+### [2026-10-17/18] Difficolta' degli esercizi e tabelle F1 per grado — schema concordato con i relatori
+- **Schema** (utente, dai relatori): tabella per esercizio con difficolta' 1 (Flesch-Kincaid) e difficolta' 2 (size =
+  classi + relazioni del GT), poi una colonna di F1 per prompt; Spearman tra ogni difficolta' e ogni colonna;
+  Wilcoxon (o t-test) tra ogni coppia di colonne. Tipo di F1 e numero di colonne ancora da definire.
+- **Difficolta' 1**: Flesch-Kincaid Grade Level della traccia (`textstat` 0.7.4 con `pyphen` 0.18.1, aggiunti a
+  `requirements.txt` e al lock); **difficolta' 2**: classi + tutti gli archi del GT (generalizzazioni comprese).
+  `experiments/difficulty_3b.py` (test `check_difficulty`). Le due difficolta' sono indipendenti (rho −0,01).
+- Medie: corpus 8,3 (tradotti 9,3), De Bari 8,1; size corpus 24,5, De Bari 16,1. **26 di sviluppo contro 54**: testi
+  piu' difficili (FK 9,4 contro 8,4, Mann-Whitney p 0,03) e diagrammi piu' piccoli (size massima 26 contro 49):
+  effetto dell'esclusione dei 14 piu' grandi nella scelta del dev set (voce 92); stessa F1 con bm25 k3.
+- **Tabelle per terzili** (54): la F1 scende con entrambe le difficolta'; con la size rho fino a −0,37 (diverse
+  p < 0,05, senza correzione per test multipli), con FK deboli e non significative; nessun prompt aiuta di piu'
+  negli esercizi difficili. File in `data/results/generation/analisi_3b/` (CSV per grado ed
+  `esercizi_difficolta.xlsx`: 79 esercizi senza AirTravel, F1 medio sulle quattro tipologie per prompt e formato).
+
+### [2026-10-14/19] Strumenti di confronto ed esportazione del 3b, correzioni, verifica delle conversioni
+- `experiments/compare_3b.py` (notebook 6 ter, test `check_compare_3b`): GT e sei condizioni affiancati per gli
+  esercizi scelti o `tutti` (oltre 10 esercizi i diagrammi si scrivono come file in `svg/`).
+- `experiments/export_3b.py --unico` → `data/results/generation/export_3b/passo3b_risultati.zip`: 2.874 risposte
+  (54 di validazione + 26 di sviluppo); `risposte/puml/` (testo PlantUML del modello), `risposte/json/` (risposte
+  del compatto convertite in PlantUML canonico; le 10 non valide restano .json), `gt/` (80 GT .puml + tracce .txt),
+  `risposte.csv` (71 colonne, con `insieme` e `file`), `esercizi.csv`, `LEGGIMI.md`.
+- `experiments/review_report.py`: GT anche dei De Bari (prima mancavano: KeyError sulle run del test set) e `--filter`
+  ripetuto ora combinato (prima teneva solo l'ultimo; i report storici usavano un filtro solo, non toccati).
+- **Verifica delle conversioni**: gli 80 GT convertiti in PlantUML e in compatto e riletti dal post-processing sono
+  identici (740 classi, 1.017 attributi, 625 relazioni, 183 generalizzazioni, tipi, molteplicita', versi); delle
+  1.427 risposte compatte valide convertite in PlantUML e rilette, 1.413 identiche in tutto e 14 (ElevatorControl)
+  con la molteplicita' simbolica "m" riletta come ruolo (scritta correttamente nel file; metriche non toccate).
+
+### [2026-10-19] Analisi statistica del 3b: la fanno i relatori con un loro script
+- **Decisione** (utente, d'accordo con i relatori): l'analisi statistica del 3b (schema della voce 156: difficolta'
+  Flesch-Kincaid e size, F1 per prompt, Spearman, Wilcoxon) viene eseguita da uno script dei relatori. Lo script di
+  analisi del 3b previsto nel repo (voci 132, 149) **non si scrive piu'**.
+- **Compito del repo**: fornire i dati nel formato richiesto e documentato: `experiments/export_3b.py --unico`
+  (`passo3b_risultati.zip`: risposte, GT, tracce, `risposte.csv` con tutte le metriche per risposta e la colonna
+  `insieme`) ed `experiments/difficulty_3b.py` / `analisi_3b/esercizi_difficolta.xlsx` (difficolta' e F1 per prompt).
+  Restano da concordare con i relatori: tipo di F1 nelle colonne, numero di colonne ("8"), insieme di esercizi (54,
+  o 80 come sensibilita'), formato dei file che lo script si aspetta.
+- Le analisi delle voci 154-156 restano come esplorative e descrittive; i risultati ufficiali saranno quelli dello
+  script dei relatori.

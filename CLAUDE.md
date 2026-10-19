@@ -28,18 +28,26 @@ zero-shot, specialmente per certe tipologie di esercizio.
    sintattiche, semantiche e pragmatiche.
 5. **Analisi** — quali tipologie di esercizio beneficiano di più dal retrieval.
 
-## Stato (aggiornato al 2026-10-05; dettagli in `docs/STATUS.md`)
+## Stato (aggiornato al 2026-10-19; dettagli in `docs/STATUS.md`)
 
 - **Passo 1 chiuso**: corpus di retrieval con 60 esercizi (45 originali + 15 tradotti dall'italiano), tutti
-  convertiti in Apollon v4 (Cruise recuperato il 2026-10-10, voce 114); test set De Bari con 20 esercizi trascritti
-  dalle immagini, congelato nel tag `testset-v1`. **Pool unico** (voce 115): per ogni query, di sviluppo o di
-  valutazione, i candidati del retrieval sono tutti gli altri 79 esercizi (mai sé stessa).
-- **Passo 2 chiuso** (BM25): configurazione congelata in `retrieval/config_bm25.yaml`, analizzata sul leave-one-out
-  del corpus e applicata una volta al test set; dense e hybrid ancora da fare.
-- **Passo 3a chiuso** (2026-10-05): infrastruttura di generazione per modelli locali via LM Studio (prompt builder,
-  client con cache, post-processing L0-L4, runner `experiments/run_experiment.py`), provata solo con client finti.
-- **Prossimo passo**: 3b (esperimenti) BLOCCATA in attesa delle risposte dei relatori (domande 8, 9, 11, 14 in
-  `docs/STATUS.md`); nel frattempo, smoke test manuale di LM Studio (lo esegue l'utente).
+  convertiti in Apollon v4; test set De Bari con 20 esercizi (traccia estratta dal PDF, diagramma trascritto
+  dall'immagine), congelato nel tag `testset-v1`. **Pool unico** (voce 115): per ogni query i candidati del retrieval
+  sono tutti gli altri 79 esercizi. Ruoli (tag `evalset-v1`): **54 di valutazione** (34 corpus + 20 De Bari) e **26 di
+  sviluppo** (20 del dev set + 6 dei piloti), `corpus/roles.yaml`.
+- **Passo 2 chiuso**: BM25 congelato in `retrieval/config_bm25.yaml`; dense (MiniLM) e hybrid (RRF) implementati;
+  esempi del 3b congelati in `data/retrieval_frozen/retrievals_3b.jsonl` (voce 129). Dense tolto dal 3b (voce 144).
+- **Passo 3a chiuso**: generazione con modelli locali via LM Studio (prompt builder, client con cache,
+  post-processing, runner `experiments/run_experiment.py`, batch e notebook `notebooks/passo3b.ipynb`).
+- **Passo 3b completato** (2026-10-13; sui 26 di sviluppo il 2026-10-18, voce 151): Gemma 4 26B A4B QAT, 6 condizioni
+  (zero_shot, static k2, random k3, bm25 k2 / k3, hybrid k3) × 3 ripetizioni × 2 formati (PlantUML, JSON compatto).
+  Risultati ESPLORATIVI (visti prima dello script di analisi, voce 154): il retrieval non batte gli esempi casuali;
+  gli esempi aiutano soprattutto nel compatto. Leve v5b e v5c sugli scheletri non adottate (voci 148, 153, 155).
+- **Prossimi passi**: l'analisi statistica del 3b la fanno i relatori con un loro script (voce 158; schema della
+  voce 156): il repo fornisce i dati (`experiments/export_3b.py --unico`, `experiments/difficulty_3b.py`) nel formato
+  da concordare (tipo di F1, colonne, esercizi); revisione dei sinonimi delle classi e livello
+  di abbinamento semantico come analisi di sensibilita' (voce 152). Domande ai relatori ancora aperte in
+  `docs/STATUS.md` (8, 11, 14, 16).
 
 ## Relatori e riferimento diretto
 
