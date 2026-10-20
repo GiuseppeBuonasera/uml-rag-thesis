@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass SmartHome {\n  + physicalAddress : string\n}\n\nclass Room {}\n\nclass SensorDevice {\n  + deviceIdentifier : string\n}\n\nclass ActuatorDevice {\n  + deviceIdentifier : string\n}\n\nclass SensorReading {\n  + value : double\n  + timestamp : time\n}\n\nclass ControlCommand {\n  + commandName : string\n  + timestamp : time\n  + status : string\n}\n\nclass ActivityLog {}\n\nclass User {\n  + name : string\n}\n\nclass AutomationRule {\n  + precondition : string\n  + action : string\n  + ruleStatus : string\n  + triggerTimestamp : time\n}\n\nSmartHome \"1\" *-- \"*\" Room\nRoom \"1\" -- \"*\" SensorDevice\nRoom \"1\" -- \"*\" ActuatorDevice\nSensorDevice \"1\" -- \"*\" SensorReading\nActuatorDevice \"1\" -- \"*\" ControlCommand\nSmartHome \"1\" *-- \"*\" SensorReading\nSmartHome \"1\" *-- \"*\" ControlCommand\nSmartHome \"1\" *-- \"*\" ActivityLog\nUser \"1\" -- \"*\" AutomationRule : manages\nAutomationRule \"0..*\" -- \"0..*\" AutomationRule : depends on / conflicts with\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 14.003979099998105,
+ "prompt_tokens": 1862,
+ "completion_tokens": 264,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-fea60v6o9hnz1heffir99s",
+  "object": "chat.completion",
+  "created": 1792512278,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass SmartHome {\n  + physicalAddress : string\n}\n\nclass Room {}\n\nclass SensorDevice {\n  + deviceIdentifier : string\n}\n\nclass ActuatorDevice {\n  + deviceIdentifier : string\n}\n\nclass SensorReading {\n  + value : double\n  + timestamp : time\n}\n\nclass ControlCommand {\n  + commandName : string\n  + timestamp : time\n  + status : string\n}\n\nclass ActivityLog {}\n\nclass User {\n  + name : string\n}\n\nclass AutomationRule {\n  + precondition : string\n  + action : string\n  + ruleStatus : string\n  + triggerTimestamp : time\n}\n\nSmartHome \"1\" *-- \"*\" Room\nRoom \"1\" -- \"*\" SensorDevice\nRoom \"1\" -- \"*\" ActuatorDevice\nSensorDevice \"1\" -- \"*\" SensorReading\nActuatorDevice \"1\" -- \"*\" ControlCommand\nSmartHome \"1\" *-- \"*\" SensorReading\nSmartHome \"1\" *-- \"*\" ControlCommand\nSmartHome \"1\" *-- \"*\" ActivityLog\nUser \"1\" -- \"*\" AutomationRule : manages\nAutomationRule \"0..*\" -- \"0..*\" AutomationRule : depends on / conflicts with\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1862,
+   "completion_tokens": 264,
+   "total_tokens": 2126,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

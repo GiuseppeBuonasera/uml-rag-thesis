@@ -1,0 +1,140 @@
+# CONTROLLO "ESERCIZIO STESSO COME ESEMPIO" (oracle_self, 2026-10-20, voce 162) — SOLO ANALISI, mai nel 3b ne' nei dati
+# dei relatori. Domanda: il modello sa usare il CONTENUTO di un esempio perfetto? Ogni esercizio di valutazione (54) ha
+# come unico esempio se stesso con la sua soluzione. Due varianti del blocco esempi: "standard" (frase "They describe
+# other systems: do not copy their classes", come nel 3b) e "libero" (senza quella frase). Tutto il resto come
+# passo3b.yaml (Gemma 4 26B A4B QAT, istruzioni v5 / v5 + indent2, vista clean_v1, campionamento). 1 ripetizione.
+# Generazioni: 54 x 2 formati x 2 varianti = 216. Regola di lettura registrata prima: experiments/analyze_oracle_self.py.
+run_id: oracle_self
+passo: controllo           # voce 162: controllo con sola condizione di analisi (ammesso sui 54)
+config_version: 2           # contesto 32768, max_tokens 4096
+random_seed: per_esercizio_ripetizione  # voce 130
+conditions: [oracle_self]   # voce 162: l'esercizio stesso come unico esempio
+k: {oracle_self: [1]}
+repetitions: 1
+seed: 0                     # non usato da random (random_seed: per_esercizio_ripetizione)
+stop_on_reasoning: true
+thinking: none              # voce 131: reasoning_effort "none" in ogni richiesta (il 26B ragiona di default)
+retrieval_source: frozen    # voce 129: esempi da data/retrieval_frozen/retrievals_3b.jsonl
+prompt: {layout: user_only, drop_interactive: true, example_view: clean_v1}  # voce 139: esempi senza istruzioni per lo studente
+generation:
+  temperature: 0.3
+  top_p: 0.95
+  top_k: 64
+  max_tokens: 4096
+  seed: 42
+plantuml_label_rule: auto_v1
+elenchi:   # esercizi di valutazione (roles.yaml), richiamati dalle configurazioni
+  valutazione_corpus: &valutazione_corpus
+    - AirTravel
+    - BankAccount
+    - BuildingManagement
+    - CelO
+    - CourseManagement
+    - Cruise
+    - DestroyBlockGame
+    - EatAtHome
+    - ElevatorControl
+    - GameArea
+    - GasStation_KUL
+    - GasStation_TUW
+    - Gym
+    - Hospital
+    - HotelBookingManagementSystem
+    - House
+    - Kinepolis
+    - LabTracker
+    - Menso
+    - MilanLibrary
+    - OnlineTutoringSystem
+    - RealEstateAgency
+    - RepairShops
+    - ResearchCenter
+    - School
+    - SellingGoods
+    - Sightseeing
+    - SmartHomeAutomationSystem
+    - TeamSportsScoutingSystem
+    - TileOGame
+    - TransportCompany
+    - TreatmentPlans
+    - University
+    - UniversityExams
+  valutazione_debari: &valutazione_debari
+    - DB01_ProjectManagementSystem
+    - DB02_HollywoodApproach
+    - DB03_WordProcessor
+    - DB04_PatientRecordAndSchedulingSystem
+    - DB05_MovieShop
+    - DB06_Flights
+    - DB07_BankSystem
+    - DB08_VeterinaryClinic
+    - DB09_AutoRepair
+    - DB10_Restaurant
+    - DB11_Deliveries
+    - DB12_Furniture
+    - DB13_Factory
+    - DB14_BicycleRental
+    - DB15_SaturnIntManagement
+    - DB16_OOBank
+    - DB17_PrepaidCellPhone
+    - DB18_LibrarySystem
+    - DB19_MyDoctor
+    - DB20_OnlineShopping
+models:
+  G26:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-26b-a4b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-26b-a4b-qat
+      quantization: QAT (Q4_0), MoE 26B-A4B (circa 4 miliardi di parametri attivi, 8 esperti)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: true          # impostazione salvata di LM Studio (default del modello); spento per richiesta: thinking none
+      kv_cache_quant: F16            # KV cache sulla GPU (offload_kv_cache_to_gpu)
+      flash_attention: true
+      gpu_offload: 0.5               # lms load google/gemma-4-26b-a4b-qat --context-length 32768 --gpu 0.5 -y (voce 131)
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: "circa 9,6 GB del modello (11,0 GB con il desktop), offload GPU 0,5; RAM circa 14,8 GB (prova del 2026-10-12)"
+  G12:
+    client:
+      kind: lmstudio
+      base_url: http://localhost:1234/v1
+      model: google/gemma-4-12b-qat
+      timeout_s: 1200
+      retries: 3
+      backoff_s: 2.0
+      unsupported_params: []
+    model_metadata:
+      model_id: google/gemma-4-12b-qat
+      quantization: QAT (q4_0)
+      context_length: 32768
+      lmstudio_version: 0.4.25+1
+      enable_thinking: false
+      kv_cache_quant: F16
+      flash_attention: true
+      hardware:
+        cpu: AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)
+        gpu: NVIDIA GeForce RTX 4070 12 GB
+        ram_gb: 32
+        vram_gb: 12
+        vram_used: 9,9 GB dedicata + 0,2 GB condivisa con contesto 32768, modello interamente
+          in VRAM (smoke test 2026-10-06)
+configurations:
+  P-corpus-standard: {model: G26, output_format: plantuml, split: corpus, query_ids: *valutazione_corpus, prompt: {instructions_version: v5, serialization: compact, examples_block: standard}}
+  P-corpus-libero: {model: G26, output_format: plantuml, split: corpus, query_ids: *valutazione_corpus, prompt: {instructions_version: v5, serialization: compact, examples_block: libero}}
+  P-testset-standard: {model: G26, output_format: plantuml, split: testset, query_ids: *valutazione_debari, prompt: {instructions_version: v5, serialization: compact, examples_block: standard}}
+  P-testset-libero: {model: G26, output_format: plantuml, split: testset, query_ids: *valutazione_debari, prompt: {instructions_version: v5, serialization: compact, examples_block: libero}}
+  C-corpus-standard: {model: G26, output_format: compact, split: corpus, query_ids: *valutazione_corpus, prompt: {instructions_version: v5, serialization: indent2, examples_block: standard}}
+  C-corpus-libero: {model: G26, output_format: compact, split: corpus, query_ids: *valutazione_corpus, prompt: {instructions_version: v5, serialization: indent2, examples_block: libero}}
+  C-testset-standard: {model: G26, output_format: compact, split: testset, query_ids: *valutazione_debari, prompt: {instructions_version: v5, serialization: indent2, examples_block: standard}}
+  C-testset-libero: {model: G26, output_format: compact, split: testset, query_ids: *valutazione_debari, prompt: {instructions_version: v5, serialization: indent2, examples_block: libero}}

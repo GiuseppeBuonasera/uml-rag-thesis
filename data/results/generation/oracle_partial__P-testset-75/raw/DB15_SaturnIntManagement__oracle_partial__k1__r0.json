@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass CarPark {}\n\nclass CardReader {\n  + verifyCardNumber()\n  + sendSignal()\n}\n\nclass Signal {}\n\nclass Card {}\n\nclass StaffCard extends Card {\n  + name : string\n  + department : string\n  + staffNumber : int\n}\n\nclass GuestCard extends Card {\n  + number : int\n  + currentDate : date\n}\n\nclass Barrier {}\n\nCarPark \"1\" *-- \"1\" CardReader\nCarPark \"1\" *-- \"1\" Barrier\nCarReader \"1\" --> \"1\" Signal\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 9.116834199998266,
+ "prompt_tokens": 1725,
+ "completion_tokens": 130,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9fk9180afqm5xdouhg7w6",
+  "object": "chat.completion",
+  "created": 1792515134,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass CarPark {}\n\nclass CardReader {\n  + verifyCardNumber()\n  + sendSignal()\n}\n\nclass Signal {}\n\nclass Card {}\n\nclass StaffCard extends Card {\n  + name : string\n  + department : string\n  + staffNumber : int\n}\n\nclass GuestCard extends Card {\n  + number : int\n  + currentDate : date\n}\n\nclass Barrier {}\n\nCarPark \"1\" *-- \"1\" CardReader\nCarPark \"1\" *-- \"1\" Barrier\nCarReader \"1\" --> \"1\" Signal\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1725,
+   "completion_tokens": 130,
+   "total_tokens": 1855,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

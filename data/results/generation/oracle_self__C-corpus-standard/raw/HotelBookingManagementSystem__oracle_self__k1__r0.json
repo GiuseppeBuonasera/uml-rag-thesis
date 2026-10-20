@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"HBMS\"}, {\"name\": \"Traveller\", \"attributes\": [\"+ name : string\", \"+ reliabilityRating : int\"]}, {\"name\": \"BillingInformation\", \"attributes\": [\"+ companyName : string\", \"+ address : string\"]}, {\"name\": \"TravelPreference\", \"attributes\": [\"+ preference : string\"]}, {\"name\": \"SearchCriteria\", \"attributes\": [\"+ city : string\", \"+ arrivalDate : date\", \"+ departureDate : date\", \"+ numberOfRooms : int\", \"+ roomType : string\", \"+ minimumHotelRating : int\", \"+ budgetPerNight : float\"]}, {\"name\": \"Hotel\", \"attributes\": [\"+ address : string\", \"+ city : string\"]}, {\"name\": \"HotelChain\"}, {\"name\": \"Offer\", \"kind\": \"abstract\"}, {\"name\": \"SpecialOffer\"}, {\"name\": \"RegularOffer\"}, {\"name\": \"Booking\", \"attributes\": [\"+ bookingId : string\", \"+ cancellationDeadline : date\", \"+ creditCardInformation : string\", \"+ paymentType : PaymentType\", \"+ confirmationDate : date\", \"+ isConfirmed : boolean\", \"+ isCancelled : boolean\", \"+ compensationAmount : float\"]}, {\"name\": \"BookingInfo\", \"attributes\": [\"+ price : float\", \"+ cityArea : string\", \"+ hotelRating : int\", \"+ keyPreferences : string\"]}, {\"name\": \"PaymentType\", \"kind\": \"enum\", \"values\": [\"PREPAID\", \"PAID_AT_HOTEL\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"HBMS\", \"target\": \"Traveller\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"HBMS\", \"target\": \"Hotel\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"HBMS\", \"target\": \"Booking\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Traveller\", \"part\": \"BillingInformation\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Traveller\", \"part\": \"TravelPreference\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"SearchCriteria\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"Booking\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Hotel\", \"target\": \"HotelChain\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"composition\", \"whole\": \"Hotel\", \"part\": \"Offer\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"SpecialOffer\", \"parent\": \"Offer\"}, {\"type\": \"inheritance\", \"child\": \"RegularOffer\", \"parent\": \"Offer\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"BookingInfo\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"Hotel\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"SpecialOffer\", \"target\": \"BookingInfo\", \"targetMultiplicity\": \"1\", \"sourceRole\": \"competingOffers\"}, {\"type\": \"association\", \"source\": \"BookingInfo\", \"target\": \"SpecialOffer\", \"targetMultiplicity\": \"0..5\", \"sourceRole\": \"bestOffers\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 48.40411519999907,
+ "prompt_tokens": 3944,
+ "completion_tokens": 739,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5ai72s1tx6abbi033puyu",
+  "object": "chat.completion",
+  "created": 1792507853,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"HBMS\"}, {\"name\": \"Traveller\", \"attributes\": [\"+ name : string\", \"+ reliabilityRating : int\"]}, {\"name\": \"BillingInformation\", \"attributes\": [\"+ companyName : string\", \"+ address : string\"]}, {\"name\": \"TravelPreference\", \"attributes\": [\"+ preference : string\"]}, {\"name\": \"SearchCriteria\", \"attributes\": [\"+ city : string\", \"+ arrivalDate : date\", \"+ departureDate : date\", \"+ numberOfRooms : int\", \"+ roomType : string\", \"+ minimumHotelRating : int\", \"+ budgetPerNight : float\"]}, {\"name\": \"Hotel\", \"attributes\": [\"+ address : string\", \"+ city : string\"]}, {\"name\": \"HotelChain\"}, {\"name\": \"Offer\", \"kind\": \"abstract\"}, {\"name\": \"SpecialOffer\"}, {\"name\": \"RegularOffer\"}, {\"name\": \"Booking\", \"attributes\": [\"+ bookingId : string\", \"+ cancellationDeadline : date\", \"+ creditCardInformation : string\", \"+ paymentType : PaymentType\", \"+ confirmationDate : date\", \"+ isConfirmed : boolean\", \"+ isCancelled : boolean\", \"+ compensationAmount : float\"]}, {\"name\": \"BookingInfo\", \"attributes\": [\"+ price : float\", \"+ cityArea : string\", \"+ hotelRating : int\", \"+ keyPreferences : string\"]}, {\"name\": \"PaymentType\", \"kind\": \"enum\", \"values\": [\"PREPAID\", \"PAID_AT_HOTEL\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"HBMS\", \"target\": \"Traveller\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"HBMS\", \"target\": \"Hotel\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"HBMS\", \"target\": \"Booking\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Traveller\", \"part\": \"BillingInformation\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Traveller\", \"part\": \"TravelPreference\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"SearchCriteria\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Traveller\", \"target\": \"Booking\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Hotel\", \"target\": \"HotelChain\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"composition\", \"whole\": \"Hotel\", \"part\": \"Offer\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"SpecialOffer\", \"parent\": \"Offer\"}, {\"type\": \"inheritance\", \"child\": \"RegularOffer\", \"parent\": \"Offer\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"BookingInfo\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Booking\", \"target\": \"Hotel\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"SpecialOffer\", \"target\": \"BookingInfo\", \"targetMultiplicity\": \"1\", \"sourceRole\": \"competingOffers\"}, {\"type\": \"association\", \"source\": \"BookingInfo\", \"target\": \"SpecialOffer\", \"targetMultiplicity\": \"0..5\", \"sourceRole\": \"bestOffers\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3944,
+   "completion_tokens": 739,
+   "total_tokens": 4683,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

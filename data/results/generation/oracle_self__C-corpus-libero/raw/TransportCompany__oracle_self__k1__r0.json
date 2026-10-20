@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Ssn : int\"\n      ]\n    },\n    {\n      \"name\": \"Driver\"\n    },\n    {\n      \"name\": \"OtherEmployee\",\n      \"attributes\": [\n        \"+ UserName : string\",\n        \"+ Password : string\"\n      ]\n    },\n    {\n      \"name\": \"Planner\"\n    },\n    {\n      \"name\": \"AdministrationEmployee\",\n      \"attributes\": [\n        \"+ FieldOfActivity : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ BillingAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ Mileage : int\",\n        \"+ Type : VehicleType\"\n      ]\n    },\n    {\n      \"name\": \"VehicleType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RefrigeratedTruck\",\n        \"SmallVan\",\n        \"LoadingPlatform\",\n        \"BoxTruck\"\n      ]\n    },\n    {\n      \"name\": \"RepairShop\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Repair\",\n      \"attributes\": [\n        \"+ Duration : int\",\n        \"+ Cost : double\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ Comment : string\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\",\n        \"+ PickUpAddress : string\",\n        \"+ DeliveryAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"PartnerFirm\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Driver\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OtherEmployee\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Planner\",\n      \"parent\": \"OtherEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdministrationEmployee\",\n      \"parent\": \"OtherEmployee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RepairShop\",\n      \"target\": \"Repair\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Repair\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Repair\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Planner\",\n      \"target\": \"Order\",\n      \"label\": \"assigned\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Planner\",\n      \"target\": \"Vehicle\",\n      \"label\": \"assigned\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Order\",\n      \"label\": \"completed\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Order\",\n      \"label\": \"used in\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AdministrationEmployee\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PartnerFirm\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 66.02884629999971,
+ "prompt_tokens": 2995,
+ "completion_tokens": 1172,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-y43fky04j8cv3xw55wvgtf",
+  "object": "chat.completion",
+  "created": 1792510099,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Ssn : int\"\n      ]\n    },\n    {\n      \"name\": \"Driver\"\n    },\n    {\n      \"name\": \"OtherEmployee\",\n      \"attributes\": [\n        \"+ UserName : string\",\n        \"+ Password : string\"\n      ]\n    },\n    {\n      \"name\": \"Planner\"\n    },\n    {\n      \"name\": \"AdministrationEmployee\",\n      \"attributes\": [\n        \"+ FieldOfActivity : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ BillingAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Vehicle\",\n      \"attributes\": [\n        \"+ LicensePlateNumber : string\",\n        \"+ Mileage : int\",\n        \"+ Type : VehicleType\"\n      ]\n    },\n    {\n      \"name\": \"VehicleType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"RefrigeratedTruck\",\n        \"SmallVan\",\n        \"LoadingPlatform\",\n        \"BoxTruck\"\n      ]\n    },\n    {\n      \"name\": \"RepairShop\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Repair\",\n      \"attributes\": [\n        \"+ Duration : int\",\n        \"+ Cost : double\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ Comment : string\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\",\n        \"+ PickUpAddress : string\",\n        \"+ DeliveryAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"PartnerFirm\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Address : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Driver\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"OtherEmployee\",\n      \"parent\": \"Employee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Planner\",\n      \"parent\": \"OtherEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"AdministrationEmployee\",\n      \"parent\": \"OtherEmployee\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RepairShop\",\n      \"target\": \"Repair\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Employee\",\n      \"target\": \"Repair\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Repair\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Planner\",\n      \"target\": \"Order\",\n      \"label\": \"assigned\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Planner\",\n      \"target\": \"Vehicle\",\n      \"label\": \"assigned\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Driver\",\n      \"target\": \"Order\",\n      \"label\": \"completed\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Vehicle\",\n      \"target\": \"Order\",\n      \"label\": \"used in\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AdministrationEmployee\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PartnerFirm\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2995,
+   "completion_tokens": 1172,
+   "total_tokens": 4167,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

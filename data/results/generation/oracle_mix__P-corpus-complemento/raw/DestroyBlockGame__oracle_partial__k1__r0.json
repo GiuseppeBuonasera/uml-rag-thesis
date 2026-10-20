@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {\n  + username : string\n  + password : string\n}\n\nclass Admin extends User {}\n\nclass Player extends User {}\n\nclass Game {\n  + name : string\n  + published : boolean\n}\n\nclass HallOfFame {\n  + score : int\n}\n\nclass Block {\n  + color : string\n  + points : int\n}\n\nclass BlockAssignment {\n  + gridHorizontalPosition : int\n  + gridVerticalPosition : int\n}\n\nclass Level {\n  + levelNumber : int\n  + isRandom : boolean\n  + nrBlocksPerLevel : int\n  + minBallSpeed : float\n  + ballSpeedIncreaseFactor : float\n  + maxPaddleLength : float\n  + minPaddleLength : float\n}\n\nclass PlayedGame {\n  + lives : int\n  + currentLevel : int\n  + score : int\n}\n\nGame \"1\" -- \"*\" HallOfFame : has\nGame \"1\" *-- \"*\" Level\nGame \"1\" *-- \"*\" Block : contains\nGame \"1\" -- \"0..1\" Admin : designed by\nGame \"1\" -- \"*\" Player : played by\nGame \"1\" -- \"1\" PlayedGame : instance of\nPlayer \"1\" -- \"*\" PlayedGame : plays\n\nLevel \"1\" *-- \"*\" BlockAssignment\nBlock \"1\" -- \"*\" BlockAssignment\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 23.023535399999673,
+ "prompt_tokens": 3829,
+ "completion_tokens": 303,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-pe1hpvlbv1nvadvongp3q",
+  "object": "chat.completion",
+  "created": 1792521674,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + username : string\n  + password : string\n}\n\nclass Admin extends User {}\n\nclass Player extends User {}\n\nclass Game {\n  + name : string\n  + published : boolean\n}\n\nclass HallOfFame {\n  + score : int\n}\n\nclass Block {\n  + color : string\n  + points : int\n}\n\nclass BlockAssignment {\n  + gridHorizontalPosition : int\n  + gridVerticalPosition : int\n}\n\nclass Level {\n  + levelNumber : int\n  + isRandom : boolean\n  + nrBlocksPerLevel : int\n  + minBallSpeed : float\n  + ballSpeedIncreaseFactor : float\n  + maxPaddleLength : float\n  + minPaddleLength : float\n}\n\nclass PlayedGame {\n  + lives : int\n  + currentLevel : int\n  + score : int\n}\n\nGame \"1\" -- \"*\" HallOfFame : has\nGame \"1\" *-- \"*\" Level\nGame \"1\" *-- \"*\" Block : contains\nGame \"1\" -- \"0..1\" Admin : designed by\nGame \"1\" -- \"*\" Player : played by\nGame \"1\" -- \"1\" PlayedGame : instance of\nPlayer \"1\" -- \"*\" PlayedGame : plays\n\nLevel \"1\" *-- \"*\" BlockAssignment\nBlock \"1\" -- \"*\" BlockAssignment\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3829,
+   "completion_tokens": 303,
+   "total_tokens": 4132,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

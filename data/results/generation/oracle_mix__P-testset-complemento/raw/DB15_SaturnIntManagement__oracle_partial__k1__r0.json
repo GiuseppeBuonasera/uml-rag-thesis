@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass CarPark {}\n\nclass Barrier {\n  + raise()\n}\n\nclass CardReader {\n  + verifyCardNumber()\n  + sendSignal()\n}\n\nclass Signal {}\n\nclass StaffCard {\n  + name : string\n  + department : string\n  + staffNumber : string\n}\n\nclass GuestCard {\n  + number : string\n  + currentDate : date\n}\n\nclass Card {}\n\nStaffCard extends Card\nGuestCard extends Card\n\nCarPark \"1\" -- \"*\" Barrier\nCarPark \"1\" -- \"1\" CardReader\nCarPark \"1\" -- \"0..1\" Signal\nCardReader \"1\" -- \"1\" Signal\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 10.455384699998831,
+ "prompt_tokens": 2071,
+ "completion_tokens": 152,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-m7swj59n478age5eyuo15",
+  "object": "chat.completion",
+  "created": 1792522675,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass CarPark {}\n\nclass Barrier {\n  + raise()\n}\n\nclass CardReader {\n  + verifyCardNumber()\n  + sendSignal()\n}\n\nclass Signal {}\n\nclass StaffCard {\n  + name : string\n  + department : string\n  + staffNumber : string\n}\n\nclass GuestCard {\n  + number : string\n  + currentDate : date\n}\n\nclass Card {}\n\nStaffCard extends Card\nGuestCard extends Card\n\nCarPark \"1\" -- \"*\" Barrier\nCarPark \"1\" -- \"1\" CardReader\nCarPark \"1\" -- \"0..1\" Signal\nCardReader \"1\" -- \"1\" Signal\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2071,
+   "completion_tokens": 152,
+   "total_tokens": 2223,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

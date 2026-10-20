@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Bus {\n  +lineNumber : int\n}\n\nclass Trajectory {\n}\n\nclass Line {\n  +category : string\n}\n\nclass MensoTicket {\n  +validityPeriod : int\n}\n\nclass Trip {\n  +time : time\n  +date : date\n}\n\nclass Invoice {\n  +totalAmount : double\n}\n\nclass Customer {\n  +homeAddress : string\n  +officeAddress : string\n  +workingHours : string\n}\n\nclass MensoCard {\n}\n\nclass OtherCard {\n}\n\nBus \"0..*\" -- \"1..*\" Trajectory : used for\nTrajectory \"1..*\" -- \"1\" Line : part of\nBus \"1\" -- \"0..*\" Trajectory : assigned to\nTrip \"0..*\" -- \"1\" Line : registered for\nTrip \"0..*\" -- \"1\" MensoCard : uses\nTrip \"0..*\" -- \"0..1\" OtherCard : uses\nTrip \"0..*\" -- \"1\" Customer : generates\nInvoice \"0..*\" -- \"1\" Customer : for\nInvoice \"0..*\" -- \"1\" Trip : based on\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 15.085727800000313,
+ "prompt_tokens": 2324,
+ "completion_tokens": 259,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lq2qexq1ladlcaf8sazaqh",
+  "object": "chat.completion",
+  "created": 1792512206,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bus {\n  +lineNumber : int\n}\n\nclass Trajectory {\n}\n\nclass Line {\n  +category : string\n}\n\nclass MensoTicket {\n  +validityPeriod : int\n}\n\nclass Trip {\n  +time : time\n  +date : date\n}\n\nclass Invoice {\n  +totalAmount : double\n}\n\nclass Customer {\n  +homeAddress : string\n  +officeAddress : string\n  +workingHours : string\n}\n\nclass MensoCard {\n}\n\nclass OtherCard {\n}\n\nBus \"0..*\" -- \"1..*\" Trajectory : used for\nTrajectory \"1..*\" -- \"1\" Line : part of\nBus \"1\" -- \"0..*\" Trajectory : assigned to\nTrip \"0..*\" -- \"1\" Line : registered for\nTrip \"0..*\" -- \"1\" MensoCard : uses\nTrip \"0..*\" -- \"0..1\" OtherCard : uses\nTrip \"0..*\" -- \"1\" Customer : generates\nInvoice \"0..*\" -- \"1\" Customer : for\nInvoice \"0..*\" -- \"1\" Trip : based on\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2324,
+   "completion_tokens": 259,
+   "total_tokens": 2583,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Person {\n  + firstName\n  + lastName\n  + address\n}\n\nclass CLIENT extends Person {\n  + phoneNumber\n  + contactPerson\n}\n\nclass WORKER extends Person {\n  + birthDate\n  + skills: string[]\n}\n\nclass MACHINE {\n  + serialNumber\n  + make\n  + model\n  + purchaseDate\n}\n\nclass PRODUCT_TYPE {\n  + material\n  + weight\n}\n\nclass PRODUCT {\n  + id\n}\n\nclass PURCHASEORDER {\n  + orderNumber\n  + dateMade\n  + expectedDeliveryDate\n  + actualDeliveryDate\n}\n\nclass PRODUCTPURCHASEORDER {\n  + quantity\n}\n\nWORKER \"*\" -- \"*\" MACHINE\nMACHINE \"1\" -- \"*\" PRODUCT_TYPE\nPRODUCT_TYPE \"1\" -- \"*\" PRODUCT\nCLIENT \"1\" -- \"*\" PURCHASEORDER\nPRODUCT \"1\" -- \"*\" PRODUCTPURCHASEORDER\nPURCHASEORDER \"1\" -- \"*\" PRODUCTPURCHASEORDER\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 13.828009199998633,
+ "prompt_tokens": 1800,
+ "completion_tokens": 220,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0rnc9z7r6vd2uyfg6kgugb",
+  "object": "chat.completion",
+  "created": 1792507082,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {\n  + firstName\n  + lastName\n  + address\n}\n\nclass CLIENT extends Person {\n  + phoneNumber\n  + contactPerson\n}\n\nclass WORKER extends Person {\n  + birthDate\n  + skills: string[]\n}\n\nclass MACHINE {\n  + serialNumber\n  + make\n  + model\n  + purchaseDate\n}\n\nclass PRODUCT_TYPE {\n  + material\n  + weight\n}\n\nclass PRODUCT {\n  + id\n}\n\nclass PURCHASEORDER {\n  + orderNumber\n  + dateMade\n  + expectedDeliveryDate\n  + actualDeliveryDate\n}\n\nclass PRODUCTPURCHASEORDER {\n  + quantity\n}\n\nWORKER \"*\" -- \"*\" MACHINE\nMACHINE \"1\" -- \"*\" PRODUCT_TYPE\nPRODUCT_TYPE \"1\" -- \"*\" PRODUCT\nCLIENT \"1\" -- \"*\" PURCHASEORDER\nPRODUCT \"1\" -- \"*\" PRODUCTPURCHASEORDER\nPURCHASEORDER \"1\" -- \"*\" PRODUCTPURCHASEORDER\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1800,
+   "completion_tokens": 220,
+   "total_tokens": 2020,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

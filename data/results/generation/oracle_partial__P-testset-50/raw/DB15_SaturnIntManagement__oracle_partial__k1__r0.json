@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass CarPark {}\n\nclass CardReader {\n  + verifyCardNumber()\n  + sendSignal()\n}\n\nclass Signal {}\n\nclass StaffCard {\n  + name : string\n  + department : string\n  + staffNumber : int\n}\n\nclass GuestCard {\n  + number : int\n  + currentDate : date\n}\n\nclass Barrier {\n  + rise()\n}\n\nclass Sign {\n  + displayStatus()\n}\n\nCarPark \"1\" *-- \"2\" Barrier\nCarPark \"1\" *-- \"1\" CardReader\nCarPark \"1\" *-- \"1\" Sign\nCardReader \"1\" --> \"1\" Signal\nStaffCard \"1\" -- \"1\" CardReader\nGuestCard \"1\" -- \"1\" CardReader\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 11.433320699998148,
+ "prompt_tokens": 1713,
+ "completion_tokens": 177,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lh05f40smfn2nyhoc60znl",
+  "object": "chat.completion",
+  "created": 1792514887,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass CarPark {}\n\nclass CardReader {\n  + verifyCardNumber()\n  + sendSignal()\n}\n\nclass Signal {}\n\nclass StaffCard {\n  + name : string\n  + department : string\n  + staffNumber : int\n}\n\nclass GuestCard {\n  + number : int\n  + currentDate : date\n}\n\nclass Barrier {\n  + rise()\n}\n\nclass Sign {\n  + displayStatus()\n}\n\nCarPark \"1\" *-- \"2\" Barrier\nCarPark \"1\" *-- \"1\" CardReader\nCarPark \"1\" *-- \"1\" Sign\nCardReader \"1\" --> \"1\" Signal\nStaffCard \"1\" -- \"1\" CardReader\nGuestCard \"1\" -- \"1\" CardReader\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1713,
+   "completion_tokens": 177,
+   "total_tokens": 1890,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

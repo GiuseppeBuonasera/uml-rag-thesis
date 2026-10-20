@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {\n  + open()\n  + save()\n  + print()\n}\n\nclass Document {\n  + new()\n}\n\nclass Page {\n}\n\nclass Header {\n  + date\n  + time\n  + pageNumber\n}\n\nclass Footer {\n  + date\n  + time\n  + pageNumber\n}\n\nclass Body {\n}\n\nclass Sentence {\n}\n\nclass Word {\n  + letters\n  + digits\n  + specialCharacters\n}\n\nclass PunctuationCharacter {\n}\n\nclass Picture {\n}\n\nclass Table {\n  + rows\n  + columns\n  + insertRow()\n  + insertColumn()\n  + newTable()\n}\n\nclass Cell {\n}\n\nUser \"1\" -- \"*\" Document : opens\n\nDocument \"1\" *-- \"*\" Page\n\nPage \"1\" *-- \"1\" Header\nPage \"1\" *-- \"1\" Body\nPage \"1\" *-- \"1\" Footer\n\nBody \"1\" *-- \"*\" Sentence\nBody \"1\" *-- \"0..*\" Picture\nBody \"1\" *-- \"0..*\" Table\n\nSentence \"1\" *-- \"*\" Word\nSentence \"1\" *-- \"*\" PunctuationCharacter\n\nTable \"1\" *-- \"*\" Cell\n\nCell \"1\" *-- \"0..*\" TextContent\nCell \"1\" *-- \"0..*\" Picture\n\nabstract class TextContent {}\n\nclass Text extends TextContent {\n}\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 21.372187799999665,
+ "prompt_tokens": 2754,
+ "completion_tokens": 323,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-o0zykgbg6b931u79cr02ft",
+  "object": "chat.completion",
+  "created": 1792522211,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + open()\n  + save()\n  + print()\n}\n\nclass Document {\n  + new()\n}\n\nclass Page {\n}\n\nclass Header {\n  + date\n  + time\n  + pageNumber\n}\n\nclass Footer {\n  + date\n  + time\n  + pageNumber\n}\n\nclass Body {\n}\n\nclass Sentence {\n}\n\nclass Word {\n  + letters\n  + digits\n  + specialCharacters\n}\n\nclass PunctuationCharacter {\n}\n\nclass Picture {\n}\n\nclass Table {\n  + rows\n  + columns\n  + insertRow()\n  + insertColumn()\n  + newTable()\n}\n\nclass Cell {\n}\n\nUser \"1\" -- \"*\" Document : opens\n\nDocument \"1\" *-- \"*\" Page\n\nPage \"1\" *-- \"1\" Header\nPage \"1\" *-- \"1\" Body\nPage \"1\" *-- \"1\" Footer\n\nBody \"1\" *-- \"*\" Sentence\nBody \"1\" *-- \"0..*\" Picture\nBody \"1\" *-- \"0..*\" Table\n\nSentence \"1\" *-- \"*\" Word\nSentence \"1\" *-- \"*\" PunctuationCharacter\n\nTable \"1\" *-- \"*\" Cell\n\nCell \"1\" *-- \"0..*\" TextContent\nCell \"1\" *-- \"0..*\" Picture\n\nabstract class TextContent {}\n\nclass Text extends TextContent {\n}\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2754,
+   "completion_tokens": 323,
+   "total_tokens": 3077,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\"\n    },\n    {\n      \"name\": \"ExaminationType\"\n    },\n    {\n      \"name\": \"Permission\"\n    },\n    {\n      \"name\": \"Doctor\"\n    },\n    {\n      \"name\": \"Patient\"\n    },\n    {\n      \"name\": \"ProblemType\"\n    },\n    {\n      \"name\": \"TreatmentPlan\"\n    },\n    {\n      \"name\": \"AdvisedExaminationType\"\n    },\n    {\n      \"name\": \"Diagnosis\"\n    },\n    {\n      \"name\": \"Treatment\"\n    },\n    {\n      \"name\": \"AdvisedExamination\"\n    },\n    {\n      \"name\": \"FreeMedicalAction\"\n    },\n    {\n      \"name\": \"Affiliation\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Permission\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExaminationType\",\n      \"target\": \"Permission\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Affiliation\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Affiliation\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Diagnosis\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Diagnosis\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ProblemType\",\n      \"target\": \"TreatmentPlan\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"AdvisedExaminationType\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"Treatment\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Treatment\",\n      \"target\": \"AdvisedExamination\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Treatment\",\n      \"target\": \"FreeMedicalAction\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 46.0745113999983,
+ "prompt_tokens": 2844,
+ "completion_tokens": 762,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-fba0138bkhfz0y6vzoc7fs",
+  "object": "chat.completion",
+  "created": 1792508566,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Hospital\"\n    },\n    {\n      \"name\": \"ExaminationType\"\n    },\n    {\n      \"name\": \"Permission\"\n    },\n    {\n      \"name\": \"Doctor\"\n    },\n    {\n      \"name\": \"Patient\"\n    },\n    {\n      \"name\": \"ProblemType\"\n    },\n    {\n      \"name\": \"TreatmentPlan\"\n    },\n    {\n      \"name\": \"AdvisedExaminationType\"\n    },\n    {\n      \"name\": \"Diagnosis\"\n    },\n    {\n      \"name\": \"Treatment\"\n    },\n    {\n      \"name\": \"AdvisedExamination\"\n    },\n    {\n      \"name\": \"FreeMedicalAction\"\n    },\n    {\n      \"name\": \"Affiliation\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Permission\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExaminationType\",\n      \"target\": \"Permission\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Affiliation\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Affiliation\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Diagnosis\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Diagnosis\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Diagnosis\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ProblemType\",\n      \"target\": \"TreatmentPlan\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"AdvisedExaminationType\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Diagnosis\",\n      \"target\": \"Treatment\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"TreatmentPlan\",\n      \"target\": \"Treatment\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Treatment\",\n      \"target\": \"AdvisedExamination\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Treatment\",\n      \"target\": \"FreeMedicalAction\",\n      \"targetMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2844,
+   "completion_tokens": 762,
+   "total_tokens": 3606,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

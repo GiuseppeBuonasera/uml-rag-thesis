@@ -1,7 +1,8 @@
 # Stato del progetto — leggere a inizio sessione
 
-Aggiornato: 2026-10-19 (3b completato sui 54 e sui 26; risultati esplorativi nella voce 154; script di analisi
-del 3b affidata ai relatori, voce 158: il repo fornisce i dati; revisione dei sinonimi in corso, voce 152).
+Aggiornato: 2026-10-20 (3b completato sui 54 e sui 26; analisi statistica affidata ai relatori, voce 158;
+controlli oracle, voci 162-165: un esempio serve solo con somiglianza dei nomi di classe di circa 0,4-0,56 o piu', e nel
+pool nessuna coppia supera 0,4; nessuna run in corso).
 
 ## Configurazione di lavoro (voce 95)
 - Modello: **Gemma 4 12B QAT** (`google/gemma-4-12b-qat`, QAT q4_0; Flash Attention attiva, KV cache F16, Enable
@@ -21,13 +22,24 @@ del 3b affidata ai relatori, voce 158: il repo fornisce i dati; revisione dei si
   dall'espansore unico.
 
 ## Stato
+- **2026-10-20, riepilogo della giornata**: revisione dei sinonimi scartata (voce 160); analisi esplorative raccolte nel
+  report per i relatori (voce 161); controlli solo analisi oracle_self (voce 162), oracle_partial (voce 163) e oracle_mix
+  (voci 164-165) eseguiti e analizzati; analisi descrittive sugli esempi (voce 166). Nessuna run in corso.
+- **Controlli oracle (2026-10-20, voci 162-164)**: oracle_self = uso parziale (PlantUML 0,760, compatto 0,635);
+  oracle_partial = soglia di utilita' a somiglianza 0,56 (circa 0,4 interpolando), nessuna coppia del pool sopra 0,4;
+  oracle_mix (voce 165): nessuna diluizione; due meta' complementari si sommano in parte (+0,210 contro +0,337).
+- **Controllo oracle_partial (2026-10-20, voce 163)**: soluzione dell'esempio al 25 / 50 / 75 % delle classi, solo
+  analisi, 162 generazioni PlantUML (`experiments/configs/oracle_partial.yaml`, notebook sezione 4 quater); soglia di
+  utilita' in `experiments/analyze_oracle_partial.py`.
+- **Controllo oracle_self (2026-10-20, voce 162)**: l'esercizio stesso come unico esempio, solo analisi, 216
+  generazioni (`experiments/configs/oracle_self.yaml`, notebook sezione 4 ter); regola di lettura in
+  `experiments/analyze_oracle_self.py`. Da lanciare.
 - **Risultati del 3b (voce 154, esplorativi: visti prima dello script di analisi)**: il retrieval non batte random
   (bm25 k3 − random −0,017 PlantUML, +0,015 compatto); gli esempi aiutano nel compatto (+0,06/+0,07 su zero_shot).
   **3b sui 26 di sviluppo completato** (936/936, voce 151): stesse conclusioni, piccolo vantaggio di bm25.
 - **Prossimi passi**: l'analisi statistica la fanno i relatori con un loro script (voce 158): al repo spetta fornire
-  i dati nel formato richiesto (da concordare: tipo di F1, colonne, insieme di esercizi, formato dei file); revisione
-  dei sinonimi dell'utente
-  (`data/results/generation/revisione_sinonimi/index.html`, voce 152), poi livello semantico come sensibilita'.
+  i dati nel formato richiesto (da concordare: tipo di F1, colonne, insieme di esercizi, formato dei file); revisione dei sinonimi
+  SCARTATA (voce 160); analisi esplorative raccolte nel report condiviso con i relatori (voce 161).
 - **Esportazione**: `python experiments/export_3b.py --unico` → `export_3b/passo3b_risultati.zip` (voce 157);
   difficolta' in `analisi_3b/` (`python experiments/difficulty_3b.py`, voce 156).
 - **3b completato (2026-10-13, 1.938/1.938)**; risultati visti dall'utente prima dello script di analisi (deroga
@@ -554,7 +566,10 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
 7. **Analysis.xlsx**: 76 discrepanze classificate come imprecisioni dell'xlsx (es. righe 2/3 scambiate in "Attributes
    + Operations", operazioni omesse nell'es. 3, classi associative non elencate negli es. 10-13): segnalarle agli
    autori di De Bari et al.? Nei confronti con i loro punteggi si usano i conteggi del ground truth (`gt_counts`).
-8. **LLM e parametri di generazione**: quale LLM (o quali), temperatura, numero di ripetizioni per cella. Gli
+8. **CHIUSA (2026-10-19, voce 159): scelta dell'utente** — Gemma 4 26B A4B QAT locale (LM Studio), temperatura 0,3,
+   top_p 0,95, top_k 64, 3 ripetizioni, contesto 32768, max_tokens 4096 (la configurazione del 3b).
+   Testo originale della domanda: **LLM e parametri di generazione**: quale LLM (o quali), temperatura, numero di
+   ripetizioni per cella. Gli
    esperimenti useranno modelli LOCALI via LM Studio: va scelta anche la lunghezza di contesto, identica per tutte le
    condizioni e tutti i k dello stesso modello. **Con k=3 l'unica finestra sicura è 32k; con k=2 la finestra da 16k
    ha un margine di circa 1.700 token nel caso peggiore (bm25: 11.192 di prompt + 3.509 di output = 14.701 su
@@ -645,13 +660,18 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
     massimo Jaccard tra due candidati è 0.25. **Proposta**: tenere tutti i candidati, con la tabella del run
     `data/results/retrieval/loo_2026-10-04_stop1` come giustificazione (escludendo GasStation come vicini J@1 passa da
     0.096 a 0.095).
-11. **Metriche**: criterio di matching dei nomi per la qualità semantica (esatto, lemma, sinonimi, LLM); qualità
+11. **CHIUSA (2026-10-19, voce 159): decide lo script di valutazione dei relatori** (completeness per classi, attributi
+    e associazioni, errori sintattici e semantici; `evaluation_summary-2.xlsx`, voci 157-158); le nostre F1 restano come
+    analisi di confronto. Testo originale: **Metriche**: criterio di matching dei nomi per la qualità semantica (esatto,
+    lemma, sinonimi, LLM); qualità
     pragmatica con LLM-as-judge, valutazione umana o un campione valutato a mano.
 12. **Tassonomia per l'analisi finale**, da fissare prima di vedere i risultati: difficoltà (`debari_ed_avg`),
     dimensione (`gt_counts`), punteggio normalizzato del top-1 del retrieval; il dominio solo come descrittivo.
 13. **Provenienza di `docs/dati/debari/Exercises_solo_testo.pdf`** (8 pagine, solo il testo delle 20 tracce, senza
     soluzioni; testo identico alle `description.md` del test set): è il testo dato agli LLM nello studio De Bari?
-14. **Generazione libera oppure vincolata allo schema Apollon?** Con il vincolo la validità sintattica è quasi
+14. **CHIUSA (2026-10-19, voce 159): i relatori sono d'accordo con la scelta attuale, generazione LIBERA** (vincolo
+    allo schema disattivato, come nel 3b). Testo originale: **Generazione libera oppure vincolata allo schema Apollon?**
+    Con il vincolo la validità sintattica è quasi
     garantita per costruzione e smette di essere una metrica. LM Studio lo supporta su `/v1/chat/completions` con
     `response_format: {"type": "json_schema", ...}` (grammatica di llama.cpp per i GGUF, Outlines per MLX; non tutti
     i modelli, specie sotto i 7B). Nel codice è pronto (`structured_output`) ma DISATTIVATO.
@@ -662,7 +682,8 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
     con ragionamento acceso** (su un sottoinsieme o una condizione), con max_tokens adeguato e `enable_thinking: true`
     nei metadati.
 
-16. **Secondo modello sul test set** (2026-10-08, voce 95): nell'insieme di sviluppo Qwen2.5-Coder 7B è stato
+16. **CHIUSA (2026-10-19, voce 159): NO**, nessun secondo modello. Testo originale: **Secondo modello sul test set**
+    (2026-10-08, voce 95): nell'insieme di sviluppo Qwen2.5-Coder 7B è stato
     scartato (R circa la metà di Gemma 4 12B QAT a ogni k e in entrambi i formati). Desiderate comunque un secondo
     modello sul test set? Con PlantUML il costo è basso (circa 6 s per generazione).
 
@@ -714,7 +735,8 @@ Raccolte in un'unica sezione (2026-10-04); le prime erano in "In sospeso" dal 20
      **STOP 2 approvato** (voce 92): piloti esclusi, regola Vc → R → J → V → PlantUML con J e R su tutte le
      risposte; `experiments/analyze_dev.py` scritto e testato PRIMA delle run. Prossimo: calibrazione dei token del
      compatto (C-G, C-Q) e le 4 run (lanciate dall'utente).
-   - **3b. Esecuzione degli esperimenti: BLOCCATA** finché i relatori non rispondono alle domande 8 (LLM, parametri,
+   - **3b. Esecuzione degli esperimenti: FATTA** (2026-10-13 e 2026-10-18); domande 8, 11, 14 e 16 chiuse (voce 159).
+     Testo storico: BLOCCATA finché i relatori non rispondono alle domande 8 (LLM, parametri,
      finestra di contesto, temperatura e ripetizioni), 9 (baseline statica), 11 (metriche), 14 (generazione libera
      o vincolata allo schema) e 15 (ragionamento acceso o spento).
 4. Valutazione (sintattica / semantica / pragmatica), con i requisiti sopra.

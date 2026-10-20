@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum AttendanceStatus {\n  Yes\n  Maybe\n  No\n}\n\nenum TaskStatus {\n  ToBeDone\n  Done\n  NotApplicable\n}\n\nclass Organizer {\n  + FirstName : string\n  + LastName : string\n  + EmailAddress : string\n  + Password : string\n  + PostalAddress : string\n  + PhoneNumber : string\n}\n\nclass Attendee {\n  + FirstName : string\n  + LastName : string\n  + EmailAddress : string\n  + Password : string\n}\n\nclass Event {\n  + StartDateTime : datetime\n  + EndDateTime : datetime\n  + Occasion : string\n}\n\nclass EventType {\n  + Name : string\n}\n\nclass Location {\n  + Name : string\n  + Address : string\n}\n\nclass Task {\n  + Description : string\n}\n\nclass ChecklistItem {\n  + Status : TaskStatus\n}\n\nclass AssignedTask {\n  + Status : TaskStatus\n}\n\nOrganizer \"1..*\" -- \"0..*\" Event : organizes\nOrganizer \"0..*\" -- \"0..*\" Attendee : invites\nAttendee \"0..*\" -- \"0..*\" Event : attends\nEvent \"*\" -- \"1\" EventType : is of type\nEvent \"*\" -- \"1\" Location : held at\nEvent \"1\" *-- \"*\" ChecklistItem : has\nChecklistItem \"1\" -- \"1\" Task : refers to\nChecklistItem \"0..1\" -- \"0..1\" Attendee : assigned to\nChecklistItem \"0..1\" -- \"0..1\" AssignedTask : becomes\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 18.855817800002114,
+ "prompt_tokens": 2282,
+ "completion_tokens": 347,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-dn456f3h2nw65jxlvb6wlc",
+  "object": "chat.completion",
+  "created": 1792513362,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum AttendanceStatus {\n  Yes\n  Maybe\n  No\n}\n\nenum TaskStatus {\n  ToBeDone\n  Done\n  NotApplicable\n}\n\nclass Organizer {\n  + FirstName : string\n  + LastName : string\n  + EmailAddress : string\n  + Password : string\n  + PostalAddress : string\n  + PhoneNumber : string\n}\n\nclass Attendee {\n  + FirstName : string\n  + LastName : string\n  + EmailAddress : string\n  + Password : string\n}\n\nclass Event {\n  + StartDateTime : datetime\n  + EndDateTime : datetime\n  + Occasion : string\n}\n\nclass EventType {\n  + Name : string\n}\n\nclass Location {\n  + Name : string\n  + Address : string\n}\n\nclass Task {\n  + Description : string\n}\n\nclass ChecklistItem {\n  + Status : TaskStatus\n}\n\nclass AssignedTask {\n  + Status : TaskStatus\n}\n\nOrganizer \"1..*\" -- \"0..*\" Event : organizes\nOrganizer \"0..*\" -- \"0..*\" Attendee : invites\nAttendee \"0..*\" -- \"0..*\" Event : attends\nEvent \"*\" -- \"1\" EventType : is of type\nEvent \"*\" -- \"1\" Location : held at\nEvent \"1\" *-- \"*\" ChecklistItem : has\nChecklistItem \"1\" -- \"1\" Task : refers to\nChecklistItem \"0..1\" -- \"0..1\" Attendee : assigned to\nChecklistItem \"0..1\" -- \"0..1\" AssignedTask : becomes\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2282,
+   "completion_tokens": 347,
+   "total_tokens": 2629,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

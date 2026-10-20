@@ -1,0 +1,60 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Position\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"GK\",\n        \"LB\"\n      ]\n    },\n    {\n      \"name\": \"Recommendation\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"key player\",\n        \"first team player\",\n        \"reserve team player\",\n        \"prospective player\",\n        \"not a good signing\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"HeadCoach\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Director\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Scout\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Player\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"PlayerProfile\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"PlayerAttribute\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ value : string\"\n      ]\n    },\n    {\n      \"name\": \"ScoutingAssignment\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"ScoutingReport\",\n      \"attributes\": [\n        \"+ pros : string\",\n        \"+ cons : string\",\n        \"+ recommendation : Recommendation\"\n      ]\n    },\n    {\n      \"name\": \"Offer\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadCoach\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Scout\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"HeadCoach\",\n      \"part\": \"PlayerProfile\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"Position\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"PlayerAttribute\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"ScoutingAssignment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"ScoutingReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Offer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 52.9295689999999,
+ "prompt_tokens": 2940,
+ "completion_tokens": 937,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5zrego1ub6pkj3b3h8pdpr",
+  "object": "chat.completion",
+  "created": 1792509999,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Position\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"GK\",\n        \"LB\"\n      ]\n    },\n    {\n      \"name\": \"Recommendation\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"key player\",\n        \"first team player\",\n        \"reserve team player\",\n        \"prospective player\",\n        \"not a good signing\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"HeadCoach\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Director\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Scout\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Player\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"PlayerProfile\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"PlayerAttribute\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ value : string\"\n      ]\n    },\n    {\n      \"name\": \"ScoutingAssignment\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"ScoutingReport\",\n      \"attributes\": [\n        \"+ pros : string\",\n        \"+ cons : string\",\n        \"+ recommendation : Recommendation\"\n      ]\n    },\n    {\n      \"name\": \"Offer\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadCoach\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Scout\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"HeadCoach\",\n      \"part\": \"PlayerProfile\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"Position\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"PlayerAttribute\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"ScoutingAssignment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"ScoutingReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Offer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2940,
+   "completion_tokens": 937,
+   "total_tokens": 3877,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

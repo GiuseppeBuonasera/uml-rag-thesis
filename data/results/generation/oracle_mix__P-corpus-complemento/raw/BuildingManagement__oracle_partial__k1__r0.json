@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass WebPortal {\n  + versionNumber : string\n  + url : string\n}\n\nclass Building {\n  + id : string\n  + name : string\n  + address : string\n  + yearOfConstruction : int\n}\n\nclass Entry {\n  + name : string\n  + public : boolean\n}\n\nclass TextEntry {\n  + text : string\n}\n\nclass NumericEntry {\n  + value : float\n  + unit : string\n}\n\nclass Image {\n  + fileName : string\n}\n\nclass User {\n  + username : string\n  + email : string\n  + password : string\n}\n\nclass Administrator {\n  + idCardNumber : string\n}\n\nclass Comment {\n  + text : string\n}\n\nenum EnergyClass {\n  A\n  B\n  C\n  D\n}\n\nUser <|-- Administrator\n\nWebPortal \"1\" -- \"*\" Building\nWebPortal \"1\" -- \"*\" User\nBuilding \"1\" -- \"1\" EnergyClass\nBuilding \"1\" -- \"1\" Image : profile photo\nBuilding \"1\" *-- \"*\" Image\nBuilding \"1\" *-- \"*\" Entry\nBuilding \"1\" -- \"1\" User : owner\nUser \"1\" -- \"*\" Building : creates\nUser \"1\" -- \"*\" Comment : writes\nUser \"1\" -- \"*\" Building : comments on\nUser \"1\" -- \"*\" Entry : manages\n\nEntry <|-- TextEntry\nEntry <|-- NumericEntry\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 19.621797199997673,
+ "prompt_tokens": 2302,
+ "completion_tokens": 324,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-mkj2w5tycxk5rjznx4dj0w",
+  "object": "chat.completion",
+  "created": 1792521606,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass WebPortal {\n  + versionNumber : string\n  + url : string\n}\n\nclass Building {\n  + id : string\n  + name : string\n  + address : string\n  + yearOfConstruction : int\n}\n\nclass Entry {\n  + name : string\n  + public : boolean\n}\n\nclass TextEntry {\n  + text : string\n}\n\nclass NumericEntry {\n  + value : float\n  + unit : string\n}\n\nclass Image {\n  + fileName : string\n}\n\nclass User {\n  + username : string\n  + email : string\n  + password : string\n}\n\nclass Administrator {\n  + idCardNumber : string\n}\n\nclass Comment {\n  + text : string\n}\n\nenum EnergyClass {\n  A\n  B\n  C\n  D\n}\n\nUser <|-- Administrator\n\nWebPortal \"1\" -- \"*\" Building\nWebPortal \"1\" -- \"*\" User\nBuilding \"1\" -- \"1\" EnergyClass\nBuilding \"1\" -- \"1\" Image : profile photo\nBuilding \"1\" *-- \"*\" Image\nBuilding \"1\" *-- \"*\" Entry\nBuilding \"1\" -- \"1\" User : owner\nUser \"1\" -- \"*\" Building : creates\nUser \"1\" -- \"*\" Comment : writes\nUser \"1\" -- \"*\" Building : comments on\nUser \"1\" -- \"*\" Entry : manages\n\nEntry <|-- TextEntry\nEntry <|-- NumericEntry\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2302,
+   "completion_tokens": 324,
+   "total_tokens": 2626,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

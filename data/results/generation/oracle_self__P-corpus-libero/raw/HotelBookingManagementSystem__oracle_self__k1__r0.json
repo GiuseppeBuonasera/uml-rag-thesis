@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum RoomType {\n  SINGLE\n  DOUBLE\n  TWIN\n}\n\nenum PaymentType {\n  PREPAID\n  PAID_AT_HOTEL\n}\n\nclass HotelBookingManager {}\n\nclass Traveller {\n  + name : string\n  + reliabilityRating : int\n}\n\nclass BillingInformation {\n  + companyName : string\n  + address : string\n}\n\nclass TravelPreference {\n  + preference : string\n}\n\nclass Hotel {\n  + city : string\n  + address : string\n}\n\nclass HotelChain {}\n\nclass RoomAvailability {\n  + roomType : RoomType\n  + isFullyBooked : boolean\n}\n\nclass Search {\n  + city : string\n  + arrivalDate : date\n  + departureDate : date\n  + numberOfRooms : int\n  + roomType : RoomType\n  + minimumRating : int\n  + budgetPerNight : float\n}\n\nclass Booking {\n  + bookingId : int\n  + price : float\n  + cityArea : string\n  + hotelRating : int\n  + cancellationDeadline : date\n  + creditCardInformation : string\n  + paymentType : PaymentType\n  + isConfirmed : boolean\n}\n\nclass SpecialOffer {\n  + price : float\n}\n\nclass PreliminaryBookingInfo {\n  + price : float\n  + cityArea : string\n  + hotelRating : int\n  + bookingId : int\n}\n\nTraveller \"1\" -- \"*\" Booking : makes\nTraveller \"1\" -- \"1\" BillingInformation : provides\nTraveller \"1\" -- \"*\" TravelPreference : specifies\nTraveller \"1\" -- \"*\" Search : performs\nTraveller \"1\" -- \"*\" SpecialOffer : receives\n\nHotelBookingManager \"1\" -- \"*\" Traveller : manages\nHotelBookingManager \"1\" -- \"*\" Hotel : lists\nHotelBookingManager \"1\" -- \"*\" Booking : stores\nHotelBookingManager \"1\" -- \"*\" PreliminaryBookingInfo : forwards\nHotelBookingManager \"1\" -- \"*\" SpecialOffer : sends\n\nHotel \"1\" -- \"*\" RoomAvailability : announces\nHotel \"1\" -- \"*\" Booking : confirms\nHotel \"0..1\" -- \"1\" HotelChain : run by\n\nBooking \"1\" -- \"1\" RoomAvailability : for\nBooking \"1\" -- \"1\" Hotel : at\nBooking \"0..1\" -- \"1\" SpecialOffer : switches to\n\nPreliminaryBookingInfo \"*\" -- \"1\" Hotel : sent to\nPreliminaryBookingInfo \"1\" -- \"1\" Search : based on\nPreliminaryBookingInfo \"1\" -- \"1\" Traveller : for\n\nSpecialOffer \"*\" -- \"1\" PreliminaryBookingInfo : competes with\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 35.34823079999842,
+ "prompt_tokens": 2690,
+ "completion_tokens": 575,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4j6rduyjxusrmuyfpkayp",
+  "object": "chat.completion",
+  "created": 1792506464,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum RoomType {\n  SINGLE\n  DOUBLE\n  TWIN\n}\n\nenum PaymentType {\n  PREPAID\n  PAID_AT_HOTEL\n}\n\nclass HotelBookingManager {}\n\nclass Traveller {\n  + name : string\n  + reliabilityRating : int\n}\n\nclass BillingInformation {\n  + companyName : string\n  + address : string\n}\n\nclass TravelPreference {\n  + preference : string\n}\n\nclass Hotel {\n  + city : string\n  + address : string\n}\n\nclass HotelChain {}\n\nclass RoomAvailability {\n  + roomType : RoomType\n  + isFullyBooked : boolean\n}\n\nclass Search {\n  + city : string\n  + arrivalDate : date\n  + departureDate : date\n  + numberOfRooms : int\n  + roomType : RoomType\n  + minimumRating : int\n  + budgetPerNight : float\n}\n\nclass Booking {\n  + bookingId : int\n  + price : float\n  + cityArea : string\n  + hotelRating : int\n  + cancellationDeadline : date\n  + creditCardInformation : string\n  + paymentType : PaymentType\n  + isConfirmed : boolean\n}\n\nclass SpecialOffer {\n  + price : float\n}\n\nclass PreliminaryBookingInfo {\n  + price : float\n  + cityArea : string\n  + hotelRating : int\n  + bookingId : int\n}\n\nTraveller \"1\" -- \"*\" Booking : makes\nTraveller \"1\" -- \"1\" BillingInformation : provides\nTraveller \"1\" -- \"*\" TravelPreference : specifies\nTraveller \"1\" -- \"*\" Search : performs\nTraveller \"1\" -- \"*\" SpecialOffer : receives\n\nHotelBookingManager \"1\" -- \"*\" Traveller : manages\nHotelBookingManager \"1\" -- \"*\" Hotel : lists\nHotelBookingManager \"1\" -- \"*\" Booking : stores\nHotelBookingManager \"1\" -- \"*\" PreliminaryBookingInfo : forwards\nHotelBookingManager \"1\" -- \"*\" SpecialOffer : sends\n\nHotel \"1\" -- \"*\" RoomAvailability : announces\nHotel \"1\" -- \"*\" Booking : confirms\nHotel \"0..1\" -- \"1\" HotelChain : run by\n\nBooking \"1\" -- \"1\" RoomAvailability : for\nBooking \"1\" -- \"1\" Hotel : at\nBooking \"0..1\" -- \"1\" SpecialOffer : switches to\n\nPreliminaryBookingInfo \"*\" -- \"1\" Hotel : sent to\nPreliminaryBookingInfo \"1\" -- \"1\" Search : based on\nPreliminaryBookingInfo \"1\" -- \"1\" Traveller : for\n\nSpecialOffer \"*\" -- \"1\" PreliminaryBookingInfo : competes with\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2690,
+   "completion_tokens": 575,
+   "total_tokens": 3265,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

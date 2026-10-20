@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass OOBank {\n}\n\nclass Branch {\n  + address\n  + branchNumber\n}\n\nclass Division {\n}\n\nclass Subdivision {\n}\n\nclass Employee {\n}\n\nclass Client {\n}\n\nclass Account {\n  + accountNumber\n  + balance\n  + creditOrOverdraftLimit\n}\n\nclass AccountType {\n  + interestRate\n  + monthlyFee\n  + privileges\n}\n\nclass MortgageAccount extends Account {\n  + collateralProperty\n}\n\nclass CheckingAccount extends Account {\n}\n\nclass CreditCardAccount extends Account {\n  + expiryDate\n}\n\nOOBank \"1\" *-- \"*\" Branch : has\nOOBank \"1\" *-- \"*\" Division : is divided into\nDivision \"1\" *-- \"*\" Subdivision : is divided into\nSubdivision \"1\" *-- \"*\" Branch : is a\nBranch \"1\" -- \"*\" Client : client opens accounts at\nClient \"1\" -- \"*\" Account : opens\nAccount \"1\" -- \"1\" AccountType : has\nAccount \"1..*\" -- \"1..*\" Client : joint account\n\nDivision \"1\" -- \"1\" Employee : has a manager\nDivision \"1\" -- \"*\" Employee : has a set of other employees\nClient \"1\" -- \"0..1\" Employee : is assigned to personal banker\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 16.549079899999924,
+ "prompt_tokens": 1527,
+ "completion_tokens": 288,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zdjp4pyfdoiyrqthejrie",
+  "object": "chat.completion",
+  "created": 1792514640,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass OOBank {\n}\n\nclass Branch {\n  + address\n  + branchNumber\n}\n\nclass Division {\n}\n\nclass Subdivision {\n}\n\nclass Employee {\n}\n\nclass Client {\n}\n\nclass Account {\n  + accountNumber\n  + balance\n  + creditOrOverdraftLimit\n}\n\nclass AccountType {\n  + interestRate\n  + monthlyFee\n  + privileges\n}\n\nclass MortgageAccount extends Account {\n  + collateralProperty\n}\n\nclass CheckingAccount extends Account {\n}\n\nclass CreditCardAccount extends Account {\n  + expiryDate\n}\n\nOOBank \"1\" *-- \"*\" Branch : has\nOOBank \"1\" *-- \"*\" Division : is divided into\nDivision \"1\" *-- \"*\" Subdivision : is divided into\nSubdivision \"1\" *-- \"*\" Branch : is a\nBranch \"1\" -- \"*\" Client : client opens accounts at\nClient \"1\" -- \"*\" Account : opens\nAccount \"1\" -- \"1\" AccountType : has\nAccount \"1..*\" -- \"1..*\" Client : joint account\n\nDivision \"1\" -- \"1\" Employee : has a manager\nDivision \"1\" -- \"*\" Employee : has a set of other employees\nClient \"1\" -- \"0..1\" Employee : is assigned to personal banker\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1527,
+   "completion_tokens": 288,
+   "total_tokens": 1815,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

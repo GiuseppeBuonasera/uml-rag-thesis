@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Researcher\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ surname : string\",\n        \"+ isAvailable : boolean\"\n      ]\n    },\n    {\n      \"name\": \"SeniorResearcher\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"JuniorResearcher\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Team\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Area\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"AreaManager\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SeniorResearcher\",\n      \"parent\": \"Researcher\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"JuniorResearcher\",\n      \"parent\": \"Researcher\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SeniorResearcher\",\n      \"target\": \"Team\",\n      \"label\": \"leads\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Team\",\n      \"part\": \"JuniorResearcher\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Area\",\n      \"target\": \"AreaManager\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Area\",\n      \"part\": \"Team\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Team\",\n      \"target\": \"Project\",\n      \"label\": \"carries out\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Researcher\",\n      \"target\": \"Area\",\n      \"label\": \"available in\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 30.68306030000167,
+ "prompt_tokens": 1972,
+ "completion_tokens": 580,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ianzchs5c691qp1bpl6xvg",
+  "object": "chat.completion",
+  "created": 1792510565,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Researcher\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ surname : string\",\n        \"+ isAvailable : boolean\"\n      ]\n    },\n    {\n      \"name\": \"SeniorResearcher\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"JuniorResearcher\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Team\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Project\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Area\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"AreaManager\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SeniorResearcher\",\n      \"parent\": \"Researcher\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"JuniorResearcher\",\n      \"parent\": \"Researcher\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SeniorResearcher\",\n      \"target\": \"Team\",\n      \"label\": \"leads\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Team\",\n      \"part\": \"JuniorResearcher\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Area\",\n      \"target\": \"AreaManager\",\n      \"label\": \"has\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Area\",\n      \"part\": \"Team\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Team\",\n      \"target\": \"Project\",\n      \"label\": \"carries out\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Researcher\",\n      \"target\": \"Area\",\n      \"label\": \"available in\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1972,
+   "completion_tokens": 580,
+   "total_tokens": 2552,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

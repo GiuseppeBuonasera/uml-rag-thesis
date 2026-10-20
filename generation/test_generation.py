@@ -2907,6 +2907,170 @@ def check_synonym_review() -> None:
           "esercizio, contesto senza condizione ne' somiglianza")
 
 
+def check_oracle_self(tmp: Path) -> None:
+    """Voce 162: controllo oracle_self (solo analisi). L'unico esempio e' l'esercizio stesso; blocco esempi standard o
+    libero (senza "do not copy"); eccezione ai ruoli SOLO per `passo: controllo` con sole condizioni di analisi;
+    config = 216 generazioni; regola di lettura di experiments/analyze_oracle_self.py (soglie, punteggi, guardia)."""
+    import copy as _copy
+    from types import SimpleNamespace
+    import yaml
+    import analyze_oracle_self as aos
+    from prompt_builder import ANALYSIS_ONLY, EXAMPLES_BLOCKS, TEMPLATES
+    assert "oracle_self" in ANALYSIS_ONLY
+    std = (TEMPLATES / EXAMPLES_BLOCKS["standard"]).read_text(encoding="utf-8")
+    lib = (TEMPLATES / EXAMPLES_BLOCKS["libero"]).read_text(encoding="utf-8")
+    assert "do not copy their classes" in std and "do not copy" not in lib and "{examples}" in lib
+    assert hashlib.sha256((TEMPLATES / EXAMPLES_BLOCKS["libero"]).read_bytes()).hexdigest() == \
+        "1b4354ac37b1a7755d773b8dad842e4e704c43aed1d178ca8b5ae18d62f3fc63"
+    for bad in ({"condition": "bm25", "examples_block": "libero"}, {"condition": "oracle_self", "examples_block": "x"}):
+        try:
+            PromptSpec(output_format="plantuml", instructions_version="v5", **bad)
+            raise AssertionError(f"accettato {bad}")
+        except ValueError:
+            pass
+    cands, tq = cl.load_all()
+    b = PromptBuilder(retrieval_source="frozen")
+    q = next(x for x in cands if x["id"] == "Gym")
+    for v, phrase in (("standard", True), ("libero", False)):
+        spec = PromptSpec(condition="oracle_self", k=1, output_format="plantuml", instructions_version="v5",
+                          example_view="clean_v1", examples_block=v)
+        bp = b.build(q, spec)
+        assert bp.example_ids == ["Gym"] and bp.analysis_only and ("do not copy" in bp.text) == phrase
+        assert b.render_example(q, spec) in bp.text  # la soluzione dell'esercizio e' nel prompt
+    try:
+        b.build(q, PromptSpec(condition="oracle_self", k=1, output_format="apollon"))
+        raise AssertionError("oracle_self accettato con le istruzioni v4")
+    except ValueError:
+        pass
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "oracle_self.yaml").read_text(encoding="utf-8"))
+    assert cfg["passo"] == "controllo" and cfg["conditions"] == ["oracle_self"] and len(cfg["configurations"]) == 8
+    total = 0
+    for name in cfg["configurations"]:
+        x = rx.resolve_configuration(cfg, name)
+        qs = cands if x["split"] == "corpus" else tq
+        total += len(rx.plan(x, qs))
+        rx.check_query_roles(x, qs)  # ammesso: controllo con sola condizione di analisi
+    assert total == 216, total
+    leak = _copy.deepcopy(rx.resolve_configuration(cfg, "P-corpus-standard"))
+    leak["conditions"] = ["bm25"]
+    try:
+        rx.check_query_roles(leak, cands)
+        raise AssertionError("eccezione ai ruoli estesa a una condizione non di analisi")
+    except SystemExit:
+        pass
+    # regola di lettura
+    assert (aos.SOGLIA_USA, aos.SOGLIA_NON_USA, aos.COPIA) == (0.80, 0.60, 0.90)
+    assert aos.outcome(0.80).startswith("il modello SA") and aos.outcome(0.799).startswith("uso PARZIALE")
+    assert aos.outcome(0.599).startswith("il modello NON") and aos.outcome(None).startswith("STOP")
+    g = q["diagram_apollon_json"]
+    perfect = {"v": SimpleNamespace(level=4, diagram=g), "gt": g, "q": "Gym"}
+    empty = {"v": SimpleNamespace(level=0, diagram=None), "gt": g, "q": "Gym"}
+    sp, se = aos.response_scores(perfect), aos.response_scores(empty)
+    assert (sp["comp"], sp["prec"], sp["copia"], sp["J"]) == (1.0, 1.0, 1, 1.0), sp
+    assert se["comp"] == 0 and se["copia"] == 0 and se["prec"] is None
+    assert aos.summarize([perfect, empty])["comp"] == 0.5
+    assert aos.main(["--results-dir", str(tmp / "nessuna_run")]) == 1
+    print("  OK  controllo oracle_self (voce 162): esempio = l'esercizio stesso, blocco standard / libero, eccezione ai "
+          "ruoli solo per i controlli di analisi, 216 generazioni, regola di lettura (soglie, punteggi, guardia)")
+
+
+def check_oracle_partial(tmp: Path) -> None:
+    """Voce 163: oracle_partial (solo analisi). degrade_diagram deterministico (frazione delle classi, relazioni solo
+    tra classi tenute); esempio = traccia vera (stessa vista di oracle_self) + soluzione degradata; config = 162
+    generazioni PlantUML; regola di experiments/analyze_oracle_partial.py (soglia, guardia)."""
+    import yaml
+    import analyze_oracle_partial as aop
+    from prompt_builder import ANALYSIS_ONLY, degrade_diagram
+    assert "oracle_partial" in ANALYSIS_ONLY
+    cands, tq = cl.load_all()
+    by = {x["id"]: x for x in cands + tq}
+    g = by["AirTravel"]["diagram_apollon_json"]
+    d1, d2 = degrade_diagram(g, 0.5, "AirTravel"), degrade_diagram(g, 0.5, "AirTravel")
+    kept = {n["id"] for n in d1["nodes"]}
+    assert d1 == d2 and len(kept) == round(0.5 * len(g["nodes"])) and len(degrade_diagram(g, 0.01, "x")["nodes"]) == 1
+    assert all(e["source"] in kept and e["target"] in kept for e in d1["edges"]) and g["nodes"] != d1["nodes"]
+    for bad in ({"condition": "oracle_partial", "oracle_keep": 1.0}, {"condition": "bm25", "oracle_keep": 0.5}):
+        try:
+            PromptSpec(output_format="plantuml", instructions_version="v5", **bad)
+            raise AssertionError(f"accettato {bad}")
+        except ValueError:
+            pass
+    b = PromptBuilder(retrieval_source="frozen")
+    q = by["BankAccount"]  # uno dei 6 esercizi ripuliti dalla vista clean_v1: la traccia deve restare quella di oracle_self
+    common = dict(k=1, output_format="plantuml", instructions_version="v5", example_view="clean_v1", examples_block="libero")
+    part = b.build(q, PromptSpec(condition="oracle_partial", oracle_keep=0.5, **common))
+    full = b.build(q, PromptSpec(condition="oracle_self", **common))
+    assert part.example_ids == ["BankAccount__parziale50"] and part.analysis_only
+    ex = b.select(q, PromptSpec(condition="oracle_partial", oracle_keep=0.5, **common))[0]
+    assert part.examples_block.split(" — PlantUML")[0] == full.examples_block.split(" — PlantUML")[0]  # stessa traccia
+    assert b.render_example(ex, PromptSpec(condition="oracle_partial", oracle_keep=0.5, **common)) in part.text
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "oracle_partial.yaml").read_text(encoding="utf-8"))
+    assert cfg["passo"] == "controllo" and cfg["conditions"] == ["oracle_partial"] and len(cfg["configurations"]) == 6
+    total = 0
+    for name in cfg["configurations"]:
+        x = rx.resolve_configuration(cfg, name)
+        qs = cands if x["split"] == "corpus" else tq
+        total += len(rx.plan(x, qs))
+        rx.check_query_roles(x, qs)
+    assert total == 162, total
+    assert aop.GUADAGNO_UTILE == 0.05
+    assert aop.threshold([(25, 0.34, 0.01), (50, 0.56, 0.05), (75, 0.77, 0.2), (100, 1.0, 0.3)]) == (50, 0.56)
+    assert aop.threshold([(25, 0.34, 0.0), (100, 1.0, 0.049)]) == (None, None)
+    assert aop.main(["--results-dir", str(tmp / "nessuna_run")]) == 1
+    print("  OK  controllo oracle_partial (voce 163): degradazione deterministica, stessa traccia di oracle_self, "
+          "162 generazioni PlantUML, regola della soglia di utilita', guardia")
+
+
+def check_oracle_mix(tmp: Path) -> None:
+    """Voce 164: oracle_partial con oracle_extra. "bm25_2" = i 2 esempi bm25 k2 congelati prima dell'esempio al 50 %;
+    "complemento" = la meta' complementare dopo (disgiunte, insieme tutte le classi); config 108 generazioni; regola di
+    experiments/analyze_oracle_mix.py (verdetti, guardia)."""
+    import yaml
+    import analyze_oracle_mix as aom
+    from prompt_builder import degrade_diagram
+    cands, tq = cl.load_all()
+    by = {x["id"]: x for x in cands + tq}
+    g = by["AirTravel"]["diagram_apollon_json"]
+    a = {n["id"] for n in degrade_diagram(g, 0.5, "AirTravel")["nodes"]}
+    b_ = {n["id"] for n in degrade_diagram(g, 0.5, "AirTravel", complement=True)["nodes"]}
+    assert not a & b_ and a | b_ == {n["id"] for n in g["nodes"]}
+    for bad in ({"condition": "bm25", "oracle_extra": "bm25_2"},
+                {"condition": "oracle_partial", "oracle_keep": 0.25, "oracle_extra": "complemento"},
+                {"condition": "oracle_partial", "oracle_keep": 0.5, "oracle_extra": "x"}):
+        try:
+            PromptSpec(output_format="plantuml", instructions_version="v5", **bad)
+            raise AssertionError(f"accettato {bad}")
+        except ValueError:
+            pass
+    fz = PromptBuilder(retrieval_source="frozen")
+    q = by["AirTravel"]
+    common = dict(condition="oracle_partial", k=1, output_format="plantuml", instructions_version="v5",
+                  example_view="clean_v1", examples_block="libero", oracle_keep=0.5)
+    dil = fz.select(q, PromptSpec(oracle_extra="bm25_2", **common))
+    bm = [h.id for h in reversed(fz.hits(q, PromptSpec(condition="bm25", k=2, output_format="plantuml",
+                                                       instructions_version="v5")))]
+    assert [e["id"] for e in dil] == bm + ["AirTravel__parziale50"]
+    comp = fz.select(q, PromptSpec(oracle_extra="complemento", **common))
+    assert [e["id"] for e in comp] == ["AirTravel__parziale50", "AirTravel__complemento50"]
+    assert fz.build(q, PromptSpec(oracle_extra="complemento", **common)).analysis_only
+    cfg = yaml.safe_load((ROOT / "experiments" / "configs" / "oracle_mix.yaml").read_text(encoding="utf-8"))
+    total = 0
+    for name in cfg["configurations"]:
+        x = rx.resolve_configuration(cfg, name)
+        qs = cands if x["split"] == "corpus" else tq
+        total += len(rx.plan(x, qs))
+        rx.check_query_roles(x, qs)
+    assert total == 108, total
+    assert (aom.MARGINE, aom.SOMMA_MIN) == (0.03, 0.05)
+    assert aom.verdict_dilution(0.066, 0.095) == "nessuna diluizione" and aom.verdict_dilution(0.064, 0.095) == "diluizione"
+    assert aom.verdict_sum(0.31, 0.095, 0.337).endswith("del tutto")
+    assert aom.verdict_sum(0.145, 0.095, 0.337).endswith("in parte")
+    assert aom.verdict_sum(0.14, 0.095, 0.337).endswith("non si sommano")
+    assert aom.main(["--results-dir", str(tmp / "nessuna_run")]) == 1
+    print("  OK  controllo oracle_mix (voce 164): diluizione con 2 esempi bm25 congelati, meta' complementari disgiunte, "
+          "108 generazioni, verdetti della regola, guardia")
+
+
 def check_compare_view() -> None:
     """experiments/compare_view.py (voce 134): esercizi comuni alle run, pagina ristretta a un esercizio e a una
     ripetizione con GT + una risposta per run; rendering verificato solo se java e plantuml.jar sono disponibili."""
@@ -3362,6 +3526,9 @@ def main() -> None:
         check_frozen(builder, tmp)
         check_3b_and_batch(builder, tmp)
         check_3b_sviluppo()
+        check_oracle_self(tmp)
+        check_oracle_partial(tmp)
+        check_oracle_mix(tmp)
         check_difficulty()
         check_synonym_review()
         check_compare_view()

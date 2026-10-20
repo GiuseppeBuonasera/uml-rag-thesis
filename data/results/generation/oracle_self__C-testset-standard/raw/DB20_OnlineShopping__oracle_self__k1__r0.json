@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Customer\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"WebUser\", \"attributes\": [\"+ login_name : string\", \"+ state : UserState\"]}, {\"name\": \"UserState\", \"kind\": \"enum\", \"values\": [\"New\", \"Active\", \"Temporary Blocked\", \"Banned\"]}, {\"name\": \"Account\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"ShoppingCart\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"Order\", \"attributes\": [\"+ status : string\"]}, {\"name\": \"LineItem\", \"attributes\": [\"+ quantity : int\"]}, {\"name\": \"Product\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"Payment\", \"attributes\": [\"+ id : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Account\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"inheritance\", \"child\": \"WebUser\", \"parent\": \"Customer\"}, {\"type\": \"association\", \"source\": \"WebUser\", \"target\": \"ShoppingCart\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"composition\", \"whole\": \"Account\", \"part\": \"ShoppingCart\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Account\", \"part\": \"Order\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Account\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"LineItem\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ShoppingCart\", \"target\": \"LineItem\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"LineItem\", \"target\": \"Product\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 26.553459499999008,
+ "prompt_tokens": 2548,
+ "completion_tokens": 496,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-xo0jsaqefxgun35ua6pbp",
+  "object": "chat.completion",
+  "created": 1792511266,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Customer\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"WebUser\", \"attributes\": [\"+ login_name : string\", \"+ state : UserState\"]}, {\"name\": \"UserState\", \"kind\": \"enum\", \"values\": [\"New\", \"Active\", \"Temporary Blocked\", \"Banned\"]}, {\"name\": \"Account\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"ShoppingCart\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"Order\", \"attributes\": [\"+ status : string\"]}, {\"name\": \"LineItem\", \"attributes\": [\"+ quantity : int\"]}, {\"name\": \"Product\", \"attributes\": [\"+ id : string\"]}, {\"name\": \"Payment\", \"attributes\": [\"+ id : string\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Customer\", \"target\": \"Account\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"inheritance\", \"child\": \"WebUser\", \"parent\": \"Customer\"}, {\"type\": \"association\", \"source\": \"WebUser\", \"target\": \"ShoppingCart\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"composition\", \"whole\": \"Account\", \"part\": \"ShoppingCart\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"whole\": \"Account\", \"part\": \"Order\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Account\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Payment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"LineItem\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ShoppingCart\", \"target\": \"LineItem\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"LineItem\", \"target\": \"Product\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2548,
+   "completion_tokens": 496,
+   "total_tokens": 3044,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

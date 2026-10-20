@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass WebPortal {\n  +versionNumber : string\n  +url : string\n}\n\nclass Building {\n  +id : string\n  +name : string\n  +address : string\n  +yearOfConstruction : int\n}\n\nclass Entry {\n  +name : string\n  +public : boolean\n}\n\nclass Image {\n  +fileName : string\n}\n\nclass User {\n  +userName : string\n  +emailAddress : string\n  +password : string\n}\n\nclass Administrator {\n  +idCardNumber : string\n}\n\nclass Comment {\n}\n\nenum EnergyClass {\n  A\n  B\n  C\n  D\n}\n\nWebPortal \"1\" -- \"*\" Building\nBuilding \"1\" -- \"1\" EnergyClass\nBuilding \"1\" *-- \"*\" Entry\nBuilding \"1\" *-- \"*\" Image\nBuilding \"1\" -- \"0..1\" Image : profile photo\nUser \"1\" -- \"*\" Building : owner\nUser \"1\" -- \"*\" Comment : writes\nBuilding \"1\" -- \"*\" Comment : has\nWebPortal \"1\" -- \"*\" User : hosts\n\nAdministrator extends User\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 13.481304299999465,
+ "prompt_tokens": 1859,
+ "completion_tokens": 252,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ij0a643ptzbf78nce460vd",
+  "object": "chat.completion",
+  "created": 1792512509,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass WebPortal {\n  +versionNumber : string\n  +url : string\n}\n\nclass Building {\n  +id : string\n  +name : string\n  +address : string\n  +yearOfConstruction : int\n}\n\nclass Entry {\n  +name : string\n  +public : boolean\n}\n\nclass Image {\n  +fileName : string\n}\n\nclass User {\n  +userName : string\n  +emailAddress : string\n  +password : string\n}\n\nclass Administrator {\n  +idCardNumber : string\n}\n\nclass Comment {\n}\n\nenum EnergyClass {\n  A\n  B\n  C\n  D\n}\n\nWebPortal \"1\" -- \"*\" Building\nBuilding \"1\" -- \"1\" EnergyClass\nBuilding \"1\" *-- \"*\" Entry\nBuilding \"1\" *-- \"*\" Image\nBuilding \"1\" -- \"0..1\" Image : profile photo\nUser \"1\" -- \"*\" Building : owner\nUser \"1\" -- \"*\" Comment : writes\nBuilding \"1\" -- \"*\" Comment : has\nWebPortal \"1\" -- \"*\" User : hosts\n\nAdministrator extends User\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1859,
+   "completion_tokens": 252,
+   "total_tokens": 2111,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

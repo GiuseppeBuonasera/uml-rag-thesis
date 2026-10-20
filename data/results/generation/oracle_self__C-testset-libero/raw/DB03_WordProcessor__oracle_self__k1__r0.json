@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"methods\": [\n        \"+ open()\",\n        \"+ save()\",\n        \"+ print()\"\n      ]\n    },\n    {\n      \"name\": \"Document\",\n      \"methods\": [\n        \"+ new()\",\n        \"+ open()\",\n        \"+ save()\",\n        \"+ print()\"\n      ]\n    },\n    {\n      \"name\": \"Page\",\n      \"methods\": [\n        \"+ newPage()\"\n      ]\n    },\n    {\n      \"name\": \"Header\",\n      \"attributes\": [\n        \"+ date\",\n        \"+ time\",\n        \"+ pageNumber\"\n      ]\n    },\n    {\n      \"name\": \"Footer\",\n      \"attributes\": [\n        \"+ date\",\n        \"+ time\",\n        \"+ pageNumber\"\n      ]\n    },\n    {\n      \"name\": \"Body\",\n      \"methods\": [\n        \"+ insertPicture()\",\n        \"+ insertTable()\"\n      ]\n    },\n    {\n      \"name\": \"Sentence\",\n      \"methods\": [\n        \"+ addWord()\"\n      ]\n    },\n    {\n      \"name\": \"Word\",\n      \"methods\": [\n        \"+ addCharacter()\"\n      ]\n    },\n    {\n      \"name\": \"Character\",\n      \"attributes\": [\n        \"+ value\"\n      ]\n    },\n    {\n      \"name\": \"Picture\"\n    },\n    {\n      \"name\": \"Table\",\n      \"methods\": [\n        \"+ addRow()\",\n        \"+ addColumn()\"\n      ]\n    },\n    {\n      \"name\": \"Row\"\n    },\n    {\n      \"name\": \"Column\"\n    },\n    {\n      \"name\": \"Cell\",\n      \"methods\": [\n        \"+ addText()\",\n        \"+ addPicture()\"\n      ]\n    },\n    {\n      \"name\": \"Keyboard\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Document\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Keyboard\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Document\",\n      \"part\": \"Page\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Header\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Footer\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Body\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Sentence\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sentence\",\n      \"part\": \"Word\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Word\",\n      \"part\": \"Character\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Body\",\n      \"part\": \"Picture\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Body\",\n      \"part\": \"Table\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Row\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Column\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Row\",\n      \"part\": \"Cell\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Column\",\n      \"part\": \"Cell\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Cell\",\n      \"part\": \"Character\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Cell\",\n      \"part\": \"Picture\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 69.15358840000044,
+ "prompt_tokens": 2219,
+ "completion_tokens": 1309,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-vdeckc3qvzrbjealzfsln",
+  "object": "chat.completion",
+  "created": 1792511344,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"methods\": [\n        \"+ open()\",\n        \"+ save()\",\n        \"+ print()\"\n      ]\n    },\n    {\n      \"name\": \"Document\",\n      \"methods\": [\n        \"+ new()\",\n        \"+ open()\",\n        \"+ save()\",\n        \"+ print()\"\n      ]\n    },\n    {\n      \"name\": \"Page\",\n      \"methods\": [\n        \"+ newPage()\"\n      ]\n    },\n    {\n      \"name\": \"Header\",\n      \"attributes\": [\n        \"+ date\",\n        \"+ time\",\n        \"+ pageNumber\"\n      ]\n    },\n    {\n      \"name\": \"Footer\",\n      \"attributes\": [\n        \"+ date\",\n        \"+ time\",\n        \"+ pageNumber\"\n      ]\n    },\n    {\n      \"name\": \"Body\",\n      \"methods\": [\n        \"+ insertPicture()\",\n        \"+ insertTable()\"\n      ]\n    },\n    {\n      \"name\": \"Sentence\",\n      \"methods\": [\n        \"+ addWord()\"\n      ]\n    },\n    {\n      \"name\": \"Word\",\n      \"methods\": [\n        \"+ addCharacter()\"\n      ]\n    },\n    {\n      \"name\": \"Character\",\n      \"attributes\": [\n        \"+ value\"\n      ]\n    },\n    {\n      \"name\": \"Picture\"\n    },\n    {\n      \"name\": \"Table\",\n      \"methods\": [\n        \"+ addRow()\",\n        \"+ addColumn()\"\n      ]\n    },\n    {\n      \"name\": \"Row\"\n    },\n    {\n      \"name\": \"Column\"\n    },\n    {\n      \"name\": \"Cell\",\n      \"methods\": [\n        \"+ addText()\",\n        \"+ addPicture()\"\n      ]\n    },\n    {\n      \"name\": \"Keyboard\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Document\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Keyboard\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Document\",\n      \"part\": \"Page\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Header\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Footer\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Page\",\n      \"part\": \"Body\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Body\",\n      \"part\": \"Sentence\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Sentence\",\n      \"part\": \"Word\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Word\",\n      \"part\": \"Character\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Body\",\n      \"part\": \"Picture\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Body\",\n      \"part\": \"Table\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Row\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Table\",\n      \"part\": \"Column\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Row\",\n      \"part\": \"Cell\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Column\",\n      \"part\": \"Cell\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Cell\",\n      \"part\": \"Character\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Cell\",\n      \"part\": \"Picture\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"0..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2219,
+   "completion_tokens": 1309,
+   "total_tokens": 3528,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

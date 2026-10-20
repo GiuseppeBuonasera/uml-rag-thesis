@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum BuildingMaterial {\n  wood\n  brick\n  concrete\n}\n\nclass House {\n  + Address : string\n  + BuildingMaterial : BuildingMaterial\n}\n\nabstract class Basement {\n  + Size : double\n  + Name : string\n}\n\nclass EarthBasement extends Basement {\n  + Humidity : double\n}\n\nclass ConcreteBasement extends Basement {}\n\nclass SemiDetachedHouse extends House {\n  + Garden : boolean\n  + Windows : int\n}\n\nclass Carport {\n  + DoublePort : boolean\n  + FlatRoof : boolean\n}\n\nclass Garage {\n  + AutomaticGarageDoor : boolean\n}\n\nclass Company {\n  + Name : string\n  + Address : string\n}\n\nclass JobLog {\n  + Hours : int\n  + Price : double\n}\n\nHouse \"1\" *-- \"0..1\" Basement\nHouse \"1\" -- \"*\" Company\nHouse \"1\" *-- \"*\" JobLog\nCompany \"1\" -- \"*\" JobLog\nSemiDetachedHouse \"1\" -- \"2\" Carport\nSemiDetachedHouse \"1\" -- \"1\" Garage\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 17.234430700000303,
+ "prompt_tokens": 1696,
+ "completion_tokens": 249,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-q6qbcf73173oyeujgchnk",
+  "object": "chat.completion",
+  "created": 1792505854,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum BuildingMaterial {\n  wood\n  brick\n  concrete\n}\n\nclass House {\n  + Address : string\n  + BuildingMaterial : BuildingMaterial\n}\n\nabstract class Basement {\n  + Size : double\n  + Name : string\n}\n\nclass EarthBasement extends Basement {\n  + Humidity : double\n}\n\nclass ConcreteBasement extends Basement {}\n\nclass SemiDetachedHouse extends House {\n  + Garden : boolean\n  + Windows : int\n}\n\nclass Carport {\n  + DoublePort : boolean\n  + FlatRoof : boolean\n}\n\nclass Garage {\n  + AutomaticGarageDoor : boolean\n}\n\nclass Company {\n  + Name : string\n  + Address : string\n}\n\nclass JobLog {\n  + Hours : int\n  + Price : double\n}\n\nHouse \"1\" *-- \"0..1\" Basement\nHouse \"1\" -- \"*\" Company\nHouse \"1\" *-- \"*\" JobLog\nCompany \"1\" -- \"*\" JobLog\nSemiDetachedHouse \"1\" -- \"2\" Carport\nSemiDetachedHouse \"1\" -- \"1\" Garage\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1696,
+   "completion_tokens": 249,
+   "total_tokens": 1945,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nabstract class TutoringRole {\n}\n\nclass User {\n  + name : string\n  + email : string\n}\n\nclass Student extends TutoringRole {\n}\n\nclass Tutor extends TutoringRole {\n  + bankAccount : string\n}\n\nclass TutoringOffer {\n  + subject : string\n  + levelOfExpertise : LevelOfTutoring\n  + hourlyPrice : float\n}\n\nclass TutorAvailability {\n  + dayOfWeek : string\n  + startTime : time\n  + endTime : time\n}\n\nclass TutoringRequest {\n  + level : LevelOfTutoring\n  + suggestedDate : date\n  + suggestedTime : time\n}\n\nclass TutoringSession {\n  + sessionDate : date\n  + sessionTime : time\n  + status : string\n}\n\nclass TutorOfTheMonthAward {\n  + month : int\n  + year : int\n  + subject : string\n}\n\nUser \"1\" -- \"0..*\" TutoringRole : is a\n\nTutor \"1\" -- \"0..*\" TutoringOffer : offers\nTutor \"1\" -- \"0..*\" TutorAvailability : specifies\nTutor \"1\" -- \"0..*\" TutoringRequest : receives\nTutor \"1\" -- \"0..*\" TutoringSession : conducts\nTutor \"1\" -- \"0..*\" TutorOfTheMonthAward : receives\n\nStudent \"1\" -- \"0..*\" TutoringRequest : makes\nStudent \"1\" -- \"0..*\" TutoringSession : attends\nStudent \"1\" -- \"0..*\" TutoringSession : pays for\n\nTutoringRequest \"1\" -- \"0..1\" TutoringSession : results in\n\nTutoringSession \"1\" -- \"0..1\" PaymentKind : paid via\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 24.483657299999322,
+ "prompt_tokens": 2026,
+ "completion_tokens": 421,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-g47ddy0yx6u8b26ws128d4",
+  "object": "chat.completion",
+  "created": 1792514118,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nabstract class TutoringRole {\n}\n\nclass User {\n  + name : string\n  + email : string\n}\n\nclass Student extends TutoringRole {\n}\n\nclass Tutor extends TutoringRole {\n  + bankAccount : string\n}\n\nclass TutoringOffer {\n  + subject : string\n  + levelOfExpertise : LevelOfTutoring\n  + hourlyPrice : float\n}\n\nclass TutorAvailability {\n  + dayOfWeek : string\n  + startTime : time\n  + endTime : time\n}\n\nclass TutoringRequest {\n  + level : LevelOfTutoring\n  + suggestedDate : date\n  + suggestedTime : time\n}\n\nclass TutoringSession {\n  + sessionDate : date\n  + sessionTime : time\n  + status : string\n}\n\nclass TutorOfTheMonthAward {\n  + month : int\n  + year : int\n  + subject : string\n}\n\nUser \"1\" -- \"0..*\" TutoringRole : is a\n\nTutor \"1\" -- \"0..*\" TutoringOffer : offers\nTutor \"1\" -- \"0..*\" TutorAvailability : specifies\nTutor \"1\" -- \"0..*\" TutoringRequest : receives\nTutor \"1\" -- \"0..*\" TutoringSession : conducts\nTutor \"1\" -- \"0..*\" TutorOfTheMonthAward : receives\n\nStudent \"1\" -- \"0..*\" TutoringRequest : makes\nStudent \"1\" -- \"0..*\" TutoringSession : attends\nStudent \"1\" -- \"0..*\" TutoringSession : pays for\n\nTutoringRequest \"1\" -- \"0..1\" TutoringSession : results in\n\nTutoringSession \"1\" -- \"0..1\" PaymentKind : paid via\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2026,
+   "completion_tokens": 421,
+   "total_tokens": 2447,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

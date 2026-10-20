@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"TileO\"\n    },\n    {\n      \"name\": \"Game\"\n    },\n    {\n      \"name\": \"Tile\"\n    },\n    {\n      \"name\": \"Connection\"\n    },\n    {\n      \"name\": \"Die\"\n    },\n    {\n      \"name\": \"Deck\"\n    },\n    {\n      \"name\": \"ActionCard\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"ActionTile\"\n    },\n    {\n      \"name\": \"NormalTile\"\n    },\n    {\n      \"name\": \"HiddenTile\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"TileO\",\n      \"part\": \"Game\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Tile\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Connection\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Die\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Deck\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Deck\",\n      \"part\": \"ActionCard\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Player\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ActionTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NormalTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HiddenTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"Connection\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"startingPosition\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"currentTile\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 46.6329278000012,
+ "prompt_tokens": 3611,
+ "completion_tokens": 795,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-lkotja6b4lochzfm8h70bk",
+  "object": "chat.completion",
+  "created": 1792510052,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"TileO\"\n    },\n    {\n      \"name\": \"Game\"\n    },\n    {\n      \"name\": \"Tile\"\n    },\n    {\n      \"name\": \"Connection\"\n    },\n    {\n      \"name\": \"Die\"\n    },\n    {\n      \"name\": \"Deck\"\n    },\n    {\n      \"name\": \"ActionCard\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"ActionTile\"\n    },\n    {\n      \"name\": \"NormalTile\"\n    },\n    {\n      \"name\": \"HiddenTile\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"TileO\",\n      \"part\": \"Game\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Tile\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Connection\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Die\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Deck\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Deck\",\n      \"part\": \"ActionCard\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Player\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ActionTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NormalTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HiddenTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"Connection\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"startingPosition\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"currentTile\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3611,
+   "completion_tokens": 795,
+   "total_tokens": 4406,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

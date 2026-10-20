@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum SessionStatus {\n  Proposed\n  Confirmed\n  Completed\n  Paid\n  Cancelled\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nclass User {\n  + name : string\n  + email : string\n}\n\nclass Tutor extends User {\n  + bankAccount : string\n}\n\nclass Student extends User {}\n\nclass Subject {\n  + name : string\n}\n\nclass TutoringOffer {\n  + hourlyPrice : float\n}\n\nclass TutoringRequest {\n  + tutoringLevel : LevelOfTutoring\n  + targetDate : date\n  + targetTime : time\n}\n\nclass TutoringSession {\n  + sessionDate : date\n  + sessionTime : time\n  + sessionStatus : SessionStatus\n}\n\nclass TutorAvailability {\n  + dayOfWeek : string\n  + startTime : time\n  + endTime : time\n}\n\nclass Payment {\n  + paymentForm : PaymentKind\n  + amount : float\n  + paymentDate : date\n}\n\nclass BestTutorAward {\n  + month : int\n  + year : int\n}\n\nTutor \"1\" *-- \"*\" TutoringOffer\nTutor \"1\" *-- \"*\" TutorAvailability\nTutor \"1\" -- \"*\" TutoringRequest\nTutor \"1\" -- \"*\" TutoringSession\nStudent \"1\" -- \"*\" TutoringRequest\nStudent \"1\" -- \"*\" TutoringSession\nStudent \"1\" -- \"0..1\" Payment\nTutoringRequest \"1\" -- \"0..1\" TutoringSession\nTutoringSession \"1\" -- \"0..1\" Payment\nSubject \"1\" -- \"*\" TutoringOffer\nSubject \"1\" -- \"*\" TutoringRequest\nTutor \"1\" -- \"*\" BestTutorAward\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 25.23904330000005,
+ "prompt_tokens": 2226,
+ "completion_tokens": 406,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-4pex3c3zn0ov6ank3blita",
+  "object": "chat.completion",
+  "created": 1792505947,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum SessionStatus {\n  Proposed\n  Confirmed\n  Completed\n  Paid\n  Cancelled\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nclass User {\n  + name : string\n  + email : string\n}\n\nclass Tutor extends User {\n  + bankAccount : string\n}\n\nclass Student extends User {}\n\nclass Subject {\n  + name : string\n}\n\nclass TutoringOffer {\n  + hourlyPrice : float\n}\n\nclass TutoringRequest {\n  + tutoringLevel : LevelOfTutoring\n  + targetDate : date\n  + targetTime : time\n}\n\nclass TutoringSession {\n  + sessionDate : date\n  + sessionTime : time\n  + sessionStatus : SessionStatus\n}\n\nclass TutorAvailability {\n  + dayOfWeek : string\n  + startTime : time\n  + endTime : time\n}\n\nclass Payment {\n  + paymentForm : PaymentKind\n  + amount : float\n  + paymentDate : date\n}\n\nclass BestTutorAward {\n  + month : int\n  + year : int\n}\n\nTutor \"1\" *-- \"*\" TutoringOffer\nTutor \"1\" *-- \"*\" TutorAvailability\nTutor \"1\" -- \"*\" TutoringRequest\nTutor \"1\" -- \"*\" TutoringSession\nStudent \"1\" -- \"*\" TutoringRequest\nStudent \"1\" -- \"*\" TutoringSession\nStudent \"1\" -- \"0..1\" Payment\nTutoringRequest \"1\" -- \"0..1\" TutoringSession\nTutoringSession \"1\" -- \"0..1\" Payment\nSubject \"1\" -- \"*\" TutoringOffer\nSubject \"1\" -- \"*\" TutoringRequest\nTutor \"1\" -- \"*\" BestTutorAward\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2226,
+   "completion_tokens": 406,
+   "total_tokens": 2632,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

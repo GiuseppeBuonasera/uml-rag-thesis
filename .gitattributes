@@ -23,6 +23,8 @@ generation/templates/v5plan_plantuml_instructions.txt -text
 generation/templates/v5b_compact_instructions.txt -text
 # istruzioni v5c del compatto, congelate con lo sha256 nel test check_v5c (voce 150)
 generation/templates/v5c_compact_instructions.txt -text
+# blocco esempi 'libero' del controllo oracle_self, sha256 nel test check_oracle_self (voce 162)
+generation/templates/v5_examples_block_libero.txt -text
 # vista degli esempi clean_v1, congelata con lo sha256 nel test (voce 138)
 generation/example_view_clean_v1.yaml -text
 # esempi congelati del 3b: lo sha256 dei byte e' verificato dal prompt builder (voci 129-130)

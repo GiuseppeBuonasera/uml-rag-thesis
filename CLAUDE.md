@@ -43,11 +43,17 @@ zero-shot, specialmente per certe tipologie di esercizio.
   (zero_shot, static k2, random k3, bm25 k2 / k3, hybrid k3) × 3 ripetizioni × 2 formati (PlantUML, JSON compatto).
   Risultati ESPLORATIVI (visti prima dello script di analisi, voce 154): il retrieval non batte gli esempi casuali;
   gli esempi aiutano soprattutto nel compatto. Leve v5b e v5c sugli scheletri non adottate (voci 148, 153, 155).
+- **Controlli solo analisi (2026-10-20, voci 162-165)**: con l'esercizio stesso come esempio la completezza passa da
+  circa 0,43 a 0,76 (PlantUML): il modello sa usare un esempio vicino. Un esempio serve (guadagno >= 0,05) solo con
+  somiglianza dei nomi di classe di circa 0,4-0,56 o piu'; nel pool nessuna coppia supera 0,4, quindi il limite del
+  retrieval nel 3b e' il corpus. Esempi lontani accanto a uno vicino non fanno danno; un esempio completo vale piu' di
+  due meta'.
 - **Prossimi passi**: l'analisi statistica del 3b la fanno i relatori con un loro script (voce 158; schema della
   voce 156): il repo fornisce i dati (`experiments/export_3b.py --unico`, `experiments/difficulty_3b.py`) nel formato
-  da concordare (tipo di F1, colonne, esercizi); revisione dei sinonimi delle classi e livello
-  di abbinamento semantico come analisi di sensibilita' (voce 152). Domande ai relatori ancora aperte in
-  `docs/STATUS.md` (8, 11, 14, 16).
+  da concordare (tipo di F1, colonne, esercizi); revisione dei sinonimi scartata (voce 160); analisi esplorative
+  raccolte nel report condiviso con i relatori (voce 161). Domande ai relatori 8, 11, 14 e 16 chiuse
+  (voce 159): modello e parametri scelti dall'utente; metriche = script dei relatori; generazione libera; nessun
+  secondo modello.
 
 ## Relatori e riferimento diretto
 

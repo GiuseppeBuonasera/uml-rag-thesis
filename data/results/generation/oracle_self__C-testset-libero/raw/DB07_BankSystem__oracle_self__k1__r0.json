@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Account\",\n      \"attributes\": [\n        \"+ balance : double\"\n      ]\n    },\n    {\n      \"name\": \"SavingAccount\",\n      \"attributes\": [\n        \"+ interestRate : double\"\n      ]\n    },\n    {\n      \"name\": \"InvestmentAccount\"\n    },\n    {\n      \"name\": \"Stock\",\n      \"attributes\": [\n        \"+ ticker : string\"\n      ]\n    },\n    {\n      \"name\": \"StockOrder\",\n      \"attributes\": [\n        \"+ quantity : int\",\n        \"+ price : double\",\n        \"+ commission : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SavingAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InvestmentAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"InvestmentAccount\",\n      \"target\": \"StockOrder\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"StockOrder\",\n      \"target\": \"Stock\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 22.778581899998244,
+ "prompt_tokens": 1654,
+ "completion_tokens": 428,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qwe6cnphczbtic3plu23fe",
+  "object": "chat.completion",
+  "created": 1792511528,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Account\",\n      \"attributes\": [\n        \"+ balance : double\"\n      ]\n    },\n    {\n      \"name\": \"SavingAccount\",\n      \"attributes\": [\n        \"+ interestRate : double\"\n      ]\n    },\n    {\n      \"name\": \"InvestmentAccount\"\n    },\n    {\n      \"name\": \"Stock\",\n      \"attributes\": [\n        \"+ ticker : string\"\n      ]\n    },\n    {\n      \"name\": \"StockOrder\",\n      \"attributes\": [\n        \"+ quantity : int\",\n        \"+ price : double\",\n        \"+ commission : double\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SavingAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InvestmentAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"InvestmentAccount\",\n      \"target\": \"StockOrder\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"StockOrder\",\n      \"target\": \"Stock\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1654,
+   "completion_tokens": 428,
+   "total_tokens": 2082,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

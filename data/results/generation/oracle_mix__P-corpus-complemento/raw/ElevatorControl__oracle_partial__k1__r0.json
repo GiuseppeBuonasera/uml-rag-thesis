@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass ElevatorController {}\n\nclass Elevator {\n  + direction : string\n  + currentFloor : int\n  + idle : boolean\n  + move()\n  + stop()\n  + status()\n}\n\nclass ElevatorButton {\n  + floorNumber : int\n  + isLit : boolean\n}\n\nclass FloorButton {\n  + floorNumber : int\n  + direction : string\n  + isLit : boolean\n}\n\nclass Floor {}\n\nElevatorController \"1\" -- \"*\" Elevator : manages\nElevator \"1\" *-- \"*\" ElevatorButton : has\nFloor \"1\" -- \"*\" FloorButton : has\nElevatorController ..> Elevator : controls\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 10.380609800002276,
+ "prompt_tokens": 1578,
+ "completion_tokens": 150,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-bylsbonmfzoqr942d7n9",
+  "object": "chat.completion",
+  "created": 1792522064,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass ElevatorController {}\n\nclass Elevator {\n  + direction : string\n  + currentFloor : int\n  + idle : boolean\n  + move()\n  + stop()\n  + status()\n}\n\nclass ElevatorButton {\n  + floorNumber : int\n  + isLit : boolean\n}\n\nclass FloorButton {\n  + floorNumber : int\n  + direction : string\n  + isLit : boolean\n}\n\nclass Floor {}\n\nElevatorController \"1\" -- \"*\" Elevator : manages\nElevator \"1\" *-- \"*\" ElevatorButton : has\nFloor \"1\" -- \"*\" FloorButton : has\nElevatorController ..> Elevator : controls\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1578,
+   "completion_tokens": 150,
+   "total_tokens": 1728,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Hospital {}\n\nabstract class Department {}\n\nclass EmergencyRoom extends Department {}\n\nabstract class StaffedDepartment extends Department {}\n\nclass InternalMedicine extends StaffedDepartment {}\n\nclass Surgery extends StaffedDepartment {}\n\nclass Obstetrics extends StaffedDepartment {}\n\nclass Shift {\n  + date : date\n}\n\nclass MedicalStaff {\n  + name : string\n  + qualification : string\n}\n\nclass AdministrativeStaff {\n  + name : string\n  + seniority : int\n}\n\nclass Staff {}\n\nclass Patient {\n  + name : string\n  + taxCode : string\n  + dateOfBirth : date\n}\n\nclass Admission {\n  + checkIn : date\n  + checkOut : date\n}\n\nclass AdmissionHistory {}\n\nclass MedicalRecord {}\n\nHospital \"1\" o-- \"1..*\" AdministrativeStaff\nHospital \"1\" *-- \"1..*\" Department\nEmergencyRoom \"1\" -- \"1..*\" Shift\nShift \"0..*\" -- \"1..*\" MedicalStaff\nStaffedDepartment \"1\" o-- \"1..*\" MedicalStaff\nPatient \"1\" -- \"1..*\" Admission\nAdmission \"1\" -- \"1\" AdmissionHistory\nMedicalRecord \"1\" *-- \"1..*\" AdmissionHistory\nPatient \"1\" -- \"1\" MedicalRecord\nDepartment \"1\" -- \"0..*\" Shift\nDepartment \"1\" -- \"1..*\" MedicalStaff\nDepartment \"1\" -- \"*\" Patient\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 18.000959899998634,
+ "prompt_tokens": 1529,
+ "completion_tokens": 312,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-uludlg0ubh9x89ljlqr46",
+  "object": "chat.completion",
+  "created": 1792506212,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Hospital {}\n\nabstract class Department {}\n\nclass EmergencyRoom extends Department {}\n\nabstract class StaffedDepartment extends Department {}\n\nclass InternalMedicine extends StaffedDepartment {}\n\nclass Surgery extends StaffedDepartment {}\n\nclass Obstetrics extends StaffedDepartment {}\n\nclass Shift {\n  + date : date\n}\n\nclass MedicalStaff {\n  + name : string\n  + qualification : string\n}\n\nclass AdministrativeStaff {\n  + name : string\n  + seniority : int\n}\n\nclass Staff {}\n\nclass Patient {\n  + name : string\n  + taxCode : string\n  + dateOfBirth : date\n}\n\nclass Admission {\n  + checkIn : date\n  + checkOut : date\n}\n\nclass AdmissionHistory {}\n\nclass MedicalRecord {}\n\nHospital \"1\" o-- \"1..*\" AdministrativeStaff\nHospital \"1\" *-- \"1..*\" Department\nEmergencyRoom \"1\" -- \"1..*\" Shift\nShift \"0..*\" -- \"1..*\" MedicalStaff\nStaffedDepartment \"1\" o-- \"1..*\" MedicalStaff\nPatient \"1\" -- \"1..*\" Admission\nAdmission \"1\" -- \"1\" AdmissionHistory\nMedicalRecord \"1\" *-- \"1..*\" AdmissionHistory\nPatient \"1\" -- \"1\" MedicalRecord\nDepartment \"1\" -- \"0..*\" Shift\nDepartment \"1\" -- \"1..*\" MedicalStaff\nDepartment \"1\" -- \"*\" Patient\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1529,
+   "completion_tokens": 312,
+   "total_tokens": 1841,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Cinema {\n  + Name : string\n  + Town : string\n}\n\nclass Theatre {\n  + Number : int\n}\n\nclass Movie {\n  + Title : string\n}\n\nclass MovieCopy {\n  + Id : int\n}\n\nclass Show {\n  + StartTime : datetime\n  + EndTime : datetime\n  + publish()\n  + cancelShow()\n}\n\nclass Seat {\n  + SeatNumber : int\n}\n\nclass OnlineReservation {\n  + ReservationTime : datetime\n  + cancelReservation()\n}\n\nclass AlternativeOffer {\n  + expire()\n  + accept()\n  + decline()\n}\n\nclass FreeTicket {\n  + SentToHome : boolean\n}\n\nclass Ticket {\n  + Price : float\n}\n\nclass Customer {\n  + Name : string\n}\n\nCinema \"1\" -- \"0..*\" Theatre\nCinema \"1\" -- \"0..*\" MovieCopy\nMovie \"1\" -- \"0..*\" MovieCopy\nTheatre \"1\" -- \"0..*\" Show\nMovieCopy \"1\" -- \"0..*\" Show\nTheatre \"1\" -- \"0..*\" Seat\nShow \"1\" -- \"0..*\" OnlineReservation\nShow \"1\" -- \"0..*\" Ticket\nSeat \"1\" -- \"0..*\" OnlineReservation\nSeat \"1\" -- \"0..*\" Ticket\nSeat \"1\" -- \"0..*\" AlternativeOffer\nShow \"1\" -- \"0..*\" AlternativeOffer\nShow \"1\" -- \"0..*\" FreeTicket\nCustomer \"1\" -- \"0..*\" OnlineReservation\nCustomer \"1\" -- \"0..*\" AlternativeOffer\nCustomer \"1\" -- \"0..*\" FreeTicket\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 24.756561000000147,
+ "prompt_tokens": 2275,
+ "completion_tokens": 375,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-mhli2731n43oe81t88v43",
+  "object": "chat.completion",
+  "created": 1792505871,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Cinema {\n  + Name : string\n  + Town : string\n}\n\nclass Theatre {\n  + Number : int\n}\n\nclass Movie {\n  + Title : string\n}\n\nclass MovieCopy {\n  + Id : int\n}\n\nclass Show {\n  + StartTime : datetime\n  + EndTime : datetime\n  + publish()\n  + cancelShow()\n}\n\nclass Seat {\n  + SeatNumber : int\n}\n\nclass OnlineReservation {\n  + ReservationTime : datetime\n  + cancelReservation()\n}\n\nclass AlternativeOffer {\n  + expire()\n  + accept()\n  + decline()\n}\n\nclass FreeTicket {\n  + SentToHome : boolean\n}\n\nclass Ticket {\n  + Price : float\n}\n\nclass Customer {\n  + Name : string\n}\n\nCinema \"1\" -- \"0..*\" Theatre\nCinema \"1\" -- \"0..*\" MovieCopy\nMovie \"1\" -- \"0..*\" MovieCopy\nTheatre \"1\" -- \"0..*\" Show\nMovieCopy \"1\" -- \"0..*\" Show\nTheatre \"1\" -- \"0..*\" Seat\nShow \"1\" -- \"0..*\" OnlineReservation\nShow \"1\" -- \"0..*\" Ticket\nSeat \"1\" -- \"0..*\" OnlineReservation\nSeat \"1\" -- \"0..*\" Ticket\nSeat \"1\" -- \"0..*\" AlternativeOffer\nShow \"1\" -- \"0..*\" AlternativeOffer\nShow \"1\" -- \"0..*\" FreeTicket\nCustomer \"1\" -- \"0..*\" OnlineReservation\nCustomer \"1\" -- \"0..*\" AlternativeOffer\nCustomer \"1\" -- \"0..*\" FreeTicket\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2275,
+   "completion_tokens": 375,
+   "total_tokens": 2650,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

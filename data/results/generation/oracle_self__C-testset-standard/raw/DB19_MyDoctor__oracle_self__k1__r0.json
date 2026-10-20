@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ Id : string\",\n        \"+ FirstName : string\",\n        \"+ LastName : string\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"methods\": [\n        \"+ CreateSchedule()\",\n        \"+ ApplyToPractice()\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"methods\": [\n        \"+ BookAppointment()\"\n      ]\n    },\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Office\",\n      \"attributes\": [\n        \"+ Id : string\",\n        \"+ Location : string\"\n      ]\n    },\n    {\n      \"name\": \"Schedule\",\n      \"attributes\": [\n        \"+ StartTime : time\",\n        \"+ EndTime : time\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"Appointment\",\n      \"attributes\": [\n        \"+ Id : string\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"BloodTest\"\n    },\n    {\n      \"name\": \"Consultation\"\n    },\n    {\n      \"name\": \"Surgery\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Doctor\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Patient\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Office\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Office\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Schedule\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Office\",\n      \"target\": \"Schedule\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Appointment\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Appointment\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Schedule\",\n      \"target\": \"Appointment\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BloodTest\",\n      \"parent\": \"Appointment\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Consultation\",\n      \"parent\": \"Appointment\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Surgery\",\n      \"parent\": \"Appointment\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 39.1967482,
+ "prompt_tokens": 2466,
+ "completion_tokens": 760,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9x0xye022sp3a0lfxcnc3f",
+  "object": "chat.completion",
+  "created": 1792511227,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ Id : string\",\n        \"+ FirstName : string\",\n        \"+ LastName : string\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"methods\": [\n        \"+ CreateSchedule()\",\n        \"+ ApplyToPractice()\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"methods\": [\n        \"+ BookAppointment()\"\n      ]\n    },\n    {\n      \"name\": \"Hospital\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"Office\",\n      \"attributes\": [\n        \"+ Id : string\",\n        \"+ Location : string\"\n      ]\n    },\n    {\n      \"name\": \"Schedule\",\n      \"attributes\": [\n        \"+ StartTime : time\",\n        \"+ EndTime : time\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"Appointment\",\n      \"attributes\": [\n        \"+ Id : string\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\",\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"BloodTest\"\n    },\n    {\n      \"name\": \"Consultation\"\n    },\n    {\n      \"name\": \"Surgery\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Doctor\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Patient\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hospital\",\n      \"target\": \"Office\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Office\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Schedule\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Office\",\n      \"target\": \"Schedule\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Appointment\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Appointment\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Schedule\",\n      \"target\": \"Appointment\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BloodTest\",\n      \"parent\": \"Appointment\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Consultation\",\n      \"parent\": \"Appointment\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Surgery\",\n      \"parent\": \"Appointment\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2466,
+   "completion_tokens": 760,
+   "total_tokens": 3226,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

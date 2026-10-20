@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"OilCompany\"\n    },\n    {\n      \"name\": \"GasStation\"\n    },\n    {\n      \"name\": \"Pump\"\n    },\n    {\n      \"name\": \"Reservoir\"\n    },\n    {\n      \"name\": \"GasolineType\"\n    },\n    {\n      \"name\": \"Customer\"\n    },\n    {\n      \"name\": \"RefuelTurn\"\n    },\n    {\n      \"name\": \"CashTurn\"\n    },\n    {\n      \"name\": \"CreditCardTurn\"\n    },\n    {\n      \"name\": \"RefuelCard\"\n    },\n    {\n      \"name\": \"Invoice\"\n    },\n    {\n      \"name\": \"InvoiceLine\"\n    },\n    {\n      \"name\": \"Payment\"\n    },\n    {\n      \"name\": \"DailyReport\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"OilCompany\",\n      \"target\": \"GasStation\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"GasStation\",\n      \"target\": \"Pump\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Pump\",\n      \"target\": \"GasolineType\"\n    },\n    {\n      \"type\": \"composition\",\n      \"source\": \"Pump\",\n      \"target\": \"Reservoir\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"RefuelTurn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RefuelTurn\",\n      \"target\": \"CashTurn\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RefuelTurn\",\n      \"target\": \"CreditCardTurn\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"RefuelCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RefuelCard\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"InvoiceLine\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"InvoiceLine\",\n      \"target\": \"RefuelTurn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"Payment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DailyReport\",\n      \"target\": \"Pump\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 46.83713610000268,
+ "prompt_tokens": 2867,
+ "completion_tokens": 784,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-m3c10broevo14bmopygfm",
+  "object": "chat.completion",
+  "created": 1792509388,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"OilCompany\"\n    },\n    {\n      \"name\": \"GasStation\"\n    },\n    {\n      \"name\": \"Pump\"\n    },\n    {\n      \"name\": \"Reservoir\"\n    },\n    {\n      \"name\": \"GasolineType\"\n    },\n    {\n      \"name\": \"Customer\"\n    },\n    {\n      \"name\": \"RefuelTurn\"\n    },\n    {\n      \"name\": \"CashTurn\"\n    },\n    {\n      \"name\": \"CreditCardTurn\"\n    },\n    {\n      \"name\": \"RefuelCard\"\n    },\n    {\n      \"name\": \"Invoice\"\n    },\n    {\n      \"name\": \"InvoiceLine\"\n    },\n    {\n      \"name\": \"Payment\"\n    },\n    {\n      \"name\": \"DailyReport\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"OilCompany\",\n      \"target\": \"GasStation\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"GasStation\",\n      \"target\": \"Pump\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Pump\",\n      \"target\": \"GasolineType\"\n    },\n    {\n      \"type\": \"composition\",\n      \"source\": \"Pump\",\n      \"target\": \"Reservoir\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"RefuelTurn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RefuelTurn\",\n      \"target\": \"CashTurn\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RefuelTurn\",\n      \"target\": \"CreditCardTurn\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"RefuelCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"RefuelCard\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"InvoiceLine\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"InvoiceLine\",\n      \"target\": \"RefuelTurn\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"Payment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DailyReport\",\n      \"target\": \"Pump\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2867,
+   "completion_tokens": 784,
+   "total_tokens": 3651,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Product {\n  + Name : string\n  + Stock : int\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n  + VATnumber : string\n  + HeadOfficeAddress : string\n}\n\nclass Order {\n  + OrderDate : date\n  + PaymentDate : date\n  + ShippingDate : date\n  + isPaid : boolean\n  + isShipped : boolean\n}\n\nclass OrderLine {\n  + Quantity : int\n  + isShipped : boolean\n}\n\nclass Invoice {\n}\n\nclass InvoiceLine {\n}\n\nclass Warehouse {\n  + Address : string\n}\n\nclass Supermarket {\n  + Address : string\n}\n\nclass Delivery {\n  + Status : string\n}\n\nclass DeliveryLine {\n}\n\nclass Shipment {\n  + Status : string\n}\n\nclass ShipmentLine {\n}\n\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"1\" -- \"*\" Supermarket : is supplied to\nSupermarket \"1\" -- \"*\" Warehouse : has\nWarehouse \"1\" -- \"*\" Product : stocks\nOrder \"1\" *-- \"1..*\" OrderLine : consists of\nOrderLine \"1\" -- \"1\" Product : refers to\nOrder \"1\" -- \"0..*\" Invoice : results in\nInvoice \"1\" *-- \"1..*\" InvoiceLine : contains\nOrderLine \"1\" -- \"0..*\" DeliveryLine : is part of\nDelivery \"1\" *-- \"1..*\" DeliveryLine : contains\nDeliveryLine \"1\" -- \"1\" OrderLine : refers to\nOrder \"1\" -- \"0..*\" Shipment : is grouped into\nShipment \"1\" *-- \"1..*\" ShipmentLine : contains\nShipmentLine \"1\" -- \"1\" OrderLine : refers to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 24.2254632999975,
+ "prompt_tokens": 2363,
+ "completion_tokens": 395,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-wzlmbv3630s4lkonpo60tf",
+  "object": "chat.completion",
+  "created": 1792514156,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Product {\n  + Name : string\n  + Stock : int\n}\n\nclass Customer {\n  + Name : string\n  + Address : string\n  + VATnumber : string\n  + HeadOfficeAddress : string\n}\n\nclass Order {\n  + OrderDate : date\n  + PaymentDate : date\n  + ShippingDate : date\n  + isPaid : boolean\n  + isShipped : boolean\n}\n\nclass OrderLine {\n  + Quantity : int\n  + isShipped : boolean\n}\n\nclass Invoice {\n}\n\nclass InvoiceLine {\n}\n\nclass Warehouse {\n  + Address : string\n}\n\nclass Supermarket {\n  + Address : string\n}\n\nclass Delivery {\n  + Status : string\n}\n\nclass DeliveryLine {\n}\n\nclass Shipment {\n  + Status : string\n}\n\nclass ShipmentLine {\n}\n\nCustomer \"1\" -- \"*\" Order : places\nCustomer \"1\" -- \"*\" Supermarket : is supplied to\nSupermarket \"1\" -- \"*\" Warehouse : has\nWarehouse \"1\" -- \"*\" Product : stocks\nOrder \"1\" *-- \"1..*\" OrderLine : consists of\nOrderLine \"1\" -- \"1\" Product : refers to\nOrder \"1\" -- \"0..*\" Invoice : results in\nInvoice \"1\" *-- \"1..*\" InvoiceLine : contains\nOrderLine \"1\" -- \"0..*\" DeliveryLine : is part of\nDelivery \"1\" *-- \"1..*\" DeliveryLine : contains\nDeliveryLine \"1\" -- \"1\" OrderLine : refers to\nOrder \"1\" -- \"0..*\" Shipment : is grouped into\nShipment \"1\" *-- \"1..*\" ShipmentLine : contains\nShipmentLine \"1\" -- \"1\" OrderLine : refers to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2363,
+   "completion_tokens": 395,
+   "total_tokens": 2758,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

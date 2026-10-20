@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ surname : string\",\n        \"+ email : string\",\n        \"+ telephone : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ total_cost : double\",\n        \"+ estimated_delivery_time : time\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ preparation_time : time\"\n      ]\n    },\n    {\n      \"name\": \"Kitchen\",\n      \"attributes\": [\n        \"+ current_workload : int\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryDepartment\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"DeliveryStaff\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Dish\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Kitchen\",\n      \"target\": \"Order\",\n      \"label\": \"takes charge of\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeliveryDepartment\",\n      \"target\": \"Order\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeliveryStaff\",\n      \"target\": \"Order\",\n      \"label\": \"delivers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 29.10711000000083,
+ "prompt_tokens": 2169,
+ "completion_tokens": 513,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-poqn0uzoh3flccuavuf4ae",
+  "object": "chat.completion",
+  "created": 1792510301,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ surname : string\",\n        \"+ email : string\",\n        \"+ telephone : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ total_cost : double\",\n        \"+ estimated_delivery_time : time\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ preparation_time : time\"\n      ]\n    },\n    {\n      \"name\": \"Kitchen\",\n      \"attributes\": [\n        \"+ current_workload : int\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryDepartment\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"DeliveryStaff\",\n      \"attributes\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"label\": \"places\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Dish\",\n      \"label\": \"contains\",\n      \"sourceMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Kitchen\",\n      \"target\": \"Order\",\n      \"label\": \"takes charge of\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeliveryDepartment\",\n      \"target\": \"Order\",\n      \"label\": \"receives\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeliveryStaff\",\n      \"target\": \"Order\",\n      \"label\": \"delivers\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2169,
+   "completion_tokens": 513,
+   "total_tokens": 2682,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

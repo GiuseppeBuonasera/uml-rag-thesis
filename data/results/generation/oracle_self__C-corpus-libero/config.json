@@ -1,0 +1,223 @@
+{
+  "config": {
+    "run_id": "oracle_self__C-corpus-libero",
+    "passo": "controllo",
+    "config_version": 2,
+    "random_seed": "per_esercizio_ripetizione",
+    "conditions": [
+      "oracle_self"
+    ],
+    "k": {
+      "oracle_self": [
+        1
+      ]
+    },
+    "repetitions": 1,
+    "seed": 0,
+    "stop_on_reasoning": true,
+    "thinking": "none",
+    "retrieval_source": "frozen",
+    "prompt": {
+      "layout": "user_only",
+      "drop_interactive": true,
+      "example_view": "clean_v1",
+      "instructions_version": "v5",
+      "serialization": "indent2",
+      "examples_block": "libero",
+      "output_format": "compact"
+    },
+    "generation": {
+      "temperature": 0.3,
+      "top_p": 0.95,
+      "top_k": 64,
+      "max_tokens": 4096,
+      "seed": 42,
+      "structured_output": false
+    },
+    "plantuml_label_rule": "auto_v1",
+    "elenchi": {
+      "valutazione_corpus": [
+        "AirTravel",
+        "BankAccount",
+        "BuildingManagement",
+        "CelO",
+        "CourseManagement",
+        "Cruise",
+        "DestroyBlockGame",
+        "EatAtHome",
+        "ElevatorControl",
+        "GameArea",
+        "GasStation_KUL",
+        "GasStation_TUW",
+        "Gym",
+        "Hospital",
+        "HotelBookingManagementSystem",
+        "House",
+        "Kinepolis",
+        "LabTracker",
+        "Menso",
+        "MilanLibrary",
+        "OnlineTutoringSystem",
+        "RealEstateAgency",
+        "RepairShops",
+        "ResearchCenter",
+        "School",
+        "SellingGoods",
+        "Sightseeing",
+        "SmartHomeAutomationSystem",
+        "TeamSportsScoutingSystem",
+        "TileOGame",
+        "TransportCompany",
+        "TreatmentPlans",
+        "University",
+        "UniversityExams"
+      ],
+      "valutazione_debari": [
+        "DB01_ProjectManagementSystem",
+        "DB02_HollywoodApproach",
+        "DB03_WordProcessor",
+        "DB04_PatientRecordAndSchedulingSystem",
+        "DB05_MovieShop",
+        "DB06_Flights",
+        "DB07_BankSystem",
+        "DB08_VeterinaryClinic",
+        "DB09_AutoRepair",
+        "DB10_Restaurant",
+        "DB11_Deliveries",
+        "DB12_Furniture",
+        "DB13_Factory",
+        "DB14_BicycleRental",
+        "DB15_SaturnIntManagement",
+        "DB16_OOBank",
+        "DB17_PrepaidCellPhone",
+        "DB18_LibrarySystem",
+        "DB19_MyDoctor",
+        "DB20_OnlineShopping"
+      ]
+    },
+    "configuration": "C-corpus-libero",
+    "client": {
+      "kind": "lmstudio",
+      "base_url": "http://localhost:1234/v1",
+      "model": "google/gemma-4-26b-a4b-qat",
+      "timeout_s": 1200,
+      "retries": 3,
+      "backoff_s": 2.0,
+      "unsupported_params": []
+    },
+    "model_metadata": {
+      "model_id": "google/gemma-4-26b-a4b-qat",
+      "quantization": "QAT (Q4_0), MoE 26B-A4B (circa 4 miliardi di parametri attivi, 8 esperti)",
+      "context_length": 32768,
+      "lmstudio_version": "0.4.25+1",
+      "enable_thinking": true,
+      "kv_cache_quant": "F16",
+      "flash_attention": true,
+      "gpu_offload": 0.5,
+      "hardware": {
+        "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor (8 core, 16 thread)",
+        "gpu": "NVIDIA GeForce RTX 4070 12 GB",
+        "ram_gb": 32,
+        "vram_gb": 12,
+        "vram_used": "circa 9,6 GB del modello (11,0 GB con il desktop), offload GPU 0,5; RAM circa 14,8 GB (prova del 2026-10-12)"
+      }
+    },
+    "split": "corpus",
+    "query_ids": [
+      "AirTravel",
+      "BankAccount",
+      "BuildingManagement",
+      "CelO",
+      "CourseManagement",
+      "Cruise",
+      "DestroyBlockGame",
+      "EatAtHome",
+      "ElevatorControl",
+      "GameArea",
+      "GasStation_KUL",
+      "GasStation_TUW",
+      "Gym",
+      "Hospital",
+      "HotelBookingManagementSystem",
+      "House",
+      "Kinepolis",
+      "LabTracker",
+      "Menso",
+      "MilanLibrary",
+      "OnlineTutoringSystem",
+      "RealEstateAgency",
+      "RepairShops",
+      "ResearchCenter",
+      "School",
+      "SellingGoods",
+      "Sightseeing",
+      "SmartHomeAutomationSystem",
+      "TeamSportsScoutingSystem",
+      "TileOGame",
+      "TransportCompany",
+      "TreatmentPlans",
+      "University",
+      "UniversityExams"
+    ]
+  },
+  "provenance": {
+    "commit": "ffb0c03e769d5b43dc10970ae167cd2781a78865",
+    "worktree_dirty": true,
+    "testset_tag": "testset-v1",
+    "testset_tag_commit": "eb4d28bebd417d661db642bae06d859963177815",
+    "config_bm25": "retrieval/config_bm25.yaml",
+    "config_bm25_sha256": "d6dfa7228ee4eee2c07c913917e2b096d6727a88bb818f7d51ed37036f5f76ab",
+    "config_dense": "retrieval/config_dense.yaml",
+    "config_dense_sha256": "2ec55d27663fe1d5b5b88a059969ff901217e3e683deae42772b1cbf8d460b66",
+    "dense_model": "sentence-transformers/all-MiniLM-L6-v2@1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "python": "3.12.10",
+    "tiktoken": "0.14.0",
+    "token_estimate": "tiktoken cl100k_base (approssimazione)",
+    "token_vocab": "generation/tokenizer/cl100k_base.tiktoken",
+    "token_vocab_sha256": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7",
+    "started_at": "2026-10-20T17:10:38",
+    "server_context": {
+      "endpoint": "http://localhost:1234/api/v1/models",
+      "available": true,
+      "loaded": true,
+      "context_lengths": [
+        32768
+      ],
+      "parallel": [
+        4
+      ],
+      "max_context_length": 262144,
+      "instances": [
+        {
+          "id": "google/gemma-4-26b-a4b-qat",
+          "config": {
+            "context_length": 32768,
+            "eval_batch_size": 2048,
+            "physical_batch_size": 512,
+            "parallel": 4,
+            "flash_attention": true,
+            "context_checkpoints": 32,
+            "reasoning_budget_message": "",
+            "speculative_draft_mtp": false,
+            "speculative_draft_simple": false,
+            "speculative_draft_model": "",
+            "speculative_draft_max_tokens": 3,
+            "speculative_draft_min_tokens": 0,
+            "speculative_draft_min_continue_probability": 0,
+            "num_experts": 8,
+            "offload_kv_cache_to_gpu": true
+          }
+        }
+      ],
+      "error": null,
+      "expected_context_length": 32768,
+      "checked_at": "2026-10-20T17:10:38",
+      "verified": true
+    },
+    "compact_format_spec": "docs/compact_format.md",
+    "example_view": "clean_v1",
+    "example_view_sha256": "756ce36bfdde20fe82e20dafc5d9ada48c97fcbdb6e121fb8c1ec05c23e323f0",
+    "retrieval_frozen": "data/retrieval_frozen/retrievals_3b.jsonl",
+    "retrieval_frozen_sha256": "2e08b93a69200e0f4e0d48a19aef9fbb05713cc3bef948b3fafddb3621c3f63d"
+  }
+}

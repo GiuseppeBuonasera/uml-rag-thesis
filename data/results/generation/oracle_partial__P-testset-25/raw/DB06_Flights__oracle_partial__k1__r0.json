@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Airline {\n  + ID\n}\n\nclass Flight {\n  + ID\n  + departureTime\n  + arrivalTime\n}\n\nclass Airport {\n  + ID\n}\n\nclass Aircraft {\n  + state\n  + position\n}\n\nclass AircraftType {\n  + type\n}\n\nclass Pilot {\n  + experienceLevel\n}\n\nclass RoleRequirement {\n  + role\n  + minLevel\n}\n\nclass Role {\n  + roleName\n}\n\nAirline \"1\" -- \"*\" Flight : operates\nAirline \"1\" *-- \"*\" Aircraft : owns\nFlight \"*\" -- \"1\" Airport : departure airport\nFlight \"*\" -- \"1\" Airport : arrival airport\nFlight \"*\" -- \"1\" Pilot : captain\nFlight \"*\" -- \"1\" Pilot : co-pilot\nFlight \"*\" -- \"1\" Aircraft : uses\nAircraft \"*\" -- \"1\" AircraftType : is of type\nPilot \"*\" -- \"1\" AircraftType : is required for\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 12.647298100000626,
+ "prompt_tokens": 1448,
+ "completion_tokens": 212,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kjchte3xv4tex0dvfttfq",
+  "object": "chat.completion",
+  "created": 1792514509,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Airline {\n  + ID\n}\n\nclass Flight {\n  + ID\n  + departureTime\n  + arrivalTime\n}\n\nclass Airport {\n  + ID\n}\n\nclass Aircraft {\n  + state\n  + position\n}\n\nclass AircraftType {\n  + type\n}\n\nclass Pilot {\n  + experienceLevel\n}\n\nclass RoleRequirement {\n  + role\n  + minLevel\n}\n\nclass Role {\n  + roleName\n}\n\nAirline \"1\" -- \"*\" Flight : operates\nAirline \"1\" *-- \"*\" Aircraft : owns\nFlight \"*\" -- \"1\" Airport : departure airport\nFlight \"*\" -- \"1\" Airport : arrival airport\nFlight \"*\" -- \"1\" Pilot : captain\nFlight \"*\" -- \"1\" Pilot : co-pilot\nFlight \"*\" -- \"1\" Aircraft : uses\nAircraft \"*\" -- \"1\" AircraftType : is of type\nPilot \"*\" -- \"1\" AircraftType : is required for\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1448,
+   "completion_tokens": 212,
+   "total_tokens": 1660,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

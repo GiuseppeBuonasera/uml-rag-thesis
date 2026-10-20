@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass OilCompany {}\n\nclass GasStation {\n}\n\nclass Pump {\n  + Type : string\n  + CurrentLevel : double\n  + ReorderingLevel : double\n  + CriticalLevel : double\n  + Blocked : boolean\n}\n\nclass Customer {\n  + IsSuspended : boolean\n}\n\nclass RefuelTurn {\n  + Amount : double\n}\n\nclass FuelCard {\n  + IsBlocked : boolean\n}\n\nclass Invoice {\n  + Discount : double\n}\n\nclass Payment {\n}\n\nclass DailyReport {\n  + QuantityToOrder : double\n}\n\nOilCompany \"1\" -- \"*\" GasStation : possesses\n\nGasStation \"1\" *-- \"*\" Pump : has\n\nPump \"1\" -- \"*\" RefuelTurn : associated with\n\nCustomer \"1\" -- \"*\" RefuelTurn : performs\n\nCustomer \"0..1\" -- \"0..1\" FuelCard : holds\n\nCustomer \"1\" -- \"*\" Invoice : receives\n\nInvoice \"1\" -- \"*\" RefuelTurn : includes\n\nInvoice \"1\" -- \"*\" Payment : is paid by\n\nPump \"1\" -- \"1\" DailyReport : reported in\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 14.368109999999433,
+ "prompt_tokens": 2229,
+ "completion_tokens": 250,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-o242y6wh8iym0z086jg3",
+  "object": "chat.completion",
+  "created": 1792512108,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass OilCompany {}\n\nclass GasStation {\n}\n\nclass Pump {\n  + Type : string\n  + CurrentLevel : double\n  + ReorderingLevel : double\n  + CriticalLevel : double\n  + Blocked : boolean\n}\n\nclass Customer {\n  + IsSuspended : boolean\n}\n\nclass RefuelTurn {\n  + Amount : double\n}\n\nclass FuelCard {\n  + IsBlocked : boolean\n}\n\nclass Invoice {\n  + Discount : double\n}\n\nclass Payment {\n}\n\nclass DailyReport {\n  + QuantityToOrder : double\n}\n\nOilCompany \"1\" -- \"*\" GasStation : possesses\n\nGasStation \"1\" *-- \"*\" Pump : has\n\nPump \"1\" -- \"*\" RefuelTurn : associated with\n\nCustomer \"1\" -- \"*\" RefuelTurn : performs\n\nCustomer \"0..1\" -- \"0..1\" FuelCard : holds\n\nCustomer \"1\" -- \"*\" Invoice : receives\n\nInvoice \"1\" -- \"*\" RefuelTurn : includes\n\nInvoice \"1\" -- \"*\" Payment : is paid by\n\nPump \"1\" -- \"1\" DailyReport : reported in\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2229,
+   "completion_tokens": 250,
+   "total_tokens": 2479,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

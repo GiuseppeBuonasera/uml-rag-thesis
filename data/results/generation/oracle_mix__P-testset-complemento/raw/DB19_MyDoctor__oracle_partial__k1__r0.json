@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass User {\n  + Id : string\n}\n\nclass Doctor extends User {\n  + GraduationYear : date\n  + FieldOfActivity : string\n  + CreateSchedule()\n}\n\nclass Patient extends User {\n  + BookAppointment()\n}\n\nclass Hospital {\n  + Name : string\n}\n\nclass Office {\n  + Id : string\n  + Name : string\n}\n\nclass Schedule {\n  + Id : string\n  + StartDate : date\n  + EndDate : date\n}\n\nclass Appointment {\n  + Id : string\n  + StartDate : datetime\n  + EndDate : datetime\n}\n\nclass BloodTest {\n  + Duration : int\n}\n\nclass Consultation {\n  + Duration : int\n}\n\nclass Surgery {\n  + Duration : int\n}\n\nHospital \"1\" *-- \"*\" Office\nDoctor \"1..*\" -- \"1..*\" Office : applies to\nDoctor \"1\" -- \"1\" Schedule : creates\nOffice \"1\" -- \"1\" Schedule : has\nSchedule \"1\" *-- \"*\" Appointment\nPatient \"1\" -- \"*\" Appointment : books\nAppointment <|-- BloodTest\nAppointment <|-- Consultation\nAppointment <|-- Surgery\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 15.87049890000344,
+ "prompt_tokens": 2315,
+ "completion_tokens": 268,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-i0rpjy59ja1ghn236pybv",
+  "object": "chat.completion",
+  "created": 1792522720,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass User {\n  + Id : string\n}\n\nclass Doctor extends User {\n  + GraduationYear : date\n  + FieldOfActivity : string\n  + CreateSchedule()\n}\n\nclass Patient extends User {\n  + BookAppointment()\n}\n\nclass Hospital {\n  + Name : string\n}\n\nclass Office {\n  + Id : string\n  + Name : string\n}\n\nclass Schedule {\n  + Id : string\n  + StartDate : date\n  + EndDate : date\n}\n\nclass Appointment {\n  + Id : string\n  + StartDate : datetime\n  + EndDate : datetime\n}\n\nclass BloodTest {\n  + Duration : int\n}\n\nclass Consultation {\n  + Duration : int\n}\n\nclass Surgery {\n  + Duration : int\n}\n\nHospital \"1\" *-- \"*\" Office\nDoctor \"1..*\" -- \"1..*\" Office : applies to\nDoctor \"1\" -- \"1\" Schedule : creates\nOffice \"1\" -- \"1\" Schedule : has\nSchedule \"1\" *-- \"*\" Appointment\nPatient \"1\" -- \"*\" Appointment : books\nAppointment <|-- BloodTest\nAppointment <|-- Consultation\nAppointment <|-- Surgery\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2315,
+   "completion_tokens": 268,
+   "total_tokens": 2583,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

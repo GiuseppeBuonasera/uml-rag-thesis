@@ -68,7 +68,7 @@ import postprocess as pp  # noqa: E402
 from plantuml_format import apollon_to_plantuml  # noqa: E402
 from llm_client import CachedClient, GenerationParams, LMStudioClient, MockClient  # noqa: E402
 from plan_split import plan_lines, split_plan  # noqa: E402  (voce 126)
-from prompt_builder import (BM25_CONFIG, CONDITIONS, DENSE_CONFIG, FROZEN_CONDITIONS, FROZEN_PATH,  # noqa: E402
+from prompt_builder import (ANALYSIS_ONLY, BM25_CONFIG, CONDITIONS, DENSE_CONFIG, FROZEN_CONDITIONS, FROZEN_PATH,  # noqa: E402
                             RANDOM_SEED_MODES, STATIC_EXAMPLE_IDS, PromptBuilder, PromptSpec, cl, dense_model,
                             random_seed, serialize_diagram)
 import token_estimate  # noqa: E402
@@ -252,7 +252,10 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
                                   output_format=p.get("output_format", "apollon"),
                                   instructions_variant=p.get("instructions_variant", "base"),
                                   instructions_version=p.get("instructions_version", "v4"),
-                                  example_view=p.get("example_view", "raw"))  # voce 138
+                                  example_view=p.get("example_view", "raw"),  # voce 138
+                                  examples_block=p.get("examples_block", "standard"),  # voce 162
+                                  oracle_keep=p.get("oracle_keep", 1.0),  # voce 163
+                                  oracle_extra=p.get("oracle_extra", "nessuno"))  # voce 164
                 for t in temperatures(cfg):
                     for r in range(cfg.get("repetitions", 1)):
                         if cond == "random" and mode == "per_esercizio_ripetizione":  # voce 130
@@ -603,6 +606,10 @@ def check_query_roles(cfg: dict, queries: list[dict]) -> None:
     (corpus/roles.yaml); ammesso solo nei config del Passo 3b marcati `passo: 3b`. Dry run e client finti non producono
     risposte di un modello, quindi non contaminano e non sono bloccati."""
     if cfg.get("passo") == "3b" or (cfg.get("client") or {}).get("kind") == "mock":
+        return
+    # voce 162: controlli marcati `passo: controllo` con SOLE condizioni di analisi (oracle_self): ammessi, i loro
+    # risultati non servono a nessuna scelta e non entrano nel 3b
+    if cfg.get("passo") == "controllo" and set(cfg.get("conditions") or []) <= ANALYSIS_ONLY:
         return
     sys.path.insert(0, str(ROOT / "corpus"))
     import paths

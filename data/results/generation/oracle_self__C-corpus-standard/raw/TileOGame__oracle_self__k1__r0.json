@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"TileO\"\n    },\n    {\n      \"name\": \"Game\"\n    },\n    {\n      \"name\": \"Tile\"\n    },\n    {\n      \"name\": \"Connection\"\n    },\n    {\n      \"name\": \"Die\"\n    },\n    {\n      \"name\": \"Deck\"\n    },\n    {\n      \"name\": \"ActionCard\"\n    },\n    {\n      \"name\": \"RollDieActionCard\"\n    },\n    {\n      \"name\": \"ConnectTilesActionCard\"\n    },\n    {\n      \"name\": \"RemoveConnectionActionCard\"\n    },\n    {\n      \"name\": \"TeleportActionCard\"\n    },\n    {\n      \"name\": \"LoseTurnActionCard\"\n    },\n    {\n      \"name\": \"ActionTile\"\n    },\n    {\n      \"name\": \"NormalTile\"\n    },\n    {\n      \"name\": \"WinTile\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"PlayingPiece\"\n    },\n    {\n      \"name\": \"Color\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"TileO\",\n      \"part\": \"Game\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Tile\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Connection\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Die\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Deck\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Player\",\n      \"partMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Deck\",\n      \"part\": \"ActionCard\",\n      \"partMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ActionTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NormalTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"WinTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"RollDieActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ConnectTilesActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"RemoveConnectionActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TeleportActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"LoseTurnActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"Connection\",\n      \"sourceMultiplicity\": \"1..4\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"PlayingPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PlayingPiece\",\n      \"target\": \"Color\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"startingPosition\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"currentTile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"ActionCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"takes\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Game\",\n      \"target\": \"WinTile\",\n      \"targetRole\": \"objective\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 71.6666421000009,
+ "prompt_tokens": 3622,
+ "completion_tokens": 1169,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-x6gx8wcbu1suelpel423",
+  "object": "chat.completion",
+  "created": 1792508428,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"TileO\"\n    },\n    {\n      \"name\": \"Game\"\n    },\n    {\n      \"name\": \"Tile\"\n    },\n    {\n      \"name\": \"Connection\"\n    },\n    {\n      \"name\": \"Die\"\n    },\n    {\n      \"name\": \"Deck\"\n    },\n    {\n      \"name\": \"ActionCard\"\n    },\n    {\n      \"name\": \"RollDieActionCard\"\n    },\n    {\n      \"name\": \"ConnectTilesActionCard\"\n    },\n    {\n      \"name\": \"RemoveConnectionActionCard\"\n    },\n    {\n      \"name\": \"TeleportActionCard\"\n    },\n    {\n      \"name\": \"LoseTurnActionCard\"\n    },\n    {\n      \"name\": \"ActionTile\"\n    },\n    {\n      \"name\": \"NormalTile\"\n    },\n    {\n      \"name\": \"WinTile\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"PlayingPiece\"\n    },\n    {\n      \"name\": \"Color\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"TileO\",\n      \"part\": \"Game\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Tile\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Connection\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Die\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Deck\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Player\",\n      \"partMultiplicity\": \"2..4\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Deck\",\n      \"part\": \"ActionCard\",\n      \"partMultiplicity\": \"32\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ActionTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NormalTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"WinTile\",\n      \"parent\": \"Tile\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"RollDieActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ConnectTilesActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"RemoveConnectionActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TeleportActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"LoseTurnActionCard\",\n      \"parent\": \"ActionCard\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Tile\",\n      \"target\": \"Connection\",\n      \"sourceMultiplicity\": \"1..4\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"PlayingPiece\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PlayingPiece\",\n      \"target\": \"Color\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"startingPosition\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Tile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"currentTile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"ActionCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"takes\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"Game\",\n      \"target\": \"WinTile\",\n      \"targetRole\": \"objective\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3622,
+   "completion_tokens": 1169,
+   "total_tokens": 4791,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

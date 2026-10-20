@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Student {\n  + studentId : string\n  + dateOfBirth : date\n  + city : string\n  + region : string\n}\n\nclass Professor {\n  + name : string\n  + dateOfBirth : date\n  + city : string\n}\n\nclass Faculty {\n  + name : string\n  + type : string\n}\n\nclass Course {\n  + code : string\n  + lectureHours : int\n}\n\nclass Exam {\n  + grade : string\n}\n\nclass EnrolledIn {\n  + yearOfEnrollment : int\n}\n\nStudent \"1\" -- \"1\" EnrolledIn\nEnrolledIn -- \"1\" Faculty\nStudent \"1\" -- \"*\" Exam\nExam -- \"1\" Course\nProfessor \"1..*\" -- \"*\" Course : teaches\nFaculty \"1\" -- \"1..*\" Course : belongs to\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 11.976281900002505,
+ "prompt_tokens": 1513,
+ "completion_tokens": 194,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cq18564z85p9mtkp6z2wrj",
+  "object": "chat.completion",
+  "created": 1792506912,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Student {\n  + studentId : string\n  + dateOfBirth : date\n  + city : string\n  + region : string\n}\n\nclass Professor {\n  + name : string\n  + dateOfBirth : date\n  + city : string\n}\n\nclass Faculty {\n  + name : string\n  + type : string\n}\n\nclass Course {\n  + code : string\n  + lectureHours : int\n}\n\nclass Exam {\n  + grade : string\n}\n\nclass EnrolledIn {\n  + yearOfEnrollment : int\n}\n\nStudent \"1\" -- \"1\" EnrolledIn\nEnrolledIn -- \"1\" Faculty\nStudent \"1\" -- \"*\" Exam\nExam -- \"1\" Course\nProfessor \"1..*\" -- \"*\" Course : teaches\nFaculty \"1\" -- \"1..*\" Course : belongs to\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1513,
+   "completion_tokens": 194,
+   "total_tokens": 1707,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Interval\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Weekly\",\n        \"Monthly\",\n        \"EveryHalfYear\",\n        \"Yearly\"\n      ]\n    },\n    {\n      \"name\": \"AccessType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Reservable\",\n        \"WalkIn\",\n        \"DropOff\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ FullName : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ PractitionerNumber : int\",\n        \"+ Signature : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ HealthNumber : string\",\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ DateOfBirth : date\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Requisition\",\n      \"attributes\": [\n        \"+ ValidFrom : date\",\n        \"+ RepetitionCount : int\",\n        \"+ RepetitionInterval : Interval\"\n      ]\n    },\n    {\n      \"name\": \"TestResult\",\n      \"attributes\": [\n        \"+ Result : boolean\",\n        \"+ Report : string\"\n      ]\n    },\n    {\n      \"name\": \"Appointment\",\n      \"attributes\": [\n        \"+ ConfirmationNumber : string\",\n        \"+ Date : date\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\"\n      ]\n    },\n    {\n      \"name\": \"BusinessHour\",\n      \"attributes\": [\n        \"+ DayOfWeek : string\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\"\n      ]\n    },\n    {\n      \"name\": \"Lab\",\n      \"attributes\": [\n        \"+ Address : string\",\n        \"+ RegistrationNumber : string\",\n        \"+ ChangeCancelFee : double\"\n      ]\n    },\n    {\n      \"name\": \"Test\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Duration : string\",\n        \"+ Access : AccessType\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Doctor\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Patient\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Requisition\",\n      \"target\": \"Test\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Test\",\n      \"target\": \"TestResult\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Appointment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Lab\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lab\",\n      \"target\": \"BusinessHour\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"TestResult\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"TestResult\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 72.65125280000211,
+ "prompt_tokens": 3715,
+ "completion_tokens": 1165,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ac25up9rjo83nqmj50bvtq",
+  "object": "chat.completion",
+  "created": 1792509628,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Interval\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Weekly\",\n        \"Monthly\",\n        \"EveryHalfYear\",\n        \"Yearly\"\n      ]\n    },\n    {\n      \"name\": \"AccessType\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Reservable\",\n        \"WalkIn\",\n        \"DropOff\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ FullName : string\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Doctor\",\n      \"attributes\": [\n        \"+ PractitionerNumber : int\",\n        \"+ Signature : string\"\n      ]\n    },\n    {\n      \"name\": \"Patient\",\n      \"attributes\": [\n        \"+ HealthNumber : string\",\n        \"+ FirstName : string\",\n        \"+ LastName : string\",\n        \"+ DateOfBirth : date\",\n        \"+ Address : string\",\n        \"+ PhoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Requisition\",\n      \"attributes\": [\n        \"+ ValidFrom : date\",\n        \"+ RepetitionCount : int\",\n        \"+ RepetitionInterval : Interval\"\n      ]\n    },\n    {\n      \"name\": \"TestResult\",\n      \"attributes\": [\n        \"+ Result : boolean\",\n        \"+ Report : string\"\n      ]\n    },\n    {\n      \"name\": \"Appointment\",\n      \"attributes\": [\n        \"+ ConfirmationNumber : string\",\n        \"+ Date : date\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\"\n      ]\n    },\n    {\n      \"name\": \"BusinessHour\",\n      \"attributes\": [\n        \"+ DayOfWeek : string\",\n        \"+ StartTime : time\",\n        \"+ EndTime : time\"\n      ]\n    },\n    {\n      \"name\": \"Lab\",\n      \"attributes\": [\n        \"+ Address : string\",\n        \"+ RegistrationNumber : string\",\n        \"+ ChangeCancelFee : double\"\n      ]\n    },\n    {\n      \"name\": \"Test\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Duration : string\",\n        \"+ Access : AccessType\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Doctor\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Patient\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Requisition\",\n      \"target\": \"Test\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Test\",\n      \"target\": \"TestResult\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"Appointment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Requisition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Lab\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lab\",\n      \"target\": \"BusinessHour\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Patient\",\n      \"target\": \"TestResult\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"TestResult\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Doctor\",\n      \"target\": \"Doctor\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3715,
+   "completion_tokens": 1165,
+   "total_tokens": 4880,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

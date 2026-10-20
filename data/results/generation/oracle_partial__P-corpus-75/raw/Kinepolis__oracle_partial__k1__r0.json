@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Kinepolis {\n}\n\nclass Cinema {\n  + Town : string\n}\n\nclass Theatre {\n  + Number : int\n}\n\nclass MovieCopy {\n  + Id : int\n}\n\nclass Show {\n  + StartTime : datetime\n  + EndTime : datetime\n  + publish()\n  + cancelShow()\n}\n\nclass Reservation {\n  + ReservationTime : datetime\n}\n\nclass Ticket {\n  + SeatNumber : int\n}\n\nclass Customer {\n  + Name : string\n}\n\nclass AlternativeOffer {\n  + ExpiryTime : datetime\n  + accept()\n  + decline()\n  + expire()\n}\n\nKinepolis \"1\" -- \"*\" Cinema\nCinema \"1\" *-- \"1..*\" Theatre\nCinema \"1\" -- \"0..*\" MovieCopy\nTheatre \"1\" -- \"0..*\" Show\nMovieCopy \"1\" -- \"0..*\" Show\nShow \"1\" -- \"0..*\" Reservation\nShow \"1\" -- \"0..*\" Ticket\nCustomer \"1\" -- \"0..*\" Reservation\nCustomer \"1\" -- \"0..*\" AlternativeOffer\nShow \"1\" -- \"0..*\" AlternativeOffer\nShow \"1\" -- \"0..*\" Ticket\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 17.716315999998187,
+ "prompt_tokens": 2083,
+ "completion_tokens": 277,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-nfwvodr92zniiqwe0qhgq",
+  "object": "chat.completion",
+  "created": 1792514056,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Kinepolis {\n}\n\nclass Cinema {\n  + Town : string\n}\n\nclass Theatre {\n  + Number : int\n}\n\nclass MovieCopy {\n  + Id : int\n}\n\nclass Show {\n  + StartTime : datetime\n  + EndTime : datetime\n  + publish()\n  + cancelShow()\n}\n\nclass Reservation {\n  + ReservationTime : datetime\n}\n\nclass Ticket {\n  + SeatNumber : int\n}\n\nclass Customer {\n  + Name : string\n}\n\nclass AlternativeOffer {\n  + ExpiryTime : datetime\n  + accept()\n  + decline()\n  + expire()\n}\n\nKinepolis \"1\" -- \"*\" Cinema\nCinema \"1\" *-- \"1..*\" Theatre\nCinema \"1\" -- \"0..*\" MovieCopy\nTheatre \"1\" -- \"0..*\" Show\nMovieCopy \"1\" -- \"0..*\" Show\nShow \"1\" -- \"0..*\" Reservation\nShow \"1\" -- \"0..*\" Ticket\nCustomer \"1\" -- \"0..*\" Reservation\nCustomer \"1\" -- \"0..*\" AlternativeOffer\nShow \"1\" -- \"0..*\" AlternativeOffer\nShow \"1\" -- \"0..*\" Ticket\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2083,
+   "completion_tokens": 277,
+   "total_tokens": 2360,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

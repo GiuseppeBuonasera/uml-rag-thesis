@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ ID\"\n      ]\n    },\n    {\n      \"name\": \"Flight\",\n      \"attributes\": [\n        \"+ ID\",\n        \"+ departure_time\",\n        \"+ arrival_time\"\n      ]\n    },\n    {\n      \"name\": \"Airport\",\n      \"attributes\": [\n        \"+ ID\"\n      ]\n    },\n    {\n      \"name\": \"Aircraft\",\n      \"attributes\": [\n        \"+ working_state\",\n        \"+ landed\",\n        \"+ airborne\"\n      ]\n    },\n    {\n      \"name\": \"AircraftType\",\n      \"attributes\": [\n        \"+ name\"\n      ]\n    },\n    {\n      \"name\": \"Pilot\",\n      \"attributes\": [\n        \"+ experience_level\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Flight\",\n      \"label\": \"operates\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"label\": \"departure airport\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"label\": \"arrival airport\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"label\": \"pilot\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"label\": \"co-pilot\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Aircraft\",\n      \"label\": \"uses\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Aircraft\",\n      \"label\": \"owns\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"AircraftType\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"label\": \"navigator\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"label\": \"co-pilot\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"label\": \"captain\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 42.28683430000092,
+ "prompt_tokens": 2436,
+ "completion_tokens": 766,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-k51gbibal7sd2brkjl7t",
+  "object": "chat.completion",
+  "created": 1792510825,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Airline\",\n      \"attributes\": [\n        \"+ ID\"\n      ]\n    },\n    {\n      \"name\": \"Flight\",\n      \"attributes\": [\n        \"+ ID\",\n        \"+ departure_time\",\n        \"+ arrival_time\"\n      ]\n    },\n    {\n      \"name\": \"Airport\",\n      \"attributes\": [\n        \"+ ID\"\n      ]\n    },\n    {\n      \"name\": \"Aircraft\",\n      \"attributes\": [\n        \"+ working_state\",\n        \"+ landed\",\n        \"+ airborne\"\n      ]\n    },\n    {\n      \"name\": \"AircraftType\",\n      \"attributes\": [\n        \"+ name\"\n      ]\n    },\n    {\n      \"name\": \"Pilot\",\n      \"attributes\": [\n        \"+ experience_level\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Flight\",\n      \"label\": \"operates\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"label\": \"departure airport\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"label\": \"arrival airport\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"label\": \"pilot\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"label\": \"co-pilot\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Aircraft\",\n      \"label\": \"uses\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Aircraft\",\n      \"label\": \"owns\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"AircraftType\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"label\": \"navigator\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"label\": \"co-pilot\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"label\": \"captain\",\n      \"targetMultiplicity\": \"1..*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2436,
+   "completion_tokens": 766,
+   "total_tokens": 3202,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

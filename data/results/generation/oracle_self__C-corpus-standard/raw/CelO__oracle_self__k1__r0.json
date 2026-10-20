@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ emailAddress : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Organizer\",\n      \"attributes\": [\n        \"+ postalAddress : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Attendee\",\n      \"attributes\": [\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Event\",\n      \"attributes\": [\n        \"+ occasion : string\",\n        \"+ startTime : datetime\",\n        \"+ endTime : datetime\"\n      ]\n    },\n    {\n      \"name\": \"EventType\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"CheckListTask\",\n      \"attributes\": [\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"TaskStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"ToBeDone\",\n        \"Done\",\n        \"NotApplicable\"\n      ]\n    },\n    {\n      \"name\": \"AttendanceStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Attending\",\n        \"Maybe\",\n        \"CannotAttend\",\n        \"NoResponse\"\n      ]\n    },\n    {\n      \"name\": \"Invitation\",\n      \"attributes\": [\n        \"+ status : AttendanceStatus\"\n      ]\n    },\n    {\n      \"name\": \"TaskAssignment\",\n      \"attributes\": [\n        \"+ isAssignedToAttendee : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Organizer\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Attendee\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Event\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"EventType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Invitation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"Invitation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"CheckListTask\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CheckListTask\",\n      \"target\": \"TaskStatus\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CheckListTask\",\n      \"target\": \"TaskAssignment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"TaskAssignment\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 58.15391620000082,
+ "prompt_tokens": 3251,
+ "completion_tokens": 967,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-y8zr5ea4ubb6pbq9c5yq4u",
+  "object": "chat.completion",
+  "created": 1792507568,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ firstName : string\",\n        \"+ lastName : string\",\n        \"+ emailAddress : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Organizer\",\n      \"attributes\": [\n        \"+ postalAddress : string\",\n        \"+ phoneNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Attendee\",\n      \"attributes\": [\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Event\",\n      \"attributes\": [\n        \"+ occasion : string\",\n        \"+ startTime : datetime\",\n        \"+ endTime : datetime\"\n      ]\n    },\n    {\n      \"name\": \"EventType\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"CheckListTask\",\n      \"attributes\": [\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"TaskStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"ToBeDone\",\n        \"Done\",\n        \"NotApplicable\"\n      ]\n    },\n    {\n      \"name\": \"AttendanceStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"Attending\",\n        \"Maybe\",\n        \"CannotAttend\",\n        \"NoResponse\"\n      ]\n    },\n    {\n      \"name\": \"Invitation\",\n      \"attributes\": [\n        \"+ status : AttendanceStatus\"\n      ]\n    },\n    {\n      \"name\": \"TaskAssignment\",\n      \"attributes\": [\n        \"+ isAssignedToAttendee : boolean\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Organizer\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Attendee\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Organizer\",\n      \"target\": \"Event\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"EventType\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Location\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"Invitation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"Invitation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Event\",\n      \"target\": \"CheckListTask\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CheckListTask\",\n      \"target\": \"TaskStatus\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CheckListTask\",\n      \"target\": \"TaskAssignment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Attendee\",\n      \"target\": \"TaskAssignment\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3251,
+   "completion_tokens": 967,
+   "total_tokens": 4218,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

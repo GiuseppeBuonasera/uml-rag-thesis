@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum Interval {\n  Weekly\n  Monthly\n  EveryHalfYear\n  Yearly\n}\n\nenum AccessType {\n  Reservable\n  WalkIn\n  DropOff\n}\n\nclass Person {\n  + LastName : string\n  + FirstName : string\n  + Address : string\n  + PhoneNumber : string\n}\n\nabstract class PersonRole {\n  + IdNumber : string\n}\n\nclass Patient extends PersonRole {\n  + HealthNumber : string\n  + DateOfBirth : date\n}\n\nclass Doctor extends PersonRole {\n  + PractitionerNumber : int\n  + Signature : string\n}\n\nclass Requisition {\n  + ValidFromDate : date\n  + RepetitionCount : int\n  + RepetitionInterval : Interval\n}\n\nclass TestResult {\n  + Result : boolean\n  + Report : string\n}\n\nclass SpecificTest {\n  + Date : date\n}\n\nclass Appointment {\n  + ConfirmationNumber : string\n  + Date : date\n  + startTime : time\n  + endTime : time\n}\n\nclass BusinessHour {\n  + startTime : time\n  + endTime : time\n}\n\nclass Lab {\n  + RegistrationNumber : string\n  + Name : string\n  + Address : string\n  + ChangeCancelFee : float\n}\n\nclass Test {\n  + Name : string\n  + Duration : string\n}\n\nclass TestType {\n  + Name : string\n  + Access : AccessType\n}\n\nPerson \"1\" -- \"*\" PersonRole\n\nPatient \"1\" -- \"*\" Requisition : has\nDoctor \"1\" -- \"*\" Requisition : prescribes\n\nRequisition \"1\" -- \"1..*\" SpecificTest : contains\n\nSpecificTest \"0..1\" -- \"1\" TestResult : has result\n\nSpecificTest \"*\" -- \"1\" Test : is a type of\nTest \"*\" -- \"1\" TestType : categorized by\n\nPatient \"0..1\" -- \"*\" Appointment : makes\nRequisition \"0..1\" -- \"0..1\" Appointment : for\nAppointment \"*\" -- \"1\" Lab : at\n\nLab \"1\" -- \"*\" BusinessHour : has\nLab \"1\" -- \"*\" Test : offers\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 29.59886059999917,
+ "prompt_tokens": 2832,
+ "completion_tokens": 472,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2cosro4ogyxz35z7gygg2t",
+  "object": "chat.completion",
+  "created": 1792506534,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum Interval {\n  Weekly\n  Monthly\n  EveryHalfYear\n  Yearly\n}\n\nenum AccessType {\n  Reservable\n  WalkIn\n  DropOff\n}\n\nclass Person {\n  + LastName : string\n  + FirstName : string\n  + Address : string\n  + PhoneNumber : string\n}\n\nabstract class PersonRole {\n  + IdNumber : string\n}\n\nclass Patient extends PersonRole {\n  + HealthNumber : string\n  + DateOfBirth : date\n}\n\nclass Doctor extends PersonRole {\n  + PractitionerNumber : int\n  + Signature : string\n}\n\nclass Requisition {\n  + ValidFromDate : date\n  + RepetitionCount : int\n  + RepetitionInterval : Interval\n}\n\nclass TestResult {\n  + Result : boolean\n  + Report : string\n}\n\nclass SpecificTest {\n  + Date : date\n}\n\nclass Appointment {\n  + ConfirmationNumber : string\n  + Date : date\n  + startTime : time\n  + endTime : time\n}\n\nclass BusinessHour {\n  + startTime : time\n  + endTime : time\n}\n\nclass Lab {\n  + RegistrationNumber : string\n  + Name : string\n  + Address : string\n  + ChangeCancelFee : float\n}\n\nclass Test {\n  + Name : string\n  + Duration : string\n}\n\nclass TestType {\n  + Name : string\n  + Access : AccessType\n}\n\nPerson \"1\" -- \"*\" PersonRole\n\nPatient \"1\" -- \"*\" Requisition : has\nDoctor \"1\" -- \"*\" Requisition : prescribes\n\nRequisition \"1\" -- \"1..*\" SpecificTest : contains\n\nSpecificTest \"0..1\" -- \"1\" TestResult : has result\n\nSpecificTest \"*\" -- \"1\" Test : is a type of\nTest \"*\" -- \"1\" TestType : categorized by\n\nPatient \"0..1\" -- \"*\" Appointment : makes\nRequisition \"0..1\" -- \"0..1\" Appointment : for\nAppointment \"*\" -- \"1\" Lab : at\n\nLab \"1\" -- \"*\" BusinessHour : has\nLab \"1\" -- \"*\" Test : offers\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2832,
+   "completion_tokens": 472,
+   "total_tokens": 3304,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

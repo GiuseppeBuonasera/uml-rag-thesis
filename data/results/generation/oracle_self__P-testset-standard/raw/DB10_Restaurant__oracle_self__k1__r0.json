@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Ingredient {\n  + Name\n  + MeasuringUnit\n  + QuantityInStock\n}\n\nclass Dish {\n  + ID\n  + Name\n}\n\nclass IngredientDish {\n  + Quantity\n}\n\nclass Table {\n  + ID\n  + MaximumAmountOfPeople\n}\n\nclass Meal {\n  + Date\n  + StartTime\n  + EndTime\n}\n\nclass DishMeal {\n  + Times_Served\n}\n\nclass Person {\n  + Name\n  + Address\n}\n\nclass Client extends Person {\n  + TaxIdentificationNumber\n}\n\nclass Waiter extends Person {\n  + ID\n  + PhoneNumber\n}\n\nIngredient \"1\" -- \"*\" IngredientDish\nIngredientDish \"*\" -- \"1\" Dish\nDish \"1\" -- \"*\" DishMeal\nDishMeal \"*\" -- \"1\" Meal\nMeal \"*\" -- \"1\" Table\nMeal \"*\" -- \"0..1\" Client\nMeal \"*\" -- \"1\" Waiter\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 13.209414500001003,
+ "prompt_tokens": 1785,
+ "completion_tokens": 212,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2qwflx8tqobt29c4pjuut",
+  "object": "chat.completion",
+  "created": 1792507046,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Ingredient {\n  + Name\n  + MeasuringUnit\n  + QuantityInStock\n}\n\nclass Dish {\n  + ID\n  + Name\n}\n\nclass IngredientDish {\n  + Quantity\n}\n\nclass Table {\n  + ID\n  + MaximumAmountOfPeople\n}\n\nclass Meal {\n  + Date\n  + StartTime\n  + EndTime\n}\n\nclass DishMeal {\n  + Times_Served\n}\n\nclass Person {\n  + Name\n  + Address\n}\n\nclass Client extends Person {\n  + TaxIdentificationNumber\n}\n\nclass Waiter extends Person {\n  + ID\n  + PhoneNumber\n}\n\nIngredient \"1\" -- \"*\" IngredientDish\nIngredientDish \"*\" -- \"1\" Dish\nDish \"1\" -- \"*\" DishMeal\nDishMeal \"*\" -- \"1\" Meal\nMeal \"*\" -- \"1\" Table\nMeal \"*\" -- \"0..1\" Client\nMeal \"*\" -- \"1\" Waiter\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1785,
+   "completion_tokens": 212,
+   "total_tokens": 1997,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

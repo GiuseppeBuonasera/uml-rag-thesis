@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + surname : string\n  + email : string\n  + telephone : string\n  + address : string\n}\n\nclass Dish {\n  + name : string\n  + preparation_time : time\n}\n\nclass Order {\n  + total_cost : double\n  + estimated_delivery_time : time\n  + status : string\n}\n\nenum OrderStatus {\n  placed\n  in preparation\n  in delivery\n  delivered\n}\n\nCustomer \"1\" -- \"*\" Order : places\n\nOrder \"1\" *-- \"1..*\" Dish : contains\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 10.641787299999123,
+ "prompt_tokens": 2105,
+ "completion_tokens": 139,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ifg6xer05gog10h1u1pg",
+  "object": "chat.completion",
+  "created": 1792522053,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + surname : string\n  + email : string\n  + telephone : string\n  + address : string\n}\n\nclass Dish {\n  + name : string\n  + preparation_time : time\n}\n\nclass Order {\n  + total_cost : double\n  + estimated_delivery_time : time\n  + status : string\n}\n\nenum OrderStatus {\n  placed\n  in preparation\n  in delivery\n  delivered\n}\n\nCustomer \"1\" -- \"*\" Order : places\n\nOrder \"1\" *-- \"1..*\" Dish : contains\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2105,
+   "completion_tokens": 139,
+   "total_tokens": 2244,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

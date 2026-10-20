@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum Position {\n  GK\n  LB\n}\n\nenum Recommendation {\n  KeyPlayer\n  FirstTeamPlayer\n  ReserveTeamPlayer\n  ProspectivePlayer\n  NotGoodSigning\n}\n\nclass Club {}\n\nclass HeadCoach {}\n\nclass Director {}\n\nclass Scout {}\n\nclass Player {\n  + Name : string\n}\n\nclass PlayerProfile {\n  + TargetPosition : Position\n}\n\nclass PlayerAttribute {\n  + Name : string\n  + Value : int\n}\n\nclass LongList {}\n\nclass ScoutingAssignment {}\n\nclass ScoutReport {\n  + Pros : string\n  + Cons : string\n  + Recommendation : Recommendation\n}\n\nclass Offer {}\n\nClub \"1\" -- \"1\" HeadCoach\nClub \"1\" -- \"1\" Director\nClub \"1\" -- \"*\" Scout\nClub \"1\" -- \"*\" Player\n\nHeadCoach \"1\" -- \"*\" PlayerProfile\nPlayerProfile \"1\" -- \"*\" PlayerAttribute\n\nScout \"0..1\" -- \"*\" LongList\nLongList \"1\" -- \"*\" ScoutingAssignment\nScout \"1\" -- \"*\" ScoutingAssignment\nScoutingAssignment \"1\" -- \"0..*\" ScoutReport\nScout \"0..1\" -- \"*\" ScoutReport : head scout\n\nPlayer \"1\" -- \"*\" LongList\nPlayer \"1\" -- \"*\" ScoutingAssignment\nPlayer \"1\" -- \"*\" ScoutReport\nPlayer \"1\" -- \"*\" Offer\n\nDirector \"1\" -- \"*\" Offer\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 19.34846539999853,
+ "prompt_tokens": 2232,
+ "completion_tokens": 312,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gnqm8h8imekq2lhj9uh",
+  "object": "chat.completion",
+  "created": 1792521949,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum Position {\n  GK\n  LB\n}\n\nenum Recommendation {\n  KeyPlayer\n  FirstTeamPlayer\n  ReserveTeamPlayer\n  ProspectivePlayer\n  NotGoodSigning\n}\n\nclass Club {}\n\nclass HeadCoach {}\n\nclass Director {}\n\nclass Scout {}\n\nclass Player {\n  + Name : string\n}\n\nclass PlayerProfile {\n  + TargetPosition : Position\n}\n\nclass PlayerAttribute {\n  + Name : string\n  + Value : int\n}\n\nclass LongList {}\n\nclass ScoutingAssignment {}\n\nclass ScoutReport {\n  + Pros : string\n  + Cons : string\n  + Recommendation : Recommendation\n}\n\nclass Offer {}\n\nClub \"1\" -- \"1\" HeadCoach\nClub \"1\" -- \"1\" Director\nClub \"1\" -- \"*\" Scout\nClub \"1\" -- \"*\" Player\n\nHeadCoach \"1\" -- \"*\" PlayerProfile\nPlayerProfile \"1\" -- \"*\" PlayerAttribute\n\nScout \"0..1\" -- \"*\" LongList\nLongList \"1\" -- \"*\" ScoutingAssignment\nScout \"1\" -- \"*\" ScoutingAssignment\nScoutingAssignment \"1\" -- \"0..*\" ScoutReport\nScout \"0..1\" -- \"*\" ScoutReport : head scout\n\nPlayer \"1\" -- \"*\" LongList\nPlayer \"1\" -- \"*\" ScoutingAssignment\nPlayer \"1\" -- \"*\" ScoutReport\nPlayer \"1\" -- \"*\" Offer\n\nDirector \"1\" -- \"*\" Offer\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2232,
+   "completion_tokens": 312,
+   "total_tokens": 2544,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

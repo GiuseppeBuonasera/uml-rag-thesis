@@ -55,7 +55,7 @@ from __future__ import annotations
 import json
 import re
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import yaml
@@ -76,7 +76,20 @@ BM25_CONFIG = ROOT / "retrieval" / "config_bm25.yaml"
 DENSE_CONFIG = ROOT / "retrieval" / "config_dense.yaml"
 
 CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle", "dense", "hybrid", "oracle_jt",
-              "struct", "construct", "struct_construct")
+              "struct", "construct", "struct_construct", "oracle_self", "oracle_partial")
+# oracle_partial (voce 163, SOLO ANALISI): come oracle_self, ma la soluzione dell'esempio e' DEGRADATA: si tiene la
+# frazione oracle_keep delle classi (scelta deterministica, degrade_diagram) con i loro attributi e le relazioni tra
+# classi tenute; la traccia dell'esempio resta quella vera. Misura quanto deve essere simile un esempio per servire.
+ORACLE_CONDITIONS = ("oracle_self", "oracle_partial")
+# voce 164: esempi aggiunti all'esempio parziale di oracle_partial. "bm25_2" = i 2 esempi bm25 k2 del file congelato
+# PRIMA dell'esempio parziale (il piu' simile per ultimo, come nel 3b); "complemento" = dopo l'esempio al 50 % un secondo
+# esempio con le classi complementari (le due soluzioni insieme coprono tutte le classi)
+ORACLE_EXTRAS = ("nessuno", "bm25_2", "complemento")
+# oracle_self (voce 162, SOLO ANALISI): l'unico esempio e' l'esercizio stesso con la sua soluzione; controllo che misura
+# se il modello sa usare il contenuto di un esempio perfetto. Mai nel 3b ne' nei dati dei relatori.
+# Blocco esempi (voce 162): "standard" = v5_examples_block.txt; "libero" = senza la frase "They describe other systems:
+# do not copy their classes" (v5_examples_block_libero.txt), solo per oracle_self
+EXAMPLES_BLOCKS = {"standard": "v5_examples_block.txt", "libero": "v5_examples_block_libero.txt"}
 # varianti del retriever della voce 120 (passo 4, voce 121), sul pool unico come bm25, il piu' simile per ultimo:
 #   struct            v2: RRF(bm25, BM25 sui nomi di classe dei candidati)
 #   construct         v4: bm25 con la spinta ai candidati che mostrano i costrutti segnalati dalla traccia
@@ -96,7 +109,24 @@ def random_seed(query_id: str, repetition: int) -> int:
     esadecimali di sha256("random|<id>|<r>"). Deterministico, indipendente dalla macchina e dall'ordine delle run."""
     import hashlib
     return int(hashlib.sha256(f"random|{query_id}|{repetition}".encode("utf-8")).hexdigest()[:8], 16)
-ANALYSIS_ONLY = {"oracle", "oracle_jt"}
+ANALYSIS_ONLY = {"oracle", "oracle_jt", "oracle_self", "oracle_partial"}
+
+
+def degrade_diagram(diagram: dict, keep: float, seed_id: str, complement: bool = False) -> dict:
+    """Voce 163: copia del diagramma Apollon con la frazione `keep` delle classi (almeno 1), scelte in modo
+    deterministico (ordine per sha256("<seed_id>|<id del nodo>")), con i loro attributi; restano solo le relazioni e le
+    generalizzazioni tra classi tenute. Il resto (layout, id) e' invariato. complement=True (voce 164): le classi NON
+    tenute dalla stessa chiamata con complement=False (le due parti insieme coprono tutte le classi)."""
+    import copy
+    import hashlib
+    nodes = diagram.get("nodes", [])
+    order = sorted(nodes, key=lambda n: hashlib.sha256(f"{seed_id}|{n['id']}".encode("utf-8")).hexdigest())
+    cut = max(1, round(keep * len(nodes)))
+    kept = {n["id"] for n in (order[cut:] if complement else order[:cut])}
+    out = copy.deepcopy(diagram)
+    out["nodes"] = [n for n in out.get("nodes", []) if n["id"] in kept]
+    out["edges"] = [e for e in out.get("edges", []) if e.get("source") in kept and e.get("target") in kept]
+    return out
 SERIALIZATIONS = ("indent2", "compact")
 # voce 138: vista degli ESEMPI. "raw" = traccia originale (default, prompt identici a prima); "clean_v1" = tolte le
 # frasi elencate in example_view_clean_v1.yaml (istruzioni per lo studente). La traccia della query non cambia mai.
@@ -177,8 +207,25 @@ class PromptSpec:
     instructions_variant: str = "base"  # "base" | "targeted" (voce 98)
     instructions_version: str = "v4"  # "v4" | "v5" (voce 111)
     example_view: str = "raw"  # "raw" | "clean_v1" (voce 138)
+    examples_block: str = "standard"  # "standard" | "libero" (voce 162, solo oracle_self / oracle_partial)
+    oracle_keep: float = 1.0  # voce 163: frazione delle classi tenute nell'esempio di oracle_partial
+    oracle_extra: str = "nessuno"  # voce 164: "nessuno" | "bm25_2" (+ 2 esempi bm25) | "complemento" (+ la parte mancante)
 
     def __post_init__(self):
+        if self.oracle_extra not in ORACLE_EXTRAS:
+            raise ValueError(f"oracle_extra sconosciuto: {self.oracle_extra} (ammessi: {ORACLE_EXTRAS})")
+        if self.oracle_extra != "nessuno" and self.condition != "oracle_partial":
+            raise ValueError("oracle_extra vale solo per oracle_partial (voce 164)")
+        if self.oracle_extra == "complemento" and self.oracle_keep != 0.5:
+            raise ValueError("oracle_extra 'complemento' solo con oracle_keep 0.5 (voce 164)")
+        if self.examples_block not in EXAMPLES_BLOCKS:
+            raise ValueError(f"blocco esempi sconosciuto: {self.examples_block} (ammessi: {tuple(EXAMPLES_BLOCKS)})")
+        if self.examples_block != "standard" and self.condition not in ORACLE_CONDITIONS:
+            raise ValueError("il blocco esempi 'libero' vale solo per oracle_self / oracle_partial (voci 162-163)")
+        if self.condition == "oracle_partial" and not 0 < self.oracle_keep < 1:
+            raise ValueError(f"oracle_partial: oracle_keep deve stare tra 0 e 1 escluso, non {self.oracle_keep}")
+        if self.condition != "oracle_partial" and self.oracle_keep != 1.0:
+            raise ValueError("oracle_keep vale solo per oracle_partial (voce 163)")
         if self.condition not in CONDITIONS:
             raise ValueError(f"condizione sconosciuta: {self.condition}")
         if self.output_format not in OUTPUT_FORMATS:
@@ -439,6 +486,21 @@ class PromptBuilder:
         c = spec.condition
         if c == "zero_shot":
             return []
+        if c == "oracle_self":  # voce 162: l'esercizio stesso, solo analisi
+            return [self.all_by_id[query["id"]]]
+        if c == "oracle_partial":  # voce 163: l'esercizio stesso con la soluzione degradata, solo analisi
+            q = self.all_by_id[query["id"]]
+            part = {"id": f"{q['id']}__parziale{round(spec.oracle_keep * 100)}", "view_id": q["id"],
+                    "description": q["description"],
+                    "diagram_apollon_json": degrade_diagram(q["diagram_apollon_json"], spec.oracle_keep, q["id"])}
+            if spec.oracle_extra == "bm25_2":  # voce 164: 2 esempi bm25 (file congelato) prima dell'esempio parziale
+                bm = replace(spec, condition="bm25", k=2, examples_block="standard", oracle_keep=1.0, oracle_extra="nessuno")
+                return [self.all_by_id[h.id] for h in reversed(self.hits(query, bm))] + [part]
+            if spec.oracle_extra == "complemento":  # voce 164: la meta' complementare dopo quella tenuta
+                comp = dict(part, id=f"{q['id']}__complemento50",
+                            diagram_apollon_json=degrade_diagram(q["diagram_apollon_json"], 0.5, q["id"], complement=True))
+                return [part, comp]
+            return [part]
         if c == "static":
             if query["id"] in {e["id"] for e in self.static}:
                 raise ValueError(f"condizione static con la query {query['id']}: coincide con un esempio statico")
@@ -473,14 +535,17 @@ class PromptBuilder:
 
     def build(self, query: dict, spec: PromptSpec) -> BuiltPrompt:
         examples = self.select(query, spec)
-        if query["id"] in {e["id"] for e in examples}:
+        if query["id"] in {e["id"] for e in examples} and spec.condition != "oracle_self":  # voce 162: unica eccezione
             raise AssertionError(f"la query {query['id']} compare tra i propri esempi")
+        if spec.condition in ORACLE_CONDITIONS and spec.instructions_version not in V5_FAMILY:
+            raise ValueError(f"{spec.condition} solo con le istruzioni della famiglia v5 (voci 162-163)")
         item = _template(ITEM_TEMPLATES[spec.output_format])
         edits = example_view_edits(spec.example_view)  # voce 138: solo gli esempi, mai la traccia della query
-        items = [item.format(n=i, description=apply_example_view(e["id"], e["description"], edits).strip(),
+        items = [item.format(n=i, description=apply_example_view(e.get("view_id", e["id"]), e["description"], edits).strip(),
                              diagram_json=self.render_example(e, spec))
                  for i, e in enumerate(examples, start=1)]
-        block = "v5_examples_block.txt" if spec.instructions_version in V5_FAMILY else "v4_examples_block.txt"  # voce 111
+        block = (EXAMPLES_BLOCKS[spec.examples_block] if spec.instructions_version in V5_FAMILY
+                 else "v4_examples_block.txt")  # voce 111; blocco "libero" della voce 162
         examples_block = _template(block).format(examples="\n".join(items)) if items else ""
         if spec.instructions_version in V5_FAMILY:
             final = V5PLAN_FINAL_LINE if spec.instructions_version == "v5plan" else V5_FINAL_LINE[spec.output_format]

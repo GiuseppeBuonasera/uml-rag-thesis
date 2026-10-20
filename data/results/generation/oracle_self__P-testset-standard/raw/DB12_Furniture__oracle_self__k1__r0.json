@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Line {\n  + Name\n}\n\nclass Piece {\n  + Type\n  + Reference\n  + SellingPrice\n}\n\nclass Component {\n  + Code\n  + ManufacturingPrice\n  + Type\n}\n\nclass Store {\n  + Address\n  + FaxNumber\n}\n\nclass Order {\n  + OrderNumber\n  + Date\n}\n\nclass PieceComponent {\n  + Quantity\n}\n\nclass PieceOrder {\n  + Quantity\n}\n\nLine \"1\" -- \"*\" Piece\nPiece \"*\" -- \"1\" Line\nPiece \"1\" -- \"*\" PieceComponent\nPieceComponent \"*\" -- \"1\" Component\nComponent \"*\" -- \"*\" Piece\nComponent \"*\" -- \"1\" Component\nOrder \"*\" -- \"1\" Store\nOrder \"*\" -- \"1\" Piece\nOrder \"1\" -- \"*\" PieceOrder\nPiece \"1\" -- \"*\" PieceOrder\nPieceOrder \"*\" -- \"1\" Order\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 12.45721400000184,
+ "prompt_tokens": 1747,
+ "completion_tokens": 199,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-idnj7ng8opqubkuawjtues",
+  "object": "chat.completion",
+  "created": 1792507070,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Line {\n  + Name\n}\n\nclass Piece {\n  + Type\n  + Reference\n  + SellingPrice\n}\n\nclass Component {\n  + Code\n  + ManufacturingPrice\n  + Type\n}\n\nclass Store {\n  + Address\n  + FaxNumber\n}\n\nclass Order {\n  + OrderNumber\n  + Date\n}\n\nclass PieceComponent {\n  + Quantity\n}\n\nclass PieceOrder {\n  + Quantity\n}\n\nLine \"1\" -- \"*\" Piece\nPiece \"*\" -- \"1\" Line\nPiece \"1\" -- \"*\" PieceComponent\nPieceComponent \"*\" -- \"1\" Component\nComponent \"*\" -- \"*\" Piece\nComponent \"*\" -- \"1\" Component\nOrder \"*\" -- \"1\" Store\nOrder \"*\" -- \"1\" Piece\nOrder \"1\" -- \"*\" PieceOrder\nPiece \"1\" -- \"*\" PieceOrder\nPieceOrder \"*\" -- \"1\" Order\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1747,
+   "completion_tokens": 199,
+   "total_tokens": 1946,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

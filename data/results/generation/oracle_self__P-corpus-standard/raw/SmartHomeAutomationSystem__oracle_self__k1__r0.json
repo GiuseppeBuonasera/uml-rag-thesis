@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass SmartHome {\n  + address : string\n}\n\nclass User {\n  + name : string\n}\n\nclass Room {}\n\nabstract class Device {\n  + deviceID : int\n  + status : DeviceStatus\n}\n\nclass Sensor extends Device {}\n\nclass Actuator extends Device {}\n\nclass SensorReading {\n  + value : double\n  + timestamp : datetime\n}\n\nclass ControlCommand {\n  + commandType : CommandType\n  + commandStatus : CommandStatus\n  + timestamp : datetime\n}\n\nclass ActivityLog {}\n\nclass AutomationRule {\n  + ruleStatus : RuleStatus\n  + triggerTimestamp : datetime\n}\n\nabstract class BooleanExpression {}\n\nclass RelationalTerm extends BooleanExpression {}\n\nclass NotExpression extends BooleanExpression {}\n\nclass BinaryExpression extends BooleanExpression {}\n\nclass CommandSequence {}\n\nenum DeviceStatus {\n  Activated\n  Deactivated\n}\n\nenum CommandType {\n  lockDoor\n  turnOnHeating\n}\n\nenum CommandStatus {\n  Requested\n  Completed\n  Failed\n}\n\nenum RuleStatus {\n  Created\n  Edited\n  Activated\n  Deactivated\n}\n\nenum BinaryOp {\n  AND\n  OR\n  NOT\n}\n\nUser \"*\" -- \"*\" SmartHome : manages\nSmartHome \"1\" *-- \"*\" Room\nSmartHome \"1\" *-- \"*\" Device\nSmartHome \"1\" *-- \"1\" ActivityLog\nRoom \"1\" *-- \"*\" Sensor\nRoom \"1\" *-- \"*\" Actuator\nSensor \"1\" -- \"*\" SensorReading\nActuator \"1\" -- \"*\" ControlCommand\nActivityLog \"1\" *-- \"*\" SensorReading\nActivityLog \"1\" *-- \"*\" ControlCommand\nUser \"1\" -- \"*\" AutomationRule : creates\nAutomationRule \"1\" *-- \"1\" BooleanExpression : precondition\nAutomationRule \"1\" *-- \"1\" CommandSequence : action\nAutomationRule \"0..1\" -- \"0..1\" AutomationRule : depends on\nAutomationRule \"0..1\" -- \"0..1\" AutomationRule : conflicts with\nCommandSequence \"1\" *-- \"1..*\" ControlCommand\nRelationalTerm \"*\" -- \"0..1\" Room\nRelationalTerm \"*\" -- \"0..1\" Sensor\nRelationalTerm \"*\" -- \"0..1\" Actuator\nRelationalTerm \"*\" -- \"0..1\" SensorReading\nRelationalTerm \"*\" -- \"0..1\" ControlCommand\nNotExpression \"1\" -- \"1\" BooleanExpression : operand\nBinaryExpression \"1\" -- \"1\" BooleanExpression : left\nBinaryExpression \"1\" -- \"1\" BooleanExpression : right\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 33.00495290000072,
+ "prompt_tokens": 2317,
+ "completion_tokens": 564,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-xsn9adau27eqj5xsof3n3",
+  "object": "chat.completion",
+  "created": 1792506020,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass SmartHome {\n  + address : string\n}\n\nclass User {\n  + name : string\n}\n\nclass Room {}\n\nabstract class Device {\n  + deviceID : int\n  + status : DeviceStatus\n}\n\nclass Sensor extends Device {}\n\nclass Actuator extends Device {}\n\nclass SensorReading {\n  + value : double\n  + timestamp : datetime\n}\n\nclass ControlCommand {\n  + commandType : CommandType\n  + commandStatus : CommandStatus\n  + timestamp : datetime\n}\n\nclass ActivityLog {}\n\nclass AutomationRule {\n  + ruleStatus : RuleStatus\n  + triggerTimestamp : datetime\n}\n\nabstract class BooleanExpression {}\n\nclass RelationalTerm extends BooleanExpression {}\n\nclass NotExpression extends BooleanExpression {}\n\nclass BinaryExpression extends BooleanExpression {}\n\nclass CommandSequence {}\n\nenum DeviceStatus {\n  Activated\n  Deactivated\n}\n\nenum CommandType {\n  lockDoor\n  turnOnHeating\n}\n\nenum CommandStatus {\n  Requested\n  Completed\n  Failed\n}\n\nenum RuleStatus {\n  Created\n  Edited\n  Activated\n  Deactivated\n}\n\nenum BinaryOp {\n  AND\n  OR\n  NOT\n}\n\nUser \"*\" -- \"*\" SmartHome : manages\nSmartHome \"1\" *-- \"*\" Room\nSmartHome \"1\" *-- \"*\" Device\nSmartHome \"1\" *-- \"1\" ActivityLog\nRoom \"1\" *-- \"*\" Sensor\nRoom \"1\" *-- \"*\" Actuator\nSensor \"1\" -- \"*\" SensorReading\nActuator \"1\" -- \"*\" ControlCommand\nActivityLog \"1\" *-- \"*\" SensorReading\nActivityLog \"1\" *-- \"*\" ControlCommand\nUser \"1\" -- \"*\" AutomationRule : creates\nAutomationRule \"1\" *-- \"1\" BooleanExpression : precondition\nAutomationRule \"1\" *-- \"1\" CommandSequence : action\nAutomationRule \"0..1\" -- \"0..1\" AutomationRule : depends on\nAutomationRule \"0..1\" -- \"0..1\" AutomationRule : conflicts with\nCommandSequence \"1\" *-- \"1..*\" ControlCommand\nRelationalTerm \"*\" -- \"0..1\" Room\nRelationalTerm \"*\" -- \"0..1\" Sensor\nRelationalTerm \"*\" -- \"0..1\" Actuator\nRelationalTerm \"*\" -- \"0..1\" SensorReading\nRelationalTerm \"*\" -- \"0..1\" ControlCommand\nNotExpression \"1\" -- \"1\" BooleanExpression : operand\nBinaryExpression \"1\" -- \"1\" BooleanExpression : left\nBinaryExpression \"1\" -- \"1\" BooleanExpression : right\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2317,
+   "completion_tokens": 564,
+   "total_tokens": 2881,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

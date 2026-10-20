@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Ingredient\",\n      \"attributes\": [\n        \"+ Name\",\n        \"+ Unit\",\n        \"+ Quantity\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ ID\",\n        \"+ Name\"\n      ]\n    },\n    {\n      \"name\": \"IngredientDish\",\n      \"attributes\": [\n        \"+ Quantity\"\n      ]\n    },\n    {\n      \"name\": \"Table\",\n      \"attributes\": [\n        \"+ ID\",\n        \"+ Capacity\"\n      ]\n    },\n    {\n      \"name\": \"Meal\",\n      \"attributes\": [\n        \"+ Date\",\n        \"+ StartTime\",\n        \"+ EndTime\"\n      ]\n    },\n    {\n      \"name\": \"DishMeal\",\n      \"attributes\": [\n        \"+ Times_Served\"\n      ]\n    },\n    {\n      \"name\": \"Waiter\",\n      \"attributes\": [\n        \"+ ID\",\n        \"+ Name\",\n        \"+ Address\",\n        \"+ Phone\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ Name\",\n        \"+ Address\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ TaxID\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"IngredientDish\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Ingredient\",\n      \"target\": \"IngredientDish\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Table\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Waiter\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"DishMeal\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"DishMeal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Client\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Waiter\",\n      \"parent\": \"Person\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 41.45448059999762,
+ "prompt_tokens": 2364,
+ "completion_tokens": 737,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-g026c5gtyi4019kubbbinft",
+  "object": "chat.completion",
+  "created": 1792511621,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Ingredient\",\n      \"attributes\": [\n        \"+ Name\",\n        \"+ Unit\",\n        \"+ Quantity\"\n      ]\n    },\n    {\n      \"name\": \"Dish\",\n      \"attributes\": [\n        \"+ ID\",\n        \"+ Name\"\n      ]\n    },\n    {\n      \"name\": \"IngredientDish\",\n      \"attributes\": [\n        \"+ Quantity\"\n      ]\n    },\n    {\n      \"name\": \"Table\",\n      \"attributes\": [\n        \"+ ID\",\n        \"+ Capacity\"\n      ]\n    },\n    {\n      \"name\": \"Meal\",\n      \"attributes\": [\n        \"+ Date\",\n        \"+ StartTime\",\n        \"+ EndTime\"\n      ]\n    },\n    {\n      \"name\": \"DishMeal\",\n      \"attributes\": [\n        \"+ Times_Served\"\n      ]\n    },\n    {\n      \"name\": \"Waiter\",\n      \"attributes\": [\n        \"+ ID\",\n        \"+ Name\",\n        \"+ Address\",\n        \"+ Phone\"\n      ]\n    },\n    {\n      \"name\": \"Person\",\n      \"attributes\": [\n        \"+ Name\",\n        \"+ Address\"\n      ]\n    },\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ TaxID\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"IngredientDish\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Ingredient\",\n      \"target\": \"IngredientDish\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Table\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Waiter\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Meal\",\n      \"target\": \"DishMeal\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Dish\",\n      \"target\": \"DishMeal\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Client\",\n      \"parent\": \"Person\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Waiter\",\n      \"parent\": \"Person\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2364,
+   "completion_tokens": 737,
+   "total_tokens": 3101,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

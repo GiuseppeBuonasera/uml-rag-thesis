@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Club {}\n\nclass Director {}\n\nclass Scout {\n  + ScoutKind : ScoutKind\n}\n\nclass HeadScout extends Scout {}\n\nclass HeadCoach {}\n\nclass Player {\n  + Status : ScoutingStatus\n}\n\nclass PlayerProfile {\n  + Position : Position\n}\n\nclass PlayerAttribute {\n  + Name : string\n  + Value : int\n}\n\nclass LongList {}\n\nclass ScoutingAssignment {}\n\nclass ScoutingReport {\n  + Pros : string\n  + Cons : string\n  + Recommendation : Recommendation\n}\n\nclass Offer {}\n\nenum ScoutKind {\n  HEAD_SCOUT\n}\n\nenum ScoutingStatus {\n  SHORT_LISTED\n}\n\nenum Position {\n  GK\n  LB\n}\n\nenum Recommendation {\n  KEY_PLAYER\n  FIRST_TEAM_PLAYER\n  RESERVE_TEAM_PLAYER\n  PROSPECTIVE_PLAYER\n  NOT_A_GOOD_SIGNING\n}\n\nClub \"1\" *-- \"1\" Director\nClub \"1\" *-- \"0..*\" Scout\nClub \"1\" *-- \"0..*\" HeadCoach\nClub \"1\" *-- \"0..*\" Player\n\nHeadCoach \"1\" -- \"0..*\" PlayerProfile : identifies\nPlayerProfile \"1\" *-- \"0..*\" PlayerAttribute\n\nScout \"1\" -- \"0..*\" LongList : notes\nLongList \"1\" -- \"0..*\" ScoutingAssignment : evaluated by\nScout \"1\" -- \"0..*\" ScoutingAssignment : carries out\nScoutingAssignment \"1\" -- \"1\" ScoutingReport : results in\nScoutingAssignment \"0..*\" -- \"1\" Player : investigates\n\nHeadCoach \"1\" -- \"0..*\" Player : decides to move to short list\nHeadScout \"1\" -- \"0..*\" Player : decides to move to short list\n\nDirector \"1\" -- \"0..*\" Offer : makes\nPlayer \"1\" -- \"0..*\" Offer : receives\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 28.12240980000206,
+ "prompt_tokens": 3167,
+ "completion_tokens": 429,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3eusp4x5tposv7yphconyr",
+  "object": "chat.completion",
+  "created": 1792521305,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Club {}\n\nclass Director {}\n\nclass Scout {\n  + ScoutKind : ScoutKind\n}\n\nclass HeadScout extends Scout {}\n\nclass HeadCoach {}\n\nclass Player {\n  + Status : ScoutingStatus\n}\n\nclass PlayerProfile {\n  + Position : Position\n}\n\nclass PlayerAttribute {\n  + Name : string\n  + Value : int\n}\n\nclass LongList {}\n\nclass ScoutingAssignment {}\n\nclass ScoutingReport {\n  + Pros : string\n  + Cons : string\n  + Recommendation : Recommendation\n}\n\nclass Offer {}\n\nenum ScoutKind {\n  HEAD_SCOUT\n}\n\nenum ScoutingStatus {\n  SHORT_LISTED\n}\n\nenum Position {\n  GK\n  LB\n}\n\nenum Recommendation {\n  KEY_PLAYER\n  FIRST_TEAM_PLAYER\n  RESERVE_TEAM_PLAYER\n  PROSPECTIVE_PLAYER\n  NOT_A_GOOD_SIGNING\n}\n\nClub \"1\" *-- \"1\" Director\nClub \"1\" *-- \"0..*\" Scout\nClub \"1\" *-- \"0..*\" HeadCoach\nClub \"1\" *-- \"0..*\" Player\n\nHeadCoach \"1\" -- \"0..*\" PlayerProfile : identifies\nPlayerProfile \"1\" *-- \"0..*\" PlayerAttribute\n\nScout \"1\" -- \"0..*\" LongList : notes\nLongList \"1\" -- \"0..*\" ScoutingAssignment : evaluated by\nScout \"1\" -- \"0..*\" ScoutingAssignment : carries out\nScoutingAssignment \"1\" -- \"1\" ScoutingReport : results in\nScoutingAssignment \"0..*\" -- \"1\" Player : investigates\n\nHeadCoach \"1\" -- \"0..*\" Player : decides to move to short list\nHeadScout \"1\" -- \"0..*\" Player : decides to move to short list\n\nDirector \"1\" -- \"0..*\" Offer : makes\nPlayer \"1\" -- \"0..*\" Offer : receives\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3167,
+   "completion_tokens": 429,
+   "total_tokens": 3596,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

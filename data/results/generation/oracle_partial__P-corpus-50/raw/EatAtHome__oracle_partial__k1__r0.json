@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Customer {\n  + name : string\n  + surname : string\n  + email : string\n  + telephone : string\n  + address : string\n}\n\nclass Order {\n  + totalCost : float\n  + estimatedDeliveryTime : time\n  + status : string\n}\n\nclass Dish {\n  + name : string\n  + preparationTime : time\n}\n\nclass Kitchen {\n  + currentWorkload : int\n}\n\nclass DeliveryDepartment {\n}\n\nclass DeliveryStaff {\n}\n\nCustomer \"1\" -- \"*\" Order : places\nOrder \"1\" *-- \"1..*\" Dish : contains\nOrder \"1\" -- \"1\" Kitchen : sent to\nOrder \"1\" -- \"1\" DeliveryDepartment : handed over to\nDeliveryDepartment \"1\" -- \"*\" DeliveryStaff : employs\nDeliveryStaff \"1\" -- \"1\" Order : delivers\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 12.368457700002182,
+ "prompt_tokens": 1663,
+ "completion_tokens": 195,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-0c3l947p5v9vtuun4e90sql",
+  "object": "chat.completion",
+  "created": 1792513741,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Customer {\n  + name : string\n  + surname : string\n  + email : string\n  + telephone : string\n  + address : string\n}\n\nclass Order {\n  + totalCost : float\n  + estimatedDeliveryTime : time\n  + status : string\n}\n\nclass Dish {\n  + name : string\n  + preparationTime : time\n}\n\nclass Kitchen {\n  + currentWorkload : int\n}\n\nclass DeliveryDepartment {\n}\n\nclass DeliveryStaff {\n}\n\nCustomer \"1\" -- \"*\" Order : places\nOrder \"1\" *-- \"1..*\" Dish : contains\nOrder \"1\" -- \"1\" Kitchen : sent to\nOrder \"1\" -- \"1\" DeliveryDepartment : handed over to\nDeliveryDepartment \"1\" -- \"*\" DeliveryStaff : employs\nDeliveryStaff \"1\" -- \"1\" Order : delivers\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1663,
+   "completion_tokens": 195,
+   "total_tokens": 1858,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

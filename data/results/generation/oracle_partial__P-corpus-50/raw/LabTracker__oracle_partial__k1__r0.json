@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Person {\n  + HealthNumber : string\n  + FirstName : string\n  + LastName : string\n  + Address : string\n  + PhoneNumber : string\n}\n\nclass Doctor extends Person {\n  + PractitionerNumber : int\n  + Signature : string\n}\n\nclass Patient extends Person {\n  + DateOfBirth : date\n}\n\nclass Requisition {\n  + ValidFrom : date\n  + RepetitionCount : int\n  + RepetitionInterval : string\n}\n\nclass Test {\n  + Name : string\n}\n\nclass TestType {\n  + Name : string\n  + Duration : string\n}\n\nclass TestResult {\n  + Result : boolean\n  + Report : string\n}\n\nclass Lab {\n  + Address : string\n  + BusinessHours : string\n  + RegistrationNumber : string\n  + Fee : float\n}\n\nclass Appointment {\n  + ConfirmationNumber : string\n  + StartTime : time\n  + EndTime : time\n}\n\nclass AppointmentConfirmation {\n  + ConfirmationNumber : string\n  + Date : date\n  + StartTime : time\n  + EndTime : time\n}\n\nDoctor \"1\" -- \"*\" Requisition : prescribes\nPatient \"1\" -- \"*\" Requisition : receives\nRequisition \"1\" *-- \"*\" Test : contains\nTest \"*\" -- \"1\" TestType : is of type\nDoctor \"1\" -- \"*\" TestResult : views\nPatient \"1\" -- \"*\" TestResult : views\nPatient \"1\" -- \"*\" Appointment : makes\nRequisition \"1\" -- \"0..1\" Appointment : for\nLab \"1\" -- \"*\" Appointment : hosts\nLab \"1\" -- \"*\" Appointment : location\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 24.017506299998786,
+ "prompt_tokens": 2598,
+ "completion_tokens": 369,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-z8l8541940miw3uaztms1p",
+  "object": "chat.completion",
+  "created": 1792513515,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Person {\n  + HealthNumber : string\n  + FirstName : string\n  + LastName : string\n  + Address : string\n  + PhoneNumber : string\n}\n\nclass Doctor extends Person {\n  + PractitionerNumber : int\n  + Signature : string\n}\n\nclass Patient extends Person {\n  + DateOfBirth : date\n}\n\nclass Requisition {\n  + ValidFrom : date\n  + RepetitionCount : int\n  + RepetitionInterval : string\n}\n\nclass Test {\n  + Name : string\n}\n\nclass TestType {\n  + Name : string\n  + Duration : string\n}\n\nclass TestResult {\n  + Result : boolean\n  + Report : string\n}\n\nclass Lab {\n  + Address : string\n  + BusinessHours : string\n  + RegistrationNumber : string\n  + Fee : float\n}\n\nclass Appointment {\n  + ConfirmationNumber : string\n  + StartTime : time\n  + EndTime : time\n}\n\nclass AppointmentConfirmation {\n  + ConfirmationNumber : string\n  + Date : date\n  + StartTime : time\n  + EndTime : time\n}\n\nDoctor \"1\" -- \"*\" Requisition : prescribes\nPatient \"1\" -- \"*\" Requisition : receives\nRequisition \"1\" *-- \"*\" Test : contains\nTest \"*\" -- \"1\" TestType : is of type\nDoctor \"1\" -- \"*\" TestResult : views\nPatient \"1\" -- \"*\" TestResult : views\nPatient \"1\" -- \"*\" Appointment : makes\nRequisition \"1\" -- \"0..1\" Appointment : for\nLab \"1\" -- \"*\" Appointment : hosts\nLab \"1\" -- \"*\" Appointment : location\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2598,
+   "completion_tokens": 369,
+   "total_tokens": 2967,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

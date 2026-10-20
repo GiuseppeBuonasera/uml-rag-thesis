@@ -167,6 +167,14 @@ non sono state modificate.
 156. 2026-10-17/18 — Difficolta' degli esercizi (Flesch-Kincaid e dimensione) e tabelle F1 per grado, schema concordato con i relatori
 157. 2026-10-14/19 — Strumenti di confronto ed esportazione del 3b, correzioni al report, verifica delle conversioni
 158. 2026-10-19 — L'analisi statistica del 3b la fanno i relatori con un loro script: al repo spetta fornire i dati
+159. 2026-10-19 — Domande ai relatori 8, 11, 14 e 16 chiuse
+160. 2026-10-20 — Revisione dei sinonimi SCARTATA (la voce 152 non si applica)
+161. 2026-10-19/20 — Analisi esplorative aggiuntive del 3b, raccolte nel report di analisi
+162. 2026-10-20 — Controllo "esercizio stesso come esempio" (oracle_self, solo analisi): disegno e regola di lettura PRIMA della run
+163. 2026-10-20 — Controllo "esempio parzialmente simile" (oracle_partial, solo analisi): disegno e soglia di utilita' PRIMA della run
+164. 2026-10-20 — Esiti di oracle_self e oracle_partial; controllo "piu' esempi insieme" (oracle_mix): disegno e regola PRIMA della run
+165. 2026-10-20 — Esito di oracle_mix: nessuna diluizione; due meta' complementari si sommano in parte
+166. 2026-10-20 — Analisi descrittive sugli esempi del 3b (ripetizioni, effetto dei singoli esempi, scelte del retrieval, difficolta' degli esempi)
 
 ## Formato
 
@@ -5484,3 +5492,143 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   o 80 come sensibilita'), formato dei file che lo script si aspetta.
 - Le analisi delle voci 154-156 restano come esplorative e descrittive; i risultati ufficiali saranno quelli dello
   script dei relatori.
+
+### [2026-10-19] Domande ai relatori 8, 11, 14 e 16 chiuse (comunicato dall'utente)
+- **8 (LLM e parametri)**: scelta dell'utente, la configurazione del 3b: Gemma 4 26B A4B QAT locale via LM Studio,
+  temperatura 0,3, top_p 0,95, top_k 64, 3 ripetizioni, contesto 32768, max_tokens 4096, ragionamento spento.
+- **11 (metriche)**: decise dallo script di valutazione dei relatori (completeness per classi, attributi, associazioni;
+  errori sintattici e semantici; voci 157-158). Le F1 di `evaluation/element_metrics.py` restano come analisi di
+  confronto e di sensibilita'; restano da chiarire con i relatori i punti della voce 157 (risposte non valide,
+  regola di abbinamento dei nomi, definizione degli errori, trattamento dei valori degli enum).
+- **14 (generazione libera o vincolata)**: i relatori sono d'accordo con la scelta attuale, generazione libera
+  (`structured_output` disattivato), come nel 3b: il rischio di rifacimento della voce 149 su questo punto e' chiuso.
+- **16 (secondo modello)**: no.
+- Conseguenza: nessun rifacimento del 3b per le domande 8 e 14 (rischio accettato nella voce 149, ora chiuso).
+
+### [2026-10-20] Revisione dei sinonimi scartata (decisione dell'utente)
+- La revisione delle 314 coppie candidate della voce 152 (livello di abbinamento semantico come sensibilita') **non si
+  fa**. Stima che aveva motivato la proposta: +6-12 % relativo sulla F1 media accettando le coppie piu' simili, tetto
+  +22-26 %, effetto simile per tutti i prompt (quindi senza conseguenze sul confronto tra prompt). Le metriche
+  ufficiali sono quelle dello script dei relatori (voce 159).
+- Codice e pagina restano come documentazione (`experiments/synonym_review.py`, test `check_synonym_review`,
+  `data/results/generation/revisione_sinonimi/`); nessun file di annotazione, nessun livello semantico.
+
+### [2026-10-19/20] Analisi esplorative aggiuntive del 3b — raccolte nel report di analisi
+- Tutte esplorative (voce 154), sui 54 di validazione salvo dove indicato; testo e tabelle nel report condiviso con i
+  relatori (https://claude.ai/code/artifact/075e6dae-ee3a-43b8-83e7-60cf416cfb4d), sezioni "Cosa penalizza", "Nomi, astrazioni e qualita' del riferimento", "Scheletri",
+  "Dimensione del modello", "Verifiche tecniche" e il paragrafo sulle difficolta' combinate.
+- **Cosa penalizza**: circa il 70 % degli elementi mancanti dipende da classi non abbinate (associazioni con un estremo
+  non abbinato 29 %, attributi di classi non abbinate 20 %, classi mancanti 20 %); tra classi abbinate manca solo il
+  4 % dei collegamenti.
+- **Nomi e astrazioni**: classi del riferimento con nome nel testo ritrovate al 66 %, senza al 6 %; il modello prende
+  dal testo il 96 % dei nomi; il riferimento ha 5-6 volte piu' enum e classi "inventate" del modello (in parte per le
+  istruzioni, che non dicono quando usarle); gli esempi recuperati raddoppiano gli enum.
+- **Attributi non deducibili**: 26-39 % degli attributi del riferimento senza parole nel testo; togliendoli la
+  completezza sale di 3-6 punti, la F1 resta uguale, gli scheletri interi restano (errore di forma).
+- **Scheletri per classe**: PlantUML 13,6 % di classi vuote, sparse; compatto 24,5 %, l'80 % in risposte interamente
+  vuote; fattore piu' forte la presenza degli attributi nel testo (27-34 % di classi vuote senza, 3-7 % con). Gli
+  esempi variabili raddoppiano gli scheletri rispetto a zero_shot e static; il retrieval non piu' di random.
+- **Difficolta' combinate**: testo difficile + diagramma grande 26,4 % di completezza contro 62,4 % del caso facile.
+
+### [2026-10-20] Controllo "esercizio stesso come esempio" (oracle_self) — disegno e regola PRIMA della run
+- **Domanda**: con un esempio PERFETTO il modello ne riprende il contenuto? Distingue le due spiegazioni del risultato
+  negativo del 3b, che i dati attuali non separano: (a) il pool non contiene esempi abbastanza vicini (limite del
+  corpus); (b) il modello riscrive comunque dal testo e usa gli esempi solo per la forma (limite del modello o delle
+  istruzioni). Proposta dell'assistente, accettata dall'utente.
+- **Condizione `oracle_self`** (`generation/prompt_builder.py`, SOLO ANALISI, in `ANALYSIS_ONLY`): l'unico esempio e'
+  l'esercizio stesso con la sua soluzione, reso come ogni esempio del 3b (vista `clean_v1`, stesso formato). Il divieto
+  "la query compare tra i propri esempi" resta per tutte le altre condizioni; oracle_self solo con le istruzioni v5.
+- **Due varianti del blocco esempi** (`prompt.examples_block`): `standard` = `v5_examples_block.txt` (come nel 3b,
+  con "They describe other systems: do not copy their classes"); `libero` = `v5_examples_block_libero.txt` (sha256
+  `1b4354ac…`, "The example below shows the format and the modeling style." senza il divieto), solo per oracle_self.
+- **Config** `experiments/configs/oracle_self.yaml`: come `passo3b.yaml` (Gemma 4 26B A4B QAT, istruzioni, vista,
+  campionamento) salvo condizione, k = 1 e **1 ripetizione**; 54 esercizi di validazione × 2 formati × 2 varianti =
+  **216 generazioni**. `passo: controllo`.
+- **Eccezione ai ruoli** (voce 117, `run_experiment.check_query_roles`): un config `passo: controllo` le cui condizioni
+  sono TUTTE di sola analisi puo' usare gli esercizi di valutazione; un controllo con qualunque altra condizione resta
+  bloccato (verificato dal test `check_oracle_self`). I risultati non servono a nessuna scelta del sistema, non entrano
+  nel 3b, nell'export per i relatori ne' nelle loro analisi.
+- **REGOLA DI LETTURA** (`experiments/analyze_oracle_self.py`, testato prima della run), sulla variante `libero`, per
+  formato, con la completezza = elementi del riferimento ritrovati / elementi del riferimento (classi + attributi +
+  relazioni + generalizzazioni, abbinamento rilassato; non valide = 0; media per esercizio): **>= 0,80 → il modello SA
+  usare il contenuto di un esempio perfetto (limite del retrieval: il corpus); < 0,60 → NON lo usa nemmeno con un
+  esempio perfetto (limite: modello o istruzioni); in mezzo → uso parziale.** Riportati anche precision, copia quasi
+  esatta (completezza e precision >= 0,90), F1 per tipologia, Jaccard dei nomi, l'effetto della frase "do not copy"
+  (libero − standard) e il riferimento del 3b (bm25 k3, zero_shot) sugli stessi esercizi.
+- **STOP** prima delle generazioni (circa 1 ora e mezza col 26B): avvio dal notebook (sezione 4 ter) o su richiesta.
+
+### [2026-10-20] Controllo "esempio parzialmente simile" (oracle_partial) — disegno e regola PRIMA della run
+- **Domanda** (utente): quanto deve essere simile un esempio per essere utile? Nel 3b il guadagno su zero_shot e'
+  nullo fino alla somiglianza massima del pool (Jt 0,33: +0,01/+0,04 di completezza in PlantUML); con l'esercizio stesso
+  (oracle_self, PlantUML libero) e' +0,34. Tra 0,33 e 1 non ci sono dati: oracle_partial li produce.
+- **Condizione `oracle_partial`** (`generation/prompt_builder.py`, SOLO ANALISI): l'esempio e' l'esercizio stesso con la
+  TRACCIA VERA (stessa vista clean_v1 di oracle_self, tramite `view_id`) e la soluzione degradata da
+  `degrade_diagram`: si tiene la frazione `oracle_keep` delle classi (almeno una), scelte in modo deterministico per
+  sha256("<id>|<id del nodo>"), con i loro attributi; restano solo relazioni e generalizzazioni tra classi tenute.
+  Blocco esempi `libero`. Somiglianza effettiva misurata (Jt soluzione dell'esempio - soluzione): 25 % → 0,34, 50 % →
+  0,56, 75 % → 0,77.
+- **Config** `experiments/configs/oracle_partial.yaml`: come `oracle_self.yaml` (`passo: controllo`, 1 ripetizione),
+  solo PlantUML, 54 esercizi di validazione × 3 livelli = **162 generazioni**. Eccezione ai ruoli della voce 162.
+- **REGOLA** (`experiments/analyze_oracle_partial.py`, testato prima della run): guadagno = completezza (come voce 162)
+  − media dello stesso esercizio con zero_shot nel 3b; **soglia di utilita' = il livello piu' basso (25, 50, 75, 100 =
+  oracle_self libero) con guadagno medio per esercizio >= 0,05**, riportato con la sua somiglianza media. Riportate anche
+  le fasce del 3b per somiglianza del miglior esempio (descrittive).
+- **Limite dichiarato**: l'esempio ha la stessa traccia dell'esercizio (cambia solo la soluzione); un esempio reale
+  simile al 50 % avrebbe anche una traccia diversa. La curva misura quindi la somiglianza della SOLUZIONE.
+- Avvio dopo la fine di oracle_self (stesso modello, un batch alla volta).
+
+### [2026-10-20] Esiti di oracle_self e oracle_partial; controllo "piu' esempi insieme" (oracle_mix) PRIMA della run
+- **Esito oracle_self** (voce 162, 216/216 valide, `oracle_self_analysis/summary.md`): **uso PARZIALE in entrambi i
+  formati**. Completezza variante libera PlantUML 0,760 (standard 0,746; 3b bm25 0,434), compatto 0,635 (standard 0,639;
+  3b bm25 0,411); copie quasi esatte 9-17 %; F1 classi 0,82-0,89, attributi 0,51 (compatto) - 0,70 (PlantUML). La frase
+  "do not copy their classes" non frena la copia (differenze ±0,015). Lettura: il modello sfrutta molto un esempio
+  vicino, quindi il limite del retrieval nel 3b e' in buona parte il corpus.
+- **Esito oracle_partial** (voce 163, 162/162 valide, ripreso una volta dopo un arresto del batch senza errori,
+  `oracle_partial_analysis/summary.md`): guadagno su zero_shot +0,036 (25 %, Jt 0,34), +0,095 (50 %, Jt 0,56), +0,173
+  (75 %, Jt 0,77), +0,337 (100 %); esempi reali del 3b +0,008 / +0,014 / +0,022 / +0,039 per Jt 0-0,1 / 0,1-0,2 / 0,2-0,3 /
+  0,3-0,45. **Soglia di utilita' al livello 50 % (somiglianza 0,56)**; interpolando, +0,05 a circa Jt 0,4. Curva
+  convessa; al 25 % concorda con gli esempi reali di pari somiglianza. Nel pool nessuna coppia di esercizi ha Jt >= 0,4
+  (2 coppie su 3.160 >= 0,3; vicino piu' simile dei 54 in media 0,17, massimo 0,33; stesso dominio in media 0,048):
+  tutto il 3b sta sotto la soglia.
+- **Controllo oracle_mix** (proposta dell'assistente, accettata dall'utente): `PromptSpec.oracle_extra` per
+  oracle_partial al 50 %: `bm25_2` = i 2 esempi bm25 k2 del file congelato PRIMA dell'esempio al 50 % (il piu' simile
+  per ultimo, come nel 3b); `complemento` = dopo l'esempio al 50 % un secondo esempio con le classi complementari
+  (`degrade_diagram(..., complement=True)`: disgiunte, insieme tutte le classi). Config
+  `experiments/configs/oracle_mix.yaml`: PlantUML, 54 esercizi × 2 varianti × 1 ripetizione = **108 generazioni**.
+- **REGOLA** (`experiments/analyze_oracle_mix.py`, testato prima della run): guadagno come nella voce 163.
+  **Diluizione**: guadagno(diluito) − guadagno(50 %) >= −0,03 → "nessuna diluizione", altrimenti "diluizione".
+  **Somma**: guadagno(complemento) >= guadagno(100 %) − 0,03 → "si sommano del tutto"; altrimenti guadagno(complemento)
+  − guadagno(50 %) >= 0,05 → "in parte"; altrimenti "non si sommano". Wilcoxon appaiato riportato come descrittivo.
+
+### [2026-10-20] Esito di oracle_mix (voce 164)
+- Run `oracle_mix__P-{corpus,testset}-{diluito,complemento}`, 108/108 valide, nessun troncamento; analisi
+  `experiments/analyze_oracle_mix.py`, `data/results/generation/oracle_mix_analysis/summary.md`.
+- Guadagno di completezza su zero_shot: 50 % da solo +0,095; **2 esempi bm25 + 50 % +0,118**; **50 % + meta'
+  complementare +0,210**; esercizio intero +0,337.
+- **Diluizione: nessuna** (diluito − 50 % = +0,024, Wilcoxon p 0,066): esempi lontani accanto a uno vicino non ne
+  riducono l'effetto.
+- **Somma: in parte** (complemento − 50 % = +0,116, p < 0,001; complemento − 100 % = −0,127, p < 0,001): due meta' con
+  le stesse informazioni dell'esercizio intero ne recuperano circa la meta' del guadagno; il modello sfrutta meglio
+  l'informazione in un unico esempio completo.
+- Lettura complessiva dei controlli 162-165 (solo analisi): la RAG di esempi puo' servire solo se il corpus contiene,
+  per ogni esercizio, almeno un esempio con somiglianza dei nomi di classe di circa 0,4-0,56 o piu'; un esempio molto
+  vicino vale piu' di piu' esempi parziali; esempi lontani accanto non fanno danno. Nel pool di 80 nessuna coppia
+  supera 0,4.
+
+### [2026-10-20] Analisi descrittive sugli esempi del 3b — esplorative (voce 154)
+- **Esempi nelle ripetizioni** (manifest del 3b): identici nelle 3 ripetizioni per static (106/106), bm25 k2 e k3,
+  hybrid k3 (108/108 ciascuno); sempre diversi per random (0/108, seme per esercizio e ripetizione, voce 130); uguali
+  tra PlantUML e compatto (323/323).
+- **Effetto dei singoli esempi** (condizione random, esempi assegnati a caso; completezza dei relatori, scarto dalla
+  media dell'esercizio; 70 esempi con almeno 8 presenze): dispersione tra esempi 1,17 punti contro 1,19 attesa per caso
+  (permutazione, p 0,55): **nessun esempio migliore o peggiore degli altri**; gli estremi osservati (DB08 +2,7,
+  AirTravel −4,0) sono rumore.
+- **Scelte del retrieval** (file congelato, 54 query): bm25 k3 usa 68 esempi diversi su 80 (12 mai scelti), hybrid k3
+  67 (13), bm25 k2 59 (21); i 10 piu' scelti coprono il 27-32 % dei posti (nessun "hub"); i piu' scelti: SellingGoods
+  (11 query su 54, bm25 + hybrid), CardGameApp (10), DB04 (9), TreatmentPlans, DB10, DB09, ClothingCompany (8).
+- **Difficolta' degli esempi** (random, difficolta' media dei 3 esempi contro scarto di completezza): size rho +0,09 /
+  +0,04, Flesch-Kincaid −0,05 / +0,02, attributi −0,09 / +0,10 (PlantUML / compatto), tutte non significative:
+  **esempi piu' difficili o piu' ricchi non aiutano ne' peggiorano**.
+- **Nota operativa**: il batch oracle_partial avviato da un processo di attesa in background si e' fermato poco dopo la
+  chiusura di quel processo (nessun errore, risposte integre, ripreso con --resume). I batch si lanciano direttamente
+  (`run_batch.launch` dal notebook o da un comando in primo piano), non da processi di attesa.
