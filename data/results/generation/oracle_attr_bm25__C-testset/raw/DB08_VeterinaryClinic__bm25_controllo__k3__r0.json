@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Animal\"\n    },\n    {\n      \"name\": \"Breed\"\n    },\n    {\n      \"name\": \"Owner\"\n    },\n    {\n      \"name\": \"Appointment\"\n    },\n    {\n      \"name\": \"Physician\"\n    },\n    {\n      \"name\": \"Condition\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Animal\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Animal\",\n      \"target\": \"Breed\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Physician\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Animal\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Condition\",\n      \"sourceMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Breed\",\n      \"target\": \"Condition\",\n      \"sourceMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 31.02086579999923,
+ "prompt_tokens": 4117,
+ "completion_tokens": 433,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3iym7xhmdts3reooyy78bv",
+  "object": "chat.completion",
+  "created": 1792581136,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Animal\"\n    },\n    {\n      \"name\": \"Breed\"\n    },\n    {\n      \"name\": \"Owner\"\n    },\n    {\n      \"name\": \"Appointment\"\n    },\n    {\n      \"name\": \"Physician\"\n    },\n    {\n      \"name\": \"Condition\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Animal\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Animal\",\n      \"target\": \"Breed\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Physician\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Animal\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Owner\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Appointment\",\n      \"target\": \"Condition\",\n      \"sourceMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Breed\",\n      \"target\": \"Condition\",\n      \"sourceMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4117,
+   "completion_tokens": 433,
+   "total_tokens": 4550,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

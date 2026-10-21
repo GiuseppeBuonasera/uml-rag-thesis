@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Interval\", \"kind\": \"enum\", \"values\": [\"Weekly\", \"Monthly\", \"EveryHalfYear\", \"Yearly\"]}, {\"name\": \"Doctor\"}, {\"name\": \"Patient\"}, {\"name\": \"Requisition\"}, {\"name\": \"Test\"}, {\"name\": \"TestResult\"}, {\"name\": \"Appointment\"}, {\"name\": \"Lab\"}, {\"name\": \"BusinessHour\"}], \"relations\": [{\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Requisition\", \"target\": \"Test\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"Lab\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Lab\", \"target\": \"BusinessHour\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Test\", \"target\": \"TestResult\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"TestResult\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"TestResult\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 28.561377500000162,
+ "prompt_tokens": 3389,
+ "completion_tokens": 430,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-l823rvcm9ypekg32v8nak",
+  "object": "chat.completion",
+  "created": 1792583031,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Interval\", \"kind\": \"enum\", \"values\": [\"Weekly\", \"Monthly\", \"EveryHalfYear\", \"Yearly\"]}, {\"name\": \"Doctor\"}, {\"name\": \"Patient\"}, {\"name\": \"Requisition\"}, {\"name\": \"Test\"}, {\"name\": \"TestResult\"}, {\"name\": \"Appointment\"}, {\"name\": \"Lab\"}, {\"name\": \"BusinessHour\"}], \"relations\": [{\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Requisition\", \"target\": \"Test\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"Appointment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"Requisition\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Appointment\", \"target\": \"Lab\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Lab\", \"target\": \"BusinessHour\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Test\", \"target\": \"TestResult\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Doctor\", \"target\": \"TestResult\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Patient\", \"target\": \"TestResult\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3389,
+   "completion_tokens": 430,
+   "total_tokens": 3819,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

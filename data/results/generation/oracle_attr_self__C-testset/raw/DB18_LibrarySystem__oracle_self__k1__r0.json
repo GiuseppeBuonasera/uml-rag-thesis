@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"kind\": \"interface\"\n    },\n    {\n      \"name\": \"UnderagedUser\",\n      \"attributes\": [\n        \"+ fullName : string\",\n        \"+ studentCard : string\"\n      ]\n    },\n    {\n      \"name\": \"AdultUser\",\n      \"attributes\": [\n        \"+ fullName : string\",\n        \"+ idCard : string\"\n      ]\n    },\n    {\n      \"name\": \"Book\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ author : string\"\n      ]\n    },\n    {\n      \"name\": \"BorrowHistory\",\n      \"attributes\": [\n        \"+ date : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"realization\",\n      \"child\": \"UnderagedUser\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"AdultUser\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Book\",\n      \"label\": \"borrows\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"User\",\n      \"part\": \"BorrowHistory\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BorrowHistory\",\n      \"target\": \"Book\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 18.437591100000645,
+ "prompt_tokens": 1688,
+ "completion_tokens": 381,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-mzkh3s0208yjvxstgrkhf",
+  "object": "chat.completion",
+  "created": 1792584395,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"kind\": \"interface\"\n    },\n    {\n      \"name\": \"UnderagedUser\",\n      \"attributes\": [\n        \"+ fullName : string\",\n        \"+ studentCard : string\"\n      ]\n    },\n    {\n      \"name\": \"AdultUser\",\n      \"attributes\": [\n        \"+ fullName : string\",\n        \"+ idCard : string\"\n      ]\n    },\n    {\n      \"name\": \"Book\",\n      \"attributes\": [\n        \"+ title : string\",\n        \"+ author : string\"\n      ]\n    },\n    {\n      \"name\": \"BorrowHistory\",\n      \"attributes\": [\n        \"+ date : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"realization\",\n      \"child\": \"UnderagedUser\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"realization\",\n      \"child\": \"AdultUser\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Book\",\n      \"label\": \"borrows\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..4\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"User\",\n      \"part\": \"BorrowHistory\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BorrowHistory\",\n      \"target\": \"Book\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1688,
+   "completion_tokens": 381,
+   "total_tokens": 2069,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

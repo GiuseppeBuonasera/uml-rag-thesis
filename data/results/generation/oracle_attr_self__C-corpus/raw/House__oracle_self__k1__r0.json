@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"House\"\n    },\n    {\n      \"name\": \"BuildingMaterial\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"wood\",\n        \"brick\",\n        \"concrete\"\n      ]\n    },\n    {\n      \"name\": \"Basement\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"EarthBasement\"\n    },\n    {\n      \"name\": \"ConcreteBasement\"\n    },\n    {\n      \"name\": \"SemiDetachedHouse\"\n    },\n    {\n      \"name\": \"Carport\"\n    },\n    {\n      \"name\": \"Garage\"\n    },\n    {\n      \"name\": \"Company\"\n    },\n    {\n      \"name\": \"JobLog\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"House\",\n      \"target\": \"BuildingMaterial\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"House\",\n      \"part\": \"Basement\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EarthBasement\",\n      \"parent\": \"Basement\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ConcreteBasement\",\n      \"parent\": \"Basement\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SemiDetachedHouse\",\n      \"parent\": \"House\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SemiDetachedHouse\",\n      \"target\": \"Carport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SemiDetachedHouse\",\n      \"target\": \"Garage\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"House\",\n      \"target\": \"Company\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"House\",\n      \"target\": \"JobLog\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"JobLog\",\n      \"target\": \"Company\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 37.528612400000384,
+ "prompt_tokens": 2169,
+ "completion_tokens": 640,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-77qnvi59nmfaq8jv2kscv5",
+  "object": "chat.completion",
+  "created": 1792582951,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"House\"\n    },\n    {\n      \"name\": \"BuildingMaterial\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"wood\",\n        \"brick\",\n        \"concrete\"\n      ]\n    },\n    {\n      \"name\": \"Basement\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"EarthBasement\"\n    },\n    {\n      \"name\": \"ConcreteBasement\"\n    },\n    {\n      \"name\": \"SemiDetachedHouse\"\n    },\n    {\n      \"name\": \"Carport\"\n    },\n    {\n      \"name\": \"Garage\"\n    },\n    {\n      \"name\": \"Company\"\n    },\n    {\n      \"name\": \"JobLog\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"House\",\n      \"target\": \"BuildingMaterial\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"House\",\n      \"part\": \"Basement\",\n      \"partMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EarthBasement\",\n      \"parent\": \"Basement\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ConcreteBasement\",\n      \"parent\": \"Basement\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SemiDetachedHouse\",\n      \"parent\": \"House\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SemiDetachedHouse\",\n      \"target\": \"Carport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"2\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"SemiDetachedHouse\",\n      \"target\": \"Garage\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"House\",\n      \"target\": \"Company\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"House\",\n      \"target\": \"JobLog\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"JobLog\",\n      \"target\": \"Company\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2169,
+   "completion_tokens": 640,
+   "total_tokens": 2809,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

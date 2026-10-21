@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass Bank {}\n\nclass Branch {}\n\nclass Customer {\n  +firstName : string\n  +lastName : string\n}\n\nclass Account {\n  +accountNumber : int\n  +currentBalance : double\n}\n\nclass SavingsAccount extends Account {}\n\nclass CheckingAccount extends Account {\n  +overdraftLimit : double\n}\n\nBank \"1\" -- \"*\" Branch\nBank \"1\" -- \"*\" Customer\nCustomer \"1\" -- \"1..5\" Account : owns\nAccount \"1\" -- \"1\" Customer : owner\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 8.319354200000816,
+ "prompt_tokens": 1331,
+ "completion_tokens": 120,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-xa4j1dn5ffk8yz8nd9lt9",
+  "object": "chat.completion",
+  "created": 1792584505,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass Bank {}\n\nclass Branch {}\n\nclass Customer {\n  +firstName : string\n  +lastName : string\n}\n\nclass Account {\n  +accountNumber : int\n  +currentBalance : double\n}\n\nclass SavingsAccount extends Account {}\n\nclass CheckingAccount extends Account {\n  +overdraftLimit : double\n}\n\nBank \"1\" -- \"*\" Branch\nBank \"1\" -- \"*\" Customer\nCustomer \"1\" -- \"1..5\" Account : owns\nAccount \"1\" -- \"1\" Customer : owner\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1331,
+   "completion_tokens": 120,
+   "total_tokens": 1451,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

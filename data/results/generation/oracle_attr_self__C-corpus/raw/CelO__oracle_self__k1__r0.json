@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Organizer\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\", \"+ email : string\", \"+ postalAddress : string\", \"+ phoneNumber : string\", \"+ password : string\"]}], \"relations\": []}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 7.730695299999752,
+ "prompt_tokens": 3056,
+ "completion_tokens": 51,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-krim7s9d9qskrqkpj23be",
+  "object": "chat.completion",
+  "created": 1792582742,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Organizer\", \"attributes\": [\"+ firstName : string\", \"+ lastName : string\", \"+ email : string\", \"+ postalAddress : string\", \"+ phoneNumber : string\", \"+ password : string\"]}], \"relations\": []}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3056,
+   "completion_tokens": 51,
+   "total_tokens": 3107,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

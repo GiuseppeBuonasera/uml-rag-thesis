@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"ProjectManager\"\n    },\n    {\n      \"name\": \"Team\"\n    },\n    {\n      \"name\": \"Project\"\n    },\n    {\n      \"name\": \"Requirement\"\n    },\n    {\n      \"name\": \"System\"\n    },\n    {\n      \"name\": \"WorkProduct\"\n    },\n    {\n      \"name\": \"Platform\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"ProjectManager\",\n      \"target\": \"Team\",\n      \"label\": \"leads\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ProjectManager\",\n      \"target\": \"Project\",\n      \"label\": \"manages\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Project\",\n      \"target\": \"Team\",\n      \"label\": \"executes\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Project\",\n      \"target\": \"Requirement\",\n      \"label\": \"uses\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Project\",\n      \"target\": \"System\",\n      \"label\": \"produces\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Requirement\",\n      \"parent\": \"WorkProduct\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"System\",\n      \"parent\": \"WorkProduct\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"System\",\n      \"target\": \"Platform\",\n      \"label\": \"deployed onto\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 28.459088800000245,
+ "prompt_tokens": 3893,
+ "completion_tokens": 418,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-sfwqyjkoss8yhgo56jb6rp",
+  "object": "chat.completion",
+  "created": 1792580880,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"ProjectManager\"\n    },\n    {\n      \"name\": \"Team\"\n    },\n    {\n      \"name\": \"Project\"\n    },\n    {\n      \"name\": \"Requirement\"\n    },\n    {\n      \"name\": \"System\"\n    },\n    {\n      \"name\": \"WorkProduct\"\n    },\n    {\n      \"name\": \"Platform\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"ProjectManager\",\n      \"target\": \"Team\",\n      \"label\": \"leads\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ProjectManager\",\n      \"target\": \"Project\",\n      \"label\": \"manages\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Project\",\n      \"target\": \"Team\",\n      \"label\": \"executes\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Project\",\n      \"target\": \"Requirement\",\n      \"label\": \"uses\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Project\",\n      \"target\": \"System\",\n      \"label\": \"produces\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Requirement\",\n      \"parent\": \"WorkProduct\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"System\",\n      \"parent\": \"WorkProduct\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"System\",\n      \"target\": \"Platform\",\n      \"label\": \"deployed onto\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3893,
+   "completion_tokens": 418,
+   "total_tokens": 4311,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

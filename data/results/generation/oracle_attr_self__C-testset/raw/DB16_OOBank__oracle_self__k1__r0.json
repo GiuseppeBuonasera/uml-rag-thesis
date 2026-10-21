@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"OOBank\"\n    },\n    {\n      \"name\": \"Branch\"\n    },\n    {\n      \"name\": \"Division\"\n    },\n    {\n      \"name\": \"Employee\"\n    },\n    {\n      \"name\": \"Customer\"\n    },\n    {\n      \"name\": \"Account\"\n    },\n    {\n      \"name\": \"MortgageAccount\"\n    },\n    {\n      \"name\": \"CheckingAccount\"\n    },\n    {\n      \"name\": \"CreditCardAccount\"\n    },\n    {\n      \"name\": \"CreditCard\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"OOBank\",\n      \"target\": \"Branch\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OOBank\",\n      \"target\": \"Division\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Division\",\n      \"target\": \"Division\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"subdivision\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Division\",\n      \"target\": \"Employee\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"manager\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Division\",\n      \"target\": \"Employee\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Branch\",\n      \"target\": \"Account\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Employee\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"targetRole\": \"personalBanker\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MortgageAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CheckingAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CreditCardAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CreditCardAccount\",\n      \"target\": \"CreditCard\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 35.87182050000047,
+ "prompt_tokens": 2322,
+ "completion_tokens": 695,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-p5r5jkjmh7eb1zxeliwjf4",
+  "object": "chat.completion",
+  "created": 1792584331,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"OOBank\"\n    },\n    {\n      \"name\": \"Branch\"\n    },\n    {\n      \"name\": \"Division\"\n    },\n    {\n      \"name\": \"Employee\"\n    },\n    {\n      \"name\": \"Customer\"\n    },\n    {\n      \"name\": \"Account\"\n    },\n    {\n      \"name\": \"MortgageAccount\"\n    },\n    {\n      \"name\": \"CheckingAccount\"\n    },\n    {\n      \"name\": \"CreditCardAccount\"\n    },\n    {\n      \"name\": \"CreditCard\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"OOBank\",\n      \"target\": \"Branch\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OOBank\",\n      \"target\": \"Division\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Division\",\n      \"target\": \"Division\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"subdivision\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Division\",\n      \"target\": \"Employee\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"manager\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Division\",\n      \"target\": \"Employee\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Branch\",\n      \"target\": \"Account\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1..*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Employee\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"targetRole\": \"personalBanker\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MortgageAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CheckingAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CreditCardAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CreditCardAccount\",\n      \"target\": \"CreditCard\",\n      \"targetMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2322,
+   "completion_tokens": 695,
+   "total_tokens": 3017,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

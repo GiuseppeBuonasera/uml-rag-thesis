@@ -47,7 +47,7 @@ zero-shot, specialmente per certe tipologie di esercizio.
   circa 0,43 a 0,76 (PlantUML): il modello sa usare un esempio vicino. Un esempio serve (guadagno >= 0,05) solo con
   somiglianza dei nomi di classe di circa 0,4-0,56 o piu'; nel pool nessuna coppia supera 0,4, quindi il limite del
   retrieval nel 3b e' il corpus. Esempi lontani accanto a uno vicino non fanno danno; un esempio completo vale piu' di
-  due meta'.
+  due meta'. Esempi senza attributi causano gli scheletri (voce 169): compatto 28 % -> 91 %, PlantUML 2 % -> 19 %.
 - **Prossimi passi**: l'analisi statistica del 3b la fanno i relatori con un loro script (voce 158; schema della
   voce 156): il repo fornisce i dati (`experiments/export_3b.py --unico`, `experiments/difficulty_3b.py`) nel formato
   da concordare (tipo di F1, colonne, esercizi); revisione dei sinonimi scartata (voce 160); analisi esplorative
@@ -81,6 +81,7 @@ UML.
   - `generation/` — prompt building e client verso l'LLM
   - `evaluation/` — metriche sintattiche, semantiche, pragmatiche
   - `data/results/` — output sperimentali (metriche, log run)
+  - `results/` — risultati raccolti da consultare (copie, generata da `experiments/build_results.py`)
   - `docs/` — note, decisioni, materiale di riferimento (`dati/`), archivio (`archivio/`)
 
 ## Note per l'agente

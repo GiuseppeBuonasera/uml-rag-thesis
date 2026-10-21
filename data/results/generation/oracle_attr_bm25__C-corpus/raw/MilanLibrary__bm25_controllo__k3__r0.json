@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Library\"\n    },\n    {\n      \"name\": \"User\"\n    },\n    {\n      \"name\": \"BorrowableItem\"\n    },\n    {\n      \"name\": \"Book\"\n    },\n    {\n      \"name\": \"MagazineIssue\"\n    },\n    {\n      \"name\": \"MusicCD\"\n    },\n    {\n      \"name\": \"VHSFilm\"\n    },\n    {\n      \"name\": \"DVDFilm\"\n    },\n    {\n      \"name\": \"Film\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"BorrowableItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BorrowableItem\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"lent to\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Book\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MagazineIssue\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MusicCD\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"VHSFilm\",\n      \"parent\": \"Film\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DVDFilm\",\n      \"parent\": \"Film\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Film\",\n      \"parent\": \"BorrowableItem\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 34.13005460000022,
+ "prompt_tokens": 3669,
+ "completion_tokens": 509,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-9lu9n7tfaym35868yneyf",
+  "object": "chat.completion",
+  "created": 1792580736,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Library\"\n    },\n    {\n      \"name\": \"User\"\n    },\n    {\n      \"name\": \"BorrowableItem\"\n    },\n    {\n      \"name\": \"Book\"\n    },\n    {\n      \"name\": \"MagazineIssue\"\n    },\n    {\n      \"name\": \"MusicCD\"\n    },\n    {\n      \"name\": \"VHSFilm\"\n    },\n    {\n      \"name\": \"DVDFilm\"\n    },\n    {\n      \"name\": \"Film\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"BorrowableItem\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BorrowableItem\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"lent to\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Book\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MagazineIssue\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MusicCD\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"VHSFilm\",\n      \"parent\": \"Film\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DVDFilm\",\n      \"parent\": \"Film\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Film\",\n      \"parent\": \"BorrowableItem\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3669,
+   "completion_tokens": 509,
+   "total_tokens": 4178,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

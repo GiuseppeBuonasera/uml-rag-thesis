@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Movie\"}, {\"name\": \"User\"}, {\"name\": \"Subscriber\"}, {\"name\": \"Card\"}, {\"name\": \"Order\"}, {\"name\": \"Rental\"}, {\"name\": \"Catalogue\"}], \"relations\": [{\"type\": \"association\", \"source\": \"User\", \"target\": \"Order\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Subscriber\", \"target\": \"Card\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Subscriber\", \"target\": \"Order\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Subscriber\", \"target\": \"Rental\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Rental\", \"target\": \"Movie\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Rental\", \"target\": \"Card\", \"sourceMultiplicity\": \"0..*\", \"targetRole\": \"recharged_card\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Movie\", \"sourceMultiplicity\": \"0..*\", \"targetRole\": \"ordered_movie\"}, {\"type\": \"association\", \"source\": \"Catalogue\", \"target\": \"Movie\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 29.963210099999742,
+ "prompt_tokens": 5052,
+ "completion_tokens": 339,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qfpm4h69epqu14d4n1omd",
+  "object": "chat.completion",
+  "created": 1792581043,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Movie\"}, {\"name\": \"User\"}, {\"name\": \"Subscriber\"}, {\"name\": \"Card\"}, {\"name\": \"Order\"}, {\"name\": \"Rental\"}, {\"name\": \"Catalogue\"}], \"relations\": [{\"type\": \"association\", \"source\": \"User\", \"target\": \"Order\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Subscriber\", \"target\": \"Card\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Subscriber\", \"target\": \"Order\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Subscriber\", \"target\": \"Rental\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Rental\", \"target\": \"Movie\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Rental\", \"target\": \"Card\", \"sourceMultiplicity\": \"0..*\", \"targetRole\": \"recharged_card\"}, {\"type\": \"association\", \"source\": \"Order\", \"target\": \"Movie\", \"sourceMultiplicity\": \"0..*\", \"targetRole\": \"ordered_movie\"}, {\"type\": \"association\", \"source\": \"Catalogue\", \"target\": \"Movie\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5052,
+   "completion_tokens": 339,
+   "total_tokens": 5391,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

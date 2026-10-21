@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Scene\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"Setup\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ photographicParameters : string\"\n      ]\n    },\n    {\n      \"name\": \"Take\",\n      \"attributes\": [\n        \"+ takeNumber : int\",\n        \"+ filmUsed : float\",\n        \"+ reelCode : string\"\n      ]\n    },\n    {\n      \"name\": \"InternalScene\",\n      \"attributes\": [\n        \"+ theater : string\"\n      ]\n    },\n    {\n      \"name\": \"ExternalScene\",\n      \"attributes\": [\n        \"+ location : Location\"\n      ]\n    },\n    {\n      \"name\": \"DayScene\"\n    },\n    {\n      \"name\": \"NightScene\"\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ address : string\",\n        \"+ description : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Scene\",\n      \"part\": \"Setup\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Setup\",\n      \"part\": \"Take\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InternalScene\",\n      \"parent\": \"Scene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalScene\",\n      \"parent\": \"Scene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DayScene\",\n      \"parent\": \"ExternalScene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NightScene\",\n      \"parent\": \"ExternalScene\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExternalScene\",\n      \"target\": \"Location\",\n      \"multiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 43.11826529999962,
+ "prompt_tokens": 4814,
+ "completion_tokens": 528,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-02e357i507su9a7ensybi6l",
+  "object": "chat.completion",
+  "created": 1792580908,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Scene\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ description : string\"\n      ]\n    },\n    {\n      \"name\": \"Setup\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ photographicParameters : string\"\n      ]\n    },\n    {\n      \"name\": \"Take\",\n      \"attributes\": [\n        \"+ takeNumber : int\",\n        \"+ filmUsed : float\",\n        \"+ reelCode : string\"\n      ]\n    },\n    {\n      \"name\": \"InternalScene\",\n      \"attributes\": [\n        \"+ theater : string\"\n      ]\n    },\n    {\n      \"name\": \"ExternalScene\",\n      \"attributes\": [\n        \"+ location : Location\"\n      ]\n    },\n    {\n      \"name\": \"DayScene\"\n    },\n    {\n      \"name\": \"NightScene\"\n    },\n    {\n      \"name\": \"Location\",\n      \"attributes\": [\n        \"+ code : string\",\n        \"+ address : string\",\n        \"+ description : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Scene\",\n      \"part\": \"Setup\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Setup\",\n      \"part\": \"Take\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InternalScene\",\n      \"parent\": \"Scene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalScene\",\n      \"parent\": \"Scene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DayScene\",\n      \"parent\": \"ExternalScene\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NightScene\",\n      \"parent\": \"ExternalScene\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ExternalScene\",\n      \"target\": \"Location\",\n      \"multiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4814,
+   "completion_tokens": 528,
+   "total_tokens": 5342,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

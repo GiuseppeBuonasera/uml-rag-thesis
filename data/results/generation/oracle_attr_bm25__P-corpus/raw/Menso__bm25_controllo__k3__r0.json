@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass BusCompany {\n}\n\nclass Bus {\n  +lineNumber : string\n}\n\nclass Trajectory {\n  +status : string\n}\n\nclass TownAuthority {\n}\n\nclass ApprovalProcedure {\n}\n\nclass Line {\n  +category : string\n}\n\nclass MENSOUser {\n  +homeAddress : string\n  +officeAddress : string\n  +workingHours : string\n}\n\nclass MENSOCard {\n}\n\nclass Trip {\n  +date : date\n  +time : time\n}\n\nclass Invoice {\n  +amount : float\n  +discount : float\n}\n\nclass Customer {\n}\n\nBusCompany \"1\" -- \"0..*\" Bus\nBusCompany \"1\" -- \"0..*\" Trajectory\nBusCompany \"1\" -- \"0..*\" Line\nBusCompany \"1\" -- \"0..*\" ApprovalProcedure\nBusCompany \"1\" -- \"0..*\" Invoice\nBusCompany \"1\" -- \"0..*\" MENSOUser\n\nBus \"0..*\" -- \"0..*\" Trajectory\n\nTrajectory \"0..*\" -- \"0..*\" TownAuthority : approval request\nApprovalProcedure \"0..*\" -- \"1\" Trajectory\nApprovalProcedure \"0..*\" -- \"1\" TownAuthority\n\nLine \"1\" -- \"1..*\" Trajectory\n\nLine \"1\" -- \"0..*\" MENSOUser : category\n\nMENSOUser \"1\" -- \"1\" MENSOCard\nMENSOUser \"1\" -- \"0..*\" Trip\nMENSOUser \"1\" -- \"0..*\" Invoice\n\nTrip \"0..*\" -- \"1\" Line\nTrip \"0..*\" -- \"1\" MENSOCard\n\nInvoice \"1\" -- \"1\" Customer\nCustomer \"1\" -- \"0..*\" Invoice\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 29.595040500000323,
+ "prompt_tokens": 3836,
+ "completion_tokens": 389,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-ndvml43k3o9w6uubczwej9",
+  "object": "chat.completion",
+  "created": 1792581866,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass BusCompany {\n}\n\nclass Bus {\n  +lineNumber : string\n}\n\nclass Trajectory {\n  +status : string\n}\n\nclass TownAuthority {\n}\n\nclass ApprovalProcedure {\n}\n\nclass Line {\n  +category : string\n}\n\nclass MENSOUser {\n  +homeAddress : string\n  +officeAddress : string\n  +workingHours : string\n}\n\nclass MENSOCard {\n}\n\nclass Trip {\n  +date : date\n  +time : time\n}\n\nclass Invoice {\n  +amount : float\n  +discount : float\n}\n\nclass Customer {\n}\n\nBusCompany \"1\" -- \"0..*\" Bus\nBusCompany \"1\" -- \"0..*\" Trajectory\nBusCompany \"1\" -- \"0..*\" Line\nBusCompany \"1\" -- \"0..*\" ApprovalProcedure\nBusCompany \"1\" -- \"0..*\" Invoice\nBusCompany \"1\" -- \"0..*\" MENSOUser\n\nBus \"0..*\" -- \"0..*\" Trajectory\n\nTrajectory \"0..*\" -- \"0..*\" TownAuthority : approval request\nApprovalProcedure \"0..*\" -- \"1\" Trajectory\nApprovalProcedure \"0..*\" -- \"1\" TownAuthority\n\nLine \"1\" -- \"1..*\" Trajectory\n\nLine \"1\" -- \"0..*\" MENSOUser : category\n\nMENSOUser \"1\" -- \"1\" MENSOCard\nMENSOUser \"1\" -- \"0..*\" Trip\nMENSOUser \"1\" -- \"0..*\" Invoice\n\nTrip \"0..*\" -- \"1\" Line\nTrip \"0..*\" -- \"1\" MENSOCard\n\nInvoice \"1\" -- \"1\" Customer\nCustomer \"1\" -- \"0..*\" Invoice\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3836,
+   "completion_tokens": 389,
+   "total_tokens": 4225,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

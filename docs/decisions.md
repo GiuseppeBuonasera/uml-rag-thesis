@@ -175,6 +175,9 @@ non sono state modificate.
 164. 2026-10-20 — Esiti di oracle_self e oracle_partial; controllo "piu' esempi insieme" (oracle_mix): disegno e regola PRIMA della run
 165. 2026-10-20 — Esito di oracle_mix: nessuna diluizione; due meta' complementari si sommano in parte
 166. 2026-10-20 — Analisi descrittive sugli esempi del 3b (ripetizioni, effetto dei singoli esempi, scelte del retrieval, difficolta' degli esempi)
+167. 2026-10-21 — Controllo "esempi senza attributi" (A: esercizio stesso; B: esempi bm25 del 3b): disegno e regola PRIMA della run
+168. 2026-10-21 — Cartella `results/` con i risultati raccolti e Excel per esercizio con i controlli oracle
+169. 2026-10-21 — Esito del controllo "esempi senza attributi": la forma vuota degli esempi CAUSA gli scheletri (entrambi i formati)
 
 ## Formato
 
@@ -5632,3 +5635,58 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
 - **Nota operativa**: il batch oracle_partial avviato da un processo di attesa in background si e' fermato poco dopo la
   chiusura di quel processo (nessun errore, risposte integre, ripreso con --resume). I batch si lanciano direttamente
   (`run_batch.launch` dal notebook o da un comando in primo piano), non da processi di attesa.
+
+### [2026-10-21] Controllo "esempi senza attributi" — disegno e regola PRIMA della run (solo analisi)
+- **Motivo** (utente): la causa degli scheletri e' stimata solo da dati osservazionali (voci 148, 155): il fattore piu'
+  forte e' la presenza degli attributi nel testo (scheletri interi nel compatto 39 % / 18 % / 6 % con pochi / medi /
+  molti attributi del GT nella traccia, rho −0,48; difficolta' quasi ininfluente: Flesch-Kincaid rho +0,17, size
+  +0,26); gli esempi variabili raddoppiano gli scheletri, ma esempio ed esercizio si sovrappongono. Una distorsione
+  delle classi insieme agli attributi e' stata scartata (due modifiche insieme non separano le cause).
+- **`strip_attributes`** (`generation/prompt_builder.py`): copia del diagramma senza attributi nelle classi non enum
+  (valori degli enum, metodi e relazioni restano). Ammesso solo per `oracle_self` e per la nuova condizione di sola
+  analisi **`bm25_controllo`** (= gli stessi esempi di bm25 dal file congelato, il piu' simile per ultimo).
+- **A** `experiments/configs/oracle_attr_self.yaml`: l'esercizio stesso, classi e relazioni perfette, nessun attributo,
+  blocco libero (come oracle_self). **B** `experiments/configs/oracle_attr_bm25.yaml`: i 3 esempi di bm25 k3 del 3b
+  senza attributi, blocco standard (come il 3b). Ciascuno: 54 esercizi × PlantUML e compatto × 1 ripetizione = 108;
+  totale **216 generazioni**. `passo: controllo` (eccezione ai ruoli della voce 162).
+- **REGOLA** (`experiments/analyze_oracle_attr.py`, testato prima): variante B, per formato, d = quota di scheletri per
+  esercizio (B) − (bm25 k3 del 3b, media delle 3 ripetizioni): **d >= 0,10 e Wilcoxon p < 0,05 → la forma vuota degli
+  esempi CAUSA gli scheletri; d < 0,05 → nessun effetto causale rilevabile; altrimenti effetto debole.** Variante A
+  (descrittiva): recall degli attributi (A) / recall (oracle_self libero) = quota degli attributi ritrovati che viene
+  dal testo. Riportati anche precision, F1, completezza e non valide.
+
+### [2026-10-21] Cartella `results/` (richiesta dell'utente)
+- `experiments/build_results.py` raccoglie in `results/` (radice del repo, versionata) i risultati trovati finora, come
+  COPIE (gli originali e gli script restano su `data/results/`): `1_passo3b/` (Excel per esercizio, file dei relatori,
+  zip delle risposte, CSV), `2_controlli_oracle/` (sommari delle voci 162-167), `3_sviluppo/` (sommari dei piloti e del
+  dev set), `README.md`. Si rilancia a ogni nuova run.
+- **Due Excel** (impostazione chiesta dall'utente, 2026-10-21), ciascuno con un foglio per ordinamento: esercizi in
+  ordine decrescente di Flesch-Kincaid ("Per Flesch-Kincaid") e di grandezza = classi + relazioni del GT ("Per
+  grandezza"), piu' il foglio Note.
+  - `results/1_passo3b/passo3b_completezza.xlsx`: 79 esercizi (AirTravel escluso), completezza totale dello strumento
+    dei relatori per i 6 prompt x 2 formati; non valide escluse; valori identici al foglio "Completezza totale" del
+    2026-10-19 (verificato). Sostituisce `esercizi_difficolta.xlsx` in `results/` (quello in `data/results/` resta).
+  - `results/2_controlli_oracle/controlli_f1.xlsx`: 54 di validazione, F1 medio sulle quattro tipologie (NOSTRO,
+    element_metrics.py rilassato: lo strumento dei relatori non ha valutato queste run) per tutti i controlli: esercizio
+    stesso (standard / libero), parziale 25/50/75 %, meta' + 2 bm25, due meta', senza attributi (A, B), con 3b
+    zero_shot e bm25 k3 come riferimento; non valide escluse. Una colonna entra solo con tutte le sue run concluse.
+
+### [2026-10-21] Esito del controllo "esempi senza attributi" (voce 167) — SOLO ANALISI
+- Batch `oracle_attr`, 216/216 risposte, tutte valide (12:43-14:20). Analisi: `experiments/analyze_oracle_attr.py`
+  -> `data/results/generation/oracle_attr_analysis/summary.md`.
+- **Variante B, esito della regola: "la forma vuota degli esempi CAUSA gli scheletri" in entrambi i formati.**
+  PlantUML: scheletri 0,19 contro 0,02 del 3b bm25 k3 (d +0,170, Wilcoxon p 0,003, 53 esercizi); compatto: 0,91
+  contro 0,28 (d +0,623, p < 0,001). Recall degli attributi: PlantUML 0,324 contro 0,346 (quasi invariata: nella
+  maggior parte degli esercizi il modello continua a prenderli dal testo); compatto **0,031 contro 0,309** (il modello
+  copia la forma degli esempi e smette di estrarre gli attributi dal testo). Completezza 0,422 / 0,434 (PlantUML),
+  0,308 / 0,411 (compatto).
+- **Variante A (descrittiva)**: con l'esercizio stesso senza attributi la recall degli attributi e' 0,346 (PlantUML)
+  e 0,242 (compatto), contro 0,696 e 0,499 con gli attributi: **quota dal testo 0,50 e 0,48**. In PlantUML 0,346 e'
+  uguale alla recall del 3b bm25 k3: quello che il modello ricava dal testo resta lo stesso, e la meta' in piu'
+  dell'oracle_self era copiata dall'esempio. Nel compatto 0,242 e' sotto il 3b (0,309): l'esempio vuoto frena anche
+  l'estrazione dal testo. Scheletri A: 0,21 (PlantUML), 0,49 (compatto). Completezza A 0,610 / 0,516 (le classi e le
+  relazioni perfette restano utili).
+- **Lettura** (esplorativa): conferma causale delle voci 148 e 155; spiega perche' nel compatto gli esempi variabili
+  raddoppiano gli scheletri: il compatto imita la forma degli esempi (quanti attributi per classe) piu' del PlantUML.
+  Conseguenza per un sistema futuro: nel compatto conviene scegliere esempi con classi ricche di attributi o
+  completare gli esempi; nessuna modifica al 3b (concluso).

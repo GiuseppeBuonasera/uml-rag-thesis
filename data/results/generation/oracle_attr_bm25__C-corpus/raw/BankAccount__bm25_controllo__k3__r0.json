@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Bank\"\n    },\n    {\n      \"name\": \"Customer\"\n    },\n    {\n      \"name\": \"Branch\"\n    },\n    {\n      \"name\": \"Account\"\n    },\n    {\n      \"name\": \"CurrentAccount\"\n    },\n    {\n      \"name\": \"SavingsAccount\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bank\",\n      \"target\": \"Customer\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bank\",\n      \"target\": \"Branch\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1..5\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CurrentAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SavingsAccount\",\n      \"parent\": \"Account\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 22.962111600000753,
+ "prompt_tokens": 3750,
+ "completion_tokens": 299,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3g3g9bgazfo0734y2bgpq",
+  "object": "chat.completion",
+  "created": 1792579454,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Bank\"\n    },\n    {\n      \"name\": \"Customer\"\n    },\n    {\n      \"name\": \"Branch\"\n    },\n    {\n      \"name\": \"Account\"\n    },\n    {\n      \"name\": \"CurrentAccount\"\n    },\n    {\n      \"name\": \"SavingsAccount\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bank\",\n      \"target\": \"Customer\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Bank\",\n      \"target\": \"Branch\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Account\",\n      \"sourceMultiplicity\": \"1..5\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"CurrentAccount\",\n      \"parent\": \"Account\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SavingsAccount\",\n      \"parent\": \"Account\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3750,
+   "completion_tokens": 299,
+   "total_tokens": 4049,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

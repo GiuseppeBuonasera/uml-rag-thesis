@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Airline\"\n    },\n    {\n      \"name\": \"Flight\"\n    },\n    {\n      \"name\": \"Airport\"\n    },\n    {\n      \"name\": \"Pilot\"\n    },\n    {\n      \"name\": \"Aircraft\"\n    },\n    {\n      \"name\": \"AeroplaneType\"\n    },\n    {\n      \"name\": \"Role\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Flight\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"sourceRole\": \"departureAirport\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"sourceRole\": \"arrivalAirport\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"sourceRole\": \"captain\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"sourceRole\": \"co-pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Aircraft\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Airline\",\n      \"part\": \"Aircraft\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"AeroplaneType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AeroplaneType\",\n      \"target\": \"Role\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 38.05205970000043,
+ "prompt_tokens": 5510,
+ "completion_tokens": 466,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-cf8l6lz3p34i0pyqru80b",
+  "object": "chat.completion",
+  "created": 1792581073,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Airline\"\n    },\n    {\n      \"name\": \"Flight\"\n    },\n    {\n      \"name\": \"Airport\"\n    },\n    {\n      \"name\": \"Pilot\"\n    },\n    {\n      \"name\": \"Aircraft\"\n    },\n    {\n      \"name\": \"AeroplaneType\"\n    },\n    {\n      \"name\": \"Role\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Flight\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"sourceRole\": \"departureAirport\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"sourceRole\": \"arrivalAirport\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"sourceRole\": \"captain\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"sourceRole\": \"co-pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Aircraft\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Airline\",\n      \"part\": \"Aircraft\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"AeroplaneType\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AeroplaneType\",\n      \"target\": \"Role\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5510,
+   "completion_tokens": 466,
+   "total_tokens": 5976,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nclass WebPortal {\n  +versionNumber : string\n  +urlAddress : string\n}\n\nclass Building {\n  +id : string\n  +name : string\n  +energyClass : string\n  +address : string\n  +yearOfConstruction : int\n}\n\nclass AdditionalEntry {\n  +name : string\n  +isPublic : boolean\n}\n\nclass TextualEntry extends AdditionalEntry {}\n\nclass NumericalEntry extends AdditionalEntry {\n  +value : float\n  +unit : string\n}\n\nclass Image {\n  +fileName : string\n}\n\nclass User {\n  +userName : string\n  +emailAddress : string\n  +password : string\n}\n\nclass Administrator extends User {\n  +idCardNumber : string\n}\n\nclass Comment {\n}\n\nUser \"1\" -- \"*\" Building : owns\nBuilding \"1\" -- \"*\" AdditionalEntry : has\nBuilding \"1\" -- \"*\" Image : has\nBuilding \"1\" -- \"1\" Image : profile photo\nWebPortal \"1\" -- \"*\" Building : provides\nWebPortal \"1\" -- \"*\" User : has\nUser \"1\" -- \"*\" Comment : writes\nBuilding \"1\" -- \"*\" Comment : has\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 20.310859199999868,
+ "prompt_tokens": 2861,
+ "completion_tokens": 264,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-z9py62exaso1fkloed8rh",
+  "object": "chat.completion",
+  "created": 1792581628,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nclass WebPortal {\n  +versionNumber : string\n  +urlAddress : string\n}\n\nclass Building {\n  +id : string\n  +name : string\n  +energyClass : string\n  +address : string\n  +yearOfConstruction : int\n}\n\nclass AdditionalEntry {\n  +name : string\n  +isPublic : boolean\n}\n\nclass TextualEntry extends AdditionalEntry {}\n\nclass NumericalEntry extends AdditionalEntry {\n  +value : float\n  +unit : string\n}\n\nclass Image {\n  +fileName : string\n}\n\nclass User {\n  +userName : string\n  +emailAddress : string\n  +password : string\n}\n\nclass Administrator extends User {\n  +idCardNumber : string\n}\n\nclass Comment {\n}\n\nUser \"1\" -- \"*\" Building : owns\nBuilding \"1\" -- \"*\" AdditionalEntry : has\nBuilding \"1\" -- \"*\" Image : has\nBuilding \"1\" -- \"1\" Image : profile photo\nWebPortal \"1\" -- \"*\" Building : provides\nWebPortal \"1\" -- \"*\" User : has\nUser \"1\" -- \"*\" Comment : writes\nBuilding \"1\" -- \"*\" Comment : has\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2861,
+   "completion_tokens": 264,
+   "total_tokens": 3125,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

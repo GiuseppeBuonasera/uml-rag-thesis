@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Course\"\n    },\n    {\n      \"name\": \"Edition\"\n    },\n    {\n      \"name\": \"Lesson\"\n    },\n    {\n      \"name\": \"Teacher\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"InternalTeacher\"\n    },\n    {\n      \"name\": \"ExternalTeacher\"\n    },\n    {\n      \"name\": \"Participant\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"Student\"\n    },\n    {\n      \"name\": \"Auditor\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Resource\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"InternalTeacher\",\n      \"targetRole\": \"responsible\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"Teacher\",\n      \"label\": \"Preallocated\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"Edition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Edition\",\n      \"target\": \"Participant\",\n      \"label\": \"Enrolled\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Teacher\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Room\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Resource\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InternalTeacher\",\n      \"parent\": \"Teacher\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalTeacher\",\n      \"parent\": \"Teacher\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Student\",\n      \"parent\": \"Participant\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Auditor\",\n      \"parent\": \"Participant\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Edition\",\n      \"part\": \"Lesson\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 30.936352999999144,
+ "prompt_tokens": 2191,
+ "completion_tokens": 607,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-kcge9j2i56pwo1p33uphf",
+  "object": "chat.completion",
+  "created": 1792583564,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Course\"\n    },\n    {\n      \"name\": \"Edition\"\n    },\n    {\n      \"name\": \"Lesson\"\n    },\n    {\n      \"name\": \"Teacher\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"InternalTeacher\"\n    },\n    {\n      \"name\": \"ExternalTeacher\"\n    },\n    {\n      \"name\": \"Participant\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"Student\"\n    },\n    {\n      \"name\": \"Auditor\"\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Resource\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"InternalTeacher\",\n      \"targetRole\": \"responsible\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"Teacher\",\n      \"label\": \"Preallocated\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Course\",\n      \"target\": \"Edition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Edition\",\n      \"target\": \"Participant\",\n      \"label\": \"Enrolled\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Teacher\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Room\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Lesson\",\n      \"target\": \"Resource\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"InternalTeacher\",\n      \"parent\": \"Teacher\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"ExternalTeacher\",\n      \"parent\": \"Teacher\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Student\",\n      \"parent\": \"Participant\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Auditor\",\n      \"parent\": \"Participant\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Edition\",\n      \"part\": \"Lesson\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2191,
+   "completion_tokens": 607,
+   "total_tokens": 2798,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

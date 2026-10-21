@@ -255,7 +255,8 @@ def plan(cfg: dict, queries: list[dict]) -> list[tuple[dict, PromptSpec, int, fl
                                   example_view=p.get("example_view", "raw"),  # voce 138
                                   examples_block=p.get("examples_block", "standard"),  # voce 162
                                   oracle_keep=p.get("oracle_keep", 1.0),  # voce 163
-                                  oracle_extra=p.get("oracle_extra", "nessuno"))  # voce 164
+                                  oracle_extra=p.get("oracle_extra", "nessuno"),  # voce 164
+                                  strip_attributes=p.get("strip_attributes", False))  # voce 167
                 for t in temperatures(cfg):
                     for r in range(cfg.get("repetitions", 1)):
                         if cond == "random" and mode == "per_esercizio_ripetizione":  # voce 130

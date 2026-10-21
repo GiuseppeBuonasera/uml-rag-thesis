@@ -22,6 +22,11 @@ pool nessuna coppia supera 0,4; nessuna run in corso).
   dall'espansore unico.
 
 ## Stato
+- **Cartella `results/` (2026-10-21, voce 168)**: risultati raccolti (completezza dei relatori del 3b e F1 dei
+  controlli per esercizio, ordinati per Flesch-Kincaid e per grandezza; file dei relatori, zip, sommari); si rigenera con `python experiments/build_results.py`.
+- **Controllo esempi senza attributi (2026-10-21, voci 167 e 169)**: esempi senza attributi -> scheletri (causale):
+  PlantUML 0,02 -> 0,19, compatto 0,28 -> 0,91 (recall attributi 0,31 -> 0,03); con l'esercizio stesso senza attributi
+  meta' degli attributi ritrovati viene dal testo (0,50 / 0,48). Nessuna run in corso.
 - **2026-10-20, riepilogo della giornata**: revisione dei sinonimi scartata (voce 160); analisi esplorative raccolte nel
   report per i relatori (voce 161); controlli solo analisi oracle_self (voce 162), oracle_partial (voce 163) e oracle_mix
   (voci 164-165) eseguiti e analizzati; analisi descrittive sugli esempi (voce 166). Nessuna run in corso.

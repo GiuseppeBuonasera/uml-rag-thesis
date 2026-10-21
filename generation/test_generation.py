@@ -3071,6 +3071,87 @@ def check_oracle_mix(tmp: Path) -> None:
           "108 generazioni, verdetti della regola, guardia")
 
 
+def check_oracle_attr(tmp: Path) -> None:
+    """Voce 167: esempi senza attributi. strip_attributes toglie gli attributi delle classi non enum (valori degli enum
+    e metodi restano); bm25_controllo = gli stessi esempi di bm25 k3 congelati; config A e B = 216 generazioni; regola di
+    experiments/analyze_oracle_attr.py (verdetti, guardia)."""
+    import yaml
+    import analyze_oracle_attr as aoa
+    from prompt_builder import ANALYSIS_ONLY, strip_attributes
+    from evaluation import element_metrics as _el
+    assert "bm25_controllo" in ANALYSIS_ONLY
+    cands, tq = cl.load_all()
+    by = {x["id"]: x for x in cands + tq}
+    g = by["BuildingManagement"]["diagram_apollon_json"]  # ha un enum (EnergyClass)
+    s = strip_attributes(g)
+    assert sum(len(v) for v in _el.elements(s)["attributes"].values()) == 0 and g != s
+    enum = [n for n in s["nodes"] if (n["data"] or {}).get("stereotype") == "enumeration"]
+    assert enum and all(n["data"]["attributes"] for n in enum)  # i valori degli enum restano
+    assert len(s["nodes"]) == len(g["nodes"]) and s["edges"] == g["edges"]
+    try:
+        PromptSpec(condition="bm25", output_format="plantuml", instructions_version="v5", strip_attributes=True)
+        raise AssertionError("strip_attributes accettato per bm25")
+    except ValueError:
+        pass
+    fz = PromptBuilder(retrieval_source="frozen")
+    q = by["Gym"]
+    bmspec = PromptSpec(condition="bm25", k=3, output_format="plantuml", instructions_version="v5", example_view="clean_v1")
+    ctrl = PromptSpec(condition="bm25_controllo", k=3, output_format="plantuml", instructions_version="v5",
+                      example_view="clean_v1", strip_attributes=True)
+    assert [e["id"] for e in fz.select(q, ctrl)] == [e["id"] for e in fz.select(q, bmspec)]
+    assert all(sum(len(v) for v in _el.elements(e["diagram_apollon_json"])["attributes"].values()) == 0
+               or any((n["data"] or {}).get("stereotype") == "enumeration" for n in e["diagram_apollon_json"]["nodes"])
+               for e in fz.select(q, ctrl))
+    selfspec = PromptSpec(condition="oracle_self", k=1, output_format="compact", instructions_version="v5",
+                          serialization="indent2", example_view="clean_v1", examples_block="libero", strip_attributes=True)
+    assert fz.build(q, selfspec).example_ids == ["Gym"]
+    total = 0
+    for name in ("oracle_attr_self", "oracle_attr_bm25"):
+        cfg = yaml.safe_load((ROOT / "experiments" / "configs" / f"{name}.yaml").read_text(encoding="utf-8"))
+        assert cfg["passo"] == "controllo"
+        for conf in cfg["configurations"]:
+            x = rx.resolve_configuration(cfg, conf)
+            qs = cands if x["split"] == "corpus" else tq
+            total += len(rx.plan(x, qs))
+            rx.check_query_roles(x, qs)
+    assert total == 216, total
+    assert (aoa.EFFETTO, aoa.NULLO, aoa.ALPHA) == (0.10, 0.05, 0.05)
+    assert aoa.verdict_b(0.10, 0.01).startswith("la forma vuota") and aoa.verdict_b(0.12, 0.2) == "effetto debole"
+    assert aoa.verdict_b(0.049, 0.01).startswith("nessun") and aoa.verdict_b(0.07, 0.01) == "effetto debole"
+    assert aoa.main(["--results-dir", str(tmp / "nessuna_run")]) == 1
+    print("  OK  controllo esempi senza attributi (voce 167): strip_attributes (enum e metodi restano), bm25_controllo = "
+          "esempi bm25 congelati, 216 generazioni, verdetti della regola, guardia")
+
+
+def check_build_results(tmp: Path) -> None:
+    """Raccolta in results/ (experiments/build_results.py): sorgenti presenti, run incomplete escluse, colonne dei
+    controlli = configurazioni esistenti."""
+    import json
+    import yaml
+    import build_results as br
+    for src, dst in br.COPIES:
+        assert src.exists() or "oracle_attr" in dst, src
+    d = tmp / "run_finta"
+    d.mkdir()
+    (d / "config.json").write_text(json.dumps({"config": {"query_ids": ["a", "b"], "repetitions": 1,
+                                                          "conditions": ["oracle_self"], "k": {"oracle_self": [1]}}}),
+                                   encoding="utf-8")
+    (d / "manifest.jsonl").write_text("{}\n", encoding="utf-8")
+    assert not br.complete(d)
+    (d / "manifest.jsonl").write_text("{}\n{}\n", encoding="utf-8")
+    assert br.complete(d) and not br.complete(tmp / "assente")
+    confs = set()
+    for f in (ROOT / "experiments" / "configs").glob("oracle_*.yaml"):
+        cfg = yaml.safe_load(f.read_text(encoding="utf-8"))
+        confs |= {f"{cfg['run_id']}__{c}" for c in cfg["configurations"]}
+    for formats, _, prefix, _ in br.CONTROLS:
+        if prefix.startswith("oracle"):
+            for F in formats:
+                for s in br.SPLITS:
+                    assert prefix.format(F=F, s=s) in confs, prefix.format(F=F, s=s)
+    print("  OK  raccolta dei risultati (build_results): sorgenti, run incomplete escluse, colonne dei controlli")
+
+
 def check_compare_view() -> None:
     """experiments/compare_view.py (voce 134): esercizi comuni alle run, pagina ristretta a un esercizio e a una
     ripetizione con GT + una risposta per run; rendering verificato solo se java e plantuml.jar sono disponibili."""
@@ -3529,6 +3610,8 @@ def main() -> None:
         check_oracle_self(tmp)
         check_oracle_partial(tmp)
         check_oracle_mix(tmp)
+        check_oracle_attr(tmp)
+        check_build_results(tmp)
         check_difficulty()
         check_synonym_review()
         check_compare_view()

@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"Faculty\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Institute\", \"attributes\": [\"+ name : string\", \"+ address : string\"]}, {\"name\": \"Employee\", \"attributes\": [\"+ socialSecurityNumber : string\", \"+ name : string\", \"+ emailAddress : string\"]}, {\"name\": \"ResearchStaff\"}, {\"name\": \"AdministrativeStaff\"}, {\"name\": \"ResearchAssistant\", \"attributes\": [\"+ researchField : string\"]}, {\"name\": \"Lecturer\"}, {\"name\": \"Project\", \"attributes\": [\"+ name : string\", \"+ startDate : date\", \"+ endDate : date\", \"+ hours : int\"]}, {\"name\": \"Course\", \"attributes\": [\"+ id : int\", \"+ name : string\", \"+ weeklyDuration : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Faculty\", \"target\": \"Institute\", \"label\": \"made up of\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Faculty\", \"target\": \"Employee\", \"label\": \"headed by\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ResearchAssistant\", \"target\": \"Institute\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ResearchAssistant\", \"target\": \"Project\", \"label\": \"involved in\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"ResearchStaff\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"AdministrativeStaff\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"ResearchAssistant\", \"parent\": \"ResearchStaff\"}, {\"type\": \"inheritance\", \"child\": \"Lecturer\", \"parent\": \"ResearchAssistant\"}, {\"type\": \"association\", \"source\": \"Lecturer\", \"target\": \"Course\", \"label\": \"teaches\", \"sourceMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 32.56250980000004,
+ "prompt_tokens": 4206,
+ "completion_tokens": 433,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-tfo6a31fhct33e05341ck",
+  "object": "chat.completion",
+  "created": 1792580542,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"Faculty\", \"attributes\": [\"+ name : string\"]}, {\"name\": \"Institute\", \"attributes\": [\"+ name : string\", \"+ address : string\"]}, {\"name\": \"Employee\", \"attributes\": [\"+ socialSecurityNumber : string\", \"+ name : string\", \"+ emailAddress : string\"]}, {\"name\": \"ResearchStaff\"}, {\"name\": \"AdministrativeStaff\"}, {\"name\": \"ResearchAssistant\", \"attributes\": [\"+ researchField : string\"]}, {\"name\": \"Lecturer\"}, {\"name\": \"Project\", \"attributes\": [\"+ name : string\", \"+ startDate : date\", \"+ endDate : date\", \"+ hours : int\"]}, {\"name\": \"Course\", \"attributes\": [\"+ id : int\", \"+ name : string\", \"+ weeklyDuration : int\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"Faculty\", \"target\": \"Institute\", \"label\": \"made up of\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Faculty\", \"target\": \"Employee\", \"label\": \"headed by\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ResearchAssistant\", \"target\": \"Institute\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"ResearchAssistant\", \"target\": \"Project\", \"label\": \"involved in\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"inheritance\", \"child\": \"ResearchStaff\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"AdministrativeStaff\", \"parent\": \"Employee\"}, {\"type\": \"inheritance\", \"child\": \"ResearchAssistant\", \"parent\": \"ResearchStaff\"}, {\"type\": \"inheritance\", \"child\": \"Lecturer\", \"parent\": \"ResearchAssistant\"}, {\"type\": \"association\", \"source\": \"Lecturer\", \"target\": \"Course\", \"label\": \"teaches\", \"sourceMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4206,
+   "completion_tokens": 433,
+   "total_tokens": 4639,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

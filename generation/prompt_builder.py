@@ -76,7 +76,7 @@ BM25_CONFIG = ROOT / "retrieval" / "config_bm25.yaml"
 DENSE_CONFIG = ROOT / "retrieval" / "config_dense.yaml"
 
 CONDITIONS = ("zero_shot", "static", "random", "bm25", "oracle", "dense", "hybrid", "oracle_jt",
-              "struct", "construct", "struct_construct", "oracle_self", "oracle_partial")
+              "struct", "construct", "struct_construct", "oracle_self", "oracle_partial", "bm25_controllo")
 # oracle_partial (voce 163, SOLO ANALISI): come oracle_self, ma la soluzione dell'esempio e' DEGRADATA: si tiene la
 # frazione oracle_keep delle classi (scelta deterministica, degrade_diagram) con i loro attributi e le relazioni tra
 # classi tenute; la traccia dell'esempio resta quella vera. Misura quanto deve essere simile un esempio per servire.
@@ -85,6 +85,10 @@ ORACLE_CONDITIONS = ("oracle_self", "oracle_partial")
 # PRIMA dell'esempio parziale (il piu' simile per ultimo, come nel 3b); "complemento" = dopo l'esempio al 50 % un secondo
 # esempio con le classi complementari (le due soluzioni insieme coprono tutte le classi)
 ORACLE_EXTRAS = ("nessuno", "bm25_2", "complemento")
+# voce 167 (SOLO ANALISI): bm25_controllo = gli stessi esempi di bm25 (file congelato), per i controlli; con
+# strip_attributes gli esempi (di bm25_controllo o di oracle_self) perdono tutti gli attributi delle classi non enum
+# (classi, relazioni e valori degli enum restano)
+STRIP_CONDITIONS = ("oracle_self", "bm25_controllo")
 # oracle_self (voce 162, SOLO ANALISI): l'unico esempio e' l'esercizio stesso con la sua soluzione; controllo che misura
 # se il modello sa usare il contenuto di un esempio perfetto. Mai nel 3b ne' nei dati dei relatori.
 # Blocco esempi (voce 162): "standard" = v5_examples_block.txt; "libero" = senza la frase "They describe other systems:
@@ -109,7 +113,19 @@ def random_seed(query_id: str, repetition: int) -> int:
     esadecimali di sha256("random|<id>|<r>"). Deterministico, indipendente dalla macchina e dall'ordine delle run."""
     import hashlib
     return int(hashlib.sha256(f"random|{query_id}|{repetition}".encode("utf-8")).hexdigest()[:8], 16)
-ANALYSIS_ONLY = {"oracle", "oracle_jt", "oracle_self", "oracle_partial"}
+ANALYSIS_ONLY = {"oracle", "oracle_jt", "oracle_self", "oracle_partial", "bm25_controllo"}
+
+
+def strip_attributes(diagram: dict) -> dict:
+    """Voce 167: copia del diagramma Apollon senza attributi nelle classi non enum (i valori degli enum, salvati come
+    attributi del nodo con stereotipo "enumeration", restano); classi, metodi e relazioni invariati."""
+    import copy
+    out = copy.deepcopy(diagram)
+    for n in out.get("nodes", []):
+        data = n.get("data") or {}
+        if data.get("stereotype") != "enumeration" and "attributes" in data:
+            data["attributes"] = []
+    return out
 
 
 def degrade_diagram(diagram: dict, keep: float, seed_id: str, complement: bool = False) -> dict:
@@ -210,8 +226,11 @@ class PromptSpec:
     examples_block: str = "standard"  # "standard" | "libero" (voce 162, solo oracle_self / oracle_partial)
     oracle_keep: float = 1.0  # voce 163: frazione delle classi tenute nell'esempio di oracle_partial
     oracle_extra: str = "nessuno"  # voce 164: "nessuno" | "bm25_2" (+ 2 esempi bm25) | "complemento" (+ la parte mancante)
+    strip_attributes: bool = False  # voce 167: esempi senza attributi (solo oracle_self e bm25_controllo)
 
     def __post_init__(self):
+        if self.strip_attributes and self.condition not in STRIP_CONDITIONS:
+            raise ValueError(f"strip_attributes vale solo per {STRIP_CONDITIONS} (voce 167)")
         if self.oracle_extra not in ORACLE_EXTRAS:
             raise ValueError(f"oracle_extra sconosciuto: {self.oracle_extra} (ammessi: {ORACLE_EXTRAS})")
         if self.oracle_extra != "nessuno" and self.condition != "oracle_partial":
@@ -487,7 +506,17 @@ class PromptBuilder:
         if c == "zero_shot":
             return []
         if c == "oracle_self":  # voce 162: l'esercizio stesso, solo analisi
-            return [self.all_by_id[query["id"]]]
+            q = self.all_by_id[query["id"]]
+            if spec.strip_attributes:  # voce 167: classi e relazioni perfette, nessun attributo
+                return [dict(q, view_id=q["id"], diagram_apollon_json=strip_attributes(q["diagram_apollon_json"]))]
+            return [q]
+        if c == "bm25_controllo":  # voce 167: gli esempi di bm25 (file congelato), eventualmente senza attributi
+            hits = self.hits(query, replace(spec, condition="bm25", strip_attributes=False))
+            exs = [self.all_by_id[h.id] for h in reversed(hits)]  # il piu' simile per ultimo, come bm25
+            if spec.strip_attributes:
+                exs = [dict(e, view_id=e["id"], diagram_apollon_json=strip_attributes(e["diagram_apollon_json"]))
+                       for e in exs]
+            return exs
         if c == "oracle_partial":  # voce 163: l'esercizio stesso con la soluzione degradata, solo analisi
             q = self.all_by_id[query["id"]]
             part = {"id": f"{q['id']}__parziale{round(spec.oracle_keep * 100)}", "view_id": q["id"],

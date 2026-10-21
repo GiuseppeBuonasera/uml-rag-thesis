@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"ProblemType\"}, {\"name\": \"TreatmentPlan\"}, {\"name\": \"ExaminationType\"}, {\"name\": \"AdvisedExaminationType\"}, {\"name\": \"Diagnosis\"}, {\"name\": \"Treatment\"}, {\"name\": \"AdvisedExamination\"}, {\"name\": \"FreeExamination\"}, {\"name\": \"Permission\"}, {\"name\": \"Patient\"}, {\"name\": \"Affiliation\"}, {\"name\": \"Doctor\"}, {\"name\": \"Hospital\"}], \"relations\": [{\"type\": \"association\", \"source\": \"ProblemType\", \"target\": \"TreatmentPlan\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"ProblemType\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"TreatmentPlan\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Consultation\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Treatment\", \"target\": \"AdvisedExamination\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Treatment\", \"target\": \"FreeExamination\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"AdvisedExamination\", \"target\": \"Permission\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"FreeExamination\", \"target\": \"Permission\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ExaminationType\", \"target\": \"Permission\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Consultation\", \"target\": \"Affiliation\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Consultation\", \"target\": \"Patient\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Affiliation\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Affiliation\", \"target\": \"Hospital\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Permission\", \"target\": \"Hospital\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TreatmentPlan\", \"target\": \"AdvisedExaminationType\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"AdvisedExaminationType\", \"target\": \"ExaminationType\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}], \"note\": \"Note: Consultation was inferred as the link between Diagnosis, Patient, and Affiliation to satisfy the text's logic of a doctor affiliated to a hospital visiting a patient.\"}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 41.44478739999977,
+ "prompt_tokens": 2801,
+ "completion_tokens": 764,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-sqsj56h8xg86bnvfvv36tx",
+  "object": "chat.completion",
+  "created": 1792583494,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"ProblemType\"}, {\"name\": \"TreatmentPlan\"}, {\"name\": \"ExaminationType\"}, {\"name\": \"AdvisedExaminationType\"}, {\"name\": \"Diagnosis\"}, {\"name\": \"Treatment\"}, {\"name\": \"AdvisedExamination\"}, {\"name\": \"FreeExamination\"}, {\"name\": \"Permission\"}, {\"name\": \"Patient\"}, {\"name\": \"Affiliation\"}, {\"name\": \"Doctor\"}, {\"name\": \"Hospital\"}], \"relations\": [{\"type\": \"association\", \"source\": \"ProblemType\", \"target\": \"TreatmentPlan\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"ProblemType\", \"target\": \"Diagnosis\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"TreatmentPlan\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Treatment\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Diagnosis\", \"target\": \"Consultation\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Treatment\", \"target\": \"AdvisedExamination\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Treatment\", \"target\": \"FreeExamination\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"AdvisedExamination\", \"target\": \"Permission\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"FreeExamination\", \"target\": \"Permission\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"ExaminationType\", \"target\": \"Permission\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"Consultation\", \"target\": \"Affiliation\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Consultation\", \"target\": \"Patient\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Affiliation\", \"target\": \"Doctor\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Affiliation\", \"target\": \"Hospital\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Permission\", \"target\": \"Hospital\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"TreatmentPlan\", \"target\": \"AdvisedExaminationType\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"0..*\"}, {\"type\": \"association\", \"source\": \"AdvisedExaminationType\", \"target\": \"ExaminationType\", \"sourceMultiplicity\": \"0..*\", \"targetMultiplicity\": \"1\"}], \"note\": \"Note: Consultation was inferred as the link between Diagnosis, Patient, and Affiliation to satisfy the text's logic of a doctor affiliated to a hospital visiting a patient.\"}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2801,
+   "completion_tokens": 764,
+   "total_tokens": 3565,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

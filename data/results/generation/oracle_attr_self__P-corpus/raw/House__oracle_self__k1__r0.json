@@ -1,0 +1,60 @@
+{
+ "text": "@startuml\n\nenum BuildingMaterial {\n  wood\n  brick\n  concrete\n}\n\nclass House {\n  +address: string\n  +buildingMaterial: BuildingMaterial\n}\n\nabstract class Basement {\n  +size: string\n  +name: string\n}\n\nclass EarthBasement extends Basement {\n  +humidityLevel: float\n}\n\nclass ConcreteBasement extends Basement {}\n\nabstract class SemiDetached extends House {}\n\nclass SemiDetachedWithCarport extends SemiDetached {\n  +hasOwnGarden: boolean\n  +numberOfWindows: int\n}\n\nclass SemiDetachedWithGarage extends SemiDetached {\n  +hasOwnGarden: boolean\n  +numberOfWindows: int\n}\n\nclass Carport {\n  +isDoubleCarport: boolean\n  +hasFlatRoof: boolean\n}\n\nclass Garage {\n  +hasAutomaticGarageDoor: boolean\n}\n\nclass Company {\n  +name: string\n  +address: string\n}\n\nclass JobLog {\n  +numberOfHours: float\n  +agreedPrice: float\n}\n\nHouse \"1\" *-- \"0..1\" Basement\nSemiDetachedWithCarport \"1\" -- \"2\" Carport\nSemiDetachedWithGarage \"1\" -- \"1\" Garage\nHouse \"1\" -- \"*\" JobLog\nJobLog \"*\" -- \"1\" Company\nHouse \"1\" -- \"*\" Company\n\n@enduml",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 16.166347599999426,
+ "prompt_tokens": 1573,
+ "completion_tokens": 304,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-buhf5az9my58r8f0icd8ix",
+  "object": "chat.completion",
+  "created": 1792584631,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "@startuml\n\nenum BuildingMaterial {\n  wood\n  brick\n  concrete\n}\n\nclass House {\n  +address: string\n  +buildingMaterial: BuildingMaterial\n}\n\nabstract class Basement {\n  +size: string\n  +name: string\n}\n\nclass EarthBasement extends Basement {\n  +humidityLevel: float\n}\n\nclass ConcreteBasement extends Basement {}\n\nabstract class SemiDetached extends House {}\n\nclass SemiDetachedWithCarport extends SemiDetached {\n  +hasOwnGarden: boolean\n  +numberOfWindows: int\n}\n\nclass SemiDetachedWithGarage extends SemiDetached {\n  +hasOwnGarden: boolean\n  +numberOfWindows: int\n}\n\nclass Carport {\n  +isDoubleCarport: boolean\n  +hasFlatRoof: boolean\n}\n\nclass Garage {\n  +hasAutomaticGarageDoor: boolean\n}\n\nclass Company {\n  +name: string\n  +address: string\n}\n\nclass JobLog {\n  +numberOfHours: float\n  +agreedPrice: float\n}\n\nHouse \"1\" *-- \"0..1\" Basement\nSemiDetachedWithCarport \"1\" -- \"2\" Carport\nSemiDetachedWithGarage \"1\" -- \"1\" Garage\nHouse \"1\" -- \"*\" JobLog\nJobLog \"*\" -- \"1\" Company\nHouse \"1\" -- \"*\" Company\n\n@enduml",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1573,
+   "completion_tokens": 304,
+   "total_tokens": 1877,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

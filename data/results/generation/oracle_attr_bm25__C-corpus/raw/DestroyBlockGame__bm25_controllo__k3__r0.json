@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"DestroyBlockApp\"\n    },\n    {\n      \"name\": \"User\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"Admin\"\n    },\n    {\n      \"name\": \"Game\"\n    },\n    {\n      \"name\": \"HallOfFame\"\n    },\n    {\n      \"name\": \"Block\"\n    },\n    {\n      \"name\": \"Level\"\n    },\n    {\n      \"name\": \"GridPosition\"\n    },\n    {\n      \"name\": \"GameSettings\"\n    },\n    {\n      \"name\": \"Mode\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DestroyBlockApp\",\n      \"part\": \"User\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DestroyBlockApp\",\n      \"part\": \"Game\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Player\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Admin\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Admin\",\n      \"target\": \"Game\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"manages\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Game\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"HallOfFame\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Level\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..99\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Block\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"GameSettings\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Level\",\n      \"target\": \"Block\",\n      \"label\": \"has_arrangement\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Block\",\n      \"target\": \"GridPosition\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 52.50605320000068,
+ "prompt_tokens": 5455,
+ "completion_tokens": 715,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-uck0n5qsmfdoi0mbpwf9l",
+  "object": "chat.completion",
+  "created": 1792579688,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"DestroyBlockApp\"\n    },\n    {\n      \"name\": \"User\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"Admin\"\n    },\n    {\n      \"name\": \"Game\"\n    },\n    {\n      \"name\": \"HallOfFame\"\n    },\n    {\n      \"name\": \"Block\"\n    },\n    {\n      \"name\": \"Level\"\n    },\n    {\n      \"name\": \"GridPosition\"\n    },\n    {\n      \"name\": \"GameSettings\"\n    },\n    {\n      \"name\": \"Mode\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DestroyBlockApp\",\n      \"part\": \"User\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"DestroyBlockApp\",\n      \"part\": \"Game\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Player\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Admin\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Admin\",\n      \"target\": \"Game\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"manages\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"Game\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Game\",\n      \"target\": \"HallOfFame\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Level\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..99\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"Block\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Game\",\n      \"part\": \"GameSettings\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Level\",\n      \"target\": \"Block\",\n      \"label\": \"has_arrangement\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Block\",\n      \"target\": \"GridPosition\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 5455,
+   "completion_tokens": 715,
+   "total_tokens": 6170,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

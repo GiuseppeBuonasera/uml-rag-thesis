@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Airline\"\n    },\n    {\n      \"name\": \"Flight\"\n    },\n    {\n      \"name\": \"Airport\"\n    },\n    {\n      \"name\": \"Aircraft\"\n    },\n    {\n      \"name\": \"AircraftType\"\n    },\n    {\n      \"name\": \"Pilot\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Flight\",\n      \"label\": \"operates\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"label\": \"departs from\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"label\": \"arrives at\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"label\": \"has\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"label\": \"has\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"co-pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Aircraft\",\n      \"label\": \"uses\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Aircraft\",\n      \"label\": \"owns\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"AircraftType\",\n      \"label\": \"is of type\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\",\n      \"targetRole\": \"captain\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\",\n      \"targetRole\": \"co-pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"targetRole\": \"navigator\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 38.226666399999885,
+ "prompt_tokens": 2307,
+ "completion_tokens": 715,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-gx1y2ikzsgr5fx6v79dmi",
+  "object": "chat.completion",
+  "created": 1792584045,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Airline\"\n    },\n    {\n      \"name\": \"Flight\"\n    },\n    {\n      \"name\": \"Airport\"\n    },\n    {\n      \"name\": \"Aircraft\"\n    },\n    {\n      \"name\": \"AircraftType\"\n    },\n    {\n      \"name\": \"Pilot\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Flight\",\n      \"label\": \"operates\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"label\": \"departs from\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Airport\",\n      \"label\": \"arrives at\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"label\": \"has\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Pilot\",\n      \"label\": \"has\",\n      \"targetMultiplicity\": \"1\",\n      \"targetRole\": \"co-pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Flight\",\n      \"target\": \"Aircraft\",\n      \"label\": \"uses\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Airline\",\n      \"target\": \"Aircraft\",\n      \"label\": \"owns\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Aircraft\",\n      \"target\": \"AircraftType\",\n      \"label\": \"is of type\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\",\n      \"targetRole\": \"captain\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\",\n      \"targetRole\": \"co-pilot\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AircraftType\",\n      \"target\": \"Pilot\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"targetRole\": \"navigator\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2307,
+   "completion_tokens": 715,
+   "total_tokens": 3022,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}
