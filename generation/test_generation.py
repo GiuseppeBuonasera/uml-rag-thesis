@@ -3130,7 +3130,7 @@ def check_build_results(tmp: Path) -> None:
     import yaml
     import build_results as br
     for src, dst in br.COPIES:
-        assert src.exists() or "oracle_attr" in dst, src
+        assert src.exists() or dst.startswith("2_controlli_oracle/"), src  # i sommari arrivano dopo le run
     d = tmp / "run_finta"
     d.mkdir()
     (d / "config.json").write_text(json.dumps({"config": {"query_ids": ["a", "b"], "repetitions": 1,
@@ -3150,6 +3150,39 @@ def check_build_results(tmp: Path) -> None:
                 for s in br.SPLITS:
                     assert prefix.format(F=F, s=s) in confs, prefix.format(F=F, s=s)
     print("  OK  raccolta dei risultati (build_results): sorgenti, run incomplete escluse, colonne dei controlli")
+
+
+def check_oracle_compatto(tmp: Path) -> None:
+    """Voce 170: oracle_partial e oracle_mix anche nel compatto. Config identiche a quelle PlantUML salvo formato e
+    serializzazione (270 generazioni, ruoli ammessi); prompt = quelli PlantUML con le istruzioni e gli esempi del
+    compatto; regole invariate; output separato; guardia."""
+    import yaml
+    import analyze_oracle_mix as aom
+    import analyze_oracle_partial as aop
+    cands, tq = cl.load_all()
+    total = 0
+    for name in ("oracle_partial", "oracle_mix"):
+        p = yaml.safe_load((ROOT / "experiments" / "configs" / f"{name}.yaml").read_text(encoding="utf-8"))
+        c = yaml.safe_load((ROOT / "experiments" / "configs" / f"{name}_compatto.yaml").read_text(encoding="utf-8"))
+        assert c["run_id"] == p["run_id"] and c["passo"] == "controllo"
+        assert {k: v for k, v in c.items() if k != "configurations"} == {k: v for k, v in p.items() if k != "configurations"}
+        assert sorted(c["configurations"]) == sorted("C-" + k[2:] for k in p["configurations"])
+        for k, conf in c["configurations"].items():
+            ref = p["configurations"]["P-" + k[2:]]
+            assert conf["output_format"] == "compact" and conf["prompt"]["serialization"] == "indent2"
+            assert {**conf["prompt"], "serialization": None} == {**ref["prompt"], "serialization": None}
+            x = rx.resolve_configuration(c, k)
+            qs = cands if x["split"] == "corpus" else tq
+            total += len(rx.plan(x, qs))
+            rx.check_query_roles(x, qs)
+    assert total == 270, total
+    assert aop.GUADAGNO_UTILE == 0.05 and (aom.MARGINE, aom.SOMMA_MIN) == (0.03, 0.05)
+    assert aop.OUT_NAMES == {"P": "oracle_partial_analysis", "C": "oracle_partial_compatto_analysis"}
+    assert aom.OUT_NAMES == {"P": "oracle_mix_analysis", "C": "oracle_mix_compatto_analysis"}
+    for m in (aop, aom):
+        assert m.main(["--results-dir", str(tmp / "nessuna_run"), "--formato", "C"]) == 1
+    print("  OK  oracle_partial e oracle_mix nel compatto (voce 170): config = PlantUML salvo formato, 270 generazioni, "
+          "regole invariate, output separato, guardia")
 
 
 def check_compare_view() -> None:
@@ -3610,6 +3643,7 @@ def main() -> None:
         check_oracle_self(tmp)
         check_oracle_partial(tmp)
         check_oracle_mix(tmp)
+        check_oracle_compatto(tmp)
         check_oracle_attr(tmp)
         check_build_results(tmp)
         check_difficulty()

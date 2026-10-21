@@ -3,7 +3,7 @@ Controllo "esempio parzialmente simile" (oracle_partial, docs/decisions.md, voce
 run: da qui la regola (costanti, threshold) non si modifica senza una nuova voce. SOLO ANALISI.
 
 Domanda: quanto deve essere simile un esempio perche' serva? Curva "somiglianza dell'esempio -> guadagno di completezza
-rispetto a zero_shot", PlantUML, 54 esercizi di validazione:
+rispetto a zero_shot", PlantUML (e compatto con --formato C, voce 170), 54 esercizi di validazione:
 - livelli 25 / 50 / 75 % (oracle_partial: la soluzione dell'esercizio con quella frazione delle classi);
 - livello 100 % = oracle_self, variante libera (voce 162);
 - riferimento = esempi del 3b (bm25, hybrid, random, static), raggruppati per somiglianza del miglior esempio.
@@ -16,7 +16,7 @@ e' >= GUADAGNO_UTILE (0,05, sopra la differenza minima rilevabile di circa 0,03 
 somiglianza media misurata. Nessun livello sopra la soglia -> "nemmeno l'esempio quasi identico basta".
 
 Uso:
-    python experiments/analyze_oracle_partial.py [--results-dir data/results/generation]
+    python experiments/analyze_oracle_partial.py [--results-dir data/results/generation] [--formato P|C]
 """
 
 from __future__ import annotations
@@ -35,6 +35,8 @@ import provenance  # noqa: E402
 
 RESULTS = rr.RESULTS
 OUT_NAME = "oracle_partial_analysis"
+FORMATS = {"P": "PlantUML", "C": "JSON compatto"}  # voce 170: stessa regola anche nel compatto
+OUT_NAMES = {"P": OUT_NAME, "C": "oracle_partial_compatto_analysis"}
 SPLITS = ("corpus", "testset")
 LEVELS = (25, 50, 75)
 BINS = ((0.0, 0.1), (0.1, 0.2), (0.2, 0.3), (0.3, 0.45))
@@ -64,15 +66,15 @@ def threshold(points: list[tuple[int, float | None, float | None]]) -> tuple[int
     return None, None
 
 
-def load_all(results: Path) -> dict:
+def load_all(results: Path, fmt: str = "P") -> dict:
     import corpus_loader as cl
     from prompt_builder import PromptBuilder, PromptSpec
     gt = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates() + cl.load_queries()}
     b = PromptBuilder(retrieval_source="frozen")
     queries = {x["id"]: x for x in cl.load_candidates() + cl.load_queries()}
     out = {"missing": []}
-    zs = [x for s in SPLITS for x in rr.load_run(results / f"passo3b__P-{s}-G26", {"cond": {"zero_shot"}}, gt)] \
-        if (results / "passo3b__P-corpus-G26" / "manifest.jsonl").exists() else []
+    zs = [x for s in SPLITS for x in rr.load_run(results / f"passo3b__{fmt}-{s}-G26", {"cond": {"zero_shot"}}, gt)] \
+        if (results / f"passo3b__{fmt}-corpus-G26" / "manifest.jsonl").exists() else []
     by_q = defaultdict(list)
     for c in zs:
         by_q[c["q"]].append(aos.response_scores(c)["comp"] or 0.0)
@@ -80,7 +82,7 @@ def load_all(results: Path) -> dict:
     for lvl in LEVELS:
         calls = []
         for s in SPLITS:
-            d = results / f"oracle_partial__P-{s}-{lvl}"
+            d = results / f"oracle_partial__{fmt}-{s}-{lvl}"
             if not (d / "manifest.jsonl").exists():
                 out["missing"].append(d.name)
                 continue
@@ -91,14 +93,14 @@ def load_all(results: Path) -> dict:
         out[lvl] = {"calls": calls, "sim": st.mean(sims) if sims else None}
     full = []
     for s in SPLITS:
-        d = results / f"oracle_self__P-{s}-libero"
+        d = results / f"oracle_self__{fmt}-{s}-libero"
         if not (d / "manifest.jsonl").exists():
             out["missing"].append(d.name)
             continue
         full += rr.load_run(d, {}, gt)
     out[100] = {"calls": full, "sim": 1.0}
-    ref = [x for s in SPLITS for x in rr.load_run(results / f"passo3b__P-{s}-G26", {}, gt)] \
-        if (results / "passo3b__P-corpus-G26" / "manifest.jsonl").exists() else []
+    ref = [x for s in SPLITS for x in rr.load_run(results / f"passo3b__{fmt}-{s}-G26", {}, gt)] \
+        if (results / f"passo3b__{fmt}-corpus-G26" / "manifest.jsonl").exists() else []
     pts = []
     for c in ref:
         if c["m"]["example_ids"] and c["q"] in out["base"]:
@@ -108,12 +110,13 @@ def load_all(results: Path) -> dict:
     return out
 
 
-def report(data: dict) -> tuple[str, dict]:
+def report(data: dict, fmt: str = "P") -> tuple[str, dict]:
     res = {}
     L = ["# Controllo \"esempio parzialmente simile\" (oracle_partial) — SOLO ANALISI", "",
-         "PlantUML, 54 esercizi di validazione, Gemma 4 26B A4B QAT, configurazione del 3b, blocco esempi libero. Esempio = "
+         f"{FORMATS[fmt]}, 54 esercizi di validazione, Gemma 4 26B A4B QAT, configurazione del 3b, blocco esempi libero. Esempio = "
          "la traccia vera dell'esercizio con la soluzione ridotta al 25 / 50 / 75 % delle classi; 100 % = oracle_self. "
-         "Regola registrata PRIMA della run (voce 163), applicata da `experiments/analyze_oracle_partial.py`.", "",
+         "Regola registrata PRIMA della run (voce 163" + ("" if fmt == "P" else "; compatto: voce 170") + "), applicata da "
+         "`experiments/analyze_oracle_partial.py`.", "",
          provenance.provenance_line(), "", "## Curva: somiglianza dell'esempio → guadagno di completezza su zero_shot", "",
          "| esempio | somiglianza (Jt) | risposte | guadagno medio |", "|---|---|---|---|"]
     for lo, hi in BINS:
@@ -143,14 +146,15 @@ def report(data: dict) -> tuple[str, dict]:
 def main(argv=None) -> int:
     a = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     a.add_argument("--results-dir", default=str(RESULTS))
+    a.add_argument("--formato", choices=sorted(FORMATS), default="P")
     args = a.parse_args(argv)
     results = Path(args.results_dir)
-    data = load_all(results)
+    data = load_all(results, args.formato)
     if data["missing"] or not data["base"]:
         print(f"run assenti: {data['missing'] or ['passo3b']}: nessuna analisi scritta")
         return 1
-    text, _ = report(data)
-    out = results / OUT_NAME
+    text, _ = report(data, args.formato)
+    out = results / OUT_NAMES[args.formato]
     out.mkdir(parents=True, exist_ok=True)
     (out / "summary.md").write_text(text, encoding="utf-8")
     run_log = sys.modules.get("run_log")

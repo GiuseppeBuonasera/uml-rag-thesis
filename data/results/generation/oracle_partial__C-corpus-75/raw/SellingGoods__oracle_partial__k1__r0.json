@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ headOfficeAddress : string\",\n        \"+ vatNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Address\",\n      \"attributes\": [\n        \"+ location : string\"\n      ]\n    },\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ stockLevel : int\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ orderDate : date\",\n        \"+ paymentStatus : string\",\n        \"+ shippingStatus : string\"\n      ]\n    },\n    {\n      \"name\": \"OrderLine\",\n      \"attributes\": [\n        \"+ quantity : int\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Warehouse\",\n      \"attributes\": [\n        \"+ location : string\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ invoiceDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Shipment\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Delivery\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryLine\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Address\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"head office\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Address\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\",\n      \"label\": \"delivery address\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Warehouse\",\n      \"target\": \"Address\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"source\": \"Order\",\n      \"target\": \"OrderLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OrderLine\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Shipment\",\n      \"target\": \"OrderLine\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Shipment\",\n      \"target\": \"Delivery\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"source\": \"Delivery\",\n      \"target\": \"DeliveryLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeliveryLine\",\n      \"target\": \"OrderLine\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 49.65437990000282,
+ "prompt_tokens": 2604,
+ "completion_tokens": 932,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-zc6clpzy7dc8mpuxa2op8",
+  "object": "chat.completion",
+  "created": 1792605830,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ headOfficeAddress : string\",\n        \"+ vatNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Address\",\n      \"attributes\": [\n        \"+ location : string\"\n      ]\n    },\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ stockLevel : int\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ orderDate : date\",\n        \"+ paymentStatus : string\",\n        \"+ shippingStatus : string\"\n      ]\n    },\n    {\n      \"name\": \"OrderLine\",\n      \"attributes\": [\n        \"+ quantity : int\",\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Warehouse\",\n      \"attributes\": [\n        \"+ location : string\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ invoiceDate : date\"\n      ]\n    },\n    {\n      \"name\": \"Shipment\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Delivery\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryLine\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Address\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"head office\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Address\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\",\n      \"label\": \"delivery address\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Warehouse\",\n      \"target\": \"Address\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Customer\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"source\": \"Order\",\n      \"target\": \"OrderLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OrderLine\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Shipment\",\n      \"target\": \"OrderLine\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Shipment\",\n      \"target\": \"Delivery\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"source\": \"Delivery\",\n      \"target\": \"DeliveryLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeliveryLine\",\n      \"target\": \"OrderLine\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2604,
+   "completion_tokens": 932,
+   "total_tokens": 3536,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

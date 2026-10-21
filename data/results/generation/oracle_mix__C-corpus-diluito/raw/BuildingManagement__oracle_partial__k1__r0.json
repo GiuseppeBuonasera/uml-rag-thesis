@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"WebPortal\",\n      \"attributes\": [\n        \"+ versionNumber : string\",\n        \"+ url : string\"\n      ]\n    },\n    {\n      \"name\": \"Building\",\n      \"attributes\": [\n        \"+ id : string\",\n        \"+ name : string\",\n        \"+ energyClass : EnergyClass\",\n        \"+ address : string\",\n        \"+ yearOfConstruction : int\"\n      ]\n    },\n    {\n      \"name\": \"EnergyClass\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"A\",\n        \"B\",\n        \"C\",\n        \"D\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ userName : string\",\n        \"+ email : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Administrator\",\n      \"attributes\": [\n        \"+ idCardNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Entry\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ isPublic : boolean\"\n      ]\n    },\n    {\n      \"name\": \"TextualEntry\",\n      \"attributes\": [\n        \"+ text : string\"\n      ]\n    },\n    {\n      \"name\": \"NumericalEntry\",\n      \"attributes\": [\n        \"+ value : float\",\n        \"+ unit : string\"\n      ]\n    },\n    {\n      \"name\": \"Image\",\n      \"attributes\": [\n        \"+ fileName : string\"\n      ]\n    },\n    {\n      \"name\": \"Comment\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"WebPortal\",\n      \"target\": \"Building\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Building\",\n      \"target\": \"User\",\n      \"targetRole\": \"owner\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Building\",\n      \"part\": \"Entry\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Building\",\n      \"part\": \"Image\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TextualEntry\",\n      \"parent\": \"Entry\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NumericalEntry\",\n      \"parent\": \"Entry\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Administrator\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Building\",\n      \"targetRole\": \"creator\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Comment\",\n      \"targetRole\": \"author\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Building\",\n      \"targetRole\": \"commenter\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Administrator\",\n      \"target\": \"User\",\n      \"targetRole\": \"manager\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Administrator\",\n      \"target\": \"Comment\",\n      \"targetRole\": \"moderator\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 51.18688950000069,
+ "prompt_tokens": 4713,
+ "completion_tokens": 823,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-bggmcx8xsvfrn96pyqjh8",
+  "object": "chat.completion",
+  "created": 1792607175,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"WebPortal\",\n      \"attributes\": [\n        \"+ versionNumber : string\",\n        \"+ url : string\"\n      ]\n    },\n    {\n      \"name\": \"Building\",\n      \"attributes\": [\n        \"+ id : string\",\n        \"+ name : string\",\n        \"+ energyClass : EnergyClass\",\n        \"+ address : string\",\n        \"+ yearOfConstruction : int\"\n      ]\n    },\n    {\n      \"name\": \"EnergyClass\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"A\",\n        \"B\",\n        \"C\",\n        \"D\"\n      ]\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ userName : string\",\n        \"+ email : string\",\n        \"+ password : string\"\n      ]\n    },\n    {\n      \"name\": \"Administrator\",\n      \"attributes\": [\n        \"+ idCardNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Entry\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ isPublic : boolean\"\n      ]\n    },\n    {\n      \"name\": \"TextualEntry\",\n      \"attributes\": [\n        \"+ text : string\"\n      ]\n    },\n    {\n      \"name\": \"NumericalEntry\",\n      \"attributes\": [\n        \"+ value : float\",\n        \"+ unit : string\"\n      ]\n    },\n    {\n      \"name\": \"Image\",\n      \"attributes\": [\n        \"+ fileName : string\"\n      ]\n    },\n    {\n      \"name\": \"Comment\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"WebPortal\",\n      \"target\": \"Building\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Building\",\n      \"target\": \"User\",\n      \"targetRole\": \"owner\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Building\",\n      \"part\": \"Entry\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Building\",\n      \"part\": \"Image\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"TextualEntry\",\n      \"parent\": \"Entry\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"NumericalEntry\",\n      \"parent\": \"Entry\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Administrator\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Building\",\n      \"targetRole\": \"creator\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Comment\",\n      \"targetRole\": \"author\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Building\",\n      \"targetRole\": \"commenter\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Administrator\",\n      \"target\": \"User\",\n      \"targetRole\": \"manager\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Administrator\",\n      \"target\": \"Comment\",\n      \"targetRole\": \"moderator\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4713,
+   "completion_tokens": 823,
+   "total_tokens": 5536,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

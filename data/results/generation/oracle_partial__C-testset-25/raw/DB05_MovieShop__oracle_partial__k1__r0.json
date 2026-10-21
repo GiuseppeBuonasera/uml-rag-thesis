@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ surname\",\n        \"+ data\"\n      ]\n    },\n    {\n      \"name\": \"Subscriber\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Card\",\n      \"attributes\": [\n        \"+ credit\"\n      ]\n    },\n    {\n      \"name\": \"Movie\",\n      \"attributes\": [\n        \"+ title\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ details\"\n      ]\n    },\n    {\n      \"name\": \"MovieShop\",\n      \"methods\": [\n        \"+ browseCatalogue()\",\n        \"+ orderMovie()\",\n        \"+ hireMovie()\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Subscriber\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Subscriber\",\n      \"target\": \"Card\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Subscriber\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"hires\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"User\",\n      \"target\": \"MovieShop\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 22.16510450000351,
+ "prompt_tokens": 1481,
+ "completion_tokens": 481,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-yekhaom2q7o41014cut808",
+  "object": "chat.completion",
+  "created": 1792604760,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ surname\",\n        \"+ data\"\n      ]\n    },\n    {\n      \"name\": \"Subscriber\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Card\",\n      \"attributes\": [\n        \"+ credit\"\n      ]\n    },\n    {\n      \"name\": \"Movie\",\n      \"attributes\": [\n        \"+ title\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ details\"\n      ]\n    },\n    {\n      \"name\": \"MovieShop\",\n      \"methods\": [\n        \"+ browseCatalogue()\",\n        \"+ orderMovie()\",\n        \"+ hireMovie()\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Subscriber\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Subscriber\",\n      \"target\": \"Card\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Subscriber\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"hires\"\n    },\n    {\n      \"type\": \"unidirectional\",\n      \"source\": \"User\",\n      \"target\": \"MovieShop\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1481,
+   "completion_tokens": 481,
+   "total_tokens": 1962,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

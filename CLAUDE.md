@@ -48,6 +48,7 @@ zero-shot, specialmente per certe tipologie di esercizio.
   somiglianza dei nomi di classe di circa 0,4-0,56 o piu'; nel pool nessuna coppia supera 0,4, quindi il limite del
   retrieval nel 3b e' il corpus. Esempi lontani accanto a uno vicino non fanno danno; un esempio completo vale piu' di
   due meta'. Esempi senza attributi causano gli scheletri (voce 169): compatto 28 % -> 91 %, PlantUML 2 % -> 19 %.
+  Nel compatto (voci 170-171) le stesse conclusioni: rispetto a esempi casuali la soglia di utilita' e' al 50 %.
 - **Prossimi passi**: l'analisi statistica del 3b la fanno i relatori con un loro script (voce 158; schema della
   voce 156): il repo fornisce i dati (`experiments/export_3b.py --unico`, `experiments/difficulty_3b.py`) nel formato
   da concordare (tipo di F1, colonne, esercizi); revisione dei sinonimi scartata (voce 160); analisi esplorative

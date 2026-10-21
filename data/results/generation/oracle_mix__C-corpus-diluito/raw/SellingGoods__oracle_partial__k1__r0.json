@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Address : string\",\n        \"+ VATNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ PaidDate : date\",\n        \"+ ShippedDate : date\"\n      ]\n    },\n    {\n      \"name\": \"OrderLine\",\n      \"attributes\": [\n        \"+ Quantity : int\"\n      ]\n    },\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ Stock : int\"\n      ]\n    },\n    {\n      \"name\": \"Warehouse\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"Shipment\",\n      \"attributes\": [\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryLine\",\n      \"attributes\": [\n        \"+ Status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Order\",\n      \"part\": \"OrderLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OrderLine\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Warehouse\",\n      \"label\": \"headOffice\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Warehouse\",\n      \"label\": \"deliveryAddress\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Shipment\",\n      \"target\": \"OrderLine\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Shipment\",\n      \"part\": \"DeliveryLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeliveryLine\",\n      \"target\": \"OrderLine\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 47.78097490000073,
+ "prompt_tokens": 4861,
+ "completion_tokens": 763,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-qnzu80icmlekhid4erpaf",
+  "object": "chat.completion",
+  "created": 1792607866,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Address : string\",\n        \"+ VATNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ PaidDate : date\",\n        \"+ ShippedDate : date\"\n      ]\n    },\n    {\n      \"name\": \"OrderLine\",\n      \"attributes\": [\n        \"+ Quantity : int\"\n      ]\n    },\n    {\n      \"name\": \"Product\",\n      \"attributes\": [\n        \"+ Stock : int\"\n      ]\n    },\n    {\n      \"name\": \"Warehouse\",\n      \"attributes\": [\n        \"+ Address : string\"\n      ]\n    },\n    {\n      \"name\": \"Invoice\",\n      \"attributes\": [\n        \"+ Date : date\"\n      ]\n    },\n    {\n      \"name\": \"Shipment\",\n      \"attributes\": [\n        \"+ Status : string\"\n      ]\n    },\n    {\n      \"name\": \"DeliveryLine\",\n      \"attributes\": [\n        \"+ Status : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Order\",\n      \"part\": \"OrderLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"OrderLine\",\n      \"target\": \"Product\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Warehouse\",\n      \"label\": \"headOffice\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Warehouse\",\n      \"label\": \"deliveryAddress\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Invoice\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Invoice\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Shipment\",\n      \"target\": \"OrderLine\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Shipment\",\n      \"part\": \"DeliveryLine\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"DeliveryLine\",\n      \"target\": \"OrderLine\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4861,
+   "completion_tokens": 763,
+   "total_tokens": 5624,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

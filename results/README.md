@@ -25,6 +25,7 @@ In tutti gli Excel il primo foglio ordina per GRANDEZZA, la difficolta' dominant
 - `oracle_partial.md` (voce 163): solo una parte delle classi dell'esercizio stesso: quanto deve essere simile un esempio.
 - `oracle_mix.md` (voci 164-165): esempio vicino + esempi lontani; due meta' complementari.
 - `oracle_attr.md` (voci 167 e 169): esempi senza attributi.
+- `oracle_partial_compatto.md`, `oracle_mix_compatto.md` (voci 170-171): parziale e misti nel compatto.
 
 ## 3_sviluppo — analisi di sviluppo (piloti e dev set, fino alla voce 151)
 Sommari delle prove usate per scegliere formato, istruzioni, k, retriever e modello.

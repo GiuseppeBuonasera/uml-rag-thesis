@@ -2,7 +2,7 @@
 
 PlantUML, 54 esercizi di validazione, Gemma 4 26B A4B QAT, configurazione del 3b, blocco esempi libero. Esempio = la traccia vera dell'esercizio con la soluzione ridotta al 25 / 50 / 75 % delle classi; 100 % = oracle_self. Regola registrata PRIMA della run (voce 163), applicata da `experiments/analyze_oracle_partial.py`.
 
-Analisi eseguita sul commit `ffb0c03e769d` (con modifiche non committate). GT del corpus: 60 diagrammi, sha256 del contenuto `b700693f7f421c5dae9aa1e0608efa90ce668a377bedd37deffb211d45986991` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `87f56f95414607b9…`.
+Analisi eseguita sul commit `4ae4fd693032` (con modifiche non committate). GT del corpus: 60 diagrammi, sha256 del contenuto `b700693f7f421c5dae9aa1e0608efa90ce668a377bedd37deffb211d45986991` (JSON canonico dei `diagram_apollon_json`, indipendente dagli a capo); file `corpus/processed/corpus.jsonl` sha256 `87f56f95414607b9…`.
 
 ## Curva: somiglianza dell'esempio → guadagno di completezza su zero_shot
 

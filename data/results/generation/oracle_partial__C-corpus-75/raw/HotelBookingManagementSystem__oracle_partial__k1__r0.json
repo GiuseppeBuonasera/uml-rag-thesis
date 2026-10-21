@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"HBMS\"\n    },\n    {\n      \"name\": \"Traveller\"\n    },\n    {\n      \"name\": \"BillingInformation\"\n    },\n    {\n      \"name\": \"TravelPreference\"\n    },\n    {\n      \"name\": \"SearchInfo\"\n    },\n    {\n      \"name\": \"Offer\"\n    },\n    {\n      \"name\": \"SpecialOffer\"\n    },\n    {\n      \"name\": \"Booking\"\n    },\n    {\n      \"name\": \"BookingInfo\"\n    },\n    {\n      \"name\": \"Hotel\"\n    },\n    {\n      \"name\": \"HotelChain\"\n    },\n    {\n      \"name\": \"RoomType\"\n    },\n    {\n      \"name\": \"PaymentType\"\n    },\n    {\n      \"name\": \"BookingStatus\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Traveller\",\n      \"target\": \"HBMS\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Traveller\",\n      \"part\": \"BillingInformation\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Traveller\",\n      \"part\": \"TravelPreference\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HBMS\",\n      \"target\": \"SearchInfo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HBMS\",\n      \"target\": \"Offer\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SpecialOffer\",\n      \"parent\": \"Offer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HBMS\",\n      \"target\": \"Booking\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Booking\",\n      \"part\": \"BookingInfo\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"Booking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"HotelChain\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"Offer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"RoomType\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 40.16538270000092,
+ "prompt_tokens": 3312,
+ "completion_tokens": 703,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-fht4wih4f4ubh71vghblr",
+  "object": "chat.completion",
+  "created": 1792605562,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"HBMS\"\n    },\n    {\n      \"name\": \"Traveller\"\n    },\n    {\n      \"name\": \"BillingInformation\"\n    },\n    {\n      \"name\": \"TravelPreference\"\n    },\n    {\n      \"name\": \"SearchInfo\"\n    },\n    {\n      \"name\": \"Offer\"\n    },\n    {\n      \"name\": \"SpecialOffer\"\n    },\n    {\n      \"name\": \"Booking\"\n    },\n    {\n      \"name\": \"BookingInfo\"\n    },\n    {\n      \"name\": \"Hotel\"\n    },\n    {\n      \"name\": \"HotelChain\"\n    },\n    {\n      \"name\": \"RoomType\"\n    },\n    {\n      \"name\": \"PaymentType\"\n    },\n    {\n      \"name\": \"BookingStatus\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Traveller\",\n      \"target\": \"HBMS\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Traveller\",\n      \"part\": \"BillingInformation\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Traveller\",\n      \"part\": \"TravelPreference\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HBMS\",\n      \"target\": \"SearchInfo\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HBMS\",\n      \"target\": \"Offer\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"SpecialOffer\",\n      \"parent\": \"Offer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HBMS\",\n      \"target\": \"Booking\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Booking\",\n      \"part\": \"BookingInfo\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"Booking\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"HotelChain\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"Offer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Hotel\",\n      \"target\": \"RoomType\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3312,
+   "completion_tokens": 703,
+   "total_tokens": 4015,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

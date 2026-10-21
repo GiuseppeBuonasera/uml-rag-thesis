@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"SmartHome\"\n    },\n    {\n      \"name\": \"Address\",\n      \"attributes\": [\n        \"+ physicalAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Device\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ deviceID : int\"\n      ]\n    },\n    {\n      \"name\": \"Sensor\",\n      \"attributes\": [\n        \"+ deviceID : int\"\n      ]\n    },\n    {\n      \"name\": \"Actuator\",\n      \"attributes\": [\n        \"+ deviceID : int\"\n      ]\n    },\n    {\n      \"name\": \"SensorReading\",\n      \"attributes\": [\n        \"+ value : double\",\n        \"+ timestamp : datetime\"\n      ]\n    },\n    {\n      \"name\": \"ControlCommand\",\n      \"attributes\": [\n        \"+ commandType : string\",\n        \"+ timestamp : datetime\",\n        \"+ status : CommandStatus\"\n      ]\n    },\n    {\n      \"name\": \"ActivityLog\"\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"AutomationRule\",\n      \"attributes\": [\n        \"+ ruleStatus : RuleStatus\",\n        \"+ triggerTimestamp : datetime\"\n      ]\n    },\n    {\n      \"name\": \"Precondition\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"BooleanExpression\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"RelationalTerm\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"Action\",\n      \"attributes\": [\n        \"+ sequence : string\"\n      ]\n    },\n    {\n      \"name\": \"CommandStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"requested\",\n        \"completed\",\n        \"failed\"\n      ]\n    },\n    {\n      \"name\": \"RuleStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"created\",\n        \"edited\",\n        \"activated\",\n        \"deactivated\"\n      ]\n    },\n    {\n      \"name\": \"BinaryOp\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"AND\",\n        \"OR\",\n        \"NOT\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SmartHome\",\n      \"part\": \"Address\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SmartHome\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SmartHome\",\n      \"part\": \"ActivityLog\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ActivityLog\",\n      \"part\": \"SensorReading\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ActivityLog\",\n      \"part\": \"ControlCommand\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Actuator\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"AutomationRule\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"AutomationRule\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"depends on / conflicts with\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"Precondition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"Action\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Sensor\",\n      \"parent\": \"Device\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Actuator\",\n      \"parent\": \"Device\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"RelationalTerm\",\n      \"parent\": \"Precondition\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BooleanExpression\",\n      \"parent\": \"Precondition\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 72.12612459999946,
+ "prompt_tokens": 3426,
+ "completion_tokens": 1291,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-k8klwmdjb5lkzy2wjp44mr",
+  "object": "chat.completion",
+  "created": 1792610128,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"SmartHome\"\n    },\n    {\n      \"name\": \"Address\",\n      \"attributes\": [\n        \"+ physicalAddress : string\"\n      ]\n    },\n    {\n      \"name\": \"Room\"\n    },\n    {\n      \"name\": \"Device\",\n      \"kind\": \"abstract\",\n      \"attributes\": [\n        \"+ deviceID : int\"\n      ]\n    },\n    {\n      \"name\": \"Sensor\",\n      \"attributes\": [\n        \"+ deviceID : int\"\n      ]\n    },\n    {\n      \"name\": \"Actuator\",\n      \"attributes\": [\n        \"+ deviceID : int\"\n      ]\n    },\n    {\n      \"name\": \"SensorReading\",\n      \"attributes\": [\n        \"+ value : double\",\n        \"+ timestamp : datetime\"\n      ]\n    },\n    {\n      \"name\": \"ControlCommand\",\n      \"attributes\": [\n        \"+ commandType : string\",\n        \"+ timestamp : datetime\",\n        \"+ status : CommandStatus\"\n      ]\n    },\n    {\n      \"name\": \"ActivityLog\"\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ name : string\"\n      ]\n    },\n    {\n      \"name\": \"AutomationRule\",\n      \"attributes\": [\n        \"+ ruleStatus : RuleStatus\",\n        \"+ triggerTimestamp : datetime\"\n      ]\n    },\n    {\n      \"name\": \"Precondition\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"BooleanExpression\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"RelationalTerm\",\n      \"kind\": \"abstract\"\n    },\n    {\n      \"name\": \"Action\",\n      \"attributes\": [\n        \"+ sequence : string\"\n      ]\n    },\n    {\n      \"name\": \"CommandStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"requested\",\n        \"completed\",\n        \"failed\"\n      ]\n    },\n    {\n      \"name\": \"RuleStatus\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"created\",\n        \"edited\",\n        \"activated\",\n        \"deactivated\"\n      ]\n    },\n    {\n      \"name\": \"BinaryOp\",\n      \"kind\": \"enum\",\n      \"values\": [\n        \"AND\",\n        \"OR\",\n        \"NOT\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SmartHome\",\n      \"part\": \"Address\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SmartHome\",\n      \"part\": \"Room\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"SmartHome\",\n      \"part\": \"ActivityLog\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ActivityLog\",\n      \"part\": \"SensorReading\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"ActivityLog\",\n      \"part\": \"ControlCommand\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Sensor\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Room\",\n      \"target\": \"Actuator\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"AutomationRule\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"AutomationRule\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"*\",\n      \"label\": \"depends on / conflicts with\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"Precondition\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AutomationRule\",\n      \"target\": \"Action\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Sensor\",\n      \"parent\": \"Device\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Actuator\",\n      \"parent\": \"Device\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"RelationalTerm\",\n      \"parent\": \"Precondition\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"BooleanExpression\",\n      \"parent\": \"Precondition\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3426,
+   "completion_tokens": 1291,
+   "total_tokens": 4717,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

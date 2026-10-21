@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ NIN\",\n        \"+ TIN\",\n        \"+ name\",\n        \"+ address\"\n      ]\n    },\n    {\n      \"name\": \"BicycleModel\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ type\",\n        \"+ gears\"\n      ]\n    },\n    {\n      \"name\": \"Bicycle\",\n      \"attributes\": [\n        \"+ id\"\n      ]\n    },\n    {\n      \"name\": \"Store\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ address\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ pickup_day\"\n      ]\n    },\n    {\n      \"name\": \"Rental\",\n      \"attributes\": [\n        \"+ return_date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bicycle\",\n      \"target\": \"BicycleModel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"BicycleModel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Store\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Rental\",\n      \"target\": \"Bicycle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 29.298379499996372,
+ "prompt_tokens": 3785,
+ "completion_tokens": 478,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5he6h4ad9el03fpkv6ofhv4",
+  "object": "chat.completion",
+  "created": 1792609125,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Client\",\n      \"attributes\": [\n        \"+ NIN\",\n        \"+ TIN\",\n        \"+ name\",\n        \"+ address\"\n      ]\n    },\n    {\n      \"name\": \"BicycleModel\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ type\",\n        \"+ gears\"\n      ]\n    },\n    {\n      \"name\": \"Bicycle\",\n      \"attributes\": [\n        \"+ id\"\n      ]\n    },\n    {\n      \"name\": \"Store\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ address\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ pickup_day\"\n      ]\n    },\n    {\n      \"name\": \"Rental\",\n      \"attributes\": [\n        \"+ return_date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Bicycle\",\n      \"target\": \"BicycleModel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Client\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"BicycleModel\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"Store\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Rental\",\n      \"target\": \"Bicycle\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3785,
+   "completion_tokens": 478,
+   "total_tokens": 4263,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

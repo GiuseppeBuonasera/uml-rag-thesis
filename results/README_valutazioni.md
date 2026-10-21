@@ -199,12 +199,12 @@ misurare cosa succederebbe con esempi molto più simili di quelli che il corpus 
 | Controllo | Voce | Esempio dato al modello | Formati | Generazioni |
 |---|---|---|---|---|
 | **Esercizio stesso** | 162 | la traccia e la soluzione dell'esercizio stesso | PlantUML e compatto | 216 |
-| **Parziale** | 163 | la traccia vera con la soluzione ridotta al 25, 50 o 75 % delle classi | solo PlantUML | 162 |
-| **Misti** | 164-165 | metà soluzione + 2 esempi bm25 ("metà + 2 bm25"); le due metà complementari come due esempi ("due metà") | solo PlantUML | 108 |
+| **Parziale** | 163, 170-171 | la traccia vera con la soluzione ridotta al 25, 50 o 75 % delle classi | PlantUML e compatto | 324 |
+| **Misti** | 164-165, 170-171 | metà soluzione + 2 esempi bm25 ("metà + 2 bm25"); le due metà complementari come due esempi ("due metà") | PlantUML e compatto | 216 |
 | **Senza attributi** | 167, 169 | A: l'esercizio stesso senza attributi; B: gli esempi bm25 k3 del 3b senza attributi | PlantUML e compatto | 216 |
 
 - Tutti sui **54 esercizi di validazione**, stessa configurazione del 3b (Gemma 4 26B A4B QAT, istruzioni v5),
-  **1 ripetizione**; 702 generazioni, tutte valide.
+  **1 ripetizione**; 972 generazioni, tutte valide.
 - **Solo analisi**: i risultati non sono usati per nessuna scelta del sistema e non entrano nei dati dei relatori.
 - **Regole fissate prima delle run**, con soglie e verdetti scritti e testati negli script di analisi
   (`experiments/analyze_oracle_*.py`). I controlli però sono stati pensati dopo aver visto il 3b.
@@ -246,22 +246,29 @@ delle 3 ripetizioni). I confronti appaiati sono con Wilcoxon. Le F1 per esercizi
 
 ### 2.5 Quanto deve essere simile un esempio (voci 163-165)
 
-Guadagno di completezza su zero_shot in funzione della somiglianza dell'esempio, misurata come Jaccard dei nomi di
-classe tra la soluzione dell'esempio e quella dell'esercizio (Jt). Solo PlantUML.
+Guadagno di completezza in funzione della somiglianza dell'esempio, misurata come Jaccard dei nomi di classe tra la
+soluzione dell'esempio e quella dell'esercizio (Jt). La regola misura il guadagno **su zero_shot**; la colonna "su
+random" (descrittiva) lo misura rispetto agli esempi casuali del 3b, che danno già il formato di uscita.
 
-| Esempio | Somiglianza (Jt) | Risposte | Guadagno |
-|---|---|---|---|
-| 3b, miglior esempio con Jt 0,00-0,10 | 0,00-0,10 | 499 | +0,008 |
-| 3b, miglior esempio con Jt 0,10-0,20 | 0,10-0,20 | 120 | +0,014 |
-| 3b, miglior esempio con Jt 0,20-0,30 | 0,20-0,30 | 161 | +0,022 |
-| 3b, miglior esempio con Jt 0,30-0,45 | 0,30-0,45 | 27 | +0,039 |
-| soluzione al 25 % delle classi | 0,34 | 54 | +0,036 |
-| soluzione al 50 % delle classi | 0,56 | 54 | **+0,095** |
-| soluzione al 75 % delle classi | 0,77 | 54 | +0,173 |
-| esercizio stesso | 1,00 | 54 | +0,337 |
+| Esempio | Jt | PlantUML: su zero_shot | PlantUML: su random | Compatto: su zero_shot | Compatto: su random |
+|---|---|---|---|---|---|
+| 3b, miglior esempio con Jt 0,00-0,10 (499 risposte) | 0,00-0,10 | +0,008 | — | +0,045 | — |
+| 3b, miglior esempio con Jt 0,10-0,20 (120) | 0,10-0,20 | +0,014 | — | +0,016 | — |
+| 3b, miglior esempio con Jt 0,20-0,30 (161) | 0,20-0,30 | +0,022 | — | +0,024 | — |
+| 3b, miglior esempio con Jt 0,30-0,45 (27) | 0,30-0,45 | +0,039 | — | +0,010 | — |
+| soluzione al 25 % delle classi | 0,34 | +0,036 | +0,013 | **+0,066** | +0,032 |
+| soluzione al 50 % delle classi | 0,56 | **+0,095** | **+0,072** | +0,109 | **+0,075** |
+| soluzione al 75 % delle classi | 0,77 | +0,173 | +0,150 | +0,159 | +0,125 |
+| esercizio stesso | 1,00 | +0,337 | +0,314 | +0,264 | +0,230 |
 
-- **Verdetto della regola: un esempio diventa utile (guadagno ≥ 0,05) al livello 50 %, cioè con somiglianza 0,56.**
-  Interpolando, la soglia è intorno a Jt 0,4.
+- **Verdetto della regola in PlantUML: un esempio diventa utile (guadagno ≥ 0,05) al livello 50 %, cioè con
+  somiglianza 0,56.** Interpolando, la soglia è intorno a Jt 0,4.
+- **Nel compatto la regola dà il livello 25 % (somiglianza 0,34)**, ma per un motivo diverso: zero_shot nel compatto
+  sbaglia spesso il formato, quindi qualunque esempio porta già circa +0,04 (anche gli esempi reali più lontani:
+  +0,045). **Rispetto a esempi casuali, che è il confronto che conta per il retrieval, la soglia cade al 50 % in
+  entrambi i formati** (+0,072 in PlantUML, +0,075 nel compatto).
+- Il compatto sfrutta meno un esempio molto vicino: con l'esercizio stesso +0,230 su random, contro +0,314 in
+  PlantUML.
 - **La curva è convessa**: il guadagno cresce poco finché l'esempio è lontano e molto quando si avvicina alla
   soluzione. Al 25 % il guadagno coincide con quello degli esempi reali del 3b di pari somiglianza: le due misure
   sono coerenti.
@@ -269,18 +276,19 @@ classe tra la soluzione dell'esempio e quella dell'esercizio (Jt). Solo PlantUML
   superano 0,3); il vicino più simile dei 54 ha in media Jt 0,17, al massimo 0,33; due esercizi dello stesso dominio
   hanno in media 0,048. Per questo nel 3b il retrieval non poteva fare la differenza.
 
-Più esempi insieme (voci 164-165):
+Più esempi insieme (voci 164-165 e 170-171), guadagno su zero_shot:
 
-| Esempi nel prompt | Guadagno |
-|---|---|
-| metà soluzione da sola | +0,095 |
-| 2 esempi bm25 + metà soluzione | +0,118 |
-| metà soluzione + metà complementare (due esempi) | +0,210 |
-| soluzione intera in un esempio | +0,337 |
+| Esempi nel prompt | PlantUML | Compatto |
+|---|---|---|
+| metà soluzione da sola | +0,095 | +0,109 |
+| 2 esempi bm25 + metà soluzione | +0,118 | +0,127 |
+| metà soluzione + metà complementare (due esempi) | +0,210 | +0,182 |
+| soluzione intera in un esempio | +0,337 | +0,264 |
 
-- **Esempi lontani accanto a uno vicino non fanno danno** (+0,024 rispetto alla metà da sola, p 0,07; verdetto
-  "nessuna diluizione"). Quindi aggiungere esempi poco simili non è un rischio.
-- **Due metà valgono meno di un esempio intero** (+0,210 contro +0,337, p < 0,001; verdetto "si sommano in parte"):
+- **Esempi lontani accanto a uno vicino non fanno danno**, in entrambi i formati (+0,024 in PlantUML, p 0,07;
+  +0,018 nel compatto, p 0,30; verdetto "nessuna diluizione"). Quindi aggiungere esempi poco simili non è un rischio.
+- **Due metà valgono meno di un esempio intero**, in entrambi i formati (PlantUML +0,210 contro +0,337, compatto +0,182
+  contro +0,264, p < 0,001; verdetto "si sommano in parte"). In PlantUML:
   con le stesse informazioni divise in due esempi il modello ottiene il 62 % del guadagno dell'esempio intero, e la
   seconda metà aggiunge circa la metà di quanto aggiungerebbe se fosse nello stesso esempio (+0,116 contro +0,242).
   Un esempio molto vicino vale più di più esempi parziali.
@@ -322,7 +330,10 @@ Più esempi insieme (voci 164-165):
    (stesso dominio e struttura simile). Esempi lontani in più non danneggiano; un esempio completo vale più di più
    esempi parziali.
 4. **Nel compatto la forma degli esempi conta molto**: esempi con poche classi dotate di attributi producono
-   scheletri. Nel compatto andrebbero scelti esempi ricchi di attributi.
+   scheletri, esempi vicini e completi li riducono (dal 25 % di random al 9-19 % con la soluzione parziale). Nel
+   compatto andrebbero scelti esempi ricchi di attributi.
+5. **Le conclusioni valgono in tutti e due i formati.** Il compatto parte più in basso (zero_shot sbaglia il formato) e
+   sfrutta un po' meno l'esempio molto vicino, ma soglia, assenza di diluizione e somma parziale sono le stesse.
 
 ### 2.8 Cautele
 
@@ -330,8 +341,8 @@ Più esempi insieme (voci 164-165):
   soluzione; un esempio reale simile al 50 % avrebbe anche una traccia diversa. La soglia misura la somiglianza della
   soluzione e potrebbe essere ottimistica.
 - **Una sola ripetizione** per controllo: le medie sono su 54 risposte per colonna, non su 162 come nel 3b.
-- **Parziale e misti solo in PlantUML.** La soglia di 0,4-0,56 vale per PlantUML; nel compatto, che reagisce di più
-  alla forma degli esempi, potrebbe essere diversa.
+- **Soglia e confronto di riferimento.** La regola registrata confronta con zero_shot; nel compatto questo confronto
+  include l'effetto formato, per cui la lettura rispetto agli esempi casuali è descrittiva (non registrata prima).
 - **Metrica nostra**, non quella dei relatori (con cui correla 0,97-0,98 sul 3b); i numeri non si sommano a quelli
   della sezione 1.
 - **Disegnati dopo il 3b**: le regole erano fissate prima di ogni run, ma la scelta dei controlli nasce dai risultati
@@ -339,7 +350,7 @@ Più esempi insieme (voci 164-165):
 
 ### Fonti della sezione 2
 
-- `2_controlli_oracle/oracle_self.md`, `oracle_partial.md`, `oracle_mix.md`, `oracle_attr.md`: i sommari prodotti dagli
-  script di analisi.
+- `2_controlli_oracle/oracle_self.md`, `oracle_partial.md`, `oracle_mix.md`, `oracle_attr.md`,
+  `oracle_partial_compatto.md`, `oracle_mix_compatto.md`: i sommari prodotti dagli script di analisi.
 - `2_controlli_oracle/controlli_f1.xlsx`: F1 per esercizio di tutti i controlli.
-- `docs/decisions.md`, voci 162-169: disegno, regole e esiti.
+- `docs/decisions.md`, voci 162-171: disegno, regole e esiti.

@@ -1,0 +1,60 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Club\"\n    },\n    {\n      \"name\": \"HeadCoach\"\n    },\n    {\n      \"name\": \"Director\"\n    },\n    {\n      \"name\": \"Scout\"\n    },\n    {\n      \"name\": \"PlayerProfile\"\n    },\n    {\n      \"name\": \"PlayerAttribute\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"LongList\"\n    },\n    {\n      \"name\": \"ScoutingAssignment\"\n    },\n    {\n      \"name\": \"ScoutingReport\"\n    },\n    {\n      \"name\": \"ShortList\"\n    },\n    {\n      \"name\": \"Offer\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Club\",\n      \"part\": \"HeadCoach\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Club\",\n      \"part\": \"Director\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Club\",\n      \"part\": \"Scout\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HeadCoach\",\n      \"target\": \"PlayerProfile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"PlayerAttribute\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"LongList\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"LongList\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"LongList\",\n      \"target\": \"PlayerProfile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"ScoutingAssignment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"ScoutingReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingReport\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"ShortList\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Offer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 49.97551299999759,
+ "prompt_tokens": 2296,
+ "completion_tokens": 928,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-2jom97bfrze0p909kz9ojar",
+  "object": "chat.completion",
+  "created": 1792602422,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"Club\"\n    },\n    {\n      \"name\": \"HeadCoach\"\n    },\n    {\n      \"name\": \"Director\"\n    },\n    {\n      \"name\": \"Scout\"\n    },\n    {\n      \"name\": \"PlayerProfile\"\n    },\n    {\n      \"name\": \"PlayerAttribute\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"LongList\"\n    },\n    {\n      \"name\": \"ScoutingAssignment\"\n    },\n    {\n      \"name\": \"ScoutingReport\"\n    },\n    {\n      \"name\": \"ShortList\"\n    },\n    {\n      \"name\": \"Offer\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Club\",\n      \"part\": \"HeadCoach\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Club\",\n      \"part\": \"Director\",\n      \"partMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Club\",\n      \"part\": \"Scout\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HeadCoach\",\n      \"target\": \"PlayerProfile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"PlayerAttribute\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"LongList\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"LongList\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"LongList\",\n      \"target\": \"PlayerProfile\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"ScoutingAssignment\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"ScoutingReport\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingReport\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Player\",\n      \"target\": \"ShortList\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Offer\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Player\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2296,
+   "completion_tokens": 928,
+   "total_tokens": 3224,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Elevator\",\n      \"attributes\": [\n        \"+ currentFloor : int\",\n        \"+ direction : string\"\n      ]\n    },\n    {\n      \"name\": \"FloorButton\",\n      \"attributes\": [\n        \"+ floorNumber : int\",\n        \"+ direction : string\",\n        \"+ isLit : boolean\"\n      ]\n    },\n    {\n      \"name\": \"ElevatorButton\",\n      \"attributes\": [\n        \"+ floorNumber : int\",\n        \"+ isLit : boolean\"\n      ]\n    },\n    {\n      \"name\": \"ControlSystem\"\n    },\n    {\n      \"name\": \"Floor\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"ControlSystem\",\n      \"target\": \"Elevator\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ControlSystem\",\n      \"target\": \"Floor\"\n    },\n    {\n      \"type\": \"composition\",\n      \"source\": \"Elevator\",\n      \"target\": \"ElevatorButton\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Floor\",\n      \"target\": \"FloorButton\",\n      \"partMultiplicity\": \"*\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 15.58582970000134,
+ "prompt_tokens": 1495,
+ "completion_tokens": 331,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-3bwe2wyrhw6uex8ace9zg",
+  "object": "chat.completion",
+  "created": 1792604445,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Elevator\",\n      \"attributes\": [\n        \"+ currentFloor : int\",\n        \"+ direction : string\"\n      ]\n    },\n    {\n      \"name\": \"FloorButton\",\n      \"attributes\": [\n        \"+ floorNumber : int\",\n        \"+ direction : string\",\n        \"+ isLit : boolean\"\n      ]\n    },\n    {\n      \"name\": \"ElevatorButton\",\n      \"attributes\": [\n        \"+ floorNumber : int\",\n        \"+ isLit : boolean\"\n      ]\n    },\n    {\n      \"name\": \"ControlSystem\"\n    },\n    {\n      \"name\": \"Floor\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"ControlSystem\",\n      \"target\": \"Elevator\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ControlSystem\",\n      \"target\": \"Floor\"\n    },\n    {\n      \"type\": \"composition\",\n      \"source\": \"Elevator\",\n      \"target\": \"ElevatorButton\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Floor\",\n      \"target\": \"FloorButton\",\n      \"partMultiplicity\": \"*\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1495,
+   "completion_tokens": 331,
+   "total_tokens": 1826,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

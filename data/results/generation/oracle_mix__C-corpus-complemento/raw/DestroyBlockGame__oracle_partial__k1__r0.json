@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}, {\"name\": \"Admin\", \"attributes\": []}, {\"name\": \"Player\", \"attributes\": []}, {\"name\": \"Game\", \"attributes\": [\"+ name : string\", \"+ published : boolean\", \"+ minBallSpeed : double\", \"+ ballSpeedIncreaseFactor : double\", \"+ maxPaddleLength : double\", \"+ minPaddleLength : double\", \"+ blocksPerLevel : int\"]}, {\"name\": \"Block\", \"attributes\": [\"+ color : string\", \"+ points : int\"]}, {\"name\": \"Level\", \"attributes\": [\"+ levelNumber : int\", \"+ isRandom : boolean\"]}, {\"name\": \"BlockAssignment\", \"attributes\": [\"+ gridHorizontalPosition : int\", \"+ gridVerticalPosition : int\"]}, {\"name\": \"HallOfFameEntry\", \"attributes\": [\"+ score : int\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Admin\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Player\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"Admin\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"Block\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Game\", \"part\": \"Level\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..99\"}, {\"type\": \"composition\", \"whole\": \"Level\", \"part\": \"BlockAssignment\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"BlockAssignment\", \"target\": \"Block\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Game\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"HallOfFameEntry\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 31.252627800000482,
+ "prompt_tokens": 4638,
+ "completion_tokens": 468,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-nmv6wgq6gyq9364o0bm6r",
+  "object": "chat.completion",
+  "created": 1792609636,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"User\", \"attributes\": [\"+ username : string\", \"+ password : string\"]}, {\"name\": \"Admin\", \"attributes\": []}, {\"name\": \"Player\", \"attributes\": []}, {\"name\": \"Game\", \"attributes\": [\"+ name : string\", \"+ published : boolean\", \"+ minBallSpeed : double\", \"+ ballSpeedIncreaseFactor : double\", \"+ maxPaddleLength : double\", \"+ minPaddleLength : double\", \"+ blocksPerLevel : int\"]}, {\"name\": \"Block\", \"attributes\": [\"+ color : string\", \"+ points : int\"]}, {\"name\": \"Level\", \"attributes\": [\"+ levelNumber : int\", \"+ isRandom : boolean\"]}, {\"name\": \"BlockAssignment\", \"attributes\": [\"+ gridHorizontalPosition : int\", \"+ gridVerticalPosition : int\"]}, {\"name\": \"HallOfFameEntry\", \"attributes\": [\"+ score : int\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Admin\", \"parent\": \"User\"}, {\"type\": \"inheritance\", \"child\": \"Player\", \"parent\": \"User\"}, {\"type\": \"association\", \"source\": \"Admin\", \"target\": \"Game\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Game\", \"target\": \"Block\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"whole\": \"Game\", \"part\": \"Level\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1..99\"}, {\"type\": \"composition\", \"whole\": \"Level\", \"part\": \"BlockAssignment\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"BlockAssignment\", \"target\": \"Block\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"Game\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Player\", \"target\": \"HallOfFameEntry\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4638,
+   "completion_tokens": 468,
+   "total_tokens": 5106,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

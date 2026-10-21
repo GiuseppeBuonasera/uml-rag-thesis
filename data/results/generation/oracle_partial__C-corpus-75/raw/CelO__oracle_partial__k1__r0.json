@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"AttendeeStatus\", \"kind\": \"enum\", \"values\": [\"Yes\", \"Maybe\", \"No\"]}, {\"name\": \"TaskStatus\", \"kind\": \"enum\", \"values\": [\"ToBeDone\", \"Done\", \"NotApplicable\"]}, {\"name\": \"Person\", \"attributes\": [\"+ FirstName : string\", \"+ LastName : string\", \"+ EmailAddress : string\", \"+ Password : string\"]}, {\"name\": \"Organizer\", \"attributes\": [\"+ PostalAddress : string\", \"+ PhoneNumber : string\"]}, {\"name\": \"Attendee\", \"attributes\": [\"+ Password : string\"]}, {\"name\": \"Event\", \"attributes\": [\"+ StartDateTime : datetime\", \"+ EndDateTime : datetime\", \"+ Occasion : string\"]}, {\"name\": \"Location\", \"attributes\": [\"+ Name : string\", \"+ Address : string\"]}, {\"name\": \"EventType\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"Task\", \"attributes\": [\"+ Description : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Organizer\", \"parent\": \"Person\"}, {\"type\": \"inheritance\", \"child\": \"Attendee\", \"parent\": \"Person\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"Event\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"EventType\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"Location\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"Attendee\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Event\", \"target\": \"Location\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Event\", \"target\": \"EventType\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Event\", \"target\": \"Task\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Task\", \"target\": \"Attendee\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"*\", \"label\": \"assigned to\"}, {\"type\": \"association\", \"source\": \"Attendee\", \"target\": \"Task\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"brings\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"Task\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"manages\"}] }",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 33.16485880000255,
+ "prompt_tokens": 2672,
+ "completion_tokens": 607,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-yfjk5rqoy146q5helwh6s",
+  "object": "chat.completion",
+  "created": 1792605376,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"AttendeeStatus\", \"kind\": \"enum\", \"values\": [\"Yes\", \"Maybe\", \"No\"]}, {\"name\": \"TaskStatus\", \"kind\": \"enum\", \"values\": [\"ToBeDone\", \"Done\", \"NotApplicable\"]}, {\"name\": \"Person\", \"attributes\": [\"+ FirstName : string\", \"+ LastName : string\", \"+ EmailAddress : string\", \"+ Password : string\"]}, {\"name\": \"Organizer\", \"attributes\": [\"+ PostalAddress : string\", \"+ PhoneNumber : string\"]}, {\"name\": \"Attendee\", \"attributes\": [\"+ Password : string\"]}, {\"name\": \"Event\", \"attributes\": [\"+ StartDateTime : datetime\", \"+ EndDateTime : datetime\", \"+ Occasion : string\"]}, {\"name\": \"Location\", \"attributes\": [\"+ Name : string\", \"+ Address : string\"]}, {\"name\": \"EventType\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"Task\", \"attributes\": [\"+ Description : string\"]}], \"relations\": [{\"type\": \"inheritance\", \"child\": \"Organizer\", \"parent\": \"Person\"}, {\"type\": \"inheritance\", \"child\": \"Attendee\", \"parent\": \"Person\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"Event\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"EventType\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"Location\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"Attendee\", \"sourceMultiplicity\": \"1..*\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Event\", \"target\": \"Location\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"0..1\"}, {\"type\": \"association\", \"source\": \"Event\", \"target\": \"EventType\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"1\"}, {\"type\": \"association\", \"source\": \"Event\", \"target\": \"Task\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Task\", \"target\": \"Attendee\", \"sourceMultiplicity\": \"0..1\", \"targetMultiplicity\": \"*\", \"label\": \"assigned to\"}, {\"type\": \"association\", \"source\": \"Attendee\", \"target\": \"Task\", \"sourceMultiplicity\": \"*\", \"targetMultiplicity\": \"*\", \"label\": \"brings\"}, {\"type\": \"association\", \"source\": \"Organizer\", \"target\": \"Task\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\", \"label\": \"manages\"}] }",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2672,
+   "completion_tokens": 607,
+   "total_tokens": 3279,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

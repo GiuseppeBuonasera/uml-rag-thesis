@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ identifyingNumber : int\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"AssemblyService\",\n      \"attributes\": [\n        \"+ kms : int\",\n        \"+ workHours : int\",\n        \"+ admissionDate : date\",\n        \"+ finishDate : date\"\n      ]\n    },\n    {\n      \"name\": \"PartOrAccessory\",\n      \"attributes\": [\n        \"+ category : string\",\n        \"+ serialNumber : string\",\n        \"+ price : float\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"attributes\": [\n        \"+ licensePlate : string\",\n        \"+ make : string\",\n        \"+ model : string\",\n        \"+ color : string\"\n      ]\n    },\n    {\n      \"name\": \"Owner\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ identifyingNumber : int\",\n        \"+ address : string\",\n        \"+ phone : string\"\n      ]\n    },\n    {\n      \"name\": \"CarModel\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"AssemblyService\",\n      \"target\": \"Car\",\n      \"label\": \"executedIn\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AssemblyService\",\n      \"target\": \"Employee\",\n      \"label\": \"responsibleEmployee\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AssemblyService\",\n      \"target\": \"PartOrAccessory\",\n      \"label\": \"fittedWith\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PartOrAccessory\",\n      \"target\": \"CarModel\",\n      \"label\": \"fits\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"Owner\",\n      \"label\": \"ownedBy\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 37.80243779999728,
+ "prompt_tokens": 4475,
+ "completion_tokens": 590,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-xs5didlcbnxf37h3zu57d",
+  "object": "chat.completion",
+  "created": 1792608934,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Employee\",\n      \"attributes\": [\n        \"+ identifyingNumber : int\",\n        \"+ name : string\",\n        \"+ address : string\"\n      ]\n    },\n    {\n      \"name\": \"AssemblyService\",\n      \"attributes\": [\n        \"+ kms : int\",\n        \"+ workHours : int\",\n        \"+ admissionDate : date\",\n        \"+ finishDate : date\"\n      ]\n    },\n    {\n      \"name\": \"PartOrAccessory\",\n      \"attributes\": [\n        \"+ category : string\",\n        \"+ serialNumber : string\",\n        \"+ price : float\"\n      ]\n    },\n    {\n      \"name\": \"Car\",\n      \"attributes\": [\n        \"+ licensePlate : string\",\n        \"+ make : string\",\n        \"+ model : string\",\n        \"+ color : string\"\n      ]\n    },\n    {\n      \"name\": \"Owner\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ identifyingNumber : int\",\n        \"+ address : string\",\n        \"+ phone : string\"\n      ]\n    },\n    {\n      \"name\": \"CarModel\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"AssemblyService\",\n      \"target\": \"Car\",\n      \"label\": \"executedIn\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AssemblyService\",\n      \"target\": \"Employee\",\n      \"label\": \"responsibleEmployee\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"AssemblyService\",\n      \"target\": \"PartOrAccessory\",\n      \"label\": \"fittedWith\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"PartOrAccessory\",\n      \"target\": \"CarModel\",\n      \"label\": \"fits\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Car\",\n      \"target\": \"Owner\",\n      \"label\": \"ownedBy\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4475,
+   "completion_tokens": 590,
+   "total_tokens": 5065,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

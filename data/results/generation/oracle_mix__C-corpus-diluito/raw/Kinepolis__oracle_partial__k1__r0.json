@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Cinema\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Town : string\"\n      ]\n    },\n    {\n      \"name\": \"Theatre\",\n      \"attributes\": [\n        \"+ NumberOfSeats : int\"\n      ]\n    },\n    {\n      \"name\": \"Movie\",\n      \"attributes\": [\n        \"+ Title : string\"\n      ]\n    },\n    {\n      \"name\": \"MovieCopy\",\n      \"attributes\": [\n        \"+ CopyId : int\"\n      ]\n    },\n    {\n      \"name\": \"Show\",\n      \"attributes\": [\n        \"+ StartTime : datetime\"\n      ],\n      \"methods\": [\n        \"+ cancelShow()\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ ReservationId : int\"\n      ],\n      \"methods\": [\n        \"+ cancel()\"\n      ]\n    },\n    {\n      \"name\": \"AlternativeOffer\",\n      \"attributes\": [\n        \"+ ExpiryTime : datetime\"\n      ],\n      \"methods\": [\n        \"+ accept()\",\n        \"+ decline()\",\n        \"+ expire()\"\n      ]\n    },\n    {\n      \"name\": \"Ticket\",\n      \"attributes\": [\n        \"+ SeatNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"CreditCard\",\n      \"attributes\": [\n        \"+ CardNumber : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Cinema\",\n      \"part\": \"Theatre\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cinema\",\n      \"target\": \"MovieCopy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Movie\",\n      \"target\": \"MovieCopy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Theatre\",\n      \"target\": \"Show\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieCopy\",\n      \"target\": \"Show\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Show\",\n      \"target\": \"Reservation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Reservation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"CreditCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Show\",\n      \"target\": \"AlternativeOffer\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Show\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetRole\": \"owner\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 59.10409649999929,
+ "prompt_tokens": 4750,
+ "completion_tokens": 962,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6mg4dse0vqqdk4jq4f4ivi",
+  "object": "chat.completion",
+  "created": 1792607610,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Cinema\",\n      \"attributes\": [\n        \"+ Name : string\",\n        \"+ Town : string\"\n      ]\n    },\n    {\n      \"name\": \"Theatre\",\n      \"attributes\": [\n        \"+ NumberOfSeats : int\"\n      ]\n    },\n    {\n      \"name\": \"Movie\",\n      \"attributes\": [\n        \"+ Title : string\"\n      ]\n    },\n    {\n      \"name\": \"MovieCopy\",\n      \"attributes\": [\n        \"+ CopyId : int\"\n      ]\n    },\n    {\n      \"name\": \"Show\",\n      \"attributes\": [\n        \"+ StartTime : datetime\"\n      ],\n      \"methods\": [\n        \"+ cancelShow()\"\n      ]\n    },\n    {\n      \"name\": \"Reservation\",\n      \"attributes\": [\n        \"+ ReservationId : int\"\n      ],\n      \"methods\": [\n        \"+ cancel()\"\n      ]\n    },\n    {\n      \"name\": \"AlternativeOffer\",\n      \"attributes\": [\n        \"+ ExpiryTime : datetime\"\n      ],\n      \"methods\": [\n        \"+ accept()\",\n        \"+ decline()\",\n        \"+ expire()\"\n      ]\n    },\n    {\n      \"name\": \"Ticket\",\n      \"attributes\": [\n        \"+ SeatNumber : string\"\n      ]\n    },\n    {\n      \"name\": \"Customer\",\n      \"attributes\": [\n        \"+ Name : string\"\n      ]\n    },\n    {\n      \"name\": \"CreditCard\",\n      \"attributes\": [\n        \"+ CardNumber : string\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"composition\",\n      \"whole\": \"Cinema\",\n      \"part\": \"Theatre\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Cinema\",\n      \"target\": \"MovieCopy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Movie\",\n      \"target\": \"MovieCopy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Theatre\",\n      \"target\": \"Show\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieCopy\",\n      \"target\": \"Show\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Show\",\n      \"target\": \"Reservation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Reservation\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Reservation\",\n      \"target\": \"CreditCard\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Show\",\n      \"target\": \"AlternativeOffer\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Show\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"0..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Customer\",\n      \"target\": \"Ticket\",\n      \"sourceMultiplicity\": \"0..*\",\n      \"targetRole\": \"owner\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4750,
+   "completion_tokens": 962,
+   "total_tokens": 5712,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

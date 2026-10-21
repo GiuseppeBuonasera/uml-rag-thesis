@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"Library\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ security_deposit : double\",\n        \"+ phone : string\",\n        \"+ email : string\",\n        \"+ mail : string\"\n      ]\n    },\n    {\n      \"name\": \"BorrowableItem\",\n      \"attributes\": [\n        \"+ libraryCode : int\",\n        \"+ location : string\",\n        \"+ maxLoanDuration : int\"\n      ]\n    },\n    {\n      \"name\": \"Book\",\n      \"attributes\": [\n        \"+ publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"MagazineIssue\",\n      \"attributes\": [\n        \"+ publication_date : date\",\n        \"+ publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"MusicCD\",\n      \"attributes\": [\n        \"+ publisher : string\",\n        \"+ artist : string\"\n      ]\n    },\n    {\n      \"name\": \"Film\",\n      \"attributes\": [\n        \"+ duration : time\",\n        \"+ actors : string[]\",\n        \"+ publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"VHSFilm\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"DVDFilm\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Author\"\n    },\n    {\n      \"name\": \"ItemTransferRequest\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Library\",\n      \"part\": \"BorrowableItem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BorrowableItem\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"lent to\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"BorrowableItem\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..3\",\n      \"label\": \"borrows\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Book\",\n      \"target\": \"Author\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Book\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MagazineIssue\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MusicCD\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Film\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"VHSFilm\",\n      \"parent\": \"Film\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DVDFilm\",\n      \"parent\": \"Film\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"ItemTransferRequest\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ItemTransferRequest\",\n      \"target\": \"Library\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"sent to\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 56.655748199998925,
+ "prompt_tokens": 4198,
+ "completion_tokens": 949,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-eve16m2cykx0j1nqlg1o",
+  "object": "chat.completion",
+  "created": 1792608445,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"Library\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ security_deposit : double\",\n        \"+ phone : string\",\n        \"+ email : string\",\n        \"+ mail : string\"\n      ]\n    },\n    {\n      \"name\": \"BorrowableItem\",\n      \"attributes\": [\n        \"+ libraryCode : int\",\n        \"+ location : string\",\n        \"+ maxLoanDuration : int\"\n      ]\n    },\n    {\n      \"name\": \"Book\",\n      \"attributes\": [\n        \"+ publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"MagazineIssue\",\n      \"attributes\": [\n        \"+ publication_date : date\",\n        \"+ publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"MusicCD\",\n      \"attributes\": [\n        \"+ publisher : string\",\n        \"+ artist : string\"\n      ]\n    },\n    {\n      \"name\": \"Film\",\n      \"attributes\": [\n        \"+ duration : time\",\n        \"+ actors : string[]\",\n        \"+ publisher : string\"\n      ]\n    },\n    {\n      \"name\": \"VHSFilm\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"DVDFilm\",\n      \"attributes\": []\n    },\n    {\n      \"name\": \"Author\"\n    },\n    {\n      \"name\": \"ItemTransferRequest\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"Library\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"Library\",\n      \"part\": \"BorrowableItem\",\n      \"wholeMultiplicity\": \"1\",\n      \"partMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"BorrowableItem\",\n      \"target\": \"User\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..1\",\n      \"label\": \"lent to\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"BorrowableItem\",\n      \"sourceMultiplicity\": \"0..1\",\n      \"targetMultiplicity\": \"0..3\",\n      \"label\": \"borrows\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Book\",\n      \"target\": \"Author\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Book\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MagazineIssue\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"MusicCD\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Film\",\n      \"parent\": \"BorrowableItem\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"VHSFilm\",\n      \"parent\": \"Film\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"DVDFilm\",\n      \"parent\": \"Film\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"ItemTransferRequest\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ItemTransferRequest\",\n      \"target\": \"Library\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"sent to\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 4198,
+   "completion_tokens": 949,
+   "total_tokens": 5147,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

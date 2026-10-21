@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"User\", \"methods\": [\"+ open()\", \"+ save()\", \"+ print()\"]}, {\"name\": \"Document\", \"methods\": [\"+ open()\", \"+ save()\", \"+ print()\"]}, {\"name\": \"Page\", \"attributes\": [\"+ date\", \"+ time\", \"+ pageNumber\"]}, {\"name\": \"Header\", \"attributes\": [\"+ date\", \"+ time\", \"+ pageNumber\"]}, {\"name\": \"Footer\", \"attributes\": [\"+ date\", \"+ time\", \"+ pageNumber\"]}, {\"name\": \"Body\", \"attributes\": [\"+ text\"]}, {\"name\": \"Sentence\", \"attributes\": [\"+ text\"]}, {\"name\": \"Word\", \"attributes\": [\"+ characters\"]}, {\"name\": \"Picture\"}, {\"name\": \"Table\", \"attributes\": [\"+ rows\", \"+ columns\"]}, {\"name\": \"Cell\", \"attributes\": [\"+ text\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"User\", \"target\": \"Document\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Document\", \"target\": \"Page\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Page\", \"target\": \"Header\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Page\", \"target\": \"Body\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Page\", \"target\": \"Footer\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Body\", \"target\": \"Sentence\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Sentence\", \"target\": \"Word\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Body\", \"target\": \"Picture\"}, {\"type\": \"association\", \"source\": \"Body\", \"target\": \"Table\"}, {\"type\": \"composition\", \"source\": \"Table\", \"target\": \"Cell\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Cell\", \"target\": \"Text\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 25.125764000000345,
+ "prompt_tokens": 1636,
+ "completion_tokens": 500,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-5l7nwk508f4i53o21jgguq",
+  "object": "chat.completion",
+  "created": 1792602998,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"User\", \"methods\": [\"+ open()\", \"+ save()\", \"+ print()\"]}, {\"name\": \"Document\", \"methods\": [\"+ open()\", \"+ save()\", \"+ print()\"]}, {\"name\": \"Page\", \"attributes\": [\"+ date\", \"+ time\", \"+ pageNumber\"]}, {\"name\": \"Header\", \"attributes\": [\"+ date\", \"+ time\", \"+ pageNumber\"]}, {\"name\": \"Footer\", \"attributes\": [\"+ date\", \"+ time\", \"+ pageNumber\"]}, {\"name\": \"Body\", \"attributes\": [\"+ text\"]}, {\"name\": \"Sentence\", \"attributes\": [\"+ text\"]}, {\"name\": \"Word\", \"attributes\": [\"+ characters\"]}, {\"name\": \"Picture\"}, {\"name\": \"Table\", \"attributes\": [\"+ rows\", \"+ columns\"]}, {\"name\": \"Cell\", \"attributes\": [\"+ text\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"User\", \"target\": \"Document\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Document\", \"target\": \"Page\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Page\", \"target\": \"Header\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Page\", \"target\": \"Body\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Page\", \"target\": \"Footer\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}, {\"type\": \"composition\", \"source\": \"Body\", \"target\": \"Sentence\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Sentence\", \"target\": \"Word\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Body\", \"target\": \"Picture\"}, {\"type\": \"association\", \"source\": \"Body\", \"target\": \"Table\"}, {\"type\": \"composition\", \"source\": \"Table\", \"target\": \"Cell\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"*\"}, {\"type\": \"association\", \"source\": \"Cell\", \"target\": \"Text\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 1636,
+   "completion_tokens": 500,
+   "total_tokens": 2136,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

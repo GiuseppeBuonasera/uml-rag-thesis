@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"CarPark\"\n    },\n    {\n      \"name\": \"Barrier\",\n      \"methods\": [\n        \"+ raise()\"\n      ]\n    },\n    {\n      \"name\": \"CardReader\",\n      \"methods\": [\n        \"+ verifyCardNumber()\"\n      ]\n    },\n    {\n      \"name\": \"Signal\",\n      \"methods\": [\n        \"+ triggerBarrier()\"\n      ]\n    },\n    {\n      \"name\": \"Sign\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Card\"\n    },\n    {\n      \"name\": \"EmployeeCard\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ department : string\",\n        \"+ employeeNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"GuestCard\",\n      \"attributes\": [\n        \"+ number : int\",\n        \"+ currentDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"EmployeeCard\",\n      \"target\": \"Card\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EmployeeCard\",\n      \"parent\": \"Card\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"GuestCard\",\n      \"parent\": \"Card\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"CarPark\",\n      \"part\": \"Barrier\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"CarPark\",\n      \"part\": \"CardReader\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"CarPark\",\n      \"part\": \"Sign\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CardReader\",\n      \"target\": \"Signal\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Signal\",\n      \"target\": \"Barrier\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 26.672854699994787,
+ "prompt_tokens": 2395,
+ "completion_tokens": 501,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-nodh6tyoc3qkaqypnyxoc",
+  "object": "chat.completion",
+  "created": 1792611205,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"CarPark\"\n    },\n    {\n      \"name\": \"Barrier\",\n      \"methods\": [\n        \"+ raise()\"\n      ]\n    },\n    {\n      \"name\": \"CardReader\",\n      \"methods\": [\n        \"+ verifyCardNumber()\"\n      ]\n    },\n    {\n      \"name\": \"Signal\",\n      \"methods\": [\n        \"+ triggerBarrier()\"\n      ]\n    },\n    {\n      \"name\": \"Sign\",\n      \"attributes\": [\n        \"+ status : string\"\n      ]\n    },\n    {\n      \"name\": \"Card\"\n    },\n    {\n      \"name\": \"EmployeeCard\",\n      \"attributes\": [\n        \"+ name : string\",\n        \"+ department : string\",\n        \"+ employeeNumber : int\"\n      ]\n    },\n    {\n      \"name\": \"GuestCard\",\n      \"attributes\": [\n        \"+ number : int\",\n        \"+ currentDate : date\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"association\",\n      \"source\": \"EmployeeCard\",\n      \"target\": \"Card\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"EmployeeCard\",\n      \"parent\": \"Card\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"GuestCard\",\n      \"parent\": \"Card\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"CarPark\",\n      \"part\": \"Barrier\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"CarPark\",\n      \"part\": \"CardReader\"\n    },\n    {\n      \"type\": \"aggregation\",\n      \"whole\": \"CarPark\",\n      \"part\": \"Sign\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"CardReader\",\n      \"target\": \"Signal\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Signal\",\n      \"target\": \"Barrier\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2395,
+   "completion_tokens": 501,
+   "total_tokens": 2896,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

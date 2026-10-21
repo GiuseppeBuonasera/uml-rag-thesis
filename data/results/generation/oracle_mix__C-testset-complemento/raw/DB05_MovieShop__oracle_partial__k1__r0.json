@@ -1,0 +1,60 @@
+{
+ "text": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ surname\"\n      ]\n    },\n    {\n      \"name\": \"Subscriber\",\n      \"attributes\": [\n        \"+ phone\",\n        \"+ address\"\n      ]\n    },\n    {\n      \"name\": \"Card\",\n      \"attributes\": [\n        \"+ credit\",\n        \"+ code\"\n      ]\n    },\n    {\n      \"name\": \"Movie\",\n      \"attributes\": [\n        \"+ title\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ date\"\n      ]\n    },\n    {\n      \"name\": \"MovieRent\",\n      \"attributes\": [\n        \"+ rentalDate\"\n      ]\n    },\n    {\n      \"name\": \"MovieBuy\",\n      \"attributes\": [\n        \"+ purchaseDate\"\n      ]\n    },\n    {\n      \"name\": \"MovieShop\",\n      \"methods\": [\n        \"+ browseCatalogue()\",\n        \"+ orderMovie()\",\n        \"+ hireMovie()\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Subscriber\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Subscriber\",\n      \"target\": \"Card\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"MovieBuy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieRent\",\n      \"target\": \"Subscriber\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"hired by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieRent\",\n      \"target\": \"Card\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"paid by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieRent\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieBuy\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"MovieShop\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"uses\"\n    }\n  ]\n}\n```",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 40.308390999998664,
+ "prompt_tokens": 2058,
+ "completion_tokens": 804,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-mwf5l7jhrb8q7qb6muhmqg",
+  "object": "chat.completion",
+  "created": 1792610880,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "```json\n{\n  \"classes\": [\n    {\n      \"name\": \"User\",\n      \"attributes\": [\n        \"+ name\",\n        \"+ surname\"\n      ]\n    },\n    {\n      \"name\": \"Subscriber\",\n      \"attributes\": [\n        \"+ phone\",\n        \"+ address\"\n      ]\n    },\n    {\n      \"name\": \"Card\",\n      \"attributes\": [\n        \"+ credit\",\n        \"+ code\"\n      ]\n    },\n    {\n      \"name\": \"Movie\",\n      \"attributes\": [\n        \"+ title\"\n      ]\n    },\n    {\n      \"name\": \"Order\",\n      \"attributes\": [\n        \"+ date\"\n      ]\n    },\n    {\n      \"name\": \"MovieRent\",\n      \"attributes\": [\n        \"+ rentalDate\"\n      ]\n    },\n    {\n      \"name\": \"MovieBuy\",\n      \"attributes\": [\n        \"+ purchaseDate\"\n      ]\n    },\n    {\n      \"name\": \"MovieShop\",\n      \"methods\": [\n        \"+ browseCatalogue()\",\n        \"+ orderMovie()\",\n        \"+ hireMovie()\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Subscriber\",\n      \"parent\": \"User\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Subscriber\",\n      \"target\": \"Card\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"has\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"Order\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"MovieBuy\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Order\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieRent\",\n      \"target\": \"Subscriber\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"hired by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieRent\",\n      \"target\": \"Card\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"paid by\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieRent\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"MovieBuy\",\n      \"target\": \"Movie\",\n      \"sourceMultiplicity\": \"1\",\n      \"targetMultiplicity\": \"1\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"User\",\n      \"target\": \"MovieShop\",\n      \"sourceMultiplicity\": \"*\",\n      \"targetMultiplicity\": \"1\",\n      \"label\": \"uses\"\n    }\n  ]\n}\n```",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 2058,
+   "completion_tokens": 804,
+   "total_tokens": 2862,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

@@ -51,11 +51,11 @@ CONTROLS = [
     ("PC", "3b bm25 k3 (riferimento)", "passo3b__{F}-{s}-G26", {"cond": {"bm25"}, "k": {"3"}}),
     ("PC", "esercizio stesso (blocco standard)", "oracle_self__{F}-{s}-standard", {}),
     ("PC", "esercizio stesso (blocco libero)", "oracle_self__{F}-{s}-libero", {}),
-    ("P", "parziale 25 %", "oracle_partial__{F}-{s}-25", {}),
-    ("P", "parziale 50 %", "oracle_partial__{F}-{s}-50", {}),
-    ("P", "parziale 75 %", "oracle_partial__{F}-{s}-75", {}),
-    ("P", "meta' + 2 bm25", "oracle_mix__{F}-{s}-diluito", {}),
-    ("P", "due meta'", "oracle_mix__{F}-{s}-complemento", {}),
+    ("PC", "parziale 25 %", "oracle_partial__{F}-{s}-25", {}),
+    ("PC", "parziale 50 %", "oracle_partial__{F}-{s}-50", {}),
+    ("PC", "parziale 75 %", "oracle_partial__{F}-{s}-75", {}),
+    ("PC", "meta' + 2 bm25", "oracle_mix__{F}-{s}-diluito", {}),
+    ("PC", "due meta'", "oracle_mix__{F}-{s}-complemento", {}),
     ("PC", "esercizio stesso senza attributi", "oracle_attr_self__{F}-{s}", {}),
     ("PC", "bm25 k3 senza attributi", "oracle_attr_bm25__{F}-{s}", {}),
 ]
@@ -65,7 +65,8 @@ COPIES = [
     (GEN / "export_3b" / "passo3b_risultati.zip", "1_passo3b/passo3b_risultati.zip"),
     (ANALISI / "difficolta.csv", "1_passo3b/difficolta.csv"),
     *[(GEN / f"{n}_analysis" / "summary.md", f"2_controlli_oracle/{n}.md")
-      for n in ("oracle_self", "oracle_partial", "oracle_mix", "oracle_attr")],
+      for n in ("oracle_self", "oracle_partial", "oracle_mix", "oracle_attr", "oracle_partial_compatto",
+                "oracle_mix_compatto")],
 ]
 # ordinamento decrescente (piu' difficile in alto) sulla colonna; la grandezza per prima perche' e' la difficolta'
 # dominante (Spearman con la completezza circa −0,45 contro circa −0,2 di Flesch-Kincaid sui 54, README_valutazioni 1.4)
@@ -281,7 +282,7 @@ def build_controls(out: Path, rows: dict, gt: dict) -> dict:
         "  Colonne '3b ... (riferimento)': media delle 3 ripetizioni del passo 3b, per confronto.",
         "  esercizio stesso = il diagramma di riferimento dell'esercizio come unico esempio (voce 162; blocco standard = testo degli esempi del 3b, libero = 'mostra il formato e lo stile').",
         "  parziale X % = solo X % delle classi dell'esercizio stesso, con le relazioni tra quelle classi (voce 163).",
-        "  meta' + 2 bm25 = meta' dell'esercizio stesso + i 2 esempi bm25 k2; due meta' = le due meta' complementari come due esempi (voci 164-165). Solo PlantUML.",
+        "  meta' + 2 bm25 = meta' dell'esercizio stesso + i 2 esempi bm25 k2; due meta' = le due meta' complementari come due esempi (voci 164-165); nel compatto dalla voce 170.",
         "  senza attributi = esempi con classi e relazioni ma attributi tolti (valori degli enum e metodi restano): esercizio stesso, oppure gli esempi bm25 k3 del 3b (voci 167 e 169).",
         "  Risposte non valide escluse: " + ("; ".join(f"{FMTS[F][1]} / {lab}: {k}" for (F, lab), k in invalid.items() if k) or "nessuna") + ".",
         ("  Run non ancora presenti (colonne vuote): " + ", ".join(missing) + "." if missing else "  Tutte le run dei controlli presenti."),
@@ -351,7 +352,7 @@ def build_ranking(out: Path, rows: dict, gt: dict) -> dict:
         "  F1 = media degli F1 di classi, attributi, relazioni e generalizzazioni (evaluation/element_metrics.py, abbinamento rilassato), prima sulle ripetizioni valide di ogni esercizio (3 nel 3b, 1 nei controlli), poi sugli esercizi: ogni esercizio pesa uguale. Metrica NOSTRA: lo strumento dei relatori ha valutato solo il 3b.",
         f"  Metà più difficile / più facile: i 54 esercizi ordinati per difficoltà decrescente e divisi a metà (27 + 27). Flesch-Kincaid: metà difficile da {result['Flesch-Kincaid'][0]:.2f} in su, metà facile fino a {result['Flesch-Kincaid'][1]:.2f}. Grandezza (classi + relazioni del GT): metà difficile da {result['grandezza'][0]} elementi in su, metà facile fino a {result['grandezza'][1]}. A parità di valore decide l'altra difficoltà, poi il nome dell'esercizio. Primo foglio: la grandezza, difficoltà dominante.",
         "  Colore: azzurro = prompt del 3b (configurazioni reali); verde = controlli oracle, in cui l'esempio contiene la soluzione dell'esercizio, intera o in parte (non utilizzabili in un sistema reale: misurano un tetto).",
-        "  static k2 ha 53 esercizi: AirTravel è uno dei due esempi fissi, quindi non ha questa condizione. Parziale e misti esistono solo in PlantUML.",
+        "  static k2 ha 53 esercizi: AirTravel è uno dei due esempi fissi, quindi non ha questa condizione. Parziale e misti: PlantUML (voci 163-165) e compatto (voce 170).",
         "  Risposte non valide escluse: " + ("; ".join(f"{FMTS[F][1]} / {lab}: {k}" for (F, lab), k in invalid.items() if k) or "nessuna") + ".",
         ("  Run non ancora presenti: " + ", ".join(missing) + "." if missing else "  Tutte le run presenti."),
         "  Generato da experiments/build_results.py.",
@@ -386,6 +387,7 @@ In tutti gli Excel il primo foglio ordina per GRANDEZZA, la difficolta' dominant
 - `oracle_partial.md` (voce 163): solo una parte delle classi dell'esercizio stesso: quanto deve essere simile un esempio.
 - `oracle_mix.md` (voci 164-165): esempio vicino + esempi lontani; due meta' complementari.
 - `oracle_attr.md` (voci 167 e 169): esempi senza attributi.
+- `oracle_partial_compatto.md`, `oracle_mix_compatto.md` (voci 170-171): parziale e misti nel compatto.
 
 ## 3_sviluppo — analisi di sviluppo (piloti e dev set, fino alla voce 151)
 Sommari delle prove usate per scegliere formato, istruzioni, k, retriever e modello.

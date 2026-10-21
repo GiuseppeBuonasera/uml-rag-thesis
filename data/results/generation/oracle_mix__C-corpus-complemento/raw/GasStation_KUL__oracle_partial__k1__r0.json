@@ -1,0 +1,60 @@
+{
+ "text": "{\"classes\": [{\"name\": \"GasStation\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"Pump\", \"attributes\": [\"+ Type : string\", \"+ ReorderingLevel : double\", \"+ CurrentLevel : double\", \"+ CriticalLevel : double\", \"+ IsBlocked : boolean\"]}, {\"name\": \"Reservoir\", \"attributes\": [\"+ Quantity : double\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"Pump\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Pump\", \"target\": \"Reservoir\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}]}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 11.861872099994798,
+ "prompt_tokens": 3254,
+ "completion_tokens": 153,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-jnp953fctgqbyaejqsqms",
+  "object": "chat.completion",
+  "created": 1792609688,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\"classes\": [{\"name\": \"GasStation\", \"attributes\": [\"+ Name : string\"]}, {\"name\": \"Pump\", \"attributes\": [\"+ Type : string\", \"+ ReorderingLevel : double\", \"+ CurrentLevel : double\", \"+ CriticalLevel : double\", \"+ IsBlocked : boolean\"]}, {\"name\": \"Reservoir\", \"attributes\": [\"+ Quantity : double\"]}], \"relations\": [{\"type\": \"association\", \"source\": \"GasStation\", \"target\": \"Pump\", \"sourceMultiplicity\": \"1\", \"targetMultiplicity\": \"*\"}, {\"type\": \"composition\", \"source\": \"Pump\", \"target\": \"Reservoir\", \"wholeMultiplicity\": \"1\", \"partMultiplicity\": \"1\"}]}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3254,
+   "completion_tokens": 153,
+   "total_tokens": 3407,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

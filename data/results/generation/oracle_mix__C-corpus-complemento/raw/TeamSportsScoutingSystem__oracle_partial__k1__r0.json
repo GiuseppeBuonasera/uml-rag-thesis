@@ -1,0 +1,60 @@
+{
+ "text": "{\n  \"classes\": [\n    {\n      \"name\": \"ClubEmployee\"\n    },\n    {\n      \"name\": \"HeadCoach\"\n    },\n    {\n      \"name\": \"Director\"\n    },\n    {\n      \"name\": \"Scout\"\n    },\n    {\n      \"name\": \"HeadScout\"\n    },\n    {\n      \"name\": \"PlayerProfile\"\n    },\n    {\n      \"name\": \"TargetPosition\"\n    },\n    {\n      \"name\": \"PlayerAttribute\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"ScoutingAssignment\"\n    },\n    {\n      \"name\": \"ScoutingReport\"\n    },\n    {\n      \"name\": \"Recommendation\"\n    },\n    {\n      \"name\": \"Offer\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadCoach\",\n      \"parent\": \"ClubEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"ClubEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Scout\",\n      \"parent\": \"ClubEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadScout\",\n      \"parent\": \"Scout\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"TargetPosition\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"PlayerAttribute\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HeadCoach\",\n      \"target\": \"PlayerProfile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"Player\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"PlayerProfile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"Player\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"Scout\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingReport\",\n      \"target\": \"ScoutingAssignment\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingReport\",\n      \"target\": \"Player\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Offer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Player\"\n    }\n  ]\n}",
+ "finish_reason": "stop",
+ "model": "google/gemma-4-26b-a4b-qat",
+ "params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "max_tokens": 4096,
+  "seed": 42,
+  "top_k": 64,
+  "structured_output": false,
+  "reasoning_effort": "none"
+ },
+ "repetition": 0,
+ "latency_s": 39.975506900002074,
+ "prompt_tokens": 3028,
+ "completion_tokens": 716,
+ "cached": false,
+ "raw": {
+  "id": "chatcmpl-6iyyi6o4ffi2uunoew4fpo",
+  "object": "chat.completion",
+  "created": 1792610201,
+  "model": "google/gemma-4-26b-a4b-qat",
+  "choices": [
+   {
+    "index": 0,
+    "message": {
+     "role": "assistant",
+     "content": "{\n  \"classes\": [\n    {\n      \"name\": \"ClubEmployee\"\n    },\n    {\n      \"name\": \"HeadCoach\"\n    },\n    {\n      \"name\": \"Director\"\n    },\n    {\n      \"name\": \"Scout\"\n    },\n    {\n      \"name\": \"HeadScout\"\n    },\n    {\n      \"name\": \"PlayerProfile\"\n    },\n    {\n      \"name\": \"TargetPosition\"\n    },\n    {\n      \"name\": \"PlayerAttribute\"\n    },\n    {\n      \"name\": \"Player\"\n    },\n    {\n      \"name\": \"ScoutingAssignment\"\n    },\n    {\n      \"name\": \"ScoutingReport\"\n    },\n    {\n      \"name\": \"Recommendation\"\n    },\n    {\n      \"name\": \"Offer\"\n    }\n  ],\n  \"relations\": [\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadCoach\",\n      \"parent\": \"ClubEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Director\",\n      \"parent\": \"ClubEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"Scout\",\n      \"parent\": \"ClubEmployee\"\n    },\n    {\n      \"type\": \"inheritance\",\n      \"child\": \"HeadScout\",\n      \"parent\": \"Scout\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"TargetPosition\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"composition\",\n      \"whole\": \"PlayerProfile\",\n      \"part\": \"PlayerAttribute\",\n      \"partMultiplicity\": \"1..*\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"HeadCoach\",\n      \"target\": \"PlayerProfile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"Player\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Scout\",\n      \"target\": \"PlayerProfile\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"Player\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingAssignment\",\n      \"target\": \"Scout\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingReport\",\n      \"target\": \"ScoutingAssignment\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"ScoutingReport\",\n      \"target\": \"Player\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Director\",\n      \"target\": \"Offer\"\n    },\n    {\n      \"type\": \"association\",\n      \"source\": \"Offer\",\n      \"target\": \"Player\"\n    }\n  ]\n}",
+     "reasoning_content": "",
+     "tool_calls": []
+    },
+    "logprobs": null,
+    "finish_reason": "stop"
+   }
+  ],
+  "usage": {
+   "prompt_tokens": 3028,
+   "completion_tokens": 716,
+   "total_tokens": 3744,
+   "completion_tokens_details": {
+    "reasoning_tokens": 0
+   }
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-4-26b-a4b-qat"
+ },
+ "reasoning_text": "",
+ "reasoning_field": null,
+ "reasoning_tokens": 0,
+ "reasoning_tokens_source": "server",
+ "request_params": {
+  "temperature": 0.3,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 4096,
+  "seed": 42
+ },
+ "params_not_sent": []
+}

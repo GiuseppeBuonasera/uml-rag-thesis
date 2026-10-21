@@ -2,7 +2,7 @@
 Controllo "piu' esempi insieme" (oracle_mix, docs/decisions.md, voce 164). Scritto e testato PRIMA della run: da qui la
 regola (costanti, verdetti) non si modifica senza una nuova voce. SOLO ANALISI.
 
-Due domande, PlantUML, 54 esercizi di validazione, rispetto all'esempio al 50 % da solo (oracle_partial, voce 163):
+Due domande, PlantUML (e compatto con --formato C, voce 170), 54 esercizi di validazione, rispetto all'esempio al 50 % da solo (oracle_partial, voce 163):
 1. DILUIZIONE: l'esempio al 50 % accompagnato da 2 esempi bm25 (lontani) perde il suo guadagno?
 2. SOMMA: due esempi al 50 % con classi complementari valgono piu' di uno solo, fino all'esercizio intero (oracle_self)?
 Guadagno = completezza della risposta − media dello stesso esercizio con zero_shot nel 3b (come la voce 163).
@@ -16,7 +16,7 @@ REGOLA (voce 164), sulle differenze appaiate per esercizio:
 Riportati anche il test di Wilcoxon sulle differenze appaiate (descrittivo) e il dettaglio per livello.
 
 Uso:
-    python experiments/analyze_oracle_mix.py [--results-dir data/results/generation]
+    python experiments/analyze_oracle_mix.py [--results-dir data/results/generation] [--formato P|C]
 """
 
 from __future__ import annotations
@@ -35,6 +35,8 @@ import provenance  # noqa: E402
 
 RESULTS = rr.RESULTS
 OUT_NAME = "oracle_mix_analysis"
+FORMATS = {"P": "PlantUML", "C": "JSON compatto"}  # voce 170: stessa regola anche nel compatto
+OUT_NAMES = {"P": OUT_NAME, "C": "oracle_mix_compatto_analysis"}
 SPLITS = ("corpus", "testset")
 # --- regola (voce 164): non si modifica senza una nuova voce in docs/decisions.md ---
 MARGINE = 0.03
@@ -61,7 +63,7 @@ def verdict_sum(g_comp: float, g_50: float, g_100: float) -> str:
     return "le due meta' non si sommano"
 
 
-def load_all(results: Path) -> dict:
+def load_all(results: Path, fmt: str = "P") -> dict:
     import corpus_loader as cl
     gt = {c["id"]: c["diagram_apollon_json"] for c in cl.load_candidates() + cl.load_queries()}
     out, missing = {}, []
@@ -77,7 +79,7 @@ def load_all(results: Path) -> dict:
         return calls
     zs = []
     for s in SPLITS:
-        d = results / f"passo3b__P-{s}-G26"
+        d = results / f"passo3b__{fmt}-{s}-G26"
         if (d / "manifest.jsonl").exists():
             zs += rr.load_run(d, {"cond": {"zero_shot"}}, gt)
         else:
@@ -86,9 +88,9 @@ def load_all(results: Path) -> dict:
     for c in zs:
         by_q[c["q"]].append(aos.response_scores(c)["comp"] or 0.0)
     base = {q: st.mean(v) for q, v in by_q.items()}
-    for key, prefix in (("50", "oracle_partial__P-{s}-50"), ("100", "oracle_self__P-{s}-libero"),
-                        ("diluito", "oracle_mix__P-{s}-diluito"), ("complemento", "oracle_mix__P-{s}-complemento")):
-        out[key] = gains(runs(prefix), base) if base else {}
+    for key, prefix in (("50", "oracle_partial__F-{s}-50"), ("100", "oracle_self__F-{s}-libero"),
+                        ("diluito", "oracle_mix__F-{s}-diluito"), ("complemento", "oracle_mix__F-{s}-complemento")):
+        out[key] = gains(runs(prefix.replace("__F-", f"__{fmt}-")), base) if base else {}
     out["missing"] = missing
     return out
 
@@ -101,7 +103,7 @@ def paired(a: dict[str, float], b: dict[str, float]) -> tuple[float, float | Non
     return st.mean(d), p, len(qs)
 
 
-def report(data: dict) -> tuple[str, dict]:
+def report(data: dict, fmt: str = "P") -> tuple[str, dict]:
     m = {k: st.mean(v.values()) for k, v in data.items() if k != "missing" and v}
     dil = verdict_dilution(m["diluito"], m["50"])
     som = verdict_sum(m["complemento"], m["50"], m["100"])
@@ -110,8 +112,9 @@ def report(data: dict) -> tuple[str, dict]:
     d3, p3, n3 = paired(data["complemento"], data["100"])
     pf = lambda p: "—" if p is None else f"{p:.3f}"  # noqa: E731
     L = ["# Controllo \"piu' esempi insieme\" (oracle_mix) — SOLO ANALISI", "",
-         "PlantUML, 54 esercizi di validazione, Gemma 4 26B A4B QAT, configurazione del 3b, blocco esempi libero. Regola "
-         "registrata PRIMA della run (voce 164), applicata da `experiments/analyze_oracle_mix.py`.", "",
+         f"{FORMATS[fmt]}, 54 esercizi di validazione, Gemma 4 26B A4B QAT, configurazione del 3b, blocco esempi "
+         "libero. Regola registrata PRIMA della run (voce 164" + ("" if fmt == "P" else "; compatto: voce 170")
+         + "), applicata da `experiments/analyze_oracle_mix.py`.", "",
          provenance.provenance_line(), "", "## Guadagno di completezza su zero_shot (media per esercizio)", "",
          "| esempi nel prompt | guadagno |", "|---|---|",
          f"| soluzione al 50 % da sola (oracle_partial) | {m['50']:+.3f} |",
@@ -129,14 +132,15 @@ def report(data: dict) -> tuple[str, dict]:
 def main(argv=None) -> int:
     a = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     a.add_argument("--results-dir", default=str(RESULTS))
+    a.add_argument("--formato", choices=sorted(FORMATS), default="P")
     args = a.parse_args(argv)
     results = Path(args.results_dir)
-    data = load_all(results)
+    data = load_all(results, args.formato)
     if data["missing"]:
         print(f"run assenti: {data['missing']}: nessuna analisi scritta")
         return 1
-    text, _ = report(data)
-    out = results / OUT_NAME
+    text, _ = report(data, args.formato)
+    out = results / OUT_NAMES[args.formato]
     out.mkdir(parents=True, exist_ok=True)
     (out / "summary.md").write_text(text, encoding="utf-8")
     run_log = sys.modules.get("run_log")

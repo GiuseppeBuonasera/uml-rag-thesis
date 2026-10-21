@@ -178,6 +178,8 @@ non sono state modificate.
 167. 2026-10-21 — Controllo "esempi senza attributi" (A: esercizio stesso; B: esempi bm25 del 3b): disegno e regola PRIMA della run
 168. 2026-10-21 — Cartella `results/` con i risultati raccolti e Excel per esercizio con i controlli oracle
 169. 2026-10-21 — Esito del controllo "esempi senza attributi": la forma vuota degli esempi CAUSA gli scheletri (entrambi i formati)
+170. 2026-10-21 — oracle_partial e oracle_mix anche nel compatto: config e regola PRIMA della run
+171. 2026-10-21 — Esito di oracle_partial e oracle_mix nel compatto: soglia al 25 % per la regola, al 50 % rispetto a esempi casuali
 
 ## Formato
 
@@ -5690,3 +5692,41 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   raddoppiano gli scheletri: il compatto imita la forma degli esempi (quanti attributi per classe) piu' del PlantUML.
   Conseguenza per un sistema futuro: nel compatto conviene scegliere esempi con classi ricche di attributi o
   completare gli esempi; nessuna modifica al 3b (concluso).
+
+### [2026-10-21] oracle_partial e oracle_mix anche nel compatto — config e regola PRIMA della run (solo analisi)
+- **Motivo** (utente): le prove "parziale" (voce 163) e "misti" (voce 164) erano solo in PlantUML, per tempo e per
+  avere una misura senza il disturbo degli scheletri. La voce 169 ha mostrato che il compatto reagisce alla forma degli
+  esempi molto piu' del PlantUML: la soglia di utilita' trovata in PlantUML (Jt circa 0,4-0,56) potrebbe non valere nel
+  compatto.
+- **Config** `experiments/configs/oracle_partial_compatto.yaml` e `oracle_mix_compatto.yaml`: identiche a quelle
+  PlantUML (stesso `run_id`, stessi esercizi, livelli 25/50/75 %, varianti diluito/complemento, blocco libero) salvo
+  `output_format: compact` e `serialization: indent2` (come oracle_self C, voce 162); 162 + 108 = **270 generazioni**,
+  run `oracle_partial__C-{corpus,testset}-{25,50,75}` e `oracle_mix__C-{corpus,testset}-{diluito,complemento}`.
+- **REGOLA**: le stesse delle voci 163 e 164, invariate, applicate al compatto da `analyze_oracle_partial.py
+  --formato C` e `analyze_oracle_mix.py --formato C` (riferimenti: zero_shot del 3b compatto, oracle_self C libero;
+  output `oracle_partial_compatto_analysis`, `oracle_mix_compatto_analysis`; i sommari PlantUML restano quelli).
+  Soglia di utilita' = livello piu' basso con guadagno >= 0,05; diluizione se diluito − 50 % < −0,03; somma "del tutto"
+  se complemento >= 100 % − 0,03, "in parte" se complemento − 50 % >= 0,05. In piu' (descrittivo, voce 169) la quota
+  di scheletri per livello.
+
+### [2026-10-21] Esito di oracle_partial e oracle_mix nel compatto (voce 170) — SOLO ANALISI
+- Batch `oracle_compatto`, 270/270 valide (18:55-21:37), nessun troncamento. Analisi `analyze_oracle_partial.py
+  --formato C` e `analyze_oracle_mix.py --formato C` -> `oracle_partial_compatto_analysis/summary.md`,
+  `oracle_mix_compatto_analysis/summary.md`.
+- **Parziale, esito della regola: soglia di utilita' al livello 25 % (somiglianza 0,34)**. Guadagno di completezza su
+  zero_shot: +0,066 (25 %), +0,109 (50 %), +0,159 (75 %), +0,264 (100 %); esempi reali del 3b +0,045 / +0,016 / +0,024 /
+  +0,010 per Jt 0-0,1 / 0,1-0,2 / 0,2-0,3 / 0,3-0,45 (PlantUML: +0,036 / +0,095 / +0,173 / +0,337, soglia al 50 %).
+- **Lettura (descrittiva, non e' la regola)**: nel compatto zero_shot sbaglia spesso la forma, quindi qualunque esempio
+  porta gia' circa +0,04 (esempi reali con Jt 0-0,1: +0,045). Rispetto a random k3 del 3b (esempi casuali, che danno gia'
+  il formato) il guadagno e' +0,032 / +0,075 / +0,125 / +0,230 nel compatto e +0,013 / +0,072 / +0,150 / +0,314 in
+  PlantUML: **contro esempi casuali la soglia di 0,05 cade al 50 % in entrambi i formati**. La soglia al 25 % del
+  compatto misura soprattutto l'effetto formato. Il compatto sfrutta meno l'esempio quando e' molto vicino (100 %:
+  +0,230 contro +0,314).
+- **Misti, esiti della regola**: **nessuna diluizione** (diluito − 50 % = +0,018, p 0,30) e **le due meta' si sommano in
+  parte** (complemento − 50 % = +0,073, p < 0,001; complemento − 100 % = −0,082, p < 0,001): stessi verdetti del
+  PlantUML (+0,024 e +0,116 / −0,127).
+- **Scheletri** (descrittivo, voce 169): nel compatto 19 % / 13 % / 9 % / 15 % con la soluzione al 25 / 50 / 75 / 100 %,
+  6 % con meta' + 2 bm25, 9 % con le due meta', contro 25 % di random k3 e 13 % di zero_shot; in PlantUML 0-2 %. Esempi
+  vicini e completi di attributi riducono gli scheletri del compatto, coerente con la voce 169.
+- **Conclusione**: la soglia "un esempio serve da somiglianza circa 0,4-0,56" vale anche nel compatto, se si confronta
+  con esempi qualunque (il caso del retrieval); le altre conclusioni delle voci 163-165 non cambiano.

@@ -22,6 +22,9 @@ pool nessuna coppia supera 0,4; nessuna run in corso).
   dall'espansore unico.
 
 ## Stato
+- **oracle_partial e oracle_mix nel compatto (2026-10-21, voci 170-171)**: 270/270 valide. Regola: soglia al 25 %
+  (contro zero_shot, che nel compatto sbaglia la forma); contro esempi casuali la soglia cade al 50 % come in PlantUML.
+  Nessuna diluizione; due meta' si sommano in parte. Nessuna run in corso.
 - **Cartella `results/` (2026-10-21, voce 168)**: risultati raccolti (completezza dei relatori del 3b e F1 dei
   controlli per esercizio, ordinati per Flesch-Kincaid e per grandezza; file dei relatori, zip, sommari); si rigenera con `python experiments/build_results.py`.
 - **Controllo esempi senza attributi (2026-10-21, voci 167 e 169)**: esempi senza attributi -> scheletri (causale):
