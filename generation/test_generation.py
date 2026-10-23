@@ -3185,6 +3185,40 @@ def check_oracle_compatto(tmp: Path) -> None:
           "regole invariate, output separato, guardia")
 
 
+def check_stats_3b(tmp: Path) -> None:
+    """Voce 173: analisi statistica del 3b (schema dei relatori). Holm, r rank-biserial, 12 colonne, Spearman per
+    difficolta' e colonna, Wilcoxon e t-test per ogni coppia, su una tabella simulata."""
+    import random
+    import stats_3b as s3
+    assert s3.ALPHA == 0.05
+    assert [round(x, 6) for x in s3.holm([0.01, 0.04, 0.03])] == [0.03, 0.06, 0.06]
+    assert s3.holm([0.01, 0.5]) == [0.02, 0.5] and s3.holm([0.6, 0.7]) == [1.0, 1.0]
+    assert s3.rank_biserial([1, 2, 3]) == 1.0 and s3.rank_biserial([1, 2, -3]) == 0.0
+    assert s3.rank_biserial([0, 0]) is None
+    cols = s3.columns()
+    assert len(cols) == 12 and len({c[0] for c in cols}) == 12
+    assert {c[1] for c in cols} == {"plantuml", "compatto"}
+    rnd = random.Random(0)
+    table = []
+    for i in range(30):
+        size = 5 + i
+        row = {"esercizio": f"E{i}", "insieme": "valutazione", "fk": rnd.uniform(5, 12), "size": size}
+        row["A"] = 1.0 - size / 50 + rnd.gauss(0, 0.01)   # cala con la size: rho fortemente negativo
+        row["B"] = row["A"] + 0.1                          # sempre meglio di A
+        row["C"] = rnd.uniform(0, 1)                       # rumore
+        table.append(row)
+    res = s3.analyse(table, ["A", "B", "C"])
+    assert len(res["spearman"]) == 6 and len(res["wilcoxon"]) == 3
+    sp = {(x["difficolta"], x["colonna"]): x for x in res["spearman"]}
+    assert sp[("size", "A")]["rho"] < -0.9 and sp[("size", "A")]["p_holm"] < 0.05
+    assert all(x["p_holm"] >= x["p"] for x in res["spearman"])
+    ab = next(x for x in res["wilcoxon"] if (x["a"], x["b"]) == ("A", "B"))
+    assert abs(ab["media_diff"] + 0.1) < 1e-9 and ab["vince_b"] == 30 and ab["r_rb"] == -1.0
+    assert ab["p_wilcoxon_holm"] < 0.05 and ab["p_t_holm"] < 0.05
+    print("  OK  analisi statistica del 3b (voce 173): Holm, r rank-biserial, 12 colonne, Spearman e Wilcoxon / t-test "
+          "su tabella simulata")
+
+
 def check_compare_view() -> None:
     """experiments/compare_view.py (voce 134): esercizi comuni alle run, pagina ristretta a un esercizio e a una
     ripetizione con GT + una risposta per run; rendering verificato solo se java e plantuml.jar sono disponibili."""
@@ -3646,6 +3680,7 @@ def main() -> None:
         check_oracle_compatto(tmp)
         check_oracle_attr(tmp)
         check_build_results(tmp)
+        check_stats_3b(tmp)
         check_difficulty()
         check_synonym_review()
         check_compare_view()

@@ -1,12 +1,12 @@
 # Stato del progetto — leggere a inizio sessione
 
-Aggiornato: 2026-10-20 (3b completato sui 54 e sui 26; analisi statistica affidata ai relatori, voce 158;
-controlli oracle, voci 162-165: un esempio serve solo con somiglianza dei nomi di classe di circa 0,4-0,56 o piu', e nel
-pool nessuna coppia supera 0,4; nessuna run in corso).
+Aggiornato: 2026-10-22 (3b completato sui 54 e sui 26; **l'analisi statistica riguarda SOLO il 3b** (voce 172);
+i controlli oracle, voci 162-171, sono esclusi e vanno negli sviluppi futuri della tesi; nessuna run in corso).
 
 ## Configurazione di lavoro (voce 95)
-- Modello: **Gemma 4 12B QAT** (`google/gemma-4-12b-qat`, QAT q4_0; Flash Attention attiva, KV cache F16, Enable
-  Thinking spento). Qwen2.5-Coder 7B: valutato e scartato (dati dell'insieme di sviluppo, voce 95).
+- Modello del 3b: **Gemma 4 26B A4B QAT** (`google/gemma-4-26b-a4b-qat`, voce 133; caricamento
+  `lms load google/gemma-4-26b-a4b-qat --context-length 32768 --gpu 0.5 -y`). Prima era Gemma 4 12B QAT (voce 95);
+  Qwen2.5-Coder 7B valutato e scartato.
 - **Versione di configurazione 2** (voce 93): contesto 32768, max_tokens 4096.
 - Campionamento: temperature 0.3, top_p 0.95, top_k 64 (valori di lavoro; domanda 8 aperta).
 - Retrieval: bm25, **k = 3** (per il Passo 3b anche k = 2, per il confronto con la baseline statica a parità di esempi).
@@ -22,6 +22,13 @@ pool nessuna coppia supera 0,4; nessuna run in corso).
   dall'espansore unico.
 
 ## Stato
+- **Analisi statistica del 3b (2026-10-22, voci 173-174)**: `python experiments/stats_3b.py --metrica f1|completezza`
+  -> `results/1_passo3b/analisi_statistica_*.xlsx`. Dopo Holm: size correlata negativamente (rho circa −0,45),
+  Flesch-Kincaid mai; nessuna differenza tra prompt dello stesso formato; PlantUML meglio del compatto. Da
+  confermare con i relatori: 12 colonne (non 8), F1 nostro come metrica, famiglia dei 66 confronti.
+- **Perimetro dell'analisi statistica (2026-10-22, voce 172)**: SOLO il passo 3b (54 di validazione come analisi
+  principale, 26 di sviluppo come secondaria, metriche dello strumento dei relatori). I controlli oracle (voci
+  162-171) sono esclusi dai test e dai dati dell'analisi: nella tesi vanno negli sviluppi futuri, come descrizione.
 - **oracle_partial e oracle_mix nel compatto (2026-10-21, voci 170-171)**: 270/270 valide. Regola: soglia al 25 %
   (contro zero_shot, che nel compatto sbaglia la forma); contro esempi casuali la soglia cade al 50 % come in PlantUML.
   Nessuna diluizione; due meta' si sommano in parte. Nessuna run in corso.
@@ -45,7 +52,7 @@ pool nessuna coppia supera 0,4; nessuna run in corso).
 - **Risultati del 3b (voce 154, esplorativi: visti prima dello script di analisi)**: il retrieval non batte random
   (bm25 k3 − random −0,017 PlantUML, +0,015 compatto); gli esempi aiutano nel compatto (+0,06/+0,07 su zero_shot).
   **3b sui 26 di sviluppo completato** (936/936, voce 151): stesse conclusioni, piccolo vantaggio di bm25.
-- **Prossimi passi**: l'analisi statistica la fanno i relatori con un loro script (voce 158): al repo spetta fornire
+- **Prossimi passi**: analisi statistica del SOLO 3b (voce 172; script dei relatori, voce 158): al repo spetta fornire
   i dati nel formato richiesto (da concordare: tipo di F1, colonne, insieme di esercizi, formato dei file); revisione dei sinonimi
   SCARTATA (voce 160); analisi esplorative raccolte nel report condiviso con i relatori (voce 161).
 - **Esportazione**: `python experiments/export_3b.py --unico` → `export_3b/passo3b_risultati.zip` (voce 157);

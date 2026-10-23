@@ -276,7 +276,8 @@ def build_controls(out: Path, rows: dict, gt: dict) -> dict:
     for by in ORDERS:
         bk.sheet(f"Per {by}", ids, by, groups, f1, "0.000", [("Media (54 esercizi)", None)])
     bk.notes([
-        "Controlli SOLO ANALISI (voci 162-169): F1 per esercizio, 54 esercizi di validazione, 1 ripetizione (Gemma 4 26B A4B QAT).",
+        "Controlli SOLO ANALISI (voci 162-171): F1 per esercizio, 54 esercizi di validazione, 1 ripetizione (Gemma 4 26B A4B QAT).",
+        "  ESCLUSI DALL'ANALISI STATISTICA (voce 172): l'analisi statistica riguarda solo il passo 3b; questi controlli vanno negli sviluppi futuri della tesi, come descrizione.",
         "  " + DIFF_NOTE,
         "  F1 = media degli F1 di classi, attributi, relazioni e generalizzazioni (evaluation/element_metrics.py, abbinamento rilassato; tipologie assenti sia nel GT sia nella risposta escluse). Metrica NOSTRA: lo strumento dei relatori non ha valutato queste run.",
         "  Colonne '3b ... (riferimento)': media delle 3 ripetizioni del passo 3b, per confronto.",
@@ -347,7 +348,8 @@ def build_ranking(out: Path, rows: dict, gt: dict) -> dict:
         j = ORDERS[by]
         result[by] = (min(r[j] for r in ids if r[0] in hard), max(r[j] for r in ids if r[0] in easy))
     bk.notes([
-        "Graduatoria di tutte le run sui 54 esercizi di validazione (Gemma 4 26B A4B QAT): i 6 prompt del passo 3b e i controlli oracle (solo analisi, voci 162-169).",
+        "Graduatoria di tutte le run sui 54 esercizi di validazione (Gemma 4 26B A4B QAT): i 6 prompt del passo 3b e i controlli oracle (solo analisi, voci 162-171).",
+        "  Graduatoria DESCRITTIVA. L'analisi statistica riguarda solo le righe del 3b (azzurre, voce 172); le righe dei controlli oracle (verdi) sono escluse e vanno negli sviluppi futuri.",
         "  Ordine: F1 sui 54 esercizi, decrescente. 'Posizione tra i difficili / facili' = posizione della run se la graduatoria si facesse solo su quella metà.",
         "  F1 = media degli F1 di classi, attributi, relazioni e generalizzazioni (evaluation/element_metrics.py, abbinamento rilassato), prima sulle ripetizioni valide di ogni esercizio (3 nel 3b, 1 nei controlli), poi sugli esercizi: ogni esercizio pesa uguale. Metrica NOSTRA: lo strumento dei relatori ha valutato solo il 3b.",
         f"  Metà più difficile / più facile: i 54 esercizi ordinati per difficoltà decrescente e divisi a metà (27 + 27). Flesch-Kincaid: metà difficile da {result['Flesch-Kincaid'][0]:.2f} in su, metà facile fino a {result['Flesch-Kincaid'][1]:.2f}. Grandezza (classi + relazioni del GT): metà difficile da {result['grandezza'][0]} elementi in su, metà facile fino a {result['grandezza'][1]}. A parità di valore decide l'altra difficoltà, poi il nome dell'esercizio. Primo foglio: la grandezza, difficoltà dominante.",
@@ -365,6 +367,8 @@ README = """# Risultati raccolti
 Cartella generata da `experiments/build_results.py` (copie: gli originali restano in `data/results/`).
 **Riassunto delle valutazioni: [`README_valutazioni.md`](README_valutazioni.md)** (scritto a mano, non rigenerato).
 Tutti i risultati sono ESPLORATIVI (voce 154): l'analisi statistica la fanno i relatori con il loro script (voce 158).
+**L'analisi statistica riguarda SOLO il passo 3b** (`1_passo3b/`, voce 172). I controlli oracle (`2_controlli_oracle/`)
+sono esclusi: nella tesi vanno negli sviluppi futuri, come descrizione.
 Modello: Gemma 4 26B A4B QAT (LM Studio), istruzioni v5, temperatura 0,3.
 
 ## classifica_run.xlsx — graduatoria di tutte le run
@@ -380,8 +384,11 @@ In tutti gli Excel il primo foglio ordina per GRANDEZZA, la difficolta' dominant
 - `evaluation_summary_relatori.xlsx`: il file prodotto dallo strumento dei relatori (2026-10-19).
 - `passo3b_risultati.zip`: tutte le risposte in JSON e PlantUML (sviluppo e validazione), i GT in PlantUML, i testi.
 - `difficolta.csv`: difficolta' degli esercizi (Flesch-Kincaid e grandezza).
+- **`analisi_statistica_f1.xlsx`, `analisi_statistica_completezza.xlsx`**: l'analisi statistica (schema dei
+  relatori: tabella, Spearman, Wilcoxon / t-test con correzione di Holm; voci 173-174), generati da
+  `experiments/stats_3b.py` (non da questo script).
 
-## 2_controlli_oracle — controlli solo analisi (54 di validazione, 1 ripetizione)
+## 2_controlli_oracle — controlli solo analisi (54 di validazione, 1 ripetizione) — SVILUPPI FUTURI, esclusi dall'analisi statistica
 - `controlli_f1.xlsx`: F1 per esercizio di tutti i controlli, stesso ordinamento (grandezza, Flesch-Kincaid).
 - `oracle_self.md` (voce 162): l'esercizio stesso come esempio.
 - `oracle_partial.md` (voce 163): solo una parte delle classi dell'esercizio stesso: quanto deve essere simile un esempio.

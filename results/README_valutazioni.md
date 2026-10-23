@@ -2,6 +2,10 @@
 
 Riassunto di quello che è emerso dalle valutazioni: il passo 3b (sezione 1) e i controlli oracle (sezione 2).
 
+> **Perimetro dell'analisi statistica (voce 172).** L'analisi statistica della tesi riguarda **solo il passo 3b**
+> (sezione 1). I controlli oracle (sezione 2) sono **esclusi**: non entrano nei test né nei dati dell'analisi, e
+> nella tesi vanno negli **sviluppi futuri**, come descrizione di cosa servirebbe perché il retrieval funzioni.
+
 > **Natura dei risultati.** Tutte le analisi qui riportate sono **esplorative**: i risultati del 3b sono stati guardati
 > prima che fosse scritto uno script di analisi registrato in anticipo (voce 154 di `docs/decisions.md`). L'analisi
 > statistica ufficiale è quella dello script dei relatori (voce 158). Nessuna correzione per test multipli è applicata
@@ -161,7 +165,64 @@ sono quindi favoriti. Non vanno sommati ai 54.
 **Esempi singoli.** Con random, dove gli esempi sono assegnati a caso, nessun esempio funziona meglio o peggio degli
 altri (test di permutazione, p 0,55); esempi più difficili o con più attributi non aiutano né peggiorano.
 
-### 1.7 Cautele
+### 1.7 Analisi statistica (schema dei relatori, voci 173-174)
+
+Lo schema richiesto dai relatori, applicato con `experiments/stats_3b.py`: tabella per esercizio con le due difficoltà
+e una colonna di score per prompt; **Spearman** tra ogni difficoltà e ogni colonna; **Wilcoxon** (e t-test) per ogni
+coppia di colonne. Correzione di **Holm** per famiglia (24 correlazioni, 66 confronti), alpha 0,05.
+
+| Scelta | Valore | Perché |
+|---|---|---|
+| Colonne | 12 = 6 prompt × 2 formati | i relatori scrivono "8", che non corrisponde a nessuna combinazione del 3b |
+| Metrica principale | F1 medio sulle 4 tipologie (nostro) | lo strumento dei relatori non calcola un F1 |
+| Metrica di confronto | completezza dei relatori | stessa analisi, file a parte |
+| Esercizi | 53 di validazione (principale), 79 (sensibilità) | AirTravel non ha static k2 |
+
+File: `1_passo3b/analisi_statistica_f1.xlsx` e `analisi_statistica_completezza.xlsx` (fogli Tabella, Spearman,
+Wilcoxon, gli stessi sui 79, Note; in giallo i risultati significativi dopo Holm).
+
+**Spearman (53, F1).** La **size** è correlata negativamente con lo score in **tutti i prompt PlantUML** (rho da −0,45 a
+−0,51, p Holm ≤ 0,012) e in 3 prompt del compatto (static k2, random k3, bm25 k3: −0,42 / −0,43). **Flesch-Kincaid
+non è mai significativo.** Con la completezza dei relatori il quadro è lo stesso.
+
+**Wilcoxon (53, F1).** Dopo Holm restano significativi solo 4 confronti, tutti "PlantUML con esempi contro compatto
+zero_shot" (+0,05 / +0,08 di F1, r +0,55 / +0,71). **Nessun confronto tra prompt dello stesso formato è significativo**:
+bm25 e hybrid non si distinguono da random, static o zero_shot. Il vantaggio degli esempi nel compatto (circa +0,04-0,05
+su zero_shot) non regge alla correzione sui 53; sui 79 regge per static k2 e bm25 k3.
+
+**Wilcoxon (53, completezza dei relatori).** 13 confronti significativi, tutti PlantUML contro compatto (+2,8 / +7,2
+punti), anche a parità di prompt. Nessuno dentro lo stesso formato.
+
+**Robustezza sui 79 esercizi (validazione + sviluppo).** I 26 di sviluppo sono quelli su cui è stata tarata la
+configurazione, misurando soprattutto bm25: se c'è un vantaggio dovuto alla taratura, favorisce bm25 e hybrid. Per
+questo l'analisi principale resta sui 53 (voci 113, 117) e i 79 servono come controllo di robustezza.
+
+| | 53 di validazione | 79 |
+|---|---|---|
+| Size correlata con l'F1 (dopo Holm) | 9 colonne su 12 (rho circa −0,45) | 7 su 12 (rho circa −0,35) |
+| Flesch-Kincaid | mai significativo | mai significativo |
+| bm25 / hybrid contro random | nessuna differenza | **nessuna differenza** |
+| Esempi contro zero_shot nel compatto | non regge a Holm | regge per static k2 e bm25 k3 (+0,04 / +0,05) |
+| Altri confronti nello stesso formato | nessuno | PlantUML: random k3 meglio di static k2 (+0,024) |
+
+- **Le conclusioni non cambiano, anzi si rafforzano**: anche includendo gli esercizi su cui è stata tarata la
+  configurazione, che favoriscono il retrieval, il retrieval non batte gli esempi casuali. Il risultato negativo è
+  quindi robusto.
+- I 79 aggiungono potenza: l'effetto "formato" degli esempi nel compatto diventa significativo.
+- La correlazione con la size è più debole sui 79 perché i 26 hanno diagrammi piccoli e simili (7-26 elementi):
+  aggiungerli non migliora la copertura dei diagrammi grandi.
+- Limite: un eventuale vantaggio del retrieval sui soli 79 non sarebbe interpretabile (potrebbe venire dalla
+  taratura); per un risultato nullo come questo il problema non si pone.
+
+**In sintesi:** l'ipotesi centrale non è confermata. Contano il **formato** (PlantUML meglio del compatto) e la
+**grandezza** del diagramma; la scelta degli esempi (recuperati, fissi, casuali o nessuno) non produce differenze
+significative.
+
+**Da concordare con i relatori:** le 12 colonne al posto di 8; l'F1 nostro come metrica; la famiglia dei 66 confronti,
+che include coppie di formato e prompt diversi poco interpretabili e riduce la potenza. Restringerla alle 36 coppie
+interpretabili (15 + 15 dentro ciascun formato, 6 tra formati a parità di prompt) è un'opzione.
+
+### 1.8 Cautele
 
 - **Test multipli.** In questa pagina ci sono decine di test senza correzione. I risultati con p ≤ 0,001 (PlantUML
   meglio del compatto, correlazione con la grandezza) sono i più robusti; quelli tra 0,003 e 0,05 (per esempio esempi
@@ -181,7 +242,10 @@ altri (test di permutazione, p 0,55); esempi più difficili o con più attributi
 
 ---
 
-## 2. Controlli oracle
+## 2. Controlli oracle (sviluppi futuri, esclusi dall'analisi statistica)
+
+> Questa sezione è **descrittiva**: i controlli oracle non fanno parte dell'analisi statistica (voce 172) e nella
+> tesi vanno negli sviluppi futuri. I p-value riportati qui servono solo a descrivere gli esiti delle regole.
 
 ### 2.1 A cosa servono
 

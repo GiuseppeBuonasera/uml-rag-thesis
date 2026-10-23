@@ -3,6 +3,8 @@
 Cartella generata da `experiments/build_results.py` (copie: gli originali restano in `data/results/`).
 **Riassunto delle valutazioni: [`README_valutazioni.md`](README_valutazioni.md)** (scritto a mano, non rigenerato).
 Tutti i risultati sono ESPLORATIVI (voce 154): l'analisi statistica la fanno i relatori con il loro script (voce 158).
+**L'analisi statistica riguarda SOLO il passo 3b** (`1_passo3b/`, voce 172). I controlli oracle (`2_controlli_oracle/`)
+sono esclusi: nella tesi vanno negli sviluppi futuri, come descrizione.
 Modello: Gemma 4 26B A4B QAT (LM Studio), istruzioni v5, temperatura 0,3.
 
 ## classifica_run.xlsx — graduatoria di tutte le run
@@ -18,8 +20,11 @@ In tutti gli Excel il primo foglio ordina per GRANDEZZA, la difficolta' dominant
 - `evaluation_summary_relatori.xlsx`: il file prodotto dallo strumento dei relatori (2026-10-19).
 - `passo3b_risultati.zip`: tutte le risposte in JSON e PlantUML (sviluppo e validazione), i GT in PlantUML, i testi.
 - `difficolta.csv`: difficolta' degli esercizi (Flesch-Kincaid e grandezza).
+- **`analisi_statistica_f1.xlsx`, `analisi_statistica_completezza.xlsx`**: l'analisi statistica (schema dei
+  relatori: tabella, Spearman, Wilcoxon / t-test con correzione di Holm; voci 173-174), generati da
+  `experiments/stats_3b.py` (non da questo script).
 
-## 2_controlli_oracle — controlli solo analisi (54 di validazione, 1 ripetizione)
+## 2_controlli_oracle — controlli solo analisi (54 di validazione, 1 ripetizione) — SVILUPPI FUTURI, esclusi dall'analisi statistica
 - `controlli_f1.xlsx`: F1 per esercizio di tutti i controlli, stesso ordinamento (grandezza, Flesch-Kincaid).
 - `oracle_self.md` (voce 162): l'esercizio stesso come esempio.
 - `oracle_partial.md` (voce 163): solo una parte delle classi dell'esercizio stesso: quanto deve essere simile un esempio.

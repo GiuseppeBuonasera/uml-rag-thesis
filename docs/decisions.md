@@ -180,6 +180,9 @@ non sono state modificate.
 169. 2026-10-21 — Esito del controllo "esempi senza attributi": la forma vuota degli esempi CAUSA gli scheletri (entrambi i formati)
 170. 2026-10-21 — oracle_partial e oracle_mix anche nel compatto: config e regola PRIMA della run
 171. 2026-10-21 — Esito di oracle_partial e oracle_mix nel compatto: soglia al 25 % per la regola, al 50 % rispetto a esempi casuali
+172. 2026-10-22 — Perimetro dell'analisi statistica: solo il 3b; i controlli oracle negli sviluppi futuri, esclusi
+173. 2026-10-22 — Analisi statistica del 3b: schema dei relatori, scelte e script, registrati PRIMA dell'esecuzione
+174. 2026-10-22 — Esito dell'analisi statistica del 3b: conta la size, non Flesch-Kincaid; nessuna differenza tra prompt dello stesso formato
 
 ## Formato
 
@@ -5730,3 +5733,60 @@ ripristinato con l'annullamento delle correzioni, e' tra le voci emesse. Le 4 vo
   vicini e completi di attributi riducono gli scheletri del compatto, coerente con la voce 169.
 - **Conclusione**: la soglia "un esempio serve da somiglianza circa 0,4-0,56" vale anche nel compatto, se si confronta
   con esempi qualunque (il caso del retrieval); le altre conclusioni delle voci 163-165 non cambiano.
+
+### [2026-10-22] Perimetro dell'analisi statistica: solo il passo 3b (decisione dell'utente)
+- **L'analisi statistica della tesi riguarda solo il passo 3b**: 6 prompt (zero_shot, static k2, random k3, bm25 k2 e
+  k3, hybrid k3) x 2 formati x 3 ripetizioni; analisi principale sui 54 di validazione, i 26 di sviluppo come analisi
+  secondaria (voce 151); metriche dello strumento dei relatori (voci 158-159). E' la parte che risponde alla domanda
+  della tesi (esempi recuperati contro statici, casuali e nessun esempio).
+- **I controlli oracle (voci 162-171) sono ESCLUSI dall'analisi statistica**: non entrano nei test, nelle tabelle dei
+  risultati ne' nei dati per lo script dei relatori; nella tesi vanno negli **sviluppi futuri**, come indicazione
+  descrittiva (il limite del retrieval nel 3b e' il corpus: un esempio serve da una somiglianza dei nomi di classe di
+  circa 0,4-0,56; esempi senza attributi causano gli scheletri). Era gia' la loro natura (solo analisi, voce 162);
+  ora e' fissato anche il loro posto nella tesi.
+- **Conseguenze nel repo**: README (radice, `results/`, `results/README_valutazioni.md`), `CLAUDE.md` e `STATUS.md`
+  aggiornati; negli Excel dei controlli e nella classifica delle run una nota dice che le righe oracle sono escluse.
+  Nessun dato o script cambia.
+
+### [2026-10-22] Analisi statistica del 3b — schema, scelte e script registrati PRIMA dell'esecuzione
+- **Schema** (relatori, comunicato dall'utente; come la voce 156): (1) tabella per esercizio con difficolta' 1
+  (Flesch-Kincaid) e difficolta' 2 (size = classi + relazioni del riferimento), poi una colonna di F1 per prompt;
+  (2) Spearman tra ciascuna difficolta' e ciascuna colonna; (3) Wilcoxon (o t-test) per ciascuna coppia di colonne.
+  Perimetro: solo il 3b (voce 172).
+- **Scelte dell'assistente sui punti lasciati aperti** (da confermare con i relatori; lo script le rende modificabili):
+  - **colonne = 12** (6 prompt x 2 formati): i relatori scrivono "8 colonne", che non corrisponde a nessuna
+    combinazione del 3b;
+  - **metrica principale = F1 medio sulle quattro tipologie** (`element_metrics`, rilassato), perche' lo strumento dei
+    relatori non calcola un F1 (solo completeness = recall); **stessa analisi con la completezza dei relatori** in un
+    file a parte (`--metrica completezza`);
+  - score per esercizio = media delle ripetizioni valide (non valide escluse, come negli Excel della voce 168);
+  - **esercizi**: principale = 53 di validazione con tutte le colonne (AirTravel non ha static k2); sensibilita' = 79
+    (con i 26 di sviluppo, voce 151);
+  - **correzione per test multipli: Holm per famiglia** (24 Spearman, 66 Wilcoxon, 66 t-test), alpha 0,05; effetto:
+    differenza media e mediana, r rank-biserial appaiato; t-test appaiato riportato accanto al Wilcoxon.
+- **Script** `experiments/stats_3b.py` (test `check_stats_3b` su tabella simulata) -> `results/1_passo3b/
+  analisi_statistica_{f1,completezza}.xlsx` (fogli Tabella, Spearman, Wilcoxon, le stesse per i 79, Note) e
+  `data/results/generation/stats_3b/summary_{f1,completezza}.md`.
+- **Dichiarazione**: analisi a posteriori; i risultati del 3b erano gia' stati visti (voce 154) e alcuni test erano
+  stati calcolati in modo esplorativo, senza correzione (`results/README_valutazioni.md`, sezione 1).
+
+### [2026-10-22] Esito dell'analisi statistica del 3b (voce 173)
+- `python experiments/stats_3b.py --metrica f1` e `--metrica completezza` -> `results/1_passo3b/analisi_statistica_
+  {f1,completezza}.xlsx`, `data/results/generation/stats_3b/summary_{f1,completezza}.md`. Holm per famiglia, alpha 0,05.
+- **Spearman (53 di validazione)**: la **size** e' correlata negativamente con lo score in tutti i prompt PlantUML (F1:
+  rho da −0,45 a −0,51, p Holm <= 0,012) e in static k2, random k3 e bm25 k3 del compatto (−0,42 / −0,43); **Flesch-
+  Kincaid non e' mai significativo**. Con la completezza dei relatori lo stesso quadro. Sui 79 la size resta
+  significativa in 7 colonne su 12 (rho circa −0,35).
+- **Wilcoxon (53, F1)**: dopo Holm sono significativi solo i confronti di PlantUML random k3 / bm25 k2 / bm25 k3 /
+  hybrid k3 contro il compatto zero_shot (+0,054 / +0,079, r +0,55 / +0,71). **Nessun confronto tra prompt dello stesso
+  formato e' significativo**: retrieval contro random, static o zero_shot non si distinguono. Il vantaggio degli
+  esempi nel compatto (circa +0,04-0,05 su zero_shot, p 0,003-0,02 senza correzione) non regge a Holm sui 53; regge
+  sui 79 per static k2 e bm25 k3 (p Holm 0,03-0,04).
+- **Wilcoxon (53, completezza dei relatori)**: 13 confronti significativi, tutti PlantUML (random, bm25, hybrid) contro
+  il compatto (+2,8 / +7,2 punti), anche a parita' di prompt (bm25 k2, bm25 k3, random k3 tramite hybrid). Nessun
+  confronto dentro lo stesso formato.
+- **Lettura**: l'ipotesi centrale (esempi recuperati migliori di statici, casuali o nessun esempio) **non e'
+  confermata**; i fattori con effetto sono il **formato** (PlantUML meglio del compatto) e la **grandezza** del
+  diagramma. Nota per i relatori: la famiglia di 66 confronti include coppie di formato e prompt diversi (poco
+  interpretabili) e riduce la potenza; restringerla alle 36 coppie interpretabili (15 + 15 dentro ciascun formato, 6
+  tra formati a parita' di prompt) e' un'opzione da concordare.
